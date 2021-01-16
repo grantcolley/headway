@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.Services", "Headway
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.App", "Headway.App\Headway.App.csproj", "{C246B4EE-AA65-4B91-A58A-50CC03162E77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.Components", "Headway.Components\Headway.Components.csproj", "{13526473-8FE3-48BD-ACAB-56CF38844063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C246B4EE-AA65-4B91-A58A-50CC03162E77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C246B4EE-AA65-4B91-A58A-50CC03162E77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C246B4EE-AA65-4B91-A58A-50CC03162E77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13526473-8FE3-48BD-ACAB-56CF38844063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13526473-8FE3-48BD-ACAB-56CF38844063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13526473-8FE3-48BD-ACAB-56CF38844063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13526473-8FE3-48BD-ACAB-56CF38844063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
