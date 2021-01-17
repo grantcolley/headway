@@ -12,7 +12,7 @@ namespace Headway.Client
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<Headway.App.App>("#app");
+            builder.RootComponents.Add<Headway.App.App>("app");
 
             builder.Services.AddHttpClient<IWeatherForecastService, WeatherForecastService>(client =>
             {
