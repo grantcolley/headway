@@ -1,5 +1,4 @@
 ﻿@page "/fetchdata"
-@inject HttpClient Http
 
 <h1>Weather forecast</h1>
 
@@ -35,21 +34,13 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    protected IEnumerable<WeatherForecast> forecasts;
+
+    [Inject]
+    public IWeatherForecastService WeatherForecastService { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
-
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        forecasts = await WeatherForecastService.GetWeatherForecasts();
     }
 }
