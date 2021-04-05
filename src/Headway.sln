@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Core", "Headway.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Repository", "Headway.Repository\Headway.Repository.csproj", "{780BD36D-CA73-4E04-A3AD-1FC25CF16A65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.IdentityProvider", "Headway.IdentityProvider\Headway.IdentityProvider.csproj", "{D84528C5-F12E-4F7D-8CC9-B823E5D3EC94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{780BD36D-CA73-4E04-A3AD-1FC25CF16A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{780BD36D-CA73-4E04-A3AD-1FC25CF16A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{780BD36D-CA73-4E04-A3AD-1FC25CF16A65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D84528C5-F12E-4F7D-8CC9-B823E5D3EC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D84528C5-F12E-4F7D-8CC9-B823E5D3EC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D84528C5-F12E-4F7D-8CC9-B823E5D3EC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D84528C5-F12E-4F7D-8CC9-B823E5D3EC94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
