@@ -2,7 +2,6 @@
 
 ##### Technologies
 ###### .NET 5.0, Blazor WebAssembly, Blazor Server, IdentityServer4, ASP.NET Core Web API
-\
 
 #### Table of Contents
 1. [Content 1](#1-content-1)
