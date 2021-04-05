@@ -1,0 +1,64 @@
+﻿@page "/fetchdata"
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView Roles="weatheruser">
+    <Authorized>
+        <h1>Weather forecast</h1>
+
+        <p>This component demonstrates fetching data from the server.</p>
+
+        @if (forecasts == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Temp. (C)</th>
+                        <th>Temp. (F)</th>
+                        <th>Summary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var forecast in forecasts)
+                    {
+                        <tr>
+                            <td>@forecast.Date.ToShortDateString()</td>
+                            <td>@forecast.TemperatureC</td>
+                            <td>@forecast.TemperatureF</td>
+                            <td>@forecast.Summary</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Only users in the <b><i>weatheruser</i></b> role can access this page.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    protected IEnumerable<WeatherForecast> forecasts;
+
+    [Inject]
+    public IWeatherForecastService WeatherForecastService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            if (user.HasClaim(c => c.Type == "role" && c.Value.Equals("weatheruser")))
+            {
+                forecasts = await WeatherForecastService.GetWeatherForecasts();
+            }
+        }
+    }
+}

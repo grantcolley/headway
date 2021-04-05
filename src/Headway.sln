@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.WebApi", "Headway.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.Services", "Headway.Services\Headway.Services.csproj", "{A2A92165-4679-4068-8591-33149A968BF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.RazorComponents", "Headway.RazorComponents\Headway.RazorComponents.csproj", "{A93212B6-39EF-473B-993B-928FAC73F432}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A2A92165-4679-4068-8591-33149A968BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2A92165-4679-4068-8591-33149A968BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2A92165-4679-4068-8591-33149A968BF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A93212B6-39EF-473B-993B-928FAC73F432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A93212B6-39EF-473B-993B-928FAC73F432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A93212B6-39EF-473B-993B-928FAC73F432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A93212B6-39EF-473B-993B-928FAC73F432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

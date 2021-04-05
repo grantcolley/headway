@@ -1,0 +1,24 @@
+﻿<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+        <div class="top-row px-4 auth">
+            @LoginDisplayFragment
+            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+        </div>
+
+        <div class="content px-4">
+            @BodyFragment
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment LoginDisplayFragment { get; set; }
+
+    [Parameter]
+    public RenderFragment BodyFragment { get; set; }
+}
