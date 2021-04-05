@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Copyright>Copyright © 2021 Grant Colley</Copyright>
+    <Authors>Grant Colley</Authors>
+    <Company>Headway</Company>
+  </PropertyGroup>
+
+</Project>
