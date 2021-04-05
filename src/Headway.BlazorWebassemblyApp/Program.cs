@@ -27,7 +27,7 @@ namespace Headway.BlazorWebassemblyApp
                 //// For more information, see https://aka.ms/blazor-standalone-auth
                 //builder.Configuration.Bind("Local", options.ProviderOptions);
                 options.ProviderOptions.Authority = "https://localhost:5001/";
-                options.ProviderOptions.ClientId = "blazorwebassemblyapp";
+                options.ProviderOptions.ClientId = "headwayblazorwebassemblyapp";
                 options.ProviderOptions.DefaultScopes.Add("openid");
                 options.ProviderOptions.DefaultScopes.Add("profile");
                 options.ProviderOptions.DefaultScopes.Add("weatherapiread");

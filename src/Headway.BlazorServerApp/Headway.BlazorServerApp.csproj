@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-Headway.BlazorServerApp-36251C4F-B815-4A3C-BFC9-F4AF62D52988</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
+    <ProjectReference Include="..\Headway.RazorComponents\Headway.RazorComponents.csproj" />
+    <ProjectReference Include="..\Headway.Services\Headway.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\Shared\" />
+  </ItemGroup>
+
+</Project>

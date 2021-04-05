@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.RazorComponents", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.BlazorWebassemblyApp", "Headway.BlazorWebassemblyApp\Headway.BlazorWebassemblyApp.csproj", "{17F66A51-074F-4549-949D-558159A3350F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.BlazorServerApp", "Headway.BlazorServerApp\Headway.BlazorServerApp.csproj", "{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{17F66A51-074F-4549-949D-558159A3350F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
