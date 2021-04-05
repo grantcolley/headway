@@ -7,4 +7,8 @@
     <Copyright>Copyright © 2021 Grant Colley</Copyright>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
+  </ItemGroup>
+
 </Project>
