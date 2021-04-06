@@ -21,21 +21,6 @@ namespace Headway.BlazorWebassemblyApp
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddOidcAuthentication(options =>
-            {
-                //// Configure your authentication provider options here.
-                //// For more information, see https://aka.ms/blazor-standalone-auth
-                //builder.Configuration.Bind("Local", options.ProviderOptions);
-                options.ProviderOptions.Authority = "https://localhost:5001/";
-                options.ProviderOptions.ClientId = "headwayblazorwebassemblyapp";
-                options.ProviderOptions.DefaultScopes.Add("openid");
-                options.ProviderOptions.DefaultScopes.Add("profile");
-                options.ProviderOptions.DefaultScopes.Add("weatherapiread");
-                options.ProviderOptions.PostLogoutRedirectUri = "/";
-                options.ProviderOptions.ResponseType = "code";
-                options.UserOptions.RoleClaim = "role";
-            }).AddAccountClaimsPrincipalFactory<UserAccountFactory>();
-
             builder.Services.AddHttpClient("webapi", (sp, client) =>
             {
                 client.BaseAddress = new Uri("https://localhost:44320");
@@ -57,10 +42,18 @@ namespace Headway.BlazorWebassemblyApp
 
             builder.Services.AddOidcAuthentication(options =>
             {
-                // Configure your authentication provider options here.
-                // For more information, see https://aka.ms/blazor-standalone-auth
-                builder.Configuration.Bind("Local", options.ProviderOptions);
-            });
+                //// Configure your authentication provider options here.
+                //// For more information, see https://aka.ms/blazor-standalone-auth
+                //builder.Configuration.Bind("Local", options.ProviderOptions);
+                options.ProviderOptions.Authority = "https://localhost:5001/";
+                options.ProviderOptions.ClientId = "headwayblazorwebassemblyapp";
+                options.ProviderOptions.DefaultScopes.Add("openid");
+                options.ProviderOptions.DefaultScopes.Add("profile");
+                options.ProviderOptions.DefaultScopes.Add("weatherapiread");
+                options.ProviderOptions.PostLogoutRedirectUri = "/";
+                options.ProviderOptions.ResponseType = "code";
+                options.UserOptions.RoleClaim = "role";
+            }).AddAccountClaimsPrincipalFactory<UserAccountFactory>();
 
             await builder.Build().RunAsync();
         }
