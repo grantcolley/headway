@@ -7,10 +7,10 @@ A Blazor app supporting both hosting models, Blazor WebAssembly and Blazor Serve
 
 #### Table of Contents
 1. [Permissioning Navigation](#permissioning-navigation)
-2. [Content 2](#2-content-2)
+2. [Configuration](#configuration)
 
 ## 1. Permissioning Navigation
 Content 1 text here...
 
-## 2. Content 2
+## 2. Configuration
 Content 2 text here...
