@@ -14,6 +14,7 @@ namespace Headway.IdentityProvider
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Email(),
                 new IdentityResource("roles", "User role(s)", new List<string> { "role" })
             };
 
