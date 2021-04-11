@@ -46,10 +46,11 @@ namespace Headway.BlazorServerApp
                     options.ResponseType = "code";
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
-                    options.Scope.Add("weatherapiread");
+                    options.Scope.Add("email");
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.ClaimActions.Add(new JsonKeyClaimAction("role", "role", "role"));
+                    options.ClaimActions.Add(new JsonKeyClaimAction("weather_priviledge", "weather_priviledge", "weather_priviledge"));
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         NameClaimType = "name",

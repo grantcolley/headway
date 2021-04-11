@@ -45,7 +45,6 @@ namespace Headway.BlazorWebassemblyApp
                 options.ProviderOptions.ClientId = "headwayblazorwebassemblyapp";
                 options.ProviderOptions.DefaultScopes.Add("openid");
                 options.ProviderOptions.DefaultScopes.Add("profile");
-                options.ProviderOptions.DefaultScopes.Add("weatherapiread");
                 options.ProviderOptions.PostLogoutRedirectUri = "/";
                 options.ProviderOptions.ResponseType = "code";
                 options.UserOptions.RoleClaim = "role";
