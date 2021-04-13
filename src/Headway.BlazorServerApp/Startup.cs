@@ -47,6 +47,7 @@ namespace Headway.BlazorServerApp
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
+                    options.Scope.Add("weatherapiread");
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.ClaimActions.Add(new JsonKeyClaimAction("role", "role", "role"));
