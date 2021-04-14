@@ -9,15 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Repository", "Headw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.IdentityProvider", "Headway.IdentityProvider\Headway.IdentityProvider.csproj", "{D84528C5-F12E-4F7D-8CC9-B823E5D3EC94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.WebApi", "Headway.WebApi\Headway.WebApi.csproj", "{8CEBE0B0-5543-4D58-ADB5-9944449011FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.WebApi", "Headway.WebApi\Headway.WebApi.csproj", "{8CEBE0B0-5543-4D58-ADB5-9944449011FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.Services", "Headway.Services\Headway.Services.csproj", "{A2A92165-4679-4068-8591-33149A968BF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Services", "Headway.Services\Headway.Services.csproj", "{A2A92165-4679-4068-8591-33149A968BF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.RazorComponents", "Headway.RazorComponents\Headway.RazorComponents.csproj", "{A93212B6-39EF-473B-993B-928FAC73F432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RazorComponents", "Headway.RazorComponents\Headway.RazorComponents.csproj", "{A93212B6-39EF-473B-993B-928FAC73F432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.BlazorWebassemblyApp", "Headway.BlazorWebassemblyApp\Headway.BlazorWebassemblyApp.csproj", "{17F66A51-074F-4549-949D-558159A3350F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorWebassemblyApp", "Headway.BlazorWebassemblyApp\Headway.BlazorWebassemblyApp.csproj", "{17F66A51-074F-4549-949D-558159A3350F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.BlazorServerApp", "Headway.BlazorServerApp\Headway.BlazorServerApp.csproj", "{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorServerApp", "Headway.BlazorServerApp\Headway.BlazorServerApp.csproj", "{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
