@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
 using IdentityServer4.Models;
 using System.Collections.Generic;
 
@@ -22,15 +21,15 @@ namespace Headway.IdentityProvider
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("weatherapiread")
+                new ApiScope("webapi")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                new ApiResource("weatherapi", "The Weather API")
+                new ApiResource("webapi", "Headway Web API")
                 {
-                    Scopes = new [] { "weatherapiread" }
+                    Scopes = new [] { "webapi" }
                 }
             };
 
@@ -44,7 +43,7 @@ namespace Headway.IdentityProvider
                     RequirePkce = true,
                     RequireClientSecret = false,
                     AllowedCorsOrigins = { "https://localhost:44310" },
-                    AllowedScopes = { "openid", "profile", "email", "weatherapiread", "weather_priviledge" },
+                    AllowedScopes = { "openid", "profile", "email", "webapi", "weather_priviledge" },
                     RedirectUris = { "https://localhost:44310/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:44310/" },
                     Enabled = true
@@ -58,7 +57,7 @@ namespace Headway.IdentityProvider
                     RequirePkce = true,
                     RequireClientSecret = false,
                     AllowedCorsOrigins = { "https://localhost:44300" },
-                    AllowedScopes = { "openid", "profile", "email", "weatherapiread", "weather_priviledge" },
+                    AllowedScopes = { "openid", "profile", "email", "webapi", "weather_priviledge" },
                     RedirectUris = { "https://localhost:44300/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:44300/signout-oidc" },
                 },
