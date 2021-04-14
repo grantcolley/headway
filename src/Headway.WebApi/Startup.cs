@@ -23,6 +23,7 @@ namespace Headway.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
 
             services.AddCors(options =>
             {
@@ -36,7 +37,7 @@ namespace Headway.WebApi
                 .AddJwtBearer(options =>
                 {
                     options.Authority = "https://localhost:5001";
-                    options.Audience = "weatherapi";
+                    options.Audience = "webapi";
                 });
 
             services.AddControllers();
