@@ -132,6 +132,35 @@ namespace Headway.IdentityProvider
                         Log.Debug("weatheruser already exists");
                     }
 
+                    var headwayAdmin = roleMgr.FindByNameAsync("headwayadmin").Result;
+                    if (headwayAdmin == null)
+                    {
+                        headwayAdmin = new IdentityRole
+                        {
+                            Id = "headwayadmin",
+                            Name = "headwayadmin",
+                            NormalizedName = "headwayadmin"
+                        };
+
+                        var headwayAdminResult = roleMgr.CreateAsync(headwayAdmin).Result;
+                        if (!headwayAdminResult.Succeeded)
+                        {
+                            throw new Exception(headwayAdminResult.Errors.First().Description);
+                        }
+
+                        var aliceRoleResult = userMgr.AddToRoleAsync(alice, headwayAdmin.Name).Result;
+                        if (!aliceRoleResult.Succeeded)
+                        {
+                            throw new Exception(aliceRoleResult.Errors.First().Description);
+                        }
+
+                        Log.Debug("headwayadmin created");
+                    }
+                    else
+                    {
+                        Log.Debug("headwayadmin already exists");
+                    }
+
                     var blazorUser = roleMgr.FindByNameAsync("headwayuser").Result;
                     if (blazorUser == null)
                     {
