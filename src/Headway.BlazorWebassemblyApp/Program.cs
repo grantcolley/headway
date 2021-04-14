@@ -25,15 +25,22 @@ namespace Headway.BlazorWebassemblyApp
                 var handler = sp.GetService<AuthorizationMessageHandler>()
                 .ConfigureHandler(
                     authorizedUrls: new[] { "https://localhost:44320" },
-                    scopes: new[] { "weatherapiread" });
+                    scopes: new[] { "webapi" });
                 return handler;
             });
 
             builder.Services.AddTransient<IWeatherForecastService, WeatherForecastService>(sp =>
             {
-                var httpClient = sp.GetRequiredService<IHttpClientFactory>();
-                var weatherForecastServiceHttpClient = httpClient.CreateClient("webapi");
-                return new WeatherForecastService(weatherForecastServiceHttpClient);
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new WeatherForecastService(httpClient);
+            });
+
+            builder.Services.AddTransient<IMenuService, MenuService>(sp =>
+            {
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new MenuService(httpClient);
             });
 
             builder.Services.AddOidcAuthentication(options =>

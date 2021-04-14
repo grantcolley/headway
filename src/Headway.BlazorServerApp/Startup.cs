@@ -47,7 +47,7 @@ namespace Headway.BlazorServerApp
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
-                    options.Scope.Add("weatherapiread");
+                    options.Scope.Add("webapi");
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.ClaimActions.Add(new JsonKeyClaimAction("role", "role", "role"));
@@ -72,6 +72,14 @@ namespace Headway.BlazorServerApp
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new WeatherForecastService(httpClient, tokenProvider);
+            });
+
+            services.AddTransient<IMenuService, MenuService>(sp =>
+            {
+                var tokenProvider = sp.GetRequiredService<TokenProvider>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new MenuService(httpClient, tokenProvider);
             });
 
             services.AddRazorPages();
