@@ -74,14 +74,6 @@ namespace Headway.BlazorServerApp
                 return new WeatherForecastService(httpClient, tokenProvider);
             });
 
-            services.AddTransient<IMenuService, MenuService>(sp =>
-            {
-                var tokenProvider = sp.GetRequiredService<TokenProvider>();
-                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient("webapi");
-                return new MenuService(httpClient, tokenProvider);
-            });
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
         }

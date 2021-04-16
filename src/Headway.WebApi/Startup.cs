@@ -23,7 +23,6 @@ namespace Headway.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
-            services.AddScoped<IMenuRepository, MenuRepository>();
 
             services.AddCors(options =>
             {
