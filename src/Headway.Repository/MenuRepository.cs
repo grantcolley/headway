@@ -62,20 +62,27 @@ namespace Headway.Repository
             }
         };
 
-        public Task<IEnumerable<MenuItem>> GetMenuItemsAsync()
+        public Task<IEnumerable<MenuItem>> GetMenuItemsAsync(string[] roles)
         {
             var groupedMenuItems = new List<MenuItem>();
-            var orderedMenuItems = menuItems.OrderBy(mi => mi.ParentId).ThenBy(mi => mi.OrderId).ToList();
-            foreach(var menuItem in orderedMenuItems)
+            if (roles != null
+                && roles.Any())
             {
-                if(menuItem.ParentId.Equals(0))
+                var orderedMenuItems = menuItems.OrderBy(mi => mi.ParentId).ThenBy(mi => mi.OrderId).ToList();
+                foreach (var menuItem in orderedMenuItems)
                 {
-                    groupedMenuItems.Add(menuItem);
-                }
-                else
-                {
-                    var parentMenuItem = orderedMenuItems.Single(mi => mi.Id.Equals(menuItem.ParentId));
-                    parentMenuItem.MenuItems.Add(menuItem);
+                    if (menuItem.Roles.Any(r => roles.Contains(r)))
+                    {
+                        if (menuItem.ParentId.Equals(0))
+                        {
+                            groupedMenuItems.Add(menuItem);
+                        }
+                        else
+                        {
+                            var parentMenuItem = orderedMenuItems.Single(mi => mi.Id.Equals(menuItem.ParentId));
+                            parentMenuItem.MenuItems.Add(menuItem);
+                        }
+                    }
                 }
             }
 

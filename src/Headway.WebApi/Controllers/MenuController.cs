@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -29,7 +31,16 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IEnumerable<MenuItem>> Get()
         {
-            return await menuRepository.GetMenuItemsAsync();
+            var identity = (ClaimsIdentity)HttpContext.User.Identity;
+            var roleClaims = identity.FindAll(identity.RoleClaimType).ToArray();
+
+            if (roleClaims != null && roleClaims.Any())
+            {
+                var roles = roleClaims.Select(r => r.Value).ToArray();
+                return await menuRepository.GetMenuItemsAsync(roles);
+            }
+
+            return null;
         }
     }
 }

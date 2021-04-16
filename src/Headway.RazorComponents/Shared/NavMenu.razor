@@ -9,32 +9,34 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    @if (menuItems != null)
-    {
-        <ul class="nav flex-column">
-            @foreach (var menuItem in menuItems)
-            {
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="@menuItem.Path" @onclick="() => OnClick(menuItem)" Match="NavLinkMatch.All">
-                        <span class="@menuItem.ImageClass" aria-hidden="true"></span> @menuItem.Name
-                    </NavLink>
-                    @if (expandMenuItems && menuItem.Id.Equals(activeParentMenuItem) && menuItem.MenuItems.Count > 0)
-                    {
-                        <ul class="nav flex-column">
-                            @foreach (var subMenuItem in menuItem.MenuItems)
-                            {
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="@subMenuItem.Path" @onclick="() => OnClick(subMenuItem)" Match="NavLinkMatch.All">
-                                        <span class="@subMenuItem.ImageClass" aria-hidden="true"></span> @subMenuItem.Name
-                                    </NavLink>
-                                </li>
-                            }
-                        </ul>
-                    }
-                </li>
-            }
-        </ul>
-    }
+    <AuthorizeView Roles="@Roles.HEADWAY_USER">
+        @if (menuItems != null)
+        {
+            <ul class="nav flex-column">
+                @foreach (var menuItem in menuItems)
+                {
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="@menuItem.Path" @onclick="() => OnClick(menuItem)" Match="NavLinkMatch.All">
+                            <span class="@menuItem.ImageClass" aria-hidden="true"></span> @menuItem.Name
+                        </NavLink>
+                        @if (expandMenuItems && menuItem.Id.Equals(activeParentMenuItem) && menuItem.MenuItems.Count > 0)
+                        {
+                            <ul class="nav flex-column">
+                                @foreach (var subMenuItem in menuItem.MenuItems)
+                                {
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="@subMenuItem.Path" @onclick="() => OnClick(subMenuItem)" Match="NavLinkMatch.All">
+                                            <span class="@subMenuItem.ImageClass" aria-hidden="true"></span> @subMenuItem.Name
+                                        </NavLink>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+    </AuthorizeView>
 </div>
 
 @code {
@@ -53,8 +55,17 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+
+        Console.WriteLine("NavMenu - Start OnInitializedAsync()");
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
+
+        Console.WriteLine($"user.Identity.Name : {user.Identity.Name}");
+
+        Console.WriteLine($"user.Identity.IsAuthenticated : {user.Identity.IsAuthenticated}");
+
+        Console.WriteLine($"user.IsInRole(Roles.HEADWAY_USER) : {user.IsInRole(Roles.HEADWAY_USER)}");
 
         if (user.Identity.IsAuthenticated)
         {
@@ -64,7 +75,7 @@
             }
         }
 
-        await base.OnInitializedAsync();
+        Console.WriteLine("NavMenu - End OnInitializedAsync()");
     }
 
     private void OnClick(MenuItem menuItem)

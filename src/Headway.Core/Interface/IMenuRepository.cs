@@ -6,6 +6,6 @@ namespace Headway.Core.Interface
 {
     public interface IMenuRepository
     {
-        Task<IEnumerable<MenuItem>> GetMenuItemsAsync();
+        Task<IEnumerable<MenuItem>> GetMenuItemsAsync(string[] roles);
     }
 }
