@@ -4,8 +4,18 @@
 
 ##### Technologies
 ###### .NET 5.0, Blazor WebAssembly, Blazor Server, IdentityServer4, ASP.NET Core Web API
+\
+**Headway** is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication:
+ * **Blazor WebAssembly** - running client-side on the browser.
+ * **Blazor Server** - where updates and event handling are run on the server and managed over a SignalR connection. 
+ * **IdentityServer4** - an OpenID Connect and OAuth 2.0 framework for authentication. 
+ * **ASP.NET Core Web API** - for accessing data repositories by authenticated users.
+ * **Razor Class Library** - for shared *Razor* components.
+ * **Class Library** - for shared classes and interfaces.
+ * **Class Library** - a services library for calling the *WebApi*.
+ * **Class Library** - a repository library for access to data behind the *WebApi*.
 
-A Blazor app supporting both hosting models, Blazor WebAssembly and Blazor Server, a WebApi for accessing data and an Identity Provider for authentication. **Headway** uses the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project as the starting point.
+![Alt text](/readme-images/headway-architecture.png?raw=true "Headway Architecture") 
 
 #### Table of Contents
 * [Role Based Navigation Menu](#role-based-navigation-menu)
