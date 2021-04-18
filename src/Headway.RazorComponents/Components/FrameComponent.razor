@@ -1,0 +1,37 @@
+﻿@using Headway.Core.Enums
+
+@FrameBuilder(frame)
+
+@code {  
+    private Frame frame;
+
+    [Parameter]
+    public string FrameName { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        var fragments = new List<IFragment>();
+        fragments.Add(new FragmentContainer { FrameId = 1, FragmentId = 1, FragmentContainerId = 0, FragmentName = "Root", FragnmentType = FragmentType.Div, Fragments = new List<IFragment>() });
+        fragments.Add(new Fragment { FrameId = 1, FragmentId = 2, FragmentContainerId = 1, FragmentName = "Name", FragnmentType = FragmentType.Text });
+        fragments.Add(new Fragment { FrameId = 1, FragmentId = 3, FragmentContainerId = 1, FragmentName = "DateOfBirth", FragnmentType = FragmentType.Date });
+
+        ((FragmentContainer)fragments[0]).Fragments.Add(fragments[1]);
+        ((FragmentContainer)fragments[0]).Fragments.Add(fragments[2]);
+
+        frame = new Frame
+        {
+            FrameId = 1,
+            FrameName = FrameName,
+            Fragments = fragments
+        };
+
+        return base.OnInitializedAsync();
+    }
+
+    private RenderFragment<Frame> FrameBuilder = frame => __builder =>
+    {
+        <div>
+
+        </div>
+    };
+}
