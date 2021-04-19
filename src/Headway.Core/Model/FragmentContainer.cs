@@ -10,7 +10,7 @@ namespace Headway.Core.Model
         public int FragmentId { get; set; }
         public int FragmentContainerId { get; set; }
         public string FragmentName { get; set; }
-        public FragmentType FragnmentType { get; set; }
+        public FragmentType FragmentType { get; set; }
         public List<IFragment> Fragments { get; set; }
     }
 }
