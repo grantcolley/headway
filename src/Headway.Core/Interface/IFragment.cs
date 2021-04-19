@@ -8,6 +8,6 @@ namespace Headway.Core.Interface
         int FragmentId { get; set; }
         int FragmentContainerId { get; set; }
         string FragmentName { get; set; }
-        FragmentType FragnmentType { get; set; }
+        FragmentType FragmentType { get; set; }
     }
 }
