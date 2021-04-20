@@ -1,7 +1,5 @@
 ﻿@using Headway.Core.Enums
 
-@*@FrameBuilder(frame)*@
-
 <div>
     @frame.FrameName
     <table>
@@ -12,12 +10,12 @@
                 <td>
                     @if (fragment.FragmentType.Equals(FragmentType.Text))
                     {
-                        <input type="text" @onchange="@((ChangeEventArgs __e) => OnChange(__e,fragment.FragmentName))" />
+                        <input type="text" @onchange="@((ChangeEventArgs e) => OnChange(e,fragment.FragmentName))" />
                     }
 
                     @if (fragment.FragmentType.Equals(FragmentType.Date))
                     {
-                        <input type="date" @onchange="@((ChangeEventArgs __e) => OnChange(__e,fragment.FragmentName))" />
+                        <input type="date" @onchange="@((ChangeEventArgs e) => OnChange(e,fragment.FragmentName))" />
                     }
                 </td>
             </tr>
@@ -52,7 +50,7 @@
         return base.OnInitializedAsync();
     }
 
-    private static void OnChange(ChangeEventArgs __e, string key)
+    private static void OnChange(ChangeEventArgs e, string key)
     {
 
     }
