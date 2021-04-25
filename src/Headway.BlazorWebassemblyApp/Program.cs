@@ -3,6 +3,7 @@ using Headway.Core.Interface;
 using Headway.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
@@ -19,15 +20,7 @@ namespace Headway.BlazorWebassemblyApp
 
             builder.Services.AddOidcAuthentication(options =>
             {
-                //// Configure your authentication provider options here.
-                //// For more information, see https://aka.ms/blazor-standalone-auth
-                //builder.Configuration.Bind("Local", options.ProviderOptions);
-                options.ProviderOptions.Authority = "https://localhost:5001/";
-                options.ProviderOptions.ClientId = "headwayblazorwebassemblyapp";
-                options.ProviderOptions.DefaultScopes.Add("openid");
-                options.ProviderOptions.DefaultScopes.Add("profile");
-                options.ProviderOptions.PostLogoutRedirectUri = "/";
-                options.ProviderOptions.ResponseType = "code";
+                builder.Configuration.Bind("OidcConfiguration", options.ProviderOptions);
                 options.UserOptions.RoleClaim = "role";
             }).AddAccountClaimsPrincipalFactory<UserAccountFactory>();
 
