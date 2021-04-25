@@ -39,14 +39,14 @@ namespace Headway.IdentityProvider
                 new Client
                 {
                     ClientId = "headwayblazorwebassemblyapp",
+                    ClientName = "Headway WASM",
                     AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
                     RequireClientSecret = false,
-                    AllowedCorsOrigins = { "https://localhost:44310" },
-                    AllowedScopes = { "openid", "profile", "email", "webapi", "weather_priviledge" },
+                    RequirePkce = true,
                     RedirectUris = { "https://localhost:44310/authentication/login-callback" },
-                    PostLogoutRedirectUris = { "https://localhost:44310/" },
-                    Enabled = true
+                    PostLogoutRedirectUris = { "https://localhost:44310/authentication/logout-callback" },
+                    AllowedScopes = { "openid", "profile", "email", "webapi", "weather_priviledge" },
+                    AllowedCorsOrigins = { "https://localhost:44310" }
                 },
 
                 new Client
