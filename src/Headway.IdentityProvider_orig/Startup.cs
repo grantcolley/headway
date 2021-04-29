@@ -29,8 +29,6 @@ namespace Headway.IdentityProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -58,6 +56,8 @@ namespace Headway.IdentityProvider
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
+
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app)
