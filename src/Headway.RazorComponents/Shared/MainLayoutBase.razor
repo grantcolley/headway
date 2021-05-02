@@ -1,6 +1,13 @@
 ﻿<div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <AuthorizeView>
+            <Authorized>
+                <NavMenu IsAuthorized="true" />
+            </Authorized>
+            <NotAuthorized>
+                <NavMenu IsAuthorized="false" />
+            </NotAuthorized>
+        </AuthorizeView>
     </div>
 
     <div class="main">

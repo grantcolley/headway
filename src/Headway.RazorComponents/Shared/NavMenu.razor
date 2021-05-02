@@ -1,4 +1,7 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Headway</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -7,6 +10,7 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
+
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
@@ -34,7 +38,7 @@
                 }
             </li>
         </AuthorizeView>
-        <AuthorizeView Roles="@Roles.HEADWAY_ADMIN">
+        <AuthorizeView>
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="configuration" @onclick='() => this.OnClick("configuration")'>
                     <span class="oi oi-person" aria-hidden="true"></span> Configuration
@@ -66,6 +70,39 @@
 
     private bool expandSubmenus = false;
     private string previousMenu = string.Empty;
+
+    [Parameter]
+    public bool IsAuthorized { get; set; }
+
+    [Inject]
+    public IMenuService MenuService { get; set; }
+
+    private IEnumerable<MenuItem> menuItems;
+
+    protected async override Task OnParametersSetAsync()
+    {
+        // can only call async in blazor in the lifecycle events
+        // OnInitializedAsync lifecycle event only gets called before first render
+        // OnParametersSetAsync lifecycle event gets called every time the parameters are set by the parent
+        // In the parent wrap a AuthorizeView around the NavMenu, setting the IsAuthorized parameter base on Authorized and NotAuthorized
+        // When IsAuthorized is true build the navigation menu
+
+        if (IsAuthorized)
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity.IsAuthenticated)
+            {
+                if (user.HasClaim(c => c.Type == ClaimTypes.ROLE && c.Value.Equals(Roles.HEADWAY_USER)))
+                {
+                    menuItems = await MenuService.GetMenuItemsAsync();
+                }
+            }
+        }
+
+        await base.OnParametersSetAsync();
+    }
 
     private void OnClick(string currentMenu)
     {

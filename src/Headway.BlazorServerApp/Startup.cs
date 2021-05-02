@@ -64,6 +64,14 @@ namespace Headway.BlazorServerApp
                 client.BaseAddress = new Uri("https://localhost:44320");
             });
 
+            services.AddTransient<IMenuService, MenuService>(sp =>
+            {
+                var tokenProvider = sp.GetRequiredService<TokenProvider>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new MenuService(httpClient, tokenProvider);
+            });
+
             services.AddScoped<TokenProvider>();
 
             services.AddTransient<IWeatherForecastService, WeatherForecastService>(sp =>
