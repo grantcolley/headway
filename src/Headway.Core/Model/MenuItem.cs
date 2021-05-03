@@ -16,5 +16,7 @@ namespace Headway.Core.Model
         public string ImageClass { get; set; }
         public string Path { get; set; }
         public List<MenuItem> MenuItems { get; set; }
+        public List<string> Roles { get; set; }
+        public bool IsExpanded { get; set; }
     }
 }
