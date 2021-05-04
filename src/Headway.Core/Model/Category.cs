@@ -2,18 +2,17 @@
 
 namespace Headway.Core.Model
 {
-    public class MenuItem
+    public class Category
     {
-        public MenuItem()
+        public Category()
         {
+            MenuItems = new List<MenuItem>();
             Rights = new List<string>();
         }
 
-        public int Id { get; set; }
-        public int Order { get; set; }
         public string Name { get; set; }
-        public string ImageClass { get; set; }
-        public string Path { get; set; }
+        public int Order { get; set; }
+        public List<MenuItem> MenuItems { get; set; }
         public List<string> Rights { get; set; }
     }
 }

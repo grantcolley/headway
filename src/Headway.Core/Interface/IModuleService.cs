@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IMenuRepository
+    public interface IModuleService
     {
-        Task<IEnumerable<MenuItem>> GetMenuItemsAsync(string userName);
+        Task<IEnumerable<Module>> GetModulesAsync();
     }
 }

@@ -14,25 +14,25 @@ namespace Headway.WebApi.Controllers
     [EnableCors("local")]
     [Route("[controller]")]
     [Authorize(Roles = "headwayuser")]
-    public class MenuController : Controller
+    public class ModulesController : Controller
     {
-        private readonly ILogger<MenuController> logger;
-        private readonly IMenuRepository menuRepository;
+        private readonly ILogger<ModulesController> logger;
+        private readonly IModuleRepository menuRepository;
 
-        public MenuController(
-            IMenuRepository menuRepository,
-            ILogger<MenuController> logger)
+        public ModulesController(
+            IModuleRepository menuRepository,
+            ILogger<ModulesController> logger)
         {
             this.menuRepository = menuRepository;
             this.logger = logger;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<MenuItem>> Get()
+        public async Task<IEnumerable<Module>> Get()
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Email);
-            return await menuRepository.GetMenuItemsAsync(claim.Value);
+            return await menuRepository.GetModulesAsync(claim.Value);
         }
     }
 }

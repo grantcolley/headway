@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace Headway.Services
 {
-    public class MenuService : IMenuService
+    public class ModuleService : IModuleService
     {
         private readonly HttpClient httpClient;
         private readonly TokenProvider tokenProvider;
         private readonly bool useAccessToken;
 
-        public MenuService(HttpClient httpClient)
+        public ModuleService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
             useAccessToken = false;
         }
 
-        public MenuService(HttpClient httpClient, TokenProvider tokenProvider)
+        public ModuleService(HttpClient httpClient, TokenProvider tokenProvider)
         {
             this.httpClient = httpClient;
             this.tokenProvider = tokenProvider;
             useAccessToken = true;
         }
 
-        public async Task<IEnumerable<MenuItem>> GetMenuItemsAsync()
+        public async Task<IEnumerable<Module>> GetModulesAsync()
         {
             if (useAccessToken)
             {
@@ -34,8 +34,8 @@ namespace Headway.Services
                 httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
             }
 
-            return await JsonSerializer.DeserializeAsync<IEnumerable<MenuItem>>
-                (await httpClient.GetStreamAsync($"Menu"),
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Module>>
+                (await httpClient.GetStreamAsync($"Modules"),
                     new JsonSerializerOptions(JsonSerializerDefaults.Web));
         }
     }

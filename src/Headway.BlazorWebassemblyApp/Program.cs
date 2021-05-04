@@ -43,11 +43,11 @@ namespace Headway.BlazorWebassemblyApp
                 return new WeatherForecastService(httpClient);
             });
 
-            builder.Services.AddTransient<IMenuService, MenuService>(sp =>
+            builder.Services.AddTransient<IModuleService, ModuleService>(sp =>
             {
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new MenuService(httpClient);
+                return new ModuleService(httpClient);
             });
 
             await builder.Build().RunAsync();
