@@ -15,7 +15,7 @@ namespace Headway.Repository
             {
                 new Category
                 {
-                    Name = "Home Catgory",
+                    Name = "Home Category",
                     Order = 1,
                     MenuItems = new List<MenuItem>
                     {
@@ -43,7 +43,7 @@ namespace Headway.Repository
             {
                 new Category
                 {
-                    Name = "Counter Catgory",
+                    Name = "Counter Category",
                     Order = 1,
                     MenuItems = new List<MenuItem>
                     {
@@ -71,7 +71,7 @@ namespace Headway.Repository
             {
                 new Category
                 {
-                    Name = "Weather Catgory",
+                    Name = "Weather Category",
                     Order = 1,
                     MenuItems = new List<MenuItem>
                     {
