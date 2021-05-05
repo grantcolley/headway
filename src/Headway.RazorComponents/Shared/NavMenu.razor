@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 
 <div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Headway</a>
+    <span class="navbar-brand">Headway</span>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col modules-bottom ">
+                <div class="col nav-modules-bottom">
                     @foreach(var module in modules)
                     {
                         @RenderModules(module);
@@ -81,7 +81,7 @@
     {
         @if (module != null)
         {
-            <button type="button" class="nav-module" @onclick="() => OnModuleClick(module)">@module.Name</button>
+            <button type="button" class="nav-module-button" @onclick="() => OnModuleClick(module)">@module.Name</button>
         }
     };
 
@@ -93,7 +93,7 @@
                 <tr>
                     <td>
                         <br/>
-                        <span class="module pl-4">@module.Name</span>
+                        <span class="nav-module pl-4">@module.Name</span>
                     </td>
                 </tr>
                 <tr>
@@ -101,8 +101,8 @@
                         @foreach (var category in module.Categories)
                         {
                             <br/>
-                            <span class="category pl-5">@category.Name</span>
-                            <ul>
+                            <span class="nav-category pl-5">@category.Name</span>
+                            <ul class="nav-menu-ul">
                                 @foreach (var menuItem in category.MenuItems)
                                 {
                                     <li class="nav-item px-3">
