@@ -1,7 +1,115 @@
 ﻿@page "/"
+@using Headway.IdentityManager.Data
+@using Microsoft.AspNetCore.Identity
 
-<h1>Hello, world!</h1>
+<form method="get" action="Identity/Account/Register">
+    <button type="submit" class="btn btn-primary">Register User</button>
+</form>
 
-Welcome to your new app.
+<p/>
+<p/>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@if (Users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Users)
+            {
+            <tr>
+                <td>@user.Id</td>
+                <td><input type="text" class="form-control" @bind="@user.UserName" /></td>
+                <td>@user.Email</td>
+                <td>@user.Roles</td>
+                <td><button type="button" class="btn btn-secondary" @onclick="() => UpdateUser(user)">Update</button></td>
+                <td><button type="button" class="btn btn-secondary" @onclick="() => AddAdmin(user)">Admin</button></td>
+                <td><button type="button" class="btn btn-secondary" @onclick="() => AddUser(user)">User</button></td>
+                <td><button type="button" class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<HeadwayUser> Users;
+
+    [Inject]
+    public ApplicationDbContext ApplicationDbContext { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        PopulateUsers();
+        base.OnInitialized();
+    }
+
+    private void PopulateUsers()
+    {
+        Users = new List<HeadwayUser>();
+        var users = ApplicationDbContext.Users.ToList();
+        var userRoles = ApplicationDbContext.UserRoles.ToList();
+
+        foreach(var user in users)
+        {
+            var headwayUser = new HeadwayUser(user);
+            headwayUser.Roles = string.Join(",", userRoles.Where(ur => ur.UserId.Equals(user.Id)).Select(ur => ur.RoleId).ToArray());
+            Users.Add(headwayUser);
+        }
+    }
+
+    private async void DeleteUser(HeadwayUser user)
+    {
+        ApplicationDbContext.Users.Remove(user.IdentityUser);
+        await ApplicationDbContext.SaveChangesAsync();
+        PopulateUsers();
+        NavigationManager.NavigateTo("/", forceLoad:true);
+    }
+
+    private async void UpdateUser(HeadwayUser user)
+    {
+        user.IdentityUser.NormalizedUserName = user.UserName.ToUpper();
+        ApplicationDbContext.Users.Update(user.IdentityUser);
+        await ApplicationDbContext.SaveChangesAsync();
+        PopulateUsers();
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+
+    private async void AddAdmin(HeadwayUser user)
+    {
+        var userRole = new IdentityUserRole<string>() {  RoleId = "headwayadmin" };
+        userRole.UserId = user.Id;
+        ApplicationDbContext.UserRoles.Add(userRole);
+        await ApplicationDbContext.SaveChangesAsync();
+        PopulateUsers();
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+
+    private async void AddUser(HeadwayUser user)
+    {
+        var userRole = new IdentityUserRole<string>() { RoleId = "headwayuser" };
+        userRole.UserId = user.Id;
+        ApplicationDbContext.UserRoles.Add(userRole);
+        await ApplicationDbContext.SaveChangesAsync();
+        PopulateUsers();
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+}
+
