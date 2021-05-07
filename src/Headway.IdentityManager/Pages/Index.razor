@@ -26,6 +26,7 @@ else
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,7 @@ else
                 <td><button type="button" class="btn btn-secondary" @onclick="() => UpdateUser(user)">Update</button></td>
                 <td><button type="button" class="btn btn-secondary" @onclick="() => AddAdmin(user)">Admin</button></td>
                 <td><button type="button" class="btn btn-secondary" @onclick="() => AddUser(user)">User</button></td>
+                <td><button type="button" class="btn btn-warning" @onclick="() => ClearRoles(user)">Clear</button></td>
                 <td><button type="button" class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
             </tr>
             }
@@ -87,6 +89,15 @@ else
     {
         user.IdentityUser.NormalizedUserName = user.UserName.ToUpper();
         ApplicationDbContext.Users.Update(user.IdentityUser);
+        await ApplicationDbContext.SaveChangesAsync();
+        PopulateUsers();
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+
+    private async void ClearRoles(HeadwayUser user)
+    {
+        var userRoles = ApplicationDbContext.UserRoles.Where(ur => ur.UserId.Equals(user.Id));
+        ApplicationDbContext.UserRoles.RemoveRange(userRoles);
         await ApplicationDbContext.SaveChangesAsync();
         PopulateUsers();
         NavigationManager.NavigateTo("/", forceLoad: true);
