@@ -17,13 +17,13 @@ namespace Headway.WebApi.Controllers
     public class ModulesController : Controller
     {
         private readonly ILogger<ModulesController> logger;
-        private readonly IModuleRepository menuRepository;
+        private readonly IModuleRepository moduleRepository;
 
         public ModulesController(
-            IModuleRepository menuRepository,
+            IModuleRepository moduleRepository,
             ILogger<ModulesController> logger)
         {
-            this.menuRepository = menuRepository;
+            this.moduleRepository = moduleRepository;
             this.logger = logger;
         }
 
@@ -32,7 +32,7 @@ namespace Headway.WebApi.Controllers
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Email);
-            return await menuRepository.GetModulesAsync(claim.Value);
+            return await moduleRepository.GetModulesAsync(claim.Value);
         }
     }
 }
