@@ -14,7 +14,6 @@ namespace Headway.IdentityProvider
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Email(),
-                new IdentityResource("weather_priviledges", "Weather Priviledge(s)", new List<string>{ "weather_priviledge" }),
                 new IdentityResource("roles", "User role(s)", new List<string> { "role" })
             };
 
@@ -45,7 +44,7 @@ namespace Headway.IdentityProvider
                     RequirePkce = true,
                     RedirectUris = { "https://localhost:44310/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:44310/authentication/logout-callback" },
-                    AllowedScopes = { "openid", "profile", "email", "webapi", "weather_priviledge" },
+                    AllowedScopes = { "openid", "profile", "email", "webapi" },
                     AllowedCorsOrigins = { "https://localhost:44310" }
                 },
 
@@ -57,7 +56,7 @@ namespace Headway.IdentityProvider
                     RequirePkce = true,
                     RequireClientSecret = false,
                     AllowedCorsOrigins = { "https://localhost:44300" },
-                    AllowedScopes = { "openid", "profile", "email", "webapi", "weather_priviledge" },
+                    AllowedScopes = { "openid", "profile", "email", "webapi" },
                     RedirectUris = { "https://localhost:44300/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:44300/signout-oidc" },
                 },

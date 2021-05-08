@@ -17,9 +17,6 @@ namespace Headway.IdentityProvider
             var emailClaim = context.Subject.FindAll(JwtClaimTypes.Email);
             context.IssuedClaims.AddRange(emailClaim);
 
-            var weatherPriviledgeClaim = context.Subject.FindAll("weather_priviledge");
-            context.IssuedClaims.AddRange(weatherPriviledgeClaim);
-
             var roleClaims = context.Subject.FindAll(JwtClaimTypes.Role);
             context.IssuedClaims.AddRange(roleClaims);
 

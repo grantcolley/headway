@@ -51,7 +51,6 @@ namespace Headway.BlazorServerApp
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.ClaimActions.Add(new JsonKeyClaimAction("role", "role", "role"));
-                    options.ClaimActions.Add(new JsonKeyClaimAction("weather_priviledge", "weather_priviledge", "weather_priviledge"));
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         NameClaimType = "name",
