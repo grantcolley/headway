@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Grant Colley</Authors>
     <Company>Headway</Company>
     <Copyright>Copyright © 2021 Grant Colley</Copyright>
@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="5.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.0-preview.3.21201.13" />
   </ItemGroup>
 
   <ItemGroup>

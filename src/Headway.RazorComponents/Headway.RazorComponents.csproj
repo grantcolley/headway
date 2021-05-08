@@ -1,16 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Grant Colley</Authors>
     <Company>Headway</Company>
     <Copyright>Copyright © 2021 Grant Colley</Copyright>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="5.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.4" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
@@ -18,6 +13,11 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.0-preview.3.21201.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0-preview.3.21201.13" />
   </ItemGroup>
 
 </Project>
