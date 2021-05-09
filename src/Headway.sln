@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorServerApp", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.IdentityProvider", "Headway.IdentityProvider\Headway.IdentityProvider.csproj", "{1E74BD80-EF58-4BDA-8336-966A59D3C85D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.IdentityManager", "Headway.IdentityManager\Headway.IdentityManager.csproj", "{4FB7017E-3108-437A-809D-A0E64DFCD09A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.IdentityManager", "Headway.IdentityManager\Headway.IdentityManager.csproj", "{4FB7017E-3108-437A-809D-A0E64DFCD09A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
