@@ -8,6 +8,11 @@ namespace Headway.Repository
 {
     public class UserRepository : IUserRepository
     {
+        public Task DeleteUserAsync(string permittedUserName, string userName)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<User> GetUserAsync(string permittedUserName, string userName)
         {
             throw new NotImplementedException();
@@ -18,12 +23,7 @@ namespace Headway.Repository
             throw new NotImplementedException();
         }
 
-        public Task<bool> TryDeleteUserAsync(string permittedUserName, string userName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> TryUpdateUserAsync(string permittedUserName, User user)
+        public Task<User> SaveUserAsync(string permittedUserName, User user)
         {
             throw new NotImplementedException();
         }

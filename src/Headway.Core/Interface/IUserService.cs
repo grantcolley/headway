@@ -6,9 +6,9 @@ namespace Headway.Core.Interface
 {
     public interface IUserService
     {
-        Task<User> GetUserAsync(string userName);
         Task<IEnumerable<User>> GetUsersAsync();
-        Task<bool> TryUpdateUserAsync(User user);
-        Task<bool> TryDeleteUserAsync(string userName);
+        Task<User> GetUserAsync(string userName);
+        Task<User> SaveUserAsync(User user);
+        Task DeleteUserAsync(string userName);
     }
 }

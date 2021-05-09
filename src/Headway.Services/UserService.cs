@@ -25,22 +25,22 @@ namespace Headway.Services
             useAccessToken = true;
         }
 
-        public Task<User> GetUserAsync(string userName)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<IEnumerable<User>> GetUsersAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> TryDeleteUserAsync(string userName)
+        public Task<User> GetUserAsync(string userName)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> TryUpdateUserAsync(User user)
+        public Task<User> SaveUserAsync(User user)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task DeleteUserAsync(string userName)
         {
             throw new System.NotImplementedException();
         }
