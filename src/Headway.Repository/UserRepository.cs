@@ -8,22 +8,22 @@ namespace Headway.Repository
 {
     public class UserRepository : IUserRepository
     {
-        public Task<User> GetUserAsync(string userName)
+        public Task<User> GetUserAsync(string permittedUserName, string userName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<User>> GetUsersAsync()
+        public Task<IEnumerable<User>> GetUsersAsync(string permittedUserName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> TryDeleteUserAsync(string userName)
+        public Task<bool> TryDeleteUserAsync(string permittedUserName, string userName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> TryUpdateUserAsync(User user)
+        public Task<bool> TryUpdateUserAsync(string permittedUserName, User user)
         {
             throw new NotImplementedException();
         }
