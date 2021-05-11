@@ -73,6 +73,14 @@ namespace Headway.BlazorServerApp
 
             services.AddScoped<TokenProvider>();
 
+            services.AddTransient<IUserService, UserService>(sp =>
+            {
+                var tokenProvider = sp.GetRequiredService<TokenProvider>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new UserService(httpClient, tokenProvider);
+            });
+
             services.AddTransient<IWeatherForecastService, WeatherForecastService>(sp =>
             {
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();

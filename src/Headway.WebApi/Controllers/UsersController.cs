@@ -13,7 +13,7 @@ namespace Headway.WebApi.Controllers
     [ApiController]
     [EnableCors("local")]
     [Route("[controller]")]
-    [Authorize(Roles = "headway-admin")]
+    [Authorize(Roles = "weatheruser")]
     public class UsersController : Controller
     {
         private readonly ILogger<UsersController> logger;
@@ -31,7 +31,7 @@ namespace Headway.WebApi.Controllers
         public async Task<IEnumerable<User>> GetUsers()
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(ClaimTypes.Name);
+            var claim = identity.FindFirst(ClaimTypes.Email);
             return await userRepository.GetUsersAsync(claim.Value);
         }
 

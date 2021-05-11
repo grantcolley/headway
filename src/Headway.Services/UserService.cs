@@ -2,6 +2,7 @@
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Headway.Services
@@ -25,9 +26,17 @@ namespace Headway.Services
             useAccessToken = true;
         }
 
-        public Task<IEnumerable<User>> GetUsersAsync()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            throw new System.NotImplementedException();
+            if (useAccessToken)
+            {
+                var token = tokenProvider.AccessToken;
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            }
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<User>>
+                (await httpClient.GetStreamAsync($"Users"),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
         }
 
         public Task<User> GetUserAsync(string userName)

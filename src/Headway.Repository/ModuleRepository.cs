@@ -106,9 +106,9 @@ namespace Headway.Repository
                         new MenuItem
                         {
                             Id = 5,
-                            Name = "User",
+                            Name = "Users",
                             ImageClass = "oi oi-person",
-                            Path = "user",
+                            Path = "users",
                             Order = 1,
                             Rights = new List<string>{ "headwayadmin-write" }
                         }
