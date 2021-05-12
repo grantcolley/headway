@@ -93,13 +93,13 @@ namespace Headway.Repository
 
         private Module configuration = new Module
         {
-            Name = "Configuration",
+            Name = "Administration",
             Order = 4,
             Categories = new List<Category>
             {
                 new Category
                 {
-                    Name = "Users",
+                    Name = "Authorisation",
                     Order = 1,
                     MenuItems = new List<MenuItem>
                     {
@@ -109,6 +109,24 @@ namespace Headway.Repository
                             Name = "Users",
                             ImageClass = "oi oi-person",
                             Path = "users",
+                            Order = 1,
+                            Rights = new List<string>{ "headwayadmin-write" }
+                        },
+                        new MenuItem
+                        {
+                            Id = 6,
+                            Name = "Permissions",
+                            ImageClass = "oi oi-key",
+                            Path = "permissions",
+                            Order = 1,
+                            Rights = new List<string>{ "headwayadmin-write" }
+                        },
+                        new MenuItem
+                        {
+                            Id = 6,
+                            Name = "Roles",
+                            ImageClass = "oi oi-lock-locked",
+                            Path = "roles",
                             Order = 1,
                             Rights = new List<string>{ "headwayadmin-write" }
                         }

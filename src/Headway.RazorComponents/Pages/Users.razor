@@ -3,7 +3,7 @@
 
 <AuthorizeView>
     <Authorized>
-        <h1>Users</h1>
+        <h3>Users</h3>
 
         @if (Users == null)
         {
@@ -28,8 +28,8 @@
                             <td>@user.Email</td>
                             <td>@string.Join(",", @user.Permissions)</td>
                             <td>
-                                <a href="@($"employeedetail/{user.UserName}")" >
-                                    <span class="material-icons">manage_accounts</span>
+                                <a href="@($"userdetails/{user}")" >
+                                    <span class="fas fa-user-edit"></span>
                                 </a>
                             </td>
                         </tr>
