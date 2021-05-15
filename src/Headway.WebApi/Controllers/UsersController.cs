@@ -13,7 +13,7 @@ namespace Headway.WebApi.Controllers
     [ApiController]
     [EnableCors("local")]
     [Route("[controller]")]
-    [Authorize(Roles = "weatheruser")]
+    [Authorize(Roles = "headwayuser")]
     public class UsersController : Controller
     {
         private readonly ILogger<UsersController> logger;
