@@ -24,9 +24,6 @@ else
                 <th>Roles</th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -38,9 +35,6 @@ else
                 <td>@user.Email</td>
                 <td>@user.Roles</td>
                 <td><button type="button" class="btn btn-secondary" @onclick="() => UpdateUser(user)">Update</button></td>
-                <td><button type="button" class="btn btn-secondary" @onclick="() => AddAdmin(user)">Admin</button></td>
-                <td><button type="button" class="btn btn-secondary" @onclick="() => AddUser(user)">User</button></td>
-                <td><button type="button" class="btn btn-warning" @onclick="() => ClearRoles(user)">Clear</button></td>
                 <td><button type="button" class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
             </tr>
             }
@@ -89,38 +83,39 @@ else
     {
         user.IdentityUser.NormalizedUserName = user.UserName.ToUpper();
         ApplicationDbContext.Users.Update(user.IdentityUser);
-        await ApplicationDbContext.SaveChangesAsync();
-        PopulateUsers();
-        NavigationManager.NavigateTo("/", forceLoad: true);
-    }
 
-    private async void ClearRoles(HeadwayUser user)
-    {
-        var userRoles = ApplicationDbContext.UserRoles.Where(ur => ur.UserId.Equals(user.Id));
-        ApplicationDbContext.UserRoles.RemoveRange(userRoles);
-        await ApplicationDbContext.SaveChangesAsync();
-        PopulateUsers();
-        NavigationManager.NavigateTo("/", forceLoad: true);
-    }
+        var headwayuser = "headwayuser";
+        var role = ApplicationDbContext.Roles.FirstOrDefault(r => r.Name.Equals(headwayuser));
 
-    private async void AddAdmin(HeadwayUser user)
-    {
-        var userRole = new IdentityUserRole<string>() {  RoleId = "headwayadmin" };
-        userRole.UserId = user.Id;
-        ApplicationDbContext.UserRoles.Add(userRole);
-        await ApplicationDbContext.SaveChangesAsync();
-        PopulateUsers();
-        NavigationManager.NavigateTo("/", forceLoad: true);
-    }
+        if (role == null)
+        {
+            role = new IdentityRole
+            {
+                Id = headwayuser,
+                Name = headwayuser,
+                NormalizedName = headwayuser.ToUpper(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            };
 
-    private async void AddUser(HeadwayUser user)
-    {
-        var userRole = new IdentityUserRole<string>() { RoleId = "headwayuser" };
-        userRole.UserId = user.Id;
-        ApplicationDbContext.UserRoles.Add(userRole);
+            ApplicationDbContext.Roles.Add(role);
+        }
+
+        var userRole = ApplicationDbContext.UserRoles.FirstOrDefault(
+                                                        ur => ur.RoleId.Equals(role.Id) 
+                                                                && ur.UserId.Equals(user.Id));
+        if (userRole == null)
+        {
+            userRole = new IdentityUserRole<string>
+            {
+                RoleId = role.Id,
+                UserId = user.Id
+            };
+
+            ApplicationDbContext.UserRoles.Add(userRole);
+        }
+
         await ApplicationDbContext.SaveChangesAsync();
         PopulateUsers();
         NavigationManager.NavigateTo("/", forceLoad: true);
     }
 }
-
