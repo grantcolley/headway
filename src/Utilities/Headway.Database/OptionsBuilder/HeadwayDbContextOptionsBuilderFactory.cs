@@ -10,7 +10,7 @@ namespace Headway.Database.OptionsBuilder
         {
             string database = typeof(T).Name switch
             {
-                nameof(HeadwayUsersDbContext) => "Headway.Identity",
+                nameof(HeadwayDbContext) => "Headway.Identity",
                 _ => throw new NotSupportedException(typeof(T).Name),
             };
 

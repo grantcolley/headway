@@ -23,8 +23,8 @@ namespace Headway.Database
 
                 var optionsBuilderFactory = new HeadwayDbContextOptionsBuilderFactory();
 
-                var optionsBuilder = optionsBuilderFactory.GetOptionsBuilder<HeadwayUsersDbContext>(databaseType);
-                using var dbContext = new HeadwayUsersDbContext(optionsBuilder.GetOptions());
+                var optionsBuilder = optionsBuilderFactory.GetOptionsBuilder<HeadwayDbContext>(databaseType);
+                using var dbContext = new HeadwayDbContext(optionsBuilder.GetOptions());
                 dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
                 Console.WriteLine($"Created Data Source: {optionsBuilder.DataSource}");

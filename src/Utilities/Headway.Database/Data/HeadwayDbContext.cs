@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Headway.Database.Data
 {
-    public class HeadwayUsersDbContext : IdentityDbContext<ApplicationUser>
+    public class HeadwayDbContext : IdentityDbContext<ApplicationUser>
     {
-        public HeadwayUsersDbContext(DbContextOptions<HeadwayUsersDbContext> options)
+        public HeadwayDbContext(DbContextOptions<HeadwayDbContext> options)
             : base(options)
         {
         }
