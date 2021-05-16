@@ -18,20 +18,23 @@
 ![Alt text](/readme-images/headway-architecture.png?raw=true "Headway Architecture") 
 
 #### Table of Contents
-* [Role Based Navigation Menu](#role-based-navigation-menu)
-* [Logging Errors](#logging-errors)
+* [Getting Started](#getting-started)
+* [Authentication and Authorization](#authentication-and-authorization)
+* [Navigation Menu](#role-based-navigation-menu)
+* [Administration](#administration)
 * [Configuration](#configuration)
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
 
+## Getting Started
 
-## Permissioning Navigation
-Content 1 text here...
+## Authentication and Authorization
 
-## Logging Errors
+## Navigation Menu
+
+## Administration
 
 ## Configuration
-Content 2 text here...
 
 ## Notes
 
