@@ -1,7 +1,12 @@
 ﻿using Headway.Database.Data;
 using Headway.Database.OptionsBuilder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations.Design;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Headway.Database
@@ -22,9 +27,29 @@ namespace Headway.Database
                 string databaseType = args[0];
 
                 var optionsBuilderFactory = new HeadwayDbContextOptionsBuilderFactory();
+                var optionsBuilder = optionsBuilderFactory.GetOptionsBuilder<ApplicationDbContext>(databaseType);
 
-                var optionsBuilder = optionsBuilderFactory.GetOptionsBuilder<HeadwayDbContext>(databaseType);
-                using var dbContext = new HeadwayDbContext(optionsBuilder.GetOptions());
+                using var dbContext = new ApplicationDbContext(optionsBuilder.GetOptions());
+
+                // https://github.com/dotnet/efcore/issues/23595
+                // https://docs.microsoft.com/en-us/ef/core/cli/services#using-services
+
+                /////////////////////////////////////////////////////
+                /// OLD
+                /// https://github.com/dotnet/efcore/issues/6806
+                /////////////////////////////////////////////////////
+
+                //// Create design-time services
+                //var serviceCollection = new ServiceCollection();
+                //serviceCollection.AddEntityFrameworkDesignTimeServices();
+                //serviceCollection.AddDbContextDesignTimeServices(dbContext);
+                //var serviceProvider = serviceCollection.BuildServiceProvider();
+
+                //// Add a migration
+                //var migrationsScaffolder = serviceProvider.GetService<IMigrationsScaffolder>();
+                //var migration = migrationsScaffolder.ScaffoldMigration("Headway", "Headway.Database");
+                //migrationsScaffolder.Save(Directory.GetCurrentDirectory(), migration, Path.Combine("..\\", Directory.GetCurrentDirectory()));
+
                 dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
                 Console.WriteLine($"Created Data Source: {optionsBuilder.DataSource}");
