@@ -25,7 +25,7 @@
 * [Configuration](#configuration)
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
-    * [EntityFramework Core](#entityframework-core)
+    * [EntityFramework Core Migrations](#entityframework-core-migrations)
 
 ## Getting Started
 
