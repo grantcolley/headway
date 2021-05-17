@@ -26,7 +26,7 @@
                         <tr>
                             <td>@user.UserName</td>
                             <td>@user.Email</td>
-                            <td>@string.Join(",", @user.Permissions)</td>
+                            <td>@string.Join(",", @user.Permissions.Select(p => p.Name).ToList())</td>
                             <td>
                                 <a href="@($"userdetails/{user}")" >
                                     <span class="fas fa-user-edit"></span>
