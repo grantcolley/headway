@@ -25,6 +25,7 @@
 * [Configuration](#configuration)
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
+    * [EntityFramework Core](#entityframework-core)
 
 ## Getting Started
 
@@ -42,4 +43,8 @@
  * Right-click the `wwwroot\css` folder in the Blazor project and click `Add` then `Client-Side Library...`. Search for `font-awesome` and install it.
  * For a Blazor Server app add `@import url('font-awesome/css/all.min.css');` at the top of [site.css](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp/wwwroot/css). For a Blazor WebAssembly app add it to [app.css](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/css/app.css).
   
+### EntityFramework Core
+ * Create migrations from the repository library and output them to a separate migrations project 
+ * https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
+ * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
