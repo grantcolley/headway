@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Headway.Repository.Data
 {
@@ -14,12 +9,12 @@ namespace Headway.Repository.Data
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration 
+            IConfigurationRoot configuration
                 = new ConfigurationBuilder().SetBasePath(
-                    Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../Headway.WebApi/appsettings.json").Build();
+                    Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../../Headway.WebApi/appsettings.json").Build();
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            builder.UseSqlServer(connectionString);
+            builder.UseSqlServer(connectionString, x => x.MigrationsAssembly("Headway.DatabaseMigrations"));
             return new ApplicationDbContext(builder.Options);
         }
     }
