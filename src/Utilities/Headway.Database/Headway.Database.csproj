@@ -16,4 +16,9 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.0-preview.3.21201.13" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Headway.Repository\Headway.Repository.csproj" />
+    <ProjectReference Include="..\Headway.DatabaseMigrations\Headway.DatabaseMigrations.csproj" />
+  </ItemGroup>
+
 </Project>

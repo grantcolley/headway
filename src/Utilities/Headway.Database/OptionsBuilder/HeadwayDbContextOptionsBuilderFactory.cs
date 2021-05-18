@@ -1,4 +1,4 @@
-﻿using Headway.Database.Data;
+﻿using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -10,7 +10,7 @@ namespace Headway.Database.OptionsBuilder
         {
             string database = typeof(T).Name switch
             {
-                nameof(ApplicationDbContext) => "Headway.Identity",
+                nameof(ApplicationDbContext) => "Headway",
                 _ => throw new NotSupportedException(typeof(T).Name),
             };
 

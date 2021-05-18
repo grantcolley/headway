@@ -1,12 +1,7 @@
-﻿using Headway.Database.Data;
-using Headway.Database.OptionsBuilder;
+﻿using Headway.Database.OptionsBuilder;
+using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations.Design;
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 using System.Linq;
 
 namespace Headway.Database
