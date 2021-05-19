@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
     <ProjectReference Include="..\Headway.Repository\Headway.Repository.csproj" />
-    <ProjectReference Include="..\Utilities\Headway.DatabaseMigrations\Headway.DatabaseMigrations.csproj" />
     <ProjectReference Include="..\Utilities\Headway.MigrationsSqlite\Headway.MigrationsSqlite.csproj" />
     <ProjectReference Include="..\Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj" />
   </ItemGroup>
