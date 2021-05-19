@@ -53,7 +53,9 @@ ApplicationDbContext.cs is in the Headway.Repository library. The migrations are
         {
             IConfigurationRoot configuration
                 = new ConfigurationBuilder().SetBasePath(
-                    Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../Headway.WebApi/appsettings.json").Build();
+                    Directory.GetCurrentDirectory())
+                       .AddJsonFile(@Directory.GetCurrentDirectory() + "/../Headway.WebApi/appsettings.json")
+                       .Build();
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             if(connectionString.Contains("Headway.db"))
