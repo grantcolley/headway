@@ -9,12 +9,19 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0-preview.3.21201.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0-preview.3.21201.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
     <ProjectReference Include="..\Headway.Repository\Headway.Repository.csproj" />
+    <ProjectReference Include="..\Utilities\Headway.DatabaseMigrations\Headway.DatabaseMigrations.csproj" />
+    <ProjectReference Include="..\Utilities\Headway.MigrationsSqlite\Headway.MigrationsSqlite.csproj" />
+    <ProjectReference Include="..\Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj" />
   </ItemGroup>
 
 </Project>

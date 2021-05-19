@@ -1,8 +1,10 @@
 using Headway.Core.Interface;
 using Headway.Repository;
+using Headway.Repository.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +24,20 @@ namespace Headway.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                if (Configuration.GetConnectionString("DefaultConnection").Contains("Headway.db"))
+                {
+                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"),
+                        x => x.MigrationsAssembly("Headway.MigrationsSqlite"));
+                }
+                else
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                        x => x.MigrationsAssembly("Headway.MigrationsSqlServer"));
+                }
+            });
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
