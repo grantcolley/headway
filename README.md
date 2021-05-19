@@ -91,15 +91,22 @@ The **ApplicationDbContext** is in the [Headway.Repository](https://github.com/g
             });
 ```
 
-In the Developer PowerShell navigate to the Headway.WebApi project and run the following command to add a migration:
+In the Developer PowerShell window navigate to the Headway.WebApi project and manage migrations by running the following command:
+
+Add a new migration:
 \
 \
 ` dotnet ef migrations add UpdateHeadway --project ..\\Utilities\\Headway.MigrationsSqlServer`
 
-And the following command will update the database
+Update the database with the latest migrations. It will also create the database if it hasn't already been created:
 \
 \
 `dotnet ef database update --project ..\\Utilities\\Headway.MigrationsSqlServer`
+
+Remove the latest migration:
+\
+\
+` dotnet ef migrations remove --project ..\\Utilities\\Headway.MigrationsSqlServer`
 
 **Supporting notes:**
  * Create migrations from the repository library and output them to a separate migrations projects 
