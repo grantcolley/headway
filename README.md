@@ -90,10 +90,10 @@ Headway.WebApi's Startup.cs should also specify which project the migration outp
             });
 ```
 In the Developer PowerShell navigate to the Headway.WebApi project and run the following command to add a migration:
-` dotnet ef migrations add UpdateHeadway --project ..\Utilities\Headway.MigrationsSqlServer`
+` dotnet ef migrations add UpdateHeadway --project ..\\Utilities\\Headway.MigrationsSqlServer`
 
 And the following command will update the database
-`dotnet ef database update --project ..\Utilities\Headway.MigrationsSqlServer`
+`dotnet ef database update --project ..\\Utilities\\Headway.MigrationsSqlServer`
 
 Supporting notes:
  * Create migrations from the repository library and output them to a separate migrations project 
