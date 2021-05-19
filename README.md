@@ -44,7 +44,8 @@
  * For a Blazor Server app add `@import url('font-awesome/css/all.min.css');` at the top of [site.css](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp/wwwroot/css). For a Blazor WebAssembly app add it to [app.css](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/css/app.css).
   
 ### EntityFramework Core Migrations
-ApplicationDbContext.cs is in the Headway.Repository library. The migrations are output to either Headway.MigrationsSqlite or Headway.MigrationsSqlServer, depending on which connection string is used in Headway.WebApi's appsettings.json. to make this work, the following class must be created in Headway.Repository to specify which project the migration output should target.
+Migrations are kept in separate projects from the [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs).
+The **ApplicationDbContext** is in the [Headway.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.Repository) library, which is referenced by [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi). When running migrations from **Headway.WebApi**, the migrations are output to either [Headway.MigrationsSqlite](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlite) or [Headway.MigrationsSqlServer](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlServer), depending on which connection string is used in **Headway.WebApi**'s [appsettings.json](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json). For this to work, a [DesignTimeDbContextFactory](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) class must be created in **Headway.Repository** which specifies which project the migration output should target based on the connection string.
 
 ```C#
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -72,7 +73,7 @@ ApplicationDbContext.cs is in the Headway.Repository library. The migrations are
     }
 ```
 
-Headway.WebApi's Startup.cs should also specify which project the migration output should target.
+**Headway.WebApi**'s [Startup.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Startup.cs) should also specify which project the migration output should target base on the connection string.
 
 ```C#
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -89,14 +90,19 @@ Headway.WebApi's Startup.cs should also specify which project the migration outp
                 }
             });
 ```
+
 In the Developer PowerShell navigate to the Headway.WebApi project and run the following command to add a migration:
+\
+\
 ` dotnet ef migrations add UpdateHeadway --project ..\\Utilities\\Headway.MigrationsSqlServer`
 
 And the following command will update the database
+\
+\
 `dotnet ef database update --project ..\\Utilities\\Headway.MigrationsSqlServer`
 
-Supporting notes:
- * Create migrations from the repository library and output them to a separate migrations project 
+**Supporting notes:**
+ * Create migrations from the repository library and output them to a separate migrations projects 
  * https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
