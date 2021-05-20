@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IUserService
+    public interface IAuthorisationService
     {
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserAsync(string userName);

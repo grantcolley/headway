@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class UserRepository : IUserRepository
+    public class AuthorisationRepository : IAuthorisationRepository
     {
         public Task<IEnumerable<User>> GetUsersAsync(string permittedUserName)
         {

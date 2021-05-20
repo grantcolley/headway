@@ -38,7 +38,7 @@ namespace Headway.WebApi
                 }
             });
 
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
 

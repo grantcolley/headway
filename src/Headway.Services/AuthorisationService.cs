@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Headway.Services
 {
-    public class UserService : IUserService
+    public class AuthorisationService : IAuthorisationService
     {
         private readonly HttpClient httpClient;
         private readonly TokenProvider tokenProvider;
         private readonly bool useAccessToken;
 
-        public UserService(HttpClient httpClient)
+        public AuthorisationService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
             useAccessToken = false;
         }
 
-        public UserService(HttpClient httpClient, TokenProvider tokenProvider)
+        public AuthorisationService(HttpClient httpClient, TokenProvider tokenProvider)
         {
             this.httpClient = httpClient;
             this.tokenProvider = tokenProvider;

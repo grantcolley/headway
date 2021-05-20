@@ -17,13 +17,13 @@ namespace Headway.WebApi.Controllers
     public class UsersController : Controller
     {
         private readonly ILogger<UsersController> logger;
-        private readonly IUserRepository userRepository;
+        private readonly IAuthorisationRepository authorisationRepository;
 
         public UsersController(
-            IUserRepository userRepository,
+            IAuthorisationRepository authorisationRepository,
             ILogger<UsersController> logger)
         {
-            this.userRepository = userRepository;
+            this.authorisationRepository = authorisationRepository;
             this.logger = logger;
         }
 
@@ -32,7 +32,7 @@ namespace Headway.WebApi.Controllers
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Email);
-            return await userRepository.GetUsersAsync(claim.Value);
+            return await authorisationRepository.GetUsersAsync(claim.Value);
         }
 
         [HttpGet("{userName}")]
@@ -40,7 +40,7 @@ namespace Headway.WebApi.Controllers
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Name);
-            return await userRepository.GetUserAsync(claim.Value, userName);
+            return await authorisationRepository.GetUserAsync(claim.Value, userName);
         }
 
         [HttpPost("{userName}")]
@@ -48,7 +48,7 @@ namespace Headway.WebApi.Controllers
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Name);
-            return await userRepository.SaveUserAsync(claim.Value, userName);
+            return await authorisationRepository.SaveUserAsync(claim.Value, userName);
         }
 
         [HttpDelete("{userName}")]
@@ -56,7 +56,7 @@ namespace Headway.WebApi.Controllers
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Name);
-            await userRepository.DeleteUserAsync(claim.Value, userName);
+            await authorisationRepository.DeleteUserAsync(claim.Value, userName);
         }
     }
 }

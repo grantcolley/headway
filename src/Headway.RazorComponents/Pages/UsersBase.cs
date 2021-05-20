@@ -9,7 +9,7 @@ namespace Headway.RazorComponents.Pages
     public class UsersBase : ComponentBase
     {
         [Inject]
-        public IUserService UserService { get; set; }
+        public IAuthorisationService UserService { get; set; }
 
         public IEnumerable<User> Users { get; set; }
 
