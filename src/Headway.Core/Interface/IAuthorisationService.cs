@@ -7,9 +7,9 @@ namespace Headway.Core.Interface
     public interface IAuthorisationService
     {
         Task<IEnumerable<User>> GetUsersAsync();
-        Task<User> GetUserAsync(string userName);
+        Task<User> GetUserAsync(int userId);
         Task<User> SaveUserAsync(User user);
-        Task DeleteUserAsync(string userName);
+        Task DeleteUserAsync(int userId);
         Task<IEnumerable<Permission>> GetPermissionsAsync();
         Task<User> GetPermissionAsync(int permissionId);
         Task<User> SavePermissionAsync(Permission permission);
