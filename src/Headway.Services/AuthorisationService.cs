@@ -7,32 +7,21 @@ using System.Threading.Tasks;
 
 namespace Headway.Services
 {
-    public class AuthorisationService : IAuthorisationService
+    public class AuthorisationService : ServiceBase, IAuthorisationService
     {
-        private readonly HttpClient httpClient;
-        private readonly TokenProvider tokenProvider;
-        private readonly bool useAccessToken;
-
         public AuthorisationService(HttpClient httpClient)
+            : base(httpClient, false)
         {
-            this.httpClient = httpClient;
-            useAccessToken = false;
         }
 
         public AuthorisationService(HttpClient httpClient, TokenProvider tokenProvider)
+            : base(httpClient, true, tokenProvider)
         {
-            this.httpClient = httpClient;
-            this.tokenProvider = tokenProvider;
-            useAccessToken = true;
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            if (useAccessToken)
-            {
-                var token = tokenProvider.AccessToken;
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            }
+            AddHttpClientAuthorisationHeader();
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<User>>
                 (await httpClient.GetStreamAsync($"Users"),
@@ -50,6 +39,50 @@ namespace Headway.Services
         }
 
         public Task DeleteUserAsync(string userName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Permission>> GetPermissionsAsync()
+        {
+            AddHttpClientAuthorisationHeader();
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Permission>>
+                (await httpClient.GetStreamAsync($"Permissions"),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        }
+
+        public Task<User> GetPermissionAsync(int permissionId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<User> SavePermissionAsync(Permission permission)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task DeletePermissionAsync(int permissionId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Role>> GetRolesAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<User> GetRoleAsync(int roleId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<User> SaveRoleAsync(Role role)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task DeleteRoleAsync(int roleId)
         {
             throw new System.NotImplementedException();
         }
