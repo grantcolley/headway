@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -14,7 +13,7 @@ namespace Headway.WebApi.Controllers
     [EnableCors("local")]
     [Route("[controller]")]
     [Authorize(Roles = "headwayuser")]
-    public class UsersController : Controller
+    public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> logger;
         private readonly IAuthorisationRepository authorisationRepository;
@@ -30,33 +29,33 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(ClaimTypes.Email);
-            return await authorisationRepository.GetUsersAsync(claim.Value);
+            var claim = GetUserClaim();
+
+            return await authorisationRepository.GetUsersAsync(claim);
         }
 
-        [HttpGet("{userName}")]
-        public async Task<User> GetUser(string userName)
+        [HttpGet("{userId}")]
+        public async Task<User> GetUser(int userId)
         {
-            var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(ClaimTypes.Name);
-            return await authorisationRepository.GetUserAsync(claim.Value, userName);
+            var claim = GetUserClaim();
+
+            return await authorisationRepository.GetUserAsync(claim, userId);
         }
 
-        [HttpPost("{userName}")]
-        public async Task<User> SaveUser(User userName)
+        [HttpPost("{user}")]
+        public async Task<User> SaveUser(User user)
         {
-            var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(ClaimTypes.Name);
-            return await authorisationRepository.SaveUserAsync(claim.Value, userName);
+            var claim = GetUserClaim();
+
+            return await authorisationRepository.SaveUserAsync(claim, user);
         }
 
-        [HttpDelete("{userName}")]
-        public async Task DeleteUser(string userName)
+        [HttpDelete("{userId}")]
+        public async Task DeleteUser(int userId)
         {
-            var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(ClaimTypes.Name);
-            await authorisationRepository.DeleteUserAsync(claim.Value, userName);
+            var claim = GetUserClaim();
+
+            await authorisationRepository.DeleteUserAsync(claim, userId);
         }
     }
 }
