@@ -6,9 +6,17 @@ namespace Headway.Core.Interface
 {
     public interface IAuthorisationRepository
     {
-        Task<IEnumerable<User>> GetUsersAsync(string permittedUserName);
-        Task<User> GetUserAsync(string permittedUserName, string userName);
-        Task<User> SaveUserAsync(string permittedUserName, User user);
-        Task DeleteUserAsync(string permittedUserName, string userName);
+        Task<IEnumerable<User>> GetUsersAsync(string claim);
+        Task<User> GetUserAsync(string claim, int userId);
+        Task<User> SaveUserAsync(string claim, User user);
+        Task DeleteUserAsync(string claim, int userId);
+        Task<IEnumerable<Permission>> GetPermissionsAsync(string claim);
+        Task<Permission> GetPermissionAsync(string claim, int permissionId);
+        Task<Permission> SavePermissionAsync(string claim, Permission permission);
+        Task DeletePermissionAsync(string claim, int permissionId);
+        Task<IEnumerable<Role>> GetRolesAsync(string claim);
+        Task<Role> GetRoleAsync(string claim, int roleId);
+        Task<Role> SaveRoleAsync(string claim, Role role);
+        Task DeleteRoleAsync(string claim, int roleId);
     }
 }
