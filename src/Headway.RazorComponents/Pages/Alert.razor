@@ -1,0 +1,26 @@
+﻿@page "/alert/{AlertType}/{Title}/{Message}"
+
+<div class="alert alert-danger mt-4" role="alert">
+    <b>@Title : </b>@Message
+</div>
+
+@code{
+
+    [Parameter]
+    public string AlertType {get;set;} 
+
+    [Parameter]
+    public string Title {get;set;} 
+
+    [Parameter]
+    public string Message {get;set;} 
+
+    public string Class { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Class = $"alert alert-{AlertType} mt-4";
+
+        base.OnInitialized();
+    }
+}
