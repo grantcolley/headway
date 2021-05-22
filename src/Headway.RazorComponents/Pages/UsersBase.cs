@@ -9,13 +9,13 @@ namespace Headway.RazorComponents.Pages
     public class UsersBase : ComponentBase
     {
         [Inject]
-        public IAuthorisationService UserService { get; set; }
+        public IAuthorisationService AuthorisationService { get; set; }
 
         public IEnumerable<User> Users { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Users = await UserService.GetUsersAsync();
+            Users = await AuthorisationService.GetUsersAsync();
 
             await base.OnInitializedAsync();
         }
