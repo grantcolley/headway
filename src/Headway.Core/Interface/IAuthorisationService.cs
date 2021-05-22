@@ -11,12 +11,12 @@ namespace Headway.Core.Interface
         Task<User> SaveUserAsync(User user);
         Task DeleteUserAsync(int userId);
         Task<IEnumerable<Permission>> GetPermissionsAsync();
-        Task<User> GetPermissionAsync(int permissionId);
-        Task<User> SavePermissionAsync(Permission permission);
+        Task<Permission> GetPermissionAsync(int permissionId);
+        Task<Permission> SavePermissionAsync(Permission permission);
         Task DeletePermissionAsync(int permissionId);
         Task<IEnumerable<Role>> GetRolesAsync();
-        Task<User> GetRoleAsync(int roleId);
-        Task<User> SaveRoleAsync(Role role);
+        Task<Role> GetRoleAsync(int roleId);
+        Task<Role> SaveRoleAsync(Role role);
         Task DeleteRoleAsync(int roleId);
     }
 }

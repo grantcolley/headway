@@ -2,6 +2,7 @@
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -24,23 +25,35 @@ namespace Headway.Services
             AddHttpClientAuthorisationHeader();
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<User>>
-                (await httpClient.GetStreamAsync($"Users"),
-                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                (await httpClient.GetStreamAsync($"Users").ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task<User> GetUserAsync(string userName)
+        public async Task<User> GetUserAsync(int userId)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            return await JsonSerializer.DeserializeAsync<User>
+                (await httpClient.GetStreamAsync($"Users/{userId}").ConfigureAwait(false),
+                new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task<User> SaveUserAsync(User user)
+        public async Task<User> SaveUserAsync(User user)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            var httpResponseMessage = await httpClient.PutAsJsonAsync($"Users", user)
+                .ConfigureAwait(false);
+
+            return await httpResponseMessage.Content.ReadFromJsonAsync<User>(
+                new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task DeleteUserAsync(string userName)
+        public async Task DeleteUserAsync(int userId)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            await httpClient.DeleteAsync($"Users/{userId}").ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Permission>> GetPermissionsAsync()
@@ -48,43 +61,71 @@ namespace Headway.Services
             AddHttpClientAuthorisationHeader();
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<Permission>>
-                (await httpClient.GetStreamAsync($"Permissions"),
-                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                (await httpClient.GetStreamAsync($"Permissions").ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task<User> GetPermissionAsync(int permissionId)
+        public async Task<Permission> GetPermissionAsync(int permissionId)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            return await JsonSerializer.DeserializeAsync<Permission>
+                (await httpClient.GetStreamAsync($"Permissions/{permissionId}").ConfigureAwait(false),
+                new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task<User> SavePermissionAsync(Permission permission)
+        public async Task<Permission> SavePermissionAsync(Permission permission)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            var httpResponseMessage = await httpClient.PutAsJsonAsync($"Permissions", permission)
+                .ConfigureAwait(false);
+
+            return await httpResponseMessage.Content.ReadFromJsonAsync<Permission>(
+                new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task DeletePermissionAsync(int permissionId)
+        public async Task DeletePermissionAsync(int permissionId)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            await httpClient.DeleteAsync($"Permissions/{permissionId}").ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<Role>> GetRolesAsync()
+        public async Task<IEnumerable<Role>> GetRolesAsync()
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Role>>
+                (await httpClient.GetStreamAsync($"Roles").ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task<User> GetRoleAsync(int roleId)
+        public async Task<Role> GetRoleAsync(int roleId)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            return await JsonSerializer.DeserializeAsync<Role>
+                (await httpClient.GetStreamAsync($"Roles/{roleId}").ConfigureAwait(false),
+                new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task<User> SaveRoleAsync(Role role)
+        public async Task<Role> SaveRoleAsync(Role role)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            var httpResponseMessage = await httpClient.PutAsJsonAsync($"Roles", role)
+                .ConfigureAwait(false);
+
+            return await httpResponseMessage.Content.ReadFromJsonAsync<Role>(
+                new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
 
-        public Task DeleteRoleAsync(int roleId)
+        public async Task DeleteRoleAsync(int roleId)
         {
-            throw new System.NotImplementedException();
+            AddHttpClientAuthorisationHeader();
+
+            await httpClient.DeleteAsync($"Roles/{roleId}").ConfigureAwait(false);
         }
     }
 }
