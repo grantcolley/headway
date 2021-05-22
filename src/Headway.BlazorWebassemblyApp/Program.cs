@@ -1,6 +1,7 @@
 using Headway.BlazorWebassemblyApp.Account;
 using Headway.Core.Interface;
 using Headway.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -45,9 +46,10 @@ namespace Headway.BlazorWebassemblyApp
 
             builder.Services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
+                var navigationManager = sp.GetRequiredService<NavigationManager>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new AuthorisationService(httpClient);
+                return new AuthorisationService(httpClient, navigationManager);
             });
 
             builder.Services.AddTransient<IWeatherForecastService, WeatherForecastService>(sp =>

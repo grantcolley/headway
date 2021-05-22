@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -75,10 +76,11 @@ namespace Headway.BlazorServerApp
 
             services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
+                var navigationManager = sp.GetRequiredService<NavigationManager>();
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new AuthorisationService(httpClient, tokenProvider);
+                return new AuthorisationService(httpClient, navigationManager, tokenProvider);
             });
 
             services.AddTransient<IWeatherForecastService, WeatherForecastService>(sp =>
