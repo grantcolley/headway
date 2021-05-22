@@ -38,8 +38,8 @@ namespace Headway.WebApi
                 }
             });
 
-            services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
             services.AddScoped<IModuleRepository, ModuleRepository>();
+            services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
             services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
 
             services.AddCors(options =>
