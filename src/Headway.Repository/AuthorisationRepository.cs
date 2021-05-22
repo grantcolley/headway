@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class AuthorisationRepository : RepositoryBase, IAuthorisationRepository
+    public class AuthorisationRepository : Repository, IAuthorisationRepository
     {
         public AuthorisationRepository(ApplicationDbContext applicationDbContext)
             : base (applicationDbContext)
@@ -16,15 +16,13 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<User>> GetUsersAsync(string claim)
         {
-            await ValidateClaim(claim, "Admin");
-
             return await applicationDbContext.Users.ToListAsync()
                 .ConfigureAwait(false);
         }
 
         public async Task<User> GetUserAsync(string claim, int userId)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             return await applicationDbContext.Users.FirstOrDefaultAsync(
                 u => u.UserId.Equals(userId))
@@ -33,7 +31,7 @@ namespace Headway.Repository
 
         public async Task<User> SaveUserAsync(string claim, User user)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             if(user.UserId.Equals(0))
             {
@@ -54,7 +52,7 @@ namespace Headway.Repository
 
         public async Task DeleteUserAsync(string claim, int userId)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             var user = await applicationDbContext.Users.FirstOrDefaultAsync(
                 u => u.UserId.Equals(userId))
@@ -70,7 +68,7 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<Permission>> GetPermissionsAsync(string claim)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             return await applicationDbContext.Permissions.ToListAsync()
                 .ConfigureAwait(false);
@@ -78,7 +76,7 @@ namespace Headway.Repository
 
         public async Task<Permission> GetPermissionAsync(string claim, int permissionId)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             return await applicationDbContext.Permissions.FirstOrDefaultAsync(
                 p => p.PermissionId.Equals(permissionId))
@@ -87,7 +85,7 @@ namespace Headway.Repository
 
         public async Task<Permission> SavePermissionAsync(string claim, Permission permission)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             if (permission.PermissionId.Equals(0))
             {
@@ -108,7 +106,7 @@ namespace Headway.Repository
 
         public async Task DeletePermissionAsync(string claim, int permissionId)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             var permission = await applicationDbContext.Permissions.FirstOrDefaultAsync(
                 p => p.PermissionId.Equals(permissionId))
@@ -124,7 +122,7 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<Role>> GetRolesAsync(string claim)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             return await applicationDbContext.Roles.ToListAsync()
                 .ConfigureAwait(false);
@@ -132,7 +130,7 @@ namespace Headway.Repository
 
         public async Task<Role> GetRoleAsync(string claim, int roleId)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             return await applicationDbContext.Roles.FirstOrDefaultAsync(
                 r => r.RoleId.Equals(roleId))
@@ -141,7 +139,7 @@ namespace Headway.Repository
 
         public async Task<Role> SaveRoleAsync(string claim, Role role)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             if (role.RoleId.Equals(0))
             {
@@ -162,7 +160,7 @@ namespace Headway.Repository
 
         public async Task DeleteRoleAsync(string claim, int roleId)
         {
-            await ValidateClaim(claim, "Admin");
+            await IsAuthorisedAsync(claim, "Admin");
 
             var role = await applicationDbContext.Roles.FirstOrDefaultAsync(
                 r => r.RoleId.Equals(roleId))
