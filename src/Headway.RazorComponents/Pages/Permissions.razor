@@ -1,11 +1,44 @@
 ﻿@page "/permissions"
 @inherits PermissionsBase
 
-<h3>Permissions</h3>
+<AuthorizeView>
+    <Authorized>
+        <h3>Permissions</h3>
 
-<div>
-    
-</div>
-
-<div>
-</div>
+        @if (Permissions == null)
+        {
+            <p><em>Loading permissions...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Roles</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var permission in Permissions)
+                    {
+                        <tr>
+                            <td>@permission.PermissionId</td>
+                            <td>@permission.Name</td>
+                            <td>@string.Join(",", @permission.Roles.Select(r => r.Name).ToList())</td>
+                            <td>
+                                <a href="@($"permissions/{permission.PermissionId}")" >
+                                    <span class="fas fa-user-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
