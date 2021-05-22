@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IAuthorisationRepository
+    public interface IAuthorisationRepository : IRepository
     {
         Task<IEnumerable<User>> GetUsersAsync(string claim);
         Task<User> GetUserAsync(string claim, int userId);
