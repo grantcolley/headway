@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.RazorComponents.Model;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http;
 
@@ -39,7 +40,14 @@ namespace Headway.Services
         {
             if(!httpResponseMessage.IsSuccessStatusCode)
             {
-                navigationManager.NavigateTo($"/error");
+                var alert = new Alert
+                {
+                    AlertType = "danger",
+                    Title = "Error",
+                    Message = httpResponseMessage.ReasonPhrase
+                };
+
+                navigationManager.NavigateTo(alert.Page);
             }
 
             return httpResponseMessage.IsSuccessStatusCode;
