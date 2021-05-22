@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -27,35 +26,67 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             var claim = GetUserClaim();
 
-            return await authorisationRepository.GetUsersAsync(claim);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            {
+                var users = await authorisationRepository.GetUsersAsync(claim).ConfigureAwait(false);
+                return Ok(users);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpGet("{userId}")]
-        public async Task<User> GetUser(int userId)
+        public async Task<IActionResult> GetUser(int userId)
         {
             var claim = GetUserClaim();
 
-            return await authorisationRepository.GetUserAsync(claim, userId);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            {
+                var user = await authorisationRepository.GetUserAsync(claim, userId).ConfigureAwait(false);
+                return Ok(user);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpPost("{user}")]
-        public async Task<User> SaveUser(User user)
+        public async Task<IActionResult> SaveUser(User user)
         {
             var claim = GetUserClaim();
 
-            return await authorisationRepository.SaveUserAsync(claim, user);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            {
+                var savedUser = await authorisationRepository.SaveUserAsync(claim, user).ConfigureAwait(false);
+                return Ok(savedUser);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpDelete("{userId}")]
-        public async Task DeleteUser(int userId)
+        public async Task<IActionResult> DeleteUser(int userId)
         {
             var claim = GetUserClaim();
 
-            await authorisationRepository.DeleteUserAsync(claim, userId);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            {
+                var result = await authorisationRepository.DeleteUserAsync(claim, userId).ConfigureAwait(false);
+                return Ok(result);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
     }
 }
