@@ -65,7 +65,7 @@
             {
                 if (user.HasClaim(c => c.Type == ClaimTypes.ROLE && c.Value.Equals(Roles.HEADWAY_USER)))
                 {
-                    modules = await ModuleService.GetModulesAsync();
+                    modules = await ModuleService.GetModulesAsync().ConfigureAwait(false);
                 }
             }
         }
