@@ -22,37 +22,33 @@ namespace Headway.Repository
 
         public async Task<User> GetUserAsync(string claim, int userId)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             return await applicationDbContext.Users.FirstOrDefaultAsync(
-                u => u.UserId.Equals(userId))
-                .ConfigureAwait(false);
+                            u => u.UserId.Equals(userId))
+                            .ConfigureAwait(false);
         }
 
         public async Task<User> SaveUserAsync(string claim, User user)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             if(user.UserId.Equals(0))
             {
                 var x = applicationDbContext.Users.Add(user);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                var result = await applicationDbContext.SaveChangesAsync()
+                                .ConfigureAwait(false);
                 // do we have the new id?
             }
             else
             {
                 applicationDbContext.Users.Update(user);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                var result = await applicationDbContext.SaveChangesAsync()
+                                .ConfigureAwait(false);
             }
 
             return user;
         }
 
-        public async Task DeleteUserAsync(string claim, int userId)
+        public async Task<bool> DeleteUserAsync(string claim, int userId)
         {
-            await IsAuthorisedAsync(claim, "Admin");
+            int result = 0;
 
             var user = await applicationDbContext.Users.FirstOrDefaultAsync(
                 u => u.UserId.Equals(userId))
@@ -61,23 +57,21 @@ namespace Headway.Repository
             if(user != null)
             {
                 applicationDbContext.Users.Remove(user);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                result = await applicationDbContext.SaveChangesAsync()
+                            .ConfigureAwait(false);
             }
+
+            return result > 0;
         }
 
         public async Task<IEnumerable<Permission>> GetPermissionsAsync(string claim)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             return await applicationDbContext.Permissions.ToListAsync()
-                .ConfigureAwait(false);
+                       .ConfigureAwait(false);
         }
 
         public async Task<Permission> GetPermissionAsync(string claim, int permissionId)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             return await applicationDbContext.Permissions.FirstOrDefaultAsync(
                 p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
@@ -85,28 +79,26 @@ namespace Headway.Repository
 
         public async Task<Permission> SavePermissionAsync(string claim, Permission permission)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             if (permission.PermissionId.Equals(0))
             {
                 var x = applicationDbContext.Permissions.Add(permission);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                var result = await applicationDbContext.SaveChangesAsync()
+                                .ConfigureAwait(false);
                 // do we have the new id?
             }
             else
             {
                 applicationDbContext.Permissions.Update(permission);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                var result = await applicationDbContext.SaveChangesAsync()
+                                .ConfigureAwait(false);
             }
 
             return permission;
         }
 
-        public async Task DeletePermissionAsync(string claim, int permissionId)
+        public async Task<bool> DeletePermissionAsync(string claim, int permissionId)
         {
-            await IsAuthorisedAsync(claim, "Admin");
+            int result = 0;
 
             var permission = await applicationDbContext.Permissions.FirstOrDefaultAsync(
                 p => p.PermissionId.Equals(permissionId))
@@ -115,63 +107,61 @@ namespace Headway.Repository
             if (permission != null)
             {
                 applicationDbContext.Permissions.Remove(permission);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                result = await applicationDbContext.SaveChangesAsync()
+                            .ConfigureAwait(false);
             }
+
+            return result > 0;
         }
 
         public async Task<IEnumerable<Role>> GetRolesAsync(string claim)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             return await applicationDbContext.Roles.ToListAsync()
-                .ConfigureAwait(false);
+                    .ConfigureAwait(false);
         }
 
         public async Task<Role> GetRoleAsync(string claim, int roleId)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             return await applicationDbContext.Roles.FirstOrDefaultAsync(
-                r => r.RoleId.Equals(roleId))
-                .ConfigureAwait(false);
+                            r => r.RoleId.Equals(roleId))
+                            .ConfigureAwait(false);
         }
 
         public async Task<Role> SaveRoleAsync(string claim, Role role)
         {
-            await IsAuthorisedAsync(claim, "Admin");
-
             if (role.RoleId.Equals(0))
             {
                 var x = applicationDbContext.Roles.Add(role);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                var result = await applicationDbContext.SaveChangesAsync()
+                                .ConfigureAwait(false);
                 // do we have the new id?
             }
             else
             {
                 applicationDbContext.Roles.Update(role);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                var result = await applicationDbContext.SaveChangesAsync()
+                                .ConfigureAwait(false);
             }
 
             return role;
         }
 
-        public async Task DeleteRoleAsync(string claim, int roleId)
+        public async Task<bool> DeleteRoleAsync(string claim, int roleId)
         {
-            await IsAuthorisedAsync(claim, "Admin");
+            int result = 0;
 
             var role = await applicationDbContext.Roles.FirstOrDefaultAsync(
-                r => r.RoleId.Equals(roleId))
-                .ConfigureAwait(false);
+                                r => r.RoleId.Equals(roleId))
+                                .ConfigureAwait(false);
 
             if (role != null)
             {
                 applicationDbContext.Roles.Remove(role);
-                await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
+                result = await applicationDbContext.SaveChangesAsync()
+                            .ConfigureAwait(false);
             }
+
+            return result > 0;
         }
     }
 }
