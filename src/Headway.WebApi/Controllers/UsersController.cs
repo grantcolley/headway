@@ -30,9 +30,12 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                .ConfigureAwait(false))
             {
-                var users = await authorisationRepository.GetUsersAsync(claim).ConfigureAwait(false);
+                var users = await authorisationRepository
+                                    .GetUsersAsync(claim)
+                                    .ConfigureAwait(false);
                 return Ok(users);
             }
             else
@@ -46,9 +49,12 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                .ConfigureAwait(false))
             {
-                var user = await authorisationRepository.GetUserAsync(claim, userId).ConfigureAwait(false);
+                var user = await authorisationRepository
+                                    .GetUserAsync(claim, userId)
+                                    .ConfigureAwait(false);
                 return Ok(user);
             }
             else
@@ -62,9 +68,12 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                .ConfigureAwait(false))
             {
-                var savedUser = await authorisationRepository.SaveUserAsync(claim, user).ConfigureAwait(false);
+                var savedUser = await authorisationRepository
+                                        .SaveUserAsync(claim, user)
+                                        .ConfigureAwait(false);
                 return Ok(savedUser);
             }
             else
@@ -78,9 +87,12 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                .ConfigureAwait(false))
             {
-                var result = await authorisationRepository.DeleteUserAsync(claim, userId).ConfigureAwait(false);
+                var result = await authorisationRepository
+                                    .DeleteUserAsync(claim, userId)
+                                    .ConfigureAwait(false);
                 return Ok(result);
             }
             else
