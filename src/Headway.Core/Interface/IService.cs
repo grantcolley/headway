@@ -4,7 +4,6 @@ namespace Headway.Core.Interface
 {
     public interface IService
     {
-        void AddHttpClientAuthorisationHeader();
         bool IsSuccessStatusCode(HttpResponseMessage httpResponseMessage);
     }
 }
