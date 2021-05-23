@@ -1,8 +1,13 @@
 ﻿@page "/permissions"
 @inherits PermissionsBase
+@using Microsoft.AspNetCore.Components.Forms
 
 <AuthorizeView>
-    <Authorized>
+    <!--
+    Need to specify the context to avoid clashes with other auto generated contexts
+    https://github.com/chanan/BlazorStrap/issues/149 
+    -->
+    <Authorized Context="Auth">
         <h3>Permissions</h3>
 
         @if (Permissions == null)
@@ -11,6 +16,19 @@
         }
         else
         {
+            <EditForm Model="@addPermission" OnValidSubmit="@SubmitPermission">
+                <DataAnnotationsValidator/>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td valign="middle"><InputText id="permissionName" @bind-Value="addPermission.Name"/></td>
+                            <td valign="middle"><button type="submit" class="btn btn-small btn-info fas fa-plus"/></td>
+                            <td valign="middle"><ValidationMessage For="() => addPermission.Name"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </EditForm>
+
             <table class="table">
                 <thead>
                     <tr>
