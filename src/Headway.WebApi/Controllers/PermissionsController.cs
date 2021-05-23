@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -27,35 +26,74 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Permission>> GetPermissions()
+        public async Task<IActionResult> GetPermissions()
         {
             var claim = GetUserClaim();
 
-            return await authorisationRepository.GetPermissionsAsync(claim);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin"))
+            {
+                var permissions = await authorisationRepository.GetPermissionsAsync(claim)
+                                                                .ConfigureAwait(false);
+                return Ok(permissions);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpGet("{permissionId}")]
-        public async Task<Permission> GetPermission(int permissionId)
+        public async Task<IActionResult> GetPermission(int permissionId)
         {
             var claim = GetUserClaim();
 
-            return await authorisationRepository.GetPermissionAsync(claim, permissionId);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                .ConfigureAwait(false))
+            {
+                var permission = await authorisationRepository.GetPermissionAsync(claim, permissionId)
+                                                                .ConfigureAwait(false);
+                return Ok(permission);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpPost("{permission}")]
-        public async Task<Permission> SaveUser(Permission permission)
+        public async Task<IActionResult> SaveUser(Permission permission)
         {
             var claim = GetUserClaim();
 
-            return await authorisationRepository.SavePermissionAsync(claim, permission);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                .ConfigureAwait(false))
+            {
+                var savedPermission = await authorisationRepository.SavePermissionAsync(claim, permission)
+                                                                    .ConfigureAwait(false);
+                return Ok(savedPermission);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
 
         [HttpDelete("{permissionId}")]
-        public async Task DeleteUser(int permissionId)
+        public async Task<IActionResult> DeleteUser(int permissionId)
         {
             var claim = GetUserClaim();
 
-            await authorisationRepository.DeletePermissionAsync(claim, permissionId);
+            if (await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                .ConfigureAwait(false))
+            {
+                var result = await authorisationRepository.DeletePermissionAsync(claim, permissionId)
+                                                            .ConfigureAwait(false);
+                return Ok(result);
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
     }
 }
