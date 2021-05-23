@@ -18,6 +18,8 @@ namespace Headway.Services
             : this(httpClient, navigationManager, useAccessToken)
         {
             this.tokenProvider = tokenProvider;
+
+            AddHttpClientAuthorisationHeader();
         }
 
         protected ServiceBase(HttpClient httpClient, NavigationManager navigationManager, bool useAccessToken)
@@ -25,15 +27,6 @@ namespace Headway.Services
             this.httpClient = httpClient;
             this.navigationManager = navigationManager;
             this.useAccessToken = useAccessToken;
-        }
-
-        public void AddHttpClientAuthorisationHeader()
-        {
-            if (useAccessToken)
-            {
-                var token = tokenProvider.AccessToken;
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            }
         }
 
         public bool IsSuccessStatusCode(HttpResponseMessage httpResponseMessage)
@@ -51,6 +44,17 @@ namespace Headway.Services
             }
 
             return httpResponseMessage.IsSuccessStatusCode;
+        }
+
+        private void AddHttpClientAuthorisationHeader()
+        {
+            if (useAccessToken
+                && tokenProvider != null
+                && httpClient.DefaultRequestHeaders.Authorization == null)
+            {
+                var token = tokenProvider.AccessToken;
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            }
         }
     }
 }
