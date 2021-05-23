@@ -21,9 +21,19 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td valign="middle"><InputText id="permissionName" @bind-Value="addPermission.Name"/></td>
-                            <td valign="middle"><button type="submit" class="btn btn-small btn-info fas fa-plus"/></td>
-                            <td valign="middle"><ValidationMessage For="() => addPermission.Name"/></td>
+                            <td valign="middle" style="padding: 20px 5px 20px 5px;">Name:</td>
+                            <td valign="middle" style="padding: 20px 0px 20px 5px;"><InputText id="permissionName" @bind-Value="addPermission.Name"/></td>
+                            <td valign="middle" style="padding: 20px 5px 20px 0px;">
+                                @if(InProgress)
+                                {
+                                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-small btn-info fas fa-plus"/>
+                                }
+                            </td>
+                            <td valign="middle" style="padding: 10px 5px 20px 5px;"><ValidationMessage For="() => addPermission.Name"/></td>
                         </tr>
                     </tbody>
                 </table>
