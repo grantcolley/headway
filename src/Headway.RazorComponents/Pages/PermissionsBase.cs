@@ -13,11 +13,24 @@ namespace Headway.RazorComponents.Pages
 
         public IEnumerable<Permission> Permissions { get; set; }
 
+        protected Permission addPermission = new();
+
+        protected bool InProgress = false;
+
         protected override async Task OnInitializedAsync()
         {
             Permissions = await AuthorisationService.GetPermissionsAsync();
 
             await base.OnInitializedAsync();
+        }
+
+        protected async Task SubmitPermission()
+        {
+            InProgress = true;
+            var newPermission = new Permission { Name = addPermission.Name };
+            var result = await AuthorisationService.SavePermissionAsync(newPermission);
+            addPermission.Name = string.Empty;
+            InProgress = false;
         }
     }
 }
