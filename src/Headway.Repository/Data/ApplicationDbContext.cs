@@ -13,5 +13,20 @@ namespace Headway.Repository.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            builder.Entity<Role>()
+                .HasIndex(r => r.Name)
+                .IsUnique();
+
+            builder.Entity<Permission>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+        }
     }
 }
