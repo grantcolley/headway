@@ -14,7 +14,7 @@ namespace Headway.WebApi.Controllers
     [EnableCors("local")]
     [Route("[controller]")]
     [Authorize(Roles = "headwayuser")]
-    public class ModulesController : Controller
+    public class ModulesController : ApiControllerBase
     {
         private readonly ILogger<ModulesController> logger;
         private readonly IModuleRepository moduleRepository;
