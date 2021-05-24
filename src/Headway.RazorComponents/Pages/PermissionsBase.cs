@@ -28,7 +28,7 @@ namespace Headway.RazorComponents.Pages
         {
             InProgress = true;
             var newPermission = new Permission { Name = addPermission.Name };
-            var result = await AuthorisationService.SavePermissionAsync(newPermission);
+            var result = await AuthorisationService.AddPermissionAsync(newPermission);
             addPermission.Name = string.Empty;
             InProgress = false;
         }
