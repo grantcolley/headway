@@ -29,9 +29,8 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IEnumerable<Module>> Get()
         {
-            var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(ClaimTypes.Email);
-            return await moduleRepository.GetModulesAsync(claim.Value);
+            var claim = GetUserClaim();
+            return await moduleRepository.GetModulesAsync(claim);
         }
     }
 }

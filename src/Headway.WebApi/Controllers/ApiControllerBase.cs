@@ -8,12 +8,10 @@ namespace Headway.WebApi.Controllers
     public abstract class ApiControllerBase<T> : ControllerBase
     {
         protected readonly ILogger<T> logger;
-        protected readonly string claim;
 
         protected ApiControllerBase(ILogger<T> logger)
         {
             this.logger = logger;
-            claim = GetUserClaim();
         }
 
         protected string GetUserClaim()

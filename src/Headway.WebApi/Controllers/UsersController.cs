@@ -27,6 +27,8 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            var claim = GetUserClaim();
+
             var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
                                                             .ConfigureAwait(false);
             if (!authorised)
@@ -43,6 +45,8 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> Get(int userId)
         {
+            var claim = GetUserClaim();
+
             var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
                                                             .ConfigureAwait(false);
             if (!authorised)
@@ -59,6 +63,8 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] User user)
         {
+            var claim = GetUserClaim();
+
             var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
                                                             .ConfigureAwait(false);
             if (!authorised)
@@ -75,6 +81,8 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] User user)
         {
+            var claim = GetUserClaim();
+
             var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
                                                             .ConfigureAwait(false);
             if (!authorised)
@@ -91,6 +99,8 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
+            var claim = GetUserClaim();
+
             var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
                                                             .ConfigureAwait(false);
             if (!authorised)
