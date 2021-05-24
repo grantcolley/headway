@@ -27,22 +27,19 @@ namespace Headway.Repository
                             .ConfigureAwait(false);
         }
 
-        public async Task<User> SaveUserAsync(string claim, User user)
+        public async Task<User> AddUserAsync(string claim, User user)
         {
-            if(user.UserId.Equals(0))
-            {
-                var x = applicationDbContext.Users.Add(user);
-                var result = await applicationDbContext.SaveChangesAsync()
-                                .ConfigureAwait(false);
-                // do we have the new id?
-            }
-            else
-            {
-                applicationDbContext.Users.Update(user);
-                var result = await applicationDbContext.SaveChangesAsync()
-                                .ConfigureAwait(false);
-            }
+            applicationDbContext.Users.Add(user);
+            await applicationDbContext.SaveChangesAsync()
+                                            .ConfigureAwait(false);
+            return user;
+        }
 
+        public async Task<User> UpdateUserAsync(string claim, User user)
+        {
+            applicationDbContext.Users.Update(user);
+            await applicationDbContext.SaveChangesAsync()
+                            .ConfigureAwait(false);
             return user;
         }
 
@@ -77,22 +74,19 @@ namespace Headway.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<Permission> SavePermissionAsync(string claim, Permission permission)
+        public async Task<Permission> AddPermissionAsync(string claim, Permission permission)
         {
-            if (permission.PermissionId.Equals(0))
-            {
-                var x = applicationDbContext.Permissions.Add(permission);
-                var result = await applicationDbContext.SaveChangesAsync()
-                                .ConfigureAwait(false);
-                // do we have the new id?
-            }
-            else
-            {
-                applicationDbContext.Permissions.Update(permission);
-                var result = await applicationDbContext.SaveChangesAsync()
-                                .ConfigureAwait(false);
-            }
+            applicationDbContext.Permissions.Add(permission);
+            await applicationDbContext.SaveChangesAsync()
+                            .ConfigureAwait(false);
+            return permission;
+        }
 
+        public async Task<Permission> UpdatePermissionAsync(string claim, Permission permission)
+        {
+            applicationDbContext.Permissions.Update(permission);
+            await applicationDbContext.SaveChangesAsync()
+                            .ConfigureAwait(false);
             return permission;
         }
 
@@ -127,22 +121,19 @@ namespace Headway.Repository
                             .ConfigureAwait(false);
         }
 
-        public async Task<Role> SaveRoleAsync(string claim, Role role)
+        public async Task<Role> AddRoleAsync(string claim, Role role)
         {
-            if (role.RoleId.Equals(0))
-            {
-                var x = applicationDbContext.Roles.Add(role);
-                var result = await applicationDbContext.SaveChangesAsync()
-                                .ConfigureAwait(false);
-                // do we have the new id?
-            }
-            else
-            {
-                applicationDbContext.Roles.Update(role);
-                var result = await applicationDbContext.SaveChangesAsync()
-                                .ConfigureAwait(false);
-            }
+            applicationDbContext.Roles.Add(role);
+            await applicationDbContext.SaveChangesAsync()
+                                            .ConfigureAwait(false);
+            return role;
+        }
 
+        public async Task<Role> UpdateRoleAsync(string claim, Role role)
+        {
+            applicationDbContext.Roles.Update(role);
+            await applicationDbContext.SaveChangesAsync()
+                            .ConfigureAwait(false);
             return role;
         }
 
