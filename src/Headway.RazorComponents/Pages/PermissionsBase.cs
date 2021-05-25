@@ -2,6 +2,7 @@
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.RazorComponents.Pages
@@ -11,7 +12,7 @@ namespace Headway.RazorComponents.Pages
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
 
-        public IEnumerable<Permission> Permissions { get; set; }
+        public List<Permission> Permissions { get; set; }
 
         protected Permission addPermission = new();
 
@@ -19,7 +20,8 @@ namespace Headway.RazorComponents.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Permissions = await AuthorisationService.GetPermissionsAsync();
+            var permissions = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
+            Permissions = new List<Permission>(permissions);
 
             await base.OnInitializedAsync();
         }
@@ -28,8 +30,34 @@ namespace Headway.RazorComponents.Pages
         {
             InProgress = true;
             var newPermission = new Permission { Name = addPermission.Name };
-            var result = await AuthorisationService.AddPermissionAsync(newPermission);
+            var permission = await AuthorisationService.AddPermissionAsync(newPermission);
+            Permissions.Add(permission);
             addPermission.Name = string.Empty;
+            InProgress = false;
+        }
+
+        public void EditPermission(Permission permission)
+        {
+            permission.CanEdit = true;
+        }
+
+        public void UndoUpdatePermission(Permission permission)
+        {
+            permission.CanEdit = false;
+        }
+
+        public async Task UpdatePermission(Permission permission)
+        {
+            InProgress = true;
+            await AuthorisationService.UpdatePermissionAsync(permission);
+            InProgress = false;
+        }
+
+        public async Task DeletePermission(Permission permission)
+        {
+            InProgress = true;
+            await AuthorisationService.DeletePermissionAsync(permission.PermissionId);
+            Permissions.Remove(permission);
             InProgress = false;
         }
     }
