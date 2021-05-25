@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
-    <ProjectReference Include="..\Headway.RazorComponents\Headway.RazorComponents.csproj" />
+    <ProjectReference Include="..\Headway.RazorShared\Headway.RazorShared.csproj" />
   </ItemGroup>
 
 </Project>

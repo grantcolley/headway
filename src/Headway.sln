@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.WebApi", "Headway.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Services", "Headway.Services\Headway.Services.csproj", "{A2A92165-4679-4068-8591-33149A968BF8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RazorComponents", "Headway.RazorComponents\Headway.RazorComponents.csproj", "{A93212B6-39EF-473B-993B-928FAC73F432}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorWebassemblyApp", "Headway.BlazorWebassemblyApp\Headway.BlazorWebassemblyApp.csproj", "{17F66A51-074F-4549-949D-558159A3350F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorServerApp", "Headway.BlazorServerApp\Headway.BlazorServerApp.csproj", "{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}"
@@ -23,9 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.IdentityManager", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.IdentityProvider", "Utilities\Headway.IdentityProvider\Headway.IdentityProvider.csproj", "{FCB4BAB8-FC8B-443A-8338-35633C98A36C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.MigrationsSqlite", "Utilities\Headway.MigrationsSqlite\Headway.MigrationsSqlite.csproj", "{BE89438D-63A4-4519-B12E-B64580A17E53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.MigrationsSqlite", "Utilities\Headway.MigrationsSqlite\Headway.MigrationsSqlite.csproj", "{BE89438D-63A4-4519-B12E-B64580A17E53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.MigrationsSqlServer", "Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj", "{1CDD388A-BCCF-461A-9527-B952592823A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.MigrationsSqlServer", "Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj", "{1CDD388A-BCCF-461A-9527-B952592823A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RazorShared", "Headway.RazorShared\Headway.RazorShared.csproj", "{4A73095E-CD93-47B8-91FC-2F3AE708F717}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RazorAdmin", "Headway.RazorAdmin\Headway.RazorAdmin.csproj", "{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +51,6 @@ Global
 		{A2A92165-4679-4068-8591-33149A968BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2A92165-4679-4068-8591-33149A968BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2A92165-4679-4068-8591-33149A968BF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A93212B6-39EF-473B-993B-928FAC73F432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A93212B6-39EF-473B-993B-928FAC73F432}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A93212B6-39EF-473B-993B-928FAC73F432}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A93212B6-39EF-473B-993B-928FAC73F432}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +75,14 @@ Global
 		{1CDD388A-BCCF-461A-9527-B952592823A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CDD388A-BCCF-461A-9527-B952592823A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CDD388A-BCCF-461A-9527-B952592823A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A73095E-CD93-47B8-91FC-2F3AE708F717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A73095E-CD93-47B8-91FC-2F3AE708F717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A73095E-CD93-47B8-91FC-2F3AE708F717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A73095E-CD93-47B8-91FC-2F3AE708F717}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

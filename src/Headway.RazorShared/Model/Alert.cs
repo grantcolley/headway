@@ -1,4 +1,4 @@
-﻿namespace Headway.RazorComponents.Model
+﻿namespace Headway.RazorShared.Model
 {
     public class Alert
     {

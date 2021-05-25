@@ -15,7 +15,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
-    <ProjectReference Include="..\Headway.RazorComponents\Headway.RazorComponents.csproj" />
+    <ProjectReference Include="..\Headway.RazorAdmin\Headway.RazorAdmin.csproj" />
+    <ProjectReference Include="..\Headway.RazorShared\Headway.RazorShared.csproj" />
     <ProjectReference Include="..\Headway.Services\Headway.Services.csproj" />
   </ItemGroup>
 
