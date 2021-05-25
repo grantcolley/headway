@@ -1,0 +1,44 @@
+﻿@page "/users"
+@inherits UsersBase
+
+<AuthorizeView>
+    <Authorized>
+        <h3>Users</h3>
+
+        @if (Users == null)
+        {
+            <p><em>Loading users...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Permissions</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Users)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>@string.Join(",", @user.Permissions.Select(p => p.Name).ToList())</td>
+                            <td>
+                                <a href="@($"userdetails/{user}")" >
+                                    <span class="fas fa-user-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
