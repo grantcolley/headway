@@ -9,9 +9,6 @@ namespace Headway.RazorAdmin.Pages
     public class PermissionDetailsBase : ComponentBase
     {
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
-        [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
 
         [Parameter]
