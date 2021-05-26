@@ -2,7 +2,7 @@
 @page "/alert/{AlertType}/{Title}/{Message}/{RedirectText}/{RedirectPage}"
 
 <div class="@Class" role="alert">
-    <b>@Title &nbsp;</b>@Message
+    <b>@Title</b>&nbsp;@Message
 </div>
 @if(!string.IsNullOrWhiteSpace(RedirectText)
     && !string.IsNullOrWhiteSpace(RedirectPage))
