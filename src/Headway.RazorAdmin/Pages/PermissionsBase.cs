@@ -14,12 +14,11 @@ namespace Headway.RazorAdmin.Pages
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
 
-        public List<Permission> Permissions { get; set; }
+        public IEnumerable<Permission> Permissions { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var permissions = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
-            Permissions = new List<Permission>(permissions);
+            Permissions = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
