@@ -9,6 +9,9 @@ namespace Headway.RazorAdmin.Pages
     public class UsersBase : ComponentBase
     {
         [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
 
         public IEnumerable<User> Users { get; set; }
@@ -18,6 +21,16 @@ namespace Headway.RazorAdmin.Pages
             Users = await AuthorisationService.GetUsersAsync().ConfigureAwait(false);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
+        }
+
+        protected void AddUser()
+        {
+            NavigationManager.NavigateTo("/userdetails");
+        }
+
+        protected void UpdateUser(int userId)
+        {
+            NavigationManager.NavigateTo($"/userdetails/{userId}");
         }
     }
 }

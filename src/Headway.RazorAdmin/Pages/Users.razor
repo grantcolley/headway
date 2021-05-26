@@ -16,8 +16,11 @@
                     <tr>
                         <th>User Name</th>
                         <th>Email</th>
+                        <th>Roles</th>
                         <th>Permissions</th>
-                        <th></th>
+                        <th> 
+                            <button type="button" class="btn btn-small btn-primary fas fa-plus" @onclick="() => AddUser()"/>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,11 +29,10 @@
                         <tr>
                             <td>@user.UserName</td>
                             <td>@user.Email</td>
-                            <td>@string.Join(",", @user.Permissions.Select(p => p.Name).ToList())</td>
+                            <td>@string.Join(",", @user.Roles.Select(r => r.Name).ToList())</td>
+                            <td>@string.Join(",", @user.Permissions.Select(r => r.Name).ToList())</td>
                             <td>
-                                <a href="@($"userdetails/{user}")" >
-                                    <span class="fas fa-user-edit"></span>
-                                </a>
+                                <button type="button" class="btn btn-small btn-primary fas fa-edit" @onclick="() => UpdateUser(user.UserId)"/>
                             </td>
                         </tr>
                     }
