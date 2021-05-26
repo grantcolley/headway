@@ -41,6 +41,23 @@ namespace Headway.WebApi.Controllers
             return Ok(permissions);
         }
 
+        [HttpGet("{permissionId}")]
+        public async Task<IActionResult> Get(int permissionId)
+        {
+            var claim = GetUserClaim();
+
+            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
+                                                            .ConfigureAwait(false);
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var permissions = await authorisationRepository.GetPermissionAsync(claim, permissionId)
+                                                            .ConfigureAwait(false);
+            return Ok(permissions);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Permission permission)
         {
