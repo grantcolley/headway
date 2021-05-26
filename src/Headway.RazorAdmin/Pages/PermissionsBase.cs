@@ -9,6 +9,9 @@ namespace Headway.RazorAdmin.Pages
     public class PermissionsBase : ComponentBase
     {
         [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
 
         public List<Permission> Permissions { get; set; }
@@ -19,6 +22,16 @@ namespace Headway.RazorAdmin.Pages
             Permissions = new List<Permission>(permissions);
 
             await base.OnInitializedAsync();
+        }
+
+        protected void AddPermission()
+        {
+            NavigationManager.NavigateTo("/permissiondetails");
+        }
+
+        protected void UpdatePermission(int permissionId)
+        {
+            NavigationManager.NavigateTo($"/permissiondetails/{permissionId}");
         }
     }
 }
