@@ -58,7 +58,7 @@
 
         if (IsAuthorized)
         {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
             var user = authState.User;
 
             if (user.Identity.IsAuthenticated)
@@ -74,7 +74,7 @@
             modules = new List<Module>();
         }
 
-        await base.OnParametersSetAsync();
+        await base.OnParametersSetAsync().ConfigureAwait(false);
     }
 
     private RenderFragment RenderModules(Module module) => __builder =>

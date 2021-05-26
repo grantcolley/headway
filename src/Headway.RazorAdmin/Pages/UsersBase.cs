@@ -15,9 +15,9 @@ namespace Headway.RazorAdmin.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Users = await AuthorisationService.GetUsersAsync();
+            Users = await AuthorisationService.GetUsersAsync().ConfigureAwait(false);
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
     }
 }

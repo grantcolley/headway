@@ -35,8 +35,8 @@ namespace Headway.Services
             }
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<Module>>
-                (await httpClient.GetStreamAsync($"Modules"),
-                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                (await httpClient.GetStreamAsync($"Modules").ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
     }
 }

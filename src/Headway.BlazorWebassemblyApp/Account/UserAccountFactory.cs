@@ -16,7 +16,7 @@ namespace Headway.BlazorWebassemblyApp.Account
         public async override ValueTask<ClaimsPrincipal> CreateUserAsync(RemoteUserAccount account,
                                                                          RemoteAuthenticationUserOptions options)
         {
-            var user = await base.CreateUserAsync(account, options);
+            var user = await base.CreateUserAsync(account, options).ConfigureAwait(false);
 
             if (user.Identity.IsAuthenticated)
             {

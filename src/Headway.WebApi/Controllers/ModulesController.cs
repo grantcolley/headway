@@ -30,7 +30,7 @@ namespace Headway.WebApi.Controllers
         public async Task<IEnumerable<Module>> Get()
         {
             var claim = GetUserClaim();
-            return await moduleRepository.GetModulesAsync(claim);
+            return await moduleRepository.GetModulesAsync(claim).ConfigureAwait(false);
         }
     }
 }

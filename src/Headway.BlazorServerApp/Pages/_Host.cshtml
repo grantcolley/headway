@@ -8,9 +8,9 @@
 
     var initialApplicationState = new InitialApplicationState
     {
-        AccessToken = await HttpContext.GetTokenAsync("access_token"),
-        RefreshToken = await HttpContext.GetTokenAsync("refresh_token"),
-        IdToken = await HttpContext.GetTokenAsync("id_token")
+        AccessToken = await HttpContext.GetTokenAsync("access_token").ConfigureAwait(false),
+        RefreshToken = await HttpContext.GetTokenAsync("refresh_token").ConfigureAwait(false),
+        IdToken = await HttpContext.GetTokenAsync("id_token").ConfigureAwait(false)
     };
 }
 

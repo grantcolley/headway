@@ -21,7 +21,7 @@ namespace Headway.RazorAdmin.Pages
             var permissions = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
             Permissions = new List<Permission>(permissions);
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected void AddPermission()

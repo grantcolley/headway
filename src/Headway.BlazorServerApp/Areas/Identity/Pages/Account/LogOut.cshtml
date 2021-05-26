@@ -7,8 +7,8 @@
 @functions {
     public async Task<IActionResult> OnPost()
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        var idToken = await HttpContext.GetTokenAsync("id_token");
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
+        var idToken = await HttpContext.GetTokenAsync("id_token").ConfigureAwait(false);
         var requestUrl = new RequestUrl("https://localhost:5001/connect/endsession");
         var url = requestUrl.CreateEndSessionUrl(idTokenHint: idToken, postLogoutRedirectUri: "https://localhost:44300/");
         return Redirect(url);

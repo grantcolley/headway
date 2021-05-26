@@ -15,7 +15,7 @@ namespace Headway.RazorAdmin.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
     }
 }

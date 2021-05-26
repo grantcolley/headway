@@ -21,7 +21,7 @@ namespace Headway.BlazorServerApp.Areas.Identity.Pages.Account
 
             await HttpContext.ChallengeAsync(
                 OpenIdConnectDefaults.AuthenticationScheme,
-                new AuthenticationProperties { RedirectUri = redirectUri });
+                new AuthenticationProperties { RedirectUri = redirectUri }).ConfigureAwait(false);
         }
     }
 }

@@ -35,8 +35,8 @@ namespace Headway.Services
             }
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<WeatherForecast>>
-                (await httpClient.GetStreamAsync($"WeatherForecast"),
-                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                (await httpClient.GetStreamAsync($"WeatherForecast").ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
     }
 }
