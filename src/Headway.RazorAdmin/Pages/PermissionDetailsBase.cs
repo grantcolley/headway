@@ -21,7 +21,8 @@ namespace Headway.RazorAdmin.Pages
 
         protected Alert alert { get; set; }
 
-        protected bool InProgress = false;
+        protected bool IsSaveInProgress = false;
+        protected bool IsDeleteInProgress = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,12 +35,12 @@ namespace Headway.RazorAdmin.Pages
                 permission = await AuthorisationService.GetPermissionAsync(PermissionId).ConfigureAwait(false);
             }
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected async Task SubmitPermission()
         {
-            InProgress = true;
+            IsSaveInProgress = true;
 
             if(permission.PermissionId.Equals(0))
             {
@@ -48,8 +49,8 @@ namespace Headway.RazorAdmin.Pages
                 alert = new Alert
                 {
                     AlertType = "info",
-                    Title = $"Added",
-                    Message = $"{permission.Name} has been added.",
+                    Title = $"{permission.Name}",
+                    Message = $"has been added.",
                     RedirectText = "Permisions",
                     RedirectPage = "/permissions"
                 };
@@ -61,31 +62,32 @@ namespace Headway.RazorAdmin.Pages
                 alert = new Alert
                 {
                     AlertType = "info",
-                    Title = $"Updated",
-                    Message = $"{permission.Name} has been updated.",
+                    Title = $"{permission.Name}",
+                    Message = $"has been updated.",
                     RedirectText = "Permisions",
                     RedirectPage = "/permissions"
                 };
             }
 
-            InProgress = false;
+            IsSaveInProgress = false;
         }
 
         public async Task DeletePermission(Permission permission)
         {
-            InProgress = true;
+            IsDeleteInProgress = true;
+
             await AuthorisationService.DeletePermissionAsync(permission.PermissionId).ConfigureAwait(false);
 
             alert = new Alert
             {
                 AlertType = "info",
-                Title = $"Deleted",
-                Message = $"{permission.Name} has been deleted.",
+                Title = $"{permission.Name}",
+                Message = $"has been deleted.",
                 RedirectText = "Permisions",
                 RedirectPage = "/permissions"
             };
 
-            InProgress = false;
+            IsDeleteInProgress = false;
         }
     }
 }
