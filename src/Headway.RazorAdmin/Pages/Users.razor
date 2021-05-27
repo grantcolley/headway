@@ -14,6 +14,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>User Id</th>
                         <th>User Name</th>
                         <th>Email</th>
                         <th>Roles</th>
@@ -27,6 +28,7 @@
                     @foreach (var user in Users)
                     {
                         <tr>
+                            <td>@user.UserId</td>
                             <td>@user.UserName</td>
                             <td>@user.Email</td>
                             <td>@string.Join(",", @user.Roles.Select(r => r.Name).ToList())</td>
