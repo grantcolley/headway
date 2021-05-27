@@ -1,11 +1,46 @@
 ﻿@page "/roles"
 @inherits RolesBase
 
-<h3>Roles</h3>
+<AuthorizeView>
+    <Authorized>
+        <h3>Roles</h3>
 
-<div>
-    
-</div>
-
-<div>
-</div>
+        @if (Roles == null)
+        {
+            <p><em>Loading roles...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Role Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Permissions</th>
+                        <th> 
+                            <button type="button" class="btn btn-small btn-primary fas fa-plus" @onclick="() => AddRole()"/>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Roles)
+                    {
+                        <tr>
+                            <td>@role.RoleId</td>
+                            <td>@role.Name</td>
+                            <td>@role.Description</td>
+                            <td>@string.Join(",", @role.Permissions.Select(r => r.Name).ToList())</td>
+                            <td>
+                                <button type="button" class="btn btn-small btn-primary fas fa-edit" @onclick="() => UpdateRole(role.RoleId)"/>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
