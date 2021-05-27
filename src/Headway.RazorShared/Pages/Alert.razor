@@ -3,12 +3,20 @@
 
 <div class="@Class" role="alert">
     <b>@Title</b>&nbsp;@Message
+    <p></p>
+    @if(!string.IsNullOrWhiteSpace(RedirectText)
+        && !string.IsNullOrWhiteSpace(RedirectPage))
+    {
+        <table>
+            <tbody>
+                <tr>
+                    <td valign="middle"><button class="btn btn-outline-primary fas fa-caret-left" @onclick="@Redirect"></button></td>
+                    <td valign="middle">&nbsp;@RedirectText</td>
+                </tr>
+            </tbody>
+        </table>
+    }
 </div>
-@if(!string.IsNullOrWhiteSpace(RedirectText)
-    && !string.IsNullOrWhiteSpace(RedirectPage))
-{
-    <a class="btn btn-outline-primary" @onclick="@Redirect">@RedirectText</a>    
-}
 
 @code{
 
@@ -41,6 +49,6 @@
 
     private void Redirect()
     {
-        NavigationManager.NavigateTo(RedirectPage, true);
+        NavigationManager.NavigateTo(RedirectPage);
     }
 }
