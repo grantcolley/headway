@@ -45,10 +45,10 @@ namespace Headway.RazorAdmin.Pages
 
                 alert = new Alert
                 {
-                    AlertType = "info",
+                    AlertType = "primary",
                     Title = $"{permission.Name}",
                     Message = $"has been added.",
-                    RedirectText = "Permisions",
+                    RedirectText = "Return to permisions.",
                     RedirectPage = "/permissions"
                 };
             }
@@ -58,10 +58,10 @@ namespace Headway.RazorAdmin.Pages
 
                 alert = new Alert
                 {
-                    AlertType = "info",
+                    AlertType = "primary",
                     Title = $"{permission.Name}",
                     Message = $"has been updated.",
-                    RedirectText = "Permisions",
+                    RedirectText = "Return to permisions.",
                     RedirectPage = "/permissions"
                 };
             }
@@ -77,10 +77,10 @@ namespace Headway.RazorAdmin.Pages
 
             alert = new Alert
             {
-                AlertType = "info",
+                AlertType = "primary",
                 Title = $"{permission.Name}",
                 Message = $"has been deleted.",
-                RedirectText = "Permisions",
+                RedirectText = "Return to permisions.",
                 RedirectPage = "/permissions"
             };
 

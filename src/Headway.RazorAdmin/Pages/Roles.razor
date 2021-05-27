@@ -19,7 +19,7 @@
                         <th>Description</th>
                         <th>Permissions</th>
                         <th> 
-                            <button type="button" class="btn btn-small btn-primary fas fa-plus" @onclick="() => AddRole()"/>
+                            <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => AddRole()"/>
                         </th>
                     </tr>
                 </thead>
@@ -32,7 +32,7 @@
                             <td>@role.Description</td>
                             <td>@string.Join(",", @role.Permissions.Select(r => r.Name).ToList())</td>
                             <td>
-                                <button type="button" class="btn btn-small btn-primary fas fa-edit" @onclick="() => UpdateRole(role.RoleId)"/>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => UpdateRole(role.RoleId)"/>
                             </td>
                         </tr>
                     }
