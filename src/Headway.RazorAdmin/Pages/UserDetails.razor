@@ -20,7 +20,7 @@
             @if (alert == null)
             {
                 <EditForm Model="@user" OnValidSubmit="@SubmitUser">
-                    <DataAnnotationsValidator/>
+                    <DataAnnotationsValidator/>                    
                     <table>
                         <tbody>
                             <tr>
@@ -63,6 +63,24 @@
                                 <td valign="middle">Email</td>
                                 <td valign="middle"><InputText id="email" @bind-Value="user.Email"/></td>
                                 <td valign="middle"><ValidationMessage For="() => user.Email"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @foreach(var role in headwayRoles)
+                                    {
+                                         <input type="checkbox" @onchange="eventArgs => { RolesCheckboxClicked(role.Role.RoleId, eventArgs.Value); }" />@role.Name<br />
+                                    }
+                                </td>
+                                <td>
+                                    @foreach(var permission in headwayPermissions)
+                                    {
+                                        <input type="checkbox" @onchange="eventArgs => { PermissionCheckboxClicked(permission.Permission.PermissionId, eventArgs.Value); }" />@permission.Name<br />
+                                    }
+                                </td>
                             </tr>
                         </tbody>
                     </table>
