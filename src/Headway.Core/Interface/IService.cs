@@ -1,9 +1,10 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
     public interface IService
     {
-        bool IsSuccessStatusCode(HttpResponseMessage httpResponseMessage);
+        Task<IServiceResult<T>> GetServiceResult<T>(HttpResponseMessage httpResponseMessage);
     }
 }

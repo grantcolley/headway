@@ -1,8 +1,8 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.RazorShared.Model;
-using Microsoft.AspNetCore.Components;
 using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Headway.Services
 {
@@ -11,39 +11,37 @@ namespace Headway.Services
         protected readonly HttpClient httpClient;
         protected readonly TokenProvider tokenProvider;
         protected readonly bool useAccessToken;
-        protected readonly NavigationManager navigationManager;
 
-        protected ServiceBase(HttpClient httpClient, NavigationManager navigationManager, 
-            bool useAccessToken, TokenProvider tokenProvider)
-            : this(httpClient, navigationManager, useAccessToken)
+        protected ServiceBase(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
+            : this(httpClient, useAccessToken)
         {
             this.tokenProvider = tokenProvider;
 
             AddHttpClientAuthorisationHeader();
         }
 
-        protected ServiceBase(HttpClient httpClient, NavigationManager navigationManager, bool useAccessToken)
+        protected ServiceBase(HttpClient httpClient, bool useAccessToken)
         {
             this.httpClient = httpClient;
-            this.navigationManager = navigationManager;
             this.useAccessToken = useAccessToken;
         }
 
-        public bool IsSuccessStatusCode(HttpResponseMessage httpResponseMessage)
+        public async Task<IServiceResult<T>> GetServiceResult<T>(HttpResponseMessage httpResponseMessage)
         {
-            if(!httpResponseMessage.IsSuccessStatusCode)
+            var serviceResult = new ServiceResult<T>
             {
-                var alert = new Alert
-                {
-                    AlertType = "danger",
-                    Title = "Error",
-                    Message = httpResponseMessage.ReasonPhrase
-                };
+                IsSuccess = httpResponseMessage.IsSuccessStatusCode,
+                Message = httpResponseMessage.ReasonPhrase
+            };
 
-                navigationManager.NavigateTo(alert.Page);
+            if (serviceResult.IsSuccess)
+            {
+                serviceResult.Result = await JsonSerializer.DeserializeAsync<T>
+                    (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
+                        new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
             }
 
-            return httpResponseMessage.IsSuccessStatusCode;
+            return serviceResult;
         }
 
         private void AddHttpClientAuthorisationHeader()
