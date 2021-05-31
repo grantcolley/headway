@@ -26,7 +26,7 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
-    * [Handling Json Circular Reference Errors](#handling-json-circular-reference-errors)
+    * [Telling Headway.WebApi to Handle Json Circular Reference Errors](#telling-headway.webApi-to-handle-json-circular-reference-errors)
 
 ## Getting Started
 
@@ -114,7 +114,7 @@ Remove the latest migration:
  * https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
-### Handling Json Circular Reference Errors
+### Telling Headway.WebApi to Handle Json Circular Reference Errors
 Entity Framework required the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
 
 ```C#
@@ -128,7 +128,7 @@ Entity Framework required the `Include()` method to specify related entities to 
         }
 ```
 
-The query results contain a circular reference, where the parent references the child which references parent and so on. In order for `System.Text.Json` to handle de-serialising objects contanining circular references we have to set `JsonSerializerOptions.ReferenceHandler` to [IgnoreCycle](https://github.com/dotnet/runtime/issues/40099) in the *Headway.WebApi*'s [Startup](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Startup.cs) class.
+The query results will now contain a circular reference, where the parent references the child which references parent and so on. In order for `System.Text.Json` to handle de-serialising objects contanining circular references we have to set `JsonSerializerOptions.ReferenceHandler` to [IgnoreCycle](https://github.com/dotnet/runtime/issues/40099) in the **Headway.WebApi**'s [Startup](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Startup.cs) class. If we explicitly specify that circular references should be ignored **Headway.WebApi** will return `HTTP Status 500 Internal Server Error`.
 
 ```C#
             services.AddControllers()
