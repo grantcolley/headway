@@ -22,7 +22,6 @@
                         <th>Id</th>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Roles</th>
                         <th> 
                             <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => AddPermission()"/>
                         </th>
@@ -35,7 +34,6 @@
                             <td>@permission.PermissionId</td>
                             <td>@permission.Name</td>
                             <td>@permission.Description</td>
-                            <td>@string.Join(",", @permission.Roles.Select(r => r.Name).ToList())</td>
                             <td>
                                 <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => UpdatePermission(permission.PermissionId)"/>
                             </td>
