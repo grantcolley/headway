@@ -19,7 +19,8 @@ namespace Headway.Repository
         {
             return await applicationDbContext.Users.AnyAsync(
                 u => u.Email.Equals(claim)
-                && u.Permissions.Any(p => p.Name.Equals(permission)))
+                && (u.Permissions.Any(p => p.Name.Equals(permission))
+                || u.Roles.SelectMany(r => r.Permissions).Any(p => p.Name.Equals(permission))))
                 .ConfigureAwait(false);
         }
     }
