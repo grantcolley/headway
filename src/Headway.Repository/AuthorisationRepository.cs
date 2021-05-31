@@ -26,7 +26,7 @@ namespace Headway.Repository
         {
             var user = await applicationDbContext.Users
                 .Include(u => u.Permissions)
-                .ThenInclude(u => u.Roles)
+                .Include(u => u.Roles)
                 .FirstOrDefaultAsync(u => u.UserId.Equals(userId))
                 .ConfigureAwait(false);
             return user;
