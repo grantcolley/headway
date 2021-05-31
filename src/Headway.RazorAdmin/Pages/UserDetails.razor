@@ -69,12 +69,16 @@
                     <table>
                         <tbody>
                             <tr>
+                                <td>Roles</td>
+                                <td>Permissions</td>
+                            </tr>
+                            <tr>
                                 <td>
                                     @if (headwayRoles != null)
                                     {
                                         @foreach (var role in headwayRoles)
                                         {
-                                            <input type="checkbox" @onchange="eventArgs => { RolesCheckboxClicked(role.Role.RoleId, eventArgs.Value); }" />@role.Name<br />
+                                            <input type="checkbox" checked="@role.IsSelected" @onchange="eventArgs => { RolesCheckboxClicked(role.Role.RoleId, eventArgs.Value); }" />@role.Name<br />
                                         }
                                     }
                                 </td>
@@ -83,7 +87,7 @@
                                     {
                                         @foreach (var permission in headwayPermissions)
                                         {
-                                            <input type="checkbox" @onchange="eventArgs => { PermissionCheckboxClicked(permission.Permission.PermissionId, eventArgs.Value); }" />@permission.Name<br />
+                                            <input type="checkbox" checked="@permission.IsSelected" @onchange="eventArgs => { PermissionCheckboxClicked(permission.Permission.PermissionId, eventArgs.Value); }" />@permission.Name<br />
                                         }
                                     }
                                 </td>
