@@ -114,7 +114,7 @@ Remove the latest migration:
  * https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
-### Telling Headway.WebApi to Handle Json Circular Reference Errors
+### Telling Headway WebApi to Handle Json Circular Reference Errors
 Entity Framework required the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
 
 ```C#
