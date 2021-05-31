@@ -3,6 +3,7 @@ using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
@@ -22,9 +23,11 @@ namespace Headway.Repository
 
         public async Task<User> GetUserAsync(string claim, int userId)
         {
-            return await applicationDbContext.Users.FirstOrDefaultAsync(
-                            u => u.UserId.Equals(userId))
-                            .ConfigureAwait(false);
+            var user = await applicationDbContext.Users
+                .Include(u => u.Permissions)
+                .FirstOrDefaultAsync(u => u.UserId.Equals(userId))
+                .ConfigureAwait(false);
+            return user;
         }
 
         public async Task<User> AddUserAsync(string claim, User user)
