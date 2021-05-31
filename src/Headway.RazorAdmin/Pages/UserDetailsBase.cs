@@ -140,7 +140,21 @@ namespace Headway.RazorAdmin.Pages
 
         protected void RolesCheckboxClicked(int roleId, object checkedValue)
         {
+            var role = headwayRoles.Single(r => r.Role.RoleId.Equals(roleId));
+            var userRole = user.Roles.SingleOrDefault(r => r.RoleId.Equals(roleId));
 
+            bool isChecked = (bool)checkedValue;
+
+            if (isChecked
+                && userRole == null)
+            {
+                user.Roles.Add(role.Role);
+            }
+            else if (!isChecked
+                && userRole != null)
+            {
+                user.Roles.Remove(userRole);
+            }
         }
 
         protected void PermissionCheckboxClicked(int permissionId, object checkedValue)
