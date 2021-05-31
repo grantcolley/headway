@@ -18,7 +18,10 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<User>> GetUsersAsync(string claim)
         {
-            return await applicationDbContext.Users.ToListAsync()
+            return await applicationDbContext.Users
+                .Include(u => u.Permissions)
+                .Include(u => u.Roles)
+                .ToListAsync()
                 .ConfigureAwait(false);
         }
 
@@ -115,8 +118,10 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<Role>> GetRolesAsync(string claim)
         {
-            return await applicationDbContext.Roles.ToListAsync()
-                    .ConfigureAwait(false);
+            return await applicationDbContext.Roles
+                .Include(p => p.Permissions)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<Role> GetRoleAsync(string claim, int roleId)
