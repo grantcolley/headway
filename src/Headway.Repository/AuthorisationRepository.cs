@@ -2,6 +2,7 @@
 using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace Headway.Repository
         {
             var user = await applicationDbContext.Users
                 .Include(u => u.Permissions)
+                .ThenInclude(u => u.Roles)
                 .FirstOrDefaultAsync(u => u.UserId.Equals(userId))
                 .ConfigureAwait(false);
             return user;
@@ -41,8 +43,8 @@ namespace Headway.Repository
         public async Task<User> UpdateUserAsync(string claim, User user)
         {
             applicationDbContext.Users.Update(user);
-            await applicationDbContext.SaveChangesAsync()
-                            .ConfigureAwait(false);
+                await applicationDbContext.SaveChangesAsync()
+                                            .ConfigureAwait(false);
             return user;
         }
 
@@ -119,9 +121,10 @@ namespace Headway.Repository
 
         public async Task<Role> GetRoleAsync(string claim, int roleId)
         {
-            return await applicationDbContext.Roles.FirstOrDefaultAsync(
-                            r => r.RoleId.Equals(roleId))
-                            .ConfigureAwait(false);
+            return await applicationDbContext.Roles
+                .Include(r => r.Permissions)
+                .FirstOrDefaultAsync(r => r.RoleId.Equals(roleId))
+                .ConfigureAwait(false);
         }
 
         public async Task<Role> AddRoleAsync(string claim, Role role)
