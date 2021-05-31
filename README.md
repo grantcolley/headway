@@ -26,7 +26,7 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
-    * [Handling Json Circular Reference Errors During De-serialising](handling-json-circular-reference-errors-during-de-serialising)
+    * [Handling Json Circular Reference Errors](#handling-json-circular-reference-errors)
 
 ## Getting Started
 
@@ -114,7 +114,7 @@ Remove the latest migration:
  * https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
-### Handling Json Circular Reference Errors During De-serialising
+### Handling Json Circular Reference Errors
 Entity Framework required the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
 
 ```C#
