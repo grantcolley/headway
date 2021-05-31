@@ -26,6 +26,7 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
+    * [Handling Json Circular Reference Errors During De-serialising](handling-json-circular-reference-errors-during-de-serialising)
 
 ## Getting Started
 
@@ -113,3 +114,24 @@ Remove the latest migration:
  * https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
+### Handling Json Circular Reference Errors During De-serialising
+Entity Framework required the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
+
+```C#
+        public async Task<User> GetUserAsync(string claim, int userId)
+        {
+            var user = await applicationDbContext.Users
+                .Include(u => u.Permissions)
+                .FirstOrDefaultAsync(u => u.UserId.Equals(userId))
+                .ConfigureAwait(false);
+            return user;
+        }
+```
+
+The query results contain a circular reference, where the parent references the child which references parent and so on. In order for `System.Text.Json` to handle de-serialising objects contanining circular references we have to set `JsonSerializerOptions.ReferenceHandler` to [IgnoreCycle](https://github.com/dotnet/runtime/issues/40099) in the *Headway.WebApi*'s [Startup](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Startup.cs) class.
+
+```C#
+            services.AddControllers()
+                .AddJsonOptions(options => 
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+```
