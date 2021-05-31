@@ -1,7 +1,10 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.RazorAdmin.Model;
 using Headway.RazorShared.Model;
 using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.RazorAdmin.Pages
@@ -15,6 +18,8 @@ namespace Headway.RazorAdmin.Pages
         public int RoleId { get; set; }
 
         protected Role role { get; set; }
+
+        protected List<HeadwayPermission> headwayPermissions { get; set; }
 
         protected Alert alert { get; set; }
 
@@ -37,7 +42,17 @@ namespace Headway.RazorAdmin.Pages
                 }
             }
 
-            // get permissions....
+            var permissionsResponse = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
+            var permissions = GetResponse(permissionsResponse);
+            if (permissions == null)
+            {
+                return;
+            }
+
+            headwayPermissions = (from p in permissions
+                                  join rp in role.Permissions on p.PermissionId equals rp.PermissionId into j
+                                  from res in j.DefaultIfEmpty()
+                                  select new HeadwayPermission(p) { IsSelected = res == null ? false : true }).ToList();
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
@@ -107,6 +122,25 @@ namespace Headway.RazorAdmin.Pages
             };
 
             IsDeleteInProgress = false;
+        }
+
+        protected void PermissionCheckboxClicked(int permissionId, object checkedValue)
+        {
+            var permission = headwayPermissions.Single(p => p.Permission.PermissionId.Equals(permissionId));
+            var rolePermission = role.Permissions.SingleOrDefault(p => p.PermissionId.Equals(permissionId));
+
+            bool isChecked = (bool)checkedValue;
+
+            if (isChecked
+                && rolePermission == null)
+            {
+                role.Permissions.Add(permission.Permission);
+            }
+            else if (!isChecked
+                && rolePermission != null)
+            {
+                role.Permissions.Remove(rolePermission);
+            }
         }
     }
 }

@@ -66,6 +66,21 @@
                             </tr>
                         </tbody>
                     </table>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @if (headwayPermissions != null)
+                                    {
+                                        @foreach (var permission in headwayPermissions)
+                                        {
+                                            <input type="checkbox" @onchange="eventArgs => { PermissionCheckboxClicked(permission.Permission.PermissionId, eventArgs.Value); }" />@permission.Name<br />
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </EditForm>
             }
             else
