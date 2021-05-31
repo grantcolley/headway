@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Headway.RazorAdmin.Pages
 {
-    public class PermissionDetailsBase : ComponentBase
+    public class PermissionDetailsBase : HeadwayComponentBase
     {
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
@@ -29,7 +29,8 @@ namespace Headway.RazorAdmin.Pages
             }
             else
             {
-                permission = await AuthorisationService.GetPermissionAsync(PermissionId).ConfigureAwait(false);
+                var permissionResponse = await AuthorisationService.GetPermissionAsync(PermissionId).ConfigureAwait(false);
+                permission = GetResponse(permissionResponse);
             }
 
             await base.OnInitializedAsync().ConfigureAwait(false);
@@ -41,7 +42,12 @@ namespace Headway.RazorAdmin.Pages
 
             if(permission.PermissionId.Equals(0))
             {
-                permission = await AuthorisationService.AddPermissionAsync(permission).ConfigureAwait(false);
+                var permissionResponse = await AuthorisationService.AddPermissionAsync(permission).ConfigureAwait(false);
+                permission = GetResponse(permissionResponse);
+                if(permission == null)
+                {
+                    return;
+                }
 
                 alert = new Alert
                 {
@@ -54,7 +60,12 @@ namespace Headway.RazorAdmin.Pages
             }
             else
             {
-                permission = await AuthorisationService.UpdatePermissionAsync(permission).ConfigureAwait(false);
+                var permissionResponse = await AuthorisationService.UpdatePermissionAsync(permission).ConfigureAwait(false);
+                permission = GetResponse(permissionResponse);
+                if (permission == null)
+                {
+                    return;
+                }
 
                 alert = new Alert
                 {
@@ -73,7 +84,12 @@ namespace Headway.RazorAdmin.Pages
         {
             IsDeleteInProgress = true;
 
-            await AuthorisationService.DeletePermissionAsync(permission.PermissionId).ConfigureAwait(false);
+            var deleteResponse = await AuthorisationService.DeletePermissionAsync(permission.PermissionId).ConfigureAwait(false);
+            var deleteResult = GetResponse(deleteResponse);
+            if (deleteResult.Equals(0))
+            {
+                return;
+            }
 
             alert = new Alert
             {

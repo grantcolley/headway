@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Headway.RazorAdmin.Pages
 {
-    public class UserDetailsBase : ComponentBase
+    public class UserDetailsBase : HeadwayComponentBase
     {
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
@@ -36,16 +36,33 @@ namespace Headway.RazorAdmin.Pages
             }
             else
             {
-                user = await AuthorisationService.GetUserAsync(UserId).ConfigureAwait(false);
+                var userResponse = await AuthorisationService.GetUserAsync(UserId).ConfigureAwait(false);
+                user = GetResponse(userResponse);
+                if (user == null)
+                {
+                    return;
+                }
+            }
+            
+            var permissionsResponse = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
+            var permissions = GetResponse(permissionsResponse);
+            if (permissions == null)
+            {
+                return;
             }
 
-            var permissions = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
             headwayPermissions = (from p in permissions
-                                 join up in user.Permissions on p.PermissionId equals up.PermissionId into j
-                                 from res in j.DefaultIfEmpty()
-                                 select new HeadwayPermission(p) { IsSelected = res == null ? false : true }).ToList();
+                                  join up in user.Permissions on p.PermissionId equals up.PermissionId into j
+                                  from res in j.DefaultIfEmpty()
+                                  select new HeadwayPermission(p) { IsSelected = res == null ? false : true }).ToList();
 
-            var roles = await AuthorisationService.GetRolesAsync().ConfigureAwait(false);
+            var rolesResponse = await AuthorisationService.GetRolesAsync().ConfigureAwait(false);
+            var roles = GetResponse(rolesResponse);
+            if(roles == null)
+            {
+                return;
+            }
+
             headwayRoles = (from r in roles
                             join ur in user.Roles on r.RoleId equals ur.RoleId into j
                             from res in j.DefaultIfEmpty()
@@ -60,7 +77,12 @@ namespace Headway.RazorAdmin.Pages
 
             if (user.UserId.Equals(0))
             {
-                user = await AuthorisationService.AddUserAsync(user).ConfigureAwait(false);
+                var userResponse = await AuthorisationService.AddUserAsync(user).ConfigureAwait(false);
+                user = GetResponse(userResponse);
+                if(user == null)
+                {
+                    return;
+                }
 
                 alert = new Alert
                 {
@@ -73,7 +95,12 @@ namespace Headway.RazorAdmin.Pages
             }
             else
             {
-                user = await AuthorisationService.UpdateUserAsync(user).ConfigureAwait(false);
+                var userResponse = await AuthorisationService.UpdateUserAsync(user).ConfigureAwait(false);
+                user = GetResponse(userResponse);
+                if (user == null)
+                {
+                    return;
+                }
 
                 alert = new Alert
                 {
@@ -92,7 +119,12 @@ namespace Headway.RazorAdmin.Pages
         {
             IsDeleteInProgress = true;
 
-            await AuthorisationService.DeleteUserAsync(user.UserId).ConfigureAwait(false);
+            var deleteResponse = await AuthorisationService.DeleteUserAsync(user.UserId).ConfigureAwait(false);
+            var deleteResult = GetResponse(deleteResponse);
+            if (deleteResult.Equals(0))
+            {
+                return;
+            }
 
             alert = new Alert
             {

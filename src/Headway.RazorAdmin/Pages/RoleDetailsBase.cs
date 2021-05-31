@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Headway.RazorAdmin.Pages
 {
-    public class RoleDetailsBase : ComponentBase
+    public class RoleDetailsBase : HeadwayComponentBase
     {
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
@@ -29,8 +29,15 @@ namespace Headway.RazorAdmin.Pages
             }
             else
             {
-                role = await AuthorisationService.GetRoleAsync(RoleId).ConfigureAwait(false);
+                var roleResponse = await AuthorisationService.GetRoleAsync(RoleId).ConfigureAwait(false);
+                role = GetResponse(roleResponse);
+                if(role == null)
+                {
+                    return;
+                }
             }
+
+            // get permissions....
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
@@ -41,7 +48,12 @@ namespace Headway.RazorAdmin.Pages
 
             if (role.RoleId.Equals(0))
             {
-                role = await AuthorisationService.AddRoleAsync(role).ConfigureAwait(false);
+                var roleResponse = await AuthorisationService.AddRoleAsync(role).ConfigureAwait(false);
+                role = GetResponse(roleResponse);
+                if(role == null)
+                {
+                    return;
+                }
 
                 alert = new Alert
                 {
@@ -54,7 +66,12 @@ namespace Headway.RazorAdmin.Pages
             }
             else
             {
-                role = await AuthorisationService.UpdateRoleAsync(role).ConfigureAwait(false);
+                var roleResponse = await AuthorisationService.UpdateRoleAsync(role).ConfigureAwait(false);
+                role = GetResponse(roleResponse);
+                if (role == null)
+                {
+                    return;
+                }
 
                 alert = new Alert
                 {
@@ -73,7 +90,12 @@ namespace Headway.RazorAdmin.Pages
         {
             IsDeleteInProgress = true;
 
-            await AuthorisationService.DeleteRoleAsync(role.RoleId).ConfigureAwait(false);
+            var deleteResponse = await AuthorisationService.DeleteRoleAsync(role.RoleId).ConfigureAwait(false);
+            var deleteResult = GetResponse(deleteResponse);
+            if(deleteResult.Equals(0))
+            {
+                return;
+            }
 
             alert = new Alert
             {

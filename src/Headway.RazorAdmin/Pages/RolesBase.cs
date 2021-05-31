@@ -1,16 +1,14 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.RazorShared.Model;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.RazorAdmin.Pages
 {
-    public class RolesBase : ComponentBase
+    public class RolesBase : HeadwayComponentBase
     {
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
 
@@ -18,7 +16,8 @@ namespace Headway.RazorAdmin.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            Roles = await AuthorisationService.GetRolesAsync().ConfigureAwait(false);
+            var rolesResponse = await AuthorisationService.GetRolesAsync().ConfigureAwait(false);
+            Roles = GetResponse(rolesResponse);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
