@@ -26,7 +26,7 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
-    * [Telling Headway.WebApi to Handle Json Circular Reference Errors](#telling-headway.webApi-to-handle-json-circular-reference-errors)
+    * [Telling Headway.WebApi to Handle Json Circular Reference Errors](#telling-headway-webApi-to-handle-json-circular-reference-errors)
 
 ## Getting Started
 
