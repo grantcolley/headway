@@ -29,15 +29,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
-            var permissions = await authorisationRepository.GetRolesAsync(claim)
-                                                            .ConfigureAwait(false);
+            var permissions = await authorisationRepository
+                .GetRolesAsync().ConfigureAwait(false);
+
             return Ok(permissions);
         }
 
@@ -46,15 +48,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
-            var permissions = await authorisationRepository.GetRoleAsync(claim, roleId)
-                                                            .ConfigureAwait(false);
+            var permissions = await authorisationRepository
+                .GetRoleAsync(roleId).ConfigureAwait(false);
+
             return Ok(permissions);
         }
 
@@ -63,15 +67,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
-            var savedPermission = await authorisationRepository.AddRoleAsync(claim, role)
-                                                                .ConfigureAwait(false);
+            var savedPermission = await authorisationRepository
+                .AddRoleAsync(role).ConfigureAwait(false);
+
             return Ok(savedPermission);
         }
 
@@ -80,15 +86,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
-            var savedPermission = await authorisationRepository.UpdateRoleAsync(claim, role)
-                                                                    .ConfigureAwait(false);
+            var savedPermission = await authorisationRepository
+                .UpdateRoleAsync(role).ConfigureAwait(false);
+
             return Ok(savedPermission);
         }
 
@@ -97,15 +105,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
-            var result = await authorisationRepository.DeleteRoleAsync(claim, roleId)
-                                                            .ConfigureAwait(false);
+            var result = await authorisationRepository
+                .DeleteRoleAsync(roleId).ConfigureAwait(false);
+
             return Ok(result);
         }
     }

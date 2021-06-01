@@ -16,7 +16,7 @@ namespace Headway.Repository
         {
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync(string claim)
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
             return await applicationDbContext.Users
                 .Include(u => u.Permissions)
@@ -25,7 +25,7 @@ namespace Headway.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<User> GetUserAsync(string claim, int userId)
+        public async Task<User> GetUserAsync(int userId)
         {
             var user = await applicationDbContext.Users
                 .Include(u => u.Permissions)
@@ -35,23 +35,32 @@ namespace Headway.Repository
             return user;
         }
 
-        public async Task<User> AddUserAsync(string claim, User user)
+        public async Task<User> AddUserAsync(User user)
         {
             applicationDbContext.Users.Add(user);
-            await applicationDbContext.SaveChangesAsync()
-                                            .ConfigureAwait(false);
+
+            await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
+
             return user;
         }
 
-        public async Task<User> UpdateUserAsync(string claim, User user)
+        public async Task<User> UpdateUserAsync(User user)
         {
-            applicationDbContext.Users.Update(user);
-                await applicationDbContext.SaveChangesAsync()
-                                            .ConfigureAwait(false);
+            try
+            {
+                applicationDbContext.Users.Update(user);
+
+                await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch(Exception ex)
+            {
+
+            }
+
             return user;
         }
 
-        public async Task<bool> DeleteUserAsync(string claim, int userId)
+        public async Task<bool> DeleteUserAsync(int userId)
         {
             int result = 0;
 
@@ -63,26 +72,26 @@ namespace Headway.Repository
             {
                 applicationDbContext.Users.Remove(user);
                 result = await applicationDbContext.SaveChangesAsync()
-                            .ConfigureAwait(false);
+                    .ConfigureAwait(false);
             }
 
             return result > 0;
         }
 
-        public async Task<IEnumerable<Permission>> GetPermissionsAsync(string claim)
+        public async Task<IEnumerable<Permission>> GetPermissionsAsync()
         {
             return await applicationDbContext.Permissions.ToListAsync()
-                       .ConfigureAwait(false);
+                .ConfigureAwait(false);
         }
 
-        public async Task<Permission> GetPermissionAsync(string claim, int permissionId)
+        public async Task<Permission> GetPermissionAsync(int permissionId)
         {
             return await applicationDbContext.Permissions.FirstOrDefaultAsync(
                 p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
         }
 
-        public async Task<Permission> AddPermissionAsync(string claim, Permission permission)
+        public async Task<Permission> AddPermissionAsync(Permission permission)
         {
             applicationDbContext.Permissions.Add(permission);
             await applicationDbContext.SaveChangesAsync()
@@ -90,7 +99,7 @@ namespace Headway.Repository
             return permission;
         }
 
-        public async Task<Permission> UpdatePermissionAsync(string claim, Permission permission)
+        public async Task<Permission> UpdatePermissionAsync(Permission permission)
         {
             applicationDbContext.Permissions.Update(permission);
             await applicationDbContext.SaveChangesAsync()
@@ -98,7 +107,7 @@ namespace Headway.Repository
             return permission;
         }
 
-        public async Task<bool> DeletePermissionAsync(string claim, int permissionId)
+        public async Task<bool> DeletePermissionAsync(int permissionId)
         {
             int result = 0;
 
@@ -116,7 +125,7 @@ namespace Headway.Repository
             return result > 0;
         }
 
-        public async Task<IEnumerable<Role>> GetRolesAsync(string claim)
+        public async Task<IEnumerable<Role>> GetRolesAsync()
         {
             return await applicationDbContext.Roles
                 .Include(p => p.Permissions)
@@ -124,7 +133,7 @@ namespace Headway.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<Role> GetRoleAsync(string claim, int roleId)
+        public async Task<Role> GetRoleAsync(int roleId)
         {
             return await applicationDbContext.Roles
                 .Include(r => r.Permissions)
@@ -132,7 +141,7 @@ namespace Headway.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<Role> AddRoleAsync(string claim, Role role)
+        public async Task<Role> AddRoleAsync(Role role)
         {
             applicationDbContext.Roles.Add(role);
             await applicationDbContext.SaveChangesAsync()
@@ -140,7 +149,7 @@ namespace Headway.Repository
             return role;
         }
 
-        public async Task<Role> UpdateRoleAsync(string claim, Role role)
+        public async Task<Role> UpdateRoleAsync(Role role)
         {
             applicationDbContext.Roles.Update(role);
             await applicationDbContext.SaveChangesAsync()
@@ -148,7 +157,7 @@ namespace Headway.Repository
             return role;
         }
 
-        public async Task<bool> DeleteRoleAsync(string claim, int roleId)
+        public async Task<bool> DeleteRoleAsync(int roleId)
         {
             int result = 0;
 

@@ -29,16 +29,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
             var users = await authorisationRepository
-                                .GetUsersAsync(claim)
-                                .ConfigureAwait(false);
+                .GetUsersAsync().ConfigureAwait(false);
+
             return Ok(users);
         }
 
@@ -47,16 +48,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
             var user = await authorisationRepository
-                                .GetUserAsync(claim, userId)
-                                .ConfigureAwait(false);
+                .GetUserAsync(userId).ConfigureAwait(false);
+
             return Ok(user);
         }
 
@@ -65,16 +67,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
             var savedUser = await authorisationRepository
-                                        .AddUserAsync(claim, user)
-                                        .ConfigureAwait(false);
+                .AddUserAsync(user).ConfigureAwait(false);
+
             return Ok(savedUser);
         }
 
@@ -83,16 +86,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
             var savedUser = await authorisationRepository
-                                    .UpdateUserAsync(claim, user)
-                                    .ConfigureAwait(false);
+                .UpdateUserAsync(user).ConfigureAwait(false);
+
             return Ok(savedUser);
         }
 
@@ -101,16 +105,17 @@ namespace Headway.WebApi.Controllers
         {
             var claim = GetUserClaim();
 
-            var authorised = await authorisationRepository.IsAuthorisedAsync(claim, "Admin")
-                                                            .ConfigureAwait(false);
+            var authorised = await authorisationRepository
+                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+
             if (!authorised)
             {
                 return Unauthorized();
             }
 
             var result = await authorisationRepository
-                                    .DeleteUserAsync(claim, userId)
-                                    .ConfigureAwait(false);
+                .DeleteUserAsync(userId).ConfigureAwait(false);
+
             return Ok(result);
         }
     }
