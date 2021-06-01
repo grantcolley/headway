@@ -93,7 +93,7 @@ namespace Headway.RazorAdmin.Pages
 
             alert = new Alert
             {
-                AlertType = "primary",
+                AlertType = "danger",
                 Title = $"{permission.Name}",
                 Message = $"has been deleted.",
                 RedirectText = "Return to permisions.",

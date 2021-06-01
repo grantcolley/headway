@@ -128,7 +128,7 @@ namespace Headway.RazorAdmin.Pages
 
             alert = new Alert
             {
-                AlertType = "primary",
+                AlertType = "danger",
                 Title = $"{user.UserName}",
                 Message = $"has been deleted.",
                 RedirectText = "Return to users.",
