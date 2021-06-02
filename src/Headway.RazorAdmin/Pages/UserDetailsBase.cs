@@ -139,39 +139,43 @@ namespace Headway.RazorAdmin.Pages
         }
 
         protected void RolesCheckboxClicked(int roleId, object checkedValue)
-        {
-            var role = headwayRoles.Single(r => r.Role.RoleId.Equals(roleId));
-            var userRole = user.Roles.SingleOrDefault(r => r.RoleId.Equals(roleId));
-
+        {           
             bool isChecked = (bool)checkedValue;
 
-            if (isChecked
-                && userRole == null)
+            if (isChecked)
             {
-                user.Roles.Add(role.Role);
+                var role = headwayRoles.Single(r => r.Role.RoleId.Equals(roleId));
+                user.Roles.Add(new Role
+                {
+                    RoleId = role.Role.RoleId,
+                    Name = role.Name,
+                    Description = role.Description
+                });
             }
-            else if (!isChecked
-                && userRole != null)
+            else if (!isChecked)
             {
+                var userRole = user.Roles.SingleOrDefault(r => r.RoleId.Equals(roleId));
                 user.Roles.Remove(userRole);
             }
         }
 
         protected void PermissionCheckboxClicked(int permissionId, object checkedValue)
-        {
-            var permission = headwayPermissions.Single(p => p.Permission.PermissionId.Equals(permissionId));
-            var userPermission = user.Permissions.SingleOrDefault(p => p.PermissionId.Equals(permissionId));
-
+        {  
             bool isChecked = (bool)checkedValue;
 
-            if(isChecked
-                && userPermission == null)
+            if(isChecked)
             {
-                user.Permissions.Add(permission.Permission);
+                var permission = headwayPermissions.Single(p => p.Permission.PermissionId.Equals(permissionId));
+                user.Permissions.Add(new Permission
+                {
+                    PermissionId = permission.Permission.PermissionId,
+                    Name = permission.Name,
+                    Description = permission.Description
+                });
             }
-            else if(!isChecked
-                && userPermission != null)
+            else if(!isChecked)
             {
+                var userPermission = user.Permissions.SingleOrDefault(p => p.PermissionId.Equals(permissionId));
                 user.Permissions.Remove(userPermission);
             }
         }
