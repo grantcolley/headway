@@ -46,16 +46,9 @@ namespace Headway.Repository
 
         public async Task<User> UpdateUserAsync(User user)
         {
-            try
-            {
-                applicationDbContext.Users.Update(user);
+            applicationDbContext.Users.Update(user);
 
-                await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
-            }
-            catch(Exception ex)
-            {
-
-            }
+            await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
 
             return user;
         }
