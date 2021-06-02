@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IRepository
+    public interface IRepository : IDisposable
     {
         Task<bool> IsAuthorisedAsync(string claim, string permission);
     }

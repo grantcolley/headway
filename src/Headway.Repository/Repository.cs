@@ -9,6 +9,7 @@ namespace Headway.Repository
     public abstract class Repository : IRepository
     {
         protected ApplicationDbContext applicationDbContext;
+        private bool disposedValue;
 
         protected Repository(ApplicationDbContext applicationDbContext)
         {
@@ -22,6 +23,25 @@ namespace Headway.Repository
                 && (u.Permissions.Any(p => p.Name.Equals(permission))
                 || u.Roles.SelectMany(r => r.Permissions).Any(p => p.Name.Equals(permission))))
                 .ConfigureAwait(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    applicationDbContext.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            System.GC.SuppressFinalize(this);
         }
     }
 }
