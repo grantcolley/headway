@@ -31,6 +31,7 @@ namespace Headway.Repository
             var user = await applicationDbContext.Users
                 .Include(u => u.Permissions)
                 .Include(u => u.Roles)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.UserId.Equals(userId))
                 .ConfigureAwait(false);
             return user;
@@ -112,14 +113,17 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<Permission>> GetPermissionsAsync()
         {
-            return await applicationDbContext.Permissions.ToListAsync()
+            return await applicationDbContext.Permissions
+                .AsNoTracking()
+                .ToListAsync()
                 .ConfigureAwait(false);
         }
 
         public async Task<Permission> GetPermissionAsync(int permissionId)
         {
-            return await applicationDbContext.Permissions.FirstOrDefaultAsync(
-                p => p.PermissionId.Equals(permissionId))
+            return await applicationDbContext.Permissions
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
         }
 
@@ -161,6 +165,7 @@ namespace Headway.Repository
         {
             return await applicationDbContext.Roles
                 .Include(p => p.Permissions)
+                .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -169,6 +174,7 @@ namespace Headway.Repository
         {
             return await applicationDbContext.Roles
                 .Include(r => r.Permissions)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.RoleId.Equals(roleId))
                 .ConfigureAwait(false);
         }
@@ -181,9 +187,35 @@ namespace Headway.Repository
             return role;
         }
 
-        public async Task<Role> UpdateRoleAsync(Role role)
+        public async Task<Role> UpdateRoleAsync(Role updateRole)
         {
+            var role = await GetRoleAsync(updateRole.RoleId).ConfigureAwait(false);
+
+            if (!role.Name.Equals(updateRole.Name))
+            {
+                role.Name = updateRole.Name;
+            }
+
+            if (!role.Description.Equals(updateRole.Description))
+            {
+                role.Description = updateRole.Description;
+            }
+
+            var removePermissions = role.Permissions
+                .Where(rp => !updateRole.Permissions.Any(p => p.PermissionId.Equals(rp.PermissionId)))
+                .ToList();
+            foreach (var permission in removePermissions)
+            {
+                role.Permissions.Remove(permission);
+            }
+
+            var addPermissions = updateRole.Permissions
+                .Where(rp => !role.Permissions.Any(p => p.PermissionId.Equals(rp.PermissionId)))
+                .ToList();
+            role.Permissions.AddRange(addPermissions);
+
             applicationDbContext.Roles.Update(role);
+
             await applicationDbContext.SaveChangesAsync()
                             .ConfigureAwait(false);
             return role;
