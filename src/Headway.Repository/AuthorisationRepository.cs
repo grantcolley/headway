@@ -21,6 +21,7 @@ namespace Headway.Repository
             return await applicationDbContext.Users
                 .Include(u => u.Permissions)
                 .Include(u => u.Roles)
+                .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -44,8 +45,46 @@ namespace Headway.Repository
             return user;
         }
 
-        public async Task<User> UpdateUserAsync(User user)
+        public async Task<User> UpdateUserAsync(User updateUser)
         {
+            var user = await GetUserAsync(updateUser.UserId).ConfigureAwait(false);
+
+            if(!user.UserName.Equals(updateUser.UserName))
+            {
+                user.UserName = updateUser.UserName;
+            }
+
+            if (!user.Email.Equals(updateUser.Email))
+            {
+                user.Email = updateUser.Email;
+            }
+
+            var removePermissions = user.Permissions
+                .Where(up => !updateUser.Permissions.Any(p => p.PermissionId.Equals(up.PermissionId)))
+                .ToList();
+            foreach(var permission in removePermissions)
+            {
+                user.Permissions.Remove(permission);
+            }
+
+            var addPermissions = updateUser.Permissions
+                .Where(up => !user.Permissions.Any(p => p.PermissionId.Equals(up.PermissionId)))
+                .ToList();
+            user.Permissions.AddRange(addPermissions);
+
+            var removeRoles = user.Roles
+                .Where(ur => !updateUser.Roles.Any(r => r.RoleId.Equals(ur.RoleId)))
+                .ToList();
+            foreach (var role in removeRoles)
+            {
+                user.Roles.Remove(role);
+            }
+
+            var addRoles = updateUser.Roles
+                .Where(ur => !user.Roles.Any(r => r.RoleId.Equals(ur.RoleId)))
+                .ToList();
+            user.Roles.AddRange(addRoles);
+
             applicationDbContext.Users.Update(user);
 
             await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
