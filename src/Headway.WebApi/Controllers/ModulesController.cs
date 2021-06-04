@@ -1,10 +1,8 @@
 ﻿using Headway.Core.Interface;
-using Headway.Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -20,16 +18,27 @@ namespace Headway.WebApi.Controllers
         public ModulesController(
             IModuleRepository moduleRepository,
             ILogger<ModulesController> logger)
-            : base(logger)
+            : base((IRepository)moduleRepository, logger)
         {
             this.moduleRepository = moduleRepository;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Module>> Get()
+        public async Task<IActionResult> Get()
         {
+            var authorised = await IsAuthorisedAsync("User")
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
             var claim = GetUserClaim();
-            return await moduleRepository.GetModulesAsync(claim).ConfigureAwait(false);
+
+            var modules = await moduleRepository.GetModulesAsync(claim).ConfigureAwait(false);
+
+            return Ok(modules);
         }
     }
 }
