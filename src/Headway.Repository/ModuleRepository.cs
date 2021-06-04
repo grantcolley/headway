@@ -26,13 +26,13 @@ namespace Headway.Repository
                             ImageClass = "oi oi-home",
                             Path = "/",
                             Order = 1,
-                            Rights = new List<string>{ "headwayuser-read" }
+                            Authorised = new List<string>{ "User" }
                         }
                     },
-                    Rights = new List<string>{ "headwayuser-read" }
+                    Authorised = new List<string>{ "User" }
                 }
             },
-            Roles = new List<string> { "headwayuser" }
+            Roles = new List<string> { "User" }
         };
 
         private Module counter = new Module
@@ -54,13 +54,13 @@ namespace Headway.Repository
                             ImageClass = "oi oi-plus",
                             Path = "counter",
                             Order = 1,
-                            Rights = new List<string>{ "headwayuser-read", "headwayuser-write" }
+                            Authorised = new List<string>{ "User" }
                         }
                     },
-                    Rights = new List<string>{ "headwayuser-read", "headwayuser-write" }
+                    Authorised = new List<string>{ "User" }
                 }
             },
-            Roles = new List<string> { "headwayuser" }
+            Roles = new List<string> { "User" }
         };
 
         private Module weather = new Module
@@ -82,13 +82,13 @@ namespace Headway.Repository
                             ImageClass = "oi oi-list-rich",
                             Path = "fetchdata",
                             Order = 1,
-                            Rights = new List<string>{ "headwayuser-read", "headwayuser-write" }
+                            Authorised = new List<string>{ "User" }
                         }
                     },
-                    Rights = new List<string>{ "headwayuser-read", "headwayuser-write" }
+                    Authorised = new List<string>{ "User" }
                 }
             },
-            Roles = new List<string> { "headwayuser" }
+            Roles = new List<string> { "User" }
         };
 
         private Module configuration = new Module
@@ -110,7 +110,7 @@ namespace Headway.Repository
                             ImageClass = "oi oi-person",
                             Path = "users",
                             Order = 1,
-                            Rights = new List<string>{ "headwayadmin-write" }
+                            Authorised = new List<string>{ "Admin" }
                         },
                         new MenuItem
                         {
@@ -119,7 +119,7 @@ namespace Headway.Repository
                             ImageClass = "oi oi-key",
                             Path = "permissions",
                             Order = 1,
-                            Rights = new List<string>{ "headwayadmin-write" }
+                            Authorised = new List<string>{ "Admin" }
                         },
                         new MenuItem
                         {
@@ -128,13 +128,13 @@ namespace Headway.Repository
                             ImageClass = "oi oi-lock-locked",
                             Path = "roles",
                             Order = 1,
-                            Rights = new List<string>{ "headwayadmin-write" }
+                            Authorised = new List<string>{ "Admin" }
                         }
                     },
-                    Rights = new List<string>{ "headwayadmin-write" }
+                    Authorised = new List<string>{ "Admin" }
                 }
             },
-            Roles = new List<string> { "headwayadmin" }
+            Roles = new List<string> { "Admin" }
         };
 
         public Task<IEnumerable<Module>> GetModulesAsync(string userName)
