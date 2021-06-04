@@ -1,11 +1,12 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.Repository.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class ModuleRepository : IModuleRepository
+    public class ModuleRepository : RepositoryBase, IModuleRepository
     {
         private Module home = new Module
         {
@@ -136,6 +137,11 @@ namespace Headway.Repository
             },
             Roles = new List<string> { "Admin" }
         };
+
+        public ModuleRepository(ApplicationDbContext applicationDbContext)
+            : base(applicationDbContext)
+        {
+        }
 
         public Task<IEnumerable<Module>> GetModulesAsync(string userName)
         {
