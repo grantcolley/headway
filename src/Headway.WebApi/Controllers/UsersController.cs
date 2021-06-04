@@ -19,7 +19,7 @@ namespace Headway.WebApi.Controllers
         public UsersController(
             IAuthorisationRepository authorisationRepository,
             ILogger<UsersController> logger)
-            : base(logger)
+            : base(authorisationRepository, logger)
         {
             this.authorisationRepository = authorisationRepository;
         }
@@ -27,10 +27,8 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -38,7 +36,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var users = await authorisationRepository
-                .GetUsersAsync().ConfigureAwait(false);
+                .GetUsersAsync()
+                .ConfigureAwait(false);
 
             return Ok(users);
         }
@@ -46,10 +45,8 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> Get(int userId)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -57,7 +54,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var user = await authorisationRepository
-                .GetUserAsync(userId).ConfigureAwait(false);
+                .GetUserAsync(userId)
+                .ConfigureAwait(false);
 
             return Ok(user);
         }
@@ -65,10 +63,8 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] User user)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -76,7 +72,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var savedUser = await authorisationRepository
-                .AddUserAsync(user).ConfigureAwait(false);
+                .AddUserAsync(user)
+                .ConfigureAwait(false);
 
             return Ok(savedUser);
         }
@@ -84,10 +81,8 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] User user)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -95,7 +90,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var savedUser = await authorisationRepository
-                .UpdateUserAsync(user).ConfigureAwait(false);
+                .UpdateUserAsync(user)
+                .ConfigureAwait(false);
 
             return Ok(savedUser);
         }
@@ -103,10 +99,8 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -114,7 +108,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var result = await authorisationRepository
-                .DeleteUserAsync(userId).ConfigureAwait(false);
+                .DeleteUserAsync(userId)
+                .ConfigureAwait(false);
 
             return Ok(result);
         }
