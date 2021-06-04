@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class AuthorisationRepository : Repository, IAuthorisationRepository
+    public class AuthorisationRepository : RepositoryBase, IAuthorisationRepository
     {
         public AuthorisationRepository(ApplicationDbContext applicationDbContext)
             : base (applicationDbContext)
