@@ -66,37 +66,34 @@
                             </tr>
                         </tbody>
                     </table>
-                    @if (!user.UserId.Equals(0))
-                    {
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>Roles</td>
-                                    <td>Permissions</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        @if (headwayRoles != null)
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Roles</td>
+                                <td>Permissions</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @if (headwayRoles != null)
+                                    {
+                                        @foreach (var role in headwayRoles)
                                         {
-                                            @foreach (var role in headwayRoles)
-                                            {
-                                                <input type="checkbox" checked="@role.IsSelected" @onchange="eventArgs => { RolesCheckboxClicked(role.Role.RoleId, eventArgs.Value); }" />@role.Name<br />
-                                            }
+                                            <input type="checkbox" checked="@role.IsSelected" @onchange="eventArgs => { RolesCheckboxClicked(role.Role.RoleId, eventArgs.Value); }" />@role.Name<br />
                                         }
-                                    </td>
-                                    <td>
-                                        @if (headwayPermissions != null)
+                                    }
+                                </td>
+                                <td>
+                                    @if (headwayPermissions != null)
+                                    {
+                                        @foreach (var permission in headwayPermissions)
                                         {
-                                            @foreach (var permission in headwayPermissions)
-                                            {
-                                                <input type="checkbox" checked="@permission.IsSelected" @onchange="eventArgs => { PermissionCheckboxClicked(permission.Permission.PermissionId, eventArgs.Value); }" />@permission.Name<br />
-                                            }
+                                            <input type="checkbox" checked="@permission.IsSelected" @onchange="eventArgs => { PermissionCheckboxClicked(permission.Permission.PermissionId, eventArgs.Value); }" />@permission.Name<br />
                                         }
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    }
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </EditForm>
             }
             else
