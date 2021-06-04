@@ -2,7 +2,6 @@
 using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,29 +27,53 @@ namespace Headway.Repository
 
         public async Task<User> GetUserAsync(int userId)
         {
-            var user = await applicationDbContext.Users
+            return await applicationDbContext.Users
                 .Include(u => u.Permissions)
                 .Include(u => u.Roles)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.UserId.Equals(userId))
+                .SingleAsync(u => u.UserId.Equals(userId))
                 .ConfigureAwait(false);
-            return user;
         }
 
-        public async Task<User> AddUserAsync(User user)
+        public async Task<User> AddUserAsync(User addUser)
         {
-            applicationDbContext.Users.Add(user);
+            var user = new User
+            {
+                UserName = addUser.UserName,
+                Email = addUser.Email
+            };
 
-            await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await applicationDbContext.Users
+                .AddAsync(user)
+                .ConfigureAwait(false);
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            if(addUser.Permissions.Any()
+                || addUser.Roles.Any())
+            {
+                user.Permissions.AddRange(addUser.Permissions);
+                user.Roles.AddRange(addUser.Roles);
+
+                await applicationDbContext
+                    .SaveChangesAsync()
+                    .ConfigureAwait(false);
+            }
 
             return user;
         }
 
         public async Task<User> UpdateUserAsync(User updateUser)
         {
-            var user = await GetUserAsync(updateUser.UserId).ConfigureAwait(false);
+            var user = await applicationDbContext.Users
+                .Include(u => u.Permissions)
+                .Include(u => u.Roles)
+                .SingleAsync(u => u.UserId.Equals(updateUser.UserId))
+                .ConfigureAwait(false);
 
-            if(!user.UserName.Equals(updateUser.UserName))
+            if (!user.UserName.Equals(updateUser.UserName))
             {
                 user.UserName = updateUser.UserName;
             }
@@ -63,6 +86,7 @@ namespace Headway.Repository
             var removePermissions = user.Permissions
                 .Where(up => !updateUser.Permissions.Any(p => p.PermissionId.Equals(up.PermissionId)))
                 .ToList();
+
             foreach(var permission in removePermissions)
             {
                 user.Permissions.Remove(permission);
@@ -71,11 +95,13 @@ namespace Headway.Repository
             var addPermissions = updateUser.Permissions
                 .Where(up => !user.Permissions.Any(p => p.PermissionId.Equals(up.PermissionId)))
                 .ToList();
+
             user.Permissions.AddRange(addPermissions);
 
             var removeRoles = user.Roles
                 .Where(ur => !updateUser.Roles.Any(r => r.RoleId.Equals(ur.RoleId)))
                 .ToList();
+
             foreach (var role in removeRoles)
             {
                 user.Roles.Remove(role);
@@ -84,31 +110,29 @@ namespace Headway.Repository
             var addRoles = updateUser.Roles
                 .Where(ur => !user.Roles.Any(r => r.RoleId.Equals(ur.RoleId)))
                 .ToList();
+
             user.Roles.AddRange(addRoles);
 
             applicationDbContext.Users.Update(user);
 
-            await applicationDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
 
             return user;
         }
 
-        public async Task<bool> DeleteUserAsync(int userId)
+        public async Task<int> DeleteUserAsync(int userId)
         {
-            int result = 0;
-
-            var user = await applicationDbContext.Users.FirstOrDefaultAsync(
-                u => u.UserId.Equals(userId))
+            var user = await applicationDbContext.Users
+                .SingleAsync(u => u.UserId.Equals(userId))
                 .ConfigureAwait(false);
 
-            if(user != null)
-            {
-                applicationDbContext.Users.Remove(user);
-                result = await applicationDbContext.SaveChangesAsync()
-                    .ConfigureAwait(false);
-            }
+            applicationDbContext.Users.Remove(user);
 
-            return result > 0;
+            return await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Permission>> GetPermissionsAsync()
@@ -123,42 +147,45 @@ namespace Headway.Repository
         {
             return await applicationDbContext.Permissions
                 .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.PermissionId.Equals(permissionId))
+                .SingleAsync(p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
         }
 
         public async Task<Permission> AddPermissionAsync(Permission permission)
         {
-            applicationDbContext.Permissions.Add(permission);
-            await applicationDbContext.SaveChangesAsync()
-                            .ConfigureAwait(false);
+            await applicationDbContext.Permissions
+                .AddAsync(permission)
+                .ConfigureAwait(false);
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
             return permission;
         }
 
         public async Task<Permission> UpdatePermissionAsync(Permission permission)
         {
             applicationDbContext.Permissions.Update(permission);
-            await applicationDbContext.SaveChangesAsync()
-                            .ConfigureAwait(false);
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
             return permission;
         }
 
-        public async Task<bool> DeletePermissionAsync(int permissionId)
+        public async Task<int> DeletePermissionAsync(int permissionId)
         {
-            int result = 0;
-
-            var permission = await applicationDbContext.Permissions.FirstOrDefaultAsync(
-                p => p.PermissionId.Equals(permissionId))
+            var permission = await applicationDbContext.Permissions
+                .SingleAsync(p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
 
-            if (permission != null)
-            {
-                applicationDbContext.Permissions.Remove(permission);
-                result = await applicationDbContext.SaveChangesAsync()
-                            .ConfigureAwait(false);
-            }
+            applicationDbContext.Permissions.Remove(permission);
 
-            return result > 0;
+            return await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Role>> GetRolesAsync()
@@ -175,21 +202,44 @@ namespace Headway.Repository
             return await applicationDbContext.Roles
                 .Include(r => r.Permissions)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(r => r.RoleId.Equals(roleId))
+                .SingleAsync(r => r.RoleId.Equals(roleId))
                 .ConfigureAwait(false);
         }
 
-        public async Task<Role> AddRoleAsync(Role role)
+        public async Task<Role> AddRoleAsync(Role addRole)
         {
-            applicationDbContext.Roles.Add(role);
-            await applicationDbContext.SaveChangesAsync()
-                                            .ConfigureAwait(false);
+            var role = new Role
+            {
+                Name = addRole.Name,
+                Description = addRole.Description
+            };
+
+            await applicationDbContext.Roles
+                .AddAsync(role)
+                .ConfigureAwait(false);
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            if(addRole.Permissions.Any())
+            {
+                role.Permissions.AddRange(addRole.Permissions);
+
+                await applicationDbContext
+                    .SaveChangesAsync()
+                    .ConfigureAwait(false);
+            }
+
             return role;
         }
 
         public async Task<Role> UpdateRoleAsync(Role updateRole)
         {
-            var role = await GetRoleAsync(updateRole.RoleId).ConfigureAwait(false);
+            var role = await applicationDbContext.Roles
+                .Include(r => r.Permissions)
+                .SingleAsync(r => r.RoleId.Equals(updateRole.RoleId))
+                .ConfigureAwait(false);
 
             if (!role.Name.Equals(updateRole.Name))
             {
@@ -204,6 +254,7 @@ namespace Headway.Repository
             var removePermissions = role.Permissions
                 .Where(rp => !updateRole.Permissions.Any(p => p.PermissionId.Equals(rp.PermissionId)))
                 .ToList();
+
             foreach (var permission in removePermissions)
             {
                 role.Permissions.Remove(permission);
@@ -212,31 +263,29 @@ namespace Headway.Repository
             var addPermissions = updateRole.Permissions
                 .Where(rp => !role.Permissions.Any(p => p.PermissionId.Equals(rp.PermissionId)))
                 .ToList();
+
             role.Permissions.AddRange(addPermissions);
 
             applicationDbContext.Roles.Update(role);
 
-            await applicationDbContext.SaveChangesAsync()
-                            .ConfigureAwait(false);
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
             return role;
         }
 
-        public async Task<bool> DeleteRoleAsync(int roleId)
+        public async Task<int> DeleteRoleAsync(int roleId)
         {
-            int result = 0;
+            var role = await applicationDbContext.Roles
+                .SingleAsync(r => r.RoleId.Equals(roleId))
+                .ConfigureAwait(false);
 
-            var role = await applicationDbContext.Roles.FirstOrDefaultAsync(
-                                r => r.RoleId.Equals(roleId))
-                                .ConfigureAwait(false);
+            applicationDbContext.Roles.Remove(role);
 
-            if (role != null)
-            {
-                applicationDbContext.Roles.Remove(role);
-                result = await applicationDbContext.SaveChangesAsync()
-                            .ConfigureAwait(false);
-            }
-
-            return result > 0;
+            return await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
         }
     }
 }
