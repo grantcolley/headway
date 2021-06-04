@@ -19,7 +19,7 @@ namespace Headway.WebApi.Controllers
         public PermissionsController(
             IAuthorisationRepository authorisationRepository,
             ILogger<PermissionsController> logger)
-            : base(logger)
+            : base(authorisationRepository, logger)
         {
             this.authorisationRepository = authorisationRepository;
         }
@@ -27,10 +27,8 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -38,7 +36,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var permissions = await authorisationRepository
-                .GetPermissionsAsync().ConfigureAwait(false);
+                .GetPermissionsAsync()
+                .ConfigureAwait(false);
 
             return Ok(permissions);
         }
@@ -46,10 +45,8 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{permissionId}")]
         public async Task<IActionResult> Get(int permissionId)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -57,7 +54,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var permissions = await authorisationRepository
-                .GetPermissionAsync(permissionId).ConfigureAwait(false);
+                .GetPermissionAsync(permissionId)
+                .ConfigureAwait(false);
 
             return Ok(permissions);
         }
@@ -65,10 +63,8 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Permission permission)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -76,7 +72,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var savedPermission = await authorisationRepository
-                .AddPermissionAsync(permission).ConfigureAwait(false);
+                .AddPermissionAsync(permission)
+                .ConfigureAwait(false);
 
             return Ok(savedPermission);
         }
@@ -84,10 +81,8 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Permission permission)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -95,7 +90,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var savedPermission = await authorisationRepository
-                .UpdatePermissionAsync(permission).ConfigureAwait(false);
+                .UpdatePermissionAsync(permission)
+                .ConfigureAwait(false);
 
             return Ok(savedPermission);
         }
@@ -103,10 +99,8 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{permissionId}")]
         public async Task<IActionResult> Delete(int permissionId)
         {
-            var claim = GetUserClaim();
-
-            var authorised = await authorisationRepository
-                .IsAuthorisedAsync(claim, "Admin").ConfigureAwait(false);
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
 
             if (!authorised)
             {
@@ -114,7 +108,8 @@ namespace Headway.WebApi.Controllers
             }
 
             var result = await authorisationRepository
-                .DeletePermissionAsync(permissionId).ConfigureAwait(false);
+                .DeletePermissionAsync(permissionId)
+                .ConfigureAwait(false);
 
             return Ok(result);
         }
