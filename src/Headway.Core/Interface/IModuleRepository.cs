@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IModuleRepository
+    public interface IModuleRepository : IRepository
     {
         Task<IEnumerable<Module>> GetModulesAsync(string userName);
     }
