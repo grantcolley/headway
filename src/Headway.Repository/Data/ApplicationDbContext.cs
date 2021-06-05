@@ -13,9 +13,16 @@ namespace Headway.Repository.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<User>()
+                .HasIndex(u => u.UserName)
+                .IsUnique();
+
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
@@ -25,6 +32,18 @@ namespace Headway.Repository.Data
                 .IsUnique();
 
             builder.Entity<Permission>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<Module>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<Category>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<MenuItem>()
                 .HasIndex(p => p.Name)
                 .IsUnique();
         }
