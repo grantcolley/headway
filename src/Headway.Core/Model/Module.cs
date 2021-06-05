@@ -10,6 +10,7 @@ namespace Headway.Core.Model
             Roles = new List<Role>();
         }
 
+        public int ModuleId { get; set; }
         public string Name { get; set; }
         public int Order { get; set; }
         public List<Category> Categories { get; set; }

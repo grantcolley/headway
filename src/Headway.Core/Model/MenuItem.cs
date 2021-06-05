@@ -9,6 +9,7 @@ namespace Headway.Core.Model
             Permissions = new List<Permission>();
         }
 
+        public int MenuItemId { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
         public string ImageClass { get; set; }
