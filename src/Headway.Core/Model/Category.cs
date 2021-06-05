@@ -7,12 +7,12 @@ namespace Headway.Core.Model
         public Category()
         {
             MenuItems = new List<MenuItem>();
-            Authorised = new List<string>();
+            Permissions = new List<Permission>();
         }
 
         public string Name { get; set; }
         public int Order { get; set; }
         public List<MenuItem> MenuItems { get; set; }
-        public List<string> Authorised { get; set; }
+        public List<Permission> Permissions { get; set; }
     }
 }
