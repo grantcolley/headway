@@ -6,14 +6,13 @@ namespace Headway.Core.Model
     {
         public MenuItem()
         {
-            Authorised = new List<string>();
+            Permissions = new List<Permission>();
         }
 
-        public int Id { get; set; }
         public int Order { get; set; }
         public string Name { get; set; }
         public string ImageClass { get; set; }
         public string Path { get; set; }
-        public List<string> Authorised { get; set; }
+        public List<Permission> Permissions { get; set; }
     }
 }
