@@ -6,6 +6,6 @@ namespace Headway.Core.Interface
 {
     public interface IModuleRepository : IRepository
     {
-        Task<IEnumerable<Module>> GetModulesAsync(string userName);
+        Task<IEnumerable<Module>> GetModulesAsync(string claim);
     }
 }
