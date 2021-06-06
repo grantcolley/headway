@@ -1,7 +1,9 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Repository.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
@@ -143,10 +145,40 @@ namespace Headway.Repository
         {
         }
 
-        public Task<IEnumerable<Module>> GetModulesAsync(string userName)
+        public async Task<IEnumerable<Module>> GetModulesAsync(string claim)
         {
-            var modules = new List<Module>();// { home, counter, weather, configuration };
-            return Task.FromResult<IEnumerable<Module>>(modules);
+            var user = await applicationDbContext.Users
+                .Include(u => u.Permissions)
+                .Include(u => u.Roles)
+                .ThenInclude(r => r.Permissions)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Email.Equals(claim))
+                .ConfigureAwait(false);
+
+            var userPermissions = user.Permissions.Select(p => p.Name).ToList();
+
+            var rolePermissions = user.Roles
+                .SelectMany(r => r.Permissions)
+                .Select(p => p.Name)
+                .ToList();
+
+            userPermissions.AddRange(rolePermissions);
+
+            var permissions = userPermissions.Distinct().ToList();
+
+            var modules = await applicationDbContext.Modules
+                .Include(m => m.Categories.OrderBy(c => c.Order))
+                .ThenInclude(c => c.MenuItems.OrderBy(mu => mu.Order))
+                .Where(m => permissions.Contains(m.Permission))
+                .AsNoTracking()
+                .OrderBy(m => m.Order)
+                .ToListAsync();
+
+            var permittedModules = modules
+                .Where(m => m.IsPermitted(permissions))
+                .ToList();
+
+            return permittedModules;
         }
     }
 }
