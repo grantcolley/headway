@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Headway.Core.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Headway.Core.Model
 {
-    public class Category
+    public class Category : IPermissionable
     {
         public Category()
         {
@@ -15,5 +17,24 @@ namespace Headway.Core.Model
         public string Permission { get; set; }
         public Module Module { get; set; }
         public List<MenuItem> MenuItems { get; set; }
+
+        public bool IsPermitted(IEnumerable<string> permissions)
+        {
+            if(permissions.Contains(Permission))
+            {
+                foreach (var menuItem in MenuItems)
+                {
+                    menuItem.IsPermitted(permissions);
+                }
+
+                return true;
+            }
+            else
+            {
+                MenuItems.Clear();
+                Module.Categories.Remove(this);
+                return false;
+            }
+        }
     }
 }
