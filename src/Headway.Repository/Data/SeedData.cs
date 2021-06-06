@@ -34,8 +34,8 @@ namespace Headway.Repository.Data
                 alice.Roles.Add(userRole);
                 applicationDbContext.SaveChanges();
 
-                var home = new Module { Name = "Home", Permission = user.Name };
-                var administration = new Module { Name = "Administration", Permission = admin.Name };
+                var home = new Module { Name = "Home", Permission = user.Name, Order = 1 };
+                var administration = new Module { Name = "Administration", Permission = admin.Name, Order = 2 };
                 applicationDbContext.Modules.Add(home);
                 applicationDbContext.Modules.Add(administration);
                 applicationDbContext.SaveChanges();
