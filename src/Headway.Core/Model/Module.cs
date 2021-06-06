@@ -7,13 +7,12 @@ namespace Headway.Core.Model
         public Module()
         {
             Categories = new List<Category>();
-            Roles = new List<Role>();
         }
 
         public int ModuleId { get; set; }
         public string Name { get; set; }
         public int Order { get; set; }
+        public string Permission { get; set; }
         public List<Category> Categories { get; set; }
-        public List<Role> Roles { get; set; }
     }
 }
