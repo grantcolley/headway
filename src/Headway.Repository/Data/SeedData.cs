@@ -34,55 +34,35 @@ namespace Headway.Repository.Data
                 alice.Roles.Add(userRole);
                 applicationDbContext.SaveChanges();
 
-                var home = new Module { Name = "Home" };
-                var administration = new Module { Name = "Administration" };
+                var home = new Module { Name = "Home", Permission = user.Name };
+                var administration = new Module { Name = "Administration", Permission = admin.Name };
                 applicationDbContext.Modules.Add(home);
                 applicationDbContext.Modules.Add(administration);
                 applicationDbContext.SaveChanges();
 
-                home.Roles.Add(userRole);
-                applicationDbContext.SaveChanges();
-
-                administration.Roles.Add(adminRole);
-                applicationDbContext.SaveChanges();
-
-                var homeCategory = new Category { Name = "Home Category" };
-                var authorisation = new Category { Name = "Authorisation", Order = 1 };
-                var configuration = new Category { Name = "Configuration", Order = 2 };
+                var homeCategory = new Category { Name = "Home Category", Permission = user.Name };
+                var authorisation = new Category { Name = "Authorisation", Order = 1, Permission = admin.Name };
+                var configuration = new Category { Name = "Configuration", Order = 2, Permission = admin.Name };
                 applicationDbContext.Categories.Add(homeCategory);
                 applicationDbContext.Categories.Add(authorisation);
                 applicationDbContext.Categories.Add(configuration);
                 applicationDbContext.SaveChanges();
 
-                homeCategory.Permissions.Add(user);
+                home.Categories.Add(homeCategory);
                 applicationDbContext.SaveChanges();
 
-                authorisation.Permissions.Add(admin);
+                administration.Categories.Add(authorisation);
+                administration.Categories.Add(configuration);
                 applicationDbContext.SaveChanges();
 
-                configuration.Permissions.Add(admin);
-                applicationDbContext.SaveChanges();
-
-                var homeMenuItem = new MenuItem { Name = "Home", ImageClass = "oi oi-home", Path = "/" };
-                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", Path = "users", Order = 1 };
-                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", Path = "roles", Order = 2 };
-                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", Path = "permissions", Order = 3 };
+                var homeMenuItem = new MenuItem { Name = "Home", ImageClass = "oi oi-home", Path = "/", Permission = user.Name };
+                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", Path = "users", Order = 1, Permission = admin.Name };
+                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", Path = "roles", Order = 2, Permission = admin.Name };
+                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", Path = "permissions", Order = 3, Permission = admin.Name };
                 applicationDbContext.MenuItems.Add(homeMenuItem);
                 applicationDbContext.MenuItems.Add(usersMenuItem);
                 applicationDbContext.MenuItems.Add(rolesMenuItem);
                 applicationDbContext.MenuItems.Add(permissionsMenuItem);
-                applicationDbContext.SaveChanges();
-
-                homeMenuItem.Permissions.Add(admin);
-                applicationDbContext.SaveChanges();
-
-                usersMenuItem.Permissions.Add(admin);
-                applicationDbContext.SaveChanges();
-
-                rolesMenuItem.Permissions.Add(admin);
-                applicationDbContext.SaveChanges();
-
-                permissionsMenuItem.Permissions.Add(admin);
                 applicationDbContext.SaveChanges();
 
                 homeCategory.MenuItems.Add(homeMenuItem);
