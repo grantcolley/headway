@@ -51,13 +51,6 @@ namespace Headway.BlazorWebassemblyApp
                 return new AuthorisationService(httpClient);
             });
 
-            builder.Services.AddTransient<IWeatherForecastService, WeatherForecastService>(sp =>
-            {
-                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient("webapi");
-                return new WeatherForecastService(httpClient);
-            });
-
             await builder.Build().RunAsync();
         }
     }
