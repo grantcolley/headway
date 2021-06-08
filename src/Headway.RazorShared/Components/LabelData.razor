@@ -1,0 +1,22 @@
+﻿@using Headway.Core.Model
+
+<div class="form-group">
+    <label>Permission Id</label>
+    <label>@permission.PermissionId</label>
+</div>
+
+@code
+{
+    [Parameter]
+    public Permission permission { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
+    }
+}
