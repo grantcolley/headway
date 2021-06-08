@@ -11,15 +11,15 @@
     <Authorized Context="authPermissionDetails">
         <h3>Permission</h3>
 
-        @if (permission == null)
+        @if (Permission == null)
         {
             <p><em>Loading permission...</em></p>
         }
         else
         {
-            @if (alert == null)
+            @if (Alert == null)
             {
-                <EditForm Model="@permission" OnValidSubmit="@SubmitPermission">
+                <EditForm Model="@Permission" OnValidSubmit="@SubmitPermission">
                     <DataAnnotationsValidator/>
                     <table>
                         <tbody>
@@ -41,7 +41,7 @@
                                     }
                                     else if(!IsSaveInProgress)
                                     {
-                                        <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => DeletePermission(permission)"/>
+                                        <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => DeletePermission(Permission)"/>
                                     }                                   
                                 </td>
                             </tr>
@@ -51,18 +51,18 @@
                         <tbody>
                             <tr>
                                 <td valign="middle">Permission Id</td>
-                                <td valign="middle">@permission.PermissionId</td>
+                                <td valign="middle">@Permission.PermissionId</td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td valign="middle">Name</td>
-                                <td valign="middle"><InputText id="permissionName" @bind-Value="permission.Name"/></td>
-                                <td valign="middle"><ValidationMessage For="() => permission.Name"/></td>
+                                <td valign="middle"><InputText id="permissionName" @bind-Value="Permission.Name"/></td>
+                                <td valign="middle"><ValidationMessage For="() => Permission.Name"/></td>
                             </tr>
                             <tr>
                                 <td valign="middle">Description</td>
-                                <td valign="middle"><InputText id="permissionDescription" @bind-Value="permission.Description"/></td>
-                                <td valign="middle"><ValidationMessage For="() => permission.Description"/></td>
+                                <td valign="middle"><InputText id="permissionDescription" @bind-Value="Permission.Description"/></td>
+                                <td valign="middle"><ValidationMessage For="() => Permission.Description"/></td>
                             </tr>
                         </tbody>
                     </table>
@@ -70,7 +70,7 @@
             }
             else
             {
-                <Alert AlertType="@alert.AlertType" Title="@alert.Title" Message="@alert.Message" RedirectText="@alert.RedirectText" RedirectPage="@alert.RedirectPage"/>
+                <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>
             }
         }
     </Authorized>
