@@ -20,7 +20,7 @@ namespace Headway.RazorShared.Model
                 };
 
                 NavigationManager.NavigateTo(alert.Page);
-                return default(T);
+                return default;
             }
             else
             {
