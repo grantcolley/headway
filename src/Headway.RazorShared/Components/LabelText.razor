@@ -1,0 +1,24 @@
+﻿@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+
+<div>
+    <label>Name</label>
+    <InputText id="permissionName" @bind-Value="permission.Name"/>
+    <ValidationMessage For="() => permission.Name"/>
+</div>
+
+@code
+{
+    [Parameter]
+    public Permission permission { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
+    }
+}
