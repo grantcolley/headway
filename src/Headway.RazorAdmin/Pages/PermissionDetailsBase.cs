@@ -14,9 +14,9 @@ namespace Headway.RazorAdmin.Pages
         [Parameter]
         public int PermissionId { get; set; }
 
-        protected Permission permission { get; set; }
+        protected Permission Permission { get; set; }
 
-        protected Alert alert { get; set; }
+        protected Alert Alert { get; set; }
 
         protected bool IsSaveInProgress = false;
         protected bool IsDeleteInProgress = false;
@@ -25,12 +25,12 @@ namespace Headway.RazorAdmin.Pages
         {
             if(PermissionId.Equals(0))
             {
-                permission = new Permission();
+                Permission = new Permission();
             }
             else
             {
                 var permissionResponse = await AuthorisationService.GetPermissionAsync(PermissionId).ConfigureAwait(false);
-                permission = GetResponse(permissionResponse);
+                Permission = GetResponse(permissionResponse);
             }
 
             await base.OnInitializedAsync().ConfigureAwait(false);
@@ -40,19 +40,19 @@ namespace Headway.RazorAdmin.Pages
         {
             IsSaveInProgress = true;
 
-            if(permission.PermissionId.Equals(0))
+            if(Permission.PermissionId.Equals(0))
             {
-                var permissionResponse = await AuthorisationService.AddPermissionAsync(permission).ConfigureAwait(false);
-                permission = GetResponse(permissionResponse);
-                if(permission == null)
+                var permissionResponse = await AuthorisationService.AddPermissionAsync(Permission).ConfigureAwait(false);
+                Permission = GetResponse(permissionResponse);
+                if(Permission == null)
                 {
                     return;
                 }
 
-                alert = new Alert
+                Alert = new Alert
                 {
                     AlertType = "primary",
-                    Title = $"{permission.Name}",
+                    Title = $"{Permission.Name}",
                     Message = $"has been added.",
                     RedirectText = "Return to permisions.",
                     RedirectPage = "/permissions"
@@ -60,17 +60,17 @@ namespace Headway.RazorAdmin.Pages
             }
             else
             {
-                var permissionResponse = await AuthorisationService.UpdatePermissionAsync(permission).ConfigureAwait(false);
-                permission = GetResponse(permissionResponse);
-                if (permission == null)
+                var permissionResponse = await AuthorisationService.UpdatePermissionAsync(Permission).ConfigureAwait(false);
+                Permission = GetResponse(permissionResponse);
+                if (Permission == null)
                 {
                     return;
                 }
 
-                alert = new Alert
+                Alert = new Alert
                 {
                     AlertType = "primary",
-                    Title = $"{permission.Name}",
+                    Title = $"{Permission.Name}",
                     Message = $"has been updated.",
                     RedirectText = "Return to permisions.",
                     RedirectPage = "/permissions"
@@ -91,7 +91,7 @@ namespace Headway.RazorAdmin.Pages
                 return;
             }
 
-            alert = new Alert
+            Alert = new Alert
             {
                 AlertType = "danger",
                 Title = $"{permission.Name}",
