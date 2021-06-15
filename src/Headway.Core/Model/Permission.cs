@@ -1,5 +1,4 @@
-﻿using Headway.Core.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
@@ -15,15 +14,12 @@ namespace Headway.Core.Model
         public List<User> Users { get; set; }
         public List<Role> Roles { get; set; }
 
-        [DynamicProperty]
         public int PermissionId { get; set; }
 
-        [DynamicProperty]
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(10, ErrorMessage = "Name must be between 1 and 10 characters")]
         public string Name { get; set; }
 
-        [DynamicProperty]
         [Required(ErrorMessage = "Description is required.")]
         [StringLength(20, ErrorMessage = "Description must be between 1 and 20 characters")]
         public string Description { get; set; }
