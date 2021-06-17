@@ -1,22 +1,24 @@
-﻿@using Headway.Core.Model
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
 
-<div class="form-group">
-    <label>Permission Id</label>
-    <label>@permission.PermissionId</label>
+<div>
+    <label>@Field.PropertyName</label>
+    <label>@PropertyValue</label>
 </div>
 
 @code
 {
     [Parameter]
-    public Permission permission { get; set; }
+    public DynamicField Field { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    public string PropertyValue
     {
-        
-    }
-
-    protected override Task OnParametersSetAsync()
-    {
-        return base.OnParametersSetAsync();
+        get
+        {
+            return Field.PropertyInfo.GetValue(Field.Model).ToString();
+        }
     }
 }
