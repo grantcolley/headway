@@ -1,24 +1,40 @@
-﻿@using Headway.Core.Model
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
 @using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
 
 <div>
-    <label>Name</label>
-    <InputText id="permissionName" @bind-Value="permission.Name"/>
-    <ValidationMessage For="() => permission.Name"/>
+    <label>@Field.PropertyName</label>
+    <InputText class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
+    <ValidationMessage For="FieldExpression"/>
 </div>
 
 @code
 {
     [Parameter]
-    public Permission permission { get; set; }
+    public DynamicField Field { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    public Expression<Func<string>> FieldExpression
     {
-        
+        get
+        {
+            var memberExpression = Expression.Constant(Field.Model);
+            var propertyExpression = Expression.Property(memberExpression, Field.PropertyName);
+            return Expression.Lambda<Func<string>>(propertyExpression);
+        }
     }
 
-    protected override Task OnParametersSetAsync()
+    public string PropertyValue
     {
-        return base.OnParametersSetAsync();
+        get
+        {
+            return Field.PropertyInfo.GetValue(Field.Model).ToString();
+        }
+    }
+
+    public void OnValueChanged(string value)
+    {
+        Field.PropertyInfo.SetValue(Field.Model, value);
     }
 }
