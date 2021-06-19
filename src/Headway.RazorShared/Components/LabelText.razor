@@ -19,9 +19,7 @@
     {
         get
         {
-            var memberExpression = Expression.Constant(Field.Model);
-            var propertyExpression = Expression.Property(memberExpression, Field.PropertyName);
-            return Expression.Lambda<Func<string>>(propertyExpression);
+            return Expression.Lambda<Func<string>>(Field.MemberExpression);
         }
     }
 
