@@ -24,12 +24,12 @@ namespace Headway.RazorAdmin.Pages
 
         protected void AddPermission()
         {
-            NavigationManager.NavigateTo("/permissiondetails");
+            NavigationManager.NavigateTo("/admindetails");
         }
 
         protected void UpdatePermission(int permissionId)
         {
-            NavigationManager.NavigateTo($"/permissiondetails/{permissionId}");
+            NavigationManager.NavigateTo($"/admindetails/{permissionId}");
         }
     }
 }
