@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Headway.Core.Dynamic
@@ -22,13 +23,16 @@ namespace Headway.Core.Dynamic
         {
             DynamicFields = new List<DynamicField>();
 
-            foreach(var property in GetPropertyInfos())
+            var constantExpression = Expression.Constant(Model);
+
+            foreach (var property in GetPropertyInfos())
             {
                 var dynamicField = new DynamicField
                 {
                     Model = Model,
                     PropertyInfo = property,
                     PropertyName = property.Name,
+                    MemberExpression = Expression.Property(constantExpression, property.Name)
                 };
 
                 if (property.PropertyType.Equals(typeof(string)))
