@@ -1,0 +1,5 @@
+﻿@page "/details/{TypeName}/{Id:int?}"
+@inherits DetailsBase
+@using System
+
+<DynamicDetails DetailsType="@TypeName" T="Permission" Id="@Id" />
