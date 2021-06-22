@@ -27,7 +27,7 @@
     {
         get
         {
-            return Field.PropertyInfo.GetValue(Field.Model).ToString();
+            return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
         }
     }
 
