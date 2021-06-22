@@ -1,8 +1,10 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Dynamic;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Headway.Services
@@ -107,6 +109,39 @@ namespace Headway.Services
         {
             var httpResponseMessage = await httpClient.DeleteAsync($"Roles/{roleId}").ConfigureAwait(false);
             return await GetServiceResult<int>(httpResponseMessage);
+        }
+
+        public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id)
+        {
+            if(typeof(T) == typeof(Permission))
+            {
+                var httpResponseMessage = await httpClient.GetAsync($"Permissions/{id}").ConfigureAwait(false);
+
+                var serviceResult = new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = httpResponseMessage.IsSuccessStatusCode,
+                    Message = httpResponseMessage.ReasonPhrase
+                };
+
+                if (serviceResult.IsSuccess)
+                {
+                    var content = await JsonSerializer.DeserializeAsync<T>
+                        (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
+                            new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
+                    serviceResult.Result = new DynamicModel<T>(content);
+                }
+
+                return serviceResult;
+            }
+
+            return null;
+        }
+
+        public DynamicModel<T> CreateDynamicModelInstance<T>()
+        {
+            var typeHelper = DynamicTypeHelper.Get<T>();
+            var instance = typeHelper.CreateInstance();
+            return new DynamicModel<T>(instance);
         }
     }
 }
