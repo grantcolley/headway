@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Headway.Core.Dynamic
 {
@@ -25,7 +22,9 @@ namespace Headway.Core.Dynamic
 
             var constantExpression = Expression.Constant(Model);
 
-            foreach (var property in GetPropertyInfos())
+            var typeHelper = DynamicTypeHelper.Get<T>();
+
+            foreach (var property in typeHelper.SupportedProperties)
             {
                 var dynamicField = new DynamicField
                 {
@@ -50,49 +49,6 @@ namespace Headway.Core.Dynamic
 
                 DynamicFields.Add(dynamicField);
             }
-        }
-
-        private static IEnumerable<PropertyInfo> GetPropertyInfos()
-        {
-            var propertyInfoResults = new List<PropertyInfo>();
-
-            PropertyInfo[] propertyInfos = typeof(T).GetProperties();
-
-            foreach (var propertyInfo in propertyInfos)
-            {
-                if (UnsupportedProperty(propertyInfo))
-                {
-                    continue;
-                }
-
-                propertyInfoResults.Add(propertyInfo);
-            }
-
-            return propertyInfoResults;
-        }
-
-        private static bool UnsupportedProperty(PropertyInfo propertyInfo)
-        {
-            // Skip non-public properties and properties that are either 
-            // classes (but not strings), interfaces, lists, generic 
-            // lists or arrays.
-            var propertyType = propertyInfo.PropertyType;
-
-            if (propertyType != typeof(string)
-                && (propertyType.IsClass
-                    || propertyType.IsInterface
-                    || propertyType.IsArray
-                    || propertyType.GetInterfaces()
-                        .Any(
-                            i =>
-                                (i.GetTypeInfo().Name.Equals(typeof(IEnumerable).Name)
-                                 || (i.IsGenericType &&
-                                     i.GetGenericTypeDefinition().Name.Equals(typeof(IEnumerable<>).Name))))))
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }
