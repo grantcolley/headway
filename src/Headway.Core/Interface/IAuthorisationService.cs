@@ -1,4 +1,5 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Dynamic;
+using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,5 +22,7 @@ namespace Headway.Core.Interface
         Task<IServiceResult<Role>> AddRoleAsync(Role role);
         Task<IServiceResult<Role>> UpdateRoleAsync(Role role);
         Task<IServiceResult<int>> DeleteRoleAsync(int roleId);
+        Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id);
+        DynamicModel<T> CreateDynamicModelInstance<T>();
     }
 }
