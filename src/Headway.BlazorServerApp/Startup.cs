@@ -82,6 +82,14 @@ namespace Headway.BlazorServerApp
                 return new AuthorisationService(httpClient, tokenProvider);
             });
 
+            services.AddTransient<IDynamicConfigService, DynamicConfigService>(sp =>
+            {
+                var tokenProvider = sp.GetRequiredService<TokenProvider>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new DynamicConfigService(httpClient, tokenProvider);
+            });
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
         }

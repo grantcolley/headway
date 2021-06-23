@@ -1,7 +1,6 @@
 using Headway.BlazorWebassemblyApp.Account;
 using Headway.Core.Interface;
 using Headway.Services;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +48,13 @@ namespace Headway.BlazorWebassemblyApp
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new AuthorisationService(httpClient);
+            });
+
+            builder.Services.AddTransient<IDynamicConfigService, DynamicConfigService>(sp =>
+            {
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new DynamicConfigService(httpClient);
             });
 
             await builder.Build().RunAsync();
