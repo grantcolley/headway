@@ -1,54 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Headway.Core.Dynamic
 {
     public class DynamicModel<T>
     {
-        public DynamicModel(T model)
+        private readonly string titleFieldName;
+        private readonly DynamicTypeHelper<T> typeHelper;
+
+        public DynamicModel(T model, DynamicModelConfig dynamicModelConfig)
         {
             Model = model;
+            DynamicModelConfig = dynamicModelConfig;
+
+            var titleField = dynamicModelConfig.FieldConfigs.FirstOrDefault(f => f.IsTitleField);
+
+            if(titleField != null)
+            {
+                titleFieldName = titleField.PropertyName;
+            }
+
+            typeHelper = DynamicTypeHelper.Get<T>();
 
             BuildDynamicFields();
         }
 
         public T Model { get; private set; }
         public List<DynamicField> DynamicFields { get; private set; }
+        public DynamicModelConfig DynamicModelConfig { get; private set; }
+
+        public string Title { get { return typeHelper.GetValue(Model, titleFieldName).ToString(); } }
 
         private void BuildDynamicFields()
         {
             DynamicFields = new List<DynamicField>();
 
             var constantExpression = Expression.Constant(Model);
-
-            var typeHelper = DynamicTypeHelper.Get<T>();
-
-            foreach (var property in typeHelper.SupportedProperties)
+            
+            Func<T, ConstantExpression, PropertyInfo, DynamicFieldConfig, DynamicField> func = (model, ce, p, c) =>
             {
                 var dynamicField = new DynamicField
                 {
-                    Model = Model,
-                    PropertyInfo = property,
-                    PropertyName = property.Name,
-                    MemberExpression = Expression.Property(constantExpression, property.Name)
+                    Model = model,
+                    Order = c.Order,
+                    PropertyInfo = p,
+                    PropertyName = p.Name,
+                    MemberExpression = Expression.Property(ce, p.Name),
+                    DynamicComponentTypeName = c.DynamicComponentTypeName,
+                    DynamicComponent = Type.GetType(c.DynamicComponentTypeName)
                 };
-
-                if (property.PropertyType.Equals(typeof(string)))
-                {
-                    dynamicField.DynamicComponentTypeName = "Headway.RazorShared.Components.LabelText, Headway.RazorShared";
-                }
-                else if(property.PropertyType.Equals(typeof(int)))
-                {
-                    dynamicField.DynamicComponentTypeName = "Headway.RazorShared.Components.LabelData, Headway.RazorShared";
-                }
-
-                dynamicField.DynamicComponent = Type.GetType(dynamicField.DynamicComponentTypeName);
 
                 dynamicField.Parameters = new Dictionary<string, object> { { "Field", dynamicField } };
 
-                DynamicFields.Add(dynamicField);
-            }
+                return dynamicField;
+            };
+
+            var dynamicFields = from p in typeHelper.SupportedProperties
+                                join c in DynamicModelConfig.FieldConfigs on p.Name equals c.PropertyName
+                                select func(Model, constantExpression, p, c);
+
+            DynamicFields.AddRange(dynamicFields);
         }
     }
 }
