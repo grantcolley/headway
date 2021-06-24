@@ -1,28 +1,65 @@
 ﻿using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Core.Model;
+using System.Collections.Concurrent;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Headway.Services
 {
-    public class DynamicConfigService : ServiceBase, IDynamicConfigService
+    public class DynamicConfigService : IDynamicConfigService
     {
-        public DynamicConfigService(HttpClient httpClient)
-            : base(httpClient, false)
-        {
-        }
+        private readonly ConcurrentDictionary<string, DynamicModelConfig> cache = new();
 
-        public DynamicConfigService(HttpClient httpClient, TokenProvider tokenProvider)
-            : base(httpClient, true, tokenProvider)
-        {
-        }
-
-        public async Task<IServiceResult<DynamicModelConfig>> GetDynamicModelConfigAsync<T>()
+        public async Task<IServiceResult<DynamicModelConfig>> GetDynamicModelConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider)
         {
             var model = typeof(T).Name;
-            var httpResponseMessage = await httpClient.GetAsync($"DynamicConfig/{model}").ConfigureAwait(false);
-            return await GetServiceResult<DynamicModelConfig>(httpResponseMessage);
+
+            if (cache.ContainsKey(model))
+            {
+                if (cache.TryGetValue(model, out DynamicModelConfig config))
+                {
+                    return new ServiceResult<DynamicModelConfig>
+                    {
+                        IsSuccess = true,
+                        Result = config
+                    };
+                }
+            }
+
+            using var httpResponseMessage = await httpClient.GetAsync($"DynamicConfig/{model}").ConfigureAwait(false);
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var config = await JsonSerializer.DeserializeAsync<DynamicModelConfig>
+                    (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
+
+                if (cache.TryAdd(model, config))
+                {
+                    return new ServiceResult<DynamicModelConfig>
+                    {
+                        IsSuccess = true,
+                        Result = config
+                    };
+                }
+                else
+                {
+                    return new ServiceResult<DynamicModelConfig>
+                    {
+                        IsSuccess = false,
+                        Message = $"Config for {model} is not accessible"
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResult<DynamicModelConfig>
+                {
+                    IsSuccess = httpResponseMessage.IsSuccessStatusCode,
+                    Message = httpResponseMessage.ReasonPhrase
+                };
+            }
         }
     }
 }

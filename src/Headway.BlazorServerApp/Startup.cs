@@ -64,6 +64,9 @@ namespace Headway.BlazorServerApp
                 client.BaseAddress = new Uri("https://localhost:44320");
             });
 
+            services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
+            services.AddScoped<TokenProvider>();
+
             services.AddTransient<IModuleService, ModuleService>(sp =>
             {
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
@@ -72,22 +75,13 @@ namespace Headway.BlazorServerApp
                 return new ModuleService(httpClient, tokenProvider);
             });
 
-            services.AddScoped<TokenProvider>();
-
             services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
+                var dynamicConfigService = sp.GetRequiredService<IDynamicConfigService>();
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new AuthorisationService(httpClient, tokenProvider);
-            });
-
-            services.AddTransient<IDynamicConfigService, DynamicConfigService>(sp =>
-            {
-                var tokenProvider = sp.GetRequiredService<TokenProvider>();
-                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient("webapi");
-                return new DynamicConfigService(httpClient, tokenProvider);
+                return new AuthorisationService(httpClient, tokenProvider, dynamicConfigService);
             });
 
             services.AddRazorPages();
