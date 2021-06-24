@@ -86,7 +86,7 @@ namespace Headway.Core.Dynamic
     {
         internal static readonly IDictionary<Type, object> cache = new Dictionary<Type, object>();
 
-        private static object lockCache = new object();
+        private static readonly object lockCache = new();
 
         private static int counter;
 
