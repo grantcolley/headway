@@ -24,15 +24,18 @@ namespace Headway.RazorAdmin.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            IServiceResult<DynamicModel<T>> serviceResult;
+
             if (Id.Equals(0))
             {
-                DynamicModel = AuthorisationService.CreateDynamicModelInstance<T>();
+                serviceResult = await AuthorisationService.CreateDynamicModelInstanceAsync<T>().ConfigureAwait(false);
             }
             else
             {
-                var response = await AuthorisationService.GetDynamicModelAsync<T>(Id).ConfigureAwait(false);
-                DynamicModel = GetResponse(response);
+                serviceResult = await AuthorisationService.GetDynamicModelAsync<T>(Id).ConfigureAwait(false);
             }
+
+            DynamicModel = GetResponse(serviceResult);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
