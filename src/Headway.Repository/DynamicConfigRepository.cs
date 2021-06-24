@@ -15,7 +15,42 @@ namespace Headway.Repository
 
         public Task<DynamicModelConfig> GetDynamicModelConfigAsync(string model)
         {
-            throw new NotImplementedException();
+            if(model.Equals("Permission"))
+            {
+                var dynamicModelConfig = new DynamicModelConfig
+                {
+                    ConfigName = "Permission",
+                    RedirectPage = "/permissions",
+                    RedirectText = "Return to permissions."
+                };
+
+                dynamicModelConfig.FieldConfigs.AddRange(new[]
+                {
+                    new DynamicFieldConfig
+                    { 
+                        PropertyName = "PermissionId",
+                        Order  = 1,
+                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelData, Headway.RazorShared"
+                    },
+                    new DynamicFieldConfig
+                    {
+                        PropertyName = "Name",
+                        Order  = 2,
+                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelText, Headway.RazorShared",
+                        IsTitleField = true
+                    },
+                    new DynamicFieldConfig
+                    {
+                        PropertyName = "Description",
+                        Order  = 3,
+                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelText, Headway.RazorShared"
+                    }
+                });
+
+                return Task.FromResult(dynamicModelConfig);
+            }
+
+            throw new NotImplementedException(model);
         }
     }
 }
