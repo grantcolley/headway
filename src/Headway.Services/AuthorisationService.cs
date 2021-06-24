@@ -4,21 +4,24 @@ using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Headway.Services
 {
     public class AuthorisationService : ServiceBase, IAuthorisationService
     {
-        public AuthorisationService(HttpClient httpClient)
+        private readonly IDynamicConfigService dynamicConfigService;
+
+        public AuthorisationService(HttpClient httpClient, IDynamicConfigService dynamicConfigService)
             : base(httpClient, false)
         {
+            this.dynamicConfigService = dynamicConfigService;
         }
 
-        public AuthorisationService(HttpClient httpClient, TokenProvider tokenProvider)
+        public AuthorisationService(HttpClient httpClient, TokenProvider tokenProvider, IDynamicConfigService dynamicConfigService)
             : base(httpClient, true, tokenProvider)
         {
+            this.dynamicConfigService = dynamicConfigService;
         }
 
         public async Task<IServiceResult<IEnumerable<User>>> GetUsersAsync()
@@ -113,35 +116,76 @@ namespace Headway.Services
 
         public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id)
         {
-            if(typeof(T) == typeof(Permission))
+            if (typeof(T) == typeof(Permission))
             {
-                var httpResponseMessage = await httpClient.GetAsync($"Permissions/{id}").ConfigureAwait(false);
-
-                var serviceResult = new ServiceResult<DynamicModel<T>>
+                var serviceResultModel = default(IServiceResult<T>);
+                using (var httpResponseMessage = await httpClient.GetAsync($"Permissions/{id}").ConfigureAwait(false))
                 {
-                    IsSuccess = httpResponseMessage.IsSuccessStatusCode,
-                    Message = httpResponseMessage.ReasonPhrase
-                };
-
-                if (serviceResult.IsSuccess)
-                {
-                    var content = await JsonSerializer.DeserializeAsync<T>
-                        (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
-                            new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
-                    serviceResult.Result = new DynamicModel<T>(content);
+                    serviceResultModel = await GetServiceResult<T>(httpResponseMessage).ConfigureAwait(false);
                 }
 
-                return serviceResult;
+                if(serviceResultModel.IsSuccess)
+                {
+                    var serviceResultConfig
+                        = await dynamicConfigService.GetDynamicModelConfigAsync<T>(httpClient, tokenProvider)
+                        .ConfigureAwait(false);
+
+                    if(serviceResultConfig.IsSuccess)
+                    {
+                        return new ServiceResult<DynamicModel<T>>
+                        {
+                            IsSuccess = serviceResultModel.IsSuccess,
+                            Message = serviceResultModel.Message,
+                            Result = new DynamicModel<T>(serviceResultModel.Result, serviceResultConfig.Result)
+                        };
+                    }
+                    else
+                    {
+                        return new ServiceResult<DynamicModel<T>>
+                        {
+                            IsSuccess = serviceResultConfig.IsSuccess,
+                            Message = serviceResultConfig.Message
+                        };
+                    }
+                }
+                else
+                {
+                    return new ServiceResult<DynamicModel<T>>
+                    {
+                        IsSuccess = serviceResultModel.IsSuccess,
+                        Message = serviceResultModel.Message
+                    };
+                }
             }
 
             return null;
         }
 
-        public DynamicModel<T> CreateDynamicModelInstance<T>()
+        public async Task<IServiceResult<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>()
         {
-            var typeHelper = DynamicTypeHelper.Get<T>();
-            var instance = typeHelper.CreateInstance();
-            return new DynamicModel<T>(instance);
+            var serviceResultConfig 
+                = await dynamicConfigService.GetDynamicModelConfigAsync<T>(httpClient, tokenProvider)
+                .ConfigureAwait(false);
+
+            if (serviceResultConfig.IsSuccess)
+            {
+                var typeHelper = DynamicTypeHelper.Get<T>();
+                var model = typeHelper.CreateInstance();
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResultConfig.IsSuccess,
+                    Message = serviceResultConfig.Message,
+                    Result = new DynamicModel<T>(model, serviceResultConfig.Result)
+                };
+            }
+            else
+            {
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResultConfig.IsSuccess,
+                    Message = serviceResultConfig.Message
+                };
+            }
         }
     }
 }
