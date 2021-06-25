@@ -50,7 +50,7 @@ namespace Headway.Core.Dynamic
 
             var constantExpression = Expression.Constant(Model);
 
-            DynamicField func(T model, ConstantExpression ce, PropertyInfo p, DynamicFieldConfig c)
+            static DynamicField func(T model, ConstantExpression ce, PropertyInfo p, DynamicFieldConfig c)
             {
                 var dynamicField = new DynamicField
                 {
