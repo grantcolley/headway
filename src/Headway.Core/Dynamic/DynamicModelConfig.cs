@@ -10,6 +10,7 @@ namespace Headway.Core.Dynamic
         }
 
         public string ConfigName { get; set; }
+        public string ConfigPath { get; set; }
         public string RedirectText { get; set; }
         public string RedirectPage { get; set; }
         public List<DynamicFieldConfig> FieldConfigs { get; set; }
