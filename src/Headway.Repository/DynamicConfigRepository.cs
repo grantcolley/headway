@@ -31,7 +31,8 @@ namespace Headway.Repository
                     { 
                         PropertyName = "PermissionId",
                         Order  = 1,
-                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelData, Headway.RazorShared"
+                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelData, Headway.RazorShared",
+                        IsIdField = true
                     },
                     new DynamicFieldConfig
                     {
