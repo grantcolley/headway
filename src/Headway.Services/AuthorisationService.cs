@@ -124,28 +124,26 @@ namespace Headway.Services
             {
                 var configPath = $"{serviceResultConfig.Result.ConfigPath}/{id}";
 
-                using (var response = await httpClient.GetAsync(configPath).ConfigureAwait(false))
-                {
-                    var serviceResultModel = await GetServiceResult<T>(response)
-                        .ConfigureAwait(false);
+                using var response = await httpClient.GetAsync(configPath).ConfigureAwait(false);
+                var serviceResultModel = await GetServiceResult<T>(response)
+                    .ConfigureAwait(false);
 
-                    if (serviceResultModel.IsSuccess)
+                if (serviceResultModel.IsSuccess)
+                {
+                    return new ServiceResult<DynamicModel<T>>
                     {
-                        return new ServiceResult<DynamicModel<T>>
-                        {
-                            IsSuccess = serviceResultModel.IsSuccess,
-                            Message = serviceResultModel.Message,
-                            Result = new DynamicModel<T>(serviceResultModel.Result, serviceResultConfig.Result)
-                        };
-                    }
-                    else
+                        IsSuccess = serviceResultModel.IsSuccess,
+                        Message = serviceResultModel.Message,
+                        Result = new DynamicModel<T>(serviceResultModel.Result, serviceResultConfig.Result)
+                    };
+                }
+                else
+                {
+                    return new ServiceResult<DynamicModel<T>>
                     {
-                        return new ServiceResult<DynamicModel<T>>
-                        {
-                            IsSuccess = serviceResultModel.IsSuccess,
-                            Message = serviceResultModel.Message
-                        };
-                    }
+                        IsSuccess = serviceResultModel.IsSuccess,
+                        Message = serviceResultModel.Message
+                    };
                 }
             }
             else
