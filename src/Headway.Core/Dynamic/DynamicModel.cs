@@ -49,8 +49,8 @@ namespace Headway.Core.Dynamic
             DynamicFields = new List<DynamicField>();
 
             var constantExpression = Expression.Constant(Model);
-            
-            Func<T, ConstantExpression, PropertyInfo, DynamicFieldConfig, DynamicField> func = (model, ce, p, c) =>
+
+            DynamicField func(T model, ConstantExpression ce, PropertyInfo p, DynamicFieldConfig c)
             {
                 var dynamicField = new DynamicField
                 {
@@ -66,7 +66,7 @@ namespace Headway.Core.Dynamic
                 dynamicField.Parameters = new Dictionary<string, object> { { "Field", dynamicField } };
 
                 return dynamicField;
-            };
+            }
 
             var dynamicFields = from p in typeHelper.SupportedProperties
                                 join c in DynamicModelConfig.FieldConfigs on p.Name equals c.PropertyName
