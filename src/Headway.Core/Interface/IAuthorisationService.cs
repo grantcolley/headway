@@ -24,5 +24,8 @@ namespace Headway.Core.Interface
         Task<IServiceResult<int>> DeleteRoleAsync(int roleId);
         Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id);
         Task<IServiceResult<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>();
+        Task<IServiceResult<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel);
+        Task<IServiceResult<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel);
+        Task<IServiceResult<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel);
     }
 }
