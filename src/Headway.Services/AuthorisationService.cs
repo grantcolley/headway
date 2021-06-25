@@ -184,5 +184,56 @@ namespace Headway.Services
                 };
             }
         }
+
+        public async Task<IServiceResult<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel)
+        {
+            var addResponse = await httpClient.PostAsJsonAsync(
+                $"{dynamicModel.DynamicModelConfig.ConfigPath}", dynamicModel.Model)
+                .ConfigureAwait(false);
+
+            var addResult = await GetServiceResult<T>(addResponse);
+
+            var serviceResult = new ServiceResult<DynamicModel<T>>
+            {
+                IsSuccess = addResult.IsSuccess,
+                Message = addResult.Message
+            };
+
+            if (serviceResult.IsSuccess)
+            {
+                serviceResult.Result = dynamicModel;
+            }
+
+            return serviceResult;
+        }
+
+        public async Task<IServiceResult<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel)
+        {
+            var addResponse = await httpClient.PutAsJsonAsync(
+                $"{dynamicModel.DynamicModelConfig.ConfigPath}", dynamicModel.Model)
+                .ConfigureAwait(false);
+
+            var addResult = await GetServiceResult<T>(addResponse);
+
+            var serviceResult = new ServiceResult<DynamicModel<T>>
+            {
+                IsSuccess = addResult.IsSuccess,
+                Message = addResult.Message
+            };
+
+            if (serviceResult.IsSuccess)
+            {
+                serviceResult.Result = dynamicModel;
+            }
+
+            return serviceResult;
+        }
+
+        public async Task<IServiceResult<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel)
+        {
+            var configPath = $"{dynamicModel.DynamicModelConfig.ConfigPath}/{dynamicModel.Id}";
+            var httpResponseMessage = await httpClient.DeleteAsync($"{configPath}").ConfigureAwait(false);
+            return await GetServiceResult<int>(httpResponseMessage);
+        }
     }
 }
