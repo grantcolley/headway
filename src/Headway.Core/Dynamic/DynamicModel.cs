@@ -8,6 +8,7 @@ namespace Headway.Core.Dynamic
 {
     public class DynamicModel<T>
     {
+        private readonly string idFieldName;
         private readonly string titleFieldName;
         private readonly DynamicTypeHelper<T> typeHelper;
 
@@ -15,6 +16,13 @@ namespace Headway.Core.Dynamic
         {
             Model = model;
             DynamicModelConfig = dynamicModelConfig;
+
+            var idField = dynamicModelConfig.FieldConfigs.FirstOrDefault(f => f.IsIdField);
+
+            if (idField != null)
+            {
+                idFieldName = idField.PropertyName;
+            }
 
             var titleField = dynamicModelConfig.FieldConfigs.FirstOrDefault(f => f.IsTitleField);
 
@@ -31,6 +39,8 @@ namespace Headway.Core.Dynamic
         public T Model { get; private set; }
         public List<DynamicField> DynamicFields { get; private set; }
         public DynamicModelConfig DynamicModelConfig { get; private set; }
+
+        public int Id { get { return Convert.ToInt32(typeHelper.GetValue(Model, idFieldName)); } }
 
         public string Title { get { return typeHelper.GetValue(Model, titleFieldName).ToString(); } }
 
