@@ -11,16 +11,16 @@ namespace Headway.WebApi.Controllers
     [EnableCors("local")]
     [Route("[controller]")]
     [Authorize(Roles = "headwayuser")]
-    public class DynamicConfigController : ApiControllerBase<DynamicConfigController>
+    public class ConfigController : ApiControllerBase<ConfigController>
     {
-        private readonly IDynamicConfigRepository dynamicRepository;
+        private readonly IConfigRepository configRepository;
 
-        public DynamicConfigController(
-            IDynamicConfigRepository dynamicRepository,
-            ILogger<DynamicConfigController> logger)
-            : base(dynamicRepository, logger)
+        public ConfigController(
+            IConfigRepository configRepository,
+            ILogger<ConfigController> logger)
+            : base(configRepository, logger)
         {
-            this.dynamicRepository = dynamicRepository;
+            this.configRepository = configRepository;
         }
 
         [HttpGet("{model}")]
@@ -34,8 +34,8 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var config = await dynamicRepository
-                .GetDynamicModelConfigAsync(model)
+            var config = await configRepository
+                .GetModelConfigAsync(model)
                 .ConfigureAwait(false);
 
             return Ok(config);
