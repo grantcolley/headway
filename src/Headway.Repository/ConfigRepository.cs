@@ -1,23 +1,23 @@
-﻿using Headway.Core.Dynamic;
-using Headway.Core.Interface;
+﻿using Headway.Core.Interface;
+using Headway.Core.Model;
 using Headway.Repository.Data;
 using System;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class DynamicConfigRepository : RepositoryBase, IDynamicConfigRepository
+    public class ConfigRepository : RepositoryBase, IConfigRepository
     {
-        public DynamicConfigRepository(ApplicationDbContext applicationDbContext)
+        public ConfigRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
         }
 
-        public Task<DynamicModelConfig> GetDynamicModelConfigAsync(string model)
+        public Task<ModelConfig> GetModelConfigAsync(string model)
         {
             if(model.Equals("Permission"))
             {
-                var dynamicModelConfig = new DynamicModelConfig
+                var dynamicModelConfig = new ModelConfig
                 {
                     ConfigName = "Permission",
                     ConfigPath = "Permissions",
@@ -27,21 +27,21 @@ namespace Headway.Repository
 
                 dynamicModelConfig.FieldConfigs.AddRange(new[]
                 {
-                    new DynamicFieldConfig
+                    new FieldConfig
                     { 
                         PropertyName = "PermissionId",
                         Order  = 1,
                         DynamicComponentTypeName = "Headway.RazorShared.Components.LabelData, Headway.RazorShared",
                         IsIdField = true
                     },
-                    new DynamicFieldConfig
+                    new FieldConfig
                     {
                         PropertyName = "Name",
                         Order  = 2,
                         DynamicComponentTypeName = "Headway.RazorShared.Components.LabelText, Headway.RazorShared",
                         IsTitleField = true
                     },
-                    new DynamicFieldConfig
+                    new FieldConfig
                     {
                         PropertyName = "Description",
                         Order  = 3,

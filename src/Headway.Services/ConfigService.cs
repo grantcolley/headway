@@ -1,5 +1,4 @@
-﻿using Headway.Core.Dynamic;
-using Headway.Core.Interface;
+﻿using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Concurrent;
 using System.Net.Http;
@@ -8,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Headway.Services
 {
-    public class DynamicConfigService : IDynamicConfigService
+    public class ConfigService : IConfigService
     {
-        private readonly ConcurrentDictionary<string, DynamicModelConfig> cache = new();
+        private readonly ConcurrentDictionary<string, ModelConfig> cache = new();
 
-        public async Task<IServiceResult<DynamicModelConfig>> GetDynamicModelConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider)
+        public async Task<IServiceResult<ModelConfig>> GetModelConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider)
         {
             var model = typeof(T).Name;
 
             if (cache.ContainsKey(model))
             {
-                if (cache.TryGetValue(model, out DynamicModelConfig config))
+                if (cache.TryGetValue(model, out ModelConfig config))
                 {
-                    return new ServiceResult<DynamicModelConfig>
+                    return new ServiceResult<ModelConfig>
                     {
                         IsSuccess = true,
                         Result = config
@@ -28,16 +27,16 @@ namespace Headway.Services
                 }
             }
 
-            using var httpResponseMessage = await httpClient.GetAsync($"DynamicConfig/{model}").ConfigureAwait(false);
+            using var httpResponseMessage = await httpClient.GetAsync($"Config/{model}").ConfigureAwait(false);
             if (httpResponseMessage.IsSuccessStatusCode)
             {
-                var config = await JsonSerializer.DeserializeAsync<DynamicModelConfig>
+                var config = await JsonSerializer.DeserializeAsync<ModelConfig>
                     (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
                     new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
 
                 if (cache.TryAdd(model, config))
                 {
-                    return new ServiceResult<DynamicModelConfig>
+                    return new ServiceResult<ModelConfig>
                     {
                         IsSuccess = true,
                         Result = config
@@ -45,7 +44,7 @@ namespace Headway.Services
                 }
                 else
                 {
-                    return new ServiceResult<DynamicModelConfig>
+                    return new ServiceResult<ModelConfig>
                     {
                         IsSuccess = false,
                         Message = $"Config for {model} is not accessible"
@@ -54,7 +53,7 @@ namespace Headway.Services
             }
             else
             {
-                return new ServiceResult<DynamicModelConfig>
+                return new ServiceResult<ModelConfig>
                 {
                     IsSuccess = httpResponseMessage.IsSuccessStatusCode,
                     Message = httpResponseMessage.ReasonPhrase
