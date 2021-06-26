@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Headway.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,19 +13,19 @@ namespace Headway.Core.Dynamic
         private readonly string titleFieldName;
         private readonly DynamicTypeHelper<T> typeHelper;
 
-        public DynamicModel(T model, DynamicModelConfig dynamicModelConfig)
+        public DynamicModel(T model, ModelConfig modelConfig)
         {
             Model = model;
-            DynamicModelConfig = dynamicModelConfig;
+            ModelConfig = modelConfig;
 
-            var idField = dynamicModelConfig.FieldConfigs.FirstOrDefault(f => f.IsIdField);
+            var idField = modelConfig.FieldConfigs.FirstOrDefault(f => f.IsIdField);
 
             if (idField != null)
             {
                 idFieldName = idField.PropertyName;
             }
 
-            var titleField = dynamicModelConfig.FieldConfigs.FirstOrDefault(f => f.IsTitleField);
+            var titleField = modelConfig.FieldConfigs.FirstOrDefault(f => f.IsTitleField);
 
             if(titleField != null)
             {
@@ -38,7 +39,7 @@ namespace Headway.Core.Dynamic
 
         public T Model { get; private set; }
         public List<DynamicField> DynamicFields { get; private set; }
-        public DynamicModelConfig DynamicModelConfig { get; private set; }
+        public ModelConfig ModelConfig { get; private set; }
 
         public int Id { get { return Convert.ToInt32(typeHelper.GetValue(Model, idFieldName)); } }
 
@@ -50,7 +51,7 @@ namespace Headway.Core.Dynamic
 
             var constantExpression = Expression.Constant(Model);
 
-            static DynamicField func(T model, ConstantExpression ce, PropertyInfo p, DynamicFieldConfig c)
+            static DynamicField func(T model, ConstantExpression ce, PropertyInfo p, FieldConfig c)
             {
                 var dynamicField = new DynamicField
                 {
@@ -69,7 +70,7 @@ namespace Headway.Core.Dynamic
             }
 
             var dynamicFields = from p in typeHelper.SupportedProperties
-                                join c in DynamicModelConfig.FieldConfigs on p.Name equals c.PropertyName
+                                join c in ModelConfig.FieldConfigs on p.Name equals c.PropertyName
                                 select func(Model, constantExpression, p, c);
 
             DynamicFields.AddRange(dynamicFields);

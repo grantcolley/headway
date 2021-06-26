@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 
-namespace Headway.Core.Dynamic
+namespace Headway.Core.Model
 {
-    public class DynamicModelConfig
+    public class ModelConfig
     {
-        public DynamicModelConfig()
+        public ModelConfig()
         {
-            FieldConfigs = new List<DynamicFieldConfig>();
+            FieldConfigs = new List<FieldConfig>();
         }
 
         public string ConfigName { get; set; }
         public string ConfigPath { get; set; }
         public string RedirectText { get; set; }
         public string RedirectPage { get; set; }
-        public List<DynamicFieldConfig> FieldConfigs { get; set; }
+        public List<FieldConfig> FieldConfigs { get; set; }
     }
 }

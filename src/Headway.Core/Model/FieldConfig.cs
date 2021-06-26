@@ -1,6 +1,6 @@
-﻿namespace Headway.Core.Dynamic
+﻿namespace Headway.Core.Model
 {
-    public class DynamicFieldConfig
+    public class FieldConfig
     {
         public int Id { get; set; }
         public int Order { get; set; }
