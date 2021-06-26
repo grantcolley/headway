@@ -122,7 +122,7 @@ namespace Headway.Services
 
             if (serviceResultConfig.IsSuccess)
             {
-                var configPath = $"{serviceResultConfig.Result.ConfigPath}/{id}";
+                var configPath = $"{serviceResultConfig.Result.ConfigApiPath}/{id}";
 
                 using var response = await httpClient.GetAsync(configPath).ConfigureAwait(false);
                 var serviceResultModel = await GetServiceResult<T>(response)
@@ -186,7 +186,7 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel)
         {
             var addResponse = await httpClient.PostAsJsonAsync(
-                $"{dynamicModel.ModelConfig.ConfigPath}", dynamicModel.Model)
+                $"{dynamicModel.ModelConfig.ConfigApiPath}", dynamicModel.Model)
                 .ConfigureAwait(false);
 
             var addResult = await GetServiceResult<T>(addResponse);
@@ -208,7 +208,7 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel)
         {
             var addResponse = await httpClient.PutAsJsonAsync(
-                $"{dynamicModel.ModelConfig.ConfigPath}", dynamicModel.Model)
+                $"{dynamicModel.ModelConfig.ConfigApiPath}", dynamicModel.Model)
                 .ConfigureAwait(false);
 
             var addResult = await GetServiceResult<T>(addResponse);
@@ -229,7 +229,7 @@ namespace Headway.Services
 
         public async Task<IServiceResult<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel)
         {
-            var configPath = $"{dynamicModel.ModelConfig.ConfigPath}/{dynamicModel.Id}";
+            var configPath = $"{dynamicModel.ModelConfig.ConfigApiPath}/{dynamicModel.Id}";
             var httpResponseMessage = await httpClient.DeleteAsync($"{configPath}").ConfigureAwait(false);
             return await GetServiceResult<int>(httpResponseMessage);
         }
