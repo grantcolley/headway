@@ -2,7 +2,7 @@
 {
     public class FieldConfig
     {
-        public int Id { get; set; }
+        public int FieldConfigId { get; set; }
         public int Order { get; set; }
         public bool IsIdField { get; set; }
         public bool IsTitleField { get; set; }
