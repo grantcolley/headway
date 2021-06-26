@@ -9,8 +9,9 @@ namespace Headway.Core.Model
             FieldConfigs = new List<FieldConfig>();
         }
 
-        public string ConfigName { get; set; }
-        public string ConfigPath { get; set; }
+        public int ModelConfigId { get; set; } 
+        public string ModelName { get; set; }
+        public string ConfigApiPath { get; set; }
         public string RedirectText { get; set; }
         public string RedirectPage { get; set; }
         public List<FieldConfig> FieldConfigs { get; set; }
