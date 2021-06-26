@@ -19,8 +19,8 @@ namespace Headway.Repository
             {
                 var dynamicModelConfig = new ModelConfig
                 {
-                    ConfigName = "Permission",
-                    ConfigPath = "Permissions",
+                    ModelName = "Permission",
+                    ConfigApiPath = "Permissions",
                     RedirectPage = "/Permissions",
                     RedirectText = "Return to permissions."
                 };
