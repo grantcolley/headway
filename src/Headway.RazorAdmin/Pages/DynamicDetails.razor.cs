@@ -28,11 +28,15 @@ namespace Headway.RazorAdmin.Pages
 
             if (Id.Equals(0))
             {
-                serviceResult = await AuthorisationService.CreateDynamicModelInstanceAsync<T>().ConfigureAwait(false);
+                serviceResult = await AuthorisationService
+                    .CreateDynamicModelInstanceAsync<T>()
+                    .ConfigureAwait(false);
             }
             else
             {
-                serviceResult = await AuthorisationService.GetDynamicModelAsync<T>(Id).ConfigureAwait(false);
+                serviceResult = await AuthorisationService
+                    .GetDynamicModelAsync<T>(Id)
+                    .ConfigureAwait(false);
             }
 
             DynamicModel = GetResponse(serviceResult);
@@ -44,42 +48,41 @@ namespace Headway.RazorAdmin.Pages
         {
             IsSaveInProgress = true;
 
-            //if (Permission.PermissionId.Equals(0))
-            //{
-            //    var permissionResponse = await AuthorisationService.AddPermissionAsync(Permission).ConfigureAwait(false);
-            //    Permission = GetResponse(permissionResponse);
-            //    if (Permission == null)
-            //    {
-            //        return;
-            //    }
+            IServiceResult<DynamicModel<T>> serviceResult;
+            string message;
 
-            //    Alert = new Alert
-            //    {
-            //        AlertType = "primary",
-            //        Title = $"{Permission.Name}",
-            //        Message = $"has been added.",
-            //        RedirectText = "Return to permisions.",
-            //        RedirectPage = "/permissions"
-            //    };
-            //}
-            //else
-            //{
-            //    var permissionResponse = await AuthorisationService.UpdatePermissionAsync(Permission).ConfigureAwait(false);
-            //    Permission = GetResponse(permissionResponse);
-            //    if (Permission == null)
-            //    {
-            //        return;
-            //    }
+            if (DynamicModel.Id.Equals(0))
+            {
+                serviceResult = await AuthorisationService
+                    .AddDynamicModelAsync<T>(DynamicModel)
+                    .ConfigureAwait(false);
 
-            //    Alert = new Alert
-            //    {
-            //        AlertType = "primary",
-            //        Title = $"{Permission.Name}",
-            //        Message = $"has been updated.",
-            //        RedirectText = "Return to permisions.",
-            //        RedirectPage = "/permissions"
-            //    };
-            //}
+                message = "has been added.";
+            }
+            else
+            {
+                serviceResult = await AuthorisationService
+                    .UpdateDynamicModelAsync<T>(DynamicModel)
+                    .ConfigureAwait(false);
+
+                message = "has been updated.";
+            }
+
+            DynamicModel = GetResponse(serviceResult);
+
+            if (DynamicModel == null)
+            {
+                return;
+            }
+
+            Alert = new Alert
+            {
+                AlertType = "primary",
+                Title = $"{DynamicModel.Title}",
+                Message = message,
+                RedirectText = "Return to permisions.",
+                RedirectPage = "/permissions"
+            };
 
             IsSaveInProgress = false;
         }
@@ -88,21 +91,25 @@ namespace Headway.RazorAdmin.Pages
         {
             IsDeleteInProgress = true;
 
-            //var deleteResponse = await AuthorisationService.DeletePermissionAsync(permission.PermissionId).ConfigureAwait(false);
-            //var deleteResult = GetResponse(deleteResponse);
-            //if (deleteResult.Equals(0))
-            //{
-            //    return;
-            //}
+            var serviceResult = await AuthorisationService
+                .DeleteDynamicModelAsync(DynamicModel)
+                .ConfigureAwait(false);
 
-            //Alert = new Alert
-            //{
-            //    AlertType = "danger",
-            //    Title = $"{permission.Name}",
-            //    Message = $"has been deleted.",
-            //    RedirectText = "Return to permisions.",
-            //    RedirectPage = "/permissions"
-            //};
+            var result = GetResponse(serviceResult);
+
+            if (result.Equals(0))
+            {
+                return;
+            }
+
+            Alert = new Alert
+            {
+                AlertType = "danger",
+                Title = $"{DynamicModel.Title}",
+                Message = $"has been deleted.",
+                RedirectText = "Return to permisions.",
+                RedirectPage = "/permissions"
+            };
 
             IsDeleteInProgress = false;
         }
