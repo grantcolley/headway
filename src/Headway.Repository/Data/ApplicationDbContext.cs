@@ -16,6 +16,8 @@ namespace Headway.Repository.Data
         public DbSet<Module> Modules { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<ModelConfig> ModelConfigs { get; set; }
+        public DbSet<FieldConfig> FieldConfigs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,6 +47,10 @@ namespace Headway.Repository.Data
 
             builder.Entity<MenuItem>()
                 .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<ModelConfig>()
+                .HasIndex(p => p.ModelName)
                 .IsUnique();
         }
     }
