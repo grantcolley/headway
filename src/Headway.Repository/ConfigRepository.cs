@@ -1,7 +1,7 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Repository.Data;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
@@ -13,46 +13,13 @@ namespace Headway.Repository
         {
         }
 
-        public Task<ModelConfig> GetModelConfigAsync(string model)
+        public async Task<ModelConfig> GetModelConfigAsync(string model)
         {
-            if(model.Equals("Permission"))
-            {
-                var dynamicModelConfig = new ModelConfig
-                {
-                    ModelName = "Permission",
-                    ConfigApiPath = "Permissions",
-                    RedirectPage = "/Permissions",
-                    RedirectText = "Return to permissions."
-                };
-
-                dynamicModelConfig.FieldConfigs.AddRange(new[]
-                {
-                    new FieldConfig
-                    { 
-                        PropertyName = "PermissionId",
-                        Order  = 1,
-                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelData, Headway.RazorShared",
-                        IsIdField = true
-                    },
-                    new FieldConfig
-                    {
-                        PropertyName = "Name",
-                        Order  = 2,
-                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelText, Headway.RazorShared",
-                        IsTitleField = true
-                    },
-                    new FieldConfig
-                    {
-                        PropertyName = "Description",
-                        Order  = 3,
-                        DynamicComponentTypeName = "Headway.RazorShared.Components.LabelText, Headway.RazorShared"
-                    }
-                });
-
-                return Task.FromResult(dynamicModelConfig);
-            }
-
-            throw new NotImplementedException(model);
+            return await applicationDbContext.ModelConfigs
+                .Include(m => m.FieldConfigs)
+                .AsNoTracking()
+                .SingleAsync(m => m.ModelName.Equals(model))
+                .ConfigureAwait(false);
         }
     }
 }
