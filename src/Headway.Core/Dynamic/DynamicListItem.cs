@@ -1,7 +1,12 @@
 ﻿namespace Headway.Core.Dynamic
 {
-    public class DynamicListItem
+    public class DynamicListItem<T>
     {
-        public object Model { get; set; }
+        public DynamicListItem(T model)
+        {
+            Model = model;
+        }
+
+        public T Model { get; private set; }
     }
 }
