@@ -23,13 +23,18 @@ namespace Headway.Core.Dynamic
 
         public string Title { get { return ListConfig.ListName; } }
 
-        public List<DynamicListItem> DynamicListItems { get; private set; }
+        public List<DynamicListItem<T>> DynamicListItems { get; private set; }
+
+        public object GetValue(T listItem, string field)
+        {
+            return typeHelper.GetValue(listItem, field);
+        }
 
         private void BuildDynamicListItems()
         {
-            DynamicListItems = new List<DynamicListItem>();
+            DynamicListItems = new List<DynamicListItem<T>>();
 
-            var dynamicListItems = listItems.Select(i => new DynamicListItem { Model = i });
+            var dynamicListItems = listItems.Select(i => new DynamicListItem<T>(i));
 
             DynamicListItems.AddRange(dynamicListItems);
         }
