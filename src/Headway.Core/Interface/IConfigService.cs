@@ -6,6 +6,7 @@ namespace Headway.Core.Interface
 {
     public interface IConfigService
     {
+        Task<IServiceResult<ListConfig>> GetListConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider);
         Task<IServiceResult<ModelConfig>> GetModelConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider);
     }
 }

@@ -9,15 +9,66 @@ namespace Headway.Services
 {
     public class ConfigService : IConfigService
     {
-        private readonly ConcurrentDictionary<string, ModelConfig> cache = new();
+        private readonly ConcurrentDictionary<string, ListConfig> listConfigs = new();
+        private readonly ConcurrentDictionary<string, ModelConfig> modelConfigs = new();
+
+        public async Task<IServiceResult<ListConfig>> GetListConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider)
+        {
+            var model = typeof(T).Name;
+
+            if (listConfigs.ContainsKey(model))
+            {
+                if (listConfigs.TryGetValue(model, out ListConfig config))
+                {
+                    return new ServiceResult<ListConfig>
+                    {
+                        IsSuccess = true,
+                        Result = config
+                    };
+                }
+            }
+
+            using var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{model}").ConfigureAwait(false);
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var config = await JsonSerializer.DeserializeAsync<ListConfig>
+                    (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
+
+                if (listConfigs.TryAdd(model, config))
+                {
+                    return new ServiceResult<ListConfig>
+                    {
+                        IsSuccess = true,
+                        Result = config
+                    };
+                }
+                else
+                {
+                    return new ServiceResult<ListConfig>
+                    {
+                        IsSuccess = false,
+                        Message = $"Config for {model} list is not accessible"
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResult<ListConfig>
+                {
+                    IsSuccess = httpResponseMessage.IsSuccessStatusCode,
+                    Message = httpResponseMessage.ReasonPhrase
+                };
+            }
+        }
 
         public async Task<IServiceResult<ModelConfig>> GetModelConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider)
         {
             var model = typeof(T).Name;
 
-            if (cache.ContainsKey(model))
+            if (modelConfigs.ContainsKey(model))
             {
-                if (cache.TryGetValue(model, out ModelConfig config))
+                if (modelConfigs.TryGetValue(model, out ModelConfig config))
                 {
                     return new ServiceResult<ModelConfig>
                     {
@@ -27,14 +78,14 @@ namespace Headway.Services
                 }
             }
 
-            using var httpResponseMessage = await httpClient.GetAsync($"Config/{model}").ConfigureAwait(false);
+            using var httpResponseMessage = await httpClient.GetAsync($"ModelConfig/{model}").ConfigureAwait(false);
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var config = await JsonSerializer.DeserializeAsync<ModelConfig>
                     (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
                     new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
 
-                if (cache.TryAdd(model, config))
+                if (modelConfigs.TryAdd(model, config))
                 {
                     return new ServiceResult<ModelConfig>
                     {
