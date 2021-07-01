@@ -12,7 +12,7 @@ namespace Headway.RazorAdmin.Pages
         public IAuthorisationService AuthorisationService { get; set; }
 
         [Parameter]
-        public string DetailsType { get; set; }
+        public string TypeName { get; set; }
 
         [Parameter]
         public int Id { get; set; }
