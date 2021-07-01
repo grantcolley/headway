@@ -5,6 +5,7 @@ namespace Headway.Core.Interface
 {
     public interface IConfigRepository : IRepository
     {
+        Task<ListConfig> GetListConfigAsync(string model);
         Task<ModelConfig> GetModelConfigAsync(string model);
     }
 }

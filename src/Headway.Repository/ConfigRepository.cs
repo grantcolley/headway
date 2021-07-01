@@ -13,6 +13,25 @@ namespace Headway.Repository
         {
         }
 
+        public Task<ListConfig> GetListConfigAsync(string model)
+        {
+            var listConfig = new ListConfig
+            {
+                ListName = "Permissions",
+                IdPropertyName = "Id",
+                ConfigApiPath = "Permissions",
+                DynamicComponentTypeName = "",
+                ListItemConfigs = new System.Collections.Generic.List<ListItemConfig>
+                {
+                    { new ListItemConfig { HeaderName = "Permission Id", Order = 1, PropertyName = "PermissionId" } },
+                    { new ListItemConfig { HeaderName = "Name", Order = 2, PropertyName = "Name" } },
+                    { new ListItemConfig { HeaderName = "Description", Order = 3, PropertyName = "Description" } }
+                 }
+            };
+
+            return Task.FromResult(listConfig);
+        }
+
         public async Task<ModelConfig> GetModelConfigAsync(string model)
         {
             return await applicationDbContext.ModelConfigs
