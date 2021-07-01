@@ -114,6 +114,48 @@ namespace Headway.Services
             return await GetServiceResult<int>(httpResponseMessage);
         }
 
+        public async Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>()
+        {
+            var serviceResultConfig = 
+                await configService.GetListConfigAsync<T>(httpClient, tokenProvider)
+                .ConfigureAwait(false);
+
+            if (serviceResultConfig.IsSuccess)
+            {
+                var configPath = $"{serviceResultConfig.Result.ConfigApiPath}";
+
+                using var response = await httpClient.GetAsync(configPath).ConfigureAwait(false);
+                var serviceResultList = await GetServiceResult<IEnumerable<T>>(response)
+                    .ConfigureAwait(false);
+
+                if (serviceResultList.IsSuccess)
+                {
+                    return new ServiceResult<DynamicList<T>>
+                    {
+                        IsSuccess = serviceResultList.IsSuccess,
+                        Message = serviceResultList.Message,
+                        Result = new DynamicList<T>(serviceResultList.Result, serviceResultConfig.Result)
+                    };
+                }
+                else
+                {
+                    return new ServiceResult<DynamicList<T>>
+                    {
+                        IsSuccess = serviceResultList.IsSuccess,
+                        Message = serviceResultList.Message
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResult<DynamicList<T>>
+                {
+                    IsSuccess = serviceResultConfig.IsSuccess,
+                    Message = serviceResultConfig.Message
+                };
+            }
+        }
+
         public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id)
         {
             var serviceResultConfig
