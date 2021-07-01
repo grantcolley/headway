@@ -14,7 +14,7 @@ namespace Headway.RazorAdmin.Pages
         public IAuthorisationService AuthorisationService { get; set; }
 
         [Parameter]
-        public string DetailsType { get; set; }
+        public string TypeName { get; set; }
 
         protected DynamicList<T> DynamicList;
 
@@ -22,20 +22,25 @@ namespace Headway.RazorAdmin.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            //var result = await AuthorisationService.GetPermissionsAsync().ConfigureAwait(false);
-            //Permissions = GetResponse(result);
+            var result = 
+                await AuthorisationService.GetDynamicListAsync<T>()
+                .ConfigureAwait(false);
+
+            DynamicList = GetResponse(result);
+
+            ListItemConfigs = DynamicList.ListConfig.ListItemConfigs;
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected void Add()
         {
-            NavigationManager.NavigateTo($"/details/{DetailsType}");
+            NavigationManager.NavigateTo($"/details/{TypeName}");
         }
 
         protected void Update(object id)
         {
-            NavigationManager.NavigateTo($"/details/{DetailsType}/{id}");
+            NavigationManager.NavigateTo($"/details/{TypeName}/{id}");
         }
     }
 }
