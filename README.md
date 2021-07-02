@@ -26,7 +26,7 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
-    * [Telling Headway.WebApi to Handle Json Circular Reference Errors](#telling-headway-webApi-to-handle-json-circular-reference-errors)
+    * [Handle System.Text.Json Circular Reference Errors](#handle-system-text-json-circular-reference-errors)
 
 ## Getting Started
 
@@ -114,8 +114,9 @@ Remove the latest migration:
  * https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
-### Telling Headway WebApi to Handle Json Circular Reference Errors
-Entity Framework required the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
+### Handle System.Text.Json Circular Reference Errors
+Newtonsoft.Json (Json.NET) has been removed from the ASP.NET Core shared framework. The default JSON serializer for ASP.NET Core is now System.Text.Json, which is new in .NET Core 3.0.
+Entity Framework requires the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
 
 ```C#
         public async Task<User> GetUserAsync(string claim, int userId)
