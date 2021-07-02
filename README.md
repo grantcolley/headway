@@ -27,6 +27,7 @@
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
     * [Handle System.Text.Json Circular Reference Errors](#handle-system.text.json-circular-reference-errors)
+    * [Make ASP.Net Core use Json.Net](#make-asp.net-core-use-json.net)
 
 ## Getting Started
 
@@ -136,3 +137,6 @@ The query results will now contain a circular reference, where the parent refere
                 .AddJsonOptions(options => 
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 ```
+
+### Make ASP.Net Core use Json.Net
+https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support
