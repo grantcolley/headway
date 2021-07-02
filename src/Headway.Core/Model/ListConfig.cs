@@ -11,9 +11,8 @@ namespace Headway.Core.Model
 
         public int ListConfigId { get; set; }
         public string ListName { get; set; }
-        public string ConfigApiPath { get; set; }
+        public string ConfigPath { get; set; }
         public string IdPropertyName { get; set; }
-        public string DynamicComponentTypeName { get; set; }
         public List<ListItemConfig> ListItemConfigs { get; set; }
     }
 }

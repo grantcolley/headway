@@ -17,10 +17,10 @@ namespace Headway.Repository
         {
             var listConfig = new ListConfig
             {
+                ListConfigId = 1,
+                IdPropertyName = "PermissionId",
+                ConfigPath = "Permissions",
                 ListName = "Permissions",
-                IdPropertyName = "Id",
-                ConfigApiPath = "Permissions",
-                DynamicComponentTypeName = "",
                 ListItemConfigs = new System.Collections.Generic.List<ListItemConfig>
                 {
                     { new ListItemConfig { HeaderName = "Permission Id", Order = 1, PropertyName = "PermissionId" } },

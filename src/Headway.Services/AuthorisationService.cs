@@ -122,7 +122,7 @@ namespace Headway.Services
 
             if (serviceResultConfig.IsSuccess)
             {
-                var configPath = $"{serviceResultConfig.Result.ConfigApiPath}";
+                var configPath = $"{serviceResultConfig.Result.ConfigPath}";
 
                 using var response = await httpClient.GetAsync(configPath).ConfigureAwait(false);
                 var serviceResultList = await GetServiceResult<IEnumerable<T>>(response)
