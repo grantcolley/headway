@@ -26,7 +26,7 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
-    * [Handle System.Text.Json Circular Reference Errors](#handle-system-text-json-circular-reference-errors)
+    * [Handle System.Text.Json Circular Reference Errors](#handle-system.text.json-circular-reference-errors)
 
 ## Getting Started
 
