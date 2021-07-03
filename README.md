@@ -26,8 +26,8 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
-    * [Handle System.Text.Json Circular Reference Errors](#handle-system.text.json-circular-reference-errors)
-    * [Make ASP.Net Core use Json.Net](#make-asp.net-core-use-json.net)
+    * [Handle System.Text.Json Circular Reference Errors](#handle-systemtextjson-circular-reference-errors)
+    * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
 
 ## Getting Started
 
@@ -116,7 +116,8 @@ Remove the latest migration:
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
 ### Handle System.Text.Json Circular Reference Errors
-Newtonsoft.Json (Json.NET) has been removed from the ASP.NET Core shared framework. The default JSON serializer for ASP.NET Core is now System.Text.Json, which is new in .NET Core 3.0.
+`Newtonsoft.Json (Json.NET)` has been removed from the ASP.NET Core shared framework. The default JSON serializer for ASP.NET Core is now `System.Text.Json`, which is new in .NET Core 3.0.
+
 Entity Framework requires the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
 
 ```C#
@@ -139,4 +140,18 @@ The query results will now contain a circular reference, where the parent refere
 ```
 
 ### Make ASP.Net Core use Json.Net
-https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support
+The default JSON serializer for ASP.NET Core is now `System.Text.Json`. However, `System.Text.Json` is new and might currently be missing features supported by `Newtonsoft.Json (Json.NET)`. 
+/
+There is also a [reported bug in System.Text.Json](https://github.com/dotnet/aspnetcore/issues/34069) where duplicate values are nulled out when setting `JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles`. 
+
+[How to specify ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support) use `Newtonsoft.Json (Json.NET)` as the JSON serializer install [Microsoft.AspNetCore.Mvc.NewtonsoftJson](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.NewtonsoftJson) and the following to the [Startup](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Startup.cs) of [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi):
+\
+*Note: I had to do this after noticing `Syste.Text.Json` nulled out duplicate string values after setting `ReferenceHandler.IgnoreCycles`.*
+```C#
+            services.AddControllers()
+                .AddNewtonsoftJson(options => 
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+```
+
+
+
