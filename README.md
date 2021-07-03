@@ -141,10 +141,9 @@ The query results will now contain a circular reference, where the parent refere
 
 ### Make ASP.Net Core use Json.Net
 The default JSON serializer for ASP.NET Core is now `System.Text.Json`. However, `System.Text.Json` is new and might currently be missing features supported by `Newtonsoft.Json (Json.NET)`.
-One problem with ASP.NET Core, for example, is it null's duplicate values:
 
 [How to specify ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support) use `Newtonsoft.Json (Json.NET)` as the JSON serializer install [Microsoft.AspNetCore.Mvc.NewtonsoftJson](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.NewtonsoftJson) and the following to the [Startup](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Startup.cs) of [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi):
-
+*Note: I had to do this after noticing `Syste.Text.Json` nulled out duplicate values in http response content.*
 ```C#
             services.AddControllers()
                 .AddNewtonsoftJson(options => 
