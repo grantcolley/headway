@@ -148,7 +148,7 @@ One problem with ASP.NET Core, for example, is it null's duplicate values:
 ```C#
             services.AddControllers()
                 .AddNewtonsoftJson(options => 
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 ```
 
 
