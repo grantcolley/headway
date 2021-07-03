@@ -26,8 +26,8 @@
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
-    * [Handle System.Text.Json Circular Reference Errors](#handle-system.text.json-circular-reference-errors)
-    * [Make ASP.Net Core use Json.Net](#make-asp.net-core-use-json.net)
+    * [Handle System.Text.Json Circular Reference Errors](#handle-systemtextjson-circular-reference-errors)
+    * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
 
 ## Getting Started
 
