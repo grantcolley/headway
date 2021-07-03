@@ -143,7 +143,13 @@ The query results will now contain a circular reference, where the parent refere
 The default JSON serializer for ASP.NET Core is now `System.Text.Json`. However, `System.Text.Json` is new and might currently be missing features supported by `Newtonsoft.Json (Json.NET)`.
 One problem with ASP.NET Core, for example, is it null's duplicate values:
 
-To specify ASP.NET Core use `Newtonsoft.Json (Json.NET)` as the JSON serializer follow the steps in this link:
-https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support
+(How to specify ASP.NET Core)[https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support] use `Newtonsoft.Json (Json.NET)` as the JSON serializer install (Microsoft.AspNetCore.Mvc.NewtonsoftJson)[https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.NewtonsoftJson] and the following to the startup.cs:
+
+```C#
+            services.AddControllers()
+                .AddNewtonsoftJson(options => 
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+```
+
 
 
