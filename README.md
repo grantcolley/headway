@@ -116,7 +116,8 @@ Remove the latest migration:
  * https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/projects?tabs=dotnet-core-cli
   
 ### Handle System.Text.Json Circular Reference Errors
-Newtonsoft.Json (Json.NET) has been removed from the ASP.NET Core shared framework. The default JSON serializer for ASP.NET Core is now System.Text.Json, which is new in .NET Core 3.0.
+`Newtonsoft.Json (Json.NET)` has been removed from the ASP.NET Core shared framework. The default JSON serializer for ASP.NET Core is now `System.Text.Json`, which is new in .NET Core 3.0.
+
 Entity Framework requires the `Include()` method to specify related entities to include in the query results. An example is `GetUserAsync` in [AuthorisationRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/AuthorisationRepository.cs).
 
 ```C#
@@ -139,4 +140,10 @@ The query results will now contain a circular reference, where the parent refere
 ```
 
 ### Make ASP.Net Core use Json.Net
+The default JSON serializer for ASP.NET Core is now `System.Text.Json`. However, `System.Text.Json` is new and might currently be missing features supported by `Newtonsoft.Json (Json.NET)`.
+One problem with ASP.NET Core, for example, is it null's duplicate values:
+
+To specify ASP.NET Core use `Newtonsoft.Json (Json.NET)` as the JSON serializer follow the steps in this link:
 https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support
+
+
