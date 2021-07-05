@@ -8,9 +8,13 @@ namespace Headway.RazorAdmin.Pages
         [Parameter]
         public string TypeName { get; set; }
 
-        protected Type ListType
+        protected RenderFragment RenderListView() => __builder =>
         {
-            get { return Type.GetType(TypeName); }
-        }
+            var type = Type.GetType("Headway.Core.Model.Permission, Headway.Core");
+            var genericType = typeof(ListView<>).MakeGenericType(new[] { type });
+            __builder.OpenComponent(1, genericType);
+            __builder.AddAttribute(2, "TypeName", TypeName);
+            __builder.CloseComponent();
+        };
     }
 }
