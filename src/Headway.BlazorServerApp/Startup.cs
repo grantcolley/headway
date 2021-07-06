@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,6 +72,14 @@ namespace Headway.BlazorServerApp
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new ModuleService(httpClient, tokenProvider);
+            });
+
+            services.AddTransient<IBrowserStorageService, BrowserStorageService>(sp =>
+            {
+                var tokenProvider = sp.GetRequiredService<TokenProvider>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new BrowserStorageService(httpClient, tokenProvider);
             });
 
             services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
