@@ -45,6 +45,13 @@ namespace Headway.BlazorWebassemblyApp
                 return new ModuleService(httpClient);
             });
 
+            builder.Services.AddTransient<IBrowserStorageService, BrowserStorageService>(sp =>
+            {
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new BrowserStorageService(httpClient);
+            });
+
             builder.Services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
                 var configService = sp.GetRequiredService<IConfigService>();
