@@ -20,6 +20,7 @@ namespace Headway.Repository.Data
         public DbSet<FieldConfig> FieldConfigs { get; set; }
         public DbSet<ListConfig> ListConfigs { get; set; }
         public DbSet<ListItemConfig> ListItemConfigs { get; set; }
+        public DbSet<BrowserStorageItem> BrowserStorageItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -57,6 +58,10 @@ namespace Headway.Repository.Data
 
             builder.Entity<ListConfig>()
                 .HasIndex(p => p.ListName)
+                .IsUnique();
+
+            builder.Entity<BrowserStorageItem>()
+                .HasIndex(p => p.Key)
                 .IsUnique();
         }
     }
