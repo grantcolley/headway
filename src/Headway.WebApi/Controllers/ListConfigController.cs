@@ -11,13 +11,13 @@ namespace Headway.WebApi.Controllers
     [EnableCors("local")]
     [Route("[controller]")]
     [Authorize(Roles = "headwayuser")]
-    public class ListConfigController : ApiControllerBase<ModelConfigController>
+    public class ListConfigController : ApiControllerBase<ListConfigController>
     {
         private readonly IConfigRepository configRepository;
 
         public ListConfigController(
             IConfigRepository configRepository,
-            ILogger<ModelConfigController> logger)
+            ILogger<ListConfigController> logger)
             : base(configRepository, logger)
         {
             this.configRepository = configRepository;
