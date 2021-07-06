@@ -1,9 +1,10 @@
 ﻿using Headway.Core.Interface;
+using Headway.RazorShared.Model;
 using Microsoft.AspNetCore.Components;
 
-namespace Headway.RazorShared.Model
+namespace Headway.RazorShared.Base
 {
-    public class HeadwayComponentBase : ComponentBase
+    public abstract class HeadwayComponentBase : ComponentBase
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; }

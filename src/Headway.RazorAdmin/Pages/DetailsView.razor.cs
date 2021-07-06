@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Dynamic;
 using Headway.Core.Interface;
+using Headway.RazorShared.Base;
 using Headway.RazorShared.Model;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
