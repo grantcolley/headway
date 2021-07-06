@@ -13,20 +13,25 @@ namespace Headway.RazorShared.Base
         {
             if (!result.IsSuccess)
             {
-                var alert = new Alert
-                {
-                    AlertType = "danger",
-                    Title = "Error",
-                    Message = result.Message
-                };
-
-                NavigationManager.NavigateTo(alert.Page);
+                RaiseAlert(result.Message);
                 return default;
             }
             else
             {
                 return result.Result;
             }
+        }
+
+        protected void RaiseAlert(string message)
+        {
+            var alert = new Alert
+            {
+                AlertType = "danger",
+                Title = "Error",
+                Message = message
+            };
+
+            NavigationManager.NavigateTo(alert.Page);
         }
     }
 }
