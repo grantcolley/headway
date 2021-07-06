@@ -2,4 +2,18 @@
 @inherits ListBase
 @using System
 
-@RenderListView()
+<AuthorizeView>
+    <Authorized Context="list">
+        @if (typeFullName == null)
+        {
+            <p><em>Loading permissions...</em></p>
+        }
+        else
+        {
+            @RenderListView()
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
