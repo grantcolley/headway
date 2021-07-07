@@ -56,9 +56,9 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
 
                 var homeMenuItem = new MenuItem { Name = "Home", ImageClass = "oi oi-home", Path = "/", Permission = user.Name };
-                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", Path = "users", Order = 1, Permission = admin.Name };
-                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", Path = "roles", Order = 2, Permission = admin.Name };
-                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", Path = "permissions", Order = 3, Permission = admin.Name };
+                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", Path = "list/User", Order = 1, Permission = admin.Name };
+                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", Path = "list/Role", Order = 2, Permission = admin.Name };
+                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", Path = "list/Permission", Order = 3, Permission = admin.Name };
                 applicationDbContext.MenuItems.Add(homeMenuItem);
                 applicationDbContext.MenuItems.Add(usersMenuItem);
                 applicationDbContext.MenuItems.Add(rolesMenuItem);
