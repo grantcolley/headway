@@ -21,7 +21,7 @@ namespace Headway.Core.Dynamic
 
         public ListConfig ListConfig { get; private set; }
 
-        public string Title { get { return ListConfig.ListName; } }
+        public string Title { get { return ListConfig.Title; } }
 
         public List<DynamicListItem<T>> DynamicListItems { get; private set; }
 
