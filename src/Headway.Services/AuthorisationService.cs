@@ -114,10 +114,10 @@ namespace Headway.Services
             return await GetServiceResult<int>(httpResponseMessage);
         }
 
-        public async Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>()
+        public async Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(string component)
         {
             var serviceResultConfig = 
-                await configService.GetListConfigAsync<T>(httpClient, tokenProvider)
+                await configService.GetListConfigAsync<T>(component, httpClient, tokenProvider)
                 .ConfigureAwait(false);
 
             if (serviceResultConfig.IsSuccess)
