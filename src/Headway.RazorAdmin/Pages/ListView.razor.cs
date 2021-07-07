@@ -23,7 +23,7 @@ namespace Headway.RazorAdmin.Pages
         protected override async Task OnInitializedAsync()
         {
             var result = 
-                await AuthorisationService.GetDynamicListAsync<T>()
+                await AuthorisationService.GetDynamicListAsync<T>(this.GetType().Name)
                 .ConfigureAwait(false);
 
             DynamicList = GetResponse(result);
