@@ -22,7 +22,7 @@ namespace Headway.Core.Interface
         Task<IServiceResult<Role>> AddRoleAsync(Role role);
         Task<IServiceResult<Role>> UpdateRoleAsync(Role role);
         Task<IServiceResult<int>> DeleteRoleAsync(int roleId);
-        Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>();
+        Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(string component);
         Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id);
         Task<IServiceResult<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>();
         Task<IServiceResult<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel);
