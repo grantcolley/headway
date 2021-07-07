@@ -57,7 +57,7 @@ namespace Headway.Repository.Data
                 .IsUnique();
 
             builder.Entity<ListConfig>()
-                .HasIndex(p => p.ListName)
+                .HasIndex(p => p.Name)
                 .IsUnique();
 
             builder.Entity<BrowserStorageItem>()
