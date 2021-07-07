@@ -12,7 +12,7 @@ namespace Headway.Services
         private readonly ConcurrentDictionary<string, ListConfig> listConfigs = new();
         private readonly ConcurrentDictionary<string, ModelConfig> modelConfigs = new();
 
-        public async Task<IServiceResult<ListConfig>> GetListConfigAsync<T>(HttpClient httpClient, TokenProvider tokenProvider)
+        public async Task<IServiceResult<ListConfig>> GetListConfigAsync<T>(string component, HttpClient httpClient, TokenProvider tokenProvider)
         {
             var model = typeof(T).Name;
 
@@ -28,7 +28,7 @@ namespace Headway.Services
                 }
             }
 
-            using var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{model}").ConfigureAwait(false);
+            using var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{component}{model}").ConfigureAwait(false);
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var config = await JsonSerializer.DeserializeAsync<ListConfig>
