@@ -23,8 +23,8 @@ namespace Headway.WebApi.Controllers
             this.configRepository = configRepository;
         }
 
-        [HttpGet("{model}")]
-        public async Task<IActionResult> Get(string model)
+        [HttpGet("{name}")]
+        public async Task<IActionResult> Get(string name)
         {
             var authorised = await IsAuthorisedAsync("Admin")
                 .ConfigureAwait(false);
@@ -35,7 +35,7 @@ namespace Headway.WebApi.Controllers
             }
 
             var config = await configRepository
-                .GetListConfigAsync(model)
+                .GetListConfigAsync(name)
                 .ConfigureAwait(false);
 
             return Ok(config);
