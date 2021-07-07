@@ -14,18 +14,11 @@ namespace Headway.Repository
         {
         }
 
-        public Task<IEnumerable<BrowserStorageItem>> GetBrowserStorageItemsAsync()
+        public async Task<IEnumerable<BrowserStorageItem>> GetBrowserStorageItemsAsync()
         {
-            //return await applicationDbContext.BrowserStorageItems
-            //    .ToListAsync()
-            //    .ConfigureAwait(false);
-
-            var browserStorageItems = new List<BrowserStorageItem>
-            {
-                { new BrowserStorageItem { Key = "Permission", Value = "Headway.Core.Model.Permission, Headway.Core" } }
-            };
-
-            return Task.FromResult((IEnumerable<BrowserStorageItem>)browserStorageItems);
+            return await applicationDbContext.BrowserStorageItems
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
     }
 }
