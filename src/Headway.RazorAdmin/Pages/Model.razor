@@ -1,0 +1,5 @@
+﻿@page "/model/{TypeName}/{Id:int?}"
+@inherits ModelBase
+@using System
+
+<ModelView TypeName="@TypeName" T="Permission" Id="@Id" />

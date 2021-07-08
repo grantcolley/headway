@@ -3,7 +3,7 @@ using System;
 
 namespace Headway.RazorAdmin.Pages
 {
-    public partial class DetailsBase : ComponentBase
+    public partial class ModelBase : ComponentBase
     {
         [Parameter]
         public string TypeName { get; set; }
