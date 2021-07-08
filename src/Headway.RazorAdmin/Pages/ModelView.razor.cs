@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Headway.RazorAdmin.Pages
 {
-    public partial class DetailsViewBase<T> : HeadwayComponentBase
+    public partial class ModelViewBase<T> : HeadwayComponentBase
     {
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
