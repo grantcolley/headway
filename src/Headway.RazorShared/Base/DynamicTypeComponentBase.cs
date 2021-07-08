@@ -1,8 +1,6 @@
 ﻿using Headway.Core.Interface;
-using Headway.RazorShared.Model;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace Headway.RazorShared.Base
@@ -11,9 +9,6 @@ namespace Headway.RazorShared.Base
     {
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
-
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
 
         [Inject]
         public IBrowserStorageService BrowserStorageService { get; set; }
