@@ -35,12 +35,12 @@ namespace Headway.RazorAdmin.Pages
 
         protected void Add()
         {
-            NavigationManager.NavigateTo($"/details/{TypeName}");
+            NavigationManager.NavigateTo($"/model/{TypeName}");
         }
 
         protected void Update(object id)
         {
-            NavigationManager.NavigateTo($"/details/{TypeName}/{id}");
+            NavigationManager.NavigateTo($"/model/{TypeName}/{id}");
         }
     }
 }
