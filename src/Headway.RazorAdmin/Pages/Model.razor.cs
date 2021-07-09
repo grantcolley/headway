@@ -1,11 +1,13 @@
 ﻿using Headway.Core.Attributes;
+using Headway.RazorShared.Base;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Threading.Tasks;
 
 namespace Headway.RazorAdmin.Pages
 {
     [DynamicComponentAttribute]
-    public partial class ModelBase : ComponentBase
+    public partial class ModelBase : DynamicTypeComponentBase
     {
         [Parameter]
         public string TypeName { get; set; }
@@ -13,9 +15,22 @@ namespace Headway.RazorAdmin.Pages
         [Parameter]
         public int Id { get; set; }
 
-        protected Type DetailsType
+        protected string typeFullName;
+
+        protected override async Task OnInitializedAsync()
         {
-            get { return Type.GetType(TypeName); }
+            typeFullName = await GetTypeFullName(TypeName).ConfigureAwait(false);
+            await base.OnInitializedAsync();
         }
+
+        protected RenderFragment RenderListView() => __builder =>
+        {
+            var type = Type.GetType(typeFullName);
+            var genericType = typeof(ModelView<>).MakeGenericType(new[] { type });
+            __builder.OpenComponent(1, genericType);
+            __builder.AddAttribute(2, "TypeName", TypeName);
+            __builder.AddAttribute(2, "Id", Id);
+            __builder.CloseComponent();
+        };
     }
 }
