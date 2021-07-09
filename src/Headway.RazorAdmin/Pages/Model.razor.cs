@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Headway.Core.Attributes;
+using Microsoft.AspNetCore.Components;
 using System;
 
 namespace Headway.RazorAdmin.Pages
 {
+    [DynamicComponentAttribute]
     public partial class ModelBase : ComponentBase
     {
         [Parameter]
