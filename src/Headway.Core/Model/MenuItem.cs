@@ -1,9 +1,11 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Headway.Core.Model
 {
+    [DynamicModelAttribute]
     public class MenuItem : IPermissionable
     {
         public int MenuItemId { get; set; }
