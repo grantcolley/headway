@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Headway.RazorAdmin.Pages
+namespace Headway.RazorShared.Components
 {
     public partial class ListViewBase<T> : HeadwayComponentBase
     {

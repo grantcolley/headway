@@ -5,7 +5,7 @@ using Headway.RazorShared.Model;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
-namespace Headway.RazorAdmin.Pages
+namespace Headway.RazorShared.Components
 {
     public partial class ModelViewBase<T> : HeadwayComponentBase
     {

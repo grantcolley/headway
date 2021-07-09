@@ -1,10 +1,11 @@
 ﻿using Headway.Core.Attributes;
 using Headway.RazorShared.Base;
+using Headway.RazorShared.Components;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Headway.RazorAdmin.Pages
+namespace Headway.RazorShared.Pages
 {
     [DynamicComponentAttribute]
     public partial class ListBase : DynamicTypeComponentBase
