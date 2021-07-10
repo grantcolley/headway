@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
@@ -10,18 +11,13 @@ namespace Headway.RazorShared.Base
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
 
-        [Inject]
-        public IBrowserStorageService BrowserStorageService { get; set; }
-
         public async Task<string> GetTypeFullName(string typeName)
         {
             var browserStorageItem = await JSRuntime.InvokeAsync<string>("localStorage.getItem", typeName).ConfigureAwait(false);
 
             if (string.IsNullOrWhiteSpace(browserStorageItem))
             {
-                var serviceResult = await BrowserStorageService.GetBrowserStorageItemsAsync().ConfigureAwait(false);
-
-                var browserStorageItems = GetResponse(serviceResult);
+                var browserStorageItems = ModelHelper.GetBrowserStorageItems();
 
                 foreach(var storageItem in browserStorageItems)
                 {

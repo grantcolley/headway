@@ -42,7 +42,6 @@ namespace Headway.WebApi
             });
 
             services.AddScoped<IModuleRepository, ModuleRepository>();
-            services.AddScoped<IBrowserStorageRepository, BrowserStorageRepository>();
             services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
             services.AddScoped<IConfigRepository, ConfigRepository>();
 

@@ -74,14 +74,6 @@ namespace Headway.BlazorServerApp
                 return new ModuleService(httpClient, tokenProvider);
             });
 
-            services.AddTransient<IBrowserStorageService, BrowserStorageService>(sp =>
-            {
-                var tokenProvider = sp.GetRequiredService<TokenProvider>();
-                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient("webapi");
-                return new BrowserStorageService(httpClient, tokenProvider);
-            });
-
             services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
                 var configService = sp.GetRequiredService<IConfigService>();
