@@ -79,10 +79,10 @@ namespace Headway.RazorShared.Components
             Alert = new Alert
             {
                 AlertType = "primary",
-                Title = $"{DynamicModel.Title}",
+                Title = DynamicModel.Title,
                 Message = message,
-                RedirectText = "Return to permisions.",
-                RedirectPage = "/permissions"
+                RedirectText = DynamicModel.ModelConfig.NavigateText,
+                RedirectPage = DynamicModel.ModelConfig.NavigateTo
             };
 
             IsSaveInProgress = false;
@@ -108,8 +108,8 @@ namespace Headway.RazorShared.Components
                 AlertType = "danger",
                 Title = $"{DynamicModel.Title}",
                 Message = $"has been deleted.",
-                RedirectText = "Return to permisions.",
-                RedirectPage = "/permissions"
+                RedirectText = DynamicModel.ModelConfig.NavigateText,
+                RedirectPage = DynamicModel.ModelConfig.NavigateTo
             };
 
             IsDeleteInProgress = false;

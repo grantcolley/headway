@@ -12,8 +12,8 @@ namespace Headway.Core.Model
         public int ModelConfigId { get; set; } 
         public string ModelName { get; set; }
         public string ConfigApiPath { get; set; }
-        public string RedirectText { get; set; }
-        public string RedirectPage { get; set; }
+        public string NavigateText { get; set; }
+        public string NavigateTo { get; set; }
         public List<FieldConfig> FieldConfigs { get; set; }
     }
 }

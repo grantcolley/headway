@@ -35,12 +35,12 @@ namespace Headway.RazorShared.Components
 
         protected void Add()
         {
-            NavigationManager.NavigateTo($"/model/{TypeName}");
+            NavigationManager.NavigateTo($"{DynamicList.ListConfig.NavigateTo}/{TypeName}");
         }
 
         protected void Update(object id)
         {
-            NavigationManager.NavigateTo($"/model/{TypeName}/{id}");
+            NavigationManager.NavigateTo($"{DynamicList.ListConfig.NavigateTo}/{TypeName}/{id}");
         }
     }
 }
