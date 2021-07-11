@@ -12,7 +12,7 @@ namespace Headway.RazorShared.Base
 
         public async Task<string> GetTypeFullName(string typeName)
         {
-            var browserStorageItem = await JSRuntime.InvokeAsync<string>("localStorage.getItem", typeName).ConfigureAwait(false);
+            var browserStorageItem = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", typeName).ConfigureAwait(false);
 
             if (string.IsNullOrWhiteSpace(browserStorageItem))
             {
@@ -20,10 +20,10 @@ namespace Headway.RazorShared.Base
 
                 foreach(var storageItem in browserStorageItems)
                 {
-                    await JSRuntime.InvokeVoidAsync("localStorage.setItem", storageItem.Key, storageItem.Value);
+                    await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", storageItem.Key, storageItem.Value);
                 }
 
-                browserStorageItem = await JSRuntime.InvokeAsync<string>("localStorage.getItem", typeName).ConfigureAwait(false);
+                browserStorageItem = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", typeName).ConfigureAwait(false);
             }
 
             if(string.IsNullOrWhiteSpace(browserStorageItem))
