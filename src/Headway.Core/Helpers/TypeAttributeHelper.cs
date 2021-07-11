@@ -23,18 +23,14 @@ namespace Headway.Core.Helpers
             return browserStorageItems;
         }
 
-        public static IEnumerable<string> GetHeadwayWebApiControllers()
+        public static IEnumerable<string> GetGetEntryAssemblyAttributeImplemters(Type attributeType)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var controllers = (from t in assembly.GetTypes()
-                                       let attributes = t.GetCustomAttributes(typeof(DynamicModelAttribute), true)
+            var assembly = Assembly.GetEntryAssembly();
+            var attributeImplementers = (from t in assembly.GetTypes()
+                                       let attributes = t.GetCustomAttributes(attributeType, true)
                                        where attributes != null && attributes.Length > 0
-                                       select new BrowserStorageItem
-                                       {
-                                           Key = t.Name,
-                                           Value = $"{t.FullName}, {assembly.GetName().Name}"
-                                       }).ToList();
-            return controllers;
+                                       select t.Name).ToList();
+            return attributeImplementers;
         }
     }
 }
