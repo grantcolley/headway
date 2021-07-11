@@ -16,7 +16,7 @@ namespace Headway.RazorShared.Base
 
             if (string.IsNullOrWhiteSpace(browserStorageItem))
             {
-                var browserStorageItems = TypeHelper.GetDynamicModels();
+                var browserStorageItems = TypeAttributeHelper.GetDynamicModels();
 
                 foreach(var storageItem in browserStorageItems)
                 {

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Headway.Core.Helpers
 {
-    public static class TypeHelper
+    public static class TypeAttributeHelper
     {
         public static IEnumerable<BrowserStorageItem> GetDynamicModels()
         {
@@ -21,6 +21,20 @@ namespace Headway.Core.Helpers
                                            Value = $"{t.FullName}, {assembly.GetName().Name}"
                                        }).ToList();
             return browserStorageItems;
+        }
+
+        public static IEnumerable<string> GetHeadwayWebApiControllers()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var controllers = (from t in assembly.GetTypes()
+                                       let attributes = t.GetCustomAttributes(typeof(DynamicModelAttribute), true)
+                                       where attributes != null && attributes.Length > 0
+                                       select new BrowserStorageItem
+                                       {
+                                           Key = t.Name,
+                                           Value = $"{t.FullName}, {assembly.GetName().Name}"
+                                       }).ToList();
+            return controllers;
         }
     }
 }
