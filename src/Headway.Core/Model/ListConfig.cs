@@ -14,7 +14,7 @@ namespace Headway.Core.Model
         public string Title { get; set; }
         public string ConfigPath { get; set; }
         public string NavigateTo { get; set; }
-        public string IdPropertyName { get; set; }
+        public string NavigationPropertyName { get; set; }
         public List<ListItemConfig> ListItemConfigs { get; set; }
     }
 }
