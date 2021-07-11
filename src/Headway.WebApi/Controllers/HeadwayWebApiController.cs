@@ -25,10 +25,10 @@ namespace Headway.WebApi.Controllers
             this.headwayWebApiRepository = headwayWebApiRepository;
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> Get(string name)
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var authorised = await IsAuthorisedAsync("Admin")
+            var authorised = await IsAuthorisedAsync("User")
                 .ConfigureAwait(false);
 
             if (!authorised)
