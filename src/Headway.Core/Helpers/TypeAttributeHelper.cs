@@ -23,14 +23,14 @@ namespace Headway.Core.Helpers
             return browserStorageItems;
         }
 
-        public static IEnumerable<string> GetGetEntryAssemblyAttributeImplemters(Type attributeType)
+        public static IEnumerable<string> GetEntryAssemblyTypesByAttribute(Type attributeType)
         {
             var assembly = Assembly.GetEntryAssembly();
-            var attributeImplementers = (from t in assembly.GetTypes()
+            var types = (from t in assembly.GetTypes()
                                        let attributes = t.GetCustomAttributes(attributeType, true)
                                        where attributes != null && attributes.Length > 0
                                        select t.Name).ToList();
-            return attributeImplementers;
+            return types;
         }
     }
 }
