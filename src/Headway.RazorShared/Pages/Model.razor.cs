@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Headway.RazorShared.Pages
 {
-    [DynamicComponent(ComponentType.Model)]
+    [DynamicContainer(ContainerType.Model)]
     public partial class ModelBase : DynamicTypeComponentBase
     {
         [Parameter]
