@@ -7,9 +7,9 @@ using System.Reflection;
 
 namespace Headway.Core.Helpers
 {
-    public static class ModelHelper
+    public static class TypeHelper
     {
-        public static IEnumerable<BrowserStorageItem> GetBrowserStorageItems()
+        public static IEnumerable<BrowserStorageItem> GetDynamicModels()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var browserStorageItems = (from t in assembly.GetTypes()
