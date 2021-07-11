@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Enums;
 using Headway.RazorShared.Base;
 using Headway.RazorShared.Components;
 using Microsoft.AspNetCore.Components;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Headway.RazorShared.Pages
 {
-    [DynamicComponentAttribute]
+    [DynamicComponent(ComponentType.Model)]
     public partial class ModelBase : DynamicTypeComponentBase
     {
         [Parameter]
