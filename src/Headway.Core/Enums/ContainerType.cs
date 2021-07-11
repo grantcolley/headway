@@ -1,8 +1,7 @@
 ﻿namespace Headway.Core.Enums
 {
-    public enum ComponentType
+    public enum ContainerType
     {
-        Input,
         List,
         Model
     }
