@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [ApiController]
+    [DynamicApiControllerAttribute]
     public abstract class ApiControllerBase<T> : ControllerBase
     {
         protected readonly IRepository repository;
