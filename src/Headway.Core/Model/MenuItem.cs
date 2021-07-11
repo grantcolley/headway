@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Headway.Core.Model
 {
-    [DynamicModelAttribute]
+    [DynamicModel]
     public class MenuItem : IPermissionable
     {
         public int MenuItemId { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
 {
-    [DynamicModelAttribute]
+    [DynamicModel]
     public class Role
     {
         public Role()

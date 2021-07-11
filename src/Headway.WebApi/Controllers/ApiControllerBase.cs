@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [ApiController]
-    [DynamicApiControllerAttribute]
+    [DynamicApiController]
     public abstract class ApiControllerBase<T> : ControllerBase
     {
         protected readonly IRepository repository;

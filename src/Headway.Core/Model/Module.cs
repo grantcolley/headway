@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Headway.Core.Model
 {
-    [DynamicModelAttribute]
+    [DynamicModel]
     public class Module : IPermissionable
     {
         public Module()
