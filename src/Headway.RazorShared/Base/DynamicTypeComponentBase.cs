@@ -16,11 +16,11 @@ namespace Headway.RazorShared.Base
 
             if (string.IsNullOrWhiteSpace(browserStorageItem))
             {
-                var browserStorageItems = TypeAttributeHelper.GetDynamicModels();
+                var models = TypeAttributeHelper.GetDynamicModels();
 
-                foreach(var storageItem in browserStorageItems)
+                foreach(var model in models)
                 {
-                    await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", storageItem.Key, storageItem.Value);
+                    await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", model.Name, model.Namespace);
                 }
 
                 browserStorageItem = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", typeName).ConfigureAwait(false);
