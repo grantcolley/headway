@@ -7,8 +7,8 @@ namespace Headway.Core.Interface
     public interface IConfigRepository : IRepository
     {
         Task<IEnumerable<ListConfig>> GetListConfigsAsync();
-        Task<ListConfig> GetListConfigAsync(string name);
+        Task<ListConfig> GetListConfigAsync(string listConfig);
         Task<IEnumerable<ModelConfig>> GetModelConfigsAsync();
-        Task<ModelConfig> GetModelConfigAsync(string model);
+        Task<ModelConfig> GetModelConfigAsync(string modelConfig);
     }
 }
