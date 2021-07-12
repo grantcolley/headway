@@ -10,18 +10,18 @@ namespace Headway.Services
 {
     public class AuthorisationService : ServiceBase, IAuthorisationService
     {
-        private readonly IConfigService configService;
+        private readonly IDynamicConfigService dynamicConfigService;
 
-        public AuthorisationService(HttpClient httpClient, IConfigService configService)
+        public AuthorisationService(HttpClient httpClient, IDynamicConfigService dynamicConfigService)
             : base(httpClient, false)
         {
-            this.configService = configService;
+            this.dynamicConfigService = dynamicConfigService;
         }
 
-        public AuthorisationService(HttpClient httpClient, TokenProvider tokenProvider, IConfigService configService)
+        public AuthorisationService(HttpClient httpClient, TokenProvider tokenProvider, IDynamicConfigService configService)
             : base(httpClient, true, tokenProvider)
         {
-            this.configService = configService;
+            this.dynamicConfigService = configService;
         }
 
         public async Task<IServiceResult<IEnumerable<User>>> GetUsersAsync()
@@ -117,7 +117,7 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(string component)
         {
             var serviceResultConfig = 
-                await configService.GetListConfigAsync<T>(component, httpClient, tokenProvider)
+                await dynamicConfigService.GetListConfigAsync<T>(component, httpClient, tokenProvider)
                 .ConfigureAwait(false);
 
             if (serviceResultConfig.IsSuccess)
@@ -159,7 +159,7 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id)
         {
             var serviceResultConfig
-                = await configService.GetModelConfigAsync<T>(httpClient, tokenProvider)
+                = await dynamicConfigService.GetModelConfigAsync<T>(httpClient, tokenProvider)
                 .ConfigureAwait(false);
 
             if (serviceResultConfig.IsSuccess)
@@ -201,7 +201,7 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>()
         {
             var serviceResultConfig 
-                = await configService.GetModelConfigAsync<T>(httpClient, tokenProvider)
+                = await dynamicConfigService.GetModelConfigAsync<T>(httpClient, tokenProvider)
                 .ConfigureAwait(false);
 
             if (serviceResultConfig.IsSuccess)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Services
 {
-    public class ConfigService : IConfigService
+    public class DynamicConfigService : IDynamicConfigService
     {
         private readonly ConcurrentDictionary<string, ListConfig> listConfigs = new();
         private readonly ConcurrentDictionary<string, ModelConfig> modelConfigs = new();

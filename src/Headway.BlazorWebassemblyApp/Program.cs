@@ -36,7 +36,7 @@ namespace Headway.BlazorWebassemblyApp
                 return handler;
             });
 
-            builder.Services.AddSingleton<IConfigService, ConfigService>();
+            builder.Services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             builder.Services.AddTransient<IModuleService, ModuleService>(sp =>
             {
@@ -47,10 +47,10 @@ namespace Headway.BlazorWebassemblyApp
 
             builder.Services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
-                var configService = sp.GetRequiredService<IConfigService>();
+                var dynamicConfigService = sp.GetRequiredService<IDynamicConfigService>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new AuthorisationService(httpClient, configService);
+                return new AuthorisationService(httpClient, dynamicConfigService);
             });
 
             await builder.Build().RunAsync();
