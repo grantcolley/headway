@@ -53,6 +53,13 @@ namespace Headway.BlazorWebassemblyApp
                 return new AuthorisationService(httpClient, dynamicConfigService);
             });
 
+            builder.Services.AddTransient<IConfigurationService, ConfigurationService>(sp =>
+            {
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new ConfigurationService(httpClient);
+            });
+
             await builder.Build().RunAsync();
         }
     }
