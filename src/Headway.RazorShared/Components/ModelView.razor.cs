@@ -18,10 +18,10 @@ namespace Headway.RazorShared.Components
         [Parameter]
         public int Id { get; set; }
 
-        protected DynamicModel<T> DynamicModel;
+        protected DynamicModel<T> dynamicModel;
         protected Alert Alert { get; set; }
-        protected bool IsSaveInProgress = false;
-        protected bool IsDeleteInProgress = false;
+        protected bool isSaveInProgress = false;
+        protected bool isDeleteInProgress = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -40,22 +40,22 @@ namespace Headway.RazorShared.Components
                     .ConfigureAwait(false);
             }
 
-            DynamicModel = GetResponse(serviceResult);
+            dynamicModel = GetResponse(serviceResult);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected async Task Submit()
         {
-            IsSaveInProgress = true;
+            isSaveInProgress = true;
 
             IServiceResult<DynamicModel<T>> serviceResult;
             string message;
 
-            if (DynamicModel.Id.Equals(0))
+            if (dynamicModel.Id.Equals(0))
             {
                 serviceResult = await AuthorisationService
-                    .AddDynamicModelAsync<T>(DynamicModel)
+                    .AddDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
 
                 message = "has been added.";
@@ -63,15 +63,15 @@ namespace Headway.RazorShared.Components
             else
             {
                 serviceResult = await AuthorisationService
-                    .UpdateDynamicModelAsync<T>(DynamicModel)
+                    .UpdateDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
 
                 message = "has been updated.";
             }
 
-            DynamicModel = GetResponse(serviceResult);
+            dynamicModel = GetResponse(serviceResult);
 
-            if (DynamicModel == null)
+            if (dynamicModel == null)
             {
                 return;
             }
@@ -79,21 +79,21 @@ namespace Headway.RazorShared.Components
             Alert = new Alert
             {
                 AlertType = "primary",
-                Title = DynamicModel.Title,
+                Title = dynamicModel.Title,
                 Message = message,
-                RedirectText = DynamicModel.ModelConfig.NavigateText,
-                RedirectPage = DynamicModel.ModelConfig.NavigateTo
+                RedirectText = dynamicModel.ModelConfig.NavigateText,
+                RedirectPage = dynamicModel.ModelConfig.NavigateTo
             };
 
-            IsSaveInProgress = false;
+            isSaveInProgress = false;
         }
 
         public async Task Delete()
         {
-            IsDeleteInProgress = true;
+            isDeleteInProgress = true;
 
             var serviceResult = await AuthorisationService
-                .DeleteDynamicModelAsync(DynamicModel)
+                .DeleteDynamicModelAsync(dynamicModel)
                 .ConfigureAwait(false);
 
             var result = GetResponse(serviceResult);
@@ -106,13 +106,13 @@ namespace Headway.RazorShared.Components
             Alert = new Alert
             {
                 AlertType = "danger",
-                Title = $"{DynamicModel.Title}",
+                Title = $"{dynamicModel.Title}",
                 Message = $"has been deleted.",
-                RedirectText = DynamicModel.ModelConfig.NavigateText,
-                RedirectPage = DynamicModel.ModelConfig.NavigateTo
+                RedirectText = dynamicModel.ModelConfig.NavigateText,
+                RedirectPage = dynamicModel.ModelConfig.NavigateTo
             };
 
-            IsDeleteInProgress = false;
+            isDeleteInProgress = false;
         }
     }
 }

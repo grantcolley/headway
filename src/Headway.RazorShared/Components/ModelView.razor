@@ -10,7 +10,7 @@
     <Authorized Context="authModelView">
         <h3>@TypeName</h3>
 
-        @if (DynamicModel == null)
+        @if (dynamicModel == null)
         {
             <p><em>Loading...</em></p>
         }
@@ -18,27 +18,27 @@
         {
             @if (Alert == null)
             {
-                <EditForm Model="@DynamicModel.Model" OnValidSubmit="@Submit">
+                <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
                     <DataAnnotationsValidator/>
                     <table>
                         <tbody>
                             <tr>
                                 <td align="left">
-                                    @if (IsSaveInProgress)
+                                    @if (isSaveInProgress)
                                     {
                                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                                     }
-                                    else if(!IsDeleteInProgress)
+                                    else if(!isDeleteInProgress)
                                     {
                                         <button type="submit" class="btn btn-small btn-outline-primary fas fa-save"/>
                                     }
                                 </td>
                                 <td align="right">
-                                    @if (IsDeleteInProgress)
+                                    @if (isDeleteInProgress)
                                     {
                                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                                     }
-                                    else if(!IsSaveInProgress)
+                                    else if(!isSaveInProgress)
                                     {
                                         <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => Delete()"/>
                                     }                                   
@@ -48,7 +48,7 @@
                     </table>
                     <table>
                         <tbody>
-                            @foreach(var dynamicField in DynamicModel.DynamicFields)
+                            @foreach(var dynamicField in dynamicModel.DynamicFields)
                             {
                                 <tr>
                                     <td valign="middle"><DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" /></td>
