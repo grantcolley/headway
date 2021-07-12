@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,27 +9,41 @@ namespace Headway.Core.Helpers
 {
     public static class TypeAttributeHelper
     {
-        public static IEnumerable<Model.Model> GetDynamicModels()
+        public static IEnumerable<DynamicType> GetExecutingAssemblyDynamicTypesByAttribute(Type attributeType)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var browserStorageItems = (from t in assembly.GetTypes()
-                                      let attributes = t.GetCustomAttributes(typeof(DynamicModelAttribute), true)
-                                       where attributes != null && attributes.Length > 0
-                                       select new Model.Model
-                                       {
-                                           Name = t.Name,
-                                           Namespace = $"{t.FullName}, {assembly.GetName().Name}"
-                                       }).ToList();
-            return browserStorageItems;
+            var dynamicTypes = (from t in assembly.GetTypes()
+                                let attributes = t.GetCustomAttributes(attributeType, true)
+                                where attributes != null && attributes.Length > 0
+                                select new DynamicType
+                                {
+                                    Name = t.Name,
+                                    Namespace = $"{t.FullName}, {assembly.GetName().Name}"
+                                }).ToList();
+            return dynamicTypes;
+        }
+
+        public static IEnumerable<DynamicType> GetCallingAssemblyDynamicTypesByAttribute(Type attributeType)
+        {
+            var assembly = Assembly.GetCallingAssembly();
+            var dynamicTypes = (from t in assembly.GetTypes()
+                                let attributes = t.GetCustomAttributes(attributeType, true)
+                                where attributes != null && attributes.Length > 0
+                                select new DynamicType
+                                {
+                                    Name = t.Name,
+                                    Namespace = $"{t.FullName}, {assembly.GetName().Name}"
+                                }).ToList();
+            return dynamicTypes;
         }
 
         public static IEnumerable<string> GetEntryAssemblyTypesByAttribute(Type attributeType)
         {
             var assembly = Assembly.GetEntryAssembly();
             var types = (from t in assembly.GetTypes()
-                                       let attributes = t.GetCustomAttributes(attributeType, true)
-                                       where attributes != null && attributes.Length > 0
-                                       select t.Name).ToList();
+                         let attributes = t.GetCustomAttributes(attributeType, true)
+                         where attributes != null && attributes.Length > 0
+                         select t.Name).ToList();
             return types;
         }
     }
