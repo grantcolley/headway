@@ -1,4 +1,5 @@
-﻿using Headway.Core.Helpers;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Headway.RazorShared.Base
 
             if (string.IsNullOrWhiteSpace(browserStorageItem))
             {
-                var models = TypeAttributeHelper.GetDynamicModels();
+                var models = TypeAttributeHelper.GetExecutingAssemblyDynamicTypesByAttribute(typeof(DynamicModelAttribute));
 
                 foreach(var model in models)
                 {
