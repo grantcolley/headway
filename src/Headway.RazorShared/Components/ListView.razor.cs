@@ -16,9 +16,9 @@ namespace Headway.RazorShared.Components
         [Parameter]
         public string TypeName { get; set; }
 
-        protected DynamicList<T> DynamicList;
+        protected DynamicList<T> dynamicList;
 
-        protected List<ListItemConfig> ListItemConfigs;
+        protected IEnumerable<ListItemConfig> listItemConfigs;
 
         protected override async Task OnInitializedAsync()
         {
@@ -26,21 +26,21 @@ namespace Headway.RazorShared.Components
                 await AuthorisationService.GetDynamicListAsync<T>(this.GetType().Name)
                 .ConfigureAwait(false);
 
-            DynamicList = GetResponse(result);
+            dynamicList = GetResponse(result);
 
-            ListItemConfigs = DynamicList.ListConfig.ListItemConfigs;
+            listItemConfigs = dynamicList.ListConfig.ListItemConfigs;
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected void Add()
         {
-            NavigationManager.NavigateTo($"{DynamicList.ListConfig.NavigateTo}/{TypeName}");
+            NavigationManager.NavigateTo($"{dynamicList.ListConfig.NavigateTo}/{TypeName}");
         }
 
         protected void Update(object id)
         {
-            NavigationManager.NavigateTo($"{DynamicList.ListConfig.NavigateTo}/{TypeName}/{id}");
+            NavigationManager.NavigateTo($"{dynamicList.ListConfig.NavigateTo}/{TypeName}/{id}");
         }
     }
 }
