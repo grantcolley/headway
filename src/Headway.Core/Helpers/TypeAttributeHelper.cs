@@ -1,5 +1,4 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Model;
+﻿using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
