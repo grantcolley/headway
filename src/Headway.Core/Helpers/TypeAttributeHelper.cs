@@ -1,5 +1,4 @@
 ﻿using Headway.Core.Attributes;
-using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +8,16 @@ namespace Headway.Core.Helpers
 {
     public static class TypeAttributeHelper
     {
-        public static IEnumerable<BrowserStorageItem> GetDynamicModels()
+        public static IEnumerable<Model.Model> GetDynamicModels()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var browserStorageItems = (from t in assembly.GetTypes()
                                       let attributes = t.GetCustomAttributes(typeof(DynamicModelAttribute), true)
                                        where attributes != null && attributes.Length > 0
-                                       select new BrowserStorageItem
+                                       select new Model.Model
                                        {
-                                           Key = t.Name,
-                                           Value = $"{t.FullName}, {assembly.GetName().Name}"
+                                           Name = t.Name,
+                                           Namespace = $"{t.FullName}, {assembly.GetName().Name}"
                                        }).ToList();
             return browserStorageItems;
         }
