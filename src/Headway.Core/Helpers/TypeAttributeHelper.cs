@@ -8,16 +8,16 @@ namespace Headway.Core.Helpers
 {
     public static class TypeAttributeHelper
     {
-        public static IEnumerable<DynamicType> GetExecutingAssemblyDynamicTypesByAttribute(Type attributeType)
+        public static IEnumerable<DynamicType> GetCallingAssemblyDynamicRazorComponentsByAttribute(Type attributeType)
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetCallingAssembly();
             var dynamicTypes = (from t in assembly.GetTypes()
                                 let attributes = t.GetCustomAttributes(attributeType, true)
                                 where attributes != null && attributes.Length > 0
                                 select new DynamicType
                                 {
                                     Name = t.Name,
-                                    Namespace = $"{t.FullName}, {assembly.GetName().Name}"
+                                    Namespace = $"{t.FullName.Replace("Base", string.Empty)}, {assembly.GetName().Name}"
                                 }).ToList();
             return dynamicTypes;
         }
@@ -44,6 +44,20 @@ namespace Headway.Core.Helpers
                          where attributes != null && attributes.Length > 0
                          select t.Name).ToList();
             return types;
+        }
+
+        public static IEnumerable<DynamicType> GetExecutingAssemblyDynamicTypesByAttribute(Type attributeType)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var dynamicTypes = (from t in assembly.GetTypes()
+                                let attributes = t.GetCustomAttributes(attributeType, true)
+                                where attributes != null && attributes.Length > 0
+                                select new DynamicType
+                                {
+                                    Name = t.Name,
+                                    Namespace = $"{t.FullName}, {assembly.GetName().Name}"
+                                }).ToList();
+            return dynamicTypes;
         }
     }
 }
