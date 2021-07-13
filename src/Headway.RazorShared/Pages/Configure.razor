@@ -3,6 +3,7 @@
 
 <AuthorizeView>
     <Authorized Context="authConfigure">
+
         <h3>Configure</h3>
 
         <hr />
@@ -24,23 +25,23 @@
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">
-                Container
+                Configuration
             </label>
             <div class="col-sm-10">
-                <select id="containers">
-                    <option></option>
-                    @foreach (var container in containers)
+                <select id="containers" @onchange="ContainerSelectionChanged">
+                    <option />
+                    @foreach (var configuration in configurations)
                     {
-                        <option value="@container.Name">@container.Name</option>
+                        <option value="@configuration.Name">@configuration.Name</option>
                     }
                 </select>
             </div>
         </div>
 
-        <!-- list of configs for selected container -->
-
-
-
+        @if(selectedConfiguration != null)
+        {
+            <DynamicComponent Type="selectedConfiguration.ComponentType" Parameters="selectedConfiguration.Parameters"/>
+        }
 
     </Authorized>
     <NotAuthorized>
