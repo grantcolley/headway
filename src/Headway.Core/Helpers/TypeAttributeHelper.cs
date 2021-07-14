@@ -16,7 +16,7 @@ namespace Headway.Core.Helpers
                                 where attributes != null && attributes.Length > 0
                                 select new DynamicType
                                 {
-                                    Name = t.Name,
+                                    Name = t.Name.Replace("Base", string.Empty),
                                     Namespace = $"{t.FullName.Replace("Base", string.Empty)}, {assembly.GetName().Name}"
                                 }).ToList();
             return dynamicTypes;
