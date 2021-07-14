@@ -17,10 +17,10 @@ namespace Headway.RazorShared.Pages
 
         private Dictionary<string, DynamicComponentConfiguration> dynamicComponents;
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             //models = TypeAttributeHelper.GetExecutingAssemblyDynamicTypesByAttribute(typeof(DynamicModelAttribute));
-            configurations = TypeAttributeHelper.GetCallingAssemblyDynamicTypesByAttribute(typeof(DynamicConfigurationAttribute));
+            configurations = TypeAttributeHelper.GetCallingAssemblyDynamicRazorComponentsByAttribute(typeof(DynamicConfigurationAttribute));
 
             dynamicComponents = new Dictionary<string, DynamicComponentConfiguration>();
 
@@ -29,7 +29,9 @@ namespace Headway.RazorShared.Pages
                 dynamicComponents.Add(configuration.Name, new DynamicComponentConfiguration { ComponentType = Type.GetType(configuration.Namespace) });
             }
 
-            await base.OnInitializedAsync();
+            selectedConfiguration = dynamicComponents["DynamicDropdownDefault"];
+
+            base.OnInitialized();
         }
 
         protected void ContainerSelectionChanged(ChangeEventArgs e)
