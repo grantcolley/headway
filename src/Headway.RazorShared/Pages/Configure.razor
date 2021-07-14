@@ -38,10 +38,7 @@
             </div>
         </div>
 
-        @if(selectedConfiguration != null)
-        {
-            <DynamicComponent Type="selectedConfiguration.ComponentType" Parameters="selectedConfiguration.Parameters"/>
-        }
+        <DynamicComponent Type="@selectedConfiguration.ComponentType" Parameters="@selectedConfiguration.Parameters"/>
 
     </Authorized>
     <NotAuthorized>
