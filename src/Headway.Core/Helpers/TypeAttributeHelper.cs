@@ -21,11 +21,6 @@ namespace Headway.Core.Helpers
                                     DisplayName = t.Name.Replace("Base", string.Empty),
                                     Namespace = $"{t.FullName.Replace("Base", string.Empty)}, {assembly.GetName().Name}"
                                 }).ToList();
-            dynamicTypes.Insert(0, new DynamicType 
-            {
-                Name = typeof(DynamicConfigurationDefaultAttribute).Name,
-                Namespace = $"{typeof(DynamicConfigurationDefaultAttribute).FullName}, {assembly.GetName().Name}"
-            });
             return dynamicTypes;
         }
 
