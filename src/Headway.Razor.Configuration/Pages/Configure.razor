@@ -31,7 +31,7 @@
                 <select id="containers" @onchange="ContainerSelectionChanged">
                     @foreach (var configuration in configurations)
                     {
-                        <option value="@configuration.Name">@configuration.Name</option>
+                        <option value="@configuration.Name">@configuration.DisplayName</option>
                     }
                 </select>
             </div>

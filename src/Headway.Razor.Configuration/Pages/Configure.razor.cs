@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
+using Headway.Razor.Configuration.Helpers;
 using Headway.Razor.Configuration.Model;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -19,7 +20,7 @@ namespace Headway.Razor.Configuration.Pages
         protected override void OnInitialized()
         {
             //models = TypeAttributeHelper.GetExecutingAssemblyDynamicTypesByAttribute(typeof(DynamicModelAttribute));
-            configurations = TypeAttributeHelper.GetCallingAssemblyDynamicRazorComponentsByAttribute(typeof(DynamicConfigurationAttribute));
+            configurations = ConfigurationsTypeHelper.GetConfigurationsDropdownItems();
 
             dynamicComponents = new Dictionary<string, DynamicComponentConfiguration>();
 
