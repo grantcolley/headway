@@ -1,0 +1,38 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+<div>
+    <label>@Field.PropertyName</label>
+    <InputText class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
+    <ValidationMessage For="FieldExpression"/>
+</div>
+
+@code
+{
+    [Parameter]
+    public DynamicField Field { get; set; }
+
+    public Expression<Func<string>> FieldExpression
+    {
+        get
+        {
+            return Expression.Lambda<Func<string>>(Field.MemberExpression);
+        }
+    }
+
+    public string PropertyValue
+    {
+        get
+        {
+            return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
+        }
+    }
+
+    public void OnValueChanged(string value)
+    {
+        Field.PropertyInfo.SetValue(Field.Model, value);
+    }
+}

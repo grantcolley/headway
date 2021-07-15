@@ -1,0 +1,19 @@
+﻿@page "/list/{TypeName}"
+@inherits ListBase
+@using System
+
+<AuthorizeView>
+    <Authorized Context="list">
+        @if (typeFullName == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            @RenderListView()
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>

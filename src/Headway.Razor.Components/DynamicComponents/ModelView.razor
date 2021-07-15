@@ -1,0 +1,70 @@
+﻿@typeparam T
+@inherits ModelViewBase<T>
+@using Microsoft.AspNetCore.Components.Forms
+
+<AuthorizeView>
+    <!--
+    Need to specify the context to avoid clashes with other auto generated contexts
+    https://github.com/chanan/BlazorStrap/issues/149 
+    -->
+    <Authorized Context="authModelView">
+        <h3>@TypeName</h3>
+
+        @if (dynamicModel == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            @if (Alert == null)
+            {
+                <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
+                    <DataAnnotationsValidator/>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td align="left">
+                                    @if (isSaveInProgress)
+                                    {
+                                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                    }
+                                    else if(!isDeleteInProgress)
+                                    {
+                                        <button type="submit" class="btn btn-small btn-outline-primary fas fa-save"/>
+                                    }
+                                </td>
+                                <td align="right">
+                                    @if (isDeleteInProgress)
+                                    {
+                                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                    }
+                                    else if(!isSaveInProgress)
+                                    {
+                                        <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => Delete()"/>
+                                    }                                   
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <tbody>
+                            @foreach(var dynamicField in dynamicModel.DynamicFields)
+                            {
+                                <tr>
+                                    <td valign="middle"><DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" /></td>
+                                </tr>                        
+                            }
+                        </tbody>
+                    </table>
+                </EditForm>
+            }
+            else
+            {
+                <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>

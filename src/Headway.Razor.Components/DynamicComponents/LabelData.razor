@@ -1,0 +1,24 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+<div>
+    <label>@Field.PropertyName</label>
+    <label>@PropertyValue</label>
+</div>
+
+@code
+{
+    [Parameter]
+    public DynamicField Field { get; set; }
+
+    public string PropertyValue
+    {
+        get
+        {
+            return Field.PropertyInfo.GetValue(Field.Model).ToString();
+        }
+    }
+}

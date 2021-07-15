@@ -1,0 +1,54 @@
+﻿@page "/alert/{AlertType}/{Title}/{Message}"
+@page "/alert/{AlertType}/{Title}/{Message}/{RedirectText}/{RedirectPage}"
+
+<div class="@Class" role="alert">
+    <b>@Title</b>&nbsp;@Message
+    <p></p>
+    @if(!string.IsNullOrWhiteSpace(RedirectText)
+        && !string.IsNullOrWhiteSpace(RedirectPage))
+    {
+        <table>
+            <tbody>
+                <tr>
+                    <td valign="middle"><button class="btn btn-outline-primary fas fa-caret-left" @onclick="@Redirect"></button></td>
+                    <td valign="middle">&nbsp;@RedirectText</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>
+
+@code{
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    [Parameter]
+    public string AlertType {get;set;} 
+
+    [Parameter]
+    public string Title {get;set;} 
+
+    [Parameter]
+    public string Message {get;set;}
+
+    [Parameter]
+    public string RedirectText { get; set; }
+
+    [Parameter]
+    public string RedirectPage { get; set; }
+
+    public string Class { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Class = $"alert alert-{AlertType} mt-4";
+
+        base.OnInitialized();
+    }
+
+    private void Redirect()
+    {
+        NavigationManager.NavigateTo($@"{RedirectPage}");
+    }
+}
