@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RazorShared", "Head
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RazorAdmin", "Headway.RazorAdmin\Headway.RazorAdmin.csproj", "{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.Razor.Configuration", "Headway.Razor.Configuration\Headway.Razor.Configuration.csproj", "{EC7A53AC-AD10-4F86-984D-9F63A1E28636}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E63C0BB0-3B6C-42A9-8018-06EAB6022DFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
