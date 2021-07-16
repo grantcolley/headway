@@ -36,7 +36,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var controllers = TypeAttributeHelper.GetEntryAssemblyTypesByAttribute(typeof(DynamicApiControllerAttribute));
+            var controllers = TypeAttributeHelper.GetEntryAssemblyTypeNamesByAttribute(typeof(DynamicApiControllerAttribute));
 
             return Ok(controllers);
         }
