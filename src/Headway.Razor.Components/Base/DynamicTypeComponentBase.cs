@@ -17,7 +17,7 @@ namespace Headway.Razor.Components.Base
 
             if (string.IsNullOrWhiteSpace(browserStorageItem))
             {
-                var models = TypeAttributeHelper.GetExecutingAssemblyDynamicTypesByAttribute(typeof(DynamicModelAttribute));
+                var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 
                 foreach(var model in models)
                 {
