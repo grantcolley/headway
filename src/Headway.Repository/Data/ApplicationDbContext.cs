@@ -52,7 +52,7 @@ namespace Headway.Repository.Data
                 .IsUnique();
 
             builder.Entity<ModelConfig>()
-                .HasIndex(p => p.ModelName)
+                .HasIndex(p => p.Model)
                 .IsUnique();
 
             builder.Entity<ListConfig>()
