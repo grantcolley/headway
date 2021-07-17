@@ -44,7 +44,7 @@ namespace Headway.Repository
             return await applicationDbContext.ModelConfigs
                 .Include(m => m.FieldConfigs)
                 .AsNoTracking()
-                .SingleAsync(m => m.ModelName.Equals(model))
+                .SingleAsync(m => m.Model.Equals(model))
                 .ConfigureAwait(false);
         }
     }
