@@ -12,6 +12,7 @@ namespace Headway.Core.Model
         public int ListConfigId { get; set; }
         public string Name { get; set; }
         public string Model { get; set; }
+        public string Component { get; set; }
         public string ConfigApi { get; set; }
         public string Title { get; set; }
         public string NavigateTo { get; set; }
