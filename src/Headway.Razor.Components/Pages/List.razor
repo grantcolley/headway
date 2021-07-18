@@ -1,10 +1,10 @@
-﻿@page "/list/{TypeName}"
+﻿@page "/list/{name}"
 @inherits ListBase
 @using System
 
 <AuthorizeView>
     <Authorized Context="list">
-        @if (typeFullName == null)
+        @if (listConfig == null)
         {
             <p><em>Loading...</em></p>
         }
