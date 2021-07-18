@@ -1,4 +1,5 @@
 using Headway.BlazorWebassemblyApp.Account;
+using Headway.Core.Cache;
 using Headway.Core.Interface;
 using Headway.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -36,6 +37,7 @@ namespace Headway.BlazorWebassemblyApp
                 return handler;
             });
 
+            builder.Services.AddSingleton<DynamicTypeCache>();
             builder.Services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             builder.Services.AddTransient<IModuleService, ModuleService>(sp =>
