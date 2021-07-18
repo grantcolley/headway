@@ -17,17 +17,17 @@ namespace Headway.Razor.Components.Pages
         [Parameter]
         public int Id { get; set; }
 
-        protected string typeFullName;
+        protected string modelNameSpace;
 
         protected override async Task OnInitializedAsync()
         {
-            typeFullName = await GetTypeFullName(TypeName).ConfigureAwait(false);
+            modelNameSpace = GetModelNameSpace(TypeName);
             await base.OnInitializedAsync();
         }
 
         protected RenderFragment RenderListView() => __builder =>
         {
-            var type = Type.GetType(typeFullName);
+            var type = Type.GetType(modelNameSpace);
             var genericType = typeof(ModelView<>).MakeGenericType(new[] { type });
             __builder.OpenComponent(1, genericType);
             __builder.AddAttribute(2, "TypeName", TypeName);
