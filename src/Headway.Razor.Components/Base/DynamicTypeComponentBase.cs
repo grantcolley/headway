@@ -1,39 +1,24 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Helpers;
+﻿using Headway.Core.Cache;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using System.Threading.Tasks;
 
 namespace Headway.Razor.Components.Base
 {
     public abstract class DynamicTypeComponentBase : HeadwayComponentBase
-    {
+    {       
         [Inject]
-        public IJSRuntime JSRuntime { get; set; }
+        DynamicTypeCache DynamicTypeCache { get; set; }
 
-        public async Task<string> GetTypeFullName(string typeName)
+        public string GetModelNameSpace(string name)
         {
-            var browserStorageItem = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", typeName).ConfigureAwait(false);
+            var model = DynamicTypeCache.GetModelType(name);
 
-            if (string.IsNullOrWhiteSpace(browserStorageItem))
+            if (model == null)
             {
-                var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
-
-                foreach(var model in models)
-                {
-                    await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", model.Name, model.Namespace);
-                }
-
-                browserStorageItem = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", typeName).ConfigureAwait(false);
-            }
-
-            if(string.IsNullOrWhiteSpace(browserStorageItem))
-            {
-                RaiseAlert($"Failed to map {typeName} to a fully qualified type name.");
+                RaiseAlert($"Failed to map {name} to a fully qualified type name.");
                 return default;
             }
 
-            return browserStorageItem;
+            return model.Namespace;
         }
     }
 }
