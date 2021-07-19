@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Cache;
 using Microsoft.AspNetCore.Components;
+using System;
 
 namespace Headway.Razor.Components.Base
 {
@@ -8,17 +9,17 @@ namespace Headway.Razor.Components.Base
         [Inject]
         DynamicTypeCache DynamicTypeCache { get; set; }
 
-        public string GetModelNameSpace(string name)
+        public string GetTypeNamespace(string name, Type attribute)
         {
-            var model = DynamicTypeCache.GetModelType(name);
+            var dynamicType = DynamicTypeCache.GetDynamicType(name, attribute);
 
-            if (model == null)
+            if (dynamicType == null)
             {
-                RaiseAlert($"Failed to map {name} to a fully qualified type name.");
+                RaiseAlert($"Failed to map {name} to a fully qualified type.");
                 return default;
             }
 
-            return model.Namespace;
+            return dynamicType.Namespace;
         }
     }
 }
