@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Components.Pages
 {
     [DynamicContainer(ContainerType.List)]
-    public partial class ListBase : DynamicTypeComponentBase
+    public abstract class ListBase : DynamicTypeComponentBase
     {
         [Inject]
         public IConfigurationService ConfigurationService { get; set; }
