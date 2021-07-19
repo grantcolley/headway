@@ -1,35 +1,34 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Helpers;
+﻿using Headway.Core.Helpers;
 using Headway.Core.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Headway.Core.Cache
 {
     public class DynamicTypeCache
     {
-        private readonly Dictionary<string, DynamicType> modelsCache = new();
+        private readonly Dictionary<string, DynamicType> cache = new();
 
-        public DynamicType GetModelType(string model)
+        public DynamicType GetDynamicType(string dynamicType, Type type)
         {
-            if(!modelsCache.ContainsKey(model))
-            {
-                var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
+            var cachedDynamicType = cache.GetValueOrDefault(dynamicType);
 
-                foreach (var m in models)
+            if (cachedDynamicType != null)
+            {
+                return cachedDynamicType;
+            }
+
+            var dynamicTypes = TypeAttributeHelper.GetHeadwayTypesByAttribute(type);
+
+            foreach (var dt in dynamicTypes)
+            {
+                if (!cache.ContainsKey(dt.Name))
                 {
-                    if (!modelsCache.ContainsKey(m.Name))
-                    {
-                        modelsCache.Add(m.Name, m);
-                    }
+                    cache.Add(dt.Name, dt);
                 }
             }
 
-            if(modelsCache.ContainsKey(model))
-            {
-                return modelsCache[model];
-            }
-
-            return null;
+            return cache.GetValueOrDefault(dynamicType); ;
         }
     }
 }
