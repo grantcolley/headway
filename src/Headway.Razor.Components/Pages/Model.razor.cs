@@ -21,7 +21,7 @@ namespace Headway.Razor.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            modelNameSpace = GetModelNameSpace(TypeName);
+            modelNameSpace = GetTypeNamespace(TypeName, typeof(DynamicModelAttribute));
             await base.OnInitializedAsync();
         }
 
