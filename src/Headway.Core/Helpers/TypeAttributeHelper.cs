@@ -54,8 +54,8 @@ namespace Headway.Core.Helpers
         private static string GetFullNamespace(Type type, Assembly assembly)
         {
             return (type.IsAbstract && type.Name.Contains("Base"))
-                ? $"{type.FullName.Replace("Base", string.Empty)}, {assembly.GetName().Name}"
-                : $"{type.Name}, {assembly.GetName().Name}";
+                ? $"{type.Namespace}.{type.Name.Replace("Base", string.Empty)}, {assembly.GetName().Name}"
+                : $"{type.FullName}, {assembly.GetName().Name}";
         }
     }
 }
