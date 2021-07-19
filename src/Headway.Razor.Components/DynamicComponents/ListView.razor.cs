@@ -1,4 +1,5 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Razor.Components.Base;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Components.DynamicComponents
 {
+    [DynamicComponent]
     public partial class ListViewBase<T> : HeadwayComponentBase
     {
         [Inject]
