@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Components.Pages
 {
     [DynamicContainer(ContainerType.Model)]
-    public partial class ModelBase : DynamicTypeComponentBase
+    public abstract class ModelBase : DynamicTypeComponentBase
     {
         [Parameter]
         public string TypeName { get; set; }
