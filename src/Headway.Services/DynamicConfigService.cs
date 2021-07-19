@@ -12,13 +12,11 @@ namespace Headway.Services
         private readonly ConcurrentDictionary<string, ListConfig> listConfigs = new();
         private readonly ConcurrentDictionary<string, ModelConfig> modelConfigs = new();
 
-        public async Task<IServiceResult<ListConfig>> GetListConfigAsync<T>(string component, HttpClient httpClient, TokenProvider tokenProvider)
+        public async Task<IServiceResult<ListConfig>> GetListConfigAsync(string configName, HttpClient httpClient, TokenProvider tokenProvider)
         {
-            var model = typeof(T).Name;
-
-            if (listConfigs.ContainsKey(model))
+            if (listConfigs.ContainsKey(configName))
             {
-                if (listConfigs.TryGetValue(model, out ListConfig config))
+                if (listConfigs.TryGetValue(configName, out ListConfig config))
                 {
                     return new ServiceResult<ListConfig>
                     {
@@ -28,14 +26,14 @@ namespace Headway.Services
                 }
             }
 
-            using var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{component}{model}").ConfigureAwait(false);
+            using var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{configName}").ConfigureAwait(false);
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var config = await JsonSerializer.DeserializeAsync<ListConfig>
                     (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
                     new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
 
-                if (listConfigs.TryAdd(model, config))
+                if (listConfigs.TryAdd(configName, config))
                 {
                     return new ServiceResult<ListConfig>
                     {
@@ -48,7 +46,7 @@ namespace Headway.Services
                     return new ServiceResult<ListConfig>
                     {
                         IsSuccess = false,
-                        Message = $"Config for {model} list is not accessible"
+                        Message = $"ListConfig {configName} list is not accessible"
                     };
                 }
             }
