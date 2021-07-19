@@ -41,7 +41,7 @@ namespace Headway.Razor.Components.Pages
         {
             var type = Type.GetType(modelNameSpace);
             var component = Type.GetType(componentNameSpace);
-            var genericType = component.GetType().MakeGenericType(new[] { type });
+            var genericType = component.MakeGenericType(new[] { type });
             __builder.OpenComponent(1, genericType);
             __builder.AddAttribute(2, "ConfigName", listConfig.Name);
             __builder.AddAttribute(3, "ModelName", listConfig.Model);
