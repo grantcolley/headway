@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Components.DynamicComponents
 {
     [DynamicComponent]
-    public partial class ListViewBase<T> : HeadwayComponentBase
+    public abstract class ListViewBase<T> : HeadwayComponentBase
     {
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
