@@ -13,7 +13,7 @@ namespace Headway.Razor.Configuration.Helpers
         public static IEnumerable<DynamicType> GetConfigurationsDropdownItems()
         {
             var configurations = TypeAttributeHelper
-                .GetHeadwayDynamicComponentsByAttribute(typeof(DynamicConfigurationAttribute))
+                .GetHeadwayTypesByAttribute(typeof(DynamicConfigurationAttribute))
                 .ToList();
 
             var assembly = Assembly.GetAssembly(typeof(DynamicDefault));
