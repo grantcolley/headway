@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Components.DynamicComponents
 {
     [DynamicComponent]
-    public partial class ModelViewBase<T> : HeadwayComponentBase
+    public abstract class ModelViewBase<T> : HeadwayComponentBase
     {
         [Inject]
         public IAuthorisationService AuthorisationService { get; set; }
@@ -21,6 +21,7 @@ namespace Headway.Razor.Components.DynamicComponents
         public int Id { get; set; }
 
         protected DynamicModel<T> dynamicModel;
+
         protected Alert Alert { get; set; }
         protected bool isSaveInProgress = false;
         protected bool isDeleteInProgress = false;
