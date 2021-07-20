@@ -20,9 +20,9 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        @foreach(var column in listItemConfigs)
+                        @foreach(var column in configItems)
                         {
-                            <th>@column.HeaderName</th>
+                            <th>@column.Label</th>
                         }
                         <th> 
                             <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
@@ -33,14 +33,14 @@
                     @foreach(var listIitem in dynamicList.DynamicListItems)
                     {
                         <tr>
-                            @foreach(var column in listItemConfigs)
+                            @foreach(var column in configItems)
                             {
                                 <td>
                                     @dynamicList.GetValue(listIitem.Model, column.PropertyName)
                                 </td>
                             }
                             <td>
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.ListConfig.NavigationPropertyName))"/>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToPropertyName))"/>
                             </td>
                         </tr>
                     }
