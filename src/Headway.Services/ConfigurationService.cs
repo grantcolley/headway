@@ -18,6 +18,21 @@ namespace Headway.Services
         {
         }
 
+        public async Task<IServiceResult<Config>> GetConfigAsync(string name)
+        {
+            var httpResponseMessage = await httpClient.GetAsync($"Configuration/{name}").ConfigureAwait(false);
+            return await GetServiceResult<Config>(httpResponseMessage);
+        }
+
+        public async Task<IServiceResult<IEnumerable<Config>>> GetConfigsAsync()
+        {
+            var httpResponseMessage = await httpClient.GetAsync($"Configuration").ConfigureAwait(false);
+            return await GetServiceResult<IEnumerable<Config>>(httpResponseMessage);
+        }
+
+        /// <summary>
+        /// OBSOLETE
+        /// </summary>
         public async Task<IServiceResult<ListConfig>> GetListConfigAsync(string listConfig)
         {
             var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{listConfig}").ConfigureAwait(false);
