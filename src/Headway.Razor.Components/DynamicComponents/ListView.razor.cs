@@ -23,7 +23,7 @@ namespace Headway.Razor.Components.DynamicComponents
 
         protected DynamicList<T> dynamicList;
 
-        protected IEnumerable<ListItemConfig> listItemConfigs;
+        protected IEnumerable<ConfigItem> configItems;
 
         protected override async Task OnInitializedAsync()
         {
@@ -33,19 +33,19 @@ namespace Headway.Razor.Components.DynamicComponents
 
             dynamicList = GetResponse(result);
 
-            listItemConfigs = dynamicList.ListConfig.ListItemConfigs;
+            configItems = dynamicList.Config.ConfigItems;
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected void Add()
         {
-            NavigationManager.NavigateTo($"{dynamicList.ListConfig.NavigateTo}/{ModelName}");
+            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{ModelName}");
         }
 
         protected void Update(object id)
         {
-            NavigationManager.NavigateTo($"{dynamicList.ListConfig.NavigateTo}/{ModelName}/{id}");
+            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{ModelName}/{id}");
         }
     }
 }
