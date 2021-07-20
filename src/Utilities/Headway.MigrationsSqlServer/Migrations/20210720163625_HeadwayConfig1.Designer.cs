@@ -4,14 +4,16 @@ using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Headway.MigrationsSqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210720163625_HeadwayConfig1")]
+    partial class HeadwayConfig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,13 +76,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                     b.Property<string>("NavigateBack")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NavigateBackConfig")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NavigateTo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NavigateToConfig")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NavigateToPropertyName")
@@ -113,10 +109,10 @@ namespace Headway.MigrationsSqlServer.Migrations
                     b.Property<int?>("ConfigId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("IsIdentity")
+                    b.Property<bool>("IsIdentity")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsTitle")
+                    b.Property<bool>("IsTitle")
                         .HasColumnType("bit");
 
                     b.Property<string>("Label")
@@ -261,9 +257,6 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Config")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageClass")
                         .HasColumnType("nvarchar(max)");
