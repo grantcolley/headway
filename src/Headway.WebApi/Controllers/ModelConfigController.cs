@@ -13,10 +13,10 @@ namespace Headway.WebApi.Controllers
     [Authorize(Roles = "headwayuser")]
     public class ModelConfigController : ApiControllerBase<ModelConfigController>
     {
-        private readonly IConfigRepository configRepository;
+        private readonly IConfigurationRepository configRepository;
 
         public ModelConfigController(
-            IConfigRepository configRepository,
+            IConfigurationRepository configRepository,
             ILogger<ModelConfigController> logger)
             : base(configRepository, logger)
         {
