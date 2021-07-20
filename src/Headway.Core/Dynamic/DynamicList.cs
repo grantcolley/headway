@@ -9,19 +9,19 @@ namespace Headway.Core.Dynamic
         private readonly DynamicTypeHelper<T> typeHelper;
         private readonly IEnumerable<T> listItems;
 
-        public DynamicList(IEnumerable<T> listItems, ListConfig listConfig)
+        public DynamicList(IEnumerable<T> listItems, Config config)
         {
             this.listItems = listItems;
-            ListConfig = listConfig;
+            Config = config;
 
             typeHelper = DynamicTypeHelper.Get<T>();
 
             BuildDynamicListItems();
         }
 
-        public ListConfig ListConfig { get; private set; }
+        public Config Config { get; private set; }
 
-        public string Title { get { return ListConfig.Title; } }
+        public string Title { get { return Config.Title; } }
 
         public List<DynamicListItem<T>> DynamicListItems { get; private set; }
 
