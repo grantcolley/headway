@@ -9,8 +9,61 @@ namespace Headway.Services
 {
     public class DynamicConfigService : IDynamicConfigService
     {
+        private readonly ConcurrentDictionary<string, Config> configs = new ();
+
+        // OBSOLETE
         private readonly ConcurrentDictionary<string, ListConfig> listConfigs = new();
         private readonly ConcurrentDictionary<string, ModelConfig> modelConfigs = new();
+
+        public async Task<IServiceResult<Config>> GetConfigAsync(string configName, HttpClient httpClient, TokenProvider tokenProvider)
+        {
+            if (configs.ContainsKey(configName))
+            {
+                if (configs.TryGetValue(configName, out Config config))
+                {
+                    return new ServiceResult<Config>
+                    {
+                        IsSuccess = true,
+                        Result = config
+                    };
+                }
+            }
+
+            using var httpResponseMessage = await httpClient.GetAsync($"Configuration/{configName}").ConfigureAwait(false);
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var config = await JsonSerializer.DeserializeAsync<Config>
+                    (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
+
+                if (configs.TryAdd(configName, config))
+                {
+                    return new ServiceResult<Config>
+                    {
+                        IsSuccess = true,
+                        Result = config
+                    };
+                }
+                else
+                {
+                    return new ServiceResult<Config>
+                    {
+                        IsSuccess = false,
+                        Message = $"Config {configName} is not accessible"
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResult<Config>
+                {
+                    IsSuccess = httpResponseMessage.IsSuccessStatusCode,
+                    Message = httpResponseMessage.ReasonPhrase
+                };
+            }
+        }
+
+        // OBSEOELTE
 
         public async Task<IServiceResult<ListConfig>> GetListConfigAsync(string configName, HttpClient httpClient, TokenProvider tokenProvider)
         {
@@ -25,8 +78,8 @@ namespace Headway.Services
                     };
                 }
             }
-
-            using var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{configName}").ConfigureAwait(false);
+            
+            using var httpResponseMessage = await httpClient.GetAsync($"Config/{configName}").ConfigureAwait(false);
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 var config = await JsonSerializer.DeserializeAsync<ListConfig>
