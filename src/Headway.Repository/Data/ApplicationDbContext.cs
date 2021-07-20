@@ -20,6 +20,9 @@ namespace Headway.Repository.Data
         public DbSet<FieldConfig> FieldConfigs { get; set; }
         public DbSet<ListConfig> ListConfigs { get; set; }
         public DbSet<ListItemConfig> ListItemConfigs { get; set; }
+        public DbSet<ConfigType> ConfigTypes { get; set; }
+        public DbSet<Config> Configs { get; set; }
+        public DbSet<ConfigItem> ConfigItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -56,6 +59,14 @@ namespace Headway.Repository.Data
                 .IsUnique();
 
             builder.Entity<ListConfig>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<ConfigType>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<Config>()
                 .HasIndex(p => p.Name)
                 .IsUnique();
         }
