@@ -13,6 +13,7 @@ namespace Headway.Core.Model
         public string Name { get; set; }
         public string ImageClass { get; set; }
         public string Path { get; set; }
+        public string Config { get; set; }
         public string Permission { get; set; }
         public Category Category { get; set; }
 
