@@ -117,12 +117,12 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(string configName)
         {
             var serviceResultConfig = 
-                await dynamicConfigService.GetListConfigAsync(configName, httpClient, tokenProvider)
+                await dynamicConfigService.GetConfigAsync(configName, httpClient, tokenProvider)
                 .ConfigureAwait(false);
 
             if (serviceResultConfig.IsSuccess)
             {
-                var configApi = $"{serviceResultConfig.Result.ConfigApi}";
+                var configApi = $"{serviceResultConfig.Result.ModelApi}";
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
                 var serviceResultList = await GetServiceResult<IEnumerable<T>>(response)
