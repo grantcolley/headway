@@ -4,8 +4,12 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IConfigRepository : IRepository
+    public interface IConfigurationRepository : IRepository
     {
+        Task<IEnumerable<Config>> GetConfigsAsync();
+        Task<Config> GetConfigAsync(string config);
+
+        /// OBSOLETE
         Task<IEnumerable<ListConfig>> GetListConfigsAsync();
         Task<ListConfig> GetListConfigAsync(string listConfig);
         Task<IEnumerable<ModelConfig>> GetModelConfigsAsync();

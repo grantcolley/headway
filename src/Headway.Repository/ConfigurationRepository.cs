@@ -7,13 +7,32 @@ using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class ConfigRepository : RepositoryBase, IConfigRepository
+    public class ConfigurationRepository : RepositoryBase, IConfigurationRepository
     {
-        public ConfigRepository(ApplicationDbContext applicationDbContext)
+        public ConfigurationRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
         }
 
+        public async Task<IEnumerable<Config>> GetConfigsAsync()
+        {
+            return await applicationDbContext.Configs
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+        }
+
+        public async Task<Config> GetConfigAsync(string name)
+        {
+            return await applicationDbContext.Configs
+                .Include(c => c.ConfigItems)
+                .AsNoTracking()
+                .SingleAsync(c => c.Name.Equals(name))
+                .ConfigureAwait(false);
+        }
+
+
+        // OBSOLETE
         public async Task<IEnumerable<ListConfig>> GetListConfigsAsync()
         {
             return await applicationDbContext.ListConfigs
