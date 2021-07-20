@@ -16,23 +16,23 @@ namespace Headway.Razor.Components.Pages
         public IConfigurationService ConfigurationService { get; set; }
 
         [Parameter]
-        public string ListConfigName { get; set; }
+        public string Config { get; set; }
 
         protected string modelNameSpace;
 
         protected string componentNameSpace;
 
-        protected ListConfig listConfig;
+        protected Config config;
 
         protected override async Task OnInitializedAsync()
         {
-            var response = await ConfigurationService.GetListConfigAsync(ListConfigName).ConfigureAwait(false);
+            var response = await ConfigurationService.GetConfigAsync(Config).ConfigureAwait(false);
 
-            listConfig = GetResponse(response);
+            config = GetResponse(response);
 
-            modelNameSpace = GetTypeNamespace(listConfig.Model, typeof(DynamicModelAttribute));
+            modelNameSpace = GetTypeNamespace(config.Model, typeof(DynamicModelAttribute));
 
-            componentNameSpace = GetTypeNamespace(listConfig.Component, typeof(DynamicComponentAttribute));
+            componentNameSpace = GetTypeNamespace(config.Component, typeof(DynamicComponentAttribute));
 
             await base.OnInitializedAsync();
         }
@@ -43,8 +43,8 @@ namespace Headway.Razor.Components.Pages
             var component = Type.GetType(componentNameSpace);
             var genericType = component.MakeGenericType(new[] { type });
             __builder.OpenComponent(1, genericType);
-            __builder.AddAttribute(2, "ConfigName", listConfig.Name);
-            __builder.AddAttribute(3, "ModelName", listConfig.Model);
+            __builder.AddAttribute(2, "ConfigName", config.Name);
+            __builder.AddAttribute(3, "ModelName", config.Model);
             __builder.CloseComponent();
         };
     }
