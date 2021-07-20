@@ -17,6 +17,11 @@ namespace Headway.Core.Model
         public string Permission { get; set; }
         public Category Category { get; set; }
 
+        public string NavigateTo()
+        {
+            return $@"{Path}\{Config}";
+        }
+
         public bool IsPermitted(IEnumerable<string> permissions)
         {
             if (permissions.Contains(Permission))
