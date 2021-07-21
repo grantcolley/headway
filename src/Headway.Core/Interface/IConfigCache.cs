@@ -1,10 +1,12 @@
 ﻿using Headway.Core.Model;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Headway.Core.Interface
 {
     public interface IConfigCache
     {
-        Task<Config> GetConfigAsync(string configName);
+        Config GetConfig(string configName);
+        void AddConfig(Config config);
+        void AddConfigs(IEnumerable<Config> configs);
     }
 }

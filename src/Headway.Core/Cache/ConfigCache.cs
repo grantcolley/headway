@@ -1,42 +1,46 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Headway.Core.Cache
 {
     public class ConfigCache : IConfigCache
     {
-        private readonly IConfigurationService configurationService;
-
         private readonly Dictionary<string, Config> cache = new();
 
-        public ConfigCache(IConfigurationService configurationService)
+        private readonly object cacheLock = new();
+
+        public void AddConfig(Config config)
         {
-            this.configurationService = configurationService;
-        }
-
-        public async Task<Config> GetConfigAsync(string configName)
-        {
-            var config = cache.GetValueOrDefault(configName);
-
-            if (config != null)
+            lock (cacheLock)
             {
-                return config;
-            }
-
-            var result = await configurationService.GetConfigAsync(configName)
-                .ConfigureAwait(false);
-
-            if(result.IsSuccess)
-            {
-                if (!cache.ContainsKey(result.Result.Name))
+                if (!cache.ContainsKey(config.Name))
                 {
-                    cache.Add(result.Result.Name, result.Result);
+                    cache.Add(config.Name, config);
                 }
             }
+        }
 
-            return cache.GetValueOrDefault(configName);
+        public void AddConfigs(IEnumerable<Config> configs)
+        {
+            lock (cacheLock)
+            {
+                foreach(var config in configs)
+                {
+                    if (!cache.ContainsKey(config.Name))
+                    {
+                        cache.Add(config.Name, config);
+                    }
+                }
+            }
+        }
+
+        public Config GetConfig(string configName)
+        {
+            lock (cacheLock)
+            {
+                return cache.GetValueOrDefault(configName);
+            }
         }
     }
 }
