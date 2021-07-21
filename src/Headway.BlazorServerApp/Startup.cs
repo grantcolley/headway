@@ -64,8 +64,6 @@ namespace Headway.BlazorServerApp
                 client.BaseAddress = new Uri("https://localhost:44320");
             });
 
-            services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
-            services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
             services.AddScoped<TokenProvider>();
 
             services.AddTransient<IModuleService, ModuleService>(sp =>
@@ -75,6 +73,8 @@ namespace Headway.BlazorServerApp
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new ModuleService(httpClient, tokenProvider);
             });
+
+            services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
@@ -92,6 +92,9 @@ namespace Headway.BlazorServerApp
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new ConfigurationService(httpClient, tokenProvider);
             });
+
+            services.AddSingleton<IConfigCache, ConfigCache>();
+            services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
