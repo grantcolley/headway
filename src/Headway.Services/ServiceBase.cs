@@ -44,6 +44,18 @@ namespace Headway.Services
             return serviceResult;
         }
 
+        protected static IServiceResult<T> GetServiceResult<T>(T result, bool isSuccess = true, string message = null)
+        {
+            var serviceResult = new ServiceResult<T>
+            {
+                IsSuccess = isSuccess,
+                Message = message,
+                Result = result
+            };
+
+            return serviceResult;
+        }
+
         private void AddHttpClientAuthorisationHeader()
         {
             if (useAccessToken
