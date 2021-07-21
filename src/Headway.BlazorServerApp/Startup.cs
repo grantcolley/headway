@@ -65,6 +65,9 @@ namespace Headway.BlazorServerApp
             });
 
             services.AddScoped<TokenProvider>();
+            services.AddSingleton<IConfigCache, ConfigCache>();
+            services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
+            services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             services.AddTransient<IModuleService, ModuleService>(sp =>
             {
@@ -73,8 +76,6 @@ namespace Headway.BlazorServerApp
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new ModuleService(httpClient, tokenProvider);
             });
-
-            services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
             {
@@ -87,14 +88,12 @@ namespace Headway.BlazorServerApp
 
             services.AddTransient<IConfigurationService, ConfigurationService>(sp =>
             {
+                var configCache = sp.GetRequiredService<IConfigCache>();
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new ConfigurationService(httpClient, tokenProvider);
+                return new ConfigurationService(httpClient, tokenProvider, configCache);
             });
-
-            services.AddSingleton<IConfigCache, ConfigCache>();
-            services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
