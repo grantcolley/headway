@@ -15,7 +15,7 @@ namespace Headway.Razor.Components.DynamicComponents
         public IAuthorisationService AuthorisationService { get; set; }
 
         [Parameter]
-        public string TypeName { get; set; }
+        public string Title { get; set; }
 
         [Parameter]
         public int Id { get; set; }
