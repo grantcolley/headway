@@ -10,7 +10,7 @@ namespace Headway.Razor.Components.Base
     public abstract class DynamicTypeComponentBase : HeadwayComponentBase
     {
         [Inject]
-        public IConfigCache ConfigCache { get; set; }
+        public IConfigurationService ConfigurationService { get; set; }
 
         [Inject]
         public IDynamicTypeCache DynamicTypeCache { get; set; }
@@ -23,7 +23,9 @@ namespace Headway.Razor.Components.Base
 
         protected async Task GetConfig(string configName)
         {
-            config = await ConfigCache.GetConfigAsync(configName).ConfigureAwait(false);
+            var result = await ConfigurationService.GetConfigAsync(configName).ConfigureAwait(false);
+
+            config = GetResponse(result);
 
             modelNameSpace = GetTypeNamespace(config.Model, typeof(DynamicModelAttribute));
 
