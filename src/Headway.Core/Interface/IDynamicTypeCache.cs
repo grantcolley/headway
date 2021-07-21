@@ -5,6 +5,6 @@ namespace Headway.Core.Interface
 {
     public interface IDynamicTypeCache
     {
-        DynamicType GetDynamicType(string dynamicType, Type type)
+        DynamicType GetDynamicType(string dynamicType, Type type);
     }
 }
