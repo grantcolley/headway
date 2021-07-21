@@ -64,7 +64,7 @@ namespace Headway.BlazorServerApp
                 client.BaseAddress = new Uri("https://localhost:44320");
             });
 
-            services.AddSingleton<DynamicTypeCache>();
+            services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
             services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
             services.AddScoped<TokenProvider>();
 

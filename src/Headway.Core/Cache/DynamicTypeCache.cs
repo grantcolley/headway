@@ -1,11 +1,12 @@
 ﻿using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 
 namespace Headway.Core.Cache
 {
-    public class DynamicTypeCache
+    public class DynamicTypeCache : IDynamicTypeCache
     {
         private readonly Dictionary<string, DynamicType> cache = new();
 

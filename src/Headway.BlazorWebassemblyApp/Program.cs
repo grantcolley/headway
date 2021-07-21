@@ -37,7 +37,7 @@ namespace Headway.BlazorWebassemblyApp
                 return handler;
             });
 
-            builder.Services.AddSingleton<DynamicTypeCache>();
+            builder.Services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
             builder.Services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             builder.Services.AddTransient<IModuleService, ModuleService>(sp =>

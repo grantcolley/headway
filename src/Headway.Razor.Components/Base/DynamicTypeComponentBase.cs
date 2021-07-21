@@ -1,5 +1,4 @@
 ﻿using Headway.Core.Attributes;
-using Headway.Core.Cache;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
@@ -14,7 +13,7 @@ namespace Headway.Razor.Components.Base
         public IConfigurationService ConfigurationService { get; set; }
 
         [Inject]
-        DynamicTypeCache DynamicTypeCache { get; set; }
+        public IDynamicTypeCache DynamicTypeCache { get; set; }
 
         protected Config config;
 
