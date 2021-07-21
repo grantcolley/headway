@@ -29,7 +29,7 @@ namespace Headway.Core.Cache
                 }
             }
 
-            return cache.GetValueOrDefault(dynamicType); ;
+            return cache.GetValueOrDefault(dynamicType);
         }
     }
 }
