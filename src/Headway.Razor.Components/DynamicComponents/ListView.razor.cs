@@ -16,10 +16,7 @@ namespace Headway.Razor.Components.DynamicComponents
         public IAuthorisationService AuthorisationService { get; set; }
 
         [Parameter]
-        public string ConfigName { get; set; }
-
-        [Parameter]
-        public string ModelName { get; set; }
+        public string Config { get; set; }
 
         protected DynamicList<T> dynamicList;
 
@@ -28,7 +25,7 @@ namespace Headway.Razor.Components.DynamicComponents
         protected override async Task OnInitializedAsync()
         {
             var result = 
-                await AuthorisationService.GetDynamicListAsync<T>(ConfigName)
+                await AuthorisationService.GetDynamicListAsync<T>(Config)
                 .ConfigureAwait(false);
 
             dynamicList = GetResponse(result);
@@ -40,12 +37,12 @@ namespace Headway.Razor.Components.DynamicComponents
 
         protected void Add()
         {
-            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{ModelName}");
+            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{dynamicList.Config.NavigateToConfig}");
         }
 
         protected void Update(object id)
         {
-            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{ModelName}/{id}");
+            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{dynamicList.Config.NavigateToConfig}/{id}");
         }
     }
 }
