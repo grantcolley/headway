@@ -1,10 +1,10 @@
-﻿@page "/model/{TypeName}/{Id:int?}"
+﻿@page "/model/{Config}/{Id:int?}"
 @inherits ModelBase
 @using System
 
 <AuthorizeView>
     <Authorized Context="list">
-        @if (modelNameSpace == null)
+        @if (config == null)
         {
             <p><em>Loading...</em></p>
         }

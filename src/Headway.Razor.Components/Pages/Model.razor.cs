@@ -1,7 +1,8 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Enums;
+using Headway.Core.Interface;
+using Headway.Core.Model;
 using Headway.Razor.Components.Base;
-using Headway.Razor.Components.DynamicComponents;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -12,25 +13,25 @@ namespace Headway.Razor.Components.Pages
     public abstract class ModelBase : DynamicTypeComponentBase
     {
         [Parameter]
-        public string TypeName { get; set; }
+        public string Config { get; set; }
 
         [Parameter]
         public int Id { get; set; }
 
-        protected string modelNameSpace;
-
         protected override async Task OnInitializedAsync()
         {
-            modelNameSpace = GetTypeNamespace(TypeName, typeof(DynamicModelAttribute));
+            await GetConfig(Config);
+
             await base.OnInitializedAsync();
         }
 
         protected RenderFragment RenderListView() => __builder =>
         {
             var type = Type.GetType(modelNameSpace);
-            var genericType = typeof(ModelView<>).MakeGenericType(new[] { type });
+            var component = Type.GetType(componentNameSpace);
+            var genericType = component.MakeGenericType(new[] { type });
             __builder.OpenComponent(1, genericType);
-            __builder.AddAttribute(2, "TypeName", TypeName);
+            __builder.AddAttribute(2, "Title", config.Title);
             __builder.AddAttribute(3, "Id", Id);
             __builder.CloseComponent();
         };
