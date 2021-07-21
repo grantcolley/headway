@@ -10,26 +10,34 @@ namespace Headway.Core.Cache
     {
         private readonly Dictionary<string, DynamicType> cache = new();
 
+        private readonly object cacheLock = new();
+
         public DynamicType GetDynamicType(string dynamicType, Type type)
         {
-            var cachedDynamicType = cache.GetValueOrDefault(dynamicType);
-
-            if (cachedDynamicType != null)
+            lock (cacheLock)
             {
-                return cachedDynamicType;
+                var cachedDynamicType = cache.GetValueOrDefault(dynamicType);
+
+                if (cachedDynamicType != null)
+                {
+                    return cachedDynamicType;
+                }
             }
 
             var dynamicTypes = TypeAttributeHelper.GetHeadwayTypesByAttribute(type);
 
-            foreach (var dt in dynamicTypes)
+            lock (cacheLock)
             {
-                if (!cache.ContainsKey(dt.Name))
+                foreach (var dt in dynamicTypes)
                 {
-                    cache.Add(dt.Name, dt);
+                    if (!cache.ContainsKey(dt.Name))
+                    {
+                        cache.Add(dt.Name, dt);
+                    }
                 }
-            }
 
-            return cache.GetValueOrDefault(dynamicType);
+                return cache.GetValueOrDefault(dynamicType);
+            }
         }
     }
 }
