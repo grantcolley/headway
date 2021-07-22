@@ -1,7 +1,5 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Enums;
-using Headway.Core.Interface;
-using Headway.Core.Model;
 using Headway.Razor.Components.Base;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -31,8 +29,9 @@ namespace Headway.Razor.Components.Pages
             var component = Type.GetType(componentNameSpace);
             var genericType = component.MakeGenericType(new[] { type });
             __builder.OpenComponent(1, genericType);
-            __builder.AddAttribute(2, "Title", config.Title);
-            __builder.AddAttribute(3, "Id", Id);
+            __builder.AddAttribute(2, "Config", config.Name);
+            __builder.AddAttribute(3, "Title", config.Title);
+            __builder.AddAttribute(4, "Id", Id);
             __builder.CloseComponent();
         };
     }
