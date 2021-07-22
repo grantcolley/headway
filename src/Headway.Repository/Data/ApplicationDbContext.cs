@@ -16,10 +16,6 @@ namespace Headway.Repository.Data
         public DbSet<Module> Modules { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
-        public DbSet<ModelConfig> ModelConfigs { get; set; }
-        public DbSet<FieldConfig> FieldConfigs { get; set; }
-        public DbSet<ListConfig> ListConfigs { get; set; }
-        public DbSet<ListItemConfig> ListItemConfigs { get; set; }
         public DbSet<ConfigType> ConfigTypes { get; set; }
         public DbSet<Config> Configs { get; set; }
         public DbSet<ConfigItem> ConfigItems { get; set; }
@@ -51,14 +47,6 @@ namespace Headway.Repository.Data
                 .IsUnique();
 
             builder.Entity<MenuItem>()
-                .HasIndex(p => p.Name)
-                .IsUnique();
-
-            builder.Entity<ModelConfig>()
-                .HasIndex(p => p.Model)
-                .IsUnique();
-
-            builder.Entity<ListConfig>()
                 .HasIndex(p => p.Name)
                 .IsUnique();
 
