@@ -13,19 +13,19 @@ namespace Headway.Core.Dynamic
         private readonly string titleFieldName;
         private readonly DynamicTypeHelper<T> typeHelper;
 
-        public DynamicModel(T model, ModelConfig modelConfig)
+        public DynamicModel(T model, Config config)
         {
             Model = model;
-            ModelConfig = modelConfig;
+            Config = config;
 
-            var idField = modelConfig.FieldConfigs.FirstOrDefault(f => f.IsIdField);
+            var idField = config.ConfigItems.FirstOrDefault(ci => ci.IsIdentity.HasValue && ci.IsIdentity.Value);
 
             if (idField != null)
             {
                 idFieldName = idField.PropertyName;
             }
 
-            var titleField = modelConfig.FieldConfigs.FirstOrDefault(f => f.IsTitleField);
+            var titleField = config.ConfigItems.FirstOrDefault(ci => ci.IsTitle.HasValue && ci.IsTitle.Value);
 
             if(titleField != null)
             {
@@ -39,7 +39,7 @@ namespace Headway.Core.Dynamic
 
         public T Model { get; private set; }
         public List<DynamicField> DynamicFields { get; private set; }
-        public ModelConfig ModelConfig { get; private set; }
+        public Config Config { get; private set; }
 
         public int Id { get { return Convert.ToInt32(typeHelper.GetValue(Model, idFieldName)); } }
 
@@ -51,7 +51,7 @@ namespace Headway.Core.Dynamic
 
             var constantExpression = Expression.Constant(Model);
 
-            static DynamicField func(T model, ConstantExpression ce, PropertyInfo p, FieldConfig c)
+            static DynamicField func(T model, ConstantExpression ce, PropertyInfo p, ConfigItem c)
             {
                 var dynamicField = new DynamicField
                 {
@@ -60,8 +60,8 @@ namespace Headway.Core.Dynamic
                     PropertyInfo = p,
                     PropertyName = p.Name,
                     MemberExpression = Expression.Property(ce, p.Name),
-                    DynamicComponentTypeName = c.DynamicComponentTypeName,
-                    DynamicComponent = Type.GetType(c.DynamicComponentTypeName)
+                    DynamicComponentTypeName = c.Component,
+                    DynamicComponent = Type.GetType(c.Component)
                 };
 
                 dynamicField.Parameters = new Dictionary<string, object> { { "Field", dynamicField } };
@@ -70,7 +70,7 @@ namespace Headway.Core.Dynamic
             }
 
             var dynamicFields = from p in typeHelper.SupportedProperties
-                                join c in ModelConfig.FieldConfigs on p.Name equals c.PropertyName
+                                join c in Config.ConfigItems on p.Name equals c.PropertyName
                                 select func(Model, constantExpression, p, c);
 
             DynamicFields.AddRange(dynamicFields);
