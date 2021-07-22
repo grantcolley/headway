@@ -67,7 +67,6 @@ namespace Headway.BlazorServerApp
             services.AddScoped<TokenProvider>();
             services.AddSingleton<IConfigCache, ConfigCache>();
             services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
-            services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             services.AddTransient<IModuleService, ModuleService>(sp =>
             {
@@ -77,15 +76,6 @@ namespace Headway.BlazorServerApp
                 return new ModuleService(httpClient, tokenProvider);
             });
 
-            services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
-            {
-                var dynamicConfigService = sp.GetRequiredService<IDynamicConfigService>();
-                var tokenProvider = sp.GetRequiredService<TokenProvider>();
-                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient("webapi");
-                return new AuthorisationService(httpClient, tokenProvider, dynamicConfigService);
-            });
-
             services.AddTransient<IConfigurationService, ConfigurationService>(sp =>
             {
                 var configCache = sp.GetRequiredService<IConfigCache>();
@@ -93,6 +83,15 @@ namespace Headway.BlazorServerApp
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new ConfigurationService(httpClient, tokenProvider, configCache);
+            });
+
+            services.AddTransient<IDynamicService, DynamicService>(sp =>
+            {
+                var configCache = sp.GetRequiredService<IConfigCache>();
+                var tokenProvider = sp.GetRequiredService<TokenProvider>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new DynamicService(httpClient, tokenProvider, configCache);
             });
 
             services.AddRazorPages();

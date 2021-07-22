@@ -39,7 +39,6 @@ namespace Headway.BlazorWebassemblyApp
 
             builder.Services.AddSingleton<IConfigCache, ConfigCache>();
             builder.Services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
-            builder.Services.AddSingleton<IDynamicConfigService, DynamicConfigService>();
 
             builder.Services.AddTransient<IModuleService, ModuleService>(sp =>
             {
@@ -48,20 +47,20 @@ namespace Headway.BlazorWebassemblyApp
                 return new ModuleService(httpClient);
             });
 
-            builder.Services.AddTransient<IAuthorisationService, AuthorisationService>(sp =>
-            {
-                var dynamicConfigService = sp.GetRequiredService<IDynamicConfigService>();
-                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-                var httpClient = httpClientFactory.CreateClient("webapi");
-                return new AuthorisationService(httpClient, dynamicConfigService);
-            });
-
             builder.Services.AddTransient<IConfigurationService, ConfigurationService>(sp =>
             {
                 var configCache = sp.GetRequiredService<IConfigCache>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new ConfigurationService(httpClient, configCache);
+            });
+
+            builder.Services.AddTransient<IDynamicService, DynamicService>(sp =>
+            {
+                var configCache = sp.GetRequiredService<IConfigCache>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new DynamicService(httpClient, configCache);
             });
 
             await builder.Build().RunAsync();
