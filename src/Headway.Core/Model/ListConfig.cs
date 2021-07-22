@@ -1,23 +1,23 @@
-﻿using System.Collections.Generic;
+﻿//using System.Collections.Generic;
 
-namespace Headway.Core.Model
-{
-    public class ListConfig
-    {
-        public ListConfig()
-        {
-            ListItemConfigs = new List<ListItemConfig>();
-        }
+//namespace Headway.Core.Model
+//{
+//    public class ListConfig
+//    {
+//        public ListConfig()
+//        {
+//            ListItemConfigs = new List<ListItemConfig>();
+//        }
 
-        public int ListConfigId { get; set; }
-        public string Name { get; set; }
-        public string Model { get; set; }
-        public string Component { get; set; }
-        public string ConfigApi { get; set; }
-        public string Title { get; set; }
-        public string NavigateTo { get; set; }
-        public string NavigateToConfig { get; set; }
-        public string NavigationPropertyName { get; set; }
-        public List<ListItemConfig> ListItemConfigs { get; set; }
-    }
-}
+//        public int ListConfigId { get; set; }
+//        public string Name { get; set; }
+//        public string Model { get; set; }
+//        public string Component { get; set; }
+//        public string ConfigApi { get; set; }
+//        public string Title { get; set; }
+//        public string NavigateTo { get; set; }
+//        public string NavigateToConfig { get; set; }
+//        public string NavigationPropertyName { get; set; }
+//        public List<ListItemConfig> ListItemConfigs { get; set; }
+//    }
+//}

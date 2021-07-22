@@ -57,31 +57,31 @@ namespace Headway.Services
             return serviceResult;
         }
 
-        /// <summary>
-        /// OBSOLETE
-        /// </summary>
-        public async Task<IServiceResult<ListConfig>> GetListConfigAsync(string listConfig)
-        {
-            var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{listConfig}").ConfigureAwait(false);
-            return await GetServiceResult<ListConfig>(httpResponseMessage);
-        }
+        ///// <summary>
+        ///// OBSOLETE
+        ///// </summary>
+        //public async Task<IServiceResult<ListConfig>> GetListConfigAsync(string listConfig)
+        //{
+        //    var httpResponseMessage = await httpClient.GetAsync($"ListConfig/{listConfig}").ConfigureAwait(false);
+        //    return await GetServiceResult<ListConfig>(httpResponseMessage);
+        //}
 
-        public async Task<IServiceResult<IEnumerable<ListConfig>>> GetListConfigsAsync()
-        {
-            var httpResponseMessage = await httpClient.GetAsync($"ListConfig").ConfigureAwait(false);
-            return await GetServiceResult<IEnumerable<ListConfig>>(httpResponseMessage);
-        }
+        //public async Task<IServiceResult<IEnumerable<ListConfig>>> GetListConfigsAsync()
+        //{
+        //    var httpResponseMessage = await httpClient.GetAsync($"ListConfig").ConfigureAwait(false);
+        //    return await GetServiceResult<IEnumerable<ListConfig>>(httpResponseMessage);
+        //}
 
-        public async Task<IServiceResult<ModelConfig>> GetModelConfigAsync(string modelConfig)
-        {
-            var httpResponseMessage = await httpClient.GetAsync($"ModelConfig/{modelConfig}").ConfigureAwait(false);
-            return await GetServiceResult<ModelConfig>(httpResponseMessage);
-        }
+        //public async Task<IServiceResult<ModelConfig>> GetModelConfigAsync(string modelConfig)
+        //{
+        //    var httpResponseMessage = await httpClient.GetAsync($"ModelConfig/{modelConfig}").ConfigureAwait(false);
+        //    return await GetServiceResult<ModelConfig>(httpResponseMessage);
+        //}
 
-        public async Task<IServiceResult<IEnumerable<ModelConfig>>> GetModelConfigsAsync()
-        {
-            var httpResponseMessage = await httpClient.GetAsync($"ModelConfig").ConfigureAwait(false);
-            return await GetServiceResult<IEnumerable<ModelConfig>>(httpResponseMessage);
-        }
+        //public async Task<IServiceResult<IEnumerable<ModelConfig>>> GetModelConfigsAsync()
+        //{
+        //    var httpResponseMessage = await httpClient.GetAsync($"ModelConfig").ConfigureAwait(false);
+        //    return await GetServiceResult<IEnumerable<ModelConfig>>(httpResponseMessage);
+        //}
     }
 }
