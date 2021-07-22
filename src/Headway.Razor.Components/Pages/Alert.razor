@@ -3,10 +3,10 @@
 
 <div class="@Class" role="alert">
     <b>@Title</b>&nbsp;@Message
-    <p></p>
     @if(!string.IsNullOrWhiteSpace(RedirectText)
         && !string.IsNullOrWhiteSpace(RedirectPage))
     {
+        <p></p>
         <table>
             <tbody>
                 <tr>
