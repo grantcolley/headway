@@ -13,7 +13,7 @@ namespace Headway.Razor.Components.DynamicComponents
     public abstract class ListViewBase<T> : HeadwayComponentBase
     {
         [Inject]
-        public IAuthorisationService AuthorisationService { get; set; }
+        public IDynamicService DynamicService { get; set; }
 
         [Parameter]
         public string Config { get; set; }
@@ -25,7 +25,7 @@ namespace Headway.Razor.Components.DynamicComponents
         protected override async Task OnInitializedAsync()
         {
             var result = 
-                await AuthorisationService.GetDynamicListAsync<T>(Config)
+                await DynamicService.GetDynamicListAsync<T>(Config)
                 .ConfigureAwait(false);
 
             dynamicList = GetResponse(result);
