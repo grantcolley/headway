@@ -16,19 +16,19 @@
         }
         else
         {
-            @if (Alert == null)
-            {
-                <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
-                    <DataAnnotationsValidator/>
-                    <table>
-                        <tbody>
-                            <tr>
+            <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
+                <DataAnnotationsValidator/>
+                <table>
+                    <tbody>
+                        <tr>
+                            @if (Alert == null)
+                            {
                                 <td align="left">
                                     @if (isSaveInProgress)
                                     {
                                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                                     }
-                                    else if(!isDeleteInProgress)
+                                    else if (!isDeleteInProgress)
                                     {
                                         <button type="submit" class="btn btn-small btn-outline-primary fas fa-save"/>
                                     }
@@ -38,30 +38,32 @@
                                     {
                                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                                     }
-                                    else if(!isSaveInProgress)
+                                    else if (!isSaveInProgress)
                                     {
                                         <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => Delete()"/>
                                     }                                   
                                 </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table>
-                        <tbody>
-                            @foreach(var dynamicField in dynamicModel.DynamicFields)
-                            {
-                                <tr>
-                                    <td valign="middle"><DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" /></td>
-                                </tr>                        
                             }
-                        </tbody>
-                    </table>
-                </EditForm>
-            }
-            else
-            {
-                <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>
-            }
+                            else
+                            {
+                                <td align="left" colspan="2">
+                                   <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>                            
+                               </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        @foreach(var dynamicField in dynamicModel.DynamicFields)
+                        {
+                            <tr>
+                                <td valign="middle"><DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" /></td>
+                            </tr>                        
+                        }
+                    </tbody>
+                </table>
+            </EditForm>
         }
     </Authorized>
     <NotAuthorized>

@@ -12,7 +12,10 @@ namespace Headway.Razor.Components.DynamicComponents
     public abstract class ModelViewBase<T> : HeadwayComponentBase
     {
         [Inject]
-        public IAuthorisationService AuthorisationService { get; set; }
+        public IDynamicService DynamicService { get; set; }
+
+        [Parameter]
+        public string Config { get; set; }
 
         [Parameter]
         public string Title { get; set; }
@@ -32,14 +35,14 @@ namespace Headway.Razor.Components.DynamicComponents
 
             if (Id.Equals(0))
             {
-                serviceResult = await AuthorisationService
-                    .CreateDynamicModelInstanceAsync<T>()
+                serviceResult = await DynamicService
+                    .CreateDynamicModelInstanceAsync<T>(Config)
                     .ConfigureAwait(false);
             }
             else
             {
-                serviceResult = await AuthorisationService
-                    .GetDynamicModelAsync<T>(Id)
+                serviceResult = await DynamicService
+                    .GetDynamicModelAsync<T>(Id, Config)
                     .ConfigureAwait(false);
             }
 
@@ -57,7 +60,7 @@ namespace Headway.Razor.Components.DynamicComponents
 
             if (dynamicModel.Id.Equals(0))
             {
-                serviceResult = await AuthorisationService
+                serviceResult = await DynamicService
                     .AddDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
 
@@ -65,7 +68,7 @@ namespace Headway.Razor.Components.DynamicComponents
             }
             else
             {
-                serviceResult = await AuthorisationService
+                serviceResult = await DynamicService
                     .UpdateDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
 
@@ -84,8 +87,8 @@ namespace Headway.Razor.Components.DynamicComponents
                 AlertType = "primary",
                 Title = dynamicModel.Title,
                 Message = message,
-                RedirectText = dynamicModel.ModelConfig.NavigateText,
-                RedirectPage = dynamicModel.ModelConfig.NavigateTo
+                //RedirectText = dynamicModel.Config.NavigateText,
+                RedirectPage = dynamicModel.Config.NavigateTo
             };
 
             isSaveInProgress = false;
@@ -95,7 +98,7 @@ namespace Headway.Razor.Components.DynamicComponents
         {
             isDeleteInProgress = true;
 
-            var serviceResult = await AuthorisationService
+            var serviceResult = await DynamicService
                 .DeleteDynamicModelAsync(dynamicModel)
                 .ConfigureAwait(false);
 
@@ -111,8 +114,8 @@ namespace Headway.Razor.Components.DynamicComponents
                 AlertType = "danger",
                 Title = $"{dynamicModel.Title}",
                 Message = $"has been deleted.",
-                RedirectText = dynamicModel.ModelConfig.NavigateText,
-                RedirectPage = dynamicModel.ModelConfig.NavigateTo
+                //RedirectText = dynamicModel.Config.NavigateText,
+                RedirectPage = dynamicModel.Config.NavigateTo
             };
 
             isDeleteInProgress = false;
