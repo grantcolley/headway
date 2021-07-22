@@ -1,4 +1,4 @@
-﻿@inherits ListConfigsBase
+﻿@inherits ConfigsBase
 
 @if (listConfigs == null)
 {
@@ -9,12 +9,12 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>List Config Id</th>
+                <th>Config Id</th>
                 <th>Name</th>
                 <th>Title</th>
-                <th>ConfigApi</th>
+                <th>ModelApi</th>
                 <th>Navigate To</th>
-                <th>Navigation Property Name</th>
+                <th>Navigate Property Name</th>
                 <th> 
                     <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
                 </th>
@@ -25,7 +25,7 @@ else
             {
                 <tr>
                     <td>
-                        @listConfig.ListConfigId
+                        @listConfig.ConfigId
                     </td>
                     <td>
                         @listConfig.Name
@@ -34,16 +34,16 @@ else
                         @listConfig.Title
                     </td>
                     <td>
-                        @listConfig.ConfigApi
+                        @listConfig.ModelApi
                     </td>
                     <td>
                         @listConfig.NavigateTo
                     </td>
                     <td>
-                        @listConfig.NavigationPropertyName
+                        @listConfig.NavigateToPropertyName
                     </td>
                     <td>
-                        <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(listConfig.ListConfigId)"/>
+                        <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(listConfig.ConfigId)"/>
                     </td>
                 </tr>
             }

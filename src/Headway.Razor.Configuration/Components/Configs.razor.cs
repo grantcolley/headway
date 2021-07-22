@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Configuration.Components
 {
     [DynamicConfiguration]
-    public partial class ListConfigsBase : HeadwayComponentBase
+    public partial class ConfigsBase : HeadwayComponentBase
     {
         [Inject]
         public IConfigurationService ConfigurationService { get; set; }
 
-        protected IEnumerable<ListConfig> listConfigs;
+        protected IEnumerable<Config> listConfigs;
 
         protected override async Task OnInitializedAsync()
         {
-            var result = await ConfigurationService.GetListConfigsAsync().ConfigureAwait(false);
+            var result = await ConfigurationService.GetConfigsAsync().ConfigureAwait(false);
 
             listConfigs = GetResponse(result);
 
