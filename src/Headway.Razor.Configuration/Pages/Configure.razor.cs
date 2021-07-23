@@ -1,45 +1,35 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Helpers;
+﻿using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.Razor.Configuration.Helpers;
-using Headway.Razor.Configuration.Model;
+using Headway.Razor.Components.Base;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Headway.Razor.Configuration.Pages
 {
-    public partial class ConfigureBase : ComponentBase
+    public partial class ConfigureBase : HeadwayComponentBase
     {
-        //protected IEnumerable<DynamicType> models;
-        protected IEnumerable<DynamicType> configurations;
-        protected DynamicComponentConfiguration selectedConfiguration;
+        [Inject]
+        public IConfigurationService ConfigurationService { get; set; }
 
-        private Dictionary<string, DynamicComponentConfiguration> dynamicComponents;
+        protected List<ConfigType> configTypes;
 
-        protected override void OnInitialized()
+        protected ConfigType selectedConfigType;
+
+        protected override async Task OnInitializedAsync()
         {
-            //models = TypeAttributeHelper.GetExecutingAssemblyDynamicTypesByAttribute(typeof(DynamicModelAttribute));
-            configurations = ConfigurationsTypeHelper.GetConfigurationsDropdownItems();
+            var result = await ConfigurationService.GetConfigTypesAsync().ConfigureAwait(false);
 
-            dynamicComponents = new Dictionary<string, DynamicComponentConfiguration>();
+            configTypes = new List<ConfigType>(GetResponse(result));
 
-            foreach(var configuration in configurations)
-            {
-                dynamicComponents.Add(configuration.Name, new DynamicComponentConfiguration 
-                {
-                    ComponentType = Type.GetType(configuration.Namespace) 
-                });
-            }
-
-            selectedConfiguration = dynamicComponents["DynamicDefault"];
+            configTypes.Insert(0, new ConfigType());
 
             base.OnInitialized();
         }
 
-        protected void ContainerSelectionChanged(ChangeEventArgs e)
+        protected void ConfigTypeSelectionChanged(ChangeEventArgs e)
         {
-            selectedConfiguration = dynamicComponents[e.Value.ToString()];
+            selectedConfigType = e.Value as ConfigType;
         }
     }
 }
