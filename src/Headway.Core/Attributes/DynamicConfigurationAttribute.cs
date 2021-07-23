@@ -1,9 +1,9 @@
-﻿using System;
+﻿//using System;
 
-namespace Headway.Core.Attributes
-{
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class DynamicConfigurationAttribute : Attribute
-    {
-    }
-}
+//namespace Headway.Core.Attributes
+//{
+//    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+//    public class DynamicConfigurationAttribute : Attribute
+//    {
+//    }
+//}
