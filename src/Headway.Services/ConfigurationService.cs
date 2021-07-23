@@ -22,6 +22,29 @@ namespace Headway.Services
             this.configCache = configCache;
         }
 
+        public async Task<IServiceResult<IEnumerable<ConfigType>>> GetConfigTypesAsync()
+        {
+            var httpResponseMessage = await httpClient.GetAsync($"Configuration/GetConfigTypes").ConfigureAwait(false);
+
+            var serviceResult = await GetServiceResult<IEnumerable<ConfigType>>(httpResponseMessage);
+
+            return serviceResult;
+        }
+
+        public async Task<IServiceResult<IEnumerable<Config>>> GetConfigsAsync()
+        {
+            var httpResponseMessage = await httpClient.GetAsync($"Configuration").ConfigureAwait(false);
+
+            var serviceResult = await GetServiceResult<IEnumerable<Config>>(httpResponseMessage);
+
+            if (serviceResult.IsSuccess)
+            {
+                configCache.AddConfigs(serviceResult.Result);
+            }
+
+            return serviceResult;
+        }
+
         public async Task<IServiceResult<Config>> GetConfigAsync(string name)
         {
             var config = configCache.GetConfig(name);
@@ -43,9 +66,9 @@ namespace Headway.Services
             return serviceResult;
         }
 
-        public async Task<IServiceResult<IEnumerable<Config>>> GetConfigsAsync()
+        public async Task<IServiceResult<IEnumerable<Config>>> GetConfigsByTypeAsync(int configTypeId)
         {
-            var httpResponseMessage = await httpClient.GetAsync($"Configuration").ConfigureAwait(false);
+            var httpResponseMessage = await httpClient.GetAsync($"Configuration/GetConfigsByType/{configTypeId}").ConfigureAwait(false);
 
             var serviceResult = await GetServiceResult<IEnumerable<Config>>(httpResponseMessage);
 
