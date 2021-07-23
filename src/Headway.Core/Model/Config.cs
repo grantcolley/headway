@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Headway.Core.Attributes;
+using System.Collections.Generic;
 
 namespace Headway.Core.Model
 {
+    [DynamicModel]
     public class Config
     {
         public Config()
