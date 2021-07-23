@@ -1,10 +1,8 @@
-@using Headway.Core.Model
-@using Headway.BlazorServerApp.Model
 @inject TokenProvider TokenProvider
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly"
-            AdditionalAssemblies="new[] { typeof(NavMenu).Assembly, typeof(HeadwayComponentBase).Assembly, typeof(DynamicComponentConfiguration).Assembly }"
+            AdditionalAssemblies="new[] { typeof(NavMenu).Assembly, typeof(HeadwayComponentBase).Assembly, typeof(ConfigureBase).Assembly }"
             PreferExactMatches="@true">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
