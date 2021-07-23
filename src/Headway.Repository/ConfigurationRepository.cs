@@ -3,6 +3,7 @@ using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
@@ -12,6 +13,14 @@ namespace Headway.Repository
         public ConfigurationRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
+        }
+
+        public async Task<IEnumerable<ConfigType>> GetConfigTypesAsync()
+        {
+            return await applicationDbContext.ConfigTypes
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Config>> GetConfigsAsync()
@@ -30,6 +39,16 @@ namespace Headway.Repository
                 .SingleAsync(c => c.Name.Equals(name))
                 .ConfigureAwait(false);
         }
+
+        public async Task<IEnumerable<Config>> GetConfigsByTypeAsync(int configTypeId)
+        {
+            return await applicationDbContext.Configs
+                .Where(c => c.ConfigType.ConfigTypeId.Equals(configTypeId))
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+        }
+
 
 
         //// OBSOLETE

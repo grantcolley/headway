@@ -6,8 +6,10 @@ namespace Headway.Core.Interface
 {
     public interface IConfigurationRepository : IRepository
     {
+        Task<IEnumerable<ConfigType>> GetConfigTypesAsync();
         Task<IEnumerable<Config>> GetConfigsAsync();
         Task<Config> GetConfigAsync(string config);
+        Task<IEnumerable<Config>> GetConfigsByTypeAsync(int configTypeId);
 
         ///// OBSOLETE
         //Task<IEnumerable<ListConfig>> GetListConfigsAsync();
