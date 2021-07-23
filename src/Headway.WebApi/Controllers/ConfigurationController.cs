@@ -23,6 +23,24 @@ namespace Headway.WebApi.Controllers
             this.configRepository = configRepository;
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetConfigTypes()
+        {
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var config = await configRepository
+                .GetConfigTypesAsync()
+                .ConfigureAwait(false);
+
+            return Ok(config);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -54,6 +72,24 @@ namespace Headway.WebApi.Controllers
 
             var config = await configRepository
                 .GetConfigAsync(name)
+                .ConfigureAwait(false);
+
+            return Ok(config);
+        }
+
+        [HttpGet("[action]/{configtypeid}")]
+        public async Task<IActionResult> GetConfigsByType(int configTypeId)
+        {
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var config = await configRepository
+                .GetConfigsByTypeAsync(configTypeId)
                 .ConfigureAwait(false);
 
             return Ok(config);
