@@ -14,7 +14,7 @@ namespace Headway.Razor.Configuration.Pages
 
         protected List<ConfigType> configTypes;
 
-        protected ConfigType selectedConfigType;
+        protected string selectedConfig;
 
         protected override async Task OnInitializedAsync()
         {
@@ -29,7 +29,7 @@ namespace Headway.Razor.Configuration.Pages
 
         protected void ConfigTypeSelectionChanged(ChangeEventArgs e)
         {
-            selectedConfigType = e.Value as ConfigType;
+            selectedConfig = e.Value.ToString();
         }
     }
 }
