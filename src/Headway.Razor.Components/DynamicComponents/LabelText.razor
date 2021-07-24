@@ -5,7 +5,7 @@
 @using System.Linq.Expressions
 
 <div>
-    <label>@Field.PropertyName</label>
+    <label>@Field.Label</label>
     <InputText class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
     <ValidationMessage For="FieldExpression"/>
 </div>
