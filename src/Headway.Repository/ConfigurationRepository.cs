@@ -31,6 +31,15 @@ namespace Headway.Repository
                 .ConfigureAwait(false);
         }
 
+        public async Task<Config> GetConfigAsync(int id)
+        {
+            return await applicationDbContext.Configs
+                .Include(c => c.ConfigItems)
+                .AsNoTracking()
+                .SingleAsync(c => c.ConfigId.Equals(id))
+                .ConfigureAwait(false);        
+        }
+
         public async Task<Config> GetConfigAsync(string name)
         {
             return await applicationDbContext.Configs
