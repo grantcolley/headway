@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.MigrationsSqlite", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.MigrationsSqlServer", "Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj", "{1CDD388A-BCCF-461A-9527-B952592823A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Configuration", "Headway.Razor.Configuration\Headway.Razor.Configuration.csproj", "{EC7A53AC-AD10-4F86-984D-9F63A1E28636}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Components", "Headway.Razor.Components\Headway.Razor.Components.csproj", "{66D49DA1-8E27-47A9-ABAC-431DFF412615}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Shared", "Headway.Razor.Shared\Headway.Razor.Shared.csproj", "{E10CDF03-8AC6-455A-8CAA-3C27A4A3C91A}"
@@ -77,10 +75,6 @@ Global
 		{1CDD388A-BCCF-461A-9527-B952592823A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CDD388A-BCCF-461A-9527-B952592823A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CDD388A-BCCF-461A-9527-B952592823A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC7A53AC-AD10-4F86-984D-9F63A1E28636}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66D49DA1-8E27-47A9-ABAC-431DFF412615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{66D49DA1-8E27-47A9-ABAC-431DFF412615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66D49DA1-8E27-47A9-ABAC-431DFF412615}.Release|Any CPU.ActiveCfg = Release|Any CPU
