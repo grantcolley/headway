@@ -9,6 +9,7 @@ namespace Headway.Core.Dynamic
     {
         public object Model { get; set; }
         public int Order { get; set; }
+        public string Label { get; set; }
         public string PropertyName { get; set; }
         public PropertyInfo PropertyInfo { get; set; }
         public MemberExpression MemberExpression { get; set; }

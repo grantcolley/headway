@@ -59,6 +59,7 @@ namespace Headway.Core.Dynamic
                     Order = c.Order,
                     PropertyInfo = p,
                     PropertyName = p.Name,
+                    Label = c.Label,
                     MemberExpression = Expression.Property(ce, p.Name),
                     DynamicComponentTypeName = c.Component,
                     DynamicComponent = Type.GetType(c.Component)
