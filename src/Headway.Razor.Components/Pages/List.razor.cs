@@ -13,11 +13,11 @@ namespace Headway.Razor.Components.Pages
         [Parameter]
         public string Config { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
             await GetConfig(Config);
 
-            await base.OnInitializedAsync();
+            await base.OnParametersSetAsync();
         }
 
         protected RenderFragment RenderListView() => __builder =>
