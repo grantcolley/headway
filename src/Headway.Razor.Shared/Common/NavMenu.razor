@@ -106,7 +106,7 @@
                                 @foreach (var menuItem in category.MenuItems)
                                 {
                                     <li class="nav-item px-3">
-                                        <NavLink class="nav-link" href="@menuItem.NavigateTo()" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="@menuItem.NavigateTo()" @onclick:stopPropagation Match="NavLinkMatch.All">
                                             <span class="@menuItem.ImageClass" aria-hidden="true"></span> @menuItem.Name
                                         </NavLink>
                                     </li>
