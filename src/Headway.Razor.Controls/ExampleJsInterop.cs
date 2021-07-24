@@ -2,7 +2,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Components
+namespace Headway.Razor.Controls
 {
     // This class provides an example of how JavaScript functionality can be wrapped
     // in a .NET class for easy consumption. The associated JavaScript module is

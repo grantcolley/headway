@@ -2,12 +2,12 @@
 using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.Razor.Components.Base;
+using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Components.DynamicComponents
+namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
     public abstract class ListViewBase<T> : HeadwayComponentBase

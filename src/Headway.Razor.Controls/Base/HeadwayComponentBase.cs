@@ -1,8 +1,8 @@
 ﻿using Headway.Core.Interface;
-using Headway.Razor.Components.Model;
+using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
 
-namespace Headway.Razor.Components.Base
+namespace Headway.Razor.Controls.Base
 {
     public abstract class HeadwayComponentBase : ComponentBase
     {

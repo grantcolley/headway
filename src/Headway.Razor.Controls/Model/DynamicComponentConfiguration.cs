@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Headway.Razor.Components.Model
+namespace Headway.Razor.Controls.Model
 {
     public class DynamicComponentConfiguration
     {

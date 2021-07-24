@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Components.Base
+namespace Headway.Razor.Controls.Base
 {
     public abstract class DynamicTypeComponentBase : HeadwayComponentBase
     {

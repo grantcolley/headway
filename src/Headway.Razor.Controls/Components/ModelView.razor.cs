@@ -1,12 +1,12 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Dynamic;
 using Headway.Core.Interface;
-using Headway.Razor.Components.Base;
-using Headway.Razor.Components.Model;
+using Headway.Razor.Controls.Base;
+using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Components.DynamicComponents
+namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
     public abstract class ModelViewBase<T> : HeadwayComponentBase
