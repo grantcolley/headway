@@ -8,13 +8,8 @@ namespace Headway.Core.Interface
     {
         Task<IEnumerable<ConfigType>> GetConfigTypesAsync();
         Task<IEnumerable<Config>> GetConfigsAsync();
+        Task<Config> GetConfigAsync(int id);
         Task<Config> GetConfigAsync(string config);
         Task<IEnumerable<Config>> GetConfigsByTypeAsync(int configTypeId);
-
-        ///// OBSOLETE
-        //Task<IEnumerable<ListConfig>> GetListConfigsAsync();
-        //Task<ListConfig> GetListConfigAsync(string listConfig);
-        //Task<IEnumerable<ModelConfig>> GetModelConfigsAsync();
-        //Task<ModelConfig> GetModelConfigAsync(string modelConfig);
     }
 }
