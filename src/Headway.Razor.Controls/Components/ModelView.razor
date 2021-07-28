@@ -8,63 +8,60 @@
     https://github.com/chanan/BlazorStrap/issues/149 
     -->
     <Authorized Context="authModelView">
-        <h3>@Title</h3>
-
         @if (dynamicModel == null)
         {
             <p><em>Loading...</em></p>
         }
         else
         {
-            <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
-                <DataAnnotationsValidator/>
-                <table>
-                    <tbody>
-                        <tr>
-                            @if (Alert == null)
-                            {
-                                <td align="left">
-                                    @if (isSaveInProgress)
+            @if(@Alert == null)
+            {
+                <div class="container container-body">
+                    <div class="lead">
+                        <h1>@dynamicModel.Config.Title</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2>@dynamicModel.Title</h2>
+                                    <div>
+                                        @if (isSaveInProgress)
+                                        {
+                                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                        }
+                                        else if (!isDeleteInProgress)
+                                        {
+                                            <button type="submit" class="btn btn-small btn-outline-primary fas fa-save"/>
+                                        }
+                                        @if (isDeleteInProgress)
+                                        {
+                                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                        }
+                                        else if (!isSaveInProgress)
+                                        {
+                                            <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => Delete()"/>
+                                        } 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
+                                    @foreach(var dynamicField in dynamicModel.DynamicFields)
                                     {
-                                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                        <DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
                                     }
-                                    else if (!isDeleteInProgress)
-                                    {
-                                        <button type="submit" class="btn btn-small btn-outline-primary fas fa-save"/>
-                                    }
-                                </td>
-                                <td align="right">
-                                    @if (isDeleteInProgress)
-                                    {
-                                        <i class="fas fa-spinner fa-spin fa-2x"></i>
-                                    }
-                                    else if (!isSaveInProgress)
-                                    {
-                                        <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => Delete()"/>
-                                    }                                   
-                                </td>
-                            }
-                            else
-                            {
-                                <td align="left" colspan="2">
-                                   <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>                            
-                               </td>
-                            }
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <tbody>
-                        @foreach(var dynamicField in dynamicModel.DynamicFields)
-                        {
-                            <tr>
-                                <td valign="middle"><DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" /></td>
-                            </tr>                        
-                        }
-                    </tbody>
-                </table>
-            </EditForm>
-        }
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>
+            }
+        }  
     </Authorized>
     <NotAuthorized>
         <p>Please log in.</p>
