@@ -19,9 +19,10 @@ namespace Headway.Core.Model
         public string ModelApi { get; set; }
         public string Component { get; set; }
         public string NavigateTo { get; set; }
-        public string NavigateToPropertyName { get; set; }
+        public string NavigateToProperty { get; set; }
         public string NavigateToConfig { get; set; }
         public string NavigateBack { get; set; }
+        public string NavigateBackProperty { get; set; }
         public string NavigateBackConfig { get; set; }
         public List<ConfigItem> ConfigItems { get; set; }
     }
