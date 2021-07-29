@@ -16,44 +16,46 @@
         {
             @if(@Alert == null)
             {
-                <div class="container container-body">
+                <div class="container container-body float-start">
                     <div class="lead">
                         <h1>@dynamicModel.Config.Title</h1>
                     </div>
                     <div class="row">
                         <div class="col-sm">
                             <div class="card">
-                                <div class="card-header">
-                                    <h2>@dynamicModel.Title</h2>
-                                    <div>
-                                        @if (isSaveInProgress)
-                                        {
-                                            <i class="fas fa-spinner fa-spin fa-2x"></i>
-                                        }
-                                        else if (!isDeleteInProgress)
-                                        {
-                                            <button type="submit" class="btn btn-small btn-outline-primary fas fa-save"/>
-                                        }
-                                        @if (isDeleteInProgress)
-                                        {
-                                            <i class="fas fa-spinner fa-spin fa-2x"></i>
-                                        }
-                                        else if (!isSaveInProgress)
-                                        {
-                                            <button type="button" class="btn btn-small btn-outline-danger fas fa-times" @onclick="() => Delete()"/>
-                                        } 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
                                 <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
-                                    @foreach(var dynamicField in dynamicModel.DynamicFields)
-                                    {
-                                        <DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
-                                    }
-                                </EditForm>
-                            </div>
+                                    <div class="card-header">
+                                        <div class="clearfix">
+                                            @dynamicModel.Title
+                                            @if (isSaveInProgress)
+                                            {
+                                                <i class="fas fa-spinner fa-spin fa-2x float-end"></i>
+                                            }
+                                            else if (!isDeleteInProgress)
+                                            {
+                                                <button type="submit" class="btn btn-small btn-outline-primary fas fa-save float-end"/>
+                                            }
+                                            @if (isDeleteInProgress)
+                                            {
+                                                <i class="fas fa-spinner fa-spin fa-2x float-end"></i>
+                                            }
+                                            else if (!isSaveInProgress)
+                                            {
+                                                <button type="button" class="btn btn-small btn-outline-danger fas fa-times float-end" @onclick="() => Delete()"/>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+
+                                            @foreach(var dynamicField in dynamicModel.DynamicFields)
+                                            {
+                                                <DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
+                                            }
+                                     </div>
+                                 </EditForm>
+                           </div>
                         </div>
+                        <col class="col-sm" />
                     </div>
                 </div>
             }
