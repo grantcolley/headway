@@ -1,5 +1,8 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Core.Interface;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
@@ -9,6 +12,9 @@ namespace Headway.WebApi.Controllers
 {
     [ApiController]
     [DynamicApiController]
+    [EnableCors("local")]
+    [Route("[controller]")]
+    [Authorize(Roles = "headwayuser")]
     public abstract class ApiControllerBase<T> : ControllerBase
     {
         protected readonly IRepository repository;
@@ -23,7 +29,7 @@ namespace Headway.WebApi.Controllers
         protected string GetUserClaim()
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(ClaimTypes.Email);
+            var claim = identity.FindFirst(System.Security.Claims.ClaimTypes.Email);
             return claim.Value;
         }
 

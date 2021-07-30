@@ -1,17 +1,11 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
 {
-    [ApiController]
-    [EnableCors("local")]
-    [Route("[controller]")]
-    [Authorize(Roles = "headwayuser")]
     public class RolesController : ApiControllerBase<RolesController>
     {
         private readonly IAuthorisationRepository authorisationRepository;
