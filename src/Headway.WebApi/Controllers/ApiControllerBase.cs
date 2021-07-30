@@ -28,7 +28,7 @@ namespace Headway.WebApi.Controllers
         protected string GetUserClaim()
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
-            var claim = identity.FindFirst(System.Security.Claims.ClaimTypes.Email);
+            var claim = identity.FindFirst(ClaimTypes.Email);
             return claim.Value;
         }
 
