@@ -23,13 +23,20 @@ namespace Headway.Razor.Controls.Base
 
         protected async Task GetConfig(string configName)
         {
-            var result = await ConfigurationService.GetConfigAsync(configName).ConfigureAwait(false);
+            try
+            {
+                var result = await ConfigurationService.GetConfigAsync(configName).ConfigureAwait(false);
 
-            config = GetResponse(result);
+                config = GetResponse(result);
 
-            modelNameSpace = GetTypeNamespace(config.Model, typeof(DynamicModelAttribute));
+                modelNameSpace = GetTypeNamespace(config.Model, typeof(DynamicModelAttribute));
 
-            componentNameSpace = GetTypeNamespace(config.Component, typeof(DynamicComponentAttribute));
+                componentNameSpace = GetTypeNamespace(config.Component, typeof(DynamicComponentAttribute));
+            }
+            catch (Exception ex)
+            {
+                RaiseAlert(ex.Message);
+            }
         }
 
         protected string GetTypeNamespace(string name, Type attribute)
