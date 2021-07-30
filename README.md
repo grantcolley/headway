@@ -20,7 +20,8 @@
 #### Table of Contents
 * [Getting Started](#getting-started)
 * [Authentication and Authorization](#authentication-and-authorization)
-* [Navigation Menu](#role-based-navigation-menu)
+* [Database](#database)
+* [Navigation Menu](#navigation-menu)
 * [Administration](#administration)
 * [Configuration](#configuration)
  * [Notes](#notes)
@@ -32,6 +33,21 @@
 ## Getting Started
 
 ## Authentication and Authorization
+Identity Provider authenticates user
+OidcConfiguration
+Token contains a RoleClaim
+WebAssembly 
+   - UserAccountFactory converts the RemoteUserAccount into a ClaimPrincipal for the application
+   - AuthorizationMessageHandler attaches token to outgoing HttpClient requests 
+
+BlazorServer 
+   - InitialApplicationState gets the access_token, refresh_token and id_token from the HttpContext after authentication ans stores them in a scoped TokenProvider
+   - The scoped TokenProvider is manually injected into each service and the bearer token is added to the Authorization header of outgoing HttpClient requests
+
+WebApi
+   - Controllers require role authorisation
+
+## Database
 
 ## Navigation Menu
 
