@@ -21,7 +21,7 @@
 * [Getting Started](#getting-started)
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Database](#database)
-* [Navigation Menu](#role-based-navigation-menu)
+* [Navigation Menu](#navigation-menu)
 * [Administration](#administration)
 * [Configuration](#configuration)
  * [Notes](#notes)
