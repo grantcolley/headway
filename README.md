@@ -20,6 +20,7 @@
 #### Table of Contents
 * [Getting Started](#getting-started)
 * [Authentication and Authorization](#authentication-and-authorization)
+* [Database](#database)
 * [Navigation Menu](#role-based-navigation-menu)
 * [Administration](#administration)
 * [Configuration](#configuration)
@@ -44,6 +45,9 @@ BlazorServer
    - The scoped TokenProvider is manually injected into each service and the bearer token is added to the Authorization header of outgoing HttpClient requests
 
 WebApi
+   - Controllers require role authorisation
+
+## Database
 
 ## Navigation Menu
 
