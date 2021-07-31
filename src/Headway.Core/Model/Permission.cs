@@ -13,10 +13,9 @@ namespace Headway.Core.Model
             Roles = new List<Role>();
         }
 
+        public int PermissionId { get; set; }
         public List<User> Users { get; set; }
         public List<Role> Roles { get; set; }
-
-        public int PermissionId { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(10, ErrorMessage = "Name must be between 1 and 10 characters")]
