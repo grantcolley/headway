@@ -38,8 +38,8 @@ namespace Headway.Core.Model
         [StringLength(20, ErrorMessage = "Model Api must be between 1 and 20 characters")]
         public string ModelApi { get; set; }
 
-        [Required(ErrorMessage = "Component is required.")]
-        [StringLength(100, ErrorMessage = "Component must be between 1 and 20 characters")]
-        public string Component { get; set; }
+        [Required(ErrorMessage = "Container is required.")]
+        [StringLength(20, ErrorMessage = "Container must be between 1 and 20 characters")]
+        public string Container { get; set; }
     }
 }
