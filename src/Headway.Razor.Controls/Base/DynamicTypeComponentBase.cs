@@ -31,7 +31,7 @@ namespace Headway.Razor.Controls.Base
 
                 modelNameSpace = GetTypeNamespace(config.Model, typeof(DynamicModelAttribute));
 
-                componentNameSpace = GetTypeNamespace(config.Component, typeof(DynamicComponentAttribute));
+                componentNameSpace = GetTypeNamespace(config.Container, typeof(DynamicContainerAttribute));
             }
             catch (Exception ex)
             {
