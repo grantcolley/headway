@@ -6,10 +6,10 @@ using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Controls.Components
+namespace Headway.Razor.Controls.Containers
 {
     [DynamicComponent]
-    public abstract class ModelViewBase<T> : HeadwayComponentBase
+    public abstract class CardBase<T> : HeadwayComponentBase
     {
         [Inject]
         public IDynamicService DynamicService { get; set; }

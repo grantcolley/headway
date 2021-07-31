@@ -1,5 +1,5 @@
 ﻿@typeparam T
-@inherits ModelViewBase<T>
+@inherits CardBase<T>
 @using Microsoft.AspNetCore.Components.Forms
 
 <AuthorizeView>
@@ -7,7 +7,7 @@
     Need to specify the context to avoid clashes with other auto generated contexts
     https://github.com/chanan/BlazorStrap/issues/149 
     -->
-    <Authorized Context="authModelView">
+    <Authorized Context="cardAuth">
         @if (dynamicModel == null)
         {
             <p><em>Loading...</em></p>
