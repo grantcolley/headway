@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Controls.Components
+namespace Headway.Razor.Controls.Containers
 {
     [DynamicComponent]
-    public abstract class ListViewBase<T> : HeadwayComponentBase
+    public abstract class TableBase<T> : HeadwayComponentBase
     {
         [Inject]
         public IDynamicService DynamicService { get; set; }

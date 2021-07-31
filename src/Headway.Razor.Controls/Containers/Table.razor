@@ -1,6 +1,6 @@
 ﻿@page "/list"
 @typeparam T
-@inherits ListViewBase<T>
+@inherits TableBase<T>
 @using Microsoft.AspNetCore.Components.Forms
 
 <AuthorizeView>
@@ -8,7 +8,7 @@
     Need to specify the context to avoid clashes with other auto generated contexts
     https://github.com/chanan/BlazorStrap/issues/149 
     -->
-    <Authorized Context="authListView">
+    <Authorized Context="tableAuth">
         @if (dynamicList == null)
         {
             <p><em>Loading...</em></p>
