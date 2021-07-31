@@ -72,6 +72,7 @@ namespace Headway.Core.Dynamic
 
             var dynamicFields = from p in typeHelper.SupportedProperties
                                 join c in Config.ConfigItems on p.Name equals c.PropertyName
+                                orderby c.Order
                                 select func(Model, constantExpression, p, c);
 
             DynamicFields.AddRange(dynamicFields);
