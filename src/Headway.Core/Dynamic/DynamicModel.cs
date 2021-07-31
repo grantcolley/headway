@@ -43,7 +43,7 @@ namespace Headway.Core.Dynamic
 
         public int Id { get { return Convert.ToInt32(typeHelper.GetValue(Model, idFieldName)); } }
 
-        public string Title { get { return typeHelper.GetValue(Model, titleFieldName).ToString(); } }
+        public string Title { get { return typeHelper.GetValue(Model, titleFieldName)?.ToString(); } }
 
         private void BuildDynamicFields()
         {
