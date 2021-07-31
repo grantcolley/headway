@@ -4,6 +4,7 @@ using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
@@ -55,6 +56,43 @@ namespace Headway.Repository
                 .Where(c => c.ConfigType.ConfigTypeId.Equals(configTypeId))
                 .AsNoTracking()
                 .ToListAsync()
+                .ConfigureAwait(false);
+        }
+
+        public async Task<Config> AddConfigAsync(Config config)
+        {
+            await applicationDbContext.Configs
+                .AddAsync(config)
+                .ConfigureAwait(false);
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            return config;
+        }
+
+        public async Task<Config> UpdateConfigAsync(Config config)
+{
+            applicationDbContext.Configs.Update(config);
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            return config;
+        }
+
+        public async Task<int> DeleteConfigAsync(int configId)
+        {
+            var config = await applicationDbContext.Configs
+                .SingleAsync(c => c.ConfigId.Equals(configId))
+                .ConfigureAwait(false);
+
+            applicationDbContext.Configs.Remove(config);
+
+            return await applicationDbContext
+                .SaveChangesAsync()
                 .ConfigureAwait(false);
         }
     }
