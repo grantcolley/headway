@@ -163,7 +163,7 @@ I [reported a bug in System.Text.Json](https://github.com/dotnet/aspnetcore/issu
 
 [How to specify ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-3.0&tabs=visual-studio#jsonnet-support) use `Newtonsoft.Json (Json.NET)` as the JSON serializer install [Microsoft.AspNetCore.Mvc.NewtonsoftJson](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.NewtonsoftJson) and the following to the [Startup](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Startup.cs) of [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi):
 \
-*Note: I had to do this after noticing `Syste.Text.Json` nulled out duplicate string values after setting `ReferenceHandler.IgnoreCycles`.*
+*Note: I had to do this after noticing `System.Text.Json` nulled out duplicate string values after setting `ReferenceHandler.IgnoreCycles`.*
 ```C#
             services.AddControllers()
                 .AddNewtonsoftJson(options => 
