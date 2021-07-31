@@ -1,4 +1,6 @@
 ﻿using Headway.Core.Interface;
+using Headway.Core.Model;
+using Headway.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -105,6 +107,60 @@ namespace Headway.WebApi.Controllers
                 .ConfigureAwait(false);
 
             return Ok(config);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Config config)
+        {
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var savedConfig = await configRepository
+                .AddConfigAsync(config)
+                .ConfigureAwait(false);
+
+            return Ok(savedConfig);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] Config config)
+        {
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var savedConfig = await configRepository
+                .UpdateConfigAsync(config)
+                .ConfigureAwait(false);
+
+            return Ok(savedConfig);
+        }
+
+        [HttpDelete("{configId}")]
+        public async Task<IActionResult> Delete(int configId)
+        {
+            var authorised = await IsAuthorisedAsync("Admin")
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var result = await configRepository
+                .DeleteConfigAsync(configId)
+                .ConfigureAwait(false);
+
+            return Ok(result);
         }
     }
 }
