@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Containers
 {
-    [DynamicComponent]
+    [DynamicContainer]
     public abstract class CardBase<T> : HeadwayComponentBase
     {
         [Inject]
