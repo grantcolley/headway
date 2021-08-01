@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Headway.Razor.Controls.Components
 {
-    public partial class TextBase : ComponentBase
+    public partial class Text : ComponentBase
     {
         [Parameter]
         public DynamicField Field { get; set; }
