@@ -4,6 +4,8 @@
 @using System.Reflection
 @using System.Linq.Expressions
 
+@inherits LabelBase 
+
 <div class="mb-1">
     <div class="row">
         <div class="col-sm-4 col-form-label">
@@ -14,17 +16,3 @@
         </div>
     </div>
 </div>
-
-@code
-{
-    [Parameter]
-    public DynamicField Field { get; set; }
-
-    public string PropertyValue
-    {
-        get
-        {
-            return Field.PropertyInfo.GetValue(Field.Model).ToString();
-        }
-    }
-}
