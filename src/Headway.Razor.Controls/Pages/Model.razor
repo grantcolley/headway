@@ -1,6 +1,7 @@
-﻿@page "/model/{Config}/{Id:int?}"
+﻿@using System
+
+@page "/model/{Config}/{Id:int?}"
 @inherits ModelBase
-@using System
 
 <AuthorizeView>
     <Authorized Context="list">
