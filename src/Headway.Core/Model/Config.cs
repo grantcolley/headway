@@ -13,7 +13,6 @@ namespace Headway.Core.Model
         }
 
         public int ConfigId { get; set; }
-        public ConfigType ConfigType { get; set; }
         public string NavigateTo { get; set; }
         public string NavigateToProperty { get; set; }
         public string NavigateToConfig { get; set; }

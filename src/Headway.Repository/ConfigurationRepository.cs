@@ -16,14 +16,6 @@ namespace Headway.Repository
         {
         }
 
-        public async Task<IEnumerable<ConfigType>> GetConfigTypesAsync()
-        {
-            return await applicationDbContext.ConfigTypes
-                .AsNoTracking()
-                .ToListAsync()
-                .ConfigureAwait(false);
-        }
-
         public async Task<IEnumerable<Config>> GetConfigsAsync()
         {
             return await applicationDbContext.Configs
@@ -47,15 +39,6 @@ namespace Headway.Repository
                 .Include(c => c.ConfigItems)
                 .AsNoTracking()
                 .SingleAsync(c => c.Name.Equals(name))
-                .ConfigureAwait(false);
-        }
-
-        public async Task<IEnumerable<Config>> GetConfigsByTypeAsync(int configTypeId)
-        {
-            return await applicationDbContext.Configs
-                .Where(c => c.ConfigType.ConfigTypeId.Equals(configTypeId))
-                .AsNoTracking()
-                .ToListAsync()
                 .ConfigureAwait(false);
         }
 
