@@ -65,11 +65,11 @@ namespace Headway.Repository.Data
                 administration.Categories.Add(configurationCategory);
                 applicationDbContext.SaveChanges();
 
-                var homeMenuItem = new MenuItem { Name = "Home", ImageClass = "oi oi-home", Path = "/", Order = 1, Permission = user.Name, Config = "Home" };
-                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", Path = "list", Order = 1, Permission = admin.Name, Config = "Users" };
-                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", Path = "list", Order = 2, Permission = admin.Name, Config = "Roles" };
-                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", Path = "list", Order = 3, Permission = admin.Name, Config = "Permissions" };
-                var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", Path = "list", Order = 1, Permission = admin.Name, Config = "Configs" };
+                var homeMenuItem = new MenuItem { Name = "Home", ImageClass = "oi oi-home", NavigateTo = "/", Order = 1, Permission = user.Name, Config = "Home" };
+                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", NavigateTo = "list", Order = 1, Permission = admin.Name, Config = "Users" };
+                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", NavigateTo = "list", Order = 2, Permission = admin.Name, Config = "Roles" };
+                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", NavigateTo = "list", Order = 3, Permission = admin.Name, Config = "Permissions" };
+                var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", NavigateTo = "list", Order = 1, Permission = admin.Name, Config = "Configs" };
                 applicationDbContext.MenuItems.Add(homeMenuItem);
                 applicationDbContext.MenuItems.Add(usersMenuItem);
                 applicationDbContext.MenuItems.Add(rolesMenuItem);
