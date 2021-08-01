@@ -13,12 +13,7 @@ namespace Headway.Core.Model
         }
 
         public int ConfigId { get; set; }
-        public string NavigateTo { get; set; }
-        public string NavigateToProperty { get; set; }
-        public string NavigateToConfig { get; set; }
-        public string NavigateBack { get; set; }
-        public string NavigateBackProperty { get; set; }
-        public string NavigateBackConfig { get; set; }
+
         public List<ConfigItem> ConfigItems { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
@@ -40,5 +35,23 @@ namespace Headway.Core.Model
         [Required(ErrorMessage = "Container is required.")]
         [StringLength(20, ErrorMessage = "Container must be between 1 and 20 characters")]
         public string Container { get; set; }
+
+        [StringLength(20, ErrorMessage = "Navigate To cannot exceed 20 characters")]
+        public string NavigateTo { get; set; }
+
+        [StringLength(50, ErrorMessage = "Navigate To Property cannot exceed 50 characters")]
+        public string NavigateToProperty { get; set; }
+
+        [StringLength(20, ErrorMessage = "Navigate To Config cannot exceed 20 characters")]
+        public string NavigateToConfig { get; set; }
+
+        [StringLength(20, ErrorMessage = "Navigate Back cannot exceed 20 characters")]
+        public string NavigateBack { get; set; }
+
+        [StringLength(50, ErrorMessage = "Navigate Back Property cannot exceed 50 characters")]
+        public string NavigateBackProperty { get; set; }
+
+        [StringLength(20, ErrorMessage = "Navigate Back Config cannot exceed 20 characters")]
+        public string NavigateBackConfig { get; set; }
     }
 }
