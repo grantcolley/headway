@@ -15,4 +15,8 @@
     <ProjectReference Include="..\..\Headway.Repository\Headway.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
