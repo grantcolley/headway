@@ -7,11 +7,15 @@ namespace Headway.Repository.Data
     {
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
+            Permission user = null;
+            Permission admin = null;
+
             if (!applicationDbContext.Users.Any()
-                && !applicationDbContext.Permissions.Any())
+                && !applicationDbContext.Permissions.Any()
+                && !applicationDbContext.Roles.Any())
             {
-                var admin = new Permission { Name = "Admin", Description = "Administrator" };
-                var user = new Permission { Name = "User", Description = "Headway User" };
+                admin = new Permission { Name = "Admin", Description = "Administrator" };
+                user = new Permission { Name = "User", Description = "Headway User" };
                 applicationDbContext.Permissions.Add(admin);
                 applicationDbContext.Permissions.Add(user);
                 applicationDbContext.SaveChanges();
@@ -43,7 +47,12 @@ namespace Headway.Repository.Data
                 jane.Roles.Add(userRole);
                 will.Roles.Add(userRole);
                 applicationDbContext.SaveChanges();
+            }
 
+            if (!applicationDbContext.Modules.Any()
+                && !applicationDbContext.Categories.Any()
+                && !applicationDbContext.MenuItems.Any())
+            {
                 var home = new Module { Name = "Home", Order = 1, Permission = user.Name };
                 var administration = new Module { Name = "Administration", Order = 2, Permission = admin.Name };
                 applicationDbContext.Modules.Add(home);
@@ -87,7 +96,11 @@ namespace Headway.Repository.Data
 
                 configurationCategory.MenuItems.Add(configureMenuItem);
                 applicationDbContext.SaveChanges();
+            }
 
+            if (!applicationDbContext.Configs.Any()
+               && !applicationDbContext.ConfigItems.Any())
+            {
                 var permissionsConfig = new Config
                 {
                     Name = "Permissions",
