@@ -31,7 +31,7 @@ namespace Headway.Services
                 var configApi = $"{serviceResultConfig.Result.ModelApi}";
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
-                var serviceResultList = await GetServiceResult<IEnumerable<T>>(response)
+                var serviceResultList = await GetServiceResultAsync<IEnumerable<T>>(response)
                     .ConfigureAwait(false);
 
                 if (serviceResultList.IsSuccess)
@@ -73,7 +73,7 @@ namespace Headway.Services
                 var configApi = $"{serviceResultConfig.Result.ModelApi}/{id}";
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
-                var serviceResultModel = await GetServiceResult<T>(response)
+                var serviceResultModel = await GetServiceResultAsync<T>(response)
                     .ConfigureAwait(false);
 
                 if (serviceResultModel.IsSuccess)
@@ -137,7 +137,7 @@ namespace Headway.Services
                 $"{dynamicModel.Config.ModelApi}", dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var addResult = await GetServiceResult<T>(addResponse);
+            var addResult = await GetServiceResultAsync<T>(addResponse);
 
             var serviceResult = new ServiceResult<DynamicModel<T>>
             {
@@ -159,7 +159,7 @@ namespace Headway.Services
                 $"{dynamicModel.Config.ModelApi}", dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var addResult = await GetServiceResult<T>(addResponse);
+            var addResult = await GetServiceResultAsync<T>(addResponse);
 
             var serviceResult = new ServiceResult<DynamicModel<T>>
             {
@@ -179,7 +179,7 @@ namespace Headway.Services
         {
             var configPath = $"{dynamicModel.Config.ModelApi}/{dynamicModel.Id}";
             var httpResponseMessage = await httpClient.DeleteAsync($"{configPath}").ConfigureAwait(false);
-            return await GetServiceResult<int>(httpResponseMessage);
+            return await GetServiceResultAsync<int>(httpResponseMessage);
         }
     }
 }

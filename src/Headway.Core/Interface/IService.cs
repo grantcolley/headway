@@ -5,6 +5,6 @@ namespace Headway.Core.Interface
 {
     public interface IService
     {
-        Task<IServiceResult<T>> GetServiceResult<T>(HttpResponseMessage httpResponseMessage);
+        Task<IServiceResult<T>> GetServiceResultAsync<T>(HttpResponseMessage httpResponseMessage);
     }
 }

@@ -26,7 +26,7 @@ namespace Headway.Services
             this.useAccessToken = useAccessToken;
         }
 
-        public async Task<IServiceResult<T>> GetServiceResult<T>(HttpResponseMessage httpResponseMessage)
+        public async Task<IServiceResult<T>> GetServiceResultAsync<T>(HttpResponseMessage httpResponseMessage)
         {
             var serviceResult = new ServiceResult<T>
             {
