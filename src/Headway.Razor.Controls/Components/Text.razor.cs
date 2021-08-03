@@ -1,10 +1,12 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Dynamic;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq.Expressions;
 
 namespace Headway.Razor.Controls.Components
 {
+    [DynamicComponent]
     public partial class Text : ComponentBase
     {
         [Parameter]

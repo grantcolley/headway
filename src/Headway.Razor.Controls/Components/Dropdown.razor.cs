@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Components;
 using System.Linq.Expressions;
 using System;
+using Headway.Core.Attributes;
 
 namespace Headway.Razor.Controls.Components
 {
+    [DynamicComponent]
     public partial class Dropdown : ComponentBase
     {
         [Parameter]
