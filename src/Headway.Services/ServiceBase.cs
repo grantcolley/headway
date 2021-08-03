@@ -15,9 +15,12 @@ namespace Headway.Services
         protected ServiceBase(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
             : this(httpClient, useAccessToken)
         {
-            this.tokenProvider = tokenProvider;
+            if (tokenProvider != null)
+            {
+                this.tokenProvider = tokenProvider;
 
-            AddHttpClientAuthorisationHeader();
+                AddHttpClientAuthorisationHeader();
+            }
         }
 
         protected ServiceBase(HttpClient httpClient, bool useAccessToken)
