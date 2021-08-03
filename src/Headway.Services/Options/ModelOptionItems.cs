@@ -1,5 +1,8 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Helpers;
+using Headway.Core.Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Services.Options
@@ -8,7 +11,16 @@ namespace Headway.Services.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync()
         {
-            throw new System.NotImplementedException();
+            var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
+
+            var optionItems = from m in models
+                              select new OptionItem
+                              {
+                                  Id = m.Name,
+                                  Display = m.DisplayName
+                              };
+
+            return Task.FromResult(optionItems);
         }
     }
 }

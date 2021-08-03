@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Headway.Services.Options
 {
-    public class ComponentOptionItems : IOptionItems
+    public class ContainerOptionItems : IOptionItems
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync()
         {
-            var components = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicComponentAttribute));
+            var containers = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicContainerAttribute));
 
-            var optionItems = from c in components
+            var optionItems = from c in containers
                               select new OptionItem
                               {
                                   Id = c.Name,
