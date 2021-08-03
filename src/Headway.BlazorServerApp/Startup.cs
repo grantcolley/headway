@@ -94,6 +94,14 @@ namespace Headway.BlazorServerApp
                 return new DynamicService(httpClient, tokenProvider, configCache);
             });
 
+            services.AddTransient<IOptionsService, OptionsService>(sp =>
+            {
+                var tokenProvider = sp.GetRequiredService<TokenProvider>();
+                var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+                var httpClient = httpClientFactory.CreateClient("webapi");
+                return new OptionsService(httpClient, tokenProvider);
+            });
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
         }
