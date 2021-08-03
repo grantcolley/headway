@@ -3,8 +3,6 @@ using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
