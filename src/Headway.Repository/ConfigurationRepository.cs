@@ -54,7 +54,7 @@ namespace Headway.Repository
         }
 
         public async Task<Config> UpdateConfigAsync(Config config)
-{
+        {
             applicationDbContext.Configs.Update(config);
 
             await applicationDbContext
