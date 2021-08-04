@@ -4,13 +4,21 @@
 @using System.Reflection
 @using System.Linq.Expressions
 
+@inherits DropdownBase
+
 <div class="mb-1">
     <div class="row">
         <div class="col-sm-4 col-form-label">
             @Field.Label
         </div>
         <div class="col-sm-8">
-            <InputText class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
+            <InputSelect class="form-control" Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((string value) => OnValueChanged(value))">
+                @foreach (var optionItem in OptionItems)
+                {
+                    <option value="@optionItem.Id">@optionItem.Display</option>
+                }
+            </InputSelect>
+
             <ValidationMessage For="FieldExpression"/>
         </div>
     </div>
