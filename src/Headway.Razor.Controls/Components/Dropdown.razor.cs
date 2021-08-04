@@ -3,12 +3,20 @@ using Microsoft.AspNetCore.Components;
 using System.Linq.Expressions;
 using System;
 using Headway.Core.Attributes;
+using Headway.Core.Interface;
+using Headway.Core.Model;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Headway.Razor.Controls.Base;
 
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public partial class Dropdown : ComponentBase
+    public class DropdownBase : HeadwayComponentBase
     {
+        [Inject]
+        public IOptionsService OptionsService { get; set; }
+
         [Parameter]
         public DynamicField Field { get; set; }
 
@@ -28,9 +36,20 @@ namespace Headway.Razor.Controls.Components
             }
         }
 
+        protected IEnumerable<OptionItem> OptionItems;
+
         public void OnValueChanged(string value)
         {
             Field.PropertyInfo.SetValue(Field.Model, value);
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            var result = await OptionsService.GetOptionItemsAsync("ModelOptionItems").ConfigureAwait(false);
+
+            OptionItems = GetResponse(result);
+
+            await base.OnParametersSetAsync();
         }
     }
 }
