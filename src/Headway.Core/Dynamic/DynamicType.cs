@@ -1,4 +1,4 @@
-﻿namespace Headway.Core.Model
+﻿namespace Headway.Core.Dynamic
 {
     public class DynamicType
     {

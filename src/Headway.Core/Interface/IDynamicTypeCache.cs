@@ -1,4 +1,4 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Dynamic;
 using System;
 
 namespace Headway.Core.Interface
