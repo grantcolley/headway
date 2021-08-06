@@ -4,6 +4,11 @@ namespace Headway.Core.Model
 {
     public class LayoutConfigItem
     {
+        public LayoutConfigItem()
+        {
+            LayoutConfigItems = new List<LayoutConfigItem>();
+        }
+
         public int LayoutConfigItemId { get; set; }
         public string Name { get; set; }
         public string Component { get; set; } 
