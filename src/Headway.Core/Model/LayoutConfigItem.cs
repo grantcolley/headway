@@ -9,6 +9,6 @@ namespace Headway.Core.Model
         public string Component { get; set; } 
         public int Row { get; set; }
         public int Column { get; set; }
-        public List<LayoutConfigItem> Containers { get; set; }             
+        public List<LayoutConfigItem> LayoutConfigItems { get; set; }             
     }
 }
