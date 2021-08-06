@@ -6,6 +6,6 @@ namespace Headway.Core.Model
     {
         public int LayoutConfigId { get; set; }
         public string Name { get; set; }
-        public List<LayoutConfigItem> Containers { get; set; }
+        public List<LayoutConfigItem> LayoutConfigItems { get; set; }
     }
 }
