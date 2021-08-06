@@ -5,7 +5,7 @@ namespace Headway.Core.Model
     public class ConfigItem
     {
         public int ConfigItemId { get; set; }
-        public int LayoutConfigItemId { get; set; }
+        public LayoutConfigItem LayoutConfigItems { get; set; }
         public bool? IsIdentity { get; set; }
         public bool? IsTitle { get; set; }
         public int Order { get; set; }
