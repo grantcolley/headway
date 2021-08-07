@@ -18,8 +18,6 @@ namespace Headway.Repository.Data
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<Config> Configs { get; set; }
         public DbSet<ConfigItem> ConfigItems { get; set; }
-        public DbSet<LayoutConfig> LayoutConfigs { get; set; }
-        public DbSet<LayoutConfigItem> LayoutConfigItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -53,10 +51,6 @@ namespace Headway.Repository.Data
 
             builder.Entity<Config>()
                 .HasIndex(c => c.Name)
-                .IsUnique();
-
-            builder.Entity<LayoutConfig>()
-                .HasIndex(l => l.Name)
                 .IsUnique();
         }
     }

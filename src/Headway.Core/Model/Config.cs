@@ -13,7 +13,6 @@ namespace Headway.Core.Model
         }
 
         public int ConfigId { get; set; }
-        public LayoutConfig LayoutConfig { get; set; }
         public List<ConfigItem> ConfigItems { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
