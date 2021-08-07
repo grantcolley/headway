@@ -172,9 +172,9 @@ namespace Headway.Repository.Data
                 permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsIdentity = null, IsTitle = null, Order = 3, Component = null });
                 applicationDbContext.SaveChanges();
 
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, IsTitle = false, Order = 1, Component = "Headway.Razor.Controls.Components.LabelData, Headway.Razor.Controls" });
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsIdentity = false, IsTitle = true, Order = 2, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsIdentity = false, IsTitle = false, Order = 3, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, IsTitle = false, Order = 1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsIdentity = false, IsTitle = true, Order = 2, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsIdentity = false, IsTitle = false, Order = 3, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 applicationDbContext.SaveChanges();
 
                 configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = null, IsTitle = null, Order = 1, Component = null });
@@ -185,18 +185,18 @@ namespace Headway.Repository.Data
                 configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", IsIdentity = null, IsTitle = null, Order = 6, Component = null });
                 applicationDbContext.SaveChanges();
 
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = true, IsTitle = false, Order = 1, Component = "Headway.Razor.Controls.Components.LabelData, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsIdentity = false, IsTitle = false, Order = 2, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", IsIdentity = false, IsTitle = true, Order = 3, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Model", Label = "Model", IsIdentity = false, IsTitle = false, Order = 4, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModelApi", Label = "Model Api", IsIdentity = false, IsTitle = false, Order = 5, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", IsIdentity = false, IsTitle = false, Order = 6, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateTo", Label = "Navigate To", IsIdentity = false, IsTitle = false, Order = 7, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToProperty", Label = "Navigate To Property", IsIdentity = false, IsTitle = false, Order = 8, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToConfig", Label = "Navigate To Config", IsIdentity = false, IsTitle = false, Order = 9, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBack", Label = "Navigate Back", IsIdentity = false, IsTitle = false, Order = 10, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackProperty", Label = "Navigate Back Property", IsIdentity = false, IsTitle = false, Order = 11, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackConfig", Label = "Navigate Back Config", IsIdentity = false, IsTitle = false, Order = 12, Component = "Headway.Razor.Controls.Components.LabelText, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = true, IsTitle = false, Order = 1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsIdentity = false, IsTitle = false, Order = 2, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", IsIdentity = false, IsTitle = true, Order = 3, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Model", Label = "Model", IsIdentity = false, IsTitle = false, Order = 4, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModelApi", Label = "Model Api", IsIdentity = false, IsTitle = false, Order = 5, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", IsIdentity = false, IsTitle = false, Order = 6, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateTo", Label = "Navigate To", IsIdentity = false, IsTitle = false, Order = 7, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToProperty", Label = "Navigate To Property", IsIdentity = false, IsTitle = false, Order = 8, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToConfig", Label = "Navigate To Config", IsIdentity = false, IsTitle = false, Order = 9, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBack", Label = "Navigate Back", IsIdentity = false, IsTitle = false, Order = 10, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackProperty", Label = "Navigate Back Property", IsIdentity = false, IsTitle = false, Order = 11, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackConfig", Label = "Navigate Back Config", IsIdentity = false, IsTitle = false, Order = 12, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 applicationDbContext.SaveChanges();
             }
         }
