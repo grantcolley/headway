@@ -11,10 +11,11 @@ namespace Headway.Core.Dynamic
         public int Order { get; set; }
         public string Label { get; set; }
         public string PropertyName { get; set; }
+        public string Tag { get; set; }
+        public string DynamicComponentTypeName { get; set; }
+        public Type DynamicComponent { get; set; }
+        public Dictionary<string, object> Parameters { get; set; }
         public PropertyInfo PropertyInfo { get; set; }
         public MemberExpression MemberExpression { get; set; }
-        public string DynamicComponentTypeName { get; set; }
-        public Dictionary<string, object> Parameters { get; set; }
-        public Type DynamicComponent { get; set; }
     }
 }
