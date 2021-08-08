@@ -56,13 +56,14 @@ namespace Headway.Core.Dynamic
                 var dynamicField = new DynamicField
                 {
                     Model = model,
+                    Label = c.Label,
                     Order = c.Order,
+                    Tag = c.Tag,
                     PropertyInfo = p,
                     PropertyName = p.Name,
-                    Label = c.Label,
-                    MemberExpression = Expression.Property(ce, p.Name),
                     DynamicComponentTypeName = c.Component,
-                    DynamicComponent = Type.GetType(c.Component)
+                    DynamicComponent = Type.GetType(c.Component),
+                    MemberExpression = Expression.Property(ce, p.Name)
                 };
 
                 dynamicField.Parameters = new Dictionary<string, object> { { "Field", dynamicField } };
