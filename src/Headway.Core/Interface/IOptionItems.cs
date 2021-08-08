@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Headway.Services.Options
+namespace Headway.Core.Interface
 {
     public interface IOptionItems
     {

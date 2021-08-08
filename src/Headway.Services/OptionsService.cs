@@ -1,6 +1,6 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.Services.Options;
+using Headway.Core.Options;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,7 +14,6 @@ namespace Headway.Services
         public OptionsService(HttpClient httpClient)
             : this(httpClient, false, null)
         {
-
         }
 
         public OptionsService(HttpClient httpClient, TokenProvider tokenProvider)

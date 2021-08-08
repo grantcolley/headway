@@ -1,23 +1,24 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Services.Options
+namespace Headway.Core.Options
 {
-    public class ContainerOptionItems : IOptionItems
+    public class ModelOptionItems : IOptionItems
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync()
         {
-            var containers = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicContainerAttribute));
+            var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 
-            var optionItems = from c in containers
+            var optionItems = from m in models
                               select new OptionItem
                               {
-                                  Id = c.Name,
-                                  Display = c.DisplayName
+                                  Id = m.Name,
+                                  Display = m.DisplayName
                               };
 
             return Task.FromResult(optionItems);
