@@ -8,13 +8,18 @@ namespace Headway.Core.Helpers
 {
     public static class TypeAttributeHelper
     {
-        public static IEnumerable<string> GetEntryAssemblyTypeNamesByAttribute(Type attributeType)
+        public static IEnumerable<DynamicType> GetEntryAssemblyTypeNamesByAttribute(Type attributeType)
         {
             var assembly = Assembly.GetEntryAssembly();
             var types = (from t in assembly.GetTypes()
                          let attributes = t.GetCustomAttributes(attributeType, true)
                          where attributes != null && attributes.Length > 0
-                         select t.Name).ToList();
+                         select new DynamicType
+                         {
+                             Name = GetName(t),
+                             DisplayName = GetName(t),
+                             Namespace = GetFullNamespace(t, assembly)
+                         }).ToList();
             return types;
         }
 
