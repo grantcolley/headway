@@ -9,7 +9,7 @@ namespace Headway.Services
 {
     public class OptionsService : ServiceBase, IOptionsService
     {
-        private readonly Dictionary<string, IOptionItems> localOptionItems = new Dictionary<string, IOptionItems>();
+        private readonly Dictionary<string, IOptionItems> localOptionItems = new();
 
         public OptionsService(HttpClient httpClient)
             : this(httpClient, false, null)
@@ -26,6 +26,7 @@ namespace Headway.Services
         {
             localOptionItems.Add(typeof(ModelOptionItems).Name, new ModelOptionItems());
             localOptionItems.Add(typeof(ComponentOptionItems).Name, new ComponentOptionItems());
+            localOptionItems.Add(typeof(ContainerOptionItems).Name, new ContainerOptionItems());
         }
 
         public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(string optionsCode)
