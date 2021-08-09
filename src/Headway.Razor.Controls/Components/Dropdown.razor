@@ -13,9 +13,12 @@
         </div>
         <div class="col-sm-8">
             <InputSelect class="form-control" Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((string value) => OnValueChanged(value))">
-                @foreach (var optionItem in OptionItems)
+                @if (OptionItems != null)
                 {
-                    <option value="@optionItem.Id">@optionItem.Display</option>
+                    @foreach (var optionItem in OptionItems)
+                    {
+                        <option value="@optionItem.Id">@optionItem.Display</option>
+                    }
                 }
             </InputSelect>
 
