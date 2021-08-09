@@ -1,10 +1,12 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
 {
+    [DynamicApiController]
     public class ModulesController : ApiControllerBase<ModulesController>
     {
         private readonly IModuleRepository moduleRepository;

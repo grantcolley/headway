@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
 {
+    [DynamicApiController]
     public class ConfigurationController : ApiControllerBase<ConfigurationController>
     {
         private readonly IConfigurationRepository configRepository;

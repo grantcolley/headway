@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
 {
+    [DynamicApiController]
     public class UsersController : ApiControllerBase<UsersController>
     {
         private readonly IAuthorisationRepository authorisationRepository;

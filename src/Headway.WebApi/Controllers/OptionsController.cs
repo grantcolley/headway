@@ -20,7 +20,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{optionsCode}")]
         public async Task<IActionResult> Get(string optionsCode)
         {
-            var authorised = await IsAuthorisedAsync("Admin")
+            var authorised = await IsAuthorisedAsync("User")
                 .ConfigureAwait(false);
 
             if (!authorised)

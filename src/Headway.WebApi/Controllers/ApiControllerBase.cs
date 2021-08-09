@@ -1,5 +1,4 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Interface;
+﻿using Headway.Core.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +9,6 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [ApiController]
-    [DynamicApiController]
     [EnableCors("local")]
     [Route("[controller]")]
     [Authorize(Roles = "headwayuser")]
