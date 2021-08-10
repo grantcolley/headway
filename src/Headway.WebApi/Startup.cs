@@ -42,7 +42,6 @@ namespace Headway.WebApi
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
             services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
-            services.AddScoped<IHeadwayWebApiRepository, HeadwayWebApiRepository>();
             services.AddScoped<IOptionsRepository, OptionsRepository>();
 
             services.AddCors(options =>
