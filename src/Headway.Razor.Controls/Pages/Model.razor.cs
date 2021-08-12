@@ -23,7 +23,7 @@ namespace Headway.Razor.Controls.Pages
             await base.OnInitializedAsync();
         }
 
-        protected RenderFragment RenderListView() => __builder =>
+        protected RenderFragment RenderView() => __builder =>
         {
             var type = Type.GetType(modelNameSpace);
             var component = Type.GetType(componentNameSpace);
