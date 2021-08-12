@@ -2,8 +2,6 @@
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
 {
