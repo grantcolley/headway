@@ -22,8 +22,6 @@ namespace Headway.Razor.Controls.Containers
         [Parameter]
         public int Id { get; set; }
 
-        protected DynamicModel<T> dynamicModel;
-
         protected Alert Alert { get; set; }
         protected bool isSaveInProgress = false;
         protected bool isDeleteInProgress = false;
@@ -45,7 +43,7 @@ namespace Headway.Razor.Controls.Containers
                     .ConfigureAwait(false);
             }
 
-            dynamicModel = GetResponse(serviceResult);
+            DynamicModel = GetResponse(serviceResult);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
@@ -57,10 +55,10 @@ namespace Headway.Razor.Controls.Containers
             IServiceResult<DynamicModel<T>> serviceResult;
             string message;
 
-            if (dynamicModel.Id.Equals(0))
+            if (DynamicModel.Id.Equals(0))
             {
                 serviceResult = await DynamicService
-                    .AddDynamicModelAsync<T>(dynamicModel)
+                    .AddDynamicModelAsync<T>(DynamicModel)
                     .ConfigureAwait(false);
 
                 message = "has been added.";
@@ -68,15 +66,15 @@ namespace Headway.Razor.Controls.Containers
             else
             {
                 serviceResult = await DynamicService
-                    .UpdateDynamicModelAsync<T>(dynamicModel)
+                    .UpdateDynamicModelAsync<T>(DynamicModel)
                     .ConfigureAwait(false);
 
                 message = "has been updated.";
             }
 
-            dynamicModel = GetResponse(serviceResult);
+            DynamicModel = GetResponse(serviceResult);
 
-            if (dynamicModel == null)
+            if (DynamicModel == null)
             {
                 return;
             }
@@ -84,10 +82,10 @@ namespace Headway.Razor.Controls.Containers
             Alert = new Alert
             {
                 AlertType = "primary",
-                Title = dynamicModel.Title,
+                Title = DynamicModel.Title,
                 Message = message,
                 //RedirectText = dynamicModel.Config.NavigateText,
-                RedirectPage = dynamicModel.Config.NavigateTo
+                RedirectPage = DynamicModel.Config.NavigateTo
             };
 
             isSaveInProgress = false;
@@ -98,7 +96,7 @@ namespace Headway.Razor.Controls.Containers
             isDeleteInProgress = true;
 
             var serviceResult = await DynamicService
-                .DeleteDynamicModelAsync(dynamicModel)
+                .DeleteDynamicModelAsync(DynamicModel)
                 .ConfigureAwait(false);
 
             var result = GetResponse(serviceResult);
@@ -111,10 +109,10 @@ namespace Headway.Razor.Controls.Containers
             Alert = new Alert
             {
                 AlertType = "danger",
-                Title = $"{dynamicModel.Title}",
+                Title = $"{DynamicModel.Title}",
                 Message = $"has been deleted.",
                 //RedirectText = dynamicModel.Config.NavigateText,
-                RedirectPage = dynamicModel.Config.NavigateTo
+                RedirectPage = DynamicModel.Config.NavigateTo
             };
 
             isDeleteInProgress = false;
