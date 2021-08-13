@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 namespace Headway.Razor.Controls.Pages
 {
     [DynamicPage(PageType.List)]
-    public abstract class ListBase : DynamicTypeComponentBase
+    public abstract class ListBase : DynamicPageBase
     {
         [Parameter]
         public string Config { get; set; }

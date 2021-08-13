@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Headway.Razor.Controls.Base
 {
-    public abstract class DynamicTypeComponentBase : HeadwayComponentBase
+    public abstract class DynamicPageBase : HeadwayComponentBase
     {
         [Inject]
         public IConfigurationService ConfigurationService { get; set; }
