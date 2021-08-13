@@ -17,11 +17,11 @@ namespace Headway.Core.Model
         public List<Role> Roles { get; set; }
         public List<Permission> Permissions { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
+        [Required(ErrorMessage = "Name is required")]
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Email is required.")]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Email is not a valid e-mail address.")]
         public string Email { get; set; }
     }

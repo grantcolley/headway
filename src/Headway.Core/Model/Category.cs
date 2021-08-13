@@ -19,11 +19,11 @@ namespace Headway.Core.Model
         public Module Module { get; set; }
         public List<MenuItem> MenuItems { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
+        [Required(ErrorMessage = "Name is required")]
         [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Permission is required.")]
+        [Required(ErrorMessage = "Permission is required")]
         [StringLength(20, ErrorMessage = "Permission must be between 1 and 20 characters")]
         public string Permission { get; set; }
 

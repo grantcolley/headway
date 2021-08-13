@@ -16,23 +16,23 @@ namespace Headway.Core.Model
         public List<ConfigItem> ConfigItems { get; set; }
         public List<ConfigContainer> Containers { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
+        [Required(ErrorMessage = "Name is required")]
         [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Title is required.")]
+        [Required(ErrorMessage = "Title is required")]
         [StringLength(20, ErrorMessage = "Title must be between 1 and 20 characters")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Model is required.")]
+        [Required(ErrorMessage = "Model is required")]
         [StringLength(150, ErrorMessage = "Model must be between 1 and 150 characters")]
         public string Model { get; set; }
 
-        [Required(ErrorMessage = "Model Api is required.")]
+        [Required(ErrorMessage = "Model Api is required")]
         [StringLength(20, ErrorMessage = "Model Api must be between 1 and 20 characters")]
         public string ModelApi { get; set; }
 
-        [Required(ErrorMessage = "Container is required.")]
+        [Required(ErrorMessage = "Container is required")]
         [StringLength(150, ErrorMessage = "Container must be between 1 and 150 characters")]
         public string Container { get; set; }
 
