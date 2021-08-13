@@ -1,6 +1,8 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Interface;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Headway.Core.Model
 {

@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
