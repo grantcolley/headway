@@ -2,7 +2,7 @@
 
 namespace Headway.Razor.Controls.Containers
 {
-    public partial class DivBase<T> : ContainerBase<T>
+    public partial class DivBase<T> : DynamicComponentBase<T>
     {
     }
 }

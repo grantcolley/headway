@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components;
 namespace Headway.Razor.Controls.Containers
 {
     [DynamicContainer]
-    public abstract class TableBase<T> : HeadwayComponentBase
+    public abstract class TableBase<T> : DynamicComponentBase<T>
     {
         [Inject]
         public IDynamicService DynamicService { get; set; }
