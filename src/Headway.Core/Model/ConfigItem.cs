@@ -19,7 +19,7 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
         public string Label { get; set; }
 
-        [StringLength(100, ErrorMessage = "Component cannot exceed 100 characters")]
+        [StringLength(150, ErrorMessage = "Component cannot exceed 150 characters")]
         public string Component { get; set; }
     }
 }
