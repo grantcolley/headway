@@ -105,9 +105,9 @@ namespace Headway.Repository.Data
                 {
                     Name = "Permissions",
                     Title = "Permissions",
-                    Model = "Permission",
+                    Model = "Headway.Core.Model.Permission, Headway.Core",
                     ModelApi = "Permissions",
-                    Container = "Table`1",
+                    Container = "Headway.Razor.Controls.Containers.Table`1, Headway.Razor.Controls",
                     NavigateTo = "model",
                     NavigateToProperty = "PermissionId",
                     NavigateToConfig = "Permission",
@@ -120,9 +120,9 @@ namespace Headway.Repository.Data
                 {
                     Name = "Permission",
                     Title = "Permission",
-                    Model = "Permission",
+                    Model = "Headway.Core.Model.Permission, Headway.Core",
                     ModelApi = "Permissions",
-                    Container = "Card`1",
+                    Container = "Headway.Razor.Controls.Containers.Card`1, Headway.Razor.Controls",
                     NavigateTo = "list",
                     NavigateToProperty = null,
                     NavigateToConfig = "Permissions",
@@ -135,9 +135,9 @@ namespace Headway.Repository.Data
                 {
                     Name = "Configs",
                     Title = "Configs",
-                    Model = "Config",
+                    Model = "Headway.Core.Model.Config, Headway.Core",
                     ModelApi = "Configuration",
-                    Container = "Table`1",
+                    Container = "Headway.Razor.Controls.Containers.Table`1, Headway.Razor.Controls",
                     NavigateTo = "model",
                     NavigateToProperty = "ConfigId",
                     NavigateToConfig = "Config",
@@ -150,9 +150,9 @@ namespace Headway.Repository.Data
                 {
                     Name = "Config",
                     Title = "Config",
-                    Model = "Config",
+                    Model = "Headway.Core.Model.Config, Headway.Core",
                     ModelApi = "Configuration",
-                    Container = "Card`1",
+                    Container = "Headway.Razor.Controls.Containers.Card`1, Headway.Razor.Controls",
                     NavigateTo = "list",
                     NavigateToProperty = null,
                     NavigateToConfig = "Configs",
@@ -167,7 +167,7 @@ namespace Headway.Repository.Data
                 applicationDbContext.Configs.Add(permissionConfig);
                 applicationDbContext.SaveChanges();
 
-                var configConfigContainer = new ConfigContainer { Container = "Div`1", Row = 1, Column =1 };
+                var configConfigContainer = new ConfigContainer { Container = "Headway.Razor.Controls.Containers.Div`1, Headway.Razor.Controls", Row = 1, Column =1 };
 
                 configConfig.Containers.Add(configConfigContainer);
                 applicationDbContext.SaveChanges();
