@@ -1,5 +1,4 @@
 ﻿using Headway.Core.Attributes;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
@@ -26,7 +25,7 @@ namespace Headway.Core.Model
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Model is required.")]
-        [StringLength(20, ErrorMessage = "Model must be between 1 and 20 characters")]
+        [StringLength(150, ErrorMessage = "Model must be between 1 and 150 characters")]
         public string Model { get; set; }
 
         [Required(ErrorMessage = "Model Api is required.")]
@@ -34,7 +33,7 @@ namespace Headway.Core.Model
         public string ModelApi { get; set; }
 
         [Required(ErrorMessage = "Container is required.")]
-        [StringLength(20, ErrorMessage = "Container must be between 1 and 20 characters")]
+        [StringLength(150, ErrorMessage = "Container must be between 1 and 150 characters")]
         public string Container { get; set; }
 
         [StringLength(20, ErrorMessage = "Navigate To cannot exceed 20 characters")]
