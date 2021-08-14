@@ -2,6 +2,7 @@
 using Headway.Core.Enums;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Pages
