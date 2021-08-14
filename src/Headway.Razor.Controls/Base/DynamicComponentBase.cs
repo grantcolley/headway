@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Dynamic;
 using Microsoft.AspNetCore.Components;
+using System;
 
 namespace Headway.Razor.Controls.Base
 {
