@@ -26,6 +26,7 @@ namespace Headway.Repository
         {
             return await applicationDbContext.Configs
                 .Include(c => c.ConfigItems)
+                .Include(c => c.Containers)
                 .AsNoTracking()
                 .SingleAsync(c => c.ConfigId.Equals(id))
                 .ConfigureAwait(false);        
@@ -35,6 +36,7 @@ namespace Headway.Repository
         {
             return await applicationDbContext.Configs
                 .Include(c => c.ConfigItems)
+                .Include(c => c.Containers)
                 .AsNoTracking()
                 .SingleAsync(c => c.Name.Equals(name))
                 .ConfigureAwait(false);
