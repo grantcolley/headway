@@ -167,7 +167,7 @@ namespace Headway.Repository.Data
                 applicationDbContext.Configs.Add(permissionConfig);
                 applicationDbContext.SaveChanges();
 
-                var configConfigContainer = new ConfigContainer { Container = "Headway.Razor.Controls.Containers.Div`1, Headway.Razor.Controls", Row = 1, Column =1, IsRootContainer = true };
+                var configConfigContainer = new ConfigContainer { Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Row = 1, Column =1, IsRootContainer = true };
 
                 configConfig.Containers.Add(configConfigContainer);
                 applicationDbContext.SaveChanges();
