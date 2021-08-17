@@ -7,6 +7,7 @@ namespace Headway.Core.Dynamic
     {
         public DynamicContainer()
         {
+            Parameters = new Dictionary<string, object>();
             DynamicFields = new List<DynamicField>();
             DynamicContainers = new List<DynamicContainer>();
         }
