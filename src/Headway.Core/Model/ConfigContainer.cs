@@ -5,7 +5,14 @@ namespace Headway.Core.Model
 {
     public class ConfigContainer
     {
+        public ConfigContainer()
+        {
+            ConfigContainers = new List<ConfigContainer>();
+        }
+
         public int ConfigContainerId { get; set; }
+
+        public bool IsRootContainer { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
         public List<ConfigContainer> ConfigContainers { get; set; }
