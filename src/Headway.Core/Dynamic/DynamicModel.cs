@@ -76,6 +76,8 @@ namespace Headway.Core.Dynamic
                 DynamicContainerTypeName = configContainer.Container
             };
 
+            dynamicContainer.Parameters.Add("Container", dynamicContainer);
+
             if(configContainer.ConfigContainers.Any())
             {
                 foreach(var container in  configContainer.ConfigContainers)
@@ -103,7 +105,7 @@ namespace Headway.Core.Dynamic
                 MemberExpression = Expression.Property(expression, propertyInfo.Name)
             };
 
-            dynamicField.Parameters = new Dictionary<string, object> { { "Field", dynamicField } };
+            dynamicField.Parameters.Add("Field", dynamicField);
 
             return dynamicField;
         }
