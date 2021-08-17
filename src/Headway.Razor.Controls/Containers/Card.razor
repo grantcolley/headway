@@ -47,12 +47,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-
-                                        @foreach(var dynamicField in DynamicModel.DynamicFields)
-                                        {
-                                            <DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
-                                        }
-
+                                        <DynamicComponent Type="DynamicModel.RootContainer.DynamicComponent" Parameters="DynamicModel.RootContainer.Parameters" />
                                      </div>
                                  </EditForm>
                            </div>
@@ -65,7 +60,7 @@
             {
                 <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>
             }
-        }  
+        }
     </Authorized>
     <NotAuthorized>
         <p>Please log in.</p>
