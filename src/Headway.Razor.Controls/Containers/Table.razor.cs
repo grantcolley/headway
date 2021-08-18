@@ -20,8 +20,6 @@ namespace Headway.Razor.Controls.Containers
 
         protected DynamicList<T> dynamicList;
 
-        protected IEnumerable<ConfigItem> configItems;
-
         protected override async Task OnInitializedAsync()
         {
             var result = 
@@ -29,8 +27,6 @@ namespace Headway.Razor.Controls.Containers
                 .ConfigureAwait(false);
 
             dynamicList = GetResponse(result);
-
-            configItems = dynamicList.Config.ConfigItems;
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
