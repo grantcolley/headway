@@ -21,6 +21,19 @@ namespace Headway.Core.Dynamic
 
         public Config Config { get; private set; }
 
+        public List<ConfigItem> ConfigItems 
+        {
+            get
+            {
+                if(Config == null)
+                {
+                    return new List<ConfigItem>();
+                }
+
+                return Config.ConfigItems.OrderBy(c => c.Order).ToList();
+            }
+        }
+
         public string Title { get { return Config.Title; } }
 
         public List<DynamicListItem<T>> DynamicListItems { get; private set; }
