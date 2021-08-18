@@ -21,7 +21,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        @foreach(var column in configItems)
+                        @foreach(var column in dynamicList.ConfigItems)
                         {
                             <th>@column.Label</th>
                         }
@@ -34,7 +34,7 @@
                     @foreach(var listIitem in dynamicList.DynamicListItems)
                     {
                         <tr>
-                            @foreach(var column in configItems)
+                            @foreach(var column in dynamicList.ConfigItems)
                             {
                                 <td>
                                     @dynamicList.GetValue(listIitem.Model, column.PropertyName)
