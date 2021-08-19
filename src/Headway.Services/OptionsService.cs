@@ -24,6 +24,7 @@ namespace Headway.Services
         private OptionsService(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
             : base(httpClient, useAccessToken, tokenProvider)
         {
+            localOptionItems.Add(typeof(PageOptionItems).Name, new PageOptionItems());
             localOptionItems.Add(typeof(ModelOptionItems).Name, new ModelOptionItems());
             localOptionItems.Add(typeof(ComponentOptionItems).Name, new ComponentOptionItems());
             localOptionItems.Add(typeof(ContainerOptionItems).Name, new ContainerOptionItems());
