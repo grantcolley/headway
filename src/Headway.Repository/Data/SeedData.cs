@@ -108,10 +108,10 @@ namespace Headway.Repository.Data
                     Model = "Headway.Core.Model.Permission, Headway.Core",
                     ModelApi = "Permissions",
                     Container = "Headway.Razor.Controls.Containers.Table`1, Headway.Razor.Controls",
-                    NavigateTo = "model",
+                    NavigateTo = "Model",
                     NavigateToProperty = "PermissionId",
                     NavigateToConfig = "Permission",
-                    NavigateBack = "list",
+                    NavigateBack = "List",
                     NavigateBackProperty = null,
                     NavigateBackConfig = "Permissions"
                 };
@@ -123,10 +123,10 @@ namespace Headway.Repository.Data
                     Model = "Headway.Core.Model.Permission, Headway.Core",
                     ModelApi = "Permissions",
                     Container = "Headway.Razor.Controls.Containers.Card`1, Headway.Razor.Controls",
-                    NavigateTo = "list",
+                    NavigateTo = "List",
                     NavigateToProperty = null,
                     NavigateToConfig = "Permissions",
-                    NavigateBack = "list",
+                    NavigateBack = "List",
                     NavigateBackProperty = null,
                     NavigateBackConfig = "Permissions"
                 };
@@ -138,10 +138,10 @@ namespace Headway.Repository.Data
                     Model = "Headway.Core.Model.Config, Headway.Core",
                     ModelApi = "Configuration",
                     Container = "Headway.Razor.Controls.Containers.Table`1, Headway.Razor.Controls",
-                    NavigateTo = "model",
+                    NavigateTo = "Model",
                     NavigateToProperty = "ConfigId",
                     NavigateToConfig = "Config",
-                    NavigateBack = "list",
+                    NavigateBack = "List",
                     NavigateBackProperty = null,
                     NavigateBackConfig = "Configs"
                 };
@@ -153,10 +153,10 @@ namespace Headway.Repository.Data
                     Model = "Headway.Core.Model.Config, Headway.Core",
                     ModelApi = "Configuration",
                     Container = "Headway.Razor.Controls.Containers.Card`1, Headway.Razor.Controls",
-                    NavigateTo = "list",
+                    NavigateTo = "List",
                     NavigateToProperty = null,
                     NavigateToConfig = "Configs",
-                    NavigateBack = "list",
+                    NavigateBack = "List",
                     NavigateBackProperty = null,
                     NavigateBackConfig = "Configs"
                 };
@@ -194,10 +194,10 @@ namespace Headway.Repository.Data
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Model", Label = "Model", IsIdentity = false, IsTitle = false, Order = 4, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", Tag = "ModelOptionItems" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModelApi", Label = "Model Api", IsIdentity = false, IsTitle = false, Order = 5, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", Tag = "ControllerOptionItems" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", IsIdentity = false, IsTitle = false, Order = 6, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", Tag = "ContainerOptionItems" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateTo", Label = "Navigate To", IsIdentity = false, IsTitle = false, Order = 7, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateTo", Label = "Navigate To", IsIdentity = false, IsTitle = false, Order = 7, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", Tag = "PageOptionItems" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToProperty", Label = "Navigate To Property", IsIdentity = false, IsTitle = false, Order = 8, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToConfig", Label = "Navigate To Config", IsIdentity = false, IsTitle = false, Order = 9, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBack", Label = "Navigate Back", IsIdentity = false, IsTitle = false, Order = 10, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBack", Label = "Navigate Back", IsIdentity = false, IsTitle = false, Order = 10, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", Tag = "PageOptionItems" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackProperty", Label = "Navigate Back Property", IsIdentity = false, IsTitle = false, Order = 11, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackConfig", Label = "Navigate Back Config", IsIdentity = false, IsTitle = false, Order = 12, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 applicationDbContext.SaveChanges();
