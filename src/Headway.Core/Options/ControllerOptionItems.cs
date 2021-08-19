@@ -17,8 +17,8 @@ namespace Headway.Core.Options
             var optionItems = from c in controllers
                               select new OptionItem
                               {
-                                  Id = c.Name,
-                                  Display = c.DisplayName
+                                  Id = c.Name.Replace("Controller", ""),
+                                  Display = c.DisplayName.Replace("Controller", "")
                               };
 
             return Task.FromResult(optionItems);

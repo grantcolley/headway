@@ -17,7 +17,7 @@ namespace Headway.Core.Options
             var optionItems = from m in models
                               select new OptionItem
                               {
-                                  Id = m.Name,
+                                  Id = m.Namespace,
                                   Display = m.DisplayName
                               };
 
