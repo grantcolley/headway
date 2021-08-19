@@ -49,6 +49,7 @@ namespace Headway.Repository
         private async Task<IEnumerable<OptionItem>> ConfigOptionItems(object arg = null)
         {
             var configs = await applicationDbContext.Configs
+                .OrderBy(c => c.Name)
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
