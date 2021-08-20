@@ -4,7 +4,7 @@ using System;
 
 namespace Headway.Razor.Controls.Base
 {
-    public abstract class DynamicComponentBase<T> : HeadwayComponentBase
+    public abstract class DynamicContainerBase<T> : HeadwayComponentBase
     {
         [Parameter]
         public DynamicModel<T> DynamicModel { get; set; }
