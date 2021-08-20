@@ -30,18 +30,18 @@ namespace Headway.Services
             localOptionItems.Add(typeof(ContainerOptionItems).Name, new ContainerOptionItems());
         }
 
-        public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(string optionsCode)
+        public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(string[] args)
         {
-            if (localOptionItems.ContainsKey(optionsCode))
+            if (localOptionItems.ContainsKey(args[0]))
             {
                 return new ServiceResult<IEnumerable<OptionItem>>
                 {
                     IsSuccess = true,
-                    Result = await localOptionItems[optionsCode].GetOptionItemsAsync()
+                    Result = await localOptionItems[args[0]].GetOptionItemsAsync()
                 };
             }
 
-            var httpResponseMessage = await httpClient.GetAsync($"Options/{optionsCode}")
+            var httpResponseMessage = await httpClient.GetAsync($"Options/{args[0]}")
                 .ConfigureAwait(false);
 
             return await GetServiceResultAsync<IEnumerable<OptionItem>>(httpResponseMessage)
