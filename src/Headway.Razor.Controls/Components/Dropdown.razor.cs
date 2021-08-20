@@ -45,7 +45,7 @@ namespace Headway.Razor.Controls.Components
 
         protected override async Task OnParametersSetAsync()
         {
-            var result = await OptionsService.GetOptionItemsAsync(Field.ContainerArgs).ConfigureAwait(false);
+            var result = await OptionsService.GetOptionItemsAsync(Field.ComponentArgs).ConfigureAwait(false);
 
             OptionItems = GetResponse(result);
 

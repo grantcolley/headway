@@ -16,7 +16,7 @@ namespace Headway.Core.Dynamic
         public int Order { get; set; }
         public string Label { get; set; }
         public string PropertyName { get; set; }
-        public string ContainerArgs { get; set; }
+        public string ComponentArgs { get; set; }
         public string DynamicComponentTypeName { get; set; }
         public int ConfigContainerId { get; set; }
         public Type DynamicComponent { get; set; }

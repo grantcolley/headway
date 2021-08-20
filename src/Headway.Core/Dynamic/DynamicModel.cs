@@ -56,6 +56,8 @@ namespace Headway.Core.Dynamic
                                 join c in Config.ConfigItems on p.Name equals c.PropertyName
                                 select CreateDynamicField(Model, constantExpression, p, c)).ToList());
 
+            AddComponentArgsToParameters(DynamicFields);
+
             RootContainer = CreateContainer(Config.Containers.Single(cc => cc.IsRootContainer));
 
             var fieldGroups = from df in DynamicFields
@@ -63,6 +65,35 @@ namespace Headway.Core.Dynamic
                                 select fieldGroup;
 
             MapDynamicContainerFields(RootContainer, fieldGroups);
+        }
+
+        private static DynamicField CreateDynamicField(T model, ConstantExpression expression, PropertyInfo propertyInfo, ConfigItem configItem)
+        {
+            var dynamicField = new DynamicField
+            {
+                Model = model,
+                Label = configItem.Label,
+                Order = configItem.Order,
+                ConfigContainerId = configItem.ConfigContainer.ConfigContainerId,
+                ComponentArgs = configItem.ComponentArgs,
+                PropertyInfo = propertyInfo,
+                PropertyName = propertyInfo.Name,
+                DynamicComponentTypeName = configItem.Component,
+                DynamicComponent = Type.GetType(configItem.Component),
+                MemberExpression = Expression.Property(expression, propertyInfo.Name)
+            };
+
+            dynamicField.Parameters.Add("Field", dynamicField);
+
+            return dynamicField;
+        }
+
+        private static void AddComponentArgsToParameters(List<DynamicField> dynamicFields)
+        {
+            foreach(var dynamicField in dynamicFields.Where(f => f.))
+            {
+
+            }
         }
 
         private static DynamicContainer CreateContainer(ConfigContainer configContainer)
@@ -87,27 +118,6 @@ namespace Headway.Core.Dynamic
             }
 
             return dynamicContainer;
-        }
-
-        private static DynamicField CreateDynamicField(T model, ConstantExpression expression, PropertyInfo propertyInfo, ConfigItem configItem)
-        {
-            var dynamicField = new DynamicField
-            {
-                Model = model,
-                Label = configItem.Label,
-                Order = configItem.Order,
-                ConfigContainerId = configItem.ConfigContainer.ConfigContainerId,
-                ContainerArgs = configItem.ComponentArgs,
-                PropertyInfo = propertyInfo,
-                PropertyName = propertyInfo.Name,
-                DynamicComponentTypeName = configItem.Component,
-                DynamicComponent = Type.GetType(configItem.Component),
-                MemberExpression = Expression.Property(expression, propertyInfo.Name)
-            };
-
-            dynamicField.Parameters.Add("Field", dynamicField);
-
-            return dynamicField;
         }
 
         private static void MapDynamicContainerFields(DynamicContainer container, IEnumerable<IGrouping<int,DynamicField>> fieldGroups)
