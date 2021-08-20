@@ -90,9 +90,38 @@ namespace Headway.Core.Dynamic
 
         private static void AddComponentArgsToParameters(List<DynamicField> dynamicFields)
         {
-            foreach(var dynamicField in dynamicFields.Where(f => f.))
+            foreach(var dynamicField in dynamicFields)
             {
+                var dynamicArgs = new List<DynamicArg>();
 
+                if (!string.IsNullOrWhiteSpace(dynamicField.ComponentArgs))
+                {
+                    var componentArgs = dynamicField.ComponentArgs.Split(';');
+
+                    foreach (var componentArg in componentArgs)
+                    {
+                        var nameValue = componentArg.Split(',');
+                        var name = nameValue[0].Split('=');
+                        var value = nameValue[1].Split('=');
+
+                        var dynamiArg = new DynamicArg { Name = name[1] };
+
+                        var field = dynamicFields.SingleOrDefault(f => f.PropertyName.Equals(value[1]));
+
+                        if (field != null)
+                        {
+                            dynamiArg.Value = field;
+                        }
+                        else
+                        {
+                            dynamiArg.Value = value[1];
+                        }
+
+                        dynamicArgs.Add(dynamiArg);
+                    }
+                }
+
+                dynamicField.Parameters.Add("ComponentArgs", dynamicArgs);
             }
         }
 
