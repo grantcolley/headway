@@ -8,7 +8,7 @@ namespace Headway.Core.Model
         public bool? IsIdentity { get; set; }
         public bool? IsTitle { get; set; }
         public int Order { get; set; }
-        public string Tag { get; set; }
+        public string ComponentArgs { get; set; }
         public ConfigContainer ConfigContainer { get; set; }
 
         [Required(ErrorMessage = "Property Name is required")]

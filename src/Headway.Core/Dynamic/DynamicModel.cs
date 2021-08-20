@@ -97,7 +97,7 @@ namespace Headway.Core.Dynamic
                 Label = configItem.Label,
                 Order = configItem.Order,
                 ConfigContainerId = configItem.ConfigContainer.ConfigContainerId,
-                Tag = configItem.Tag,
+                ContainerArgs = configItem.ComponentArgs,
                 PropertyInfo = propertyInfo,
                 PropertyName = propertyInfo.Name,
                 DynamicComponentTypeName = configItem.Component,
