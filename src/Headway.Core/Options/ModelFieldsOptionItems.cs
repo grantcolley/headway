@@ -1,4 +1,6 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +12,16 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync()
         {
-            //var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
+            var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 
-            //var optionItems = from m in models
-            //                  select new OptionItem
-            //                  {
-            //                      Id = m.Namespace,
-            //                      Display = m.DisplayName
-            //                  };
+            var optionItems = from m in models
+                              select new OptionItem
+                              {
+                                  Id = m.Namespace,
+                                  Display = m.DisplayName
+                              };
 
-            //return Task.FromResult(optionItems);
+            return Task.FromResult(optionItems);
         }
     }
 }
