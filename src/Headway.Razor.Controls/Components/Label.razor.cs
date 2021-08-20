@@ -1,21 +1,10 @@
 ﻿using Headway.Core.Attributes;
-using Headway.Core.Dynamic;
-using Microsoft.AspNetCore.Components;
+using Headway.Razor.Controls.Base;
 
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public partial class Label : ComponentBase
+    public class LabelBase : DynamicComponentBase
     {
-        [Parameter]
-        public DynamicField Field { get; set; }
-
-        public string PropertyValue
-        {
-            get
-            {
-                return Field.PropertyInfo.GetValue(Field.Model).ToString();
-            }
-        }
     }
 }
