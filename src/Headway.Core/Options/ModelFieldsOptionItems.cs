@@ -12,16 +12,25 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
+            var modelName = args.Single(a => a.Name.Equals("Model")).Value.ToString();
+
             var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 
-            List<OptionItem> optionItems= new List<OptionItem>() { new OptionItem() };
+            var model = models.Single(m => m.DisplayName.Equals(modelName));
 
-            optionItems.AddRange((from m in models
-                              select new OptionItem
-                              {
-                                  Id = m.Namespace,
-                                  Display = m.DisplayName
-                              }).ToList());
+            var type = Type.GetType(model.Namespace);
+
+            var propertyInfos = PropertyInfoHelper.GetPropertyInfos(type);
+
+            List<OptionItem> optionItems= new() { new OptionItem() };
+
+            optionItems.AddRange((from p in propertyInfos
+                                  orderby p.Name
+                                  select new OptionItem
+                                  {
+                                      Id = p.Name,
+                                      Display = p.Name
+                                  }).ToList());
 
             return Task.FromResult(optionItems.AsEnumerable());
         }
