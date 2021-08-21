@@ -15,6 +15,7 @@ namespace Headway.Core.Options
             var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 
             var optionItems = from m in models
+                              orderby m.Name
                               select new OptionItem
                               {
                                   Id = m.Namespace,

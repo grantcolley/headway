@@ -15,6 +15,7 @@ namespace Headway.Core.Options
             var components = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicPageAttribute));
 
             var optionItems = from c in components
+                              orderby c.Name
                               select new OptionItem
                               {
                                   Id = c.Name,
