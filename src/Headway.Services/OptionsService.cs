@@ -4,6 +4,7 @@ using Headway.Core.Model;
 using Headway.Core.Options;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ namespace Headway.Services
         public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
         {
             var optionsCode = dynamicArgs.Single(a => a.Name.Equals(OPTIONS_CODE)).Value.ToString();
-            var optionsArgs = dynamicArgs.Where(a => a.Name.Equals(OPTIONS_CODE));
+            var optionsArgs = dynamicArgs.Where(a => !a.Name.Equals(OPTIONS_CODE));
             var args = ComponentArgHelper.GetArgs(optionsArgs);
 
             if (localOptionItems.ContainsKey(optionsCode))
