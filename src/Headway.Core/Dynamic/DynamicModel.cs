@@ -1,4 +1,5 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Helpers;
+using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace Headway.Core.Dynamic
                                 join c in Config.ConfigItems on p.Name equals c.PropertyName
                                 select CreateDynamicField(Model, constantExpression, p, c)).ToList());
 
-            AddComponentArgsToParameters(DynamicFields);
+            ComponentArgHelper.AddDynamicArgs(DynamicFields);
 
             RootContainer = CreateContainer(Config.Containers.Single(cc => cc.IsRootContainer));
 
@@ -86,43 +87,6 @@ namespace Headway.Core.Dynamic
             dynamicField.Parameters.Add("Field", dynamicField);
 
             return dynamicField;
-        }
-
-        private static void AddComponentArgsToParameters(List<DynamicField> dynamicFields)
-        {
-            foreach(var dynamicField in dynamicFields)
-            {
-                var dynamicArgs = new List<DynamicArg>();
-
-                if (!string.IsNullOrWhiteSpace(dynamicField.ComponentArgs))
-                {
-                    var componentArgs = dynamicField.ComponentArgs.Split(';');
-
-                    foreach (var componentArg in componentArgs)
-                    {
-                        var nameValue = componentArg.Split(',');
-                        var name = nameValue[0].Split('=');
-                        var value = nameValue[1].Split('=');
-
-                        var dynamiArg = new DynamicArg { Name = name[1] };
-
-                        var field = dynamicFields.SingleOrDefault(f => f.PropertyName.Equals(value[1]));
-
-                        if (field != null)
-                        {
-                            dynamiArg.Value = field;
-                        }
-                        else
-                        {
-                            dynamiArg.Value = value[1];
-                        }
-
-                        dynamicArgs.Add(dynamiArg);
-                    }
-                }
-
-                dynamicField.Parameters.Add("ComponentArgs", dynamicArgs);
-            }
         }
 
         private static DynamicContainer CreateContainer(ConfigContainer configContainer)
