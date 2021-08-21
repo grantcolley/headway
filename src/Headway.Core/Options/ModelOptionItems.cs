@@ -10,7 +10,7 @@ namespace Headway.Core.Options
 {
     public class ModelOptionItems : IOptionItems
     {
-        public Task<IEnumerable<OptionItem>> GetOptionItemsAsync()
+        public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
             var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 

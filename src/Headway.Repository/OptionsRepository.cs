@@ -14,26 +14,26 @@ namespace Headway.Repository
 {
     public class OptionsRepository : RepositoryBase, IOptionsRepository
     {
-        private readonly Dictionary<string, Func<object, Task<IEnumerable<OptionItem>>>> optionItems = new();
+        private readonly Dictionary<string, Func<List<Arg>, Task<IEnumerable<OptionItem>>>> optionItems = new();
 
         public OptionsRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
-            optionItems["ControllerOptionItems"] = new Func<object, Task<IEnumerable<OptionItem>>>(GetControllerOptionItemsAsync);
-            optionItems["ConfigOptionItems"] = new Func<object, Task<IEnumerable<OptionItem>>>(ConfigOptionItems);
+            optionItems["ControllerOptionItems"] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetControllerOptionItemsAsync);
+            optionItems["ConfigOptionItems"] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(ConfigOptionItems);
         }
 
-        public async Task<IEnumerable<OptionItem>> GetOptionItemsAsync(string optionsCode)
+        public async Task<IEnumerable<OptionItem>> GetOptionItemsAsync(string optionsCode, List<Arg> args)
         {
             if (optionItems.ContainsKey(optionsCode))
             {
-                return await optionItems[optionsCode].Invoke(null);
+                return await optionItems[optionsCode].Invoke(args);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException(optionsCode);
         }
 
-        private Task<IEnumerable<OptionItem>> GetControllerOptionItemsAsync(object arg = null)
+        private Task<IEnumerable<OptionItem>> GetControllerOptionItemsAsync(List<Arg> args)
         {
             var controllers = TypeAttributeHelper.GetEntryAssemblyTypeNamesByAttribute(typeof(DynamicApiControllerAttribute));
 
@@ -47,7 +47,7 @@ namespace Headway.Repository
             return Task.FromResult(optionItems);
         }
 
-        private async Task<IEnumerable<OptionItem>> ConfigOptionItems(object arg = null)
+        private async Task<IEnumerable<OptionItem>> ConfigOptionItems(List<Arg> args)
         {
             var configs = await applicationDbContext.Configs
                 .OrderBy(c => c.Name)

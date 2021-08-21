@@ -6,6 +6,6 @@ namespace Headway.Core.Interface
 {
     public interface IOptionsService
     {
-        Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(string[] args);
+        Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs);
     }
 }

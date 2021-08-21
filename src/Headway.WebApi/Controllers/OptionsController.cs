@@ -1,6 +1,8 @@
 ﻿using Headway.Core.Interface;
+using Headway.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -17,9 +19,11 @@ namespace Headway.WebApi.Controllers
             this.optionsRepository = optionsRepository;
         }
 
-        [HttpGet("{optionsCode}")]
-        public async Task<IActionResult> Get(string optionsCode)
+        [HttpGet("{optionsCode}/{args}")]
+        public async Task<IActionResult> Get(string optionsCode, string args)
         {
+            var arguments = JsonSerializer.Deserialize<List<Arg>>(args);
+
             var authorised = await IsAuthorisedAsync("User")
                 .ConfigureAwait(false);
 
@@ -29,7 +33,7 @@ namespace Headway.WebApi.Controllers
             }
 
             var permissions = await optionsRepository
-                .GetOptionItemsAsync(optionsCode)
+                .GetOptionItemsAsync(optionsCode, arguments)
                 .ConfigureAwait(false);
 
             return Ok(permissions);

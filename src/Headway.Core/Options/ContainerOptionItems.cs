@@ -10,7 +10,7 @@ namespace Headway.Core.Options
 {
     public class ContainerOptionItems : IOptionItems
     {
-        public Task<IEnumerable<OptionItem>> GetOptionItemsAsync()
+        public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
             var containers = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicContainerAttribute));
 
