@@ -1,10 +1,10 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
@@ -19,9 +19,7 @@ namespace Headway.Razor.Controls.Components
 
         protected override async Task OnParametersSetAsync()
         {
-            var args = ComponentArgs.Select(a => a.Value.ToString()).ToArray();
-
-            var result = await OptionsService.GetOptionItemsAsync(args).ConfigureAwait(false);
+            var result = await OptionsService.GetOptionItemsAsync(ComponentArgs).ConfigureAwait(false);
 
             OptionItems = GetResponse(result);
 
