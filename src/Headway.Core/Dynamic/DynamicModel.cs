@@ -12,7 +12,6 @@ namespace Headway.Core.Dynamic
     {
         private readonly string idFieldName;
         private readonly string titleFieldName;
-        private readonly DynamicTypeHelper<T> typeHelper;
 
         public DynamicModel(T model, Config config)
         {
@@ -33,8 +32,6 @@ namespace Headway.Core.Dynamic
                 titleFieldName = titleField.PropertyName;
             }
 
-            typeHelper = DynamicTypeHelper.Get<T>();
-
             BuildDynamicComponents();
         }
 
@@ -43,9 +40,9 @@ namespace Headway.Core.Dynamic
         public DynamicContainer RootContainer { get; set; }
         public List<DynamicField> DynamicFields { get; private set; }
 
-        public int Id { get { return Convert.ToInt32(typeHelper.GetValue(Model, idFieldName)); } }
+        public int Id { get; private set; }
 
-        public string Title { get { return typeHelper.GetValue(Model, titleFieldName)?.ToString(); } }
+        public string Title { get; private set; }
 
         private void BuildDynamicComponents()
         {
@@ -53,7 +50,27 @@ namespace Headway.Core.Dynamic
 
             var constantExpression = Expression.Constant(Model);
 
-            DynamicFields = new List<DynamicField>((from p in typeHelper.SupportedProperties
+            var supportedProperties = PropertyInfoHelper.GetPropertyInfos(Model.GetType());
+
+            if(string.IsNullOrWhiteSpace(idFieldName))
+            {
+                var property = supportedProperties.SingleOrDefault(n => n.Equals(idFieldName));
+                if(property != null)
+                {
+                    Id = Convert.ToInt32(property.GetValue(Model));
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(titleFieldName))
+            {
+                var property = supportedProperties.SingleOrDefault(n => n.Equals(titleFieldName));
+                if (property != null)
+                {
+                    Title = property.GetValue(Model)?.ToString();
+                }
+            }
+
+            DynamicFields = new List<DynamicField>((from p in supportedProperties
                                 join c in Config.ConfigItems on p.Name equals c.PropertyName
                                 select CreateDynamicField(Model, constantExpression, p, c)).ToList());
 
