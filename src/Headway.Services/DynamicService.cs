@@ -1,7 +1,9 @@
 ﻿using Headway.Core.Dynamic;
+using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -112,8 +114,8 @@ namespace Headway.Services
 
             if (serviceResultConfig.IsSuccess)
             {
-                var typeHelper = DynamicTypeHelper.Get<T>();
-                var model = typeHelper.CreateInstance();
+                var model = TypeHelper<T>.Create();
+
                 return new ServiceResult<DynamicModel<T>>
                 {
                     IsSuccess = serviceResultConfig.IsSuccess,
