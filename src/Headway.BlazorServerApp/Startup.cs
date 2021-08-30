@@ -66,7 +66,6 @@ namespace Headway.BlazorServerApp
 
             services.AddScoped<TokenProvider>();
             services.AddSingleton<IConfigCache, ConfigCache>();
-            services.AddSingleton<IDynamicTypeCache, DynamicTypeCache>();
 
             services.AddTransient<IModuleService, ModuleService>(sp =>
             {
