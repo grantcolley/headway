@@ -16,39 +16,54 @@ namespace Headway.Core.Helpers
 
             foreach (var propertyInfo in propertyInfos)
             {
-                if (UnsupportedProperty(propertyInfo))
+                if (SupportedProperty(propertyInfo))
                 {
-                    continue;
+                    propertyInfoResults.Add(propertyInfo);
                 }
-
-                propertyInfoResults.Add(propertyInfo);
             }
 
             return propertyInfoResults;
         }
 
-        private static bool UnsupportedProperty(PropertyInfo propertyInfo)
+        /// <summary>
+        /// Support public value types, strings, classes generic lists (IList<>).
+        /// Does not support interfaces, abstract classes or collections that do not inherit from IList<>.
+        /// </summary>
+        /// <param name="propertyInfo">The PropertyInfo to evaluate.</param>
+        /// <returns>True if the property is supported, else returns false.</returns>
+        private static bool SupportedProperty(PropertyInfo propertyInfo)
         {
-            // Skip non-public properties and properties that are either 
-            // classes (but not strings), interfaces, lists, generic 
-            // lists or arrays.
             var propertyType = propertyInfo.PropertyType;
 
-            if (propertyType != typeof(string)
-                && (propertyType.IsClass
-                    || propertyType.IsInterface
-                    || propertyType.IsArray
-                    || propertyType.GetInterfaces()
-                        .Any(
-                            i =>
-                                (i.GetTypeInfo().Name.Equals(typeof(IEnumerable).Name)
-                                 || (i.IsGenericType &&
-                                     i.GetGenericTypeDefinition().Name.Equals(typeof(IEnumerable<>).Name))))))
+            if (propertyType.IsPublic
+                && !propertyType.IsAbstract
+                && !propertyType.IsInterface)
             {
-                return true;
+                if (propertyType.IsValueType
+                     || propertyType == typeof(string))
+                {
+                    return true;
+                }
+                else if (propertyType.IsClass)
+                {
+                    if (propertyType.GetInterfaces()
+                        .Any(i => i.GetTypeInfo().Name.Equals(typeof(IEnumerable).Name)))
+                    {
+                        if (propertyType.GetInterfaces()
+                            .Any(i => i.IsGenericType
+                            && i.GetGenericTypeDefinition().Name.Equals(typeof(IList<>).Name)))
+                        {
+                            return true;
+                        }
+
+                        return false;
+                    }
+
+                    return true;
+                }
             }
 
-            return false;
+            return true;
         }
     }
 }
