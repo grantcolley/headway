@@ -5,6 +5,7 @@
     <Authors>Grant Colley</Authors>
     <Company>Headway</Company>
     <Copyright>Copyright © 2021 Grant Colley</Copyright>
+    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
   </PropertyGroup>
 
 </Project>

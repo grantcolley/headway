@@ -6,6 +6,7 @@
     <Company>Headway</Company>
     <Copyright>Copyright © 2021 Grant Colley</Copyright>
     <UserSecretsId>aspnet-Headway.BlazorServerApp-36251C4F-B815-4A3C-BFC9-F4AF62D52988</UserSecretsId>
+    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
   </PropertyGroup>
 
   <ItemGroup>
