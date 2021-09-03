@@ -18,9 +18,6 @@ namespace Headway.Razor.Controls.Containers
         public string Config { get; set; }
 
         [Parameter]
-        public string Title { get; set; }
-
-        [Parameter]
         public int Id { get; set; }
 
         protected Alert Alert { get; set; }
