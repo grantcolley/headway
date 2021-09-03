@@ -1,7 +1,4 @@
 ﻿using Headway.Core.Attributes;
-using Headway.Core.Enums;
-using Headway.Core.Interface;
-using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -10,30 +7,17 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Pages
 {
     [DynamicPage]
-    public abstract class ModelBase : HeadwayComponentBase
+    public abstract class ModelBase : DynamicPageBase
     {
-        [Inject]
-        public IConfigurationService ConfigurationService { get; set; }
-
         [Parameter]
         public string Config { get; set; }
 
         [Parameter]
         public int Id { get; set; }
 
-        protected Config config;
-
         protected override async Task OnInitializedAsync()
         {
-            try
-            {
-                var result = await ConfigurationService.GetConfigAsync(Config).ConfigureAwait(false);
-                config = GetResponse(result);
-            }
-            catch (Exception ex)
-            {
-                RaiseAlert(ex.Message);
-            }
+            await GetConfig(Config);
 
             await base.OnInitializedAsync();
         }
