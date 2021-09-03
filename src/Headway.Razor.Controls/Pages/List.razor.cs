@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Pages
 {
-    [DynamicPage(PageType.List)]
+    [DynamicPage]
     public abstract class ListBase : DynamicPageBase
     {
         [Parameter]
