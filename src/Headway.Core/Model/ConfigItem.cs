@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.Core.Model
 {
@@ -9,7 +10,11 @@ namespace Headway.Core.Model
         public bool? IsTitle { get; set; }
         public int Order { get; set; }
         public string ComponentArgs { get; set; }
+        public string ConfigName { get; set; }
         public ConfigContainer ConfigContainer { get; set; }
+
+        [NotMapped]
+        public Config Config {  get; set; }
 
         [Required(ErrorMessage = "Property Name is required")]
         [StringLength(50, ErrorMessage = "Property Name must be between 1 and 50 characters")]
