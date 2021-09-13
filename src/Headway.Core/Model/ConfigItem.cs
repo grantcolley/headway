@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Headway.Core.Attributes;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.Core.Model
 {
+    [DynamicModel]
     public class ConfigItem
     {
         public int ConfigItemId { get; set; }
