@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Pages
 {
     [DynamicPage]
-    public abstract class ListBase : DynamicPageBase
+    public abstract class ListBase : ConfigComponentBase
     {
         [Parameter]
         public string Config { get; set; }

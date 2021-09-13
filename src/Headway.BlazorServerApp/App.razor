@@ -2,7 +2,7 @@
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly"
-            AdditionalAssemblies="new[] { typeof(NavMenu).Assembly, typeof(DynamicPageBase).Assembly }"
+            AdditionalAssemblies="new[] { typeof(NavMenu).Assembly, typeof(ConfigComponentBase).Assembly }"
             PreferExactMatches="@true">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">

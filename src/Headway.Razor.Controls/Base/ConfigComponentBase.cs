@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
 {
-    public abstract class DynamicPageBase : HeadwayComponentBase
+    public abstract class ConfigComponentBase : HeadwayComponentBase
     {
         [Inject]
         public IConfigurationService ConfigurationService { get; set; }

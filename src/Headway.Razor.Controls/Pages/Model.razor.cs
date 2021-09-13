@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Pages
 {
     [DynamicPage]
-    public abstract class ModelBase : DynamicPageBase
+    public abstract class ModelBase : ConfigComponentBase
     {
         [Parameter]
         public string Config { get; set; }
