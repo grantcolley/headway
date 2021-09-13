@@ -14,15 +14,17 @@ namespace Headway.Core.Options
         {
             var components = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicPageAttribute));
 
-            var optionItems = from c in components
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            optionItems.AddRange((from c in components
                               orderby c.Name
                               select new OptionItem
                               {
                                   Id = c.Name,
                                   Display = c.DisplayName
-                              };
+                              }).ToList());
 
-            return Task.FromResult(optionItems);
+            return Task.FromResult(optionItems.AsEnumerable());
         }
     }
 }

@@ -14,15 +14,17 @@ namespace Headway.Core.Options
         {
             var containers = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicContainerAttribute));
 
-            var optionItems = from c in containers
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            optionItems.AddRange((from c in containers
                               orderby c.Name
                               select new OptionItem
                               {
                                   Id = c.Namespace,
                                   Display = c.DisplayName
-                              };
+                              }).ToList());
 
-            return Task.FromResult(optionItems);
+            return Task.FromResult(optionItems.AsEnumerable());
         }
     }
 }

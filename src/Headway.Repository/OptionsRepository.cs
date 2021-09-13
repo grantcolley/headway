@@ -37,14 +37,16 @@ namespace Headway.Repository
         {
             var controllers = TypeAttributeHelper.GetEntryAssemblyTypeNamesByAttribute(typeof(DynamicApiControllerAttribute));
 
-            var optionItems = from c in controllers
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            optionItems.AddRange((from c in controllers
                               select new OptionItem
                               {
                                   Id = c.Name.Replace("Controller", ""),
                                   Display = c.DisplayName.Replace("Controller", "")
-                              };
+                              }).ToList());
 
-            return Task.FromResult(optionItems);
+            return Task.FromResult(optionItems.AsEnumerable());
         }
 
         private async Task<IEnumerable<OptionItem>> ConfigOptionItems(List<Arg> args)
@@ -55,7 +57,11 @@ namespace Headway.Repository
                 .ToListAsync()
                 .ConfigureAwait(false);
 
-            return configs.Select(c => new OptionItem { Id = c.Name, Display = c.Title }).ToList();
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            optionItems.AddRange(configs.Select(c => new OptionItem { Id = c.Name, Display = c.Title }).ToList());
+
+            return optionItems;
         }
     }
 }
