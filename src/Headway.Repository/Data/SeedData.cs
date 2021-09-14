@@ -184,8 +184,10 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
 
                 var configConfigContainer = new ConfigContainer { Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Row = 1, Column =1, IsRootContainer = true };
+                var permissionConfigContainer = new ConfigContainer { Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Row = 1, Column = 1, IsRootContainer = true };
 
                 configConfig.Containers.Add(configConfigContainer);
+                permissionsConfig.Containers.Add(permissionConfigContainer);
                 applicationDbContext.SaveChanges();
 
                 permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = null, IsTitle = null, Order = 1, Component = null });
@@ -193,9 +195,9 @@ namespace Headway.Repository.Data
                 permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsIdentity = null, IsTitle = null, Order = 3, Component = null });
                 applicationDbContext.SaveChanges();
 
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, IsTitle = false, Order = 1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsIdentity = false, IsTitle = true, Order = 2, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsIdentity = false, IsTitle = false, Order = 3, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, IsTitle = false, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsIdentity = false, IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsIdentity = false, IsTitle = false, Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 applicationDbContext.SaveChanges();
 
                 configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = null, IsTitle = null, Order = 1, Component = null });
@@ -216,6 +218,7 @@ namespace Headway.Repository.Data
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBack", Label = "Navigate Back", IsIdentity = false, IsTitle = false, Order = 10, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = "Name=OptionsCode,Value=PageOptionItems" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackProperty", Label = "Navigate Back Property", IsIdentity = false, IsTitle = false, Order = 11, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = "Name=OptionsCode,Value=ModelFieldsOptionItems;Name=Model,Value=Config" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateBackConfig", Label = "Navigate Back Config", IsIdentity = false, IsTitle = false, Order = 12, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = "Name=OptionsCode,Value=ConfigOptionItems" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", IsIdentity = false, IsTitle = false, Order = 13, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls" });
                 applicationDbContext.SaveChanges();
 
                 configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItemId", Label = "Config Item Id", IsIdentity = true, IsTitle = false, Order = 1, ConfigContainer = configConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
