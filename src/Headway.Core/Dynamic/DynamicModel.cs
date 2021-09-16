@@ -92,6 +92,7 @@ namespace Headway.Core.Dynamic
                 Model = model,
                 Label = configItem.Label,
                 Order = configItem.Order,
+                ConfigName = configItem.ConfigName,
                 ConfigContainerId = configItem.ConfigContainer.ConfigContainerId,
                 ComponentArgs = configItem.ComponentArgs,
                 PropertyInfo = propertyInfo,
