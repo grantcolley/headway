@@ -19,7 +19,7 @@ namespace Headway.Razor.Controls.Pages
         {
             await GetConfig(Config);
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => __builder =>
