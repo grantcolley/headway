@@ -5,6 +5,7 @@ using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Containers
@@ -26,8 +27,12 @@ namespace Headway.Razor.Controls.Containers
 
         protected DynamicModel<T> dynamicModel;
 
+        protected List<T> list;
+
         protected override async Task OnInitializedAsync()
         {
+            list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
+
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
     }
