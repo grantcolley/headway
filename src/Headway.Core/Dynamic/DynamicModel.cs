@@ -8,15 +8,16 @@ using System.Reflection;
 
 namespace Headway.Core.Dynamic
 {
-    public class DynamicModel<T>
+    public class DynamicModel<T> where T : class, new()
     {
         private readonly string idFieldName;
         private readonly string titleFieldName;
-
+        
         public DynamicModel(T model, Config config)
         {
             Model = model;
             Config = config;
+            Helper = DynamicTypeHelper.Get<T>();
 
             var idField = config.ConfigItems.FirstOrDefault(ci => ci.IsIdentity.HasValue && ci.IsIdentity.Value);
 
@@ -37,6 +38,7 @@ namespace Headway.Core.Dynamic
 
         public T Model { get; private set; }
         public Config Config { get; private set; }
+        public DynamicTypeHelper<T> Helper { get; private set; }
         public DynamicContainer RootContainer { get; set; }
         public List<DynamicField> DynamicFields { get; private set; }
 

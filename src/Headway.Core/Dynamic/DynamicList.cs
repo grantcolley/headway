@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Headway.Core.Dynamic
 {
-    public class DynamicList<T>
+    public class DynamicList<T> where T : class, new()
     {
         private readonly Dictionary<string, PropertyInfo> properties = new();
         private readonly IEnumerable<T> listItems;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Containers
 {
     [DynamicContainer]
-    public abstract class TableBase<T> : DynamicContainerBase<T>
+    public abstract class TableBase<T> : DynamicContainerBase<T> where T : class, new()
     {
         [Inject]
         public IDynamicService DynamicService { get; set; }

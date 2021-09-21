@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
 
-@typeparam T
+@typeparam T where T : class, new()
 @inherits CardBase<T>
 
 <AuthorizeView>
