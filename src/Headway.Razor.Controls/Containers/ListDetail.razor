@@ -1,4 +1,44 @@
-﻿@typeparam T
-@inherits ListDetailBase<T>
+﻿@typeparam T where T : class, new()
+@inherits ListDetailBase<T> 
 
-<h1>Hello world!</h1>
+<div class="container container-body float-start">
+	<div class="row">
+		<div class="col-sm">
+
+		</div>
+		<div class="col-sm">
+            @if (dynamicList != null)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            @foreach (var column in dynamicList.ConfigItems)
+                            {
+                                <th>@column.Label</th>
+                            }
+                            <th> 
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var listIitem in dynamicList.DynamicListItems)
+                        {
+                            <tr>
+                                @foreach (var column in dynamicList.ConfigItems)
+                                {
+                                    <td>
+                                        @dynamicList.GetValue(listIitem.Model, column.PropertyName)
+                                    </td>
+                                }
+                                <td>
+                                    <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+		</div>
+	</div>
+</div>
