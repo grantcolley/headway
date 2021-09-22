@@ -19,14 +19,14 @@ namespace Headway.Core.Dynamic
             Config = config;
             Helper = DynamicTypeHelper.Get<T>();
 
-            var idField = config.ConfigItems.FirstOrDefault(ci => ci.IsIdentity.HasValue && ci.IsIdentity.Value);
+            var idField = config.ConfigItems.FirstOrDefault(ci => ci.IsIdentity);
 
             if (idField != null)
             {
                 idFieldName = idField.PropertyName;
             }
 
-            var titleField = config.ConfigItems.FirstOrDefault(ci => ci.IsTitle.HasValue && ci.IsTitle.Value);
+            var titleField = config.ConfigItems.FirstOrDefault(ci => ci.IsTitle);
 
             if(titleField != null)
             {
