@@ -14,26 +14,5 @@ namespace Headway.Razor.Controls.Base
 
         [Parameter]
         public List<DynamicArg> ComponentArgs { get; set; }
-
-        public Expression<Func<string>> FieldExpression
-        {
-            get
-            {
-                return Expression.Lambda<Func<string>>(Field.MemberExpression);
-            }
-        }
-
-        public string PropertyValue
-        {
-            get
-            {
-                return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
-            }
-        }
-
-        public virtual void OnValueChanged(string value)
-        {
-            Field.PropertyInfo.SetValue(Field.Model, value);
-        }
     }
 }
