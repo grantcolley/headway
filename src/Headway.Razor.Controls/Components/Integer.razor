@@ -1,0 +1,19 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits IntegerBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @Field.Label
+        </div>
+        <div class="col-sm-8">
+            <IntegerNumber class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
+            <ValidationMessage For="FieldExpression"/>
+        </div>
+    </div>
+</div>
