@@ -11,9 +11,25 @@ namespace Headway.Razor.Controls.Base
         [Inject]
         public IDynamicService DynamicService { get; set; }
 
-        protected async Task<DynamicList<T>> GetDynamicList(IEnumerable<T> list, string config)
+        protected async Task<DynamicList<T>> GetDynamicListAsync(IEnumerable<T> list, string config)
         {
             var result = await DynamicService.GetDynamicListAsync<T>(list, config)
+                .ConfigureAwait(false);
+
+            return GetResponse(result);
+        }
+
+        protected async Task<DynamicModel<T>> GetDynamicModelAsync(T model, string config)
+        {
+            var result = await DynamicService.GetDynamicModelAsync<T>(model, config)
+                .ConfigureAwait(false);
+
+            return GetResponse(result);
+        }
+
+        protected async Task<DynamicModel<T>> CreateDynamicModelAsync(string config)
+        {
+            var result = await DynamicService.CreateDynamicModelInstanceAsync<T>(config)
                 .ConfigureAwait(false);
 
             return GetResponse(result);
