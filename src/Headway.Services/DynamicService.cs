@@ -89,6 +89,31 @@ namespace Headway.Services
             }
         }
 
+        public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(T model, string config) where T : class, new()
+        {
+            var serviceResultConfig =
+                await GetConfigAsync(config)
+                .ConfigureAwait(false);
+
+            if (serviceResultConfig.IsSuccess)
+            {
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResultConfig.IsSuccess,
+                    Message = serviceResultConfig.Message,
+                    Result = new DynamicModel<T>(model, serviceResultConfig.Result)
+                };
+            }
+            else
+            {
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResultConfig.IsSuccess,
+                    Message = serviceResultConfig.Message
+                };
+            }
+        }
+
         public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id, string config) where T : class, new()
         {
             var serviceResultConfig =

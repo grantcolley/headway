@@ -8,6 +8,7 @@ namespace Headway.Core.Interface
     {
         Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(IEnumerable<T> list, string config) where T : class, new();
         Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(string configName) where T : class, new();
+        Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(T model, string config) where T : class, new();
         Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id, string config) where T : class, new();
         Task<IServiceResult<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>(string config) where T : class, new();
         Task<IServiceResult<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new();
