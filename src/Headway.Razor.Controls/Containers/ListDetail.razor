@@ -4,7 +4,10 @@
 <div class="container container-body float-start">
 	<div class="row">
 		<div class="col-sm">
-
+            @if(dynamicModel != null)
+            {
+                <DynamicComponent Type="dynamicModel.RootContainer.DynamicComponent" Parameters="dynamicModel.RootContainer.Parameters" />   
+            }
 		</div>
 		<div class="col-sm">
             @if (dynamicList != null)

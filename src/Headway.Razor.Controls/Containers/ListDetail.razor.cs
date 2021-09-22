@@ -28,9 +28,13 @@ namespace Headway.Razor.Controls.Containers
 
         protected override async Task OnInitializedAsync()
         {
-            var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
+            dynamicModel = await CreateDynamicModelAsync(Config.Name);
 
-            dynamicList = await GetDynamicList(list, "ConfigItems").ConfigureAwait(false);
+            var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
+                     
+            dynamicList = await GetDynamicListAsync(list, "ConfigItems").ConfigureAwait(false);
+
+
 
             // https://softwareengineering.stackexchange.com/questions/287980/generic-sorting-of-lists
             // get the dynamicModel for ConfigItem then get the propertyInfo for the Order field
