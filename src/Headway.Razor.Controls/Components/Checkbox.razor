@@ -1,0 +1,20 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits CheckboxBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @Field.Label
+        </div>
+        <div class="col-sm-1">
+            <InputCheckbox class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression"/>
+            <ValidationMessage For="FieldExpression"/>
+        </div>
+        <div class="col-sm-7"></div>
+    </div>
+</div>
