@@ -12,8 +12,7 @@
             @Field.Label
         </div>
         <div class="col-sm-1">
-            <InputCheckbox class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression"/>
-            <ValidationMessage For="FieldExpression"/>
+            <input type="checkbox" @bind="PropertyValue" style="vertical-align:bottom"/>
         </div>
         <div class="col-sm-7"></div>
     </div>
