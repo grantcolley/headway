@@ -34,11 +34,6 @@ namespace Headway.Razor.Controls.Components
             }
         }
 
-        public virtual void OnValueChanged(string value)
-        {
-            Field.PropertyInfo.SetValue(Field.Model, value);
-        }
-
         protected override async Task OnParametersSetAsync()
         {
             var result = await OptionsService.GetOptionItemsAsync(ComponentArgs).ConfigureAwait(false);
@@ -46,6 +41,11 @@ namespace Headway.Razor.Controls.Components
             OptionItems = GetResponse(result);
 
             await base.OnParametersSetAsync();
+        }
+
+        public virtual void OnValueChanged(string value)
+        {
+            Field.PropertyInfo.SetValue(Field.Model, value);
         }
     }
 }
