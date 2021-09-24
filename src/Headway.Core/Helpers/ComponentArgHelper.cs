@@ -38,11 +38,11 @@ namespace Headway.Core.Helpers
 
                 if (!string.IsNullOrWhiteSpace(dynamicField.ComponentArgs))
                 {
-                    var componentArgs = dynamicField.ComponentArgs.Split(';');
+                    var componentArgs = dynamicField.ComponentArgs.Split('|');
 
                     foreach (var componentArg in componentArgs)
                     {
-                        var nameValue = componentArg.Split(',');
+                        var nameValue = componentArg.Split(';');
                         var name = nameValue[0].Split('=');
                         var value = nameValue[1].Split('=');
 
