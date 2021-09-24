@@ -182,7 +182,7 @@ namespace Headway.Repository.Data
                     Title = "ConfigItem",
                     Model = "Headway.Core.Model.ConfigItem, Headway.Core",
                     ModelApi = "Configuration",
-                    Container = "Headway.Razor.Controls.Containers.ListDetail`1, Headway.Razor.Controls",
+                    Container = "Headway.Razor.Controls.Components.ListDetail`1, Headway.Razor.Controls",
                     NavigateTo = null,
                     NavigateToProperty = null,
                     NavigateToConfig = null,

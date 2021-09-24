@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Controls.Containers
+namespace Headway.Razor.Controls.Components
 {
-    [DynamicContainer]
+    [DynamicComponent]
     public abstract class ListDetailBase<T> : GenericComponentBase<T> where T : class, new()
     {
         [Parameter]
