@@ -1,4 +1,5 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Dynamic;
 using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
 {
+    [DynamicComponent]
     public class GenericListBase : ConfigComponentBase
     {
         [Parameter]
