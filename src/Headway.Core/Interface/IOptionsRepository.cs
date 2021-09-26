@@ -6,6 +6,7 @@ namespace Headway.Core.Interface
 {
     public interface IOptionsRepository : IRepository
     {
-        Task<IEnumerable<OptionItem>> GetOptionItemsAsync(string source, List<Arg> args);
+        Task<IEnumerable<OptionItem>> GetOptionItemsAsync(List<Arg> args);
+        Task<string> GetComplexOptionItemsAsync(List<Arg> args);
     }
 }
