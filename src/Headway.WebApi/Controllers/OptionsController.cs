@@ -20,11 +20,9 @@ namespace Headway.WebApi.Controllers
             this.optionsRepository = optionsRepository;
         }
 
-        [HttpGet("{optionsCode}/{args}")]
-        public async Task<IActionResult> Get(string optionsCode, string args)
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] List<Arg> args)
         {
-            var arguments = JsonSerializer.Deserialize<List<Arg>>(args);
-
             var authorised = await IsAuthorisedAsync("User")
                 .ConfigureAwait(false);
 
@@ -33,11 +31,29 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var permissions = await optionsRepository
-                .GetOptionItemsAsync(optionsCode, arguments)
+            var options = await optionsRepository
+                .GetOptionItemsAsync(args)
                 .ConfigureAwait(false);
 
-            return Ok(permissions);
+            return Ok(options);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ComplexOptions([FromBody] List<Arg> args)
+        {
+            var authorised = await IsAuthorisedAsync("User")
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var options = await optionsRepository
+                .GetComplexOptionItemsAsync(args)
+                .ConfigureAwait(false);
+
+            return Ok(options);
         }
     }
 }
