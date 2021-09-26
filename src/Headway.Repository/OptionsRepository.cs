@@ -84,7 +84,7 @@ namespace Headway.Repository
 
         private async Task<string> GetConfigContainers(List<Arg> args)
         {
-            var configName = args.Single(a => a.Name.Equals("ConfigName")).Value;
+            var configName = args.Single(a => a.Name.Equals("SearchParameter")).Value;
 
             var configs = await applicationDbContext.Configs
                 .Include(c => c.Containers)
