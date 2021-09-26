@@ -1,0 +1,29 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@typeparam T where T : class, new()
+@inherits DropdownComplexBase<T>
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @Field.Label
+        </div>
+        <div class="col-sm-8">
+            <InputSelect class="form-control" Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((T value) => OnValueChanged(value))">
+                @if (OptionItems != null)
+                {
+                    @foreach (var optionItem in OptionItems)
+                    {
+                        <option value="@optionItem">@optionItem.ToString()</option>
+                    }
+                }
+            </InputSelect>
+
+            <ValidationMessage For="FieldExpression"/>
+        </div>
+    </div>
+</div>
