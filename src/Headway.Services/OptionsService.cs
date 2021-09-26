@@ -1,10 +1,12 @@
-﻿using Headway.Core.Helpers;
+﻿using Headway.Core.Constants;
+using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Options;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -12,8 +14,6 @@ namespace Headway.Services
 {
     public class OptionsService : ServiceBase, IOptionsService
     {
-        private const string OPTIONS_CODE = "OptionsCode";
-
         private readonly Dictionary<string, IOptionItems> localOptionItems = new();
 
         public OptionsService(HttpClient httpClient)
@@ -38,9 +38,9 @@ namespace Headway.Services
 
         public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
         {
-            var optionsCode = dynamicArgs.Single(a => a.Name.Equals(OPTIONS_CODE)).Value.ToString();
-            var optionsArgs = dynamicArgs.Where(a => !a.Name.Equals(OPTIONS_CODE));
-            var args = ComponentArgHelper.GetArgs(optionsArgs);
+            var optionsCode = dynamicArgs.Single(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
+
+            var args = ComponentArgHelper.GetArgs(dynamicArgs);
 
             if (localOptionItems.ContainsKey(optionsCode))
             {
@@ -51,12 +51,21 @@ namespace Headway.Services
                 };
             }
 
-            string jsonArgs = JsonSerializer.Serialize(args);
-
-            var httpResponseMessage = await httpClient.GetAsync($"Options/{optionsCode}/{jsonArgs}")
+            var httpResponseMessage = await httpClient.PostAsJsonAsync($"Options", args)
                 .ConfigureAwait(false);
 
             return await GetServiceResultAsync<IEnumerable<OptionItem>>(httpResponseMessage)
+                .ConfigureAwait(false);
+        }
+
+        public async Task<IServiceResult<IEnumerable<T>>> GetOptionItemsAsync<T>(List<DynamicArg> dynamicArgs)
+        {
+            var args = ComponentArgHelper.GetArgs(dynamicArgs);
+
+            var httpResponseMessage = await httpClient.PostAsJsonAsync($"Options/ComplexOptions", args)
+                .ConfigureAwait(false);
+
+            return await GetServiceResultAsync<IEnumerable<T>>(httpResponseMessage)
                 .ConfigureAwait(false);
         }
     }
