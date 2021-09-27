@@ -29,7 +29,7 @@ namespace Headway.Razor.Controls.Components
             model = args.Single(a => a.Name.Equals("Model")).Value;
             componentName = args.Single(a => a.Name.Equals("Component")).Value;
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => __builder =>

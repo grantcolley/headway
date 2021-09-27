@@ -42,7 +42,8 @@ namespace Headway.Repository
                 .Where(m => permissions.Contains(m.Permission))
                 .AsNoTracking()
                 .OrderBy(m => m.Order)
-                .ToListAsync();
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             var permittedModules = modules
                 .Where(m => m.IsPermitted(permissions))

@@ -33,7 +33,7 @@ namespace Headway.Repository
 
             if (complexOptionItems.ContainsKey(optionsCode))
             {
-                return await complexOptionItems[optionsCode].Invoke(args);
+                return await complexOptionItems[optionsCode].Invoke(args).ConfigureAwait(false);
             }
 
             throw new NotImplementedException(optionsCode);
@@ -45,7 +45,7 @@ namespace Headway.Repository
 
             if (optionItems.ContainsKey(optionsCode))
             {
-                return await optionItems[optionsCode].Invoke(args);
+                return await optionItems[optionsCode].Invoke(args).ConfigureAwait(false);
             }
 
             throw new NotImplementedException(optionsCode);

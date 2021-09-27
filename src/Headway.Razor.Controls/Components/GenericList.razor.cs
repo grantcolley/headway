@@ -22,7 +22,7 @@ namespace Headway.Razor.Controls.Components
         {
             await GetConfig(Field.ConfigName).ConfigureAwait(false);
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => __builder =>

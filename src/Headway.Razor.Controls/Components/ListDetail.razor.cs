@@ -26,7 +26,7 @@ namespace Headway.Razor.Controls.Components
 
         protected override async Task OnInitializedAsync()
         {
-            dynamicModel = await CreateDynamicModelAsync(Config.Name);
+            dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false); ;
 
             var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
 

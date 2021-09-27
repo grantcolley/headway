@@ -189,7 +189,7 @@ namespace Headway.Services
                 $"{dynamicModel.Config.ModelApi}", dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var addResult = await GetServiceResultAsync<T>(addResponse);
+            var addResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
 
             var serviceResult = new ServiceResult<DynamicModel<T>>
             {
@@ -211,7 +211,7 @@ namespace Headway.Services
                 $"{dynamicModel.Config.ModelApi}", dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var addResult = await GetServiceResultAsync<T>(addResponse);
+            var addResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
 
             var serviceResult = new ServiceResult<DynamicModel<T>>
             {
@@ -231,7 +231,7 @@ namespace Headway.Services
         {
             var configPath = $"{dynamicModel.Config.ModelApi}/{dynamicModel.Id}";
             var httpResponseMessage = await httpClient.DeleteAsync($"{configPath}").ConfigureAwait(false);
-            return await GetServiceResultAsync<int>(httpResponseMessage);
+            return await GetServiceResultAsync<int>(httpResponseMessage).ConfigureAwait(false);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Headway.Razor.Controls.Components
 
             OptionItems = GetResponse(result);
 
-            await base.OnParametersSetAsync();
+            await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
         public virtual void OnValueChanged(T value)

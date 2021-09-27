@@ -15,9 +15,9 @@ namespace Headway.Razor.Controls.Pages
 
         protected override async Task OnParametersSetAsync()
         {
-            await GetConfig(Config);
+            await GetConfig(Config).ConfigureAwait(false);
 
-            await base.OnParametersSetAsync();
+            await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => __builder =>

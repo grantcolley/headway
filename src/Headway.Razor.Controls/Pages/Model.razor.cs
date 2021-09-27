@@ -17,7 +17,7 @@ namespace Headway.Razor.Controls.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await GetConfig(Config);
+            await GetConfig(Config).ConfigureAwait(false);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }

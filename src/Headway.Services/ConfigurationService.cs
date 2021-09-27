@@ -26,7 +26,8 @@ namespace Headway.Services
         {
             var httpResponseMessage = await httpClient.GetAsync($"Configuration").ConfigureAwait(false);
 
-            var serviceResult = await GetServiceResultAsync<IEnumerable<Config>>(httpResponseMessage);
+            var serviceResult = await GetServiceResultAsync<IEnumerable<Config>>(httpResponseMessage)
+                .ConfigureAwait(false);
 
             if (serviceResult.IsSuccess)
             {
