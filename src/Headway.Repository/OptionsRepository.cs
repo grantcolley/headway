@@ -96,6 +96,7 @@ namespace Headway.Repository
             if (configs.Any())
             {
                 var configContainers = configs.Single().Containers.ToList();
+                configContainers.Insert(0, new ConfigContainer());
                 return JsonSerializer.Serialize(configContainers);
             }
             else
