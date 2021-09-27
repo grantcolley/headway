@@ -8,6 +8,12 @@ namespace Headway.Core.Helpers
 {
     public static class PropertyInfoHelper
     {
+        public static PropertyInfo GetPropertyInfo(Type type, string propertyName)
+        {
+            var propertyInfos = GetPropertyInfos(type);
+            return propertyInfos.FirstOrDefault(p => p.Name.Equals(propertyName));
+        }
+
         public static IEnumerable<PropertyInfo> GetPropertyInfos(Type type)
         {
             var propertyInfoResults = new List<PropertyInfo>();
