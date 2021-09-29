@@ -1,5 +1,6 @@
 ﻿@using Headway.Core.Dynamic
 @using Headway.Core.Model
+@using Headway.Razor.Controls.Model
 @using Microsoft.AspNetCore.Components.Forms
 @using System.Reflection
 @using System.Linq.Expressions
@@ -18,7 +19,7 @@
                 {
                     @foreach (var optionItem in OptionItems)
                     {
-                        <option value="@optionItem.Item">@optionItem.Name</option>
+                        <option value="@optionItem.Args">@optionItem.Name</option>
                     }
                 }
             </InputSelect>
