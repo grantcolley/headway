@@ -14,17 +14,15 @@
             @Field.Label
         </div>
         <div class="col-sm-8">
-            <InputSelect class="form-control" Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((T value) => OnValueChanged(value))">
+            <InputSelect class="form-control" Value="@Value" ValueChanged="@((string value) => OnValueChanged(value))">
                 @if (OptionItems != null)
                 {
                     @foreach (var optionItem in OptionItems)
                     {
-                        <option value="@optionItem.Args">@optionItem.Name</option>
+                        <option value="@optionItem.Name">@optionItem.Name</option>
                     }
                 }
             </InputSelect>
-
-            <ValidationMessage For="FieldExpression"/>
         </div>
     </div>
 </div>
