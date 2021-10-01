@@ -14,7 +14,7 @@
             @Field.Label
         </div>
         <div class="col-sm-8">
-            <InputSelect class="form-control" Value="@Value" ValueChanged="@((string value) => OnValueChanged(value))">
+            <InputSelect class="form-control" Value="@Value" ValueExpression="(() => Value)" ValueChanged="@((string value) => OnValueChanged(value))">
                 @if (OptionItems != null)
                 {
                     @foreach (var optionItem in OptionItems)

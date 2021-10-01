@@ -25,11 +25,14 @@ namespace Headway.Razor.Controls.Components
         {
             var displayName = ComponentArgs.Single(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
             var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
-            var value = propertyInfo.GetValue(Field.PropertyInfo.GetValue(Field.Model));
 
-            if (value != null)
+            if (Field.PropertyInfo.GetValue(Field.Model) != null)
             {
-                Value = value.ToString();
+                var value = propertyInfo.GetValue(Field.PropertyInfo.GetValue(Field.Model));
+                if (value != null)
+                {
+                    Value = value.ToString();
+                }
             }
 
             var result = await OptionsService.GetOptionItemsAsync<T>(ComponentArgs).ConfigureAwait(false);
@@ -52,8 +55,9 @@ namespace Headway.Razor.Controls.Components
             }
             else
             {
-                var optionItem = OptionItems.First(o => o.Name.Equals(value));
-                Field.PropertyInfo.SetValue(Field.Model, optionItem);
+                var optionItem = OptionItems.First(
+                    o => !string.IsNullOrWhiteSpace(o.Name) && o.Name.Equals(value));
+                Field.PropertyInfo.SetValue(Field.Model, optionItem.Item);
             }
         }
     }
