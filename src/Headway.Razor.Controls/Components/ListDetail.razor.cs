@@ -4,6 +4,7 @@ using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
@@ -24,11 +25,13 @@ namespace Headway.Razor.Controls.Components
 
         protected DynamicList<T> dynamicList;
 
+        private List<T> list;
+
         protected override async Task OnInitializedAsync()
         {
             await NewAsync().ConfigureAwait(false);
 
-            var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
+            list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
 
             dynamicList = await GetDynamicListAsync(list, "ConfigItems").ConfigureAwait(false);
 
@@ -40,17 +43,29 @@ namespace Headway.Razor.Controls.Components
             dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false);
         }
 
-        protected async Task EditAsync(T model)
+        protected async Task EditAsync(DynamicListItem<T> listItem)
         {
-            dynamicModel = await GetDynamicModelAsync(model, Config.Name).ConfigureAwait(false);
+            dynamicModel = await GetDynamicModelAsync(listItem.Model, Config.Name).ConfigureAwait(false);
         }
 
-        protected async Task AddAsync()
+        protected void Add(DynamicModel<T> model)
         {
         }
 
-        protected async Task RemoveAsync()
+        protected async Task RemoveAsync(DynamicModel<T> model)
         {
+            var listItem = dynamicList.DynamicListItems.FirstOrDefault(i => i.Model.Equals(model.Model));
+            
+            if(listItem == null)
+            {
+                return;
+            }
+
+            list.Remove(listItem.Model);
+
+            dynamicList.Remove(listItem);
+
+            await NewAsync().ConfigureAwait(false);
         }
     }
 }
