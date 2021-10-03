@@ -51,6 +51,16 @@ namespace Headway.Core.Dynamic
             return properties[field].GetValue(listItem);
         }
 
+        public void Remove(DynamicListItem<T> dynamicListItem)
+        {
+            if (dynamicListItem == null)
+            {
+                return;
+            }
+
+            DynamicListItems.Remove(dynamicListItem);
+        }
+
         private void BuildDynamicListItems()
         {
             DynamicListItems = new List<DynamicListItem<T>>();
