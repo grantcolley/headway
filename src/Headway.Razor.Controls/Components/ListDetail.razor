@@ -10,8 +10,8 @@
                     <thead>
                         <tr>
                             <th>
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-save float-left" @onclick="() => Save()"/>                                
-                                <button type="button" class="btn btn-small btn-outline-danger fas fa-times float-end" @onclick="() => Delete()"/>
+                                <button type="button" class="btn btn-small btn-outline-danger fas fa-minus float-left" @onclick="() => RemoveAsync()"/>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-arrow-right float-end" @onclick="() => AddAsync()"/>                                
                             </th>
                         </tr>
                     </thead>
@@ -36,7 +36,7 @@
                                 <th>@column.Label</th>
                             }
                             <th> 
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus float-left" @onclick="() => New()"/>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus float-left" @onclick="() => NewAsync()"/>
                             </th>
                         </tr>
                     </thead>
@@ -51,7 +51,7 @@
                                     </td>
                                 }
                                 <td>
-                                    <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Edit(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
+                                    <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => EditAsync(listIitem.Model)"/>
                                 </td>
                             </tr>
                         }

@@ -26,7 +26,7 @@ namespace Headway.Razor.Controls.Components
 
         protected override async Task OnInitializedAsync()
         {
-            dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false); ;
+            await NewAsync().ConfigureAwait(false);
 
             var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
 
@@ -35,19 +35,21 @@ namespace Headway.Razor.Controls.Components
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        protected void New()
+        protected async Task NewAsync()
+        {
+            dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false);
+        }
+
+        protected async Task EditAsync(T model)
+        {
+            dynamicModel = await GetDynamicModelAsync(model, Config.Name).ConfigureAwait(false);
+        }
+
+        protected async Task AddAsync()
         {
         }
 
-        protected void Edit(object id)
-        {
-        }
-
-        protected void Save()
-        {
-        }
-
-        protected void Delete()
+        protected async Task RemoveAsync()
         {
         }
     }
