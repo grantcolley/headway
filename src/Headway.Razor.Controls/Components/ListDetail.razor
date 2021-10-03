@@ -6,7 +6,23 @@
 		<div class="col-sm">
             @if(dynamicModel != null)
             {
-                <DynamicComponent Type="dynamicModel.RootContainer.DynamicComponent" Parameters="dynamicModel.RootContainer.Parameters" />   
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-save float-left" @onclick="() => Save()"/>                                
+                                <button type="button" class="btn btn-small btn-outline-danger fas fa-times float-end" @onclick="() => Delete()"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <DynamicComponent Type="dynamicModel.RootContainer.DynamicComponent" Parameters="dynamicModel.RootContainer.Parameters" />   
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             }
 		</div>
 		<div class="col-sm">
@@ -20,7 +36,7 @@
                                 <th>@column.Label</th>
                             }
                             <th> 
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus float-left" @onclick="() => New()"/>
                             </th>
                         </tr>
                     </thead>
@@ -35,7 +51,7 @@
                                     </td>
                                 }
                                 <td>
-                                    <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
+                                    <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Edit(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
                                 </td>
                             </tr>
                         }

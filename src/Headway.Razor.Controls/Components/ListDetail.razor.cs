@@ -35,11 +35,19 @@ namespace Headway.Razor.Controls.Components
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        protected void Add()
+        protected void New()
         {
         }
 
-        protected void Update(object id)
+        protected void Edit(object id)
+        {
+        }
+
+        protected void Save()
+        {
+        }
+
+        protected void Delete()
         {
         }
     }
