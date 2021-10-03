@@ -54,18 +54,18 @@ namespace Headway.Core.Dynamic
 
             var supportedProperties = PropertyInfoHelper.GetPropertyInfos(Model.GetType());
 
-            if(string.IsNullOrWhiteSpace(idFieldName))
+            if(!string.IsNullOrWhiteSpace(idFieldName))
             {
-                var property = supportedProperties.SingleOrDefault(n => n.Equals(idFieldName));
+                var property = supportedProperties.SingleOrDefault(p => p.Name.Equals(idFieldName));
                 if(property != null)
                 {
                     Id = Convert.ToInt32(property.GetValue(Model));
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(titleFieldName))
+            if (!string.IsNullOrWhiteSpace(titleFieldName))
             {
-                var property = supportedProperties.SingleOrDefault(n => n.Equals(titleFieldName));
+                var property = supportedProperties.SingleOrDefault(p => p.Name.Equals(titleFieldName));
                 if (property != null)
                 {
                     Title = property.GetValue(Model)?.ToString();
