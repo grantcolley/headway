@@ -9,9 +9,9 @@ namespace Headway.Core.Dynamic
     public class DynamicList<T> where T : class, new()
     {
         private readonly Dictionary<string, PropertyInfo> properties = new();
-        private readonly IEnumerable<T> listItems;
+        private readonly List<T> listItems;
 
-        public DynamicList(IEnumerable<T> listItems, Config config)
+        public DynamicList(List<T> listItems, Config config)
         {
             this.listItems = listItems;
             Config = config;
@@ -51,6 +51,17 @@ namespace Headway.Core.Dynamic
             return properties[field].GetValue(listItem);
         }
 
+        public void Add(T item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+
+            listItems.Add(item);
+            DynamicListItems.Add(new DynamicListItem<T>(item));
+        }
+
         public void Remove(DynamicListItem<T> dynamicListItem)
         {
             if (dynamicListItem == null)
@@ -58,6 +69,7 @@ namespace Headway.Core.Dynamic
                 return;
             }
 
+            listItems.Remove(dynamicListItem.Model);
             DynamicListItems.Remove(dynamicListItem);
         }
 
