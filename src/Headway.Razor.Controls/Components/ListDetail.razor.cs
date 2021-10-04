@@ -25,13 +25,11 @@ namespace Headway.Razor.Controls.Components
 
         protected DynamicList<T> dynamicList;
 
-        private List<T> list;
-
         protected override async Task OnInitializedAsync()
         {
             await NewAsync().ConfigureAwait(false);
 
-            list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
+            var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
 
             dynamicList = await GetDynamicListAsync(list, "ConfigItems").ConfigureAwait(false);
 
@@ -48,8 +46,18 @@ namespace Headway.Razor.Controls.Components
             dynamicModel = await GetDynamicModelAsync(listItem.Model, Config.Name).ConfigureAwait(false);
         }
 
-        protected void Add(DynamicModel<T> model)
+        protected async Task AddAsync(DynamicModel<T> model)
         {
+            var listItem = dynamicList.DynamicListItems.FirstOrDefault(i => i.Model.Equals(model.Model));
+
+            if (listItem != null)
+            {
+                return;
+            }
+
+            dynamicList.Add(model.Model);
+
+            await NewAsync().ConfigureAwait(false);
         }
 
         protected async Task RemoveAsync(DynamicModel<T> model)
@@ -60,8 +68,6 @@ namespace Headway.Razor.Controls.Components
             {
                 return;
             }
-
-            list.Remove(listItem.Model);
 
             dynamicList.Remove(listItem);
 
