@@ -11,9 +11,9 @@ namespace Headway.Core.Dynamic
         private readonly Dictionary<string, PropertyInfo> properties = new();
         private readonly List<T> listItems;
 
-        public DynamicList(List<T> listItems, Config config)
+        public DynamicList(IEnumerable<T> listItems, Config config)
         {
-            this.listItems = listItems;
+            this.listItems = new List<T>(listItems);
             Config = config;
 
             var t = typeof(T);
