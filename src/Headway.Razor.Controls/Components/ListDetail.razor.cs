@@ -64,12 +64,10 @@ namespace Headway.Razor.Controls.Components
         {
             var listItem = dynamicList.DynamicListItems.FirstOrDefault(i => i.Model.Equals(model.Model));
             
-            if(listItem == null)
+            if(listItem != null)
             {
-                return;
+                dynamicList.Remove(listItem);
             }
-
-            dynamicList.Remove(listItem);
 
             await NewAsync().ConfigureAwait(false);
         }
