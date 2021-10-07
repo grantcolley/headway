@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public class GenericListBase : ConfigComponentBase
+    public abstract class GenericListBase : ConfigComponentBase
     {
         [Parameter]
         public DynamicField Field { get; set; }

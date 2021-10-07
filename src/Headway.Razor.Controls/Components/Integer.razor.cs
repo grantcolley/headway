@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public class IntegerBase : DynamicComponentBase
+    public abstract class IntegerBase : DynamicComponentBase
     {
         public Expression<Func<int>> FieldExpression
         {

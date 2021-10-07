@@ -4,7 +4,7 @@ using Headway.Razor.Controls.Base;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public class LabelBase : DynamicComponentBase
+    public abstract class LabelBase : DynamicComponentBase
     {
         public string PropertyValue
         {

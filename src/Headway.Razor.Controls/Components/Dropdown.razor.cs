@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public class DropdownBase : DynamicComponentBase
+    public abstract class DropdownBase : DynamicComponentBase
     {
         [Inject]
         public IOptionsService OptionsService { get; set; }

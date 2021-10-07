@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public class GenericDropdownBase : ComponentBase
+    public abstract class GenericDropdownBase : ComponentBase
     {
         private string model;
         private string componentName;

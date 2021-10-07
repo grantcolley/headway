@@ -4,7 +4,7 @@ using Headway.Razor.Controls.Base;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public class CheckboxBase : DynamicComponentBase
+    public abstract class CheckboxBase : DynamicComponentBase
     {
         public bool PropertyValue
         {

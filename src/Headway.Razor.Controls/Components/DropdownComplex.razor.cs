@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicComponent]
-    public class DropdownComplexBase<T> : DynamicComponentBase
+    public abstract class DropdownComplexBase<T> : DynamicComponentBase
     {
         [Inject]
         public IOptionsService OptionsService { get; set; }
