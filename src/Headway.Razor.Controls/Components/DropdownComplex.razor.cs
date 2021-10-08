@@ -17,13 +17,13 @@ namespace Headway.Razor.Controls.Components
         [Inject]
         public IOptionsService OptionsService { get; set; }
 
-        protected string Value { get; set; }
+        protected string value { get; set; }
 
-        protected IEnumerable<GenericItem<T>> OptionItems;
+        protected IEnumerable<GenericItem<T>> optionItems;
 
         protected override async Task OnParametersSetAsync()
         {
-            Value = null;
+            value = null;
 
             var displayName = ComponentArgs.Single(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
             
@@ -31,20 +31,20 @@ namespace Headway.Razor.Controls.Components
             
             if (Field.PropertyInfo.GetValue(Field.Model) != null)
             {
-                var value = propertyInfo.GetValue(Field.PropertyInfo.GetValue(Field.Model));
-                if (value != null)
+                var val = propertyInfo.GetValue(Field.PropertyInfo.GetValue(Field.Model));
+                if (val != null)
                 {
-                    Value = value.ToString();
+                    value = val.ToString();
                 }
             }
 
             var result = await OptionsService.GetOptionItemsAsync<T>(ComponentArgs).ConfigureAwait(false);
 
-            var optionItems = GetResponse(result);
+            var items = GetResponse(result);
 
-            if (optionItems.Any())
+            if (items.Any())
             {
-                OptionItems = optionItems.Select( oi => new GenericItem<T>(oi, propertyInfo));
+                optionItems = items.Select( oi => new GenericItem<T>(oi, propertyInfo));
             }
 
             await base.OnParametersSetAsync().ConfigureAwait(false);
@@ -58,7 +58,7 @@ namespace Headway.Razor.Controls.Components
             }
             else
             {
-                var optionItem = OptionItems.First(
+                var optionItem = optionItems.First(
                     o => !string.IsNullOrWhiteSpace(o.Name) && o.Name.Equals(value));
                 Field.PropertyInfo.SetValue(Field.Model, optionItem.Item);
             }

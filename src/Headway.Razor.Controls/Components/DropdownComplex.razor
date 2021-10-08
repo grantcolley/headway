@@ -14,10 +14,10 @@
             @Field.Label
         </div>
         <div class="col-sm-8">
-            <InputSelect class="form-control" Value="@Value" ValueExpression="(() => Value)" ValueChanged="@((string value) => OnValueChanged(value))">
-                @if (OptionItems != null)
+            <InputSelect class="form-control" Value="@value" ValueExpression="(() => value)" ValueChanged="@((string val) => OnValueChanged(val))">
+                @if (optionItems != null)
                 {
-                    @foreach (var optionItem in OptionItems)
+                    @foreach (var optionItem in optionItems)
                     {
                         <option value="@optionItem.Name">@optionItem.Name</option>
                     }

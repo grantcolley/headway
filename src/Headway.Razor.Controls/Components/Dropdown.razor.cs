@@ -16,7 +16,7 @@ namespace Headway.Razor.Controls.Components
         [Inject]
         public IOptionsService OptionsService { get; set; }
 
-        protected IEnumerable<OptionItem> OptionItems;
+        protected IEnumerable<OptionItem> optionItems;
 
         public Expression<Func<string>> FieldExpression
         {
@@ -38,7 +38,7 @@ namespace Headway.Razor.Controls.Components
         {
             var result = await OptionsService.GetOptionItemsAsync(ComponentArgs).ConfigureAwait(false);
 
-            OptionItems = GetResponse(result);
+            optionItems = GetResponse(result);
 
             await base.OnParametersSetAsync().ConfigureAwait(false);
         }
