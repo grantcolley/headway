@@ -17,15 +17,18 @@ namespace Headway.Razor.Controls.Components
         [Inject]
         public IOptionsService OptionsService { get; set; }
 
-        public string Value { get; set; }
+        protected string Value { get; set; }
 
         protected IEnumerable<GenericItem<T>> OptionItems;
 
         protected override async Task OnParametersSetAsync()
         {
-            var displayName = ComponentArgs.Single(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
-            var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
+            Value = null;
 
+            var displayName = ComponentArgs.Single(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
+            
+            var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
+            
             if (Field.PropertyInfo.GetValue(Field.Model) != null)
             {
                 var value = propertyInfo.GetValue(Field.PropertyInfo.GetValue(Field.Model));
