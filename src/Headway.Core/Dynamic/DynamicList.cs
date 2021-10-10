@@ -1,14 +1,11 @@
-﻿using Headway.Core.Helpers;
-using Headway.Core.Model;
+﻿using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Headway.Core.Dynamic
 {
     public class DynamicList<T> where T : class, new()
     {
-        private readonly Dictionary<string, PropertyInfo> properties = new();
         private readonly List<T> listItems;
 
         public DynamicList(IEnumerable<T> listItems, Config config)
@@ -16,16 +13,12 @@ namespace Headway.Core.Dynamic
             this.listItems = new List<T>(listItems);
             Config = config;
 
-            var t = typeof(T);
-            var propertyInfos = PropertyInfoHelper.GetPropertyInfos(t);
-
-            foreach (var propertyInfo in propertyInfos)
-            {
-                properties.Add(propertyInfo.Name, propertyInfo);
-            }
+            Helper = DynamicTypeHelper.Get<T>();
 
             BuildDynamicListItems();
         }
+
+        public DynamicTypeHelper<T> Helper { get; private set; }
 
         public Config Config { get; private set; }
 
@@ -48,7 +41,7 @@ namespace Headway.Core.Dynamic
 
         public object GetValue(T listItem, string field)
         {
-            return properties[field].GetValue(listItem);
+            return Helper.GetValue(listItem, field);
         }
 
         public void Add(T item)
