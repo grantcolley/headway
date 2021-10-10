@@ -56,7 +56,7 @@ namespace Headway.Core.Dynamic
 
             if(!string.IsNullOrWhiteSpace(idFieldName))
             {
-                var property = supportedProperties.SingleOrDefault(p => p.Name.Equals(idFieldName));
+                var property = supportedProperties.FirstOrDefault(p => p.Name.Equals(idFieldName));
                 if(property != null)
                 {
                     Id = Convert.ToInt32(property.GetValue(Model));
@@ -65,7 +65,7 @@ namespace Headway.Core.Dynamic
 
             if (!string.IsNullOrWhiteSpace(titleFieldName))
             {
-                var property = supportedProperties.SingleOrDefault(p => p.Name.Equals(titleFieldName));
+                var property = supportedProperties.FirstOrDefault(p => p.Name.Equals(titleFieldName));
                 if (property != null)
                 {
                     Title = property.GetValue(Model)?.ToString();
