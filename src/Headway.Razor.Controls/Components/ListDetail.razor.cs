@@ -1,5 +1,7 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
@@ -31,7 +33,9 @@ namespace Headway.Razor.Controls.Components
 
             var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
 
-            dynamicList = await GetDynamicListAsync(list, "ConfigItems").ConfigureAwait(false);
+            var listConfig = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LIST_CONFIG);
+
+            dynamicList = await GetDynamicListAsync(list, listConfig).ConfigureAwait(false);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
