@@ -7,6 +7,7 @@ namespace Headway.Core.Dynamic
     public class DynamicList<T> where T : class, new()
     {
         private readonly List<T> listItems;
+        private readonly List<DynamicListItem<T>> dynamicListItems;
 
         public DynamicList(IEnumerable<T> listItems, Config config)
         {
@@ -15,7 +16,7 @@ namespace Headway.Core.Dynamic
 
             Helper = DynamicTypeHelper.Get<T>();
 
-            BuildDynamicListItems();
+            dynamicListItems = listItems.Select(i => new DynamicListItem<T>(i)).ToList();
         }
 
         public DynamicTypeHelper<T> Helper { get; private set; }
@@ -37,7 +38,20 @@ namespace Headway.Core.Dynamic
 
         public string Title { get { return Config.Title; } }
 
-        public List<DynamicListItem<T>> DynamicListItems { get; private set; }
+        public List<DynamicListItem<T>> DynamicListItems 
+        { 
+            get
+            {
+                if(string.IsNullOrWhiteSpace(Config.OrderModelBy))
+                {
+                    return dynamicListItems;
+                }
+
+                return dynamicListItems.OrderBy(
+                    i => Helper.GetValue(i.Model, Config.OrderModelBy))
+                    .ToList();
+            }
+        }
 
         public object GetValue(T listItem, string field)
         {
@@ -64,15 +78,6 @@ namespace Headway.Core.Dynamic
 
             listItems.Remove(dynamicListItem.Model);
             DynamicListItems.Remove(dynamicListItem);
-        }
-
-        private void BuildDynamicListItems()
-        {
-            DynamicListItems = new List<DynamicListItem<T>>();
-
-            var dynamicListItems = listItems.Select(i => new DynamicListItem<T>(i));
-
-            DynamicListItems.AddRange(dynamicListItems);
         }
     }
 }
