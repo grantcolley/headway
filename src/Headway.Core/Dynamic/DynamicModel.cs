@@ -52,11 +52,9 @@ namespace Headway.Core.Dynamic
 
             var constantExpression = Expression.Constant(Model);
 
-            var supportedProperties = PropertyInfoHelper.GetPropertyInfos(Model.GetType());
-
             if(!string.IsNullOrWhiteSpace(idFieldName))
             {
-                var property = supportedProperties.FirstOrDefault(p => p.Name.Equals(idFieldName));
+                var property = Helper.SupportedProperties.FirstOrDefault(p => p.Name.Equals(idFieldName));
                 if(property != null)
                 {
                     Id = Convert.ToInt32(property.GetValue(Model));
@@ -65,15 +63,15 @@ namespace Headway.Core.Dynamic
 
             if (!string.IsNullOrWhiteSpace(titleFieldName))
             {
-                var property = supportedProperties.FirstOrDefault(p => p.Name.Equals(titleFieldName));
+                var property = Helper.SupportedProperties.FirstOrDefault(p => p.Name.Equals(titleFieldName));
                 if (property != null)
                 {
                     Title = property.GetValue(Model)?.ToString();
                 }
             }
 
-            DynamicFields = new List<DynamicField>((from p in supportedProperties
-                                join c in Config.ConfigItems on p.Name equals c.PropertyName
+            DynamicFields = new List<DynamicField>((from p in Helper.SupportedProperties
+                                                    join c in Config.ConfigItems on p.Name equals c.PropertyName
                                 select CreateDynamicField(Model, constantExpression, p, c)).ToList());
 
             ComponentArgHelper.AddDynamicArgs(DynamicFields);
