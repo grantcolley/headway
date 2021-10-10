@@ -30,6 +30,48 @@ namespace Headway.Core.Helpers
             return args;
         }
 
+        public static Arg GetArg(IEnumerable<DynamicArg> dynamicArgs, string name)
+        {
+            var dynamicArg = dynamicArgs.FirstOrDefault(a => a.Name.Equals(name));
+
+            if (dynamicArg == null)
+            {
+                return null;
+            }
+
+            var arg = new Arg { Name = dynamicArg.Name };
+
+            if (dynamicArg.Value is DynamicField field)
+            {
+                arg.Value = field.PropertyInfo.GetValue(field.Model)?.ToString();
+            }
+            else
+            {
+                arg.Value = dynamicArg.Value.ToString();
+            }
+
+            return arg;
+        }
+
+        public static string GetArgValue(IEnumerable<DynamicArg> dynamicArgs, string name)
+        {
+            var dynamicArg = dynamicArgs.FirstOrDefault(a => a.Name.Equals(name));
+
+            if (dynamicArg == null)
+            {
+                return null;
+            }
+
+            if (dynamicArg.Value is DynamicField field)
+            {
+                return field.PropertyInfo.GetValue(field.Model)?.ToString();
+            }
+            else
+            {
+                return dynamicArg.Value.ToString();
+            }
+        }
+
         public static void AddDynamicArgs(List<DynamicField> dynamicFields)
         {
             foreach (var dynamicField in dynamicFields)
