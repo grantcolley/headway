@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
@@ -13,7 +14,7 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
-            var modelName = args.Single(a => a.Name.Equals("Model")).Value.ToString();
+            var modelName = args.Single(a => a.Name.Equals(Args.MODEL)).Value.ToString();
 
             var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 

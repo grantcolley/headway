@@ -1,3 +1,4 @@
+using Headway.Core.Constants;
 using Headway.Core.Interface;
 using Headway.Repository;
 using Headway.Repository.Data;
@@ -27,15 +28,15 @@ namespace Headway.WebApi
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                if (Configuration.GetConnectionString("DefaultConnection").Contains("Headway.db"))
+                if (Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING).Contains(DataMigrations.SQLITE_DATABASE))
                 {
-                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"),
-                        x => x.MigrationsAssembly("Headway.MigrationsSqlite"));
+                    options.UseSqlite(Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
+                        x => x.MigrationsAssembly(DataMigrations.SQLITE_MIGRATIONS));
                 }
                 else
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                        x => x.MigrationsAssembly("Headway.MigrationsSqlServer"));
+                    options.UseSqlServer(Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
+                        x => x.MigrationsAssembly(DataMigrations.SQLSERVER_MIGRATIONS));
                 }
             });
 

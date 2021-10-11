@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
@@ -26,8 +27,8 @@ namespace Headway.Razor.Controls.Components
         {
             var args = ComponentArgHelper.GetArgs(ComponentArgs);
 
-            model = args.Single(a => a.Name.Equals("Model")).Value;
-            componentName = args.Single(a => a.Name.Equals("Component")).Value;
+            model = args.Single(a => a.Name.Equals(Args.MODEL)).Value;
+            componentName = args.Single(a => a.Name.Equals(Args.COMPONENT)).Value;
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
@@ -38,8 +39,8 @@ namespace Headway.Razor.Controls.Components
             var component = Type.GetType(componentName);
             var genericType = component.MakeGenericType(new[] { type });
             __builder.OpenComponent(1, genericType);
-            __builder.AddAttribute(2, "Field", Field);
-            __builder.AddAttribute(3, "ComponentArgs", ComponentArgs);
+            __builder.AddAttribute(2, Parameters.FIELD, Field);
+            __builder.AddAttribute(3, Parameters.COMPONENT_ARGS, ComponentArgs);
             __builder.CloseComponent();
         };
     }

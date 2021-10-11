@@ -55,7 +55,7 @@ namespace Headway.Services
 
             if (serviceResultConfig.IsSuccess)
             {
-                var configApi = $"{serviceResultConfig.Result.ModelApi}";
+                var configApi = serviceResultConfig.Result.ModelApi;
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
                 var serviceResultList = await GetServiceResultAsync<IEnumerable<T>>(response)
@@ -186,7 +186,7 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
             var addResponse = await httpClient.PostAsJsonAsync(
-                $"{dynamicModel.Config.ModelApi}", dynamicModel.Model)
+                dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
             var addResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
@@ -208,7 +208,7 @@ namespace Headway.Services
         public async Task<IServiceResult<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
             var addResponse = await httpClient.PutAsJsonAsync(
-                $"{dynamicModel.Config.ModelApi}", dynamicModel.Model)
+                dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
             var addResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
@@ -230,7 +230,7 @@ namespace Headway.Services
         public async Task<IServiceResult<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
             var configPath = $"{dynamicModel.Config.ModelApi}/{dynamicModel.Id}";
-            var httpResponseMessage = await httpClient.DeleteAsync($"{configPath}").ConfigureAwait(false);
+            var httpResponseMessage = await httpClient.DeleteAsync(configPath).ConfigureAwait(false);
             return await GetServiceResultAsync<int>(httpResponseMessage).ConfigureAwait(false);
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace Headway.Razor.Controls.Model
+﻿using Headway.Core.Constants;
+
+namespace Headway.Razor.Controls.Model
 {
     public class Alert
     {
@@ -11,7 +13,7 @@
         {
             get
             {
-                return $"/alert/{AlertType ?? string.Empty}/{Title ?? string.Empty}/{Message ?? string.Empty}/{RedirectText ?? string.Empty}/{RedirectPage ?? string.Empty}";
+                return $"/{Alerts.ALERT}/{AlertType ?? string.Empty}/{Title ?? string.Empty}/{Message ?? string.Empty}/{RedirectText ?? string.Empty}/{RedirectPage ?? string.Empty}";
             }
         }
     }

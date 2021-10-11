@@ -33,7 +33,7 @@ namespace Headway.Razor.Controls.Pages
 
         private void Redirect()
         {
-            NavigationManager.NavigateTo($@"{RedirectPage}");
+            NavigationManager.NavigateTo(RedirectPage);
         }
     }
 }

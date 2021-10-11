@@ -51,7 +51,7 @@ namespace Headway.Services
                 };
             }
 
-            var httpResponseMessage = await httpClient.PostAsJsonAsync($"Options", args)
+            var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS, args)
                 .ConfigureAwait(false);
 
             return await GetServiceResultAsync<IEnumerable<OptionItem>>(httpResponseMessage)
@@ -62,7 +62,7 @@ namespace Headway.Services
         {
             var args = ComponentArgHelper.GetArgs(dynamicArgs);
 
-            var httpResponseMessage = await httpClient.PostAsJsonAsync($"Options/ComplexOptions", args)
+            var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS_COMPLEXOPTIONS, args)
                 .ConfigureAwait(false);
 
             return await GetServiceResultAsync<IEnumerable<T>>(httpResponseMessage)

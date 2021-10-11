@@ -1,4 +1,5 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Constants;
+using Headway.Core.Dynamic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Headway.Core.Helpers
             var dynamicTypes = new List<DynamicType>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => a.GetName().Name.StartsWith("Headway"))
+                .Where(a => a.GetName().Name.StartsWith(TypeHelpers.HEADWAY))
                 .ToList();
 
             foreach (var assembly in assemblies)
@@ -51,15 +52,15 @@ namespace Headway.Core.Helpers
 
         private static string GetName(Type type)
         {
-            return (type.IsAbstract && type.Name.Contains("Base"))
-                ? type.Name.Replace("Base", string.Empty)
+            return (type.IsAbstract && type.Name.Contains(TypeHelpers.BASE))
+                ? type.Name.Replace(TypeHelpers.BASE, string.Empty)
                 : type.Name;
         }
 
         private static string GetFullNamespace(Type type, Assembly assembly)
         {
-            return (type.IsAbstract && type.Name.Contains("Base"))
-                ? $"{type.Namespace}.{type.Name.Replace("Base", string.Empty)}, {assembly.GetName().Name}"
+            return (type.IsAbstract && type.Name.Contains(TypeHelpers.BASE))
+                ? $"{type.Namespace}.{type.Name.Replace(TypeHelpers.BASE, string.Empty)}, {assembly.GetName().Name}"
                 : $"{type.FullName}, {assembly.GetName().Name}";
         }
     }

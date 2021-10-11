@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
@@ -31,9 +32,9 @@ namespace Headway.Razor.Controls.Components
             var component = Type.GetType(config.Container);
             var genericType = component.MakeGenericType(new[] { type });
             __builder.OpenComponent(1, genericType);
-            __builder.AddAttribute(2, "Field", Field);
-            __builder.AddAttribute(3, "ComponentArgs", ComponentArgs);
-            __builder.AddAttribute(4, "Config", config);
+            __builder.AddAttribute(2, Parameters.FIELD, Field);
+            __builder.AddAttribute(3, Parameters.COMPONENT_ARGS, ComponentArgs);
+            __builder.AddAttribute(4, Parameters.CONFIG, config);
             __builder.CloseComponent();
         };
     }

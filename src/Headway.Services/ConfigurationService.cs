@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Constants;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -24,7 +25,7 @@ namespace Headway.Services
 
         public async Task<IServiceResult<IEnumerable<Config>>> GetConfigsAsync()
         {
-            var httpResponseMessage = await httpClient.GetAsync($"Configuration").ConfigureAwait(false);
+            var httpResponseMessage = await httpClient.GetAsync(Controllers.CONFIGURATION).ConfigureAwait(false);
 
             var serviceResult = await GetServiceResultAsync<IEnumerable<Config>>(httpResponseMessage)
                 .ConfigureAwait(false);
@@ -46,7 +47,7 @@ namespace Headway.Services
                 return GetServiceResult<Config>(config);
             }
 
-            var httpResponseMessage = await httpClient.GetAsync($"Configuration/{name}").ConfigureAwait(false);
+            var httpResponseMessage = await httpClient.GetAsync($"{Controllers.CONFIGURATION}/{name}").ConfigureAwait(false);
 
             var serviceResult = await GetServiceResultAsync<Config>(httpResponseMessage).ConfigureAwait(false);
 

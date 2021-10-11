@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Constants;
+using Headway.Core.Interface;
 using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
 
@@ -26,7 +27,7 @@ namespace Headway.Razor.Controls.Base
         {
             var alert = new Alert
             {
-                AlertType = "danger",
+                AlertType = Alerts.DANGER,
                 Title = "Error",
                 Message = message
             };

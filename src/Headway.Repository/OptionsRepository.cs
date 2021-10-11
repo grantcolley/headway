@@ -21,10 +21,10 @@ namespace Headway.Repository
         public OptionsRepository(ApplicationDbContext applicationDbContext)
             : base(applicationDbContext)
         {
-            optionItems["ControllerOptionItems"] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetControllerOptionItemsAsync);
-            optionItems["ConfigOptionItems"] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);
+            optionItems[Options.CONTROLLER_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetControllerOptionItemsAsync);
+            optionItems[Options.CONFIG_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);
 
-            complexOptionItems["ConfigContainers"] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
+            complexOptionItems[Options.CONFIG_CONTAINERS] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
         }
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
@@ -60,8 +60,8 @@ namespace Headway.Repository
             optionItems.AddRange((from c in controllers
                               select new OptionItem
                               {
-                                  Id = c.Name.Replace("Controller", ""),
-                                  Display = c.DisplayName.Replace("Controller", "")
+                                  Id = c.Name.Replace(Options.CONTROLLER, ""),
+                                  Display = c.DisplayName.Replace(Options.CONTROLLER, "")
                               }).ToList());
 
             return Task.FromResult(optionItems.AsEnumerable());
@@ -84,7 +84,7 @@ namespace Headway.Repository
 
         private async Task<string> GetConfigContainers(List<Arg> args)
         {
-            var configName = args.Single(a => a.Name.Equals("SearchParameter")).Value;
+            var configName = args.Single(a => a.Name.Equals(Args.SEARCH_PARAMETER)).Value;
 
             var configs = await applicationDbContext.Configs
                 .Include(c => c.Containers)

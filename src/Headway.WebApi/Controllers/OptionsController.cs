@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Constants;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] List<Arg> args)
         {
-            var authorised = await IsAuthorisedAsync("User")
+            var authorised = await IsAuthorisedAsync(Roles.USER)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -41,7 +42,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> ComplexOptions([FromBody] List<Arg> args)
         {
-            var authorised = await IsAuthorisedAsync("User")
+            var authorised = await IsAuthorisedAsync(Roles.USER)
                 .ConfigureAwait(false);
 
             if (!authorised)

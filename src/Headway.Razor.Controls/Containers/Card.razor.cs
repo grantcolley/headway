@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Base;
@@ -79,7 +80,7 @@ namespace Headway.Razor.Controls.Containers
 
             Alert = new Alert
             {
-                AlertType = "primary",
+                AlertType = Alerts.PRIMARY,
                 Title = DynamicModel.Title,
                 Message = message,
                 //RedirectText = dynamicModel.Config.NavigateText,
@@ -106,8 +107,8 @@ namespace Headway.Razor.Controls.Containers
 
             Alert = new Alert
             {
-                AlertType = "danger",
-                Title = $"{DynamicModel.Title}",
+                AlertType = Alerts.DANGER,
+                Title = DynamicModel.Title,
                 Message = $"has been deleted.",
                 //RedirectText = dynamicModel.Config.NavigateText,
                 RedirectPage = DynamicModel.Config.NavigateTo

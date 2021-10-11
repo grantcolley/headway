@@ -1,4 +1,5 @@
-﻿using Headway.Core.Helpers;
+﻿using Headway.Core.Constants;
+using Headway.Core.Helpers;
 using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -102,7 +103,7 @@ namespace Headway.Core.Dynamic
                 MemberExpression = Expression.Property(expression, propertyInfo.Name)
             };
 
-            dynamicField.Parameters.Add("Field", dynamicField);
+            dynamicField.Parameters.Add(Parameters.FIELD, dynamicField);
 
             return dynamicField;
         }
@@ -118,7 +119,7 @@ namespace Headway.Core.Dynamic
                 DynamicContainerTypeName = configContainer.Container
             };
 
-            dynamicContainer.Parameters.Add("Container", dynamicContainer);
+            dynamicContainer.Parameters.Add(Parameters.CONTAINER, dynamicContainer);
 
             if(configContainer.ConfigContainers.Any())
             {

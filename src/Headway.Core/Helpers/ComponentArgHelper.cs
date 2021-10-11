@@ -1,4 +1,5 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Constants;
+using Headway.Core.Dynamic;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,7 +106,7 @@ namespace Headway.Core.Helpers
                     }
                 }
 
-                dynamicField.Parameters.Add("ComponentArgs", dynamicArgs);
+                dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
             }
         }
     }

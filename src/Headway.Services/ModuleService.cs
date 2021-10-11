@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Constants;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -35,7 +36,7 @@ namespace Headway.Services
             }
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<Module>>
-                (await httpClient.GetStreamAsync($"Modules").ConfigureAwait(false),
+                (await httpClient.GetStreamAsync(Controllers.MODULES).ConfigureAwait(false),
                     new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
         }
     }
