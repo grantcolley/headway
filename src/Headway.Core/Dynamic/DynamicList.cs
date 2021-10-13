@@ -66,7 +66,7 @@ namespace Headway.Core.Dynamic
             }
 
             listItems.Add(item);
-            DynamicListItems.Add(new DynamicListItem<T>(item));
+            dynamicListItems.Add(new DynamicListItem<T>(item));
         }
 
         public void Remove(DynamicListItem<T> dynamicListItem)
@@ -77,7 +77,7 @@ namespace Headway.Core.Dynamic
             }
 
             listItems.Remove(dynamicListItem.Model);
-            DynamicListItems.Remove(dynamicListItem);
+            dynamicListItems.Remove(dynamicListItem);
         }
     }
 }
