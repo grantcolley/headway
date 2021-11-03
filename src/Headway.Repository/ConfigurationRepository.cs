@@ -2,15 +2,17 @@
 using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class ConfigurationRepository : RepositoryBase, IConfigurationRepository
+    public class ConfigurationRepository : RepositoryBase<ConfigurationRepository>, IConfigurationRepository
     {
-        public ConfigurationRepository(ApplicationDbContext applicationDbContext)
-            : base(applicationDbContext)
+        public ConfigurationRepository(ApplicationDbContext applicationDbContext, ILogger<ConfigurationRepository> logger)
+            : base(applicationDbContext, logger)
         {
         }
 
@@ -55,11 +57,18 @@ namespace Headway.Repository
 
         public async Task<Config> UpdateConfigAsync(Config config)
         {
-            applicationDbContext.Configs.Update(config);
+            try
+            {
+                applicationDbContext.Configs.Update(config);
 
-            await applicationDbContext
-                .SaveChangesAsync()
-                .ConfigureAwait(false);
+                await applicationDbContext
+                    .SaveChangesAsync()
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
 
             return config;
         }

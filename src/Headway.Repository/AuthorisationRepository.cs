@@ -2,16 +2,17 @@
 using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class AuthorisationRepository : RepositoryBase, IAuthorisationRepository
+    public class AuthorisationRepository : RepositoryBase<AuthorisationRepository>, IAuthorisationRepository
     {
-        public AuthorisationRepository(ApplicationDbContext applicationDbContext)
-            : base (applicationDbContext)
+        public AuthorisationRepository(ApplicationDbContext applicationDbContext, ILogger<AuthorisationRepository> logger)
+            : base (applicationDbContext, logger)
         {
         }
 

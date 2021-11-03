@@ -5,6 +5,7 @@ using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class OptionsRepository : RepositoryBase, IOptionsRepository
+    public class OptionsRepository : RepositoryBase<OptionsRepository>, IOptionsRepository
     {
         private readonly Dictionary<string, Func<List<Arg>, Task<IEnumerable<OptionItem>>>> optionItems = new();
         private readonly Dictionary<string, Func<List<Arg>, Task<string>>> complexOptionItems = new();
 
-        public OptionsRepository(ApplicationDbContext applicationDbContext)
-            : base(applicationDbContext)
+        public OptionsRepository(ApplicationDbContext applicationDbContext, ILogger<OptionsRepository> logger)
+            : base(applicationDbContext, logger)
         {
             optionItems[Options.CONTROLLER_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetControllerOptionItemsAsync);
             optionItems[Options.CONFIG_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);

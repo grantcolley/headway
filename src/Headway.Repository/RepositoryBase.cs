@@ -1,20 +1,23 @@
 ﻿using Headway.Core.Interface;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public abstract class RepositoryBase : IRepository
+    public abstract class RepositoryBase<T> : IRepository
     {
-        protected ApplicationDbContext applicationDbContext;
+        protected readonly ApplicationDbContext applicationDbContext;
+        protected readonly ILogger<T> logger;
         private bool disposedValue;
 
-        protected RepositoryBase(ApplicationDbContext applicationDbContext)
+        protected RepositoryBase(ApplicationDbContext applicationDbContext, ILogger<T> logger)
         {
             this.applicationDbContext = applicationDbContext;
+            this.logger = logger;
         }
 
         public async Task<bool> IsAuthorisedAsync(string claim, string permission)

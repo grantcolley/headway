@@ -2,16 +2,17 @@
 using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
 {
-    public class ModuleRepository : RepositoryBase, IModuleRepository
+    public class ModuleRepository : RepositoryBase<ModuleRepository>, IModuleRepository
     {
-        public ModuleRepository(ApplicationDbContext applicationDbContext)
-            : base(applicationDbContext)
+        public ModuleRepository(ApplicationDbContext applicationDbContext, ILogger<ModuleRepository> logger)
+            : base(applicationDbContext, logger)
         {
         }
 
