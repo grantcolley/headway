@@ -2,6 +2,7 @@ using Headway.Repository.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Headway.WebApi
 {
@@ -27,6 +28,7 @@ namespace Headway.WebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).UseSerilog((hostingContext, loggerConfiguration) =>
+                  loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
     }
 }
