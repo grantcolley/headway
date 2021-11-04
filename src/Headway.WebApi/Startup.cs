@@ -33,11 +33,13 @@ namespace Headway.WebApi
                 {
                     options.UseSqlite(Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
                         x => x.MigrationsAssembly(DataMigrations.SQLITE_MIGRATIONS));
+                    options.EnableSensitiveDataLogging();
                 }
                 else
                 {
                     options.UseSqlServer(Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
                         x => x.MigrationsAssembly(DataMigrations.SQLSERVER_MIGRATIONS));
+                    options.EnableSensitiveDataLogging();
                 }
             });
 
