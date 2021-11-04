@@ -27,6 +27,7 @@ namespace Headway.Repository
         public async Task<Config> GetConfigAsync(int id)
         {
             return await applicationDbContext.Configs
+                .AsNoTracking()
                 .Include(c => c.Containers)
                 .Include(c => c.ConfigItems)
                 .SingleAsync(c => c.ConfigId.Equals(id))
@@ -57,18 +58,11 @@ namespace Headway.Repository
 
         public async Task<Config> UpdateConfigAsync(Config config)
         {
-            try
-            {
-                applicationDbContext.Configs.Update(config);
+            applicationDbContext.Configs.Update(config);
 
-                await applicationDbContext
-                    .SaveChangesAsync()
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.ToString());
-            }
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
 
             return config;
         }
