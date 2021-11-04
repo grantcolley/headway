@@ -13,8 +13,7 @@ namespace Headway.Repository.Data
             IConfigurationRoot configuration
                 = new ConfigurationBuilder().SetBasePath(
                     Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../Headway.WebApi/appsettings.json").Build();
-            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            builder.EnableSensitiveDataLogging();
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();            
             var connectionString = configuration.GetConnectionString(DataMigrations.CONNECTION_STRING);
             if(connectionString.Contains(DataMigrations.SQLITE_DATABASE))
             {
