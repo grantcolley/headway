@@ -1,5 +1,4 @@
-﻿using Headway.Core.Enums;
-using System;
+﻿using System;
 
 namespace Headway.Core.Attributes
 {
