@@ -90,7 +90,7 @@ namespace Headway.Razor.Controls.Containers
             isSaveInProgress = false;
         }
 
-        public async Task Delete()
+        protected async Task Delete()
         {
             isDeleteInProgress = true;
 
