@@ -1,0 +1,7 @@
+﻿@typeparam T where T : class, new()
+@inherits TabPageBase<T>
+
+@if (Parent.ActivePage == this)
+{
+  @ChildContent
+}
