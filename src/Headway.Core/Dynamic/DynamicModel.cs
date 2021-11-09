@@ -40,7 +40,7 @@ namespace Headway.Core.Dynamic
         public T Model { get; private set; }
         public Config Config { get; private set; }
         public DynamicTypeHelper<T> Helper { get; private set; }
-        public DynamicContainer RootContainer { get; set; }
+        public List<DynamicContainer> RootContainers { get; set; }
         public List<DynamicField> DynamicFields { get; private set; }
 
         public int Id { get; private set; }
@@ -77,13 +77,19 @@ namespace Headway.Core.Dynamic
 
             ComponentArgHelper.AddDynamicArgs(DynamicFields);
 
-            RootContainer = CreateContainer(Config.Containers.Single(cc => cc.IsRootContainer));
+            RootContainers = Config.Containers
+                .Where(cc => cc.IsRootContainer)
+                //.OrderBy(cc => cc.Order)
+                .Select(cc => CreateContainer(cc)).ToList();
 
             var fieldGroups = from df in DynamicFields
-                                group df by df.ConfigContainerId into fieldGroup
-                                select fieldGroup;
+                              group df by df.ConfigContainerId into fieldGroup
+                              select fieldGroup;
 
-            MapDynamicContainerFields(RootContainer, fieldGroups);
+            foreach(var rootContainer in RootContainers)
+            {
+                MapDynamicContainerFields(rootContainer, fieldGroups);
+            }
         }
 
         private static DynamicField CreateDynamicField(T model, ConstantExpression expression, PropertyInfo propertyInfo, ConfigItem configItem)

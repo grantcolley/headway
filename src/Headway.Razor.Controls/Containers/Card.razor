@@ -46,7 +46,10 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <DynamicComponent Type="DynamicModel.RootContainer.DynamicComponent" Parameters="DynamicModel.RootContainer.Parameters" />
+                                        @foreach(var rootContainer in DynamicModel.RootContainers)
+                                        {
+                                            <DynamicComponent Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
+                                        }
                                      </div>
                                  </EditForm>
                            </div>

@@ -16,11 +16,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <DynamicComponent Type="dynamicModel.RootContainer.DynamicComponent" Parameters="dynamicModel.RootContainer.Parameters" />   
-                            </td>
-                        </tr>
+                        @foreach(var rootContainer in dynamicModel.RootContainers)
+                        {
+                            <tr>
+                                <td>
+                                    <DynamicComponent Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             }
