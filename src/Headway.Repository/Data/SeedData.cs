@@ -184,9 +184,9 @@ namespace Headway.Repository.Data
                 applicationDbContext.Configs.Add(permissionConfig);
                 applicationDbContext.SaveChanges();
 
-                var configConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Row = 1, Column =1, IsRootContainer = true };
-                var configItemConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Row = 1, Column = 1, IsRootContainer = true };
-                var permissionConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Row = 1, Column = 1, IsRootContainer = true };
+                var configConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, Row = 1, Column =1, IsRootContainer = true };
+                var configItemConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, Row = 1, Column = 1, IsRootContainer = true };
+                var permissionConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, Row = 1, Column = 1, IsRootContainer = true };
 
                 configConfig.Containers.Add(configConfigContainer);
                 configItemConfig.Containers.Add(configItemConfigContainer);

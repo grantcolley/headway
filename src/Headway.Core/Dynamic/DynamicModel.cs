@@ -79,7 +79,7 @@ namespace Headway.Core.Dynamic
 
             RootContainers = Config.Containers
                 .Where(cc => cc.IsRootContainer)
-                //.OrderBy(cc => cc.Order)
+                .OrderBy(cc => cc.Order)
                 .Select(cc => CreateContainer(cc)).ToList();
 
             var fieldGroups = from df in DynamicFields
