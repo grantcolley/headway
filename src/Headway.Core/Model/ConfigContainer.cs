@@ -11,11 +11,11 @@ namespace Headway.Core.Model
         }
 
         public int ConfigContainerId { get; set; }
-
         public bool IsRootContainer { get; set; }
-        public int Row { get; set; }
-        public int Column { get; set; }
+        public int? Row { get; set; }
+        public int? Column { get; set; }
         public int Order { get; set; }
+
         public List<ConfigContainer> ConfigContainers { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
