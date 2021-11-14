@@ -25,5 +25,8 @@ namespace Headway.Core.Model
         [Required(ErrorMessage = "Container is required")]
         [StringLength(150, ErrorMessage = "Container must be between 1 and 150 characters")]
         public string Container { get; set; }
+
+        [StringLength(50, ErrorMessage = "Test must be between 1 and 50 characters")]
+        public string Text { get; set; }
     }
 }
