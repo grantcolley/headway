@@ -210,9 +210,9 @@ namespace Headway.Repository.Data
                 ////////////////////////////////
 
                 // Config //////////////////////
-                var configConfigContainer1 = new ConfigContainer { Name = "Tab Control", Container = "Headway.Razor.Controls.Containers.TabControl, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
-                var configConfigContainer2 = new ConfigContainer { Name = "TabPage", Container = "Headway.Razor.Controls.Containers.TabPage, Headway.Razor.Controls", Order = 1 };
-                var configConfigContainer3 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, };
+                var configConfigContainer1 = new ConfigContainer { Name = "Tab Control", Container = "Headway.Razor.Controls.Containers.TabControl, Headway.Razor.Controls", Text = "Configure Model", Order = 1, IsRootContainer = true };
+                var configConfigContainer2 = new ConfigContainer { Name = "TabPage", Container = "Headway.Razor.Controls.Containers.TabPage, Headway.Razor.Controls", Text = "Model", Order = 1 };
+                var configConfigContainer3 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Text = "Fields", Order = 1 };
 
                 configConfigContainer1.ConfigContainers.Add(configConfigContainer2);
                 configConfigContainer2.ConfigContainers.Add(configConfigContainer3);
