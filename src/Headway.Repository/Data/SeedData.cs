@@ -192,7 +192,7 @@ namespace Headway.Repository.Data
                 ////////////////////////////////
 
                 // ConfigItem /////////////////
-                var configItemConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
+                var configItemConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
                 configItemConfig.Containers.Add(configItemConfigContainer);
                 applicationDbContext.SaveChanges();
 
