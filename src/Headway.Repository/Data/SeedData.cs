@@ -75,10 +75,10 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
 
                 var homeMenuItem = new MenuItem { Name = "Home", ImageClass = "oi oi-home", NavigateTo = "/", Order = 1, Permission = user.Name, Config = "Home" };
-                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", NavigateTo = "list", Order = 1, Permission = admin.Name, Config = "Users" };
-                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", NavigateTo = "list", Order = 2, Permission = admin.Name, Config = "Roles" };
-                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", NavigateTo = "list", Order = 3, Permission = admin.Name, Config = "Permissions" };
-                var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", NavigateTo = "list", Order = 1, Permission = admin.Name, Config = "Configs" };
+                var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Users" };
+                var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "Roles" };
+                var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "Permissions" };
+                var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Configs" };
                 applicationDbContext.MenuItems.Add(homeMenuItem);
                 applicationDbContext.MenuItems.Add(usersMenuItem);
                 applicationDbContext.MenuItems.Add(rolesMenuItem);
@@ -109,10 +109,10 @@ namespace Headway.Repository.Data
                     ModelApi = "Permissions",
                     OrderModelBy = "Name",
                     Container = "Headway.Razor.Controls.Containers.Table`1, Headway.Razor.Controls",
-                    NavigateTo = "Model",
+                    NavigateTo = "Page",
                     NavigateToProperty = "PermissionId",
                     NavigateToConfig = "Permission",
-                    NavigateBack = "List",
+                    NavigateBack = "Page",
                     NavigateBackConfig = "Permissions"
                 };
 
@@ -123,9 +123,9 @@ namespace Headway.Repository.Data
                     Model = "Headway.Core.Model.Permission, Headway.Core",
                     ModelApi = "Permissions",
                     Container = "Headway.Razor.Controls.Containers.Card`1, Headway.Razor.Controls",
-                    NavigateTo = "List",
+                    NavigateTo = "Page",
                     NavigateToConfig = "Permissions",
-                    NavigateBack = "List",
+                    NavigateBack = "Page",
                     NavigateBackConfig = "Permissions"
                 };
 
@@ -137,10 +137,10 @@ namespace Headway.Repository.Data
                     ModelApi = "Configuration",
                     OrderModelBy = "Name",
                     Container = "Headway.Razor.Controls.Containers.Table`1, Headway.Razor.Controls",
-                    NavigateTo = "Model",
+                    NavigateTo = "Page",
                     NavigateToProperty = "ConfigId",
                     NavigateToConfig = "Config",
-                    NavigateBack = "List",
+                    NavigateBack = "Page",
                     NavigateBackConfig = "Configs"
                 };
 
@@ -151,9 +151,9 @@ namespace Headway.Repository.Data
                     Model = "Headway.Core.Model.Config, Headway.Core",
                     ModelApi = "Configuration",
                     Container = "Headway.Razor.Controls.Containers.Crud`1, Headway.Razor.Controls",
-                    NavigateTo = "List",
+                    NavigateTo = "Page",
                     NavigateToConfig = "Configs",
-                    NavigateBack = "List",
+                    NavigateBack = "Page",
                     NavigateBackConfig = "Configs"
                 };
 
