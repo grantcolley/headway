@@ -1,0 +1,20 @@
+﻿@using System
+
+@page "/Page/{Config}/{Id:int?}"
+@inherits PageBase
+
+<AuthorizeView>
+    <Authorized Context="page">
+        @if (config == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            @RenderView()
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
