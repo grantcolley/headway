@@ -23,7 +23,7 @@
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Navigation Menu](#navigation-menu)
 * [Page Layout](#page-layout)
-   * [Page Rendering](page-rendering#) 
+   * [Page Rendering](#page-rendering#) 
 * [Configuration](#configuration)
 * [Administration](#administration)
 * [Database](#database)
