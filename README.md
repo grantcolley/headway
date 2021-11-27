@@ -23,6 +23,7 @@
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Navigation Menu](#navigation-menu)
 * [Page Layout](#page-layout)
+   * [Page Rendering](page-rendering#) 
 * [Configuration](#configuration)
 * [Administration](#administration)
 * [Database](#database)
@@ -54,8 +55,10 @@ WebApi
 ## Page Layout
 ![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
 
+### Page Rendering
+![Alt text](/readme-images/PageRenderHierarchy.drawio.png?raw=true "Page Render Hierarchy")
+
 ## Configuration
-![Alt text](/readme-images/PageRenderHierarchy.drawio.png?raw=true "Page Layout")
 
 ## Administration
 
