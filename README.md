@@ -4,6 +4,7 @@
 
 ##### Technologies
 ###### .NET 6.0, Blazor WebAssembly, Blazor Server, IdentityServer4, ASP.NET Core Web API
+#####
 \
 **Headway** is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication:
  * **Blazor WebAssembly** - running client-side on the browser.
@@ -19,11 +20,12 @@
 
 #### Table of Contents
 * [Getting Started](#getting-started)
+* [Page Layout](#page-layout)
 * [Authentication and Authorization](#authentication-and-authorization)
-* [Database](#database)
 * [Navigation Menu](#navigation-menu)
 * [Administration](#administration)
 * [Configuration](#configuration)
+* [Database](#database)
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
@@ -31,6 +33,9 @@
     * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
 
 ## Getting Started
+
+## Page Layout
+![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
 
 ## Authentication and Authorization
 Identity Provider authenticates user
@@ -47,13 +52,13 @@ BlazorServer
 WebApi
    - Controllers require role authorisation
 
-## Database
-
 ## Navigation Menu
 
 ## Administration
 
 ## Configuration
+
+## Database
 
 ## Notes
 
