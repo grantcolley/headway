@@ -20,11 +20,11 @@
 
 #### Table of Contents
 * [Getting Started](#getting-started)
-* [Page Layout](#page-layout)
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Navigation Menu](#navigation-menu)
-* [Administration](#administration)
+* [Page Layout](#page-layout)
 * [Configuration](#configuration)
+* [Administration](#administration)
 * [Database](#database)
  * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
@@ -33,9 +33,6 @@
     * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
 
 ## Getting Started
-
-## Page Layout
-![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
 
 ## Authentication and Authorization
 Identity Provider authenticates user
@@ -54,9 +51,13 @@ WebApi
 
 ## Navigation Menu
 
-## Administration
+## Page Layout
+![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
 
 ## Configuration
+![Alt text](/readme-images/PageRenderHierarchy.drawio.png?raw=true "Page Layout")
+
+## Administration
 
 ## Database
 
