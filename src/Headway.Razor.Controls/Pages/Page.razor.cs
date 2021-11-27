@@ -30,20 +30,20 @@ namespace Headway.Razor.Controls.Pages
             await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
-        protected RenderFragment RenderView() => __builder =>
+        protected RenderFragment RenderView() => builder =>
         {
             var type = Type.GetType(config.Model);
             var component = Type.GetType(config.Container);
             var genericType = component.MakeGenericType(new[] { type });
-            __builder.OpenComponent(1, genericType);
-            __builder.AddAttribute(2, Parameters.CONFIG, config.Name);
+            builder.OpenComponent(1, genericType);
+            builder.AddAttribute(2, Parameters.CONFIG, config.Name);
 
             if (Id.HasValue)
             {
-                __builder.AddAttribute(3, Parameters.ID, Id);
+                builder.AddAttribute(3, Parameters.ID, Id);
             }
 
-            __builder.CloseComponent();
+            builder.CloseComponent();
         };
     }
 }
