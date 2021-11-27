@@ -4,23 +4,13 @@ using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Model;
-using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Containers
 {
     [DynamicContainer]
-    public abstract class CardBase<T> : DynamicModelContainerBase<T> where T : class, new()
+    public abstract class CardBase<T> : DynamicContainerBase<T> where T : class, new()
     {
-        [Inject]
-        public IDynamicService DynamicService { get; set; }
-
-        [Parameter]
-        public string Config { get; set; }
-
-        [Parameter]
-        public int Id { get; set; }
-
         protected Alert Alert { get; set; }
         protected bool isSaveInProgress = false;
         protected bool isDeleteInProgress = false;
@@ -29,7 +19,8 @@ namespace Headway.Razor.Controls.Containers
         {
             IServiceResult<DynamicModel<T>> serviceResult;
 
-            if (Id.Equals(0))
+            if (!Id.HasValue 
+                || Id.Value.Equals(0))
             {
                 serviceResult = await DynamicService
                     .CreateDynamicModelInstanceAsync<T>(Config)
@@ -38,7 +29,7 @@ namespace Headway.Razor.Controls.Containers
             else
             {
                 serviceResult = await DynamicService
-                    .GetDynamicModelAsync<T>(Id, Config)
+                    .GetDynamicModelAsync<T>(Id.Value, Config)
                     .ConfigureAwait(false);
             }
 
