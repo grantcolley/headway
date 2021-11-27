@@ -26,16 +26,16 @@ namespace Headway.Razor.Controls.Components
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        protected RenderFragment RenderView() => __builder =>
+        protected RenderFragment RenderView() => builder =>
         {
             var type = Type.GetType(config.Model);
             var component = Type.GetType(config.Container);
             var genericType = component.MakeGenericType(new[] { type });
-            __builder.OpenComponent(1, genericType);
-            __builder.AddAttribute(2, Parameters.FIELD, Field);
-            __builder.AddAttribute(3, Parameters.COMPONENT_ARGS, ComponentArgs);
-            __builder.AddAttribute(4, Parameters.CONFIG, config);
-            __builder.CloseComponent();
+            builder.OpenComponent(1, genericType);
+            builder.AddAttribute(2, Parameters.FIELD, Field);
+            builder.AddAttribute(3, Parameters.COMPONENT_ARGS, ComponentArgs);
+            builder.AddAttribute(4, Parameters.CONFIG, config);
+            builder.CloseComponent();
         };
     }
 }
