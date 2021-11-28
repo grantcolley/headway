@@ -36,7 +36,6 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Order Model By must be between 1 and 50 characters")]
         public string OrderModelBy { get; set; }
 
-        [Required(ErrorMessage = "Container is required")]
         [StringLength(150, ErrorMessage = "Container must be between 1 and 150 characters")]
         public string Container { get; set; }
 
