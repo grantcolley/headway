@@ -1,0 +1,15 @@
+﻿ @inherits TabsBase
+
+<CascadingValue Value="this">
+    <div class="btn-group" role="group">
+        @foreach (DynamicContainer page in Container.DynamicContainers)
+        {
+            <button type="button"
+                    class="btn @GetTabButtonClass(page)"
+                    @onclick=@(() => SetActivePage(page))>
+                    @(page.Text)
+            </button>
+        }
+    </div>
+    <DynamicComponent Type="ActivePage.DynamicComponent" Parameters="ActivePage.Parameters" />
+</CascadingValue>
