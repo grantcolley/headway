@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Dynamic;
 using Headway.Core.Interface;
+using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,15 @@ namespace Headway.Razor.Controls.Base
     {
         [Inject]
         public IDynamicService DynamicService { get; set; }
+
+        [Parameter]
+        public DynamicField Field { get; set; }
+
+        [Parameter]
+        public List<DynamicArg> ComponentArgs { get; set; }
+
+        [Parameter]
+        public Config Config { get; set; }
 
         protected async Task<DynamicList<T>> GetDynamicListAsync(IEnumerable<T> list, string config)
         {
