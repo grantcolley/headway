@@ -14,15 +14,6 @@ namespace Headway.Razor.Controls.Components
     [DynamicComponent]
     public abstract class ListDetailBase<T> : GenericComponentBase<T> where T : class, new()
     {
-        [Parameter]
-        public DynamicField Field { get; set; }
-
-        [Parameter]
-        public List<DynamicArg> ComponentArgs { get; set; }
-
-        [Parameter]
-        public Config Config { get; set; }
-
         protected DynamicModel<T> dynamicModel;
 
         protected DynamicList<T> dynamicList;
