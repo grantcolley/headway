@@ -6,12 +6,10 @@ namespace Headway.Core.Dynamic
 {
     public class DynamicList<T> where T : class, new()
     {
-        private readonly List<T> listItems;
         private readonly List<DynamicListItem<T>> dynamicListItems;
 
         public DynamicList(IEnumerable<T> listItems, Config config)
         {
-            this.listItems = new List<T>(listItems);
             Config = config;
 
             Helper = DynamicTypeHelper.Get<T>();
@@ -65,7 +63,6 @@ namespace Headway.Core.Dynamic
                 return;
             }
 
-            listItems.Add(item);
             dynamicListItems.Add(new DynamicListItem<T>(item));
         }
 
@@ -76,7 +73,6 @@ namespace Headway.Core.Dynamic
                 return;
             }
 
-            listItems.Remove(dynamicListItem.Model);
             dynamicListItems.Remove(dynamicListItem);
         }
     }
