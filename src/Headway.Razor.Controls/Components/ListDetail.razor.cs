@@ -51,6 +51,8 @@ namespace Headway.Razor.Controls.Components
             }
 
             dynamicList.Add(model.Model);
+            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
 
             await NewAsync().ConfigureAwait(false);
         }
@@ -62,6 +64,9 @@ namespace Headway.Razor.Controls.Components
             if(listItem != null)
             {
                 dynamicList.Remove(listItem);
+
+                Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
             }
 
             await NewAsync().ConfigureAwait(false);
