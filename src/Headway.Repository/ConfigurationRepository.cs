@@ -4,6 +4,7 @@ using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository
@@ -60,7 +61,44 @@ namespace Headway.Repository
 
         public async Task<Config> UpdateConfigAsync(Config config)
         {
-            applicationDbContext.Configs.Update(config);
+            var existingConfig = await applicationDbContext.Configs
+                .Include(c => c.ConfigItems)
+                .FirstOrDefaultAsync(c => c.ConfigId.Equals(config.ConfigId))
+                .ConfigureAwait(false);
+
+            if(existingConfig == null)
+            {
+                applicationDbContext.Configs.Add(config);
+            }
+            else
+            {
+                applicationDbContext
+                    .Entry(existingConfig)
+                    .CurrentValues.SetValues(config);
+
+                foreach(var configItem in config.ConfigItems)
+                {
+                    var existingConfigItem = existingConfig.ConfigItems
+                        .FirstOrDefault(ci => ci.ConfigItemId.Equals(configItem.ConfigItemId));
+
+                    if(existingConfigItem == null)
+                    {
+                        existingConfig.ConfigItems.Add(configItem);
+                    }
+                    else
+                    {
+                        applicationDbContext.Entry(existingConfigItem).CurrentValues.SetValues(configItem);
+                    }
+                }
+
+                foreach (var configItem in existingConfig.ConfigItems)
+                {
+                    if (!config.ConfigItems.Any(ci => ci.ConfigItemId.Equals(configItem.ConfigItemId)))
+                    {
+                        applicationDbContext.Remove(configItem);
+                    }
+                }
+            }
 
             await applicationDbContext
                 .SaveChangesAsync()
