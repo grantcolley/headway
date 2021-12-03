@@ -30,6 +30,7 @@ namespace Headway.Repository
                 .AsNoTracking()
                 .Include(c => c.Containers)
                 .Include(c => c.ConfigItems)
+                .ThenInclude(ci => ci.ConfigContainer)
                 .SingleAsync(c => c.ConfigId.Equals(id))
                 .ConfigureAwait(false);        
         }
@@ -40,6 +41,7 @@ namespace Headway.Repository
                 .AsNoTrackingWithIdentityResolution()
                 .Include(c => c.Containers)
                 .Include(c => c.ConfigItems)
+                .ThenInclude(ci => ci.ConfigContainer)
                 .SingleAsync(c => c.Name.Equals(name))
                 .ConfigureAwait(false);
 
