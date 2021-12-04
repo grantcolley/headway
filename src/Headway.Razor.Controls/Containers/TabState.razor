@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+@typeparam T where T : class, new()
+@inherits TabStateBase<T>
+
+<AuthorizeView>
+    <!--
+    Need to specify the context to avoid clashes with other auto generated contexts
+    https://github.com/chanan/BlazorStrap/issues/149 
+    -->
+    <Authorized Context="tabStateAuth">
+        @if (DynamicModel == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            @if(@Alert == null)
+            {
+                <div class="container container-body float-start">
+                    <div class="lead">
+                        <h1>@DynamicModel.Config.Title</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="card">
+                                <EditForm Model="@DynamicModel.Model" OnValidSubmit="@Submit">
+                                    <div class="card-header">
+                                        <div class="container px-1">
+                                            <div class="row">
+                                                <div class="column">
+                                                    <div class="clearfix">
+                                                        @if (isSaveInProgress)
+                                                        {
+                                                            <i class="fas fa-spinner fa-spin fa-2x float-left"></i>
+                                                        }
+                                                        else if (!isDeleteInProgress)
+                                                        {
+                                                            <button type="submit" class="btn btn-small btn-outline-primary fas fa-save float-left"/>
+                                                        }
+                                                        @if (isDeleteInProgress)
+                                                        {
+                                                            <i class="fas fa-spinner fa-spin fa-2x float-end"></i>
+                                                        }
+                                                        else if (!isSaveInProgress)
+                                                        {
+                                                            <button type="button" class="btn btn-small btn-outline-danger fas fa-times float-end" @onclick="() => Delete()"/>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="column">
+                                                    <div class="btn-group btn-group-sm float-left" role="group">
+                                                        @foreach (DynamicContainer page in DynamicModel.RootContainers)
+                                                        {
+                                                            <button type="button"
+                                                                    class="btn btn-small @GetTabButtonClass(page)"
+                                                                    @onclick=@(() => SetActivePage(page))>
+                                                                    @(page.Text)
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <DynamicComponent Type="ActivePage.DynamicComponent" Parameters="ActivePage.Parameters" />
+                                     </div>
+                                 </EditForm>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" RedirectText="@Alert.RedirectText" RedirectPage="@Alert.RedirectPage"/>
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Please log in.</p>
+    </NotAuthorized>
+</AuthorizeView>
