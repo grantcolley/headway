@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col nav-modules-bottom">
-                    @foreach(var module in modules)
+                    @foreach (var module in modules)
                     {
                         @RenderModules(module);
                     }
@@ -31,6 +31,9 @@
 </div>
 
 @code {
+    [Inject]
+    public IAppCache AppCache { get; set; }
+
     [Inject]
     public IModuleService ModuleService { get; set; }
 
@@ -66,6 +69,23 @@
                 if (user.HasClaim(c => c.Type == ClaimTypes.ROLE && c.Value.Equals(Roles.HEADWAY_USER)))
                 {
                     modules = await ModuleService.GetModulesAsync().ConfigureAwait(false);
+                }
+
+                var cachedSelectedModule = AppCache.Get<string>(AppCacheKeys.ACTIVE_NAV_MODULE);
+                if (!string.IsNullOrWhiteSpace(cachedSelectedModule))
+                {
+                    await InvokeAsync(() =>
+                    {
+                        selectedModule = modules.FirstOrDefault(
+                            m => m.Name.Equals(cachedSelectedModule));
+
+                        if (selectedModule == null)
+                        {
+                            AppCache.Remove(AppCacheKeys.ACTIVE_NAV_MODULE);
+                        }
+
+                        StateHasChanged();
+                    });
                 }
             }
         }
@@ -122,6 +142,15 @@
     private void OnModuleClick(Module module)
     {
         selectedModule = module;
+
+        if(selectedModule == null)
+        {
+            AppCache.Remove(AppCacheKeys.ACTIVE_NAV_MODULE);
+        }
+        else
+        {
+            AppCache.Set(AppCacheKeys.ACTIVE_NAV_MODULE, selectedModule.Name);
+        }
     }
 
     private void ToggleNavMenu()
