@@ -150,7 +150,7 @@ namespace Headway.Repository.Data
                     Title = "Config",
                     Model = "Headway.Core.Model.Config, Headway.Core",
                     ModelApi = "Configuration",
-                    Container = "Headway.Razor.Controls.Containers.Card`1, Headway.Razor.Controls",
+                    Container = "Headway.Razor.Controls.Containers.TabState`1, Headway.Razor.Controls",
                     NavigateTo = "Page",
                     NavigateToConfig = "Configs",
                     NavigateBack = "Page",
@@ -191,7 +191,7 @@ namespace Headway.Repository.Data
                 ////////////////////////////////
 
                 // ConfigItem /////////////////
-                var configItemConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+                var configItemConfigContainer = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
                 configItemConfig.Containers.Add(configItemConfigContainer);
                 applicationDbContext.SaveChanges();
 
@@ -209,15 +209,15 @@ namespace Headway.Repository.Data
                 ////////////////////////////////
 
                 // Config //////////////////////
-                var configConfigContainer1 = new ConfigContainer { Name = "Tabs", Container = "Headway.Razor.Controls.Containers.Tabs, Headway.Razor.Controls", Text = "Configure Model", Order = 1, IsRootContainer = true };
-                var configConfigContainer2 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Text = "Model", Order = 1 };
-                var configConfigContainer3 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Text = "Fields", Order = 1 };
+                //var configConfigContainer1 = new ConfigContainer { Name = "Tabs", Container = "Headway.Razor.Controls.Containers.Tabs, Headway.Razor.Controls", Text = "Configure Model", Order = 1, IsRootContainer = true };
+                var configConfigContainer2 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Text = "Model", Order = 1, IsRootContainer = true };
+                var configConfigContainer3 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Text = "Fields", Order = 1, IsRootContainer = true };
 
-                configConfigContainer1.ConfigContainers.Add(configConfigContainer2);
-                configConfigContainer1.ConfigContainers.Add(configConfigContainer3);
-                applicationDbContext.SaveChanges();
+                //configConfigContainer1.ConfigContainers.Add(configConfigContainer2);
+                //configConfigContainer1.ConfigContainers.Add(configConfigContainer3);
+                //applicationDbContext.SaveChanges();
 
-                configConfig.Containers.Add(configConfigContainer1);
+                //configConfig.Containers.Add(configConfigContainer1);
                 configConfig.Containers.Add(configConfigContainer2);
                 configConfig.Containers.Add(configConfigContainer3);
                 applicationDbContext.SaveChanges();
