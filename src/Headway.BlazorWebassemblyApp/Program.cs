@@ -37,6 +37,7 @@ namespace Headway.BlazorWebassemblyApp
                 return handler;
             });
 
+            builder.Services.AddSingleton<IAppCache, AppCache>();
             builder.Services.AddSingleton<IConfigCache, ConfigCache>();
 
             builder.Services.AddTransient<IModuleService, ModuleService>(sp =>

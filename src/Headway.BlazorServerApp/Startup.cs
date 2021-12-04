@@ -65,6 +65,7 @@ namespace Headway.BlazorServerApp
             });
 
             services.AddScoped<TokenProvider>();
+            services.AddSingleton<IAppCache, AppCache>();
             services.AddSingleton<IConfigCache, ConfigCache>();
 
             services.AddTransient<IModuleService, ModuleService>(sp =>
