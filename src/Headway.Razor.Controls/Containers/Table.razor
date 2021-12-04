@@ -3,52 +3,41 @@
 @typeparam T where T : class, new()
 @inherits TableBase<T>
 
-<AuthorizeView>
-    <!--
-    Need to specify the context to avoid clashes with other auto generated contexts
-    https://github.com/chanan/BlazorStrap/issues/149 
-    -->
-    <Authorized Context="tableAuth">
-        @if (dynamicList == null)
-        {
-            <p><em>Loading...</em></p>
-        }
-        else
-        {
-            <h3>@dynamicList.Title</h3>
+@if (dynamicList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>@dynamicList.Title</h3>
 
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        @foreach(var column in dynamicList.ConfigItems)
-                        {
-                            <th>@column.Label</th>
-                        }
-                        <th> 
-                            <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var listIitem in dynamicList.DynamicListItems)
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                @foreach(var column in dynamicList.ConfigItems)
+                {
+                    <th>@column.Label</th>
+                }
+                <th> 
+                    <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var listIitem in dynamicList.DynamicListItems)
+            {
+                <tr>
+                    @foreach(var column in dynamicList.ConfigItems)
                     {
-                        <tr>
-                            @foreach(var column in dynamicList.ConfigItems)
-                            {
-                                <td>
-                                    @dynamicList.GetValue(listIitem.Model, column.PropertyName)
-                                </td>
-                            }
-                            <td>
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
-                            </td>
-                        </tr>
+                        <td>
+                            @dynamicList.GetValue(listIitem.Model, column.PropertyName)
+                        </td>
                     }
-                </tbody>
-            </table>
-        }
-    </Authorized>
-    <NotAuthorized>
-        <p>Please log in.</p>
-    </NotAuthorized>
-</AuthorizeView>
+                    <td>
+                        <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
