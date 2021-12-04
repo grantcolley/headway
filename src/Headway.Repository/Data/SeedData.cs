@@ -183,10 +183,14 @@ namespace Headway.Repository.Data
                 applicationDbContext.Configs.Add(permissionConfig);
                 applicationDbContext.SaveChanges();
 
-                // Permissions /////////////////
-                permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", Order = 1 });
-                permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
-                permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
+                // Permission//////////////////
+                var permissionConfigContainer = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+                permissionConfig.Containers.Add(permissionConfigContainer);
+                applicationDbContext.SaveChanges();
+
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
 
@@ -209,15 +213,9 @@ namespace Headway.Repository.Data
                 ////////////////////////////////
 
                 // Config //////////////////////
-                //var configConfigContainer1 = new ConfigContainer { Name = "Tabs", Container = "Headway.Razor.Controls.Containers.Tabs, Headway.Razor.Controls", Text = "Configure Model", Order = 1, IsRootContainer = true };
                 var configConfigContainer2 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Text = "Model", Order = 1, IsRootContainer = true };
                 var configConfigContainer3 = new ConfigContainer { Name = "Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Text = "Fields", Order = 1, IsRootContainer = true };
 
-                //configConfigContainer1.ConfigContainers.Add(configConfigContainer2);
-                //configConfigContainer1.ConfigContainers.Add(configConfigContainer3);
-                //applicationDbContext.SaveChanges();
-
-                //configConfig.Containers.Add(configConfigContainer1);
                 configConfig.Containers.Add(configConfigContainer2);
                 configConfig.Containers.Add(configConfigContainer3);
                 applicationDbContext.SaveChanges();
@@ -239,6 +237,14 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
 
+
+                // Permissions /////////////////
+                permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", Order = 1 });
+                permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
+                permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
+                applicationDbContext.SaveChanges();
+                ////////////////////////////////
+
                 // Configs //////////////////////
                 configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", Order = 1 });
                 configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
@@ -250,17 +256,6 @@ namespace Headway.Repository.Data
                 // Config Items /////////////////
                 configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "Property Name", Order = 1 });
                 configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
-                applicationDbContext.SaveChanges();
-                ////////////////////////////////
-
-                // Permissions//////////////////
-                var permissionConfigContainer = new ConfigContainer { Name = "Root Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
-                permissionConfig.Containers.Add(permissionConfigContainer);
-                applicationDbContext.SaveChanges();
-
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-                permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
             }
