@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Headway.Services
@@ -33,7 +32,7 @@ namespace Headway.Services
             localOptionItems.Add(typeof(ModelOptionItems).Name, new ModelOptionItems());
             localOptionItems.Add(typeof(ModelFieldsOptionItems).Name, new ModelFieldsOptionItems());
             localOptionItems.Add(typeof(ComponentOptionItems).Name, new ComponentOptionItems());
-            localOptionItems.Add(typeof(ContainerOptionItems).Name, new ContainerOptionItems());
+            localOptionItems.Add(typeof(DocumentOptionItems).Name, new DocumentOptionItems());
         }
 
         public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)

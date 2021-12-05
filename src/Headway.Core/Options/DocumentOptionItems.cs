@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Options
 {
-    public class ContainerOptionItems : IOptionItems
+    public class DocumentOptionItems : IOptionItems
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
-            var containers = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicContainerAttribute));
+            var containers = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicDocumentAttribute));
 
             List<OptionItem> optionItems = new() { new OptionItem() };
 
