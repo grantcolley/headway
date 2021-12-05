@@ -33,7 +33,7 @@ namespace Headway.Razor.Controls.Pages
         protected RenderFragment RenderView() => builder =>
         {
             var type = Type.GetType(config.Model);
-            var component = Type.GetType(config.Container);
+            var component = Type.GetType(config.Document);
             var genericType = component.MakeGenericType(new[] { type });
             builder.OpenComponent(1, genericType);
             builder.AddAttribute(2, Parameters.CONFIG, config.Name);

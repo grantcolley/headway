@@ -36,8 +36,8 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Order Model By must be between 1 and 50 characters")]
         public string OrderModelBy { get; set; }
 
-        [StringLength(150, ErrorMessage = "Container must be between 1 and 150 characters")]
-        public string Container { get; set; }
+        [StringLength(150, ErrorMessage = "Document must be between 1 and 150 characters")]
+        public string Document { get; set; }
 
         [StringLength(50, ErrorMessage = "Navigate To cannot exceed 50 characters")]
         public string NavigateTo { get; set; }
@@ -47,14 +47,5 @@ namespace Headway.Core.Model
 
         [StringLength(50, ErrorMessage = "Navigate To Config cannot exceed 50 characters")]
         public string NavigateToConfig { get; set; }
-
-        [StringLength(50, ErrorMessage = "Navigate Back cannot exceed 50 characters")]
-        public string NavigateBack { get; set; }
-
-        [StringLength(50, ErrorMessage = "Navigate Back Property cannot exceed 50 characters")]
-        public string NavigateBackProperty { get; set; }
-
-        [StringLength(50, ErrorMessage = "Navigate Back Config cannot exceed 50 characters")]
-        public string NavigateBackConfig { get; set; }
     }
 }
