@@ -3,7 +3,7 @@
 @typeparam T where T : class, new()
 @inherits TabStateBase<T>
 
-@if (DynamicModel == null)
+@if (dynamicModel == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -13,12 +13,12 @@ else
     {
         <div class="container container-body float-start">
             <div class="lead">
-                <h4>@DynamicModel.Config.Title</h4>
+                <h4>@dynamicModel.Config.Title</h4>
             </div>
             <div class="row">
                 <div class="col-sm">
                     <div class="card">
-                        <EditForm Model="@DynamicModel.Model" OnValidSubmit="@Submit">
+                        <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
                             <div class="card-header">
                                 <div class="container px-1">
                                     <div class="row">
@@ -46,7 +46,7 @@ else
                                     <div class="row mt-2">
                                         <div class="column">
                                             <div class="btn-group btn-group-sm float-left" role="group">
-                                                @foreach (DynamicContainer page in DynamicModel.RootContainers)
+                                                @foreach (var page in dynamicModel.RootContainers)
                                                 {
                                                     <button type="button"
                                                             class="btn btn-small @GetTabButtonClass(page)"
@@ -60,9 +60,9 @@ else
                                 </div>
                             </div>
                             <div class="card-body">
-                                <DynamicComponent Type="ActivePage.DynamicComponent" Parameters="ActivePage.Parameters" />
-                                </div>
-                            </EditForm>
+                                <DynamicComponent Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+                            </div>
+                        </EditForm>
                     </div>
                 </div>
             </div>

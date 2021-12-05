@@ -3,7 +3,7 @@
 @typeparam T where T : class, new()
 @inherits CardBase<T>
 
-@if (DynamicModel == null)
+@if (dynamicModel == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -13,12 +13,12 @@ else
     {
         <div class="container container-body float-start">
             <div class="lead">
-                <h4>@DynamicModel.Config.Title</h4>
+                <h4>@dynamicModel.Config.Title</h4>
             </div>
             <div class="row">
                 <div class="col-sm">
                     <div class="card">
-                        <EditForm Model="@DynamicModel.Model" OnValidSubmit="@Submit">
+                        <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
                             <div class="card-header">
                                 <div class="clearfix">
                                     @if (isSaveInProgress)
@@ -40,7 +40,7 @@ else
                                 </div>
                             </div>
                             <div class="card-body">
-                                @foreach(var rootContainer in DynamicModel.RootContainers)
+                                @foreach(var rootContainer in dynamicModel.RootContainers)
                                 {
                                     <DynamicComponent Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
                                 }

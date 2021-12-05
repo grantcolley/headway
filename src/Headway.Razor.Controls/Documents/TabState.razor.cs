@@ -4,38 +4,36 @@ using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Model;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Controls.Containers
+namespace Headway.Razor.Controls.Documents
 {
-    [DynamicContainer]
-    public abstract class CardBase<T> : DynamicContainerBase<T> where T : class, new()
+    [DynamicDocument]
+    public abstract class TabStateBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
         protected Alert Alert { get; set; }
         protected bool isSaveInProgress = false;
         protected bool isDeleteInProgress = false;
+        protected DynamicContainer activePage { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            IServiceResult<DynamicModel<T>> serviceResult;
+            await InitializeDynamicModelAsync().ConfigureAwait(false);
 
-            if (!Id.HasValue 
-                || Id.Value.Equals(0))
-            {
-                serviceResult = await DynamicService
-                    .CreateDynamicModelInstanceAsync<T>(Config)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                serviceResult = await DynamicService
-                    .GetDynamicModelAsync<T>(Id.Value, Config)
-                    .ConfigureAwait(false);
-            }
-
-            DynamicModel = GetResponse(serviceResult);
+            activePage = dynamicModel.RootContainers.First();
 
             await base.OnInitializedAsync().ConfigureAwait(false);
+        }
+
+        protected string GetTabButtonClass(DynamicContainer page)
+        {
+            return page == activePage ? Css.BTN_PRIMARY : Css.BTN_SECONDARY;
+        }
+
+        protected void SetActivePage(DynamicContainer page)
+        {
+            activePage = page;
         }
 
         protected async Task Submit()
@@ -45,10 +43,10 @@ namespace Headway.Razor.Controls.Containers
             IServiceResult<DynamicModel<T>> serviceResult;
             string message;
 
-            if (DynamicModel.Id.Equals(0))
+            if (dynamicModel.Id.Equals(0))
             {
                 serviceResult = await DynamicService
-                    .AddDynamicModelAsync<T>(DynamicModel)
+                    .AddDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
 
                 message = "has been added.";
@@ -56,15 +54,15 @@ namespace Headway.Razor.Controls.Containers
             else
             {
                 serviceResult = await DynamicService
-                    .UpdateDynamicModelAsync<T>(DynamicModel)
+                    .UpdateDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
 
                 message = "has been updated.";
             }
 
-            DynamicModel = GetResponse(serviceResult);
+            dynamicModel = GetResponse(serviceResult);
 
-            if (DynamicModel == null)
+            if (dynamicModel == null)
             {
                 return;
             }
@@ -72,10 +70,10 @@ namespace Headway.Razor.Controls.Containers
             Alert = new Alert
             {
                 AlertType = Alerts.PRIMARY,
-                Title = DynamicModel.Title,
+                Title = dynamicModel.Title,
                 Message = message,
                 //RedirectText = dynamicModel.Config.NavigateText,
-                RedirectPage = DynamicModel.Config.NavigateTo
+                RedirectPage = dynamicModel.Config.NavigateTo
             };
 
             isSaveInProgress = false;
@@ -86,7 +84,7 @@ namespace Headway.Razor.Controls.Containers
             isDeleteInProgress = true;
 
             var serviceResult = await DynamicService
-                .DeleteDynamicModelAsync(DynamicModel)
+                .DeleteDynamicModelAsync(dynamicModel)
                 .ConfigureAwait(false);
 
             var result = GetResponse(serviceResult);
@@ -99,10 +97,10 @@ namespace Headway.Razor.Controls.Containers
             Alert = new Alert
             {
                 AlertType = Alerts.DANGER,
-                Title = DynamicModel.Title,
+                Title = dynamicModel.Title,
                 Message = $"has been deleted.",
                 //RedirectText = dynamicModel.Config.NavigateText,
-                RedirectPage = DynamicModel.Config.NavigateTo
+                RedirectPage = dynamicModel.Config.NavigateTo
             };
 
             isDeleteInProgress = false;

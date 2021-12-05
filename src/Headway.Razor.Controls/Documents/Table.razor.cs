@@ -4,20 +4,14 @@ using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Controls.Containers
+namespace Headway.Razor.Controls.Documents
 {
-    [DynamicContainer]
-    public abstract class TableBase<T> : DynamicContainerBase<T> where T : class, new()
+    [DynamicDocument]
+    public abstract class TableBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
-        protected DynamicList<T> dynamicList;
-
         protected override async Task OnInitializedAsync()
         {
-            var result = 
-                await DynamicService.GetDynamicListAsync<T>(Config)
-                .ConfigureAwait(false);
-
-            dynamicList = GetResponse(result);
+            await InitializeDynamicListAsync().ConfigureAwait(false);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
