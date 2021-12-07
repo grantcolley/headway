@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Dynamic;
 using Headway.Core.Interface;
+using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
@@ -17,8 +18,10 @@ namespace Headway.Razor.Controls.Base
         public int? Id { get; set; }
 
         protected DynamicModel<T> dynamicModel { get; set; }
-
         protected DynamicList<T> dynamicList;
+        protected Alert Alert { get; set; }
+        protected bool isSaveInProgress = false;
+        protected bool isDeleteInProgress = false;
 
         protected virtual async Task InitializeDynamicModelAsync()
         {
