@@ -11,10 +11,6 @@ namespace Headway.Razor.Controls.Documents
     [DynamicDocument]
     public abstract class CardBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
-        protected Alert Alert { get; set; }
-        protected bool isSaveInProgress = false;
-        protected bool isDeleteInProgress = false;
-
         protected override async Task OnInitializedAsync()
         {
             await InitializeDynamicModelAsync().ConfigureAwait(false);
