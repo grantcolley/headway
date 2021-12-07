@@ -25,6 +25,10 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Title must be between 1 and 50 characters")]
         public string Title { get; set; }
 
+        [Required(ErrorMessage = "Description is required")]
+        [StringLength(150, ErrorMessage = "Description must be between 1 and 150 characters")]
+        public string Description { get; set; }
+
         [Required(ErrorMessage = "Model is required")]
         [StringLength(150, ErrorMessage = "Model must be between 1 and 150 characters")]
         public string Model { get; set; }
