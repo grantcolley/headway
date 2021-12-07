@@ -28,7 +28,7 @@ namespace Headway.Repository
         {
             return await applicationDbContext.Configs
                 .AsNoTracking()
-                .Include(c => c.Containers)
+                .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
                 .SingleAsync(c => c.ConfigId.Equals(id))
@@ -39,7 +39,7 @@ namespace Headway.Repository
         {
             var result = await applicationDbContext.Configs
                 .AsNoTrackingWithIdentityResolution()
-                .Include(c => c.Containers)
+                .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
                 .SingleAsync(c => c.Name.Equals(name))

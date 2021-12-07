@@ -88,7 +88,7 @@ namespace Headway.Repository
             var configName = args.Single(a => a.Name.Equals(Args.SEARCH_PARAMETER)).Value;
 
             var configs = await applicationDbContext.Configs
-                .Include(c => c.Containers)
+                .Include(c => c.ConfigContainers)
                 .Where(c => c.Name.Equals(configName))
                 .AsNoTracking()
                 .ToListAsync()
@@ -96,7 +96,7 @@ namespace Headway.Repository
 
             if (configs.Any())
             {
-                var configContainers = configs.Single().Containers.ToList();
+                var configContainers = configs.Single().ConfigContainers.ToList();
                 configContainers.Insert(0, new ConfigContainer());
                 return JsonSerializer.Serialize(configContainers);
             }

@@ -77,7 +77,7 @@ namespace Headway.Core.Dynamic
 
             ComponentArgHelper.AddDynamicArgs(DynamicFields);
 
-            RootContainers = Config.Containers
+            RootContainers = Config.ConfigContainers
                 .Where(cc => cc.IsRootContainer)
                 .OrderBy(cc => cc.Order)
                 .Select(cc => CreateContainer(cc)).ToList();

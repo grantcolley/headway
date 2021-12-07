@@ -10,12 +10,12 @@ namespace Headway.Core.Model
         public Config()
         {
             ConfigItems = new List<ConfigItem>();
-            Containers = new List<ConfigContainer>();
+            ConfigContainers = new List<ConfigContainer>();
         }
 
         public int ConfigId { get; set; }
         public List<ConfigItem> ConfigItems { get; set; }
-        public List<ConfigContainer> Containers { get; set; }
+        public List<ConfigContainer> ConfigContainers { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
