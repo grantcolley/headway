@@ -11,23 +11,28 @@ namespace Headway.Razor.Controls.Components
         [Parameter]
         public DynamicContainer Container { get; set; }
 
-        public DynamicContainer ActivePage { get; set; }
+        public DynamicContainer activePage { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
-            ActivePage = Container.DynamicContainers.First();
+            activePage = Container.DynamicContainers.First();
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected string GetTabButtonClass(DynamicContainer page)
         {
-            return page == ActivePage ? Css.BTN_PRIMARY : Css.BTN_SECONDARY;
+            return page == activePage ? Css.BTN_PRIMARY : Css.BTN_SECONDARY;
         }
 
-        protected void SetActivePage(DynamicContainer page)
+        protected async void SetActivePage(DynamicContainer page)
         {
-            ActivePage = page;
+            await InvokeAsync(() =>
+            {
+                activePage = page;
+
+                StateHasChanged();
+            });
         }
     }
 }
