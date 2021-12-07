@@ -119,11 +119,9 @@ namespace Headway.Core.Dynamic
             var dynamicContainer = new DynamicContainer
             {
                 ContainerId = configContainer.ConfigContainerId,
-                Row = configContainer.Row,
-                Column = configContainer.Column,
                 DynamicComponent = Type.GetType(configContainer.Container),
                 DynamicContainerTypeName = configContainer.Container,
-                Text = configContainer.Text
+                Label = configContainer.Label
             };
 
             dynamicContainer.Parameters.Add(Parameters.CONTAINER, dynamicContainer);
