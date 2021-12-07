@@ -12,9 +12,6 @@ namespace Headway.Razor.Controls.Documents
     [DynamicDocument]
     public abstract class TabStateBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
-        protected Alert Alert { get; set; }
-        protected bool isSaveInProgress = false;
-        protected bool isDeleteInProgress = false;
         protected DynamicContainer activePage { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -31,9 +28,14 @@ namespace Headway.Razor.Controls.Documents
             return page == activePage ? Css.BTN_PRIMARY : Css.BTN_SECONDARY;
         }
 
-        protected void SetActivePage(DynamicContainer page)
+        protected async void SetActivePage(DynamicContainer page)
         {
-            activePage = page;
+            await InvokeAsync(() =>
+            {
+                activePage = page;
+
+                StateHasChanged();
+            });
         }
 
         protected async Task Submit()
