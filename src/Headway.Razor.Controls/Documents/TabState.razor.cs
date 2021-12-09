@@ -34,13 +34,6 @@ namespace Headway.Razor.Controls.Documents
             activePage = page;
         }
 
-        protected RenderFragment RenderView() => builder =>
-        {
-            builder.OpenComponent(1, activePage.DynamicComponent);
-            builder.AddAttribute(2, Parameters.CONTAINER, activePage);
-            builder.CloseComponent();
-        };
-
         protected async Task Submit()
         {
             isSaveInProgress = true;
