@@ -62,7 +62,7 @@ else
                             <div class="card-body">
                                 @if(activePage != null)
                                 {
-                                    <DynamicComponent Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+                                    <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
                                 }
                             </div>
                         </EditForm>
