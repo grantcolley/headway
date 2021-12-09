@@ -4,6 +4,7 @@ using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Model;
+using Microsoft.AspNetCore.Components;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,15 +29,17 @@ namespace Headway.Razor.Controls.Documents
             return page == activePage ? Css.BTN_PRIMARY : Css.BTN_SECONDARY;
         }
 
-        protected async void SetActivePage(DynamicContainer page)
+        protected void SetActivePage(DynamicContainer page)
         {
-            await InvokeAsync(() =>
-            {
-                activePage = page;
-
-                StateHasChanged();
-            });
+            activePage = page;
         }
+
+        protected RenderFragment RenderView() => builder =>
+        {
+            builder.OpenComponent(1, activePage.DynamicComponent);
+            builder.AddAttribute(2, Parameters.CONTAINER, activePage);
+            builder.CloseComponent();
+        };
 
         protected async Task Submit()
         {
