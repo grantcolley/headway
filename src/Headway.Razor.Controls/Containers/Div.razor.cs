@@ -1,13 +1,11 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Dynamic;
-using Microsoft.AspNetCore.Components;
+using Headway.Razor.Controls.Base;
 
 namespace Headway.Razor.Controls.Containers
 {
     [DynamicContainer]
-    public partial class Div : ComponentBase
+    public abstract class DivBase : DynamicContainerBase
     {
-        [Parameter]
-        public DynamicContainer Container { get; set; }
     }
 }

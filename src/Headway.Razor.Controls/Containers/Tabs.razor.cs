@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,11 +9,8 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Components
 {
     [DynamicContainer]
-    public abstract class TabsBase : ComponentBase
+    public abstract class TabsBase : DynamicContainerBase
     {
-        [Parameter]
-        public DynamicContainer Container { get; set; }
-
         public DynamicContainer activePage { get; set; }
 
         protected async override Task OnInitializedAsync()
