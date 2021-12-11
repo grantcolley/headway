@@ -65,6 +65,7 @@ namespace Headway.Repository
         {
             var existingConfig = await applicationDbContext.Configs
                 .Include(c => c.ConfigItems)
+                .Include(c => c.ConfigContainers)
                 .FirstOrDefaultAsync(c => c.ConfigId.Equals(config.ConfigId))
                 .ConfigureAwait(false);
 
@@ -98,6 +99,29 @@ namespace Headway.Repository
                     if (!config.ConfigItems.Any(ci => ci.ConfigItemId.Equals(configItem.ConfigItemId)))
                     {
                         applicationDbContext.Remove(configItem);
+                    }
+                }
+
+                foreach (var container in config.ConfigContainers)
+                {
+                    var existingContainer = existingConfig.ConfigContainers
+                        .FirstOrDefault(c => c.ConfigContainerId.Equals(container.ConfigContainerId));
+
+                    if (existingContainer == null)
+                    {
+                        existingConfig.ConfigContainers.Add(container);
+                    }
+                    else
+                    {
+                        applicationDbContext.Entry(existingContainer).CurrentValues.SetValues(container);
+                    }
+                }
+
+                foreach (var container in existingConfig.ConfigContainers)
+                {
+                    if (!config.ConfigContainers.Any(c => c.ConfigContainerId.Equals(container.ConfigContainerId)))
+                    {
+                        applicationDbContext.Remove(container);
                     }
                 }
             }
