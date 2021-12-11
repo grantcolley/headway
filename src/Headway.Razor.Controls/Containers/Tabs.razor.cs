@@ -1,4 +1,5 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Microsoft.AspNetCore.Components;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
 {
+    [DynamicContainer]
     public abstract class TabsBase : ComponentBase
     {
         [Parameter]
