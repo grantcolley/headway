@@ -1,1 +1,20 @@
 ﻿@inherits ContainerLayoutBuilderBase
+
+<div class="container container-body float-start">
+	<div class="row">
+		<div class="col-sm">
+            @if (configContainers != null)
+            {
+                <RootContainer ConfigContainers="configContainers">
+                    <ContainerList ConfigContainers="configContainers" Description="Root Containers"/>
+         
+                    @if(activeContainer != null)
+                    {
+                        <ContainerList ConfigContainers="activeContainer.ConfigContainers" Description="@activeContainer.Label"/>
+                    }
+
+                </RootContainer>                
+            }
+		</div>
+	</div>
+</div>
