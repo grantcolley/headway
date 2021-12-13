@@ -1,0 +1,19 @@
+﻿.container-list {
+    display: flex;
+    flex-direction: column;
+    width: 312px;
+}
+
+.container-list ul {
+    flex: 1;
+}
+
+.dropzone {
+    padding: 30px;
+    border: 1px dashed #75868a;
+    list-style: none;
+}
+
+.can-drop {
+    border: 2px dashed green;
+}
