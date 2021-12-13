@@ -1,6 +1,7 @@
 ﻿@using Headway.Core.Model
 
 <div class="container-list">
+    <h1>@Description</h1>
     <ul class="dropzone @dropClass"
         ondragover="event.preventDefault();"
         ondragstart="event.dataTransfer.setData('', event.target.id);"
@@ -8,7 +9,7 @@
         @ondragenter="HandleDragEnter"
         @ondragleave="HandleDragLeave">
 
-        @foreach (var container in ConfigContainer.ConfigContainers)
+        @foreach (var container in ConfigContainers)
         {
             <Container ConfigContainer="container" />
         }
@@ -22,13 +23,16 @@
     RootContainer RootContainer { get; set; }
 
     [Parameter]
-    public ConfigContainer ConfigContainer { get; set; }
+    public List<ConfigContainer> ConfigContainers { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
 
     private string dropClass = "";
 
     private void HandleDragEnter()
     {
-        if (ConfigContainer.ConfigContainers.Exists(cc => cc.Equals(RootContainer.Payload)))
+        if (ConfigContainers.Exists(cc => cc.Equals(RootContainer.Payload)))
         {
             dropClass = "";
         }
