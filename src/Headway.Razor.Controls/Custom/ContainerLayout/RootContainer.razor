@@ -1,0 +1,17 @@
+﻿@using Headway.Core.Model
+
+<div class="root-container">
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    [Parameter]
+    public List<ConfigContainer> ConfigContainers { get; set; }
+    
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    
+    public ConfigContainer Payload { get; set; }
+}
