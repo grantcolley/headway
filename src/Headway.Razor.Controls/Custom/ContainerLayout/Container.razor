@@ -1,0 +1,18 @@
+﻿@using Headway.Core.Model
+
+<li class="draggable" draggable="true" title="@ConfigContainer.Label" @ondragstart="@(() => HandleDragStart(ConfigContainer))">
+    <p class="Label">@ConfigContainer.Label</p>
+</li>
+
+@code {
+    [CascadingParameter]
+    RootContainer RootContainer { get; set; }
+    
+    [Parameter]
+    public ConfigContainer ConfigContainer { get; set; }
+
+    private void HandleDragStart(ConfigContainer selectedConfigContainer)
+    {
+        RootContainer.Payload = selectedConfigContainer;
+    }
+}
