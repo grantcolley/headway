@@ -1,7 +1,7 @@
 ﻿.container-list {
     display: flex;
     flex-direction: column;
-    width: 312px;
+    /*width: 312px;*/
 }
 
 .container-list ul {
@@ -12,6 +12,7 @@
     padding: 30px;
     border: 1px dashed #75868a;
     list-style: none;
+    background: #f7f7f7;
 }
 
 .can-drop {

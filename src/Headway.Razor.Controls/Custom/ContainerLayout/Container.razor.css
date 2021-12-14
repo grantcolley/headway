@@ -3,8 +3,8 @@
     padding: 10px 25px;
     border: 1px solid #424d5c;
     cursor: grab;
-    background: #5c6b7f;
-    color: #ffffff;
+    background: #e2e3e5; /*#5c6b7f;*/
+    color: #4e5154; /*#ffffff;*/
     border-radius: 5px;
     width: 250px;
 }

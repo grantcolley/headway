@@ -8,18 +8,12 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
     public abstract class ContainerLayoutBuilderBase : DynamicComponentBase
     {
         protected List<ConfigContainer> configContainers;
-        protected ConfigContainer activeContainer;
 
         protected override async Task OnInitializedAsync()
         {
             configContainers = (List<ConfigContainer>)Field.PropertyInfo.GetValue(Field.Model, null);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
-        }
-
-        protected void HandleActiveContainerUpdated(ConfigContainer container)
-        {
-            activeContainer = container;
         }
     }
 }

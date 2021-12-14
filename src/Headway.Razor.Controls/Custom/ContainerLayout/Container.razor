@@ -1,23 +1,6 @@
-﻿@using Headway.Core.Model
+﻿@inherits ContainerBase
 
-<li class="draggable" draggable="true" title="@ConfigContainer.Label" @ondragstart="@(() => HandleDragStart(ConfigContainer))" @onclick="(() => HandleClick(ConfigContainer))">
+<li class="draggable" draggable="true" title="@ConfigContainer.Label" @ondragstart="@(() => HandleDragStart(ConfigContainer))" >
     <p class="Label">@ConfigContainer.Label</p>
+    <ContainerList ConfigContainer="ConfigContainer" ConfigContainers="ConfigContainer.ConfigContainers"/>
 </li>
-
-@code {
-    [CascadingParameter]
-    RootContainer RootContainer { get; set; }
-    
-    [Parameter]
-    public ConfigContainer ConfigContainer { get; set; }
-
-    private void HandleDragStart(ConfigContainer selectedConfigContainer)
-    {
-        RootContainer.Payload = selectedConfigContainer;
-    }
-
-    private async Task HandleClick(ConfigContainer selectedConfigContainer)
-    {
-        await RootContainer.UpdateActiveContainer(selectedConfigContainer).ConfigureAwait(false);
-    }
-}

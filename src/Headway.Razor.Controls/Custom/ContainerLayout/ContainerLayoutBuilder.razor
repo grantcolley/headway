@@ -5,14 +5,8 @@
 		<div class="col-sm">
             @if (configContainers != null)
             {
-                <RootContainer ConfigContainers="configContainers" OnActiveContainerUpdated="HandleActiveContainerUpdated">
-                    <ContainerList ConfigContainers="configContainers" Description="Root Containers" NotifyActiveContainerUpdated="true"/>
-         
-                    @if(activeContainer != null)
-                    {
-                        <ContainerList ConfigContainers="activeContainer.ConfigContainers" Description="@activeContainer.Label"/>
-                    }
-
+                <RootContainer ConfigContainers="configContainers">
+                    <ContainerList ConfigContainers="configContainers"/>
                 </RootContainer>                
             }
 		</div>

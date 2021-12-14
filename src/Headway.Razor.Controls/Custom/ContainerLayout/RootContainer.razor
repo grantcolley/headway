@@ -1,25 +1,7 @@
-﻿@using Headway.Core.Model
+﻿@inherits RootContainerBase
 
 <div class="root-container">
     <CascadingValue Value="this">
         @ChildContent
     </CascadingValue>
 </div>
-
-@code {
-    [Parameter]
-    public List<ConfigContainer> ConfigContainers { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public EventCallback<ConfigContainer> OnActiveContainerUpdated { get; set; }
-
-    public ConfigContainer Payload { get; set; }
-
-    public async Task UpdateActiveContainer(ConfigContainer configContainer)
-    {
-        await OnActiveContainerUpdated.InvokeAsync(configContainer).ConfigureAwait(false);
-    }
-}
