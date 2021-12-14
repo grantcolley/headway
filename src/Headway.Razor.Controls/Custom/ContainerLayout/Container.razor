@@ -1,6 +1,6 @@
 ﻿@using Headway.Core.Model
 
-<li class="draggable" draggable="true" title="@ConfigContainer.Label" @ondragstart="@(() => HandleDragStart(ConfigContainer))">
+<li class="draggable" draggable="true" title="@ConfigContainer.Label" @ondragstart="@(() => HandleDragStart(ConfigContainer))" @onclick="(() => HandleClick(ConfigContainer))">
     <p class="Label">@ConfigContainer.Label</p>
 </li>
 
@@ -14,5 +14,10 @@
     private void HandleDragStart(ConfigContainer selectedConfigContainer)
     {
         RootContainer.Payload = selectedConfigContainer;
+    }
+
+    private async Task HandleClick(ConfigContainer selectedConfigContainer)
+    {
+        await RootContainer.UpdateActiveContainer(selectedConfigContainer).ConfigureAwait(false);
     }
 }

@@ -17,7 +17,7 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        protected void EditAsync(ConfigContainer container)
+        protected void HandleActiveContainerUpdated(ConfigContainer container)
         {
             activeContainer = container;
         }

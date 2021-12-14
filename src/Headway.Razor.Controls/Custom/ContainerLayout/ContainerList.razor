@@ -28,6 +28,9 @@
     [Parameter]
     public string Description { get; set; }
 
+    [Parameter]
+    public bool NotifyActiveContainerUpdated { get; set; }
+
     private string dropClass = "";
 
     private void HandleDragEnter()
