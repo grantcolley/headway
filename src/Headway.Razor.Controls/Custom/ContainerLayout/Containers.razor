@@ -1,6 +1,6 @@
-﻿@inherits ContainerListBase
+﻿@inherits ContainersBase
 
-<div class="container-list">
+<div class="containers">
     <ul class="dropzone @dropClass"
         ondragover="event.preventDefault();"
         ondragstart="event.dataTransfer.setData('', event.target.id);"
@@ -10,7 +10,7 @@
 
         @foreach (var container in ConfigContainers)
         {
-            <Container ConfigContainer="container" ParentConfigContainer="ConfigContainer" />
+            <Container ConfigContainer="container" Source="ConfigContainers" />
         }
 
     </ul>

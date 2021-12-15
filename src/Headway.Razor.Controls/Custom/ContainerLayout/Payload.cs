@@ -5,8 +5,7 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
 {
     public class Payload
     {
-        public ConfigContainer ConfigContainer { get; set; }
-        public ConfigContainer ParentConfigContainer { get; set; }
-        public List<ConfigContainer> RootContainers { get; set; }
+        public ConfigContainer DragTarget { get; set; }
+        public List<ConfigContainer> DragSource { get; set; }
     }
 }

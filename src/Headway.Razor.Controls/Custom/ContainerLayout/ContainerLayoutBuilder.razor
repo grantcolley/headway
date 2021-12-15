@@ -5,9 +5,9 @@
 		<div class="col-sm">
             @if (configContainers != null)
             {
-                <RootContainer ConfigContainers="configContainers">
-                    <ContainerList ConfigContainers="configContainers"/>
-                </RootContainer>                
+                <DragDropController>
+                    <Containers ConfigContainers="configContainers"/>
+                </DragDropController>                
             }
 		</div>
 	</div>
