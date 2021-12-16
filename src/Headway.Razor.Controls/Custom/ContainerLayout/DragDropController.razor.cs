@@ -7,6 +7,6 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
-        public Payload Payload { get; set; }
+        public ContainerPayload Payload { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
         public List<ConfigContainer> ConfigContainers { get; set; }
 
         [Parameter]
-        public string Label { get; set; }
+        public ConfigContainer ConfigContainer { get; set; }
 
         protected string dropClass = "";
 
@@ -27,7 +27,7 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
             }
 
             if (ConfigContainers.Any(c => c.Label.Equals(DragDropController.Payload.DragTarget))
-                || (!string.IsNullOrWhiteSpace(Label) && Label.Equals(DragDropController.Payload.DragTarget)))
+                || (ConfigContainer != null && ConfigContainer.Label.Equals(DragDropController.Payload.DragTarget.Label)))
             {
                 dropClass = "no-drop";
             }
@@ -51,10 +51,13 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
             }
 
             if (dropClass.Equals("can-drop")
-                && !ConfigContainers.Equals(DragDropController.Payload.DragSource))
+                && !ConfigContainers.Equals(DragDropController.Payload.DragSourceContainers)
+                && (ConfigContainer == null
+                || DragDropController.Payload.DragSourceContainer == null
+                || !ConfigContainer.Label.Equals(DragDropController.Payload.DragSourceContainer.Label)))
             {
                 ConfigContainers.Add(DragDropController.Payload.DragTarget);
-                DragDropController.Payload.DragSource.Remove(DragDropController.Payload.DragTarget);
+                DragDropController.Payload.DragSourceContainers.Remove(DragDropController.Payload.DragTarget);
             }
 
             dropClass = "";

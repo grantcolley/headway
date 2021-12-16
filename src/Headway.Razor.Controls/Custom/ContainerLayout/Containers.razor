@@ -10,7 +10,7 @@
 
         @foreach (var container in ConfigContainers)
         {
-            <Container ConfigContainer="container" Source="ConfigContainers" />
+            <Container ConfigContainer="container" SourceContainer="ConfigContainer" SourceContainers="ConfigContainers" />
         }
 
     </ul>

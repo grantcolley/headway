@@ -13,17 +13,22 @@ namespace Headway.Razor.Controls.Custom.ContainerLayout
         public ConfigContainer ConfigContainer { get; set; }
 
         [Parameter]
-        public List<ConfigContainer> Source { get; set; }
+        public ConfigContainer SourceContainer { get; set; }
+
+        [Parameter]
+        public List<ConfigContainer> SourceContainers { get; set; }
 
         protected void HandleDragStart(ConfigContainer configContainer)
         {
-            var payLoad = new Payload 
+            if (DragDropController.Payload == null)
             {
-                DragTarget = configContainer,
-                DragSource = Source
-            };
-
-            DragDropController.Payload = payLoad;
+                DragDropController.Payload = new ContainerPayload
+                {
+                    DragTarget = configContainer,
+                    DragSourceContainer = SourceContainer,
+                    DragSourceContainers = SourceContainers,
+                };
+            }
         }
     }
 }

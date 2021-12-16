@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace Headway.Razor.Controls.Custom.ContainerLayout
 {
-    public class Payload
+    public class ContainerPayload
     {
         public ConfigContainer DragTarget { get; set; }
-        public List<ConfigContainer> DragSource { get; set; }
+        public ConfigContainer DragSourceContainer { get; set; }
+        public List<ConfigContainer> DragSourceContainers { get; set; }
     }
 }
