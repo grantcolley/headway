@@ -1,7 +1,6 @@
 ﻿.containers {
     display: flex;
     flex-direction: column;
-    /*width: 312px;*/
 }
 
 .containers ul {
