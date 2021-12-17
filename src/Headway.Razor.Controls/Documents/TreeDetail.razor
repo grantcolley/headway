@@ -1,0 +1,55 @@
+﻿@typeparam T where T : class, new()
+@inherits TreeDetailBase<T> 
+@using Headway.Razor.Controls.Custom.ContainerLayout
+
+<div class="container container-body float-start">
+	<div class="row">
+		<div class="col-sm">
+            @if(dynamicModel != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button type="button" class="btn btn-small btn-outline-danger fas fa-minus float-left" @onclick="() => RemoveAsync(dynamicModel)"/>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-arrow-right float-end" @onclick="() => AddAsync(dynamicModel)"/>                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var rootContainer in dynamicModel.RootContainers)
+                        {
+                            <tr>
+                                <td>
+                                    <DynamicComponent Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+		</div>
+		<div class="col-sm">
+            @if (tree != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th> 
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus float-left" @onclick="() => NewAsync()"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>
+                                    <ContainerLayoutBuilder Field="Field" ComponentArgs="ComponentArgs"/>
+                                    @*<button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => EditAsync(listIitem)"/>*@
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            }
+		</div>
+	</div>
+</div>
