@@ -190,7 +190,7 @@ namespace Headway.Repository.Data
                     Description = "Create, update or delete a config container for a config",
                     Model = "Headway.Core.Model.ConfigContainer, Headway.Core",
                     ModelApi = "Configuration",
-                    Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
+                    Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
                 };
 
                 applicationDbContext.Configs.Add(configsConfig);
@@ -250,12 +250,10 @@ namespace Headway.Repository.Data
                 var configConfigContainer1 = new ConfigContainer { Name = "Model Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model", Order = 1, IsRootContainer = true };
                 var configConfigContainer2 = new ConfigContainer { Name = "Fields Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Fields", Order = 2, IsRootContainer = true };
                 var configConfigContainer3 = new ConfigContainer { Name = "Containers Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Containers", Order = 3, IsRootContainer = true };
-                var configConfigContainer4 = new ConfigContainer { Name = "Container Layout Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Container Layout", Order = 4, IsRootContainer = true };
 
                 configConfig.ConfigContainers.Add(configConfigContainer1);
                 configConfig.ConfigContainers.Add(configConfigContainer2);
                 configConfig.ConfigContainers.Add(configConfigContainer3);
-                configConfig.ConfigContainers.Add(configConfigContainer4);
                 applicationDbContext.SaveChanges();
 
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = true, Order = 1, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
@@ -270,8 +268,7 @@ namespace Headway.Repository.Data
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToProperty", Label = "Navigate To Property", Order = 10, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = "Name=OptionsCode;Value=ModelFieldsOptionItems|Name=Model;Value=Config" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateToConfig", Label = "Navigate To Config", Order = 11, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = "Name=OptionsCode;Value=ConfigOptionItems" });
                 configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", Order = 12, ConfigContainer = configConfigContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigItem", ComponentArgs = "Name=ListConfig;Value=ConfigItemsListDetail" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Order = 13, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer", ComponentArgs = "Name=ListConfig;Value=ConfigContainersListDetail" });
-                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Container Layout", Order = 14, ConfigContainer = configConfigContainer4, Component = "Headway.Razor.Controls.Custom.ContainerLayout.ContainerLayoutBuilder, Headway.Razor.Controls" });
+                configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Order = 13, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer" });
 
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
