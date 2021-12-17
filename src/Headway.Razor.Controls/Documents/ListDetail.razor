@@ -10,6 +10,7 @@
                     <thead>
                         <tr>
                             <th>
+                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus float-left" @onclick="() => NewAsync()"/>
                                 <button type="button" class="btn btn-small btn-outline-danger fas fa-minus float-left" @onclick="() => RemoveAsync(dynamicModel)"/>
                                 <button type="button" class="btn btn-small btn-outline-primary fas fa-arrow-right float-end" @onclick="() => AddAsync(dynamicModel)"/>                                
                             </th>
@@ -38,9 +39,7 @@
                             {
                                 <th>@column.Label</th>
                             }
-                            <th> 
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus float-left" @onclick="() => NewAsync()"/>
-                            </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
