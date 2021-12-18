@@ -11,7 +11,6 @@ namespace Headway.Core.Dynamic
         public DynamicList(IEnumerable<T> listItems, Config config)
         {
             Config = config;
-
             Helper = DynamicTypeHelper.Get<T>();
 
             dynamicListItems = listItems.Select(i => new DynamicListItem<T>(i)).ToList();
