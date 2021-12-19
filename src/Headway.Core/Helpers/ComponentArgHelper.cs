@@ -89,12 +89,22 @@ namespace Headway.Core.Helpers
                         var name = nameValue[0].Split('=');
                         var value = nameValue[1].Split('=');
 
+                        bool isDynamicField = false;
+
+                        if(nameValue.Length > 2)
+                        {
+                            var isField = nameValue[2].Split('=');
+                            if(isField[1].Equals("true", System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                isDynamicField = true;
+                            }
+                        }
+
                         var dynamicArg = new DynamicArg { Name = name[1] };
 
-                        var field = dynamicFields.SingleOrDefault(f => f.PropertyName.Equals(value[1]));
-
-                        if (field != null)
+                        if (isDynamicField)
                         {
+                            var field = dynamicFields.SingleOrDefault(f => f.PropertyName.Equals(value[1]));
                             dynamicArg.Value = field;
                         }
                         else
