@@ -1,0 +1,17 @@
+﻿@typeparam T where T : class, new()
+@inherits TreeViewBase<T>
+
+<div class="container container-body float-start">
+	<div class="row">
+		<div class="col-sm">
+            <div class="treeview">
+                <CascadingValue Value="Payload">
+                    @foreach (var node in nodes)
+                    {
+                        @RenderTreeNode(node)   
+                    }
+                </CascadingValue>
+            </div>
+		</div>
+	</div>
+</div>
