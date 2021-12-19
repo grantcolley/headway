@@ -12,3 +12,27 @@
 .draggable:active {
     cursor: grabbing;
 }
+
+.treenodes {
+    display: flex;
+    flex-direction: column;
+}
+
+.treenodes ul {
+    flex: 1;
+}
+
+.dropzone {
+    padding: 30px;
+    border: 1px dashed #75868a;
+    list-style: none;
+    background: #f7f7f7;
+}
+
+.can-drop {
+    border: 2px dashed green;
+}
+
+.no-drop {
+    border: 2px dashed red;
+}
