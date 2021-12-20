@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 
 namespace Headway.Razor.Controls.Components.GenericTree
@@ -8,9 +9,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
         public static RenderFragment RenderTreeView<T>(List<T> tree, string nodeLabel, string nodesProperty) where T : class, new()
             => builder =>
         {
-            var type = typeof(T).GetType();
-            var component = typeof(TreeView<T>).GetType();
-            var genericType = component.MakeGenericType(new[] { type });
+            var genericType = Type.GetType(typeof(TreeView<T>).AssemblyQualifiedName);
             builder.OpenComponent(1, genericType);
             builder.AddAttribute(2, TreeViewConstants.TREEVIEW_PARAMETER_TREE, tree);
             builder.AddAttribute(3, TreeViewConstants.TREEVIEW_PARAMETER_NODE_LABEL, nodeLabel);
@@ -21,9 +20,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
         public static RenderFragment RenderTreeNode<T>(Node<T> node) where T : class, new()
             => builder =>
         {
-            var type = node.GetType();
-            var component = typeof(TreeNode<T>).GetType();
-            var genericType = component.MakeGenericType(new[] { type });
+            var genericType = Type.GetType(typeof(TreeNode<T>).AssemblyQualifiedName);
             builder.OpenComponent(1, genericType);
             builder.AddAttribute(2, TreeViewConstants.TREENODE_PARAMETER_NODE, node);
             builder.CloseComponent();
