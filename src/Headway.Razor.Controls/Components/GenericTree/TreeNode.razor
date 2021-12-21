@@ -1,24 +1,22 @@
 ﻿@typeparam T where T : class, new()
 @inherits TreeNodeBase<T>
 
-<li class="draggable" 
+<li class="draggable  @dropClass" 
     draggable="true" 
     title="@Node.Label"
-    @ondragstart="@(() => HandleDragStart(Node))" >
+    @ondragstart="@(() => HandleDragStart(Node))"
+    @ondrop="HandleDrop"
+    @ondragenter="HandleDragEnter"
+    @ondragleave="HandleDragLeave">
     <p class="Label">@Node.Label</p>
     <div class="treenodes">
-        <ul class="dropzone @dropClass"
+        <ul class="treenodeslist"
             ondragover="event.preventDefault();"
-            ondragstart="event.dataTransfer.setData('', event.target.id);"
-            @ondrop="HandleDrop"
-            @ondragenter="HandleDragEnter"
-            @ondragleave="HandleDragLeave">
-
+            ondragstart="event.dataTransfer.setData('', event.target.id);">
             @foreach (var node in Node.Nodes)
             {
                 @RenderTreeNode(node)
             }
-
         </ul>
     </div>
 </li>
