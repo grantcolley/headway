@@ -27,7 +27,30 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         public void Move(Node<T> dragNode, Node<T> dropNode)
         {
+            if (dragNode.Source == null
+                && nodes.Contains(dragNode))
+            { 
+                nodes.Remove(dragNode);
+            }
+            else if(dragNode.Source.Nodes.Contains(dragNode))
+            {
+                dragNode.Source.Nodes.Remove(dragNode);
+            }
 
+            dragNode.Source = dropNode;
+            dropNode.Nodes.Add(dragNode);
+        }
+
+        public void Add(Node<T> dragNode)
+        {
+            if(dragNode.Source != null
+                && dragNode.Source.Nodes.Contains(dragNode))
+            {
+                dragNode.Source.Nodes.Remove(dragNode);
+            }
+
+            dragNode.Source = null;
+            nodes.Add(dragNode);
         }
 
         protected override void OnInitialized()
@@ -43,7 +66,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
             foreach(var node in Tree)
             {
-                nodes.Add(NodeBuilder(node));
+                nodes.Add(NodeBuilder(node, null));
             }
 
             return base.OnParametersSetAsync();
@@ -79,26 +102,23 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         protected void HandleDrop()
         {
-            if (Payload == null)
+            if (Payload != null
+                && dropClass.Equals("can-drop"))
             {
-                dropClass = "";
-                return;
+                Add(Payload.DragNode);
             }
 
-            if (dropClass.Equals("can-drop"))
-            {
-                //Move(Payload.DragNode, Node);
-            }
-
+            Payload = null;
             dropClass = "";
         }
 
-        private Node<T> NodeBuilder(T model)
+        private Node<T> NodeBuilder(T model, Node<T> source)
         {
             var node = new Node<T> 
             {
                 Model = model,
-                Label = (string)typeHelper.GetValue(model, NodeLabel)
+                Label = (string)typeHelper.GetValue(model, NodeLabel),
+                Source = source
             };
 
             var modelNodes = (List<T>)typeHelper.GetValue(model, NodesProperty);
@@ -107,7 +127,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
             {
                 foreach(var modelNode in modelNodes)
                 {
-                    node.Nodes.Add(NodeBuilder(modelNode));
+                    node.Nodes.Add(NodeBuilder(modelNode, node));
                 }
             }
 
