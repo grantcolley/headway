@@ -37,7 +37,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 return;
             }
 
-            if ((Node.Label.Equals(TreeView.Payload.DragNode.Label))
+            if (Node.Equals(TreeView.Payload.DragNode)
                 || Node.Nodes.Any(n => n.Equals(TreeView.Payload.DragNode)))
             {
                 dropClass = "no-drop";
@@ -55,17 +55,13 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         protected void HandleDrop()
         {
-            if (TreeView.Payload == null)
-            {
-                dropClass = "";
-                return;
-            }
-
-            if (dropClass.Equals("can-drop"))
+            if (TreeView.Payload != null
+                && dropClass.Equals("can-drop"))
             {
                 TreeView.Move(TreeView.Payload.DragNode, Node);
             }
 
+            TreeView.Payload = null;
             dropClass = "";
         }
     }
