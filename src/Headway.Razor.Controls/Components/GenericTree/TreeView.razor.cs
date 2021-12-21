@@ -1,12 +1,19 @@
 ﻿using Headway.Core.Dynamic;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components.GenericTree
 {
     public class TreeViewBase<T> : ComponentBase where T : class, new()
     {
+        private DynamicTypeHelper<T> typeHelper;
+
+        protected List<Node<T>> nodes;
+
+        protected string dropClass = "";
+
         [Parameter]
         public List<T> Tree { get; set; }
 
@@ -18,10 +25,6 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         public Payload<T> Payload { get; set; }
 
-        protected List<Node<T>> nodes;
-
-        private DynamicTypeHelper<T> typeHelper;
-        
         public void Move(Node<T> dragNode, Node<T> dropNode)
         {
 
@@ -49,6 +52,45 @@ namespace Headway.Razor.Controls.Components.GenericTree
         protected RenderFragment RenderTreeNode(Node<T> node)
         {
             return TreeNodeRenderer.RenderTreeNode(node);
+        }
+
+        protected void HandleDragEnter()
+        {
+            if (Payload == null)
+            {
+                dropClass = "";
+                return;
+            }
+
+            if (nodes.Any(n => n.Equals(Payload.DragNode)))
+            {
+                dropClass = "no-drop";
+            }
+            else
+            {
+                dropClass = "can-drop";
+            }
+        }
+
+        protected void HandleDragLeave()
+        {
+            dropClass = "";
+        }
+
+        protected void HandleDrop()
+        {
+            if (Payload == null)
+            {
+                dropClass = "";
+                return;
+            }
+
+            if (dropClass.Equals("can-drop"))
+            {
+                //Move(Payload.DragNode, Node);
+            }
+
+            dropClass = "";
         }
 
         private Node<T> NodeBuilder(T model)

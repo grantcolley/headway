@@ -5,12 +5,19 @@
 	<div class="row">
 		<div class="col-sm">
             <div class="treeview">
-                <CascadingValue Value="Payload">
-                    @foreach (var node in nodes)
-                    {
-                        @RenderTreeNode(node)   
-                    }
-                </CascadingValue>
+                <ul class="dropzone @dropClass"
+                    ondragover="event.preventDefault();"
+                    ondragstart="event.dataTransfer.setData('', event.target.id);"
+                    @ondrop="HandleDrop"
+                    @ondragenter="HandleDragEnter"
+                    @ondragleave="HandleDragLeave">
+                    <CascadingValue Value="this">
+                        @foreach (var node in nodes)
+                        {
+                            @RenderTreeNode(node)   
+                        }
+                    </CascadingValue>
+                </ul>
             </div>
 		</div>
 	</div>
