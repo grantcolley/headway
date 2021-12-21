@@ -6,19 +6,19 @@
     title="@Node.Label"
     @ondragstart="@(() => HandleDragStart(Node))" >
     <p class="Label">@Node.Label</p>
-        <div class="treenodes">
-            <ul class="dropzone @dropClass"
-                ondragover="event.preventDefault();"
-                ondragstart="event.dataTransfer.setData('', event.target.id);"
-                @ondrop="HandleDrop"
-                @ondragenter="HandleDragEnter"
-                @ondragleave="HandleDragLeave">
+    <div class="treenodes">
+        <ul class="dropzone @dropClass"
+            ondragover="event.preventDefault();"
+            ondragstart="event.dataTransfer.setData('', event.target.id);"
+            @ondrop="HandleDrop"
+            @ondragenter="HandleDragEnter"
+            @ondragleave="HandleDragLeave">
 
-                @foreach (var node in Node.Nodes)
-                {
-                    @RenderTreeNode(node)
-                }
+            @foreach (var node in Node.Nodes)
+            {
+                @RenderTreeNode(node)
+            }
 
-            </ul>
-        </div>
+        </ul>
+    </div>
 </li>
