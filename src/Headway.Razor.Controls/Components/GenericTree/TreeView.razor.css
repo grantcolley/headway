@@ -1,6 +1,6 @@
 ﻿.treeview {
     display: flex;
-    justify-content: space-around;
+    /*justify-content: space-around;*/
     flex-direction: column;
 }
 
@@ -9,8 +9,9 @@
 }
 
 .dropzone {
-    padding: 30px;
-    border: 1px dashed #75868a;
+    /*padding: 30px;*/
+    /*border: 1px dashed #75868a;*/
+    border-radius: 5px;
     list-style: none;
     background: #f7f7f7;
 }
