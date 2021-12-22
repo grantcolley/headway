@@ -45,15 +45,6 @@ namespace Headway.Razor.Controls.Documents
 
         protected async Task AddAsync(DynamicModel<T> model)
         {
-            // traverse for duplicates....
-            //var treeItem = tree.FirstOrDefault();
-
-            //if (treeItem != null)
-            //{
-            //    return;
-            //}
-
-            //tree.Add(model.Model);
             Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
                 (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
 
