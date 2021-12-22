@@ -48,6 +48,16 @@ namespace Headway.Core.Dynamic
         public IEnumerable<PropertyInfo> SupportedProperties { get; private set; }
 
         /// <summary>
+        /// Gets a <see cref="PropertyInfo"/> from the <see cref="SupportedProperties"/> list.
+        /// </summary>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <returns>The <see cref="PropertyInfo"/> matching the propertyName</returns>
+        public PropertyInfo GetPropertyInfo(string propertyName)
+        {
+            return SupportedProperties.First(p => p.Name == propertyName);
+        }
+
+        /// <summary>
         /// A dynamic method for setting the value of the target property.
         /// </summary>
         /// <param name="target">The target property.</param>
