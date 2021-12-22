@@ -7,7 +7,6 @@ using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Components.GenericTree;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Documents
@@ -16,13 +15,11 @@ namespace Headway.Razor.Controls.Documents
     public abstract class TreeDetailBase<T> : GenericComponentBase<T> where T : class, new()
     {
         protected DynamicModel<T> dynamicModel;
-        protected List<T> tree;
         private string nodeLabel;
         private string nodesProperty;
 
         protected override async Task OnInitializedAsync()
         {
-            tree = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
             nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LABEL_PROPERTY);
             nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LIST_PROPERTY);
 
@@ -33,7 +30,7 @@ namespace Headway.Razor.Controls.Documents
 
         protected RenderFragment RenderTreeView()
         {
-            return TreeNodeRenderer.RenderTreeView(tree, nodeLabel, nodesProperty);
+            return TreeNodeRenderer.RenderTreeView<T>(Field, nodeLabel, nodesProperty);
         }
 
         protected async Task NewAsync()
@@ -49,31 +46,31 @@ namespace Headway.Razor.Controls.Documents
         protected async Task AddAsync(DynamicModel<T> model)
         {
             // traverse for duplicates....
-            var treeItem = tree.FirstOrDefault();
+            //var treeItem = tree.FirstOrDefault();
 
-            if (treeItem != null)
-            {
-                return;
-            }
+            //if (treeItem != null)
+            //{
+            //    return;
+            //}
 
-            tree.Add(model.Model);
-            //Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
-            //    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
+            //tree.Add(model.Model);
+            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
 
             await NewAsync().ConfigureAwait(false);
         }
 
         protected async Task RemoveAsync(DynamicModel<T> model)
         {
-            var treeItem = tree.FirstOrDefault();
+            //var treeItem = tree.FirstOrDefault();
 
-            if (treeItem != null)
-            {
-                tree.Remove(treeItem);
+            //if (treeItem != null)
+            //{
+            //    tree.Remove(treeItem);
 
-                //Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
-                //    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
-            }
+            //    //Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+            //    //    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
+            //}
 
             await NewAsync().ConfigureAwait(false);
         }
