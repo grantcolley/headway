@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components.GenericTree
@@ -10,12 +11,14 @@ namespace Headway.Razor.Controls.Components.GenericTree
     {
         private DynamicTypeHelper<T> typeHelper;
 
+        private PropertyInfo modelNodesPropertyInfo;
+
         protected List<Node<T>> nodes;
 
         protected string dropClass = "";
 
         [Parameter]
-        public List<T> Tree { get; set; }
+        public DynamicField Field { get; set; }
 
         [Parameter]
         public string NodeLabel { get; set; }
@@ -31,14 +34,21 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 && nodes.Contains(dragNode))
             { 
                 nodes.Remove(dragNode);
+                Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
             }
-            else if(dragNode.Source.Nodes.Contains(dragNode))
+            else if(dragNode.Source != null
+                && dragNode.Source.Nodes.Contains(dragNode))
             {
                 dragNode.Source.Nodes.Remove(dragNode);
+                dragNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)dragNode.Source.ModelNodesPropertyInfo.GetValue(dragNode.Source.Model, null), new T[] { dragNode.Model });
             }
 
             dragNode.Source = dropNode;
             dropNode.Nodes.Add(dragNode);
+            dropNode.ModelNodesPropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                (List<T>)dropNode.ModelNodesPropertyInfo.GetValue(dropNode.Model, null), new T[] { dragNode.Model });
         }
 
         public void Add(Node<T> dragNode)
@@ -47,15 +57,38 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 && dragNode.Source.Nodes.Contains(dragNode))
             {
                 dragNode.Source.Nodes.Remove(dragNode);
+                dragNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)dragNode.Source.ModelNodesPropertyInfo.GetValue(dragNode.Source.Model, null), new T[] { dragNode.Model });
             }
 
             dragNode.Source = null;
             nodes.Add(dragNode);
+            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
+        }
+
+        public void Remove(Node<T> removeNode)
+        {
+            if (removeNode.Source == null
+                && nodes.Contains(removeNode))
+            {
+                nodes.Remove(removeNode);
+                Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { removeNode.Model });
+            }
+            else if (removeNode.Source != null
+                && removeNode.Source.Nodes.Contains(removeNode))
+            {
+                removeNode.Source.Nodes.Remove(removeNode);
+                removeNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)removeNode.Source.ModelNodesPropertyInfo.GetValue(removeNode.Source.Model, null), new T[] { removeNode.Model });
+            }
         }
 
         protected override void OnInitialized()
         {
             typeHelper = DynamicTypeHelper.Get<T>();
+            modelNodesPropertyInfo = typeHelper.GetPropertyInfo(NodesProperty);
 
             base.OnInitialized();
         }
@@ -64,7 +97,9 @@ namespace Headway.Razor.Controls.Components.GenericTree
         {
             nodes = new List<Node<T>>();
 
-            foreach(var node in Tree)
+            var tree = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
+
+            foreach (var node in tree)
             {
                 nodes.Add(NodeBuilder(node, null));
             }
@@ -118,7 +153,8 @@ namespace Headway.Razor.Controls.Components.GenericTree
             {
                 Model = model,
                 Label = (string)typeHelper.GetValue(model, NodeLabel),
-                Source = source
+                Source = source,
+                ModelNodesPropertyInfo = modelNodesPropertyInfo
             };
 
             var modelNodes = (List<T>)typeHelper.GetValue(model, NodesProperty);
