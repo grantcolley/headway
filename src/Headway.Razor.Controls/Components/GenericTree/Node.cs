@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace Headway.Razor.Controls.Components.GenericTree
 {
@@ -13,5 +14,6 @@ namespace Headway.Razor.Controls.Components.GenericTree
         public string Label { get; set; }
         public Node<T> Source { get; set; }
         public List<Node<T>> Nodes { get; set; }
+        public PropertyInfo ModelNodesPropertyInfo { get; set; }
     }
 }
