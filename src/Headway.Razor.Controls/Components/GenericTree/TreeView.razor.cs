@@ -96,7 +96,6 @@ namespace Headway.Razor.Controls.Components.GenericTree
         protected override Task OnParametersSetAsync()
         {
             nodes = new List<Node<T>>();
-
             var tree = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
 
             foreach (var node in tree)
