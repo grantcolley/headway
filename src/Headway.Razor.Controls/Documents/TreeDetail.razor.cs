@@ -15,8 +15,6 @@ namespace Headway.Razor.Controls.Documents
     public abstract class TreeDetailBase<T> : GenericComponentBase<T> where T : class, new()
     {
         protected DynamicModel<T> dynamicModel;
-        private string nodeLabel;
-        private string nodesProperty;
 
         public async Task EditAsync(T model)
         {
@@ -25,9 +23,6 @@ namespace Headway.Razor.Controls.Documents
 
         protected override async Task OnInitializedAsync()
         {
-            nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LABEL_PROPERTY);
-            nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LIST_PROPERTY);
-
             await NewAsync().ConfigureAwait(false);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
@@ -35,7 +30,7 @@ namespace Headway.Razor.Controls.Documents
 
         protected RenderFragment RenderTreeView()
         {
-            return TreeNodeRenderer.RenderTreeView<T>(Field, nodeLabel, nodesProperty);
+            return TreeNodeRenderer.RenderTreeView<T>(Field, ComponentArgs);
         }
 
         protected async Task NewAsync()
