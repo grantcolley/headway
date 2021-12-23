@@ -1,4 +1,7 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Constants;
+using Headway.Core.Dynamic;
+using Headway.Core.Helpers;
+using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +13,18 @@ namespace Headway.Razor.Controls.Components.GenericTree
     public class TreeViewBase<T> : ComponentBase where T : class, new()
     {
         private DynamicTypeHelper<T> typeHelper;
-
         private PropertyInfo modelNodesPropertyInfo;
+        private string nodeLabel;
+        private string nodesProperty;
 
         protected List<Node<T>> nodes;
-
         protected string dropClass = "";
 
         [Parameter]
         public DynamicField Field { get; set; }
 
         [Parameter]
-        public string NodeLabel { get; set; }
-
-        [Parameter]
-        public string NodesProperty { get; set; }
+        public List<DynamicArg> ComponentArgs { get; set; }
 
         public Payload<T> Payload { get; set; }
 
@@ -87,8 +87,11 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         protected override void OnInitialized()
         {
+            nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LABEL_PROPERTY);
+            nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LIST_PROPERTY);
+
             typeHelper = DynamicTypeHelper.Get<T>();
-            modelNodesPropertyInfo = typeHelper.GetPropertyInfo(NodesProperty);
+            modelNodesPropertyInfo = typeHelper.GetPropertyInfo(nodesProperty);
 
             base.OnInitialized();
         }
@@ -151,12 +154,12 @@ namespace Headway.Razor.Controls.Components.GenericTree
             var node = new Node<T> 
             {
                 Model = model,
-                Label = (string)typeHelper.GetValue(model, NodeLabel),
+                Label = (string)typeHelper.GetValue(model, nodeLabel),
                 Source = source,
                 ModelNodesPropertyInfo = modelNodesPropertyInfo
             };
 
-            var modelNodes = (List<T>)typeHelper.GetValue(model, NodesProperty);
+            var modelNodes = (List<T>)typeHelper.GetValue(model, nodesProperty);
 
             if(modelNodes != null)
             {
