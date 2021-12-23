@@ -4,7 +4,7 @@
     {
         public const string TREENODE_PARAMETER_NODE = "Node";
         public const string TREEVIEW_PARAMETER_FIELD = "Field";
-        public const string TREEVIEW_PARAMETER_NODE_LABEL = "NodeLabel";
-        public const string TREEVIEW_PARAMETER_NODES_PROPERTY = "NodesProperty";
+        public const string TREEVIEW_PARAMETER_COMPONENT_ARGS = "ComponentArgs";
+        public const string TREEVIEW_PARAMETER_ON_SELECTED_NODE = "OnSelectedNode";
     }
 }
