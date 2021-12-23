@@ -18,6 +18,11 @@ namespace Headway.Razor.Controls.Documents
         private string nodeLabel;
         private string nodesProperty;
 
+        public async Task EditAsync(T model)
+        {
+            dynamicModel = await GetDynamicModelAsync(model, Config.Name).ConfigureAwait(false);
+        }
+
         protected override async Task OnInitializedAsync()
         {
             nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LABEL_PROPERTY);
@@ -38,13 +43,10 @@ namespace Headway.Razor.Controls.Documents
             dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false);
         }
 
-        protected async Task EditAsync(DynamicListItem<T> listItem)
-        {
-            dynamicModel = await GetDynamicModelAsync(listItem.Model, Config.Name).ConfigureAwait(false);
-        }
-
         protected async Task AddAsync(DynamicModel<T> model)
         {
+            var tree = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
+
             Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
                 (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
 
