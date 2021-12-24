@@ -17,6 +17,8 @@ namespace Headway.Razor.Controls.Documents
     {
         protected DynamicModel<T> dynamicModel;
 
+        private TreeView<T> treeView;
+
         protected override async Task OnInitializedAsync()
         {
             await NewAsync().ConfigureAwait(false);
@@ -31,6 +33,7 @@ namespace Headway.Razor.Controls.Documents
             builder.AddAttribute(2, TreeViewConstants.TREEVIEW_PARAMETER_FIELD, Field);
             builder.AddAttribute(3, TreeViewConstants.TREEVIEW_PARAMETER_COMPONENT_ARGS, ComponentArgs);
             builder.AddAttribute(4, TreeViewConstants.TREEVIEW_PARAMETER_ON_SELECT_ACTIVE_NODE, EventCallback.Factory.Create<T>(this, EditAsync));
+            builder.AddComponentReferenceCapture(5, inst => { treeView = (TreeView<T>)inst; });
             builder.CloseComponent();
         };
 
@@ -41,25 +44,20 @@ namespace Headway.Razor.Controls.Documents
 
         protected async Task AddAsync(DynamicModel<T> model)
         {
-            var tree = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
-
-            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
-                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
+            if(treeView != null)
+            {
+                treeView.Add(model.Model);
+            }
 
             await NewAsync().ConfigureAwait(false);
         }
 
         protected async Task RemoveAsync(DynamicModel<T> model)
         {
-            //var treeItem = tree.FirstOrDefault();
-
-            //if (treeItem != null)
-            //{
-            //    tree.Remove(treeItem);
-
-            //    //Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
-            //    //    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
-            //}
+            if (treeView != null)
+            {
+                treeView.Remove(model.Model);
+            }
 
             await NewAsync().ConfigureAwait(false);
         }
