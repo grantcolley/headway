@@ -16,6 +16,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
         private PropertyInfo modelNodesPropertyInfo;
         private string nodeLabel;
         private string nodesProperty;
+        private Node<T> selectedNode;
 
         protected List<Node<T>> nodes;
         protected string dropClass = "";
@@ -54,43 +55,26 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 (List<T>)dropNode.ModelNodesPropertyInfo.GetValue(dropNode.Model, null), new T[] { dragNode.Model });
         }
 
-        public void Add(Node<T> dragNode)
+        public void Add(T model)
         {
-            if(dragNode.Source != null
-                && dragNode.Source.Nodes.Contains(dragNode))
-            {
-                dragNode.Source.Nodes.Remove(dragNode);
-                dragNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
-                    (List<T>)dragNode.Source.ModelNodesPropertyInfo.GetValue(dragNode.Source.Model, null), new T[] { dragNode.Model });
-            }
-
-            dragNode.Source = null;
-            nodes.Add(dragNode);
-            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
-                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
+            Add(NodeBuilder(model, null));
         }
 
-        public void Remove(Node<T> removeNode)
+        public void Remove(T model)
         {
-            if (removeNode.Source == null
-                && nodes.Contains(removeNode))
+            if(selectedNode != null
+                && selectedNode.Model.Equals(model))
             {
-                nodes.Remove(removeNode);
-                Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
-                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { removeNode.Model });
-            }
-            else if (removeNode.Source != null
-                && removeNode.Source.Nodes.Contains(removeNode))
-            {
-                removeNode.Source.Nodes.Remove(removeNode);
-                removeNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
-                    (List<T>)removeNode.Source.ModelNodesPropertyInfo.GetValue(removeNode.Source.Model, null), new T[] { removeNode.Model });
+                Remove(selectedNode);
+
+                selectedNode = null;
             }
         }
 
-        public async Task SelectedNode(Node<T> selectedNode)
+        public async Task SelectActiveNode(Node<T> node)
         {
-            await OnSelectActiveNode.InvokeAsync(selectedNode.Model);
+            selectedNode = node;
+            await OnSelectActiveNode.InvokeAsync(node.Model);
         }
 
         protected override void OnInitialized()
@@ -155,6 +139,40 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
             Payload = null;
             dropClass = "";
+        }
+
+        private void Add(Node<T> dragNode)
+        {
+            if (dragNode.Source != null
+                && dragNode.Source.Nodes.Contains(dragNode))
+            {
+                dragNode.Source.Nodes.Remove(dragNode);
+                dragNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)dragNode.Source.ModelNodesPropertyInfo.GetValue(dragNode.Source.Model, null), new T[] { dragNode.Model });
+            }
+
+            dragNode.Source = null;
+            nodes.Add(dragNode);
+            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
+        }
+
+        private void Remove(Node<T> removeNode)
+        {
+            if (removeNode.Source == null
+                && nodes.Contains(removeNode))
+            {
+                nodes.Remove(removeNode);
+                Field.PropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { removeNode.Model });
+            }
+            else if (removeNode.Source != null
+                && removeNode.Source.Nodes.Contains(removeNode))
+            {
+                removeNode.Source.Nodes.Remove(removeNode);
+                removeNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
+                    (List<T>)removeNode.Source.ModelNodesPropertyInfo.GetValue(removeNode.Source.Model, null), new T[] { removeNode.Model });
+            }
         }
 
         private Node<T> NodeBuilder(T model, Node<T> source)
