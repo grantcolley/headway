@@ -8,7 +8,7 @@
     @ondrop="HandleDrop"
     @ondragenter="HandleDragEnter"
     @ondragleave="HandleDragLeave">
-    <p class="Label">@Node.Label</p>
+    <p class="Label" @onclick="OnNodeClicked">@Node.Label</p>
     <div class="treenodes">
         <ul class="treenodeslist">
             @foreach (var node in Node.Nodes)

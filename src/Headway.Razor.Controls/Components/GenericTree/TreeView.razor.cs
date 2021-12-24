@@ -26,6 +26,9 @@ namespace Headway.Razor.Controls.Components.GenericTree
         [Parameter]
         public List<DynamicArg> ComponentArgs { get; set; }
 
+        [Parameter]
+        public EventCallback<T> OnSelectActiveNode { get; set; }
+
         public Payload<T> Payload { get; set; }
 
         public void Move(Node<T> dragNode, Node<T> dropNode)
@@ -83,6 +86,11 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 removeNode.Source.ModelNodesPropertyInfo.PropertyType.GetMethod("Remove").Invoke(
                     (List<T>)removeNode.Source.ModelNodesPropertyInfo.GetValue(removeNode.Source.Model, null), new T[] { removeNode.Model });
             }
+        }
+
+        public async Task SelectedNode(Node<T> selectedNode)
+        {
+            await OnSelectActiveNode.InvokeAsync(selectedNode.Model);
         }
 
         protected override void OnInitialized()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components.GenericTree
 {
@@ -63,6 +64,11 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
             TreeView.Payload = null;
             dropClass = "";
+        }
+
+        protected async Task OnNodeClicked()
+        {
+            await TreeView.SelectedNode(Node).ConfigureAwait(false);
         }
     }
 }
