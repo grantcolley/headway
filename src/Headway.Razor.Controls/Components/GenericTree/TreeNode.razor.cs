@@ -68,7 +68,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         protected async Task OnNodeClicked()
         {
-            await TreeView.SelectedNode(Node).ConfigureAwait(false);
+            await TreeView.SelectActiveNode(Node).ConfigureAwait(false);
         }
     }
 }
