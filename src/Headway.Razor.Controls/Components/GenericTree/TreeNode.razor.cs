@@ -66,7 +66,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
             dropClass = "";
         }
 
-        protected async Task OnNodeClicked()
+        protected async Task SelectAsync()
         {
             await TreeView.SelectActiveNode(Node).ConfigureAwait(false);
         }
