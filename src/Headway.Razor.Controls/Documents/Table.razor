@@ -19,7 +19,7 @@ else
                     <th>@column.Label</th>
                 }
                 <th> 
-                    <button type="button" class="btn btn-small btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
+                    <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
                 </th>
             </tr>
         </thead>
@@ -34,7 +34,7 @@ else
                         </td>
                     }
                     <td>
-                        <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
+                        <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/>
                     </td>
                 </tr>
             }

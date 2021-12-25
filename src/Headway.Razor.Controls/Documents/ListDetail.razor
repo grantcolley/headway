@@ -10,9 +10,9 @@
                     <thead>
                         <tr>
                             <th>
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-plus float-left" @onclick="() => NewAsync()"/>
-                                <button type="button" class="btn btn-small btn-outline-danger fas fa-minus float-left" @onclick="() => RemoveAsync(dynamicModel)"/>
-                                <button type="button" class="btn btn-small btn-outline-primary fas fa-arrow-right float-end" @onclick="() => AddAsync(dynamicModel)"/>                                
+                                <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-undo float-left" @onclick="() => NewAsync()"/>
+                                <button type="button" class="btn btn-small borderless btn-outline-danger fas fa-minus float-left" @onclick="() => RemoveAsync(dynamicModel)"/>
+                                <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-arrow-right float-end" @onclick="() => AddAsync(dynamicModel)"/>                                
                             </th>
                         </tr>
                     </thead>
@@ -53,7 +53,7 @@
                                     </td>
                                 }
                                 <td>
-                                    <button type="button" class="btn btn-small btn-outline-primary fas fa-edit" @onclick="() => EditAsync(listIitem)"/>
+                                    <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit" @onclick="() => EditAsync(listIitem)"/>
                                 </td>
                             </tr>
                         }
