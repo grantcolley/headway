@@ -16,7 +16,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
         private PropertyInfo modelNodesPropertyInfo;
         private string nodeLabel;
         private string nodesProperty;
-        private Node<T> selectedNode;
+        private string nodeUniqueProperty;
 
         protected List<Node<T>> nodes;
         protected string dropClass = "";
@@ -57,23 +57,28 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         public void Add(T model)
         {
-            Add(NodeBuilder(model, null));
+            var node = NodeBuilder(model, null);
+            var duplicate = FindDuplicate(node);
+
+            if(duplicate == null)
+            {
+                Add(node);
+            }
         }
 
         public void Remove(T model)
         {
-            if(selectedNode != null
-                && selectedNode.Model.Equals(model))
-            {
-                Remove(selectedNode);
+            var node = NodeBuilder(model, null);
+            var duplicate = FindDuplicate(node);
 
-                selectedNode = null;
+            if (duplicate != null)
+            {
+                Remove(duplicate);
             }
         }
 
         public async Task SelectActiveNode(Node<T> node)
         {
-            selectedNode = node;
             await OnSelectActiveNode.InvokeAsync(node.Model);
         }
 
@@ -81,6 +86,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
         {
             nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LABEL_PROPERTY);
             nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LIST_PROPERTY);
+            nodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_UNIQUE_PROPERTY);
 
             typeHelper = DynamicTypeHelper.Get<T>();
             modelNodesPropertyInfo = typeHelper.GetPropertyInfo(nodesProperty);
@@ -180,9 +186,10 @@ namespace Headway.Razor.Controls.Components.GenericTree
             var node = new Node<T> 
             {
                 Model = model,
-                Label = (string)typeHelper.GetValue(model, nodeLabel),
                 Source = source,
-                ModelNodesPropertyInfo = modelNodesPropertyInfo
+                ModelNodesPropertyInfo = modelNodesPropertyInfo,
+                Label = (string)typeHelper.GetValue(model, nodeLabel),
+                UniqueValue = (string)typeHelper.GetValue(model, nodeUniqueProperty)
             };
 
             var modelNodes = (List<T>)typeHelper.GetValue(model, nodesProperty);
@@ -196,6 +203,37 @@ namespace Headway.Razor.Controls.Components.GenericTree
             }
 
             return node;
+        }
+
+        private Node<T> FindDuplicate(Node<T> source)
+        {
+            foreach (var node in nodes)
+            {
+                var duplicate = GetNode(source.UniqueValue, node);
+                if (duplicate != null)
+                {
+                    return duplicate;
+                }
+            }
+
+            return null;
+        }
+
+        private Node<T> GetNode(string nodeUniqueProperty, Node<T> source)
+        {
+            if(source.UniqueValue.Equals(nodeUniqueProperty))
+            {
+                return source;
+            }
+            else
+            {
+                foreach(var node in source.Nodes)
+                {
+                    return GetNode(nodeUniqueProperty, node);
+                }
+
+                return null;
+            }
         }
     }
 }
