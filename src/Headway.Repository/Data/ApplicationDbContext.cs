@@ -53,6 +53,10 @@ namespace Headway.Repository.Data
             builder.Entity<Config>()
                 .HasIndex(c => c.Name)
                 .IsUnique();
+
+            builder.Entity<ConfigContainer>()
+                .HasIndex(cc => cc.Name)
+                .IsUnique();
         }
     }
 }
