@@ -3,14 +3,25 @@
     flex-direction: column;
 }
 
+.treeview-header {
+    position: relative;
+    padding: 1rem 1rem;
+    color: #41464b;
+    background: #f1f1f1;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
 .treeview ul {
     flex: 1;
 }
 
 .dropzone {
-    border-radius: 5px;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
     list-style: none;
-    background: #f7f7f7;
+    background: #f9f9f9;
 }
 
 .can-drop {

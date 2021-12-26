@@ -5,6 +5,9 @@
 	<div class="row">
 		<div class="col-sm">
             <div class="treeview">
+                <div class="treeview-header">
+                    <strong>@Field.Label</strong>&emsp;@message
+                </div>
                 <ul class="dropzone @dropClass"
                     ondragover="event.preventDefault();"
                     ondragstart="event.dataTransfer.setData('', event.target.id);"
