@@ -7,8 +7,10 @@
     @ondrop="HandleDrop"
     @ondragenter="HandleDragEnter"
     @ondragleave="HandleDragLeave">
-    <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit float-left" @onclick="() => SelectAsync()"/>
-    <label class="float-left" draggable="false">@Node.Label</label>
+    <div class="node-label">
+        <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit float-left" @onclick="() => SelectAsync()"/>
+            <label class="float-left" draggable="false">@Node.Label</label>
+    </div>
     <div class="treenodes">
         <ul class="treenodeslist">
             @foreach (var node in Node.Nodes)

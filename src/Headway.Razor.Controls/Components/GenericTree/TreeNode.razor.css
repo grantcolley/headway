@@ -31,3 +31,7 @@
 .no-drop {
     border: 2px dashed red;
 }
+
+.node-label {
+    margin-bottom: 4px;
+}
