@@ -30,7 +30,7 @@ else
                                                 }
                                                 else if (!isDeleteInProgress)
                                                 {
-                                                    <button type="submit" class="btn btn-small borderless btn-outline-primary fas fa-save float-left"/>
+                                                    <ComponentTip Class="float-left borderless" Text="Save"><button type="submit" class="btn btn-small borderless btn-outline-primary fas fa-save"/></ComponentTip>
                                                 }
                                                 @if (isDeleteInProgress)
                                                 {
@@ -38,7 +38,7 @@ else
                                                 }
                                                 else if (!isSaveInProgress)
                                                 {
-                                                    <button type="button" class="btn btn-small borderless btn-outline-danger fas fa-times float-end" @onclick="() => Delete()"/>
+                                                    <ComponentTip Class="float-end borderless" Text="Delete"><button type="button" class="btn btn-small borderless btn-outline-danger fas fa-times" @onclick="() => Delete()"/></ComponentTip>
                                                 }
                                             </div>
                                         </div>
