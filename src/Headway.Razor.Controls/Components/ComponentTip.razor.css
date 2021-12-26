@@ -1,0 +1,37 @@
+﻿.component-tip {
+/*    border-bottom: 1px dotted black;*/
+    display: inline-block;
+    position: relative;
+}
+
+.component-tip:hover span {
+    visibility: visible;
+}
+
+span {
+    background-color: #e2e3e5;
+    border-color: #d3d6d8;
+    border-radius: 6px;
+    bottom: 100%;
+    color: #41464b;
+    font-size: 12px;
+    left: 50%;
+    margin-left: -60px;
+    padding: 5px 0;
+    position: absolute;
+    text-align: center;
+    visibility: hidden;
+    width: 120px;
+    z-index: 1;
+}
+
+span::after {
+    border-color: #e2e3e5 transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px;
+    content: "";
+    left: 50%;
+    margin-left: -5px;
+    position: absolute;
+    top: 100%;
+}
