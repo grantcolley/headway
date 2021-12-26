@@ -1,13 +1,10 @@
 ﻿using Headway.Core.Attributes;
-using Headway.Core.Constants;
 using Headway.Core.Dynamic;
-using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Components.GenericTree;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Documents
@@ -21,7 +18,7 @@ namespace Headway.Razor.Controls.Documents
 
         protected override async Task OnInitializedAsync()
         {
-            await NewAsync().ConfigureAwait(false);
+            await ResetDynamicModelAsync().ConfigureAwait(false);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
@@ -39,7 +36,9 @@ namespace Headway.Razor.Controls.Documents
 
         protected async Task NewAsync()
         {
-            dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false);
+            treeView?.ClearMessage();
+
+            await ResetDynamicModelAsync().ConfigureAwait(false);
         }
 
         protected async Task AddAsync(DynamicModel<T> model)
@@ -49,7 +48,7 @@ namespace Headway.Razor.Controls.Documents
                 treeView.Add(model.Model);
             }
 
-            await NewAsync().ConfigureAwait(false);
+            await ResetDynamicModelAsync().ConfigureAwait(false);
         }
 
         protected async Task RemoveAsync(DynamicModel<T> model)
@@ -59,12 +58,17 @@ namespace Headway.Razor.Controls.Documents
                 treeView.Remove(model.Model);
             }
 
-            await NewAsync().ConfigureAwait(false);
+            await ResetDynamicModelAsync().ConfigureAwait(false);
         }
 
         private async Task EditAsync(T model)
         {
             dynamicModel = await GetDynamicModelAsync(model, Config.Name).ConfigureAwait(false);
+        }
+
+        private async Task ResetDynamicModelAsync()
+        {
+            dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false);
         }
     }
 }
