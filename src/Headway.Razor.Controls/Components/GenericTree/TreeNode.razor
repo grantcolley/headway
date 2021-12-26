@@ -8,8 +8,8 @@
     @ondragenter="HandleDragEnter"
     @ondragleave="HandleDragLeave">
     <div class="node-label">
-        <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit float-left" @onclick="() => SelectAsync()"/>
-            <label class="float-left" draggable="false">@Node.Label</label>
+        <ComponentTip Class="float-left borderless" Text="Edit"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit" @onclick="() => SelectAsync()"/></ComponentTip>
+        <label class="float-left" draggable="false">@Node.Label</label>
     </div>
     <div class="treenodes">
         <ul class="treenodeslist">
