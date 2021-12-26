@@ -10,9 +10,9 @@
                     <thead>
                         <tr>
                             <th>
-                                <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-undo float-left" @onclick="() => NewAsync()"/>
-                                <button type="button" class="btn btn-small borderless btn-outline-danger fas fa-minus float-left" @onclick="() => RemoveAsync(dynamicModel)"/>
-                                <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-arrow-right float-end" @onclick="() => AddAsync(dynamicModel)"/>                                
+                                <ComponentTip Class="float-left borderless" Text="Clear selection"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-undo" @onclick="() => NewAsync()"/></ComponentTip>
+                                <ComponentTip Class="float-left borderless" Text="Remove from tree"><button type="button" class="btn btn-small borderless btn-outline-danger fas fa-minus" @onclick="() => RemoveAsync(dynamicModel)"/></ComponentTip>
+                                <ComponentTip Class="float-end borderless" Text="Add to tree"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-arrow-right" @onclick="() => AddAsync(dynamicModel)"/></ComponentTip>                                
                             </th>
                         </tr>
                     </thead>
