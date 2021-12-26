@@ -6,7 +6,16 @@
 		<div class="col-sm">
             <div class="treeview">
                 <div class="treeview-header">
-                    <strong>@Field.Label</strong>&emsp;@message
+                    <strong>
+                        @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+                        {
+                            @Field.Label                    
+                        }
+                        else
+                        {
+                            <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>
+                        }
+                    </strong>&emsp;@message
                 </div>
                 <ul class="dropzone @dropClass"
                     ondragover="event.preventDefault();"

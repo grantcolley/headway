@@ -26,6 +26,9 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
         public string Label { get; set; }
 
+        [StringLength(50, ErrorMessage = "Tooltip cannot exceed 50 characters")]
+        public string Tooltip { get; set; }
+
         [StringLength(150, ErrorMessage = "Component cannot exceed 150 characters")]
         public string Component { get; set; }
     }

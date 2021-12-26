@@ -9,7 +9,14 @@
 <div class="mb-1">
     <div class="row">
         <div class="col-sm-4 col-form-label">
-            @Field.Label
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                @Field.Label                
+            }
+            else
+            {
+                <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>    
+            }
         </div>
         <div class="col-sm-8">
             <InputSelect class="form-control" Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((string value) => OnValueChanged(value))">

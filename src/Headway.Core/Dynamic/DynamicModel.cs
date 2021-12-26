@@ -98,6 +98,7 @@ namespace Headway.Core.Dynamic
             {
                 Model = model,
                 Label = configItem.Label,
+                Tooltip = configItem.Tooltip,
                 Order = configItem.Order,
                 ConfigName = configItem.ConfigName,
                 ConfigContainerId = configItem.ConfigContainer.ConfigContainerId,
