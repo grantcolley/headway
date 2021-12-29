@@ -1,0 +1,26 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits DateBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                @Field.Label                
+            }
+            else
+            {
+                <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>    
+            }
+        </div>
+        <div class="col-sm-8">
+            <DateControl class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
+            <ValidationMessage For="FieldExpression"/>
+        </div>
+    </div>
+</div>
