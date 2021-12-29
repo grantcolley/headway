@@ -5,7 +5,6 @@ using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
 {
@@ -35,11 +34,11 @@ namespace Headway.Razor.Controls.Components
             Field.PropertyInfo.SetValue(Field.Model, value);
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             rows = ComponentArgHelper.GetArgValue(ComponentArgs, Args.TEXT_MULTILINE_ROWS);
 
-            await base.OnInitializedAsync().ConfigureAwait(false);
+            base.OnInitialized();
         }
     }
 }
