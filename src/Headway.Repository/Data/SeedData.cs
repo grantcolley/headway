@@ -193,12 +193,40 @@ namespace Headway.Repository.Data
                     Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
                 };
 
+                var demoModelsConfig = new Config
+                {
+                    Name = "DemoModels",
+                    Title = "DemoModels",
+                    Description = "Demo Models list",
+                    Model = "Headway.Core.Model.DemoModel, Headway.Core",
+                    ModelApi = "Demo",
+                    OrderModelBy = "Name",
+                    Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                    NavigateTo = "Page",
+                    NavigateToProperty = "DemoModelId",
+                    NavigateToConfig = "DemoModel"
+                };
+
+                var demoModelConfig = new Config
+                {
+                    Name = "DemoModel",
+                    Title = "Demo",
+                    Description = "Demonstrate rendering a model with components",
+                    Model = "Headway.Core.Model.DemoModel, Headway.Core",
+                    ModelApi = "Demo",
+                    Document = "Headway.Razor.Controls.Documents.TabState`1, Headway.Razor.Controls",
+                    NavigateTo = "Page",
+                    NavigateToConfig = "DemoModels"
+                };
+
                 applicationDbContext.Configs.Add(configsConfig);
                 applicationDbContext.Configs.Add(configConfig);
                 applicationDbContext.Configs.Add(configItemsListDetailConfig);
                 applicationDbContext.Configs.Add(configItemConfig);
                 applicationDbContext.Configs.Add(configContainersListDetailConfig);
                 applicationDbContext.Configs.Add(configContainerConfig);
+                applicationDbContext.Configs.Add(demoModelsConfig);
+                applicationDbContext.Configs.Add(demoModelConfig);
                 applicationDbContext.Configs.Add(permissionsConfig);
                 applicationDbContext.Configs.Add(permissionConfig);
                 applicationDbContext.SaveChanges();
@@ -211,6 +239,23 @@ namespace Headway.Repository.Data
                 permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
                 permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
                 permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                applicationDbContext.SaveChanges();
+                ////////////////////////////////
+
+                // DemoModel //////////////////////
+                var demoModelContainer1 = new ConfigContainer { Name = "Standard Components", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Example Components", Order = 1, IsRootContainer = true };
+
+                demoModelConfig.ConfigContainers.Add(demoModelContainer1);
+                applicationDbContext.SaveChanges();
+
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelId", Label = "Demo Model Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls", Tooltip = "Label" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = "Name=Rows;Value=3" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 4, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls", Tooltip = "Integer" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "IsEnabled", Label = "Is Enabled", Order = 5, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls", Tooltip = "Checkbox" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Amount", Label = "Amount", Order = 6, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Decimal, Headway.Razor.Controls", Tooltip = "Decimal" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Date", Label = "Date", Order = 7, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Date, Headway.Razor.Controls", Tooltip = "Date" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Style", Label = "Style", Order = 8, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.RadioArgs, Headway.Razor.Controls", Tooltip = "RadioArgs", ComponentArgs = "Name=one;Value=Arg #1|Name=two;Value=Arg #2|Name=three;Value=Arg #3" });
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
 
@@ -278,6 +323,13 @@ namespace Headway.Repository.Data
                 permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", Order = 1 });
                 permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
                 permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
+                applicationDbContext.SaveChanges();
+                /////////////////////////////////
+
+                // DemoModels /////////////////
+                demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelId", Label = "Demo Model Id", Order = 1 });
+                demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
+                demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
                 applicationDbContext.SaveChanges();
                 /////////////////////////////////
 
