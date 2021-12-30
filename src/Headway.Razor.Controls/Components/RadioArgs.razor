@@ -18,7 +18,7 @@
                 <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>    
             }
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-8">
            <InputRadioGroup @bind-Value="PropertyValue">
                 @foreach (var arg in args)
                 {
@@ -26,6 +26,5 @@
                 }
            </InputRadioGroup>
         </div>
-        <div class="col-sm-7"></div>
     </div>
 </div>
