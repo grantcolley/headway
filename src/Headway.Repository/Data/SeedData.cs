@@ -202,7 +202,7 @@ namespace Headway.Repository.Data
                     Title = "DemoModels",
                     Description = "Demo Models list",
                     Model = "Headway.Core.Model.DemoModel, Headway.Core",
-                    ModelApi = "Demo",
+                    ModelApi = "DemoModel",
                     OrderModelBy = "Name",
                     Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
                     NavigateTo = "Page",
@@ -216,7 +216,7 @@ namespace Headway.Repository.Data
                     Title = "Demo",
                     Description = "Demonstrate rendering a model with components",
                     Model = "Headway.Core.Model.DemoModel, Headway.Core",
-                    ModelApi = "Demo",
+                    ModelApi = "DemoModel",
                     Document = "Headway.Razor.Controls.Documents.TabState`1, Headway.Razor.Controls",
                     NavigateTo = "Page",
                     NavigateToConfig = "DemoModels"
