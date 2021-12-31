@@ -2,7 +2,6 @@
 using Headway.Core.Constants;
 using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
