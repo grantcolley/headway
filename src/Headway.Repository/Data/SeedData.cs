@@ -79,11 +79,13 @@ namespace Headway.Repository.Data
                 var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "Roles" };
                 var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "Permissions" };
                 var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Configs" };
+                var demoMenuItem = new MenuItem { Name = "Demo", ImageClass = "oi oi-info", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "DemoModels" };
                 applicationDbContext.MenuItems.Add(homeMenuItem);
                 applicationDbContext.MenuItems.Add(usersMenuItem);
                 applicationDbContext.MenuItems.Add(rolesMenuItem);
                 applicationDbContext.MenuItems.Add(permissionsMenuItem);
                 applicationDbContext.MenuItems.Add(configureMenuItem);
+                applicationDbContext.MenuItems.Add(demoMenuItem);
                 applicationDbContext.SaveChanges();
 
                 homeCategory.MenuItems.Add(homeMenuItem);
@@ -95,6 +97,7 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
 
                 configurationCategory.MenuItems.Add(configureMenuItem);
+                configurationCategory.MenuItems.Add(demoMenuItem);
                 applicationDbContext.SaveChanges();
             }
 
