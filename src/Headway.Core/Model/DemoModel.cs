@@ -10,24 +10,23 @@ namespace Headway.Core.Model
     public class DemoModel
     {
         public int DemoModelId { get; set; }
-        public bool Enabled { get; set; }
-        public int Order { get; set; }
+        public string Description { get; set; }
+        public bool Checkbox { get; set; }
+        public int Integer { get; set; }
+        public string OptionVertical { get; set; }
+        public string OptionHorizontal { get; set; }
+        public DateTime Date { get; set; }
 
         public List<DemoModel> DemoModels { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
-        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
-        public string Name { get; set; }
+        [Required(ErrorMessage = "Text is required")]
+        [StringLength(50, ErrorMessage = "Text must be between 1 and 50 characters")]
+        public string Text { get; set; }
 
-        [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
-        public string Description { get; set; }
-
-        [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
-        public string Style { get; set; }
+        [StringLength(50, ErrorMessage = "TextMultiline must be between 1 and 50 characters")]
+        public string TextMultiline { get; set; }
 
         [Column(TypeName = "decimal(5, 2)")]
-        public decimal Amount { get; set; }
-
-        public DateTime Date { get; set; }
+        public decimal Decimal { get; set; }
     }
 }
