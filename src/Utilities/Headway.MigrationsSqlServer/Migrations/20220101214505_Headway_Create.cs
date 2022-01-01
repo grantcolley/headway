@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -16,20 +17,45 @@ namespace Headway.MigrationsSqlServer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     ModelApi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderModelBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Container = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Document = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     NavigateTo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     NavigateToProperty = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    NavigateToConfig = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    NavigateBack = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    NavigateBackProperty = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    NavigateBackConfig = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    NavigateToConfig = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Configs", x => x.ConfigId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModels",
+                columns: table => new
+                {
+                    DemoModelId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Checkbox = table.Column<bool>(type: "bit", nullable: false),
+                    Integer = table.Column<int>(type: "int", nullable: false),
+                    OptionVertical = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OptionHorizontal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    TextMultiline = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Decimal = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
+                    DemoModelId1 = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModels", x => x.DemoModelId);
+                    table.ForeignKey(
+                        name: "FK_DemoModels_DemoModels_DemoModelId1",
+                        column: x => x.DemoModelId1,
+                        principalTable: "DemoModels",
+                        principalColumn: "DemoModelId");
                 });
 
             migrationBuilder.CreateTable(
@@ -96,12 +122,10 @@ namespace Headway.MigrationsSqlServer.Migrations
                     ConfigContainerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsRootContainer = table.Column<bool>(type: "bit", nullable: false),
-                    Row = table.Column<int>(type: "int", nullable: true),
-                    Column = table.Column<int>(type: "int", nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Container = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Label = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ConfigContainerId1 = table.Column<int>(type: "int", nullable: true),
                     ConfigId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -227,6 +251,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                     ConfigContainerId = table.Column<int>(type: "int", nullable: true),
                     PropertyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Label = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Tooltip = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Component = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     ConfigId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -291,6 +316,12 @@ namespace Headway.MigrationsSqlServer.Migrations
                 column: "ConfigId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConfigContainers_Name",
+                table: "ConfigContainers",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ConfigItems_ConfigContainerId",
                 table: "ConfigItems",
                 column: "ConfigContainerId");
@@ -305,6 +336,11 @@ namespace Headway.MigrationsSqlServer.Migrations
                 table: "Configs",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModels_DemoModelId1",
+                table: "DemoModels",
+                column: "DemoModelId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuItems_CategoryId",
@@ -367,6 +403,9 @@ namespace Headway.MigrationsSqlServer.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ConfigItems");
+
+            migrationBuilder.DropTable(
+                name: "DemoModels");
 
             migrationBuilder.DropTable(
                 name: "MenuItems");

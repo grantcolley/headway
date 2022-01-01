@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Headway.MigrationsSqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211231212828_Headway_DemoModel_2")]
-    partial class Headway_DemoModel_2
+    [Migration("20220101214505_Headway_Create")]
+    partial class Headway_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -229,31 +229,36 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DemoModelId"), 1L, 1);
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(5,2)");
+                    b.Property<bool>("Checkbox")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Decimal")
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<int?>("DemoModelId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
+                    b.Property<int>("Integer")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("OptionHorizontal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OptionVertical")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
+                    b.Property<string>("TextMultiline")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
