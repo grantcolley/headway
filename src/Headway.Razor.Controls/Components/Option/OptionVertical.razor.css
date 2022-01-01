@@ -1,0 +1,8 @@
+﻿.option-vertical {
+    margin: 2px;
+}
+
+.option-vertical-input {
+    display: inline-block;
+    padding-left: 1em;
+}

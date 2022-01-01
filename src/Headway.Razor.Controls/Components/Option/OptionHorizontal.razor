@@ -1,0 +1,30 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits OptionBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                @Field.Label                
+            }
+            else
+            {
+                <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>    
+            }
+        </div>
+        <div class="col-sm-8">
+           <InputRadioGroup @bind-Value="PropertyValue">
+                @foreach (var option in options)
+                {
+                    <InputRadio Value="option.Id"/><label class="option-horizontal">@option.Display</label>
+                }
+           </InputRadioGroup>
+        </div>
+    </div>
+</div>
