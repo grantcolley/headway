@@ -1,4 +1,8 @@
-﻿.option-horizontal {
+﻿.option-horizontal-container {
+    margin-top: 5px;
+}
+
+.option-horizontal {
     display: inline-block;
     padding-left: 1em;
     padding-right: 3em;
