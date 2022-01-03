@@ -37,25 +37,19 @@ namespace Headway.MigrationsSqlServer.Migrations
                 {
                     DemoModelId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Checkbox = table.Column<bool>(type: "bit", nullable: false),
                     Integer = table.Column<int>(type: "int", nullable: false),
                     OptionVertical = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OptionHorizontal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TextMultiline = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Decimal = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    DemoModelId1 = table.Column<int>(type: "int", nullable: true)
+                    Decimal = table.Column<decimal>(type: "decimal(5,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DemoModels", x => x.DemoModelId);
-                    table.ForeignKey(
-                        name: "FK_DemoModels_DemoModels_DemoModelId1",
-                        column: x => x.DemoModelId1,
-                        principalTable: "DemoModels",
-                        principalColumn: "DemoModelId");
                 });
 
             migrationBuilder.CreateTable(
@@ -142,6 +136,52 @@ namespace Headway.MigrationsSqlServer.Migrations
                         column: x => x.ConfigId,
                         principalTable: "Configs",
                         principalColumn: "ConfigId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModelItem",
+                columns: table => new
+                {
+                    DemoModelItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DemoModelId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModelItem", x => x.DemoModelItemId);
+                    table.ForeignKey(
+                        name: "FK_DemoModelItem_DemoModels_DemoModelId",
+                        column: x => x.DemoModelId,
+                        principalTable: "DemoModels",
+                        principalColumn: "DemoModelId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModelTreeItem",
+                columns: table => new
+                {
+                    DemoModelTreeItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DemoModelId = table.Column<int>(type: "int", nullable: true),
+                    DemoModelTreeItemId1 = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModelTreeItem", x => x.DemoModelTreeItemId);
+                    table.ForeignKey(
+                        name: "FK_DemoModelTreeItem_DemoModels_DemoModelId",
+                        column: x => x.DemoModelId,
+                        principalTable: "DemoModels",
+                        principalColumn: "DemoModelId");
+                    table.ForeignKey(
+                        name: "FK_DemoModelTreeItem_DemoModelTreeItem_DemoModelTreeItemId1",
+                        column: x => x.DemoModelTreeItemId1,
+                        principalTable: "DemoModelTreeItem",
+                        principalColumn: "DemoModelTreeItemId");
                 });
 
             migrationBuilder.CreateTable(
@@ -338,9 +378,19 @@ namespace Headway.MigrationsSqlServer.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DemoModels_DemoModelId1",
-                table: "DemoModels",
-                column: "DemoModelId1");
+                name: "IX_DemoModelItem_DemoModelId",
+                table: "DemoModelItem",
+                column: "DemoModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModelTreeItem_DemoModelId",
+                table: "DemoModelTreeItem",
+                column: "DemoModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModelTreeItem_DemoModelTreeItemId1",
+                table: "DemoModelTreeItem",
+                column: "DemoModelTreeItemId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuItems_CategoryId",
@@ -405,7 +455,10 @@ namespace Headway.MigrationsSqlServer.Migrations
                 name: "ConfigItems");
 
             migrationBuilder.DropTable(
-                name: "DemoModels");
+                name: "DemoModelItem");
+
+            migrationBuilder.DropTable(
+                name: "DemoModelTreeItem");
 
             migrationBuilder.DropTable(
                 name: "MenuItems");
@@ -421,6 +474,9 @@ namespace Headway.MigrationsSqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "ConfigContainers");
+
+            migrationBuilder.DropTable(
+                name: "DemoModels");
 
             migrationBuilder.DropTable(
                 name: "Categories");

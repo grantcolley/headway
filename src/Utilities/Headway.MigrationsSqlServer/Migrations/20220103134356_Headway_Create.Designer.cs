@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Headway.MigrationsSqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220101214505_Headway_Create")]
+    [Migration("20220103134356_Headway_Create")]
     partial class Headway_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,11 +238,10 @@ namespace Headway.MigrationsSqlServer.Migrations
                     b.Property<decimal>("Decimal")
                         .HasColumnType("decimal(5,2)");
 
-                    b.Property<int?>("DemoModelId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Integer")
                         .HasColumnType("int");
@@ -264,9 +263,64 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.HasKey("DemoModelId");
 
-                    b.HasIndex("DemoModelId1");
-
                     b.ToTable("DemoModels");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelItem", b =>
+                {
+                    b.Property<int>("DemoModelItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DemoModelItemId"), 1L, 1);
+
+                    b.Property<int?>("DemoModelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("DemoModelItemId");
+
+                    b.HasIndex("DemoModelId");
+
+                    b.ToTable("DemoModelItem");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelTreeItem", b =>
+                {
+                    b.Property<int>("DemoModelTreeItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DemoModelTreeItemId"), 1L, 1);
+
+                    b.Property<int?>("DemoModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DemoModelTreeItemId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("DemoModelTreeItemId");
+
+                    b.HasIndex("DemoModelId");
+
+                    b.HasIndex("DemoModelTreeItemId1");
+
+                    b.ToTable("DemoModelTreeItem");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.MenuItem", b =>
@@ -505,11 +559,22 @@ namespace Headway.MigrationsSqlServer.Migrations
                     b.Navigation("ConfigContainer");
                 });
 
-            modelBuilder.Entity("Headway.Core.Model.DemoModel", b =>
+            modelBuilder.Entity("Headway.Core.Model.DemoModelItem", b =>
                 {
                     b.HasOne("Headway.Core.Model.DemoModel", null)
-                        .WithMany("DemoModels")
-                        .HasForeignKey("DemoModelId1");
+                        .WithMany("DemoModelItems")
+                        .HasForeignKey("DemoModelId");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelTreeItem", b =>
+                {
+                    b.HasOne("Headway.Core.Model.DemoModel", null)
+                        .WithMany("DemoModelTreeItems")
+                        .HasForeignKey("DemoModelId");
+
+                    b.HasOne("Headway.Core.Model.DemoModelTreeItem", null)
+                        .WithMany("DemoModelTreeItems")
+                        .HasForeignKey("DemoModelTreeItemId1");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.MenuItem", b =>
@@ -585,7 +650,14 @@ namespace Headway.MigrationsSqlServer.Migrations
 
             modelBuilder.Entity("Headway.Core.Model.DemoModel", b =>
                 {
-                    b.Navigation("DemoModels");
+                    b.Navigation("DemoModelItems");
+
+                    b.Navigation("DemoModelTreeItems");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelTreeItem", b =>
+                {
+                    b.Navigation("DemoModelTreeItems");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.Module", b =>
