@@ -7,9 +7,10 @@ namespace Headway.Core.Model
     public class DemoModelItem
     {
         public int DemoModelItemId { get; set; }
+        public int Order { get; set; }
 
-        [Required(ErrorMessage = "Description is required")]
-        [StringLength(50, ErrorMessage = "Description must be between 1 and 50 characters")]
-        public string Description { get; set; }
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
+        public string Name { get; set; }
     }
 }
