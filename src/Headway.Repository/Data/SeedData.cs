@@ -9,21 +9,26 @@ namespace Headway.Repository.Data
         {
             Permission user = null;
             Permission admin = null;
+            Permission developer = null;
 
             if (!applicationDbContext.Users.Any()
                 && !applicationDbContext.Permissions.Any()
                 && !applicationDbContext.Roles.Any())
             {
                 admin = new Permission { Name = "Admin", Description = "Administrator" };
+                developer = new Permission { Name = "Developer", Description = "Developer" };
                 user = new Permission { Name = "User", Description = "Headway User" };
                 applicationDbContext.Permissions.Add(admin);
+                applicationDbContext.Permissions.Add(developer);
                 applicationDbContext.Permissions.Add(user);
                 applicationDbContext.SaveChanges();
 
+                var grant = new User { UserName = "grant", Email = "grant@email.com" };
                 var alice = new User { UserName = "alice", Email = "alice@email.com" };
                 var bob = new User { UserName = "bob", Email = "bob@email.com" };
                 var jane = new User { UserName = "jane", Email = "jane@email.com" };
                 var will = new User { UserName = "will", Email = "will@email.com" };
+                applicationDbContext.Users.Add(grant);
                 applicationDbContext.Users.Add(alice);
                 applicationDbContext.Users.Add(bob);
                 applicationDbContext.Users.Add(jane);
@@ -31,15 +36,21 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
 
                 var adminRole = new Role { Name = "Admin", Description = "Administrator Role" };
+                var developerRole = new Role { Name = "Developer", Description = "Developer Role" };
                 var userRole = new Role { Name = "User", Description = "Headway User Role" };
                 applicationDbContext.Roles.Add(adminRole);
+                applicationDbContext.Roles.Add(developerRole);
                 applicationDbContext.Roles.Add(userRole);
                 applicationDbContext.SaveChanges();
 
                 adminRole.Permissions.Add(admin);
+                developerRole.Permissions.Add(developer);
+                developerRole.Permissions.Add(admin);
+                developerRole.Permissions.Add(user);
                 userRole.Permissions.Add(user);
                 applicationDbContext.SaveChanges();
 
+                grant.Roles.Add(developerRole);
                 alice.Roles.Add(adminRole);
                 alice.Roles.Add(userRole);
                 bob.Roles.Add(adminRole);
@@ -62,9 +73,11 @@ namespace Headway.Repository.Data
                 var homeCategory = new Category { Name = "Home Category", Order = 1, Permission = user.Name };
                 var authorisationCatgory = new Category { Name = "Authorisation", Order = 1, Permission = admin.Name };
                 var configurationCategory = new Category { Name = "Configuration", Order = 2, Permission = admin.Name };
+                var developerToolsCategory = new Category { Name = "Developer Tools", Order = 3, Permission = developer.Name };
                 applicationDbContext.Categories.Add(homeCategory);
                 applicationDbContext.Categories.Add(authorisationCatgory);
                 applicationDbContext.Categories.Add(configurationCategory);
+                applicationDbContext.Categories.Add(developerToolsCategory);
                 applicationDbContext.SaveChanges();
 
                 home.Categories.Add(homeCategory);
@@ -72,6 +85,7 @@ namespace Headway.Repository.Data
 
                 administration.Categories.Add(authorisationCatgory);
                 administration.Categories.Add(configurationCategory);
+                administration.Categories.Add(developerToolsCategory);
                 applicationDbContext.SaveChanges();
 
                 var homeMenuItem = new MenuItem { Name = "Home", ImageClass = "oi oi-home", NavigateTo = "/", Order = 1, Permission = user.Name, Config = "Home" };
@@ -79,7 +93,7 @@ namespace Headway.Repository.Data
                 var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "Roles" };
                 var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "Permissions" };
                 var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Configs" };
-                var demoMenuItem = new MenuItem { Name = "Demo", ImageClass = "oi oi-info", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "DemoModels" };
+                var demoMenuItem = new MenuItem { Name = "Demo", ImageClass = "oi oi-info", NavigateTo = "Page", Order = 2, Permission = developer.Name, Config = "DemoModels" };
                 applicationDbContext.MenuItems.Add(homeMenuItem);
                 applicationDbContext.MenuItems.Add(usersMenuItem);
                 applicationDbContext.MenuItems.Add(rolesMenuItem);
@@ -97,7 +111,9 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
 
                 configurationCategory.MenuItems.Add(configureMenuItem);
-                configurationCategory.MenuItems.Add(demoMenuItem);
+                applicationDbContext.SaveChanges();
+
+                developerToolsCategory.MenuItems.Add(demoMenuItem);
                 applicationDbContext.SaveChanges();
             }
 
@@ -187,15 +203,15 @@ namespace Headway.Repository.Data
                     Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
                 };
 
-                var configContainersListDetailConfig = new Config
-                {
-                    Name = "ConfigContainersListDetail",
-                    Title = "ConfigContainersListDetail",
-                    Description = "List of config containers for a config",
-                    Model = "Headway.Core.Model.ConfigContainer, Headway.Core",
-                    ModelApi = "Configuration",
-                    OrderModelBy = "Order"
-                };
+                //var configContainersListDetailConfig = new Config
+                //{
+                //    Name = "ConfigContainersListDetail",
+                //    Title = "ConfigContainersListDetail",
+                //    Description = "List of config containers for a config",
+                //    Model = "Headway.Core.Model.ConfigContainer, Headway.Core",
+                //    ModelApi = "Configuration",
+                //    OrderModelBy = "Order"
+                //};
 
                 var configContainerConfig = new Config
                 {
@@ -233,14 +249,46 @@ namespace Headway.Repository.Data
                     NavigateToConfig = "DemoModels"
                 };
 
+                var demoModelItemsListDetailConfig = new Config
+                {
+                    Name = "DemoModelItemsListDetail",
+                    Title = "DemoModelItemsListDetail",
+                    Description = "List of demo model items",
+                    Model = "Headway.Core.Model.DemoModelItem, Headway.Core",
+                    ModelApi = "DemoModel",
+                    OrderModelBy = "Order"
+                };
+
+                var demoModelItemConfig = new Config
+                {
+                    Name = "DemoModelItem",
+                    Title = "DemoModelItem",
+                    Description = "Create, update or delete a demo model item",
+                    Model = "Headway.Core.Model.DemoModelItem, Headway.Core",
+                    ModelApi = "DemoModel",
+                    Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
+                };
+
+                var demoModelTreeItemConfig = new Config
+                {
+                    Name = "DemoModelTreeItem",
+                    Title = "DemoModelTreeItem",
+                    Description = "Create, update or delete a demo model tree item",
+                    Model = "Headway.Core.Model.DemoModelTreeItem, Headway.Core",
+                    ModelApi = "DemoModel",
+                    Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
+                };
+
                 applicationDbContext.Configs.Add(configsConfig);
                 applicationDbContext.Configs.Add(configConfig);
                 applicationDbContext.Configs.Add(configItemsListDetailConfig);
                 applicationDbContext.Configs.Add(configItemConfig);
-                applicationDbContext.Configs.Add(configContainersListDetailConfig);
+                //applicationDbContext.Configs.Add(configContainersListDetailConfig);
                 applicationDbContext.Configs.Add(configContainerConfig);
                 applicationDbContext.Configs.Add(demoModelsConfig);
                 applicationDbContext.Configs.Add(demoModelConfig);
+                applicationDbContext.Configs.Add(demoModelItemConfig);
+                applicationDbContext.Configs.Add(demoModelTreeItemConfig);
                 applicationDbContext.Configs.Add(permissionsConfig);
                 applicationDbContext.Configs.Add(permissionConfig);
                 applicationDbContext.SaveChanges();
@@ -257,9 +305,13 @@ namespace Headway.Repository.Data
                 ////////////////////////////////
 
                 // DemoModel //////////////////////
-                var demoModelContainer1 = new ConfigContainer { Name = "Standard Components", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Example Components", Order = 1, IsRootContainer = true };
+                var demoModelContainer1 = new ConfigContainer { Name = "Model Components Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model Components", Order = 1, IsRootContainer = true };
+                var demoModelContainer2 = new ConfigContainer { Name = "List Component Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "List Component", Order = 2, IsRootContainer = true };
+                var demoModelContainer3 = new ConfigContainer { Name = "Tree Component Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Tree Component", Order = 3, IsRootContainer = true };
 
                 demoModelConfig.ConfigContainers.Add(demoModelContainer1);
+                demoModelConfig.ConfigContainers.Add(demoModelContainer2);
+                demoModelConfig.ConfigContainers.Add(demoModelContainer3);
                 applicationDbContext.SaveChanges();
 
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Text", Label = "Text", IsTitle = true, Order = 1, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls", Tooltip = "Text" });
@@ -270,8 +322,32 @@ namespace Headway.Repository.Data
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OptionHorizontal", Label = "OptionHorizontal", Order = 6, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Option.OptionHorizontal, Headway.Razor.Controls", Tooltip = "OptionHorizontal", ComponentArgs = "Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Date", Label = "Date", Order = 7, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Date, Headway.Razor.Controls", Tooltip = "Date" });
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OptionVertical", Label = "OptionVertical", Order = 8, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Option.OptionVertical, Headway.Razor.Controls", Tooltip = "OptionVertical", ComponentArgs = "Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItems", Label = "Demo Model Items", Order = 9, ConfigContainer = demoModelContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelItems", ComponentArgs = "Name=ListConfig;Value=DemoModelItemsListDetail" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItems", Label = "Demo Model Tree Items", Tooltip = "Drag and drop items in a nested tree hierarchy", Order = 10, ConfigContainer = demoModelContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelTreeItem", ComponentArgs = "Name=ModelUniqueProperty;Value=DemoModelTreeItemId|Name=ModelLabelProperty;Value=Name|Name=ModelListProperty;Value=DemoModelTreeItems" });
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
+
+                // DemoModelItem //////////////////
+                var demoModelItemConfigContainer = new ConfigContainer { Name = "Demo Model Item Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+                demoModelItemConfig.ConfigContainers.Add(demoModelItemConfigContainer);
+                applicationDbContext.SaveChanges();
+
+                demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItemId", Label = "Demo Model Item Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+                demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
+                applicationDbContext.SaveChanges();
+                /////////////////////////////////////
+
+                // DemoModelTreeItem //////////////////
+                var demoModelTreeItemConfigContainer = new ConfigContainer { Name = "Demo Model Tree Item Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+                demoModelTreeItemConfig.ConfigContainers.Add(demoModelTreeItemConfigContainer);
+                applicationDbContext.SaveChanges();
+
+                demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItemId", Label = "Demo Model Tree Item Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+                demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+                demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
+                applicationDbContext.SaveChanges();
+                /////////////////////////////////////
 
                 // ConfigItem //////////////////
                 var configItemConfigContainer = new ConfigContainer { Name = "Config Item Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
@@ -346,6 +422,12 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
                 /////////////////////////////////
 
+                // DemoModelItems /////////////////
+                demoModelItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 1 });
+                demoModelItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
+                applicationDbContext.SaveChanges();
+                ////////////////////////////////
+
                 // Configs //////////////////////
                 configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", Order = 1 });
                 configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
@@ -353,16 +435,16 @@ namespace Headway.Repository.Data
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
 
-                // Config Items /////////////////
+                // ConfigItems /////////////////
                 configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "Property Name", Order = 1 });
                 configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
  
-                // Config Containers////////////
-                configContainersListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 1 });
-                configContainersListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 2 });
-                applicationDbContext.SaveChanges();
+                // ConfigContainers////////////
+                //configContainersListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 1 });
+                //configContainersListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 2 });
+                //applicationDbContext.SaveChanges();
                 ////////////////////////////////
             }
         }
