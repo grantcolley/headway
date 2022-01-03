@@ -40,15 +40,7 @@ namespace Headway.Core.Model
 
         public bool IsPermitted(IEnumerable<string> permissions)
         {
-            if (permissions.Contains(Permission))
-            {
-                return true;
-            }
-            else
-            {
-                Category.MenuItems.Remove(this);
-                return false;
-            }
+            return permissions.Contains(Permission);
         }
     }
 }
