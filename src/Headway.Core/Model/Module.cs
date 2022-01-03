@@ -30,9 +30,19 @@ namespace Headway.Core.Model
         {
             if(permissions.Contains(Permission))
             {
-                foreach (var category in Categories)
+                var count = Categories.Count;
+
+                if (count > 0)
                 {
-                    category.IsPermitted(permissions);
+                    for (int i = count - 1; i >= 0; i--)
+                    {
+                        if (Categories[i].IsPermitted(permissions))
+                        {
+                            continue;
+                        }
+
+                        Categories.RemoveAt(i);
+                    }
                 }
 
                 return true;
