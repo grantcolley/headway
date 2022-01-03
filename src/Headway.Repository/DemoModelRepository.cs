@@ -29,7 +29,8 @@ namespace Headway.Repository
         {
             return await applicationDbContext.DemoModels
                 .AsNoTracking()
-                .Include(m => m.DemoModels)
+                .Include(m => m.DemoModelItems)
+                .Include(m => m.DemoModelTreeItems)
                 .SingleAsync(m => m.DemoModelId.Equals(id))
                 .ConfigureAwait(false);
         }
@@ -50,7 +51,7 @@ namespace Headway.Repository
         public async Task<DemoModel> UpdateDemoModelAsync(DemoModel demoModel)
         {
             var existing = await applicationDbContext.DemoModels
-                .Include(m => m.DemoModels)
+                .Include(m => m.DemoModelItems)
                 .FirstOrDefaultAsync(m => m.DemoModelId.Equals(demoModel.DemoModelId))
                 .ConfigureAwait(false);
 
@@ -64,14 +65,14 @@ namespace Headway.Repository
                     .Entry(existing)
                     .CurrentValues.SetValues(demoModel);
 
-                foreach (var dm in demoModel.DemoModels)
+                foreach (var dm in demoModel.DemoModelItems)
                 {
-                    var existingDm = existing.DemoModels
-                        .FirstOrDefault(m => m.DemoModelId.Equals(dm.DemoModelId));
+                    var existingDm = existing.DemoModelItems
+                        .FirstOrDefault(m => m.DemoModelItemId.Equals(dm.DemoModelItemId));
 
                     if (existingDm == null)
                     {
-                        existing.DemoModels.Add(dm);
+                        existing.DemoModelItems.Add(dm);
                     }
                     else
                     {
@@ -79,9 +80,9 @@ namespace Headway.Repository
                     }
                 }
 
-                foreach (var dm in demoModel.DemoModels)
+                foreach (var dm in demoModel.DemoModelItems)
                 {
-                    if (!demoModel.DemoModels.Any(m => m.DemoModelId.Equals(dm.DemoModelId)))
+                    if (!demoModel.DemoModelItems.Any(m => m.DemoModelItemId.Equals(dm.DemoModelItemId)))
                     {
                         applicationDbContext.Remove(dm);
                     }
