@@ -31,9 +31,19 @@ namespace Headway.Core.Model
         {
             if(permissions.Contains(Permission))
             {
-                foreach (var menuItem in MenuItems)
+                var count = MenuItems.Count;
+
+                if (count > 0)
                 {
-                    menuItem.IsPermitted(permissions);
+                    for (int i = count - 1; i >= 0; i--)
+                    {
+                        if (MenuItems[i].IsPermitted(permissions))
+                        {
+                            continue;
+                        }
+
+                        MenuItems.RemoveAt(i);
+                    }
                 }
 
                 return true;
@@ -41,7 +51,6 @@ namespace Headway.Core.Model
             else
             {
                 MenuItems.Clear();
-                Module.Categories.Remove(this);
                 return false;
             }
         }
