@@ -271,12 +271,13 @@ namespace Headway.Repository.Data
 
                 applicationDbContext.Configs.Add(configsConfig);
                 applicationDbContext.Configs.Add(configConfig);
-                applicationDbContext.Configs.Add(configItemsListDetailConfig);
                 applicationDbContext.Configs.Add(configItemConfig);
+                applicationDbContext.Configs.Add(configItemsListDetailConfig);
                 applicationDbContext.Configs.Add(configContainerConfig);
                 applicationDbContext.Configs.Add(demoModelsConfig);
                 applicationDbContext.Configs.Add(demoModelConfig);
                 applicationDbContext.Configs.Add(demoModelItemConfig);
+                applicationDbContext.Configs.Add(demoModelItemsListDetailConfig);
                 applicationDbContext.Configs.Add(demoModelTreeItemConfig);
                 applicationDbContext.Configs.Add(permissionsConfig);
                 applicationDbContext.Configs.Add(permissionConfig);
