@@ -203,16 +203,6 @@ namespace Headway.Repository.Data
                     Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
                 };
 
-                //var configContainersListDetailConfig = new Config
-                //{
-                //    Name = "ConfigContainersListDetail",
-                //    Title = "ConfigContainersListDetail",
-                //    Description = "List of config containers for a config",
-                //    Model = "Headway.Core.Model.ConfigContainer, Headway.Core",
-                //    ModelApi = "Configuration",
-                //    OrderModelBy = "Order"
-                //};
-
                 var configContainerConfig = new Config
                 {
                     Name = "ConfigContainer",
@@ -283,7 +273,6 @@ namespace Headway.Repository.Data
                 applicationDbContext.Configs.Add(configConfig);
                 applicationDbContext.Configs.Add(configItemsListDetailConfig);
                 applicationDbContext.Configs.Add(configItemConfig);
-                //applicationDbContext.Configs.Add(configContainersListDetailConfig);
                 applicationDbContext.Configs.Add(configContainerConfig);
                 applicationDbContext.Configs.Add(demoModelsConfig);
                 applicationDbContext.Configs.Add(demoModelConfig);
@@ -322,7 +311,7 @@ namespace Headway.Repository.Data
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OptionHorizontal", Label = "OptionHorizontal", Order = 6, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Option.OptionHorizontal, Headway.Razor.Controls", Tooltip = "OptionHorizontal", ComponentArgs = "Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Date", Label = "Date", Order = 7, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Date, Headway.Razor.Controls", Tooltip = "Date" });
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OptionVertical", Label = "OptionVertical", Order = 8, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Option.OptionVertical, Headway.Razor.Controls", Tooltip = "OptionVertical", ComponentArgs = "Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
-                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItems", Label = "Demo Model Items", Order = 9, ConfigContainer = demoModelContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelItems", ComponentArgs = "Name=ListConfig;Value=DemoModelItemsListDetail" });
+                demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItems", Label = "Demo Model Items", Order = 9, ConfigContainer = demoModelContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelItem", ComponentArgs = "Name=ListConfig;Value=DemoModelItemsListDetail" });
                 demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItems", Label = "Demo Model Tree Items", Tooltip = "Drag and drop items in a nested tree hierarchy", Order = 10, ConfigContainer = demoModelContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelTreeItem", ComponentArgs = "Name=ModelUniqueProperty;Value=DemoModelTreeItemId|Name=ModelLabelProperty;Value=Name|Name=ModelListProperty;Value=DemoModelTreeItems" });
                 applicationDbContext.SaveChanges();
                 ////////////////////////////////
@@ -439,12 +428,6 @@ namespace Headway.Repository.Data
                 configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "Property Name", Order = 1 });
                 configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
                 applicationDbContext.SaveChanges();
-                ////////////////////////////////
- 
-                // ConfigContainers////////////
-                //configContainersListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 1 });
-                //configContainersListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 2 });
-                //applicationDbContext.SaveChanges();
                 ////////////////////////////////
             }
         }
