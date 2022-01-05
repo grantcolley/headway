@@ -1,117 +1,154 @@
 ﻿using Headway.Core.Model;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Headway.Repository.Data
 {
     public class SeedData
     {
+        private static Permission user = null;
+        private static Permission admin = null;
+        private static Permission developer = null;
+
+        private static Role developerRole = null;
+        private static Role adminRole = null;
+        private static Role userRole = null;
+
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
-            Permission user = null;
-            Permission admin = null;
-            Permission developer = null;
+            TruncateTables(applicationDbContext);
 
-            Role developerRole = null;
-            Role adminRole = null;
-            Role userRole = null;
+            Permissions(applicationDbContext);
+            Roles(applicationDbContext);
+            Users(applicationDbContext);
 
-            if (!applicationDbContext.Users.Any()
-                && !applicationDbContext.Permissions.Any()
-                && !applicationDbContext.Roles.Any())
-            {
-                user = new Permission { Name = "User", Description = "Headway User" };
-                admin = new Permission { Name = "Admin", Description = "Administrator" };
-                developer = new Permission { Name = "Developer", Description = "Developer" };
-                applicationDbContext.Permissions.Add(user);
-                applicationDbContext.Permissions.Add(admin);
-                applicationDbContext.Permissions.Add(developer);
+            DemoModels(applicationDbContext);
 
-                developerRole = new Role { Name = "Developer", Description = "Developer Role" };
-                adminRole = new Role { Name = "Admin", Description = "Administrator Role" };
-                userRole = new Role { Name = "User", Description = "Headway User Role" };
-                applicationDbContext.Roles.Add(adminRole);
-                applicationDbContext.Roles.Add(developerRole);
-                applicationDbContext.Roles.Add(userRole);
+            AdministrationNavigationConfig(applicationDbContext);
 
-                adminRole.Permissions.Add(admin);
-                adminRole.Permissions.Add(user);
-                developerRole.Permissions.Add(developer);
-                developerRole.Permissions.Add(admin);
-                developerRole.Permissions.Add(user);
-                userRole.Permissions.Add(user);
+            PermissionsConfig(applicationDbContext);
+            PermissionConfig(applicationDbContext);
 
-                applicationDbContext.SaveChanges();
-            }
+            ConfigsConfig(applicationDbContext);
+            ConfigConfig(applicationDbContext);
+            ConfigItemConfig(applicationDbContext);
+            ConfigItemsListDetailConfig(applicationDbContext);
+            ConfigContainerConfig(applicationDbContext);
 
-            if (!applicationDbContext.Users.Any())
-            {
-                var grant = new User { UserName = "grant", Email = "grant@email.com" };
-                var alice = new User { UserName = "alice", Email = "alice@email.com" };
-                var bob = new User { UserName = "bob", Email = "bob@email.com" };
-                var jane = new User { UserName = "jane", Email = "jane@email.com" };
-                var will = new User { UserName = "will", Email = "will@email.com" };
-                applicationDbContext.Users.Add(grant);
-                applicationDbContext.Users.Add(alice);
-                applicationDbContext.Users.Add(bob);
-                applicationDbContext.Users.Add(jane);
-                applicationDbContext.Users.Add(will);
-
-                grant.Roles.Add(developerRole);
-                alice.Roles.Add(adminRole);
-                alice.Roles.Add(userRole);
-                bob.Roles.Add(adminRole);
-                bob.Roles.Add(userRole);
-                jane.Roles.Add(userRole);
-                will.Roles.Add(userRole);
-                applicationDbContext.SaveChanges();
-            }
-
-            if (!applicationDbContext.DemoModels.Any())
-            {
-                var demoModel = new DemoModel
-                {
-                    Description = "Demo model rendering components",
-                    Text = "Sample text..."
-                };
-                applicationDbContext.DemoModels.Add(demoModel);
-                applicationDbContext.SaveChanges();
-            }
-
-            if (!applicationDbContext.Modules.Any()
-                && !applicationDbContext.Categories.Any()
-                && !applicationDbContext.MenuItems.Any())
-            {
-                AdministrationNavigationConfig(applicationDbContext, admin, developer);
-            }
-
-            if (!applicationDbContext.Configs.Any()
-               && !applicationDbContext.ConfigItems.Any())
-            {
-                PermissionsConfig(applicationDbContext);
-                PermissionConfig(applicationDbContext);
-
-                ConfigsConfig(applicationDbContext);
-                ConfigConfig(applicationDbContext);
-                ConfigItemConfig(applicationDbContext);
-                ConfigItemsListDetailConfig(applicationDbContext);
-                ConfigContainerConfig(applicationDbContext);
-
-                DemoModelsConfig(applicationDbContext);
-                DemoModelConfig(applicationDbContext);
-                DemoModelItemConfig(applicationDbContext);
-                DemoModelItemsListDetailConfig(applicationDbContext);
-                DemoModelTreeItemConfig(applicationDbContext);
-            }
+            DemoModelsConfig(applicationDbContext);
+            DemoModelConfig(applicationDbContext);
+            DemoModelItemConfig(applicationDbContext);
+            DemoModelItemsListDetailConfig(applicationDbContext);
+            DemoModelTreeItemConfig(applicationDbContext);
         }
 
-        private static void AdministrationNavigationConfig(ApplicationDbContext applicationDbContext, Permission admin, Permission developer)
+        private static void TruncateTables(ApplicationDbContext applicationDbContext)
+        {
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Roles");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Roles, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Permissions");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Permissions, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelItems");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelTreeItems");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModels");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModels, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE MenuItems");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Categories");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Categories, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Modules");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Modules, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE ConfigItems");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM ConfigContainers");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (ConfigContainers, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Configs");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Configs, RESEED, 1)");
+        }
+
+        private static void Permissions(ApplicationDbContext applicationDbContext)
+        {
+            user = new Permission { Name = "User", Description = "Headway User" };
+            admin = new Permission { Name = "Admin", Description = "Administrator" };
+            developer = new Permission { Name = "Developer", Description = "Developer" };
+
+            applicationDbContext.Permissions.Add(user);
+            applicationDbContext.Permissions.Add(admin);
+            applicationDbContext.Permissions.Add(developer);
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void Roles(ApplicationDbContext applicationDbContext)
+        {
+            developerRole = new Role { Name = "Developer", Description = "Developer Role" };
+            adminRole = new Role { Name = "Admin", Description = "Administrator Role" };
+            userRole = new Role { Name = "User", Description = "Headway User Role" };
+
+            applicationDbContext.Roles.Add(adminRole);
+            applicationDbContext.Roles.Add(developerRole);
+            applicationDbContext.Roles.Add(userRole);
+
+            adminRole.Permissions.Add(admin);
+            adminRole.Permissions.Add(user);
+            developerRole.Permissions.Add(developer);
+            developerRole.Permissions.Add(admin);
+            developerRole.Permissions.Add(user);
+            userRole.Permissions.Add(user);
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void Users(ApplicationDbContext applicationDbContext)
+        {
+            var grant = new User { UserName = "grant", Email = "grant@email.com" };
+            var alice = new User { UserName = "alice", Email = "alice@email.com" };
+            var bob = new User { UserName = "bob", Email = "bob@email.com" };
+            var jane = new User { UserName = "jane", Email = "jane@email.com" };
+            var will = new User { UserName = "will", Email = "will@email.com" };
+
+            applicationDbContext.Users.Add(grant);
+            applicationDbContext.Users.Add(alice);
+            applicationDbContext.Users.Add(bob);
+            applicationDbContext.Users.Add(jane);
+            applicationDbContext.Users.Add(will);
+
+            grant.Roles.Add(developerRole);
+            alice.Roles.Add(adminRole);
+            alice.Roles.Add(userRole);
+            bob.Roles.Add(adminRole);
+            bob.Roles.Add(userRole);
+            jane.Roles.Add(userRole);
+            will.Roles.Add(userRole);
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void DemoModels(ApplicationDbContext applicationDbContext)
+        {
+            var demoModel = new DemoModel
+            {
+                Description = "Demo model rendering components",
+                Text = "Sample text..."
+            };
+
+            applicationDbContext.DemoModels.Add(demoModel);
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void AdministrationNavigationConfig(ApplicationDbContext applicationDbContext)
         {
             var administration = new Module { Name = "Administration", Order = 1, Permission = admin.Name };
+
             applicationDbContext.Modules.Add(administration);
 
             var authorisationCatgory = new Category { Name = "Authorisation", Order = 1, Permission = admin.Name };
             var configurationCategory = new Category { Name = "Configuration", Order = 2, Permission = admin.Name };
             var developerToolsCategory = new Category { Name = "Developer Tools", Order = 3, Permission = developer.Name };
+
             applicationDbContext.Categories.Add(authorisationCatgory);
             applicationDbContext.Categories.Add(configurationCategory);
             applicationDbContext.Categories.Add(developerToolsCategory);
@@ -121,6 +158,7 @@ namespace Headway.Repository.Data
             var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "Permissions" };
             var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Configs" };
             var demoMenuItem = new MenuItem { Name = "Demo", ImageClass = "oi oi-info", NavigateTo = "Page", Order = 2, Permission = developer.Name, Config = "DemoModels" };
+
             applicationDbContext.MenuItems.Add(usersMenuItem);
             applicationDbContext.MenuItems.Add(rolesMenuItem);
             applicationDbContext.MenuItems.Add(permissionsMenuItem);
@@ -184,6 +222,7 @@ namespace Headway.Repository.Data
             applicationDbContext.Configs.Add(permissionConfig);
 
             var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+
             permissionConfig.ConfigContainers.Add(permissionConfigContainer);
 
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
@@ -274,6 +313,7 @@ namespace Headway.Repository.Data
             applicationDbContext.Configs.Add(configItemConfig);
 
             var configItemConfigContainer = new ConfigContainer { Name = "Config Item Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+
             configItemConfig.ConfigContainers.Add(configItemConfigContainer);
 
             configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItemId", Label = "Config Item Id", IsIdentity = true, Order = 1, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
@@ -326,8 +366,8 @@ namespace Headway.Repository.Data
             applicationDbContext.Configs.Add(configContainerConfig);
 
             var configContainerConfigContainer = new ConfigContainer { Name = "Config Container Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+
             configContainerConfig.ConfigContainers.Add(configContainerConfigContainer);
-            applicationDbContext.SaveChanges();
 
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainerId", Label = "Config Container Id", IsIdentity = true, Order = 1, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
@@ -415,6 +455,7 @@ namespace Headway.Repository.Data
             applicationDbContext.Configs.Add(demoModelItemConfig);
 
             var demoModelItemConfigContainer = new ConfigContainer { Name = "Demo Model Item Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+
             demoModelItemConfig.ConfigContainers.Add(demoModelItemConfigContainer);
 
             demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItemId", Label = "Demo Model Item Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
@@ -459,6 +500,7 @@ namespace Headway.Repository.Data
             applicationDbContext.Configs.Add(demoModelTreeItemConfig);
 
             var demoModelTreeItemConfigContainer = new ConfigContainer { Name = "Demo Model Tree Item Div", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+
             demoModelTreeItemConfig.ConfigContainers.Add(demoModelTreeItemConfigContainer);
 
             demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItemId", Label = "Demo Model Tree Item Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelTreeItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
