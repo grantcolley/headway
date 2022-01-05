@@ -20,6 +20,8 @@ namespace Headway.Repository.Data
         public DbSet<ConfigItem> ConfigItems { get; set; }
         public DbSet<ConfigContainer> ConfigContainers { get; set; }
         public DbSet<DemoModel> DemoModels { get; set; }
+        public DbSet<DemoModelItem> DemoModelItems { get; set; }
+        public DbSet<DemoModelTreeItem> DemoModelTreeItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
