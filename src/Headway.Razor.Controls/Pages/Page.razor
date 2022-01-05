@@ -2,7 +2,6 @@
 
 @page "/Page/{Config}/{Id:int?}"
 @inherits PageBase
-
 <AuthorizeView>
     <Authorized Context="page">
         @if (config == null)
@@ -15,6 +14,6 @@
         }
     </Authorized>
     <NotAuthorized>
-        <p>Please log in.</p>
+        <LoginMessage/>
     </NotAuthorized>
 </AuthorizeView>
