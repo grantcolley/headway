@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
+    <ProjectReference Include="..\Headway.Razor.Controls\Headway.Razor.Controls.csproj" />
   </ItemGroup>
 
   <ItemGroup>
