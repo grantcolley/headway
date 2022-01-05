@@ -217,8 +217,8 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 Model = model,
                 Source = source,
                 ModelNodesPropertyInfo = modelNodesPropertyInfo,
-                Label = (string)typeHelper.GetValue(model, nodeLabel),
-                UniqueValue = (string)typeHelper.GetValue(model, nodeUniqueProperty)
+                Label = typeHelper.GetValue(model, nodeLabel).ToString(),
+                UniqueValue = typeHelper.GetValue(model, nodeUniqueProperty).ToString()
             };
 
             var modelNodes = (List<T>)typeHelper.GetValue(model, nodesProperty);
@@ -248,9 +248,9 @@ namespace Headway.Razor.Controls.Components.GenericTree
             return null;
         }
 
-        private Node<T> GetNode(string nodeUniqueProperty, Node<T> source)
+        private Node<T> GetNode(string nodeUniqueValue, Node<T> source)
         {
-            if(source.UniqueValue.Equals(nodeUniqueProperty))
+            if(source.UniqueValue.Equals(nodeUniqueValue))
             {
                 return source;
             }
@@ -258,7 +258,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
             {
                 foreach(var node in source.Nodes)
                 {
-                    return GetNode(nodeUniqueProperty, node);
+                    return GetNode(nodeUniqueValue, node);
                 }
 
                 return null;
