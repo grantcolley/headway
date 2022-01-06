@@ -38,23 +38,18 @@ namespace Headway.Razor.Controls.Documents
             isSaveInProgress = true;
 
             IServiceResult<DynamicModel<T>> serviceResult;
-            string message;
 
             if (dynamicModel.Id.Equals(0))
             {
                 serviceResult = await DynamicService
                     .AddDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
-
-                message = "has been added.";
             }
             else
             {
                 serviceResult = await DynamicService
                     .UpdateDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
-
-                message = "has been updated.";
             }
 
             dynamicModel = GetResponse(serviceResult);
@@ -63,15 +58,6 @@ namespace Headway.Razor.Controls.Documents
             {
                 return;
             }
-
-            Alert = new Alert
-            {
-                AlertType = Alerts.PRIMARY,
-                Title = dynamicModel.Title,
-                Message = message,
-                //RedirectText = dynamicModel.Config.NavigateText,
-                RedirectPage = dynamicModel.Config.NavigateTo
-            };
 
             isSaveInProgress = false;
         }
@@ -95,9 +81,7 @@ namespace Headway.Razor.Controls.Documents
             {
                 AlertType = Alerts.DANGER,
                 Title = dynamicModel.Title,
-                Message = $"has been deleted.",
-                //RedirectText = dynamicModel.Config.NavigateText,
-                RedirectPage = dynamicModel.Config.NavigateTo
+                Message = $"has been deleted."
             };
 
             isDeleteInProgress = false;
