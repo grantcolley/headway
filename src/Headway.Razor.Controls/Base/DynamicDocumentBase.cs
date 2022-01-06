@@ -19,6 +19,7 @@ namespace Headway.Razor.Controls.Base
 
         protected DynamicModel<T> dynamicModel { get; set; }
         protected DynamicList<T> dynamicList;
+        protected Status Status { get; set; }
         protected Alert Alert { get; set; }
         protected bool isSaveInProgress = false;
         protected bool isDeleteInProgress = false;
