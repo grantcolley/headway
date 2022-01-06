@@ -7,6 +7,11 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class DemoModelTreeItem
     {
+        public DemoModelTreeItem()
+        {
+            DemoModelTreeItems = new List<DemoModelTreeItem>();
+        }
+
         public int DemoModelTreeItemId { get; set; }
         public int Order { get; set; }
         public List<DemoModelTreeItem> DemoModelTreeItems { get; set; }
