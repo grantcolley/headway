@@ -9,6 +9,12 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class DemoModel
     {
+        public DemoModel()
+        {
+            DemoModelItems = new List<DemoModelItem>();
+            DemoModelTreeItems = new List<DemoModelTreeItem>();
+        }
+
         public int DemoModelId { get; set; }
 
         public bool Checkbox { get; set; }
