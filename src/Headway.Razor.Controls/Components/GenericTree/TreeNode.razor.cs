@@ -38,7 +38,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 return;
             }
 
-            if (Node.Equals(TreeView.Payload.DragNode)
+            if (IsDecendent(Node)
                 || Node.Nodes.Any(n => n.Equals(TreeView.Payload.DragNode)))
             {
                 dropClass = "no-drop";
@@ -69,6 +69,21 @@ namespace Headway.Razor.Controls.Components.GenericTree
         protected async Task SelectAsync()
         {
             await TreeView.SelectActiveNode(Node).ConfigureAwait(false);
+        }
+
+        private bool IsDecendent(Node<T> node)
+        {
+            if(node.Equals(TreeView.Payload.DragNode))
+            {
+                return true;
+            }
+
+            if (node.Source == null)
+            {
+                return false;
+            }
+
+            return IsDecendent(node.Source);
         }
     }
 }
