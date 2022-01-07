@@ -1,5 +1,6 @@
 ﻿.draggable {
-    padding: 10px 25px;
+    margin-top: 4px;
+    padding: 5px 5px;
     cursor: grab;
     background: #f7f7f7;
     color: #4e5154;
@@ -8,6 +9,11 @@
 
 .draggable:active {
     cursor: grabbing;
+    border: 2px dashed orange;
+}
+
+.label-pointer {
+    cursor: pointer;
 }
 
 .treenodes {
@@ -33,5 +39,5 @@
 }
 
 .node-label {
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
