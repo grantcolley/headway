@@ -1,6 +1,5 @@
 ﻿.draggable {
-    margin-top: 4px;
-    padding: 5px 5px;
+    padding: 10px 0px;
     cursor: grab;
     background: #f7f7f7;
     color: #4e5154;
@@ -12,7 +11,7 @@
     border: 2px dashed orange;
 }
 
-.label-pointer {
+.node-pointer {
     cursor: pointer;
 }
 
@@ -40,4 +39,9 @@
 
 .node-label {
     margin-bottom: 2px;
+}
+
+.show-hide-indicator {
+    width: 20px;
+    margin-right: 1px;
 }

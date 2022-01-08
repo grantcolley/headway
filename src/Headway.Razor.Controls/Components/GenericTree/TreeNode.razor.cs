@@ -12,6 +12,10 @@ namespace Headway.Razor.Controls.Components.GenericTree
         [Parameter]
         public Node<T> Node { get; set; }
 
+        private const string emptyDrop = "";
+        private const string noDrop = "no-drop";
+        private const string canDrop = "can-drop";
+
         protected string dropClass = "";
 
         protected RenderFragment RenderTreeNode(Node<T> node)
@@ -34,41 +38,56 @@ namespace Headway.Razor.Controls.Components.GenericTree
         {
             if (TreeView.Payload == null)
             {
-                dropClass = "";
+                dropClass = emptyDrop;
                 return;
             }
 
             if (IsDecendent(Node)
                 || Node.Nodes.Any(n => n.Equals(TreeView.Payload.DragNode)))
             {
-                dropClass = "no-drop";
+                dropClass = noDrop;
             }
             else
             {
-                dropClass = "can-drop";
+                dropClass = canDrop;
             }
         }
 
         protected void HandleDragLeave()
         {
-            dropClass = "";
+            dropClass = emptyDrop;
         }
 
         protected void HandleDrop()
         {
             if (TreeView.Payload != null
-                && dropClass.Equals("can-drop"))
+                && dropClass.Equals(canDrop))
             {
                 TreeView.Move(TreeView.Payload.DragNode, Node);
             }
 
             TreeView.Payload = null;
-            dropClass = "";
+            dropClass = emptyDrop;
+
+            Node.ExpandNodes = true;
         }
 
         protected async Task SelectAsync()
         {
             await TreeView.SelectActiveNode(Node).ConfigureAwait(false);
+        }
+
+        protected void ExpandCollapseNodes()
+        {
+            if(Node.Nodes.Any()
+                && Node.ExpandNodes.Equals(false))
+            {
+                Node.ExpandNodes = true;
+            }
+            else
+            {
+                Node.ExpandNodes = false;
+            }
         }
 
         private bool IsDecendent(Node<T> node)

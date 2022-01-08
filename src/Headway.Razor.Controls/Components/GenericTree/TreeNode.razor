@@ -8,14 +8,17 @@
     @ondragenter="HandleDragEnter"
     @ondragleave="HandleDragLeave">
     <div class="node-label">
-        <label class="float-left label-pointer" @onclick="() => SelectAsync()" draggable="false">@Node.Label</label>
+        <label class="float-left node-pointer show-hide-indicator @Node.ExpandCss" @onclick="() => ExpandCollapseNodes()"/><label class="float-left node-pointer" @onclick="() => SelectAsync()" draggable="false">@Node.Label</label>
     </div>
-    <div class="treenodes">
-        <ul class="treenodeslist">
-            @foreach (var node in Node.Nodes)
-            {
-                @RenderTreeNode(node)
-            }
-        </ul>
-    </div>
+    @if(Node.ExpandNodes)
+    {
+        <div class="treenodes">
+            <ul class="treenodeslist">
+                @foreach (var node in Node.Nodes)
+                {
+                    @RenderTreeNode(node)
+                }
+            </ul>
+        </div>   
+    }
 </li>
