@@ -7,11 +7,13 @@ namespace Headway.Core.Dynamic
     {
         public DynamicContainer()
         {
+            UniqueId = Guid.NewGuid().ToString();
             Parameters = new Dictionary<string, object>();
             DynamicFields = new List<DynamicField>();
             DynamicContainers = new List<DynamicContainer>();
         }
 
+        public string UniqueId { get; private set; }
         public int ContainerId { get; set; }
         public string DynamicContainerTypeName { get; set; }
         public string Label { get; set; }
