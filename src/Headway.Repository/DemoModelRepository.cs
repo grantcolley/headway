@@ -65,26 +65,55 @@ namespace Headway.Repository
                     .Entry(existing)
                     .CurrentValues.SetValues(demoModel);
 
-                foreach (var dm in demoModel.DemoModelItems)
-                {
-                    var existingDm = existing.DemoModelItems
-                        .FirstOrDefault(m => m.DemoModelItemId.Equals(dm.DemoModelItemId));
+                var removeDemoModelItems = (from demoModelItem in existing.DemoModelItems
+                                   where !demoModel.DemoModelItems.Any(i => i.DemoModelItemId.Equals(demoModelItem.DemoModelItemId))
+                                   select demoModelItem)
+                                  .ToList();
 
-                    if (existingDm == null)
+                applicationDbContext.RemoveRange(removeDemoModelItems);
+
+                foreach (var demoModelItem in demoModel.DemoModelItems)
+                {
+                    DemoModelItem existingDemoModelItem = null;
+
+                    if(demoModelItem.DemoModelItemId > 0)
                     {
-                        existing.DemoModelItems.Add(dm);
+                        existingDemoModelItem = existing.DemoModelItems
+                            .FirstOrDefault(m => m.DemoModelItemId.Equals(demoModelItem.DemoModelItemId));
+                    }
+
+                    if (existingDemoModelItem == null)
+                    {
+                        existing.DemoModelItems.Add(demoModelItem);
                     }
                     else
                     {
-                        applicationDbContext.Entry(existingDm).CurrentValues.SetValues(dm);
+                        applicationDbContext.Entry(existingDemoModelItem).CurrentValues.SetValues(demoModelItem);
                     }
                 }
 
-                foreach (var dm in demoModel.DemoModelItems)
+                var removeDemoModelTreeItems = (from demoModelTreeItem in existing.DemoModelTreeItems
+                                            where !demoModel.DemoModelTreeItems.Any(i => i.DemoModelTreeItemId.Equals(demoModelTreeItem.DemoModelTreeItemId))
+                                            select demoModelTreeItem)
+                                            .ToList();
+
+                applicationDbContext.RemoveRange(removeDemoModelTreeItems);
+
+                foreach (var demoModelTreeItem in demoModel.DemoModelTreeItems)
                 {
-                    if (!demoModel.DemoModelItems.Any(m => m.DemoModelItemId.Equals(dm.DemoModelItemId)))
+                    DemoModelTreeItem existingDemoModelTreeItem = null;
+
+                    existingDemoModelTreeItem = existing.DemoModelTreeItems
+                        .FirstOrDefault(m => m.DemoModelTreeItemId.Equals(demoModelTreeItem.DemoModelTreeItemId));
+
+                    if (existingDemoModelTreeItem == null)
                     {
-                        applicationDbContext.Remove(dm);
+                        existing.DemoModelTreeItems.Add(demoModelTreeItem);
+                    }
+                    else
+                    {
+                        applicationDbContext.Entry(existingDemoModelTreeItem).CurrentValues.SetValues(demoModelTreeItem);
+                        SyncDemoModelTreeItems(existingDemoModelTreeItem, demoModelTreeItem, applicationDbContext);
                     }
                 }
             }
@@ -94,6 +123,35 @@ namespace Headway.Repository
                 .ConfigureAwait(false);
 
             return demoModel;
+        }
+
+        private void SyncDemoModelTreeItems(
+            DemoModelTreeItem existingDemoModelTreeItem,
+            DemoModelTreeItem demoModelTreeItem,
+            ApplicationDbContext applicationDbContext)
+        {
+            var removeDemoModelTreeItems = (from treeItem in existingDemoModelTreeItem.DemoModelTreeItems
+                                            where !demoModelTreeItem.DemoModelTreeItems.Any(i => i.DemoModelTreeItemId.Equals(treeItem.DemoModelTreeItemId))
+                                        select treeItem)
+                                        .ToList();
+
+            applicationDbContext.RemoveRange(removeDemoModelTreeItems);
+
+            foreach (var treeItem in demoModelTreeItem.DemoModelTreeItems)
+            {
+                var existingTreeItem = existingDemoModelTreeItem.DemoModelTreeItems
+                    .FirstOrDefault(m => m.DemoModelTreeItemId.Equals(treeItem.DemoModelTreeItemId));
+
+                if (existingTreeItem == null)
+                {
+                    existingDemoModelTreeItem.DemoModelTreeItems.Add(treeItem);
+                }
+                else
+                {
+                    applicationDbContext.Entry(existingTreeItem).CurrentValues.SetValues(treeItem);
+                    SyncDemoModelTreeItems(existingTreeItem, treeItem, applicationDbContext);
+                }
+            }
         }
 
         public async Task<int> DeleteDemoModelAsync(int id)
