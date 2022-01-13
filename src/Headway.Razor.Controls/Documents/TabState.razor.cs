@@ -4,6 +4,7 @@ using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Model;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace Headway.Razor.Controls.Documents
     [DynamicDocument]
     public abstract class TabStateBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
+        protected EditContext TabStateEditContext { get; set; }
         protected DynamicContainer activePage { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -21,6 +23,8 @@ namespace Headway.Razor.Controls.Documents
             activePage = dynamicModel.RootContainers.First();
 
             await base.OnInitializedAsync().ConfigureAwait(false);
+
+            TabStateEditContext = new EditContext(dynamicModel.Model);
         }
 
         protected string GetTabButtonClass(DynamicContainer page)
@@ -58,6 +62,8 @@ namespace Headway.Razor.Controls.Documents
             {
                 return;
             }
+
+            TabStateEditContext.MarkAsUnmodified();
 
             isSaveInProgress = false;
         }
