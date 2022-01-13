@@ -84,10 +84,6 @@ namespace Headway.Razor.Controls.Components.GenericTree
                 Remove(duplicate);
                 message = $"Removed {node.Label}";
             }
-            else
-            {
-                message = $"Can't find {node.Label}";
-            }
         }
 
         public async Task SelectActiveNode(Node<T> node)
@@ -212,13 +208,13 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         private Node<T> NodeBuilder(T model, Node<T> source)
         {
-            var node = new Node<T> 
+            var node = new Node<T>() 
             {
                 Model = model,
                 Source = source,
                 ModelNodesPropertyInfo = modelNodesPropertyInfo,
-                Label = typeHelper.GetValue(model, nodeLabel).ToString(),
-                UniqueValue = typeHelper.GetValue(model, nodeUniqueProperty).ToString()
+                Label = typeHelper.GetValue(model, nodeLabel)?.ToString(),
+                UniqueValue = typeHelper.GetValue(model, nodeUniqueProperty)?.ToString()
             };
 
             var modelNodes = (List<T>)typeHelper.GetValue(model, nodesProperty);
