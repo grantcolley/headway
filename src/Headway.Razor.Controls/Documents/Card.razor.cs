@@ -44,6 +44,8 @@ namespace Headway.Razor.Controls.Documents
                 return;
             }
 
+            CurrentEditContext.MarkAsUnmodified();
+
             isSaveInProgress = false;
         }
 
