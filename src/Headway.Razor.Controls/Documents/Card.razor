@@ -19,6 +19,7 @@ else
                 <div class="col-sm">
                     <div class="card">
                         <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
+                            <DataAnnotationsValidator />
                             <div class="card-header">
                                 <div class="clearfix">
                                     @if (isSaveInProgress)
