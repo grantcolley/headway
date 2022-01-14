@@ -2,6 +2,7 @@
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,9 @@ namespace Headway.Razor.Controls.Base
     {
         [Inject]
         public IDynamicService DynamicService { get; set; }
+
+        [CascadingParameter]
+        public EditContext CurrentEditContext { get; set; }
 
         [Parameter]
         public DynamicField Field { get; set; }
