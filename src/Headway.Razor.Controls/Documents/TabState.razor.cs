@@ -13,7 +13,6 @@ namespace Headway.Razor.Controls.Documents
     [DynamicDocument]
     public abstract class TabStateBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
-        protected EditContext TabStateEditContext { get; set; }
         protected DynamicContainer activePage { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -23,8 +22,6 @@ namespace Headway.Razor.Controls.Documents
             activePage = dynamicModel.RootContainers.First();
 
             await base.OnInitializedAsync().ConfigureAwait(false);
-
-            TabStateEditContext = new EditContext(dynamicModel.Model);
         }
 
         protected string GetTabButtonClass(DynamicContainer page)
@@ -63,7 +60,7 @@ namespace Headway.Razor.Controls.Documents
                 return;
             }
 
-            TabStateEditContext.MarkAsUnmodified();
+            CurrentEditContext.MarkAsUnmodified();
 
             isSaveInProgress = false;
         }
