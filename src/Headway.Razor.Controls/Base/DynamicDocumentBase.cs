@@ -2,6 +2,7 @@
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
@@ -17,6 +18,7 @@ namespace Headway.Razor.Controls.Base
         [Parameter]
         public int? Id { get; set; }
 
+        protected EditContext CurrentEditContext { get; set; }
         protected DynamicModel<T> dynamicModel { get; set; }
         protected DynamicList<T> dynamicList;
         protected Status Status { get; set; }
@@ -43,6 +45,8 @@ namespace Headway.Razor.Controls.Base
             }
 
             dynamicModel = GetResponse(serviceResult);
+
+            CurrentEditContext = new EditContext(dynamicModel.Model);
         }
 
         protected virtual async Task InitializeDynamicListAsync()
