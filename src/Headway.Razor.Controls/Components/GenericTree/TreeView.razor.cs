@@ -208,7 +208,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         private Node<T> NodeBuilder(T model, Node<T> source)
         {
-            var node = new Node<T>() 
+            var node = new Node<T>
             {
                 Model = model,
                 Source = source,
