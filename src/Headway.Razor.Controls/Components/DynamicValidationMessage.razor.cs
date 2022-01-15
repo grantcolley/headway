@@ -40,6 +40,8 @@ namespace Headway.Razor.Controls.Components
         public void Dispose()
         {
             EditContext.OnValidationStateChanged -= HandleValidationStateChanged;
+
+            GC.SuppressFinalize(this);
         }
 
         private void HandleValidationStateChanged(object o, ValidationStateChangedEventArgs args)
