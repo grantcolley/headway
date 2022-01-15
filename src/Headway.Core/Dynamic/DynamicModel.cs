@@ -47,6 +47,22 @@ namespace Headway.Core.Dynamic
 
         public string Title { get; private set; }
 
+        public bool IsValid
+        {
+            get 
+            {
+                foreach(var field in DynamicFields)
+                {
+                    if(field.ValidationMessagesCount > 0)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
         private void BuildDynamicComponents()
         {
             DynamicFields = new List<DynamicField>();
