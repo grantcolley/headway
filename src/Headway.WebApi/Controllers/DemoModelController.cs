@@ -50,11 +50,11 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var config = await demoModelRepository
+            var demoModel = await demoModelRepository
                 .GetDemoModelAsync(id)
                 .ConfigureAwait(false);
 
-            return Ok(config);
+            return Ok(demoModel);
         }
 
         [HttpPost]
