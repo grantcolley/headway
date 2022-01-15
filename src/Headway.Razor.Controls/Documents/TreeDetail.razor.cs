@@ -5,6 +5,8 @@ using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Components.GenericTree;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Documents
@@ -45,10 +47,13 @@ namespace Headway.Razor.Controls.Documents
         {
             if(treeView != null)
             {
-                treeView.Add(model.Model);
-            }
+                if(model.IsValid)
+                {
+                    treeView.Add(model.Model);
 
-            await ResetDynamicModelAsync().ConfigureAwait(false);
+                    await ResetDynamicModelAsync().ConfigureAwait(false);
+                }
+            }
         }
 
         protected async Task RemoveAsync(DynamicModel<T> model)
