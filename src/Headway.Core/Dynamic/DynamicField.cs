@@ -21,6 +21,7 @@ namespace Headway.Core.Dynamic
         public string ComponentArgs { get; set; }
         public string DynamicComponentTypeName { get; set; }
         public int ConfigContainerId { get; set; }
+        public int ValidationMessagesCount { get; set; }
         public Type DynamicComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
         public PropertyInfo PropertyInfo { get; set; }
