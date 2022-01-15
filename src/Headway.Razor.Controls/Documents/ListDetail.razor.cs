@@ -42,18 +42,21 @@ namespace Headway.Razor.Controls.Documents
 
         protected async Task AddAsync(DynamicModel<T> model)
         {
-            var listItem = dynamicList.DynamicListItems.FirstOrDefault(i => i.Model.Equals(model.Model));
-
-            if (listItem != null)
+            if (model.IsValid)
             {
-                return;
+                var listItem = dynamicList.DynamicListItems.FirstOrDefault(i => i.Model.Equals(model.Model));
+
+                if (listItem != null)
+                {
+                    return;
+                }
+
+                dynamicList.Add(model.Model);
+                Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
+
+                await NewAsync().ConfigureAwait(false);
             }
-
-            dynamicList.Add(model.Model);
-            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
-                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { model.Model });
-
-            await NewAsync().ConfigureAwait(false);
         }
 
         protected async Task RemoveAsync(DynamicModel<T> model)
