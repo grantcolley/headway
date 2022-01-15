@@ -20,7 +20,7 @@
         </div>
         <div class="col-sm-8">
             <InputText class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
-            <ValidationMessage For="FieldExpression"/>
+            <DynamicValidationMessage For="FieldExpression" Field="@Field"/>
         </div>
     </div>
 </div>
