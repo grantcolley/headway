@@ -103,8 +103,11 @@ namespace Headway.Repository
                 {
                     DemoModelTreeItem existingDemoModelTreeItem = null;
 
-                    existingDemoModelTreeItem = existing.DemoModelTreeItems
-                        .FirstOrDefault(m => m.DemoModelTreeItemId.Equals(demoModelTreeItem.DemoModelTreeItemId));
+                    if (demoModelTreeItem.DemoModelTreeItemId > 0)
+                    {
+                        existingDemoModelTreeItem = existing.DemoModelTreeItems
+                            .FirstOrDefault(m => m.DemoModelTreeItemId.Equals(demoModelTreeItem.DemoModelTreeItemId));
+                    }
 
                     if (existingDemoModelTreeItem == null)
                     {
