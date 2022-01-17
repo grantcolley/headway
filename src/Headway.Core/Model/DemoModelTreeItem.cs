@@ -14,6 +14,8 @@ namespace Headway.Core.Model
 
         public int DemoModelTreeItemId { get; set; }
         public int Order { get; set; }
+        public DemoModel DemoModel { get; set; }
+
         public List<DemoModelTreeItem> DemoModelTreeItems { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
