@@ -57,6 +57,7 @@ namespace Headway.Repository
 
             if (existing == null)
             {
+                demoModel.DemoModelTreeItems.ForEach(m => m.DemoModel = demoModel);
                 applicationDbContext.DemoModels.Add(demoModel);
             }
             else
@@ -103,6 +104,8 @@ namespace Headway.Repository
                 {
                     DemoModelTreeItem existingDemoModelTreeItem = null;
 
+                    demoModelTreeItem.DemoModel = demoModel;
+
                     if (demoModelTreeItem.DemoModelTreeItemId > 0)
                     {
                         existingDemoModelTreeItem = existing.DemoModelTreeItems
@@ -116,7 +119,6 @@ namespace Headway.Repository
                     else
                     {
                         applicationDbContext.Entry(existingDemoModelTreeItem).CurrentValues.SetValues(demoModelTreeItem);
-                        SyncDemoModelTreeItems(existingDemoModelTreeItem, demoModelTreeItem, applicationDbContext);
                     }
                 }
             }
@@ -126,35 +128,6 @@ namespace Headway.Repository
                 .ConfigureAwait(false);
 
             return demoModel;
-        }
-
-        private void SyncDemoModelTreeItems(
-            DemoModelTreeItem existingDemoModelTreeItem,
-            DemoModelTreeItem demoModelTreeItem,
-            ApplicationDbContext applicationDbContext)
-        {
-            var removeDemoModelTreeItems = (from treeItem in existingDemoModelTreeItem.DemoModelTreeItems
-                                            where !demoModelTreeItem.DemoModelTreeItems.Any(i => i.DemoModelTreeItemId.Equals(treeItem.DemoModelTreeItemId))
-                                        select treeItem)
-                                        .ToList();
-
-            applicationDbContext.RemoveRange(removeDemoModelTreeItems);
-
-            foreach (var treeItem in demoModelTreeItem.DemoModelTreeItems)
-            {
-                var existingTreeItem = existingDemoModelTreeItem.DemoModelTreeItems
-                    .FirstOrDefault(m => m.DemoModelTreeItemId.Equals(treeItem.DemoModelTreeItemId));
-
-                if (existingTreeItem == null)
-                {
-                    existingDemoModelTreeItem.DemoModelTreeItems.Add(treeItem);
-                }
-                else
-                {
-                    applicationDbContext.Entry(existingTreeItem).CurrentValues.SetValues(treeItem);
-                    SyncDemoModelTreeItems(existingTreeItem, treeItem, applicationDbContext);
-                }
-            }
         }
 
         public async Task<int> DeleteDemoModelAsync(int id)
