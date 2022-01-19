@@ -182,10 +182,17 @@ namespace Headway.Razor.Controls.Components.GenericTree
                     (List<T>)dragNode.Source.ModelNodesPropertyInfo.GetValue(dragNode.Source.Model, null), new T[] { dragNode.Model });
             }
 
-            dragNode.Source = null;
+            if(dragNode.Source != null)
+            {
+                dragNode.Source = null;
+            }
+            else
+            {
+                Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
+            }
+
             nodes.Add(dragNode);
-            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
-                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
         }
 
         private void Remove(Node<T> removeNode)
