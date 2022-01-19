@@ -207,16 +207,16 @@ namespace Headway.Services
 
         public async Task<IServiceResult<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
-            var addResponse = await httpClient.PutAsJsonAsync(
+            var updateResponse = await httpClient.PutAsJsonAsync(
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var addResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
+            var updateResult = await GetServiceResultAsync<T>(updateResponse).ConfigureAwait(false);
 
             var serviceResult = new ServiceResult<DynamicModel<T>>
             {
-                IsSuccess = addResult.IsSuccess,
-                Message = addResult.Message
+                IsSuccess = updateResult.IsSuccess,
+                Message = updateResult.Message
             };
 
             if (serviceResult.IsSuccess)
