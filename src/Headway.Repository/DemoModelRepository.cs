@@ -52,6 +52,7 @@ namespace Headway.Repository
         {
             var existing = await applicationDbContext.DemoModels
                 .Include(m => m.DemoModelItems)
+                .Include(m => m.DemoModelTreeItems)
                 .FirstOrDefaultAsync(m => m.DemoModelId.Equals(demoModel.DemoModelId))
                 .ConfigureAwait(false);
 
