@@ -130,7 +130,6 @@ namespace Headway.Repository.Data
         {
             var demoModel = new DemoModel
             {
-                Description = "Demo model rendering components",
                 Text = "Sample text..."
             };
 
@@ -397,7 +396,7 @@ namespace Headway.Repository.Data
             applicationDbContext.Configs.Add(demoModelsConfig);
 
             demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelId", Label = "Demo Model Id", Order = 1 });
-            demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 2 });
+            demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Text", Label = "Text", Order = 2 });
 
             applicationDbContext.SaveChanges();
         }
