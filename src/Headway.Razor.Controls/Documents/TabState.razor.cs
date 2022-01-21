@@ -18,9 +18,22 @@ namespace Headway.Razor.Controls.Documents
         {
             await InitializeDynamicModelAsync().ConfigureAwait(false);
 
-            activePage = dynamicModel.RootContainers.First();
+            SetActivePage();
 
             await base.OnInitializedAsync().ConfigureAwait(false);
+        }
+
+        private void SetActivePage()
+        {
+            if(activePage != null)
+            {
+                activePage = dynamicModel.RootContainers.FirstOrDefault(c => c.ContainerId.Equals(activePage.ContainerId));
+            }
+            
+            if(activePage == null)
+            {
+                activePage = dynamicModel.RootContainers.First();
+            }
         }
 
         protected string GetTabButtonClass(DynamicContainer page)
@@ -52,19 +65,9 @@ namespace Headway.Razor.Controls.Documents
                     .ConfigureAwait(false);
             }
 
-            dynamicModel = GetResponse(serviceResult);
+            SetCurrentModelContext(serviceResult);
 
-            if (dynamicModel == null)
-            {
-                return;
-            }
-
-            CurrentEditContext.MarkAsUnmodified();
-
-            await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
+            SetActivePage();
 
             isSaveInProgress = false;
         }
