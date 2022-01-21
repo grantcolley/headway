@@ -37,14 +37,7 @@ namespace Headway.Razor.Controls.Documents
                     .ConfigureAwait(false);
             }
 
-            dynamicModel = GetResponse(serviceResult);
-
-            if (dynamicModel == null)
-            {
-                return;
-            }
-
-            CurrentEditContext.MarkAsUnmodified();
+            SetCurrentModelContext(serviceResult);
 
             isSaveInProgress = false;
         }
