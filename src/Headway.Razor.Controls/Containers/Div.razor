@@ -4,7 +4,7 @@
     <div class="row">
         @foreach(var dynamicField in Container.DynamicFields)
         {
-            <DynamicComponent Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
+            <DynamicComponent @key=dynamicField.PropertyName Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
         }
     </div>
 </div>
