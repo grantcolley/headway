@@ -44,9 +44,7 @@ namespace Headway.Razor.Controls.Base
                     .ConfigureAwait(false);
             }
 
-            dynamicModel = GetResponse(serviceResult);
-
-            CurrentEditContext = new EditContext(dynamicModel.Model);
+            SetCurrentModelContext(serviceResult);
         }
 
         protected virtual async Task InitializeDynamicListAsync()
@@ -58,6 +56,13 @@ namespace Headway.Razor.Controls.Base
             dynamicList = GetResponse(result);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
+        }
+
+        protected virtual void SetCurrentModelContext(IServiceResult<DynamicModel<T>> serviceResult)
+        {
+            dynamicModel = GetResponse(serviceResult);
+
+            CurrentEditContext = new EditContext(dynamicModel.Model);
         }
     }
 }
