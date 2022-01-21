@@ -188,20 +188,26 @@ namespace Headway.Services
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var addResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
-
-            var serviceResult = new ServiceResult<DynamicModel<T>>
-            {
-                IsSuccess = addResult.IsSuccess,
-                Message = addResult.Message
-            };
+            var serviceResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
 
             if (serviceResult.IsSuccess)
             {
-                serviceResult.Result = dynamicModel;
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResult.IsSuccess,
+                    Message = serviceResult.Message,
+                    Result = new DynamicModel<T>(serviceResult.Result, dynamicModel.Config)
+                };
             }
-
-            return serviceResult;
+            else
+            {
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResult.IsSuccess,
+                    Message = serviceResult.Message,
+                    Result = dynamicModel
+                };
+            }
         }
 
         public async Task<IServiceResult<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
@@ -210,20 +216,26 @@ namespace Headway.Services
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var updateResult = await GetServiceResultAsync<T>(updateResponse).ConfigureAwait(false);
-
-            var serviceResult = new ServiceResult<DynamicModel<T>>
-            {
-                IsSuccess = updateResult.IsSuccess,
-                Message = updateResult.Message
-            };
+            var serviceResult = await GetServiceResultAsync<T>(updateResponse).ConfigureAwait(false);
 
             if (serviceResult.IsSuccess)
             {
-                serviceResult.Result = dynamicModel;
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResult.IsSuccess,
+                    Message = serviceResult.Message,
+                    Result = new DynamicModel<T>(serviceResult.Result, dynamicModel.Config)
+                };
             }
-
-            return serviceResult;
+            else
+            {
+                return new ServiceResult<DynamicModel<T>>
+                {
+                    IsSuccess = serviceResult.IsSuccess,
+                    Message = serviceResult.Message,
+                    Result = dynamicModel
+                };
+            }
         }
 
         public async Task<IServiceResult<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
