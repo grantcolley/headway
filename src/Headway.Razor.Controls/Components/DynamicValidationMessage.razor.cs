@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
 {
@@ -44,9 +45,12 @@ namespace Headway.Razor.Controls.Components
             GC.SuppressFinalize(this);
         }
 
-        private void HandleValidationStateChanged(object o, ValidationStateChangedEventArgs args)
+        private async void HandleValidationStateChanged(object o, ValidationStateChangedEventArgs args)
         {
-            StateHasChanged();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
     }
 }
