@@ -17,6 +17,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
         private string nodeLabel;
         private string nodesProperty;
         private string nodeUniqueProperty;
+        private string parentNodeUniqueProperty;
 
         protected List<Node<T>> nodes;
         protected string dropClass = "";
@@ -51,6 +52,10 @@ namespace Headway.Razor.Controls.Components.GenericTree
             }
 
             dragNode.Source = dropNode;
+
+            var parentNodeUniquePropertyValue = typeHelper.GetValue(dropNode.Model, nodeUniqueProperty)?.ToString();
+            typeHelper.SetValue(dragNode.Model, parentNodeUniqueProperty, parentNodeUniquePropertyValue);
+
             dropNode.Nodes.Add(dragNode);
             dropNode.ModelNodesPropertyInfo.PropertyType.GetMethod("Add").Invoke(
                 (List<T>)dropNode.ModelNodesPropertyInfo.GetValue(dropNode.Model, null), new T[] { dragNode.Model });
@@ -70,7 +75,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
             }
             else
             {
-                message = $"{node.Label} already exists with unique value {node.UniqueValue}";
+                message = $"{node.Label} already exists with {nodeUniqueProperty} {node.UniqueValue}";
             }
         }
 
@@ -100,9 +105,10 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         protected override void OnInitialized()
         {
-            nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LABEL_PROPERTY);
-            nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_LIST_PROPERTY);
-            nodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.MODEL_UNIQUE_PROPERTY);
+            nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LABEL_PROPERTY);
+            nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LIST_PROPERTY);
+            nodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.UNIQUE_PROPERTY);
+            parentNodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.PARENT_UNIQUE_PROPERTY);
 
             typeHelper = DynamicTypeHelper.Get<T>();
             modelNodesPropertyInfo = typeHelper.GetPropertyInfo(nodesProperty);
@@ -182,15 +188,12 @@ namespace Headway.Razor.Controls.Components.GenericTree
                     (List<T>)dragNode.Source.ModelNodesPropertyInfo.GetValue(dragNode.Source.Model, null), new T[] { dragNode.Model });
             }
 
-            if(dragNode.Source != null)
-            {
-                dragNode.Source = null;
-            }
-            else
-            {
-                Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
-                    (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
-            }
+            dragNode.Source = null;
+
+            typeHelper.SetValue(dragNode.Model, parentNodeUniqueProperty, null);
+
+            Field.PropertyInfo.PropertyType.GetMethod("Add").Invoke(
+                (List<T>)Field.PropertyInfo.GetValue(Field.Model, null), new T[] { dragNode.Model });
 
             nodes.Add(dragNode);
         }
