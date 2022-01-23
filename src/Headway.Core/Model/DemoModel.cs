@@ -16,15 +16,12 @@ namespace Headway.Core.Model
         }
 
         public int DemoModelId { get; set; }
-
         public bool Checkbox { get; set; }
         public int Integer { get; set; }
         public string OptionVertical { get; set; }
         public string OptionHorizontal { get; set; }
         public DateTime Date { get; set; }
-
         public List<DemoModelItem> DemoModelItems { get; set; }
-
         public List<DemoModelTreeItem> DemoModelTreeItems { get; set; }
 
         [Required(ErrorMessage = "Text is required")]
