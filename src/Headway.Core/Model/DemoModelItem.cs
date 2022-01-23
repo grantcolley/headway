@@ -7,6 +7,7 @@ namespace Headway.Core.Model
     public class DemoModelItem
     {
         public int DemoModelItemId { get; set; }
+        public int DemoModelId { get; set; }
         public int Order { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
