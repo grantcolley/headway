@@ -11,6 +11,9 @@ namespace Headway.Core.Model
         }
 
         public int ConfigContainerId { get; set; }
+        public int ConfigId { get; set; }
+        public string ContainerCode { get; set; }
+        public string ParentContainerCode { get; set; }
         public bool IsRootContainer { get; set; }
         public int Order { get; set; }
 
