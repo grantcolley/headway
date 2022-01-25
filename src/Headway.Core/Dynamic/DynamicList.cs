@@ -11,12 +11,12 @@ namespace Headway.Core.Dynamic
         public DynamicList(IEnumerable<T> listItems, Config config)
         {
             Config = config;
-            Helper = DynamicTypeHelper.Get<T>();
+            TypeHelper = DynamicTypeHelper.Get<T>();
 
             dynamicListItems = listItems.Select(i => new DynamicListItem<T>(i)).ToList();
         }
 
-        public DynamicTypeHelper<T> Helper { get; private set; }
+        public DynamicTypeHelper<T> TypeHelper { get; private set; }
 
         public Config Config { get; private set; }
 
@@ -45,14 +45,14 @@ namespace Headway.Core.Dynamic
                 }
 
                 return dynamicListItems.OrderBy(
-                    i => Helper.GetValue(i.Model, Config.OrderModelBy))
+                    i => TypeHelper.GetValue(i.Model, Config.OrderModelBy))
                     .ToList();
             }
         }
 
         public object GetValue(T listItem, string field)
         {
-            return Helper.GetValue(listItem, field);
+            return TypeHelper.GetValue(listItem, field);
         }
 
         public void Add(T item)
