@@ -2,7 +2,7 @@
 {
     public class GenericTreeHelperArgs
     {
-        public string ModelIdPropertyName { get; set; }
+        public string ModelIdProperty { get; set; }
         public string ItemsProperty { get; set; }
         public string OrderByProperty { get; set; }
         public string ItemCodeProperty { get; set; }
