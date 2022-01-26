@@ -28,10 +28,14 @@ namespace Headway.Core.Helpers
                 var children = items
                     .Where(i => !string.IsNullOrWhiteSpace(itemTypeHelper.GetValue(i, genericTreeHelperArgs.ParentItemCodeProperty)?.ToString())
                                 && itemTypeHelper.GetValue(i, genericTreeHelperArgs.ParentItemCodeProperty).ToString().Equals(itemTypeHelper.GetValue(item, genericTreeHelperArgs.ItemCodeProperty)?.ToString()))
-                    .OrderBy(i => itemTypeHelper.GetValue(i, genericTreeHelperArgs.OrderByProperty));
+                    .OrderBy(i => itemTypeHelper.GetValue(i, genericTreeHelperArgs.OrderByProperty))
+                    .ToList();
 
-                modelItemsProperty.PropertyType.GetMethod("AddRange").Invoke(
-                    (List<K>)modelItemsProperty.GetValue(model, null), children.ToArray());
+                foreach(var child in children)
+                {
+                    modelItemsProperty.PropertyType.GetMethod("Add").Invoke(
+                        (List<K>)modelItemsProperty.GetValue(model, null), new[] { child });
+                }
 
                 tree.Add(item);
             }
@@ -52,7 +56,9 @@ namespace Headway.Core.Helpers
             var modelTypeHelper = DynamicTypeHelper.Get<T>();
             int modelId = (int)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ModelIdProperty);
             var items = (List<K>)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ItemsProperty);
+
             List<K> flattenedTree = new();
+
             FlattenTree(items, modelId, flattenedTree, genericTreeHelperArgs, itemTypeHelper);
             ValidateFlattenedTree(flattenedTree, modelId, genericTreeHelperArgs, itemTypeHelper);
             return flattenedTree;
@@ -97,8 +103,9 @@ namespace Headway.Core.Helpers
             {
                 typeHelper.SetValue(item, genericTreeHelperArgs.ModelIdProperty, modelId);
                 tree.Add(item);
-                FlattenTree(items, modelId, tree, genericTreeHelperArgs, typeHelper);
-                items.Clear();
+                var children = (List<T>)typeHelper.GetValue(item, genericTreeHelperArgs.ItemsProperty);
+                FlattenTree(children, modelId, tree, genericTreeHelperArgs, typeHelper);
+                children.Clear();
             }
         }
     }
