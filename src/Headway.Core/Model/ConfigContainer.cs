@@ -12,8 +12,6 @@ namespace Headway.Core.Model
 
         public int ConfigContainerId { get; set; }
         public int ConfigId { get; set; }
-        public string ContainerCode { get; set; }
-        public string ParentContainerCode { get; set; }
         public bool IsRootContainer { get; set; }
         public int Order { get; set; }
 
@@ -26,6 +24,13 @@ namespace Headway.Core.Model
         [Required(ErrorMessage = "Container is required")]
         [StringLength(150, ErrorMessage = "Container must be between 1 and 150 characters")]
         public string Container { get; set; }
+
+        [Required(ErrorMessage = "ContainerCode is required")]
+        [StringLength(20, ErrorMessage = "ContainerCode must be between 1 and 20 characters")]
+        public string ContainerCode { get; set; }
+
+        [StringLength(20, ErrorMessage = "ParentContainerCode must be between 1 and 20 characters")]
+        public string ParentContainerCode { get; set; }
 
         [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
         public string Label { get; set; }
