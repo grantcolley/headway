@@ -26,10 +26,10 @@ namespace Headway.Core.Model
         public string Container { get; set; }
 
         [Required(ErrorMessage = "ContainerCode is required")]
-        [StringLength(20, ErrorMessage = "ContainerCode must be between 1 and 20 characters")]
+        [StringLength(50, ErrorMessage = "ContainerCode must be between 1 and 50 characters")]
         public string ContainerCode { get; set; }
 
-        [StringLength(20, ErrorMessage = "ParentContainerCode must be between 1 and 20 characters")]
+        [StringLength(50, ErrorMessage = "ParentContainerCode must be between 1 and 50 characters")]
         public string ParentContainerCode { get; set; }
 
         [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
