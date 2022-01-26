@@ -1,5 +1,7 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.Repository.Constants;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -12,9 +14,19 @@ namespace Headway.Repository
 {
     public class DemoModelRepository : RepositoryBase<DemoModelRepository>, IDemoModelRepository
     {
+        private readonly GenericTreeHelperArgs genericTreeHelperArgs;
+
         public DemoModelRepository(ApplicationDbContext applicationDbContext, ILogger<DemoModelRepository> logger)
             : base(applicationDbContext, logger)
         {
+            genericTreeHelperArgs = new GenericTreeHelperArgs
+            {
+                ModelIdProperty = GenericTreeArgs.DEMO_MODEL_ID,
+                ItemsProperty = GenericTreeArgs.DEMO_MODEL_TREE_ITEMS,
+                ItemCodeProperty = GenericTreeArgs.DEMO_MODEL_ITEM_CODE,
+                ParentItemCodeProperty = GenericTreeArgs.DEMO_MODEL_PARENT_ITEM_CODE,
+                OrderByProperty = GenericTreeArgs.DEMO_MODEL_TREE_ITEM_ORDER
+            };
         }
 
         public async Task<IEnumerable<DemoModel>> GetDemoModelsAsync()
@@ -34,14 +46,15 @@ namespace Headway.Repository
                 .SingleAsync(m => m.DemoModelId.Equals(id))
                 .ConfigureAwait(false);
 
-            demoModel.DemoModelTreeItems = GetTree(demoModel.DemoModelTreeItems, id);
+            demoModel.DemoModelTreeItems = GenericTreeHelper.GetTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);
 
             return demoModel;
         }
 
         public async Task<DemoModel> AddDemoModelAsync(DemoModel demoModel)
         {
-            demoModel.DemoModelTreeItems = GetFlattenedTree(demoModel.DemoModelTreeItems, demoModel.DemoModelId);
+            demoModel.DemoModelTreeItems = 
+                GenericTreeHelper.GetFlattenedTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);
 
             await applicationDbContext.DemoModels
                 .AddAsync(demoModel)
@@ -51,7 +64,7 @@ namespace Headway.Repository
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
 
-            demoModel.DemoModelTreeItems = GetTree(demoModel.DemoModelTreeItems, demoModel.DemoModelId);
+            demoModel.DemoModelTreeItems = GenericTreeHelper.GetTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);
 
             return demoModel;
         }
@@ -103,7 +116,7 @@ namespace Headway.Repository
                 }
 
                 demoModel.DemoModelTreeItems =
-                    GetFlattenedTree(demoModel.DemoModelTreeItems, demoModel.DemoModelId);
+                    GenericTreeHelper.GetFlattenedTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);
 
                 var removeDemoModelTreeItems = (from demoModelTreeItem in existing.DemoModelTreeItems
                                                 where !demoModel.DemoModelTreeItems.Any(i => i.ItemCode.Equals(demoModelTreeItem.ItemCode))
@@ -137,7 +150,7 @@ namespace Headway.Repository
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
 
-            demoModel.DemoModelTreeItems = GetTree(demoModel.DemoModelTreeItems, demoModel.DemoModelId);
+            demoModel.DemoModelTreeItems = GenericTreeHelper.GetTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);
 
             return demoModel;
         }
@@ -155,70 +168,6 @@ namespace Headway.Repository
             return await applicationDbContext
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
-        }
-
-        private static List<DemoModelTreeItem> GetTree(List<DemoModelTreeItem> demoModelTreeItems, int demoModelId)
-        {
-            List<DemoModelTreeItem> demoModelTree = new();
-
-            ValidateFlattenedTree(demoModelTreeItems, demoModelId);
-
-            foreach (var demoModelTreeItem in demoModelTreeItems)
-            {
-                var children = demoModelTreeItems
-                    .Where(dm => !string.IsNullOrWhiteSpace(dm.ParentItemCode)
-                                && dm.ParentItemCode.Equals(demoModelTreeItem.ItemCode))
-                    .OrderBy(dm => dm.Order);
-
-                demoModelTreeItem.DemoModelTreeItems
-                    .AddRange(children);
-
-                demoModelTree.Add(demoModelTreeItem);
-            }
-
-            return demoModelTree
-                .Where(m => string.IsNullOrWhiteSpace(m.ParentItemCode))
-                .OrderBy(m => m.Order)
-                .ToList();
-        }
-
-        private static List<DemoModelTreeItem> GetFlattenedTree(List<DemoModelTreeItem> demoModelTreeItems, int demoModelId)
-        {
-            List<DemoModelTreeItem> flattenedTree = new();
-            FlattenTree(demoModelTreeItems, demoModelId, flattenedTree);
-            ValidateFlattenedTree(flattenedTree, demoModelId);
-            return flattenedTree;
-        }
-
-        private static void ValidateFlattenedTree(List<DemoModelTreeItem> demoModelTreeItems, int demoModelId)
-        {
-            if (demoModelTreeItems.Any(m => string.IsNullOrWhiteSpace(m.ItemCode)))
-            {
-                throw new Exception($"DemoModelId {demoModelId} tree items missing item code");
-            }
-
-            var itemCodes = demoModelTreeItems.Select(m => m.ItemCode).ToList();
-            var children = demoModelTreeItems
-                .Where(m => !string.IsNullOrWhiteSpace(m.ParentItemCode)).ToList();
-
-            foreach (var child in children)
-            {
-                if (!itemCodes.Any(c => c.Equals(child.ParentItemCode)))
-                {
-                    child.ParentItemCode = string.Empty;
-                }
-            }
-        }
-
-        private static void FlattenTree(List<DemoModelTreeItem> demoModelTreeItems, int demoModelId, List<DemoModelTreeItem> demoModelTree)
-        {
-            foreach (var demoModelTreeItem in demoModelTreeItems)
-            {
-                demoModelTreeItem.DemoModelId = demoModelId;
-                demoModelTree.Add(demoModelTreeItem);
-                FlattenTree(demoModelTreeItem.DemoModelTreeItems, demoModelId, demoModelTree);
-                demoModelTreeItem.DemoModelTreeItems.Clear();
-            }
         }
     }
 }
