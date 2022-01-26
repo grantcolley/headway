@@ -23,10 +23,10 @@ namespace Headway.Core.Model
         public string Name { get; set; }
 
         [Required(ErrorMessage = "ItemCode is required")]
-        [StringLength(20, ErrorMessage = "ItemCode must be between 1 and 20 characters")]
+        [StringLength(50, ErrorMessage = "ItemCode must be between 1 and 50 characters")]
         public string ItemCode { get; set; }
 
-        [StringLength(20, ErrorMessage = "ParentItemCode must be between 1 and 20 characters")]
+        [StringLength(50, ErrorMessage = "ParentItemCode must be between 1 and 50 characters")]
         public string ParentItemCode { get; set; }
     }
 }
