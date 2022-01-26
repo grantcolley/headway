@@ -15,7 +15,7 @@ namespace Headway.Core.Helpers
         {
             var itemTypeHelper = DynamicTypeHelper.Get<K>();
             var modelTypeHelper = DynamicTypeHelper.Get<T>();
-            int modelId = (int)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ModelIdPropertyName);
+            int modelId = (int)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ModelIdProperty);
             var items = (List<K>)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ItemsProperty);
             var modelItemsProperty = modelTypeHelper.GetPropertyInfo(genericTreeHelperArgs.ItemsProperty);
 
@@ -50,7 +50,7 @@ namespace Headway.Core.Helpers
         {
             var itemTypeHelper = DynamicTypeHelper.Get<K>();
             var modelTypeHelper = DynamicTypeHelper.Get<T>();
-            int modelId = (int)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ModelIdPropertyName);
+            int modelId = (int)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ModelIdProperty);
             var items = (List<K>)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ItemsProperty);
             List<K> flattenedTree = new();
             FlattenTree(items, modelId, flattenedTree, genericTreeHelperArgs, itemTypeHelper);
@@ -95,7 +95,7 @@ namespace Headway.Core.Helpers
         {
             foreach (var item in items)
             {
-                typeHelper.SetValue(item, genericTreeHelperArgs.ModelIdPropertyName, modelId);
+                typeHelper.SetValue(item, genericTreeHelperArgs.ModelIdProperty, modelId);
                 tree.Add(item);
                 FlattenTree(items, modelId, tree, genericTreeHelperArgs, typeHelper);
                 items.Clear();
