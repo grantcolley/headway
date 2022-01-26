@@ -1,8 +1,11 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.Repository.Constants;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,9 +14,19 @@ namespace Headway.Repository
 {
     public class ConfigurationRepository : RepositoryBase<ConfigurationRepository>, IConfigurationRepository
     {
+        private readonly GenericTreeHelperArgs genericTreeHelperArgs;
+
         public ConfigurationRepository(ApplicationDbContext applicationDbContext, ILogger<ConfigurationRepository> logger)
             : base(applicationDbContext, logger)
         {
+            genericTreeHelperArgs = new GenericTreeHelperArgs
+            {
+                ModelIdProperty = GenericTreeArgs.CONFIG_ID,
+                ItemsProperty = GenericTreeArgs.CONFIG_CONTAINERS,
+                ItemCodeProperty = GenericTreeArgs.CONFIG_CONTAINER_CODE,
+                ParentItemCodeProperty = GenericTreeArgs.CONFIG_CONTAINER_PARENT_CODE,
+                OrderByProperty = GenericTreeArgs.CONFIG_CONTAINER_ORDER
+            };
         }
 
         public async Task<IEnumerable<Config>> GetConfigsAsync()
@@ -26,18 +39,22 @@ namespace Headway.Repository
 
         public async Task<Config> GetConfigAsync(int id)
         {
-            return await applicationDbContext.Configs
+            var config = await applicationDbContext.Configs
                 .AsNoTracking()
                 .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
                 .SingleAsync(c => c.ConfigId.Equals(id))
-                .ConfigureAwait(false);        
+                .ConfigureAwait(false);
+
+            config.ConfigContainers = GenericTreeHelper.GetTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
+
+            return config;
         }
 
         public async Task<Config> GetConfigAsync(string name)
         {
-            var result = await applicationDbContext.Configs
+            var config = await applicationDbContext.Configs
                 .AsNoTrackingWithIdentityResolution()
                 .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigItems)
@@ -45,11 +62,15 @@ namespace Headway.Repository
                 .SingleAsync(c => c.Name.Equals(name))
                 .ConfigureAwait(false);
 
-            return result;
+            config.ConfigContainers = GenericTreeHelper.GetTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
+
+            return config;
         }
 
         public async Task<Config> AddConfigAsync(Config config)
         {
+            config.ConfigContainers = GenericTreeHelper.GetFlattenedTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
+
             await applicationDbContext.Configs
                 .AddAsync(config)
                 .ConfigureAwait(false);
@@ -58,35 +79,50 @@ namespace Headway.Repository
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
 
+            config.ConfigContainers = GenericTreeHelper.GetTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
+
             return config;
         }
 
         public async Task<Config> UpdateConfigAsync(Config config)
         {
-            var existingConfig = await applicationDbContext.Configs
+            var existing = await applicationDbContext.Configs
                 .Include(c => c.ConfigItems)
                 .Include(c => c.ConfigContainers)
                 .FirstOrDefaultAsync(c => c.ConfigId.Equals(config.ConfigId))
                 .ConfigureAwait(false);
 
-            if(existingConfig == null)
+            if(existing == null)
             {
-                applicationDbContext.Configs.Add(config);
+                throw new NullReferenceException(
+                    $"{nameof(config)} ConfigId {config.ConfigId} not found.");
             }
             else
             {
                 applicationDbContext
-                    .Entry(existingConfig)
+                    .Entry(existing)
                     .CurrentValues.SetValues(config);
 
-                foreach(var configItem in config.ConfigItems)
+                var removeConfigItems = (from configItem in existing.ConfigItems
+                                         where !config.ConfigItems.Any(i => i.ConfigItemId.Equals(configItem.ConfigItemId))
+                                         select configItem)
+                                         .ToList();
+
+                applicationDbContext.RemoveRange(removeConfigItems);
+
+                foreach (var configItem in config.ConfigItems)
                 {
-                    var existingConfigItem = existingConfig.ConfigItems
-                        .FirstOrDefault(ci => ci.ConfigItemId.Equals(configItem.ConfigItemId));
+                    ConfigItem existingConfigItem = null;
+
+                    if (configItem.ConfigItemId > 0)
+                    {
+                        existingConfigItem = existing.ConfigItems
+                            .FirstOrDefault(ci => ci.ConfigItemId.Equals(configItem.ConfigItemId));
+                    }
 
                     if(existingConfigItem == null)
                     {
-                        existingConfig.ConfigItems.Add(configItem);
+                        existing.ConfigItems.Add(configItem);
                     }
                     else
                     {
@@ -94,34 +130,33 @@ namespace Headway.Repository
                     }
                 }
 
-                foreach (var configItem in existingConfig.ConfigItems)
+                config.ConfigContainers =
+                    GenericTreeHelper.GetFlattenedTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
+
+                var removeConfigContainers = (from configContainer in existing.ConfigContainers
+                                                where !config.ConfigContainers.Any(c => c.ContainerCode.Equals(configContainer.ContainerCode))
+                                                select configContainer)
+                                                .ToList();
+
+                applicationDbContext.RemoveRange(removeConfigContainers);
+
+                foreach (var configContainer in config.ConfigContainers)
                 {
-                    if (!config.ConfigItems.Any(ci => ci.ConfigItemId.Equals(configItem.ConfigItemId)))
+                    ConfigContainer existingConfigContainer = null;
+
+                    if(configContainer.ConfigContainerId > 0)
                     {
-                        applicationDbContext.Remove(configItem);
+                        existingConfigContainer = existing.ConfigContainers
+                            .FirstOrDefault(c => c.ConfigContainerId.Equals(configContainer.ConfigContainerId));
                     }
-                }
 
-                foreach (var container in config.ConfigContainers)
-                {
-                    var existingContainer = existingConfig.ConfigContainers
-                        .FirstOrDefault(c => c.ConfigContainerId.Equals(container.ConfigContainerId));
-
-                    if (existingContainer == null)
+                    if (existingConfigContainer == null)
                     {
-                        existingConfig.ConfigContainers.Add(container);
+                        existing.ConfigContainers.Add(configContainer);
                     }
                     else
                     {
-                        applicationDbContext.Entry(existingContainer).CurrentValues.SetValues(container);
-                    }
-                }
-
-                foreach (var container in existingConfig.ConfigContainers)
-                {
-                    if (!config.ConfigContainers.Any(c => c.ConfigContainerId.Equals(container.ConfigContainerId)))
-                    {
-                        applicationDbContext.Remove(container);
+                        applicationDbContext.Entry(existingConfigContainer).CurrentValues.SetValues(configContainer);
                     }
                 }
             }
