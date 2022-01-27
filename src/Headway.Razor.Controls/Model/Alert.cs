@@ -13,7 +13,15 @@ namespace Headway.Razor.Controls.Model
         {
             get
             {
-                return $"/{Alerts.ALERT}/{AlertType ?? string.Empty}/{Title ?? string.Empty}/{Message ?? string.Empty}/{RedirectText ?? string.Empty}/{RedirectPage ?? string.Empty}";
+                var path = $"/{Alerts.ALERT}/{AlertType ?? string.Empty}/{Title ?? string.Empty}/{Message ?? string.Empty}";
+
+                if(!string.IsNullOrEmpty(RedirectText)
+                    && !string.IsNullOrEmpty(RedirectPage))
+                {
+                    path += $"/{ RedirectText ?? string.Empty}/{ RedirectPage ?? string.Empty}";
+                }
+
+                return path;
             }
         }
     }
