@@ -62,7 +62,10 @@ namespace Headway.Razor.Controls.Base
         {
             dynamicModel = GetResponse(serviceResult);
 
-            CurrentEditContext = new EditContext(dynamicModel.Model);
+            if(dynamicModel != null)
+            {
+                CurrentEditContext = new EditContext(dynamicModel.Model);
+            }
         }
     }
 }
