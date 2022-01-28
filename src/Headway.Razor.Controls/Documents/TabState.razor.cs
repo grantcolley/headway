@@ -23,19 +23,6 @@ namespace Headway.Razor.Controls.Documents
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        private void SetActivePage()
-        {
-            if(activePage != null)
-            {
-                activePage = dynamicModel.RootContainers.FirstOrDefault(c => c.ContainerId.Equals(activePage.ContainerId));
-            }
-            
-            if(activePage == null)
-            {
-                activePage = dynamicModel.RootContainers.First();
-            }
-        }
-
         protected string GetTabButtonClass(DynamicContainer page)
         {
             return page == activePage ? Css.BTN_PRIMARY : Css.BTN_SECONDARY;
@@ -95,6 +82,22 @@ namespace Headway.Razor.Controls.Documents
             };
 
             isDeleteInProgress = false;
+        }
+
+        private void SetActivePage()
+        {
+            if(dynamicModel != null)
+            {
+                if (activePage != null)
+                {
+                    activePage = dynamicModel.RootContainers.FirstOrDefault(c => c.ContainerId.Equals(activePage.ContainerId));
+                }
+
+                if (activePage == null)
+                {
+                    activePage = dynamicModel.RootContainers.First();
+                }
+            }
         }
     }
 }
