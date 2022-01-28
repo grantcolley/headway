@@ -17,27 +17,39 @@ namespace Headway.Core.Helpers
             var modelTypeHelper = DynamicTypeHelper.Get<T>();
             int modelId = (int)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ModelIdProperty);
             var items = (List<K>)modelTypeHelper.GetValue(model, genericTreeHelperArgs.ItemsProperty);
-            var modelItemsProperty = modelTypeHelper.GetPropertyInfo(genericTreeHelperArgs.ItemsProperty);
+            var modelItemsProperty = itemTypeHelper.GetPropertyInfo(genericTreeHelperArgs.ItemsProperty);
 
             List<K> tree = new();
 
             ValidateFlattenedTree(items, modelId, genericTreeHelperArgs, itemTypeHelper);
 
-            foreach (var item in items)
+            var count = items.Count;
+
+            try
             {
-                var children = items
-                    .Where(i => !string.IsNullOrWhiteSpace(itemTypeHelper.GetValue(i, genericTreeHelperArgs.ParentItemCodeProperty)?.ToString())
-                                && itemTypeHelper.GetValue(i, genericTreeHelperArgs.ParentItemCodeProperty).ToString().Equals(itemTypeHelper.GetValue(item, genericTreeHelperArgs.ItemCodeProperty)?.ToString()))
-                    .OrderBy(i => itemTypeHelper.GetValue(i, genericTreeHelperArgs.OrderByProperty))
-                    .ToList();
+                foreach (var item in items)
+                { 
+                    var children = items
+                        .Where(child => !string.IsNullOrWhiteSpace(itemTypeHelper.GetValue(child, genericTreeHelperArgs.ParentItemCodeProperty)?.ToString())
+                                    && itemTypeHelper.GetValue(child, genericTreeHelperArgs.ParentItemCodeProperty).ToString().Equals(itemTypeHelper.GetValue(item, genericTreeHelperArgs.ItemCodeProperty)?.ToString()))
+                        .OrderBy(child => itemTypeHelper.GetValue(child, genericTreeHelperArgs.OrderByProperty))
+                        .ToList();
 
-                foreach(var child in children)
-                {
-                    modelItemsProperty.PropertyType.GetMethod("Add").Invoke(
-                        (List<K>)modelItemsProperty.GetValue(model, null), new[] { child });
+                    foreach (var child in children)
+                    {
+                        modelItemsProperty.PropertyType.GetMethod("Add").Invoke(
+                            (List<K>)modelItemsProperty.GetValue(item, null), new object[] { child });
+                    }
+
+                    if (string.IsNullOrWhiteSpace(itemTypeHelper.GetValue(item, genericTreeHelperArgs.ParentItemCodeProperty)?.ToString()))
+                    {
+                        tree.Add(item);
+                    }
                 }
-
-                tree.Add(item);
+            }
+            catch(Exception ex)
+            {
+                var nsg = ex.Message;
             }
 
             return tree
