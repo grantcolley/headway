@@ -25,7 +25,7 @@ namespace Headway.Core.Model
         public List<DemoModelTreeItem> DemoModelTreeItems { get; set; }
 
         [Required(ErrorMessage = "Text is required")]
-        [StringLength(50, ErrorMessage = "Text must be between 1 and 50 characters")]
+        [StringLength(20, ErrorMessage = "Text must be between 1 and 20 characters")]
         public string Text { get; set; }
 
         [StringLength(50, ErrorMessage = "TextMultiline must be between 1 and 50 characters")]
