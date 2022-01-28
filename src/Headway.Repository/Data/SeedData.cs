@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Headway.Repository.Data
 {
@@ -130,7 +131,21 @@ namespace Headway.Repository.Data
         {
             var demoModel = new DemoModel
             {
-                Text = "Sample text..."
+                Text = "Sample text...",
+                DemoModelItems = new List<DemoModelItem>
+                {
+                    new DemoModelItem { Name = "Item 1", Order = 1 },
+                    new DemoModelItem { Name = "Item 2", Order = 2 }
+                },
+                DemoModelTreeItems = new List<DemoModelTreeItem>
+                {
+                    new DemoModelTreeItem { Name = "Tree Item 1", ItemCode = "TREE_ITEM_1", Order = 1 },
+                    new DemoModelTreeItem { Name = "Child Item 1.1", ItemCode = "Child_ITEM_1.1", ParentItemCode = "TREE_ITEM_1", Order = 1 },
+                    new DemoModelTreeItem { Name = "Child Item 1.2", ItemCode = "Child_ITEM_1.2", ParentItemCode = "TREE_ITEM_1", Order = 2 },
+                    new DemoModelTreeItem { Name = "Tree Item 2", ItemCode = "TREE_ITEM_2", Order = 2 },
+                    new DemoModelTreeItem { Name = "Child Item 2.1", ItemCode = "Child_ITEM_2.1", ParentItemCode = "TREE_ITEM_2", Order = 1 },
+                    new DemoModelTreeItem { Name = "Child Item 2.2", ItemCode = "Child_ITEM_2.2", ParentItemCode = "TREE_ITEM_2", Order = 2 }
+                 }
             };
 
             applicationDbContext.DemoModels.Add(demoModel);
