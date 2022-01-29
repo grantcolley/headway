@@ -12,6 +12,7 @@ namespace Headway.Razor.Controls.Containers
     public abstract class DivBase : DynamicContainerBase
     {
         protected bool LayoutHorizontal { get; private set; }
+
         protected override Task OnInitializedAsync()
         {
             var layoutHorizontal = ComponentArgHelper.GetArgValue(Container.DynamicArgs, Args.LAYOUT_HORIZONTAL);
