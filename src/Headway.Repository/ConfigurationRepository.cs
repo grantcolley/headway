@@ -1,4 +1,5 @@
-﻿using Headway.Core.Helpers;
+﻿using Headway.Core.Constants;
+using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Repository.Constants;
@@ -23,8 +24,8 @@ namespace Headway.Repository
             {
                 ModelIdProperty = GenericTreeArgs.CONFIG_ID,
                 ItemsProperty = GenericTreeArgs.CONFIG_CONTAINERS,
-                ItemCodeProperty = GenericTreeArgs.CONFIG_CONTAINER_CODE,
-                ParentItemCodeProperty = GenericTreeArgs.CONFIG_CONTAINER_PARENT_CODE,
+                ItemCodeProperty = Args.CODE,
+                ParentItemCodeProperty = Args.PARENT_CODE,
                 OrderByProperty = GenericTreeArgs.CONFIG_CONTAINER_ORDER
             };
         }
