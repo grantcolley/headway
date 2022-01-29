@@ -77,47 +77,62 @@ namespace Headway.Core.Helpers
         {
             foreach (var dynamicField in dynamicFields)
             {
-                var dynamicArgs = new List<DynamicArg>();
-
-                if (!string.IsNullOrWhiteSpace(dynamicField.ComponentArgs))
-                {
-                    var componentArgs = dynamicField.ComponentArgs.Split('|');
-
-                    foreach (var componentArg in componentArgs)
-                    {
-                        var nameValue = componentArg.Split(';');
-                        var name = nameValue[0].Split('=');
-                        var value = nameValue[1].Split('=');
-
-                        bool isDynamicField = false;
-
-                        if(nameValue.Length > 2)
-                        {
-                            var isField = nameValue[2].Split('=');
-                            if(isField[1].Equals("true", System.StringComparison.OrdinalIgnoreCase))
-                            {
-                                isDynamicField = true;
-                            }
-                        }
-
-                        var dynamicArg = new DynamicArg { Name = name[1] };
-
-                        if (isDynamicField)
-                        {
-                            var field = dynamicFields.SingleOrDefault(f => f.PropertyName.Equals(value[1]));
-                            dynamicArg.Value = field;
-                        }
-                        else
-                        {
-                            dynamicArg.Value = value[1];
-                        }
-
-                        dynamicArgs.Add(dynamicArg);
-                    }
-                }
-
+                var dynamicArgs = ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
                 dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
             }
+        }
+
+        public static void AddDynamicArgs(List<DynamicContainer> dynamicContainers, List<DynamicField> dynamicFields)
+        {
+            foreach (var dynamicContainer in dynamicContainers)
+            {
+                var dynamicArgs = ExtractDynamicArgs(dynamicContainer.ComponentArgs, dynamicFields);
+                dynamicContainer.DynamicArgs.AddRange(dynamicArgs);
+            }
+        }
+
+        private static List<DynamicArg> ExtractDynamicArgs(string componentArgs, List<DynamicField> dynamicFields)
+        {
+            var dynamicArgs = new List<DynamicArg>();
+
+            if (!string.IsNullOrWhiteSpace(componentArgs))
+            {
+                var componentArgsList = componentArgs.Split('|');
+
+                foreach (var componentArg in componentArgsList)
+                {
+                    var nameValue = componentArg.Split(';');
+                    var name = nameValue[0].Split('=');
+                    var value = nameValue[1].Split('=');
+
+                    bool isDynamicField = false;
+
+                    if (nameValue.Length > 2)
+                    {
+                        var isField = nameValue[2].Split('=');
+                        if (isField[1].Equals("true", System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            isDynamicField = true;
+                        }
+                    }
+
+                    var dynamicArg = new DynamicArg { Name = name[1] };
+
+                    if (isDynamicField)
+                    {
+                        var field = dynamicFields.FirstOrDefault(f => f.PropertyName.Equals(value[1]));
+                        dynamicArg.Value = field;
+                    }
+                    else
+                    {
+                        dynamicArg.Value = value[1];
+                    }
+
+                    dynamicArgs.Add(dynamicArg);
+                }
+            }
+
+            return dynamicArgs;
         }
     }
 }
