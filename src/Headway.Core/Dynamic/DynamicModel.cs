@@ -94,7 +94,7 @@ namespace Headway.Core.Dynamic
             ComponentArgHelper.AddDynamicArgs(DynamicFields);
 
             RootContainers = Config.ConfigContainers
-                .Where(cc => cc.IsRootContainer)
+                .Where(cc => string.IsNullOrWhiteSpace(cc.ParentCode))
                 .OrderBy(cc => cc.Order)
                 .Select(cc => CreateContainer(cc)).ToList();
 
@@ -138,7 +138,10 @@ namespace Headway.Core.Dynamic
                 ContainerId = configContainer.ConfigContainerId,
                 DynamicComponent = Type.GetType(configContainer.Container),
                 DynamicContainerTypeName = configContainer.Container,
-                Label = configContainer.Label
+                Label = configContainer.Label,
+                Code = configContainer.Code,
+                ParentCode = configContainer.ParentCode,
+                ComponentArgs = configContainer.ComponentArgs
             };
 
             dynamicContainer.Parameters.Add(Parameters.CONTAINER, dynamicContainer);
