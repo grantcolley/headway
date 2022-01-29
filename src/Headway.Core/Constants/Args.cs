@@ -13,5 +13,6 @@
         public const string LABEL_PROPERTY = "LabelProperty";
         public const string LIST_PROPERTY = "ListProperty";
         public const string TEXT_MULTILINE_ROWS = "Rows";
+        public const string LAYOUT_HORIZONTAL = "LayoutHorizontal";
     }
 }
