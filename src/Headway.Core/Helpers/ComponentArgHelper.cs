@@ -56,7 +56,7 @@ namespace Headway.Core.Helpers
 
         public static string GetArgValue(IEnumerable<DynamicArg> dynamicArgs, string name)
         {
-            var dynamicArg = dynamicArgs.FirstOrDefault(a => a.Name.Equals(name));
+            var dynamicArg = dynamicArgs?.FirstOrDefault(a => a.Name.Equals(name));
 
             if (dynamicArg == null)
             {
