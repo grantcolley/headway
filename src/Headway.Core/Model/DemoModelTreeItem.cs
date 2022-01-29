@@ -1,12 +1,12 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class DemoModelTreeItem
+    public class DemoModelTreeItem : IComponentTree
     {
         public DemoModelTreeItem()
         {
@@ -22,11 +22,11 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "ItemCode is required")]
-        [StringLength(50, ErrorMessage = "ItemCode must be between 1 and 50 characters")]
-        public string ItemCode { get; set; }
+        [Required(ErrorMessage = "Code is required")]
+        [StringLength(50, ErrorMessage = "Code must be between 1 and 50 characters")]
+        public string Code { get; set; }
 
-        [StringLength(50, ErrorMessage = "ParentItemCode must be between 1 and 50 characters")]
-        public string ParentItemCode { get; set; }
+        [StringLength(50, ErrorMessage = "ParentCode must be between 1 and 50 characters")]
+        public string ParentCode { get; set; }
     }
 }

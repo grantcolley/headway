@@ -134,7 +134,7 @@ namespace Headway.Repository
                     GenericTreeHelper.GetFlattenedTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
 
                 var removeConfigContainers = (from configContainer in existing.ConfigContainers
-                                                where !config.ConfigContainers.Any(c => c.ContainerCode.Equals(configContainer.ContainerCode))
+                                                where !config.ConfigContainers.Any(c => c.Code.Equals(configContainer.Code))
                                                 select configContainer)
                                                 .ToList();
 

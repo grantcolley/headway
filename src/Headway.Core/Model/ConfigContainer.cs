@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Headway.Core.Interface;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
 {
-    public class ConfigContainer
+    public class ConfigContainer : IComponentTree, IComponent
     {
         public ConfigContainer()
         {
@@ -12,8 +13,8 @@ namespace Headway.Core.Model
 
         public int ConfigContainerId { get; set; }
         public int ConfigId { get; set; }
-        public bool IsRootContainer { get; set; }
         public int Order { get; set; }
+        public string ComponentArgs { get; set; }
 
         public List<ConfigContainer> ConfigContainers { get; set; }
 
@@ -25,12 +26,12 @@ namespace Headway.Core.Model
         [StringLength(150, ErrorMessage = "Container must be between 1 and 150 characters")]
         public string Container { get; set; }
 
-        [Required(ErrorMessage = "ContainerCode is required")]
-        [StringLength(50, ErrorMessage = "ContainerCode must be between 1 and 50 characters")]
-        public string ContainerCode { get; set; }
+        [Required(ErrorMessage = "Code is required")]
+        [StringLength(50, ErrorMessage = "Code must be between 1 and 50 characters")]
+        public string Code { get; set; }
 
-        [StringLength(50, ErrorMessage = "ParentContainerCode must be between 1 and 50 characters")]
-        public string ParentContainerCode { get; set; }
+        [StringLength(50, ErrorMessage = "ParentCode must be between 1 and 50 characters")]
+        public string ParentCode { get; set; }
 
         [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
         public string Label { get; set; }

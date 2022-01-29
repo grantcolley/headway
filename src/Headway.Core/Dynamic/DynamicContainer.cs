@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Headway.Core.Interface;
+using System;
 using System.Collections.Generic;
 
 namespace Headway.Core.Dynamic
 {
-    public class DynamicContainer
+    public class DynamicContainer : IComponentTree, IComponent
     {
         public DynamicContainer()
         {
@@ -17,6 +18,9 @@ namespace Headway.Core.Dynamic
         public int ContainerId { get; set; }
         public string DynamicContainerTypeName { get; set; }
         public string Label { get; set; }
+        public string Code { get; set; }
+        public string ParentCode { get; set; }
+        public string ComponentArgs { get; set; }
         public Type DynamicComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
         public List<DynamicField> DynamicFields {  get; set; }

@@ -119,7 +119,7 @@ namespace Headway.Repository
                     GenericTreeHelper.GetFlattenedTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);
 
                 var removeDemoModelTreeItems = (from demoModelTreeItem in existing.DemoModelTreeItems
-                                                where !demoModel.DemoModelTreeItems.Any(i => i.ItemCode.Equals(demoModelTreeItem.ItemCode))
+                                                where !demoModel.DemoModelTreeItems.Any(i => i.Code.Equals(demoModelTreeItem.Code))
                                                 select demoModelTreeItem)
                                                 .ToList();
 
