@@ -30,6 +30,12 @@ namespace Headway.Repository.Data
             PermissionsConfig(applicationDbContext);
             PermissionConfig(applicationDbContext);
 
+            RolesConfig(applicationDbContext);
+            RoleConfig(applicationDbContext);
+
+            UsersConfig(applicationDbContext);
+            UserConfig(applicationDbContext);
+
             ConfigsConfig(applicationDbContext);
             ConfigConfig(applicationDbContext);
             ConfigItemConfig(applicationDbContext);
@@ -243,6 +249,110 @@ namespace Headway.Repository.Data
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void RolesConfig(ApplicationDbContext applicationDbContext)
+        {
+            var rolesConfig = new Config
+            {
+                Name = "Roles",
+                Title = "Roles",
+                Description = "Roles list",
+                Model = "Headway.Core.Model.Role, Headway.Core",
+                ModelApi = "Roles",
+                OrderModelBy = "Name",
+                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                NavigateTo = "Page",
+                NavigateToProperty = "RoleId",
+                NavigateToConfig = "Role"
+            };
+
+            applicationDbContext.Configs.Add(rolesConfig);
+
+            rolesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", Order = 1 });
+            rolesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
+            rolesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void RoleConfig(ApplicationDbContext applicationDbContext)
+        {
+            var roleConfig = new Config
+            {
+                Name = "Role",
+                Title = "Role",
+                Description = "Create, update or delete a role",
+                Model = "Headway.Core.Model.Role, Headway.Core",
+                ModelApi = "Roles",
+                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                NavigateTo = "Page",
+                NavigateToConfig = "Roles"
+            };
+
+            applicationDbContext.Configs.Add(roleConfig);
+
+            var roleConfigContainer = new ConfigContainer { Name = "Role Div", Code = "ROLE_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
+
+            roleConfig.ConfigContainers.Add(roleConfigContainer);
+
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", IsIdentity = true, Order = 1, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void UsersConfig(ApplicationDbContext applicationDbContext)
+        {
+            var usersConfig = new Config
+            {
+                Name = "Users",
+                Title = "Users",
+                Description = "Users list",
+                Model = "Headway.Core.Model.User, Headway.Core",
+                ModelApi = "Users",
+                OrderModelBy = "UserName",
+                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                NavigateTo = "Page",
+                NavigateToProperty = "UserId",
+                NavigateToConfig = "User"
+            };
+
+            applicationDbContext.Configs.Add(usersConfig);
+
+            usersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", Order = 1 });
+            usersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", Order = 2 });
+            usersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3 });
+
+            applicationDbContext.SaveChanges();
+        }
+
+        private static void UserConfig(ApplicationDbContext applicationDbContext)
+        {
+            var userConfig = new Config
+            {
+                Name = "User",
+                Title = "User",
+                Description = "Create, update or delete a user",
+                Model = "Headway.Core.Model.User, Headway.Core",
+                ModelApi = "Users",
+                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                NavigateTo = "Page",
+                NavigateToConfig = "Users"
+            };
+
+            applicationDbContext.Configs.Add(userConfig);
+
+            var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
+
+            userConfig.ConfigContainers.Add(userConfigContainer);
+
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", IsIdentity = true, Order = 1, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", IsTitle = true, Order = 2, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
 
             applicationDbContext.SaveChanges();
         }
