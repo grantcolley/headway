@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Interface;
+using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +22,7 @@ namespace Headway.Core.Dynamic
         public string Code { get; set; }
         public string ParentCode { get; set; }
         public string ComponentArgs { get; set; }
+        public List<DynamicArg> DynamicArgs {get;set;}
         public Type DynamicComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
         public List<DynamicField> DynamicFields {  get; set; }
