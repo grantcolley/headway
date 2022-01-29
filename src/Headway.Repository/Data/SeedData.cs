@@ -139,12 +139,12 @@ namespace Headway.Repository.Data
                 },
                 DemoModelTreeItems = new List<DemoModelTreeItem>
                 {
-                    new DemoModelTreeItem { Name = "Tree Item 1", ItemCode = "TREE_ITEM_1", Order = 1 },
-                    new DemoModelTreeItem { Name = "Child Item 1.1", ItemCode = "Child_ITEM_1.1", ParentItemCode = "TREE_ITEM_1", Order = 1 },
-                    new DemoModelTreeItem { Name = "Child Item 1.2", ItemCode = "Child_ITEM_1.2", ParentItemCode = "TREE_ITEM_1", Order = 2 },
-                    new DemoModelTreeItem { Name = "Tree Item 2", ItemCode = "TREE_ITEM_2", Order = 2 },
-                    new DemoModelTreeItem { Name = "Child Item 2.1", ItemCode = "Child_ITEM_2.1", ParentItemCode = "TREE_ITEM_2", Order = 1 },
-                    new DemoModelTreeItem { Name = "Child Item 2.2", ItemCode = "Child_ITEM_2.2", ParentItemCode = "TREE_ITEM_2", Order = 2 }
+                    new DemoModelTreeItem { Name = "Tree Item 1", Code = "TREE_ITEM_1", Order = 1 },
+                    new DemoModelTreeItem { Name = "Child Item 1.1", Code = "Child_ITEM_1.1", ParentCode = "TREE_ITEM_1", Order = 1 },
+                    new DemoModelTreeItem { Name = "Child Item 1.2", Code = "Child_ITEM_1.2", ParentCode = "TREE_ITEM_1", Order = 2 },
+                    new DemoModelTreeItem { Name = "Tree Item 2", Code = "TREE_ITEM_2", Order = 2 },
+                    new DemoModelTreeItem { Name = "Child Item 2.1", Code = "Child_ITEM_2.1", ParentCode = "TREE_ITEM_2", Order = 1 },
+                    new DemoModelTreeItem { Name = "Child Item 2.2", Code = "Child_ITEM_2.2", ParentCode = "TREE_ITEM_2", Order = 2 }
                  }
             };
 
@@ -235,7 +235,7 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(permissionConfig);
 
-            var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", ContainerCode = "PERMISSION_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+            var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", Code = "PERMISSION_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
             permissionConfig.ConfigContainers.Add(permissionConfigContainer);
 
@@ -287,9 +287,9 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(configConfig);
 
-            var configConfigContainer1 = new ConfigContainer { Name = "Model Div", ContainerCode = "MODEL DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model", Order = 1, IsRootContainer = true };
-            var configConfigContainer2 = new ConfigContainer { Name = "Fields Div", ContainerCode = "FIELDS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Fields", Order = 2, IsRootContainer = true };
-            var configConfigContainer3 = new ConfigContainer { Name = "Containers Div", ContainerCode = "CONTAINERS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Containers", Order = 3, IsRootContainer = true };
+            var configConfigContainer1 = new ConfigContainer { Name = "Model Div", Code = "MODEL DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model", Order = 1 };
+            var configConfigContainer2 = new ConfigContainer { Name = "Fields Div", Code = "FIELDS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Fields", Order = 2 };
+            var configConfigContainer3 = new ConfigContainer { Name = "Containers Div", Code = "CONTAINERS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Containers", Order = 3 };
 
             configConfig.ConfigContainers.Add(configConfigContainer1);
             configConfig.ConfigContainers.Add(configConfigContainer2);
@@ -325,7 +325,7 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(configItemConfig);
 
-            var configItemConfigContainer = new ConfigContainer { Name = "Config Item Div", ContainerCode = "CONFIG_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+            var configItemConfigContainer = new ConfigContainer { Name = "Config Item Div", Code = "CONFIG_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
             configItemConfig.ConfigContainers.Add(configItemConfigContainer);
 
@@ -378,17 +378,17 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(configContainerConfig);
 
-            var configContainerConfigContainer = new ConfigContainer { Name = "Config Container Div", ContainerCode = "CONFIG_CONTAINER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+            var configContainerConfigContainer = new ConfigContainer { Name = "Config Container Div", Code = "CONFIG_CONTAINER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
             configContainerConfig.ConfigContainers.Add(configContainerConfigContainer);
 
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainerId", Label = "Config Container Id", IsIdentity = true, Order = 1, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ContainerCode", Label = "Container Code", IsIdentity = true, Order = 2, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ParentContainerCode", Label = "Parent Container Code", IsIdentity = true, Order = 3, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Code", Label = "Code", IsIdentity = true, Order = 2, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ParentCode", Label = "Parent Code", IsIdentity = true, Order = 3, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 4, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 5, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 6, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "IsRootContainer", Label = "IsRootContainer", Order = 7, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 6, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", Order = 8, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = "Name=OptionsCode;Value=ContainerOptionItems" });
             applicationDbContext.SaveChanges();
         }
@@ -433,9 +433,9 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(demoModelConfig);
 
-            var demoModelContainer1 = new ConfigContainer { Name = "Model Components Div", ContainerCode = "MODEL_COMPONENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model Components", Order = 1, IsRootContainer = true };
-            var demoModelContainer2 = new ConfigContainer { Name = "List Component Div", ContainerCode = "LIST_COMPONENT_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "List Component", Order = 2, IsRootContainer = true };
-            var demoModelContainer3 = new ConfigContainer { Name = "Tree Component Div", ContainerCode = "TREE_COMPONENT_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Tree Component", Order = 3, IsRootContainer = true };
+            var demoModelContainer1 = new ConfigContainer { Name = "Model Components Div", Code = "MODEL_COMPONENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model Components", Order = 1 };
+            var demoModelContainer2 = new ConfigContainer { Name = "List Component Div", Code = "LIST_COMPONENT_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "List Component", Order = 2 };
+            var demoModelContainer3 = new ConfigContainer { Name = "Tree Component Div", Code = "TREE_COMPONENT_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Tree Component", Order = 3 };
 
             demoModelConfig.ConfigContainers.Add(demoModelContainer1);
             demoModelConfig.ConfigContainers.Add(demoModelContainer2);
@@ -470,7 +470,7 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(demoModelItemConfig);
 
-            var demoModelItemConfigContainer = new ConfigContainer { Name = "Demo Model Item Div", ContainerCode = "DEMO_MODEL_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+            var demoModelItemConfigContainer = new ConfigContainer { Name = "Demo Model Item Div", Code = "DEMO_MODEL_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
             demoModelItemConfig.ConfigContainers.Add(demoModelItemConfigContainer);
 
@@ -515,7 +515,7 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(demoModelTreeItemConfig);
 
-            var demoModelTreeItemConfigContainer = new ConfigContainer { Name = "Demo Model Tree Item Div", ContainerCode = "DEMO_MODEL_TREE_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1, IsRootContainer = true };
+            var demoModelTreeItemConfigContainer = new ConfigContainer { Name = "Demo Model Tree Item Div", Code = "DEMO_MODEL_TREE_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
             demoModelTreeItemConfig.ConfigContainers.Add(demoModelTreeItemConfigContainer);
 
