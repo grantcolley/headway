@@ -14,5 +14,7 @@
         public const string LIST_PROPERTY = "ListProperty";
         public const string TEXT_MULTILINE_ROWS = "Rows";
         public const string LAYOUT_HORIZONTAL = "LayoutHorizontal";
+        public const string CODE = "Code";
+        public const string PARENT_CODE = "ParentCode";
     }
 }
