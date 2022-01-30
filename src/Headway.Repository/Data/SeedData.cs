@@ -348,13 +348,17 @@ namespace Headway.Repository.Data
 
             applicationDbContext.Configs.Add(userConfig);
 
-            var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
-
+            var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER_DIV", Order = 1, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls" };
+            var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH_DIV", ParentCode = "USER_DEV", Order = 1, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            userConfigContainer.ConfigContainers.Add(authConfigContainer);
             userConfig.ConfigContainers.Add(userConfigContainer);
+            userConfig.ConfigContainers.Add(authConfigContainer);
 
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", IsIdentity = true, Order = 1, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", IsTitle = true, Order = 2, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleChecklist", Label = "Roles", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
 
             applicationDbContext.SaveChanges();
         }
