@@ -84,8 +84,8 @@ namespace Headway.Core.Helpers
 
         public static void AddDynamicArgs(DynamicContainer dynamicContainer, List<DynamicField> dynamicFields)
         {
-                var dynamicArgs = ExtractDynamicArgs(dynamicContainer.ComponentArgs, dynamicFields);
-                dynamicContainer.DynamicArgs.AddRange(dynamicArgs);
+            var dynamicArgs = ExtractDynamicArgs(dynamicContainer.ComponentArgs, dynamicFields);
+            dynamicContainer.DynamicArgs.AddRange(dynamicArgs);
         }
 
         private static List<DynamicArg> ExtractDynamicArgs(string componentArgs, List<DynamicField> dynamicFields)
