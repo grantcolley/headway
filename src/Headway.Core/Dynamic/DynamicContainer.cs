@@ -13,6 +13,7 @@ namespace Headway.Core.Dynamic
             Parameters = new Dictionary<string, object>();
             DynamicFields = new List<DynamicField>();
             DynamicContainers = new List<DynamicContainer>();
+            DynamicArgs = new List<DynamicArg>();
         }
 
         public string UniqueId { get; private set; }
