@@ -200,11 +200,16 @@ namespace Headway.Repository
 
         public async Task<Role> GetRoleAsync(int roleId)
         {
-            return await applicationDbContext.Roles
+            var role = await applicationDbContext.Roles
                 .Include(r => r.Permissions)
                 .AsNoTracking()
                 .SingleAsync(r => r.RoleId.Equals(roleId))
                 .ConfigureAwait(false);
+
+            role.PermissionChecklist = await GetPermissionChecklistAsync(role)
+                .ConfigureAwait(false); ;
+
+            return role;
         }
 
         public async Task<Role> AddRoleAsync(Role addRole)
@@ -215,6 +220,8 @@ namespace Headway.Repository
                 Description = addRole.Description
             };
 
+            var permissions = ExtractSelectedPemissions(addRole);
+
             await applicationDbContext.Roles
                 .AddAsync(role)
                 .ConfigureAwait(false);
@@ -223,14 +230,17 @@ namespace Headway.Repository
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
 
-            if(addRole.Permissions.Any())
+            if(permissions.Any())
             {
-                role.Permissions.AddRange(addRole.Permissions);
+                role.Permissions.AddRange(permissions);
 
                 await applicationDbContext
                     .SaveChangesAsync()
                     .ConfigureAwait(false);
             }
+
+            role.PermissionChecklist = await GetPermissionChecklistAsync(role)
+                .ConfigureAwait(false);
 
             return role;
         }
@@ -252,8 +262,10 @@ namespace Headway.Repository
                 role.Description = updateRole.Description;
             }
 
+            var permissions = ExtractSelectedPemissions(updateRole);
+
             var removePermissions = role.Permissions
-                .Where(rp => !updateRole.Permissions.Any(p => p.PermissionId.Equals(rp.PermissionId)))
+                .Where(rp => !permissions.Any(p => p.PermissionId.Equals(rp.PermissionId)))
                 .ToList();
 
             foreach (var permission in removePermissions)
@@ -261,7 +273,7 @@ namespace Headway.Repository
                 role.Permissions.Remove(permission);
             }
 
-            var addPermissions = updateRole.Permissions
+            var addPermissions = permissions
                 .Where(rp => !role.Permissions.Any(p => p.PermissionId.Equals(rp.PermissionId)))
                 .ToList();
 
@@ -271,6 +283,9 @@ namespace Headway.Repository
 
             await applicationDbContext
                 .SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            role.PermissionChecklist = await GetPermissionChecklistAsync(role)
                 .ConfigureAwait(false);
 
             return role;
@@ -287,6 +302,39 @@ namespace Headway.Repository
             return await applicationDbContext
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
+        }
+
+        private async Task<List<ChecklistItem>> GetPermissionChecklistAsync(Role role)
+        {
+            var permissions = await GetPermissionsAsync()
+                .ConfigureAwait(false);
+
+            var permissionChecklist = (from p in permissions
+                                       select new ChecklistItem
+                                       {
+                                           Id = p.PermissionId,
+                                           Name = p.Name,
+                                           Description = p.Description
+                                       }).ToList();
+
+            (from ps in permissionChecklist
+             join p in role.Permissions on ps.Id equals p.PermissionId
+             select ps.IsChecked = true).ToList();
+
+            return permissionChecklist;
+        }
+
+        private List<Permission> ExtractSelectedPemissions(Role role)
+        {
+            return role.PermissionChecklist
+                .Where(p => p.IsChecked)
+                .Select(p => new Permission
+                {
+                    PermissionId = p.Id,
+                    Name = p.Name,
+                    Description = p.Description
+                })
+                .ToList();
         }
     }
 }

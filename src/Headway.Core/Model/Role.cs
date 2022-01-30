@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.Core.Model
 {
@@ -16,6 +17,9 @@ namespace Headway.Core.Model
         public int RoleId { get; set; }
         public List<User> Users { get; set; }
         public List<Permission> Permissions { get; set; }
+
+        [NotMapped]
+        public List<ChecklistItem> PermissionChecklist { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters")]

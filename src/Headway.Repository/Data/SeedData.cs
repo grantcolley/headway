@@ -302,7 +302,7 @@ namespace Headway.Repository.Data
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", IsIdentity = true, Order = 1, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            //roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permissions", Label = "Permissions", Order = 4, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
 
             applicationDbContext.SaveChanges();
         }
