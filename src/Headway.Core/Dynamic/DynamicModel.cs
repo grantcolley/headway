@@ -96,7 +96,7 @@ namespace Headway.Core.Dynamic
             RootContainers = Config.ConfigContainers
                 .Where(cc => string.IsNullOrWhiteSpace(cc.ParentCode))
                 .OrderBy(cc => cc.Order)
-                .Select(cc => CreateContainer(cc)).ToList();
+                .Select(cc => CreateContainer(cc, DynamicFields)).ToList();
 
             var fieldGroups = from df in DynamicFields
                               group df by df.ConfigContainerId into fieldGroup
@@ -131,7 +131,7 @@ namespace Headway.Core.Dynamic
             return dynamicField;
         }
 
-        private static DynamicContainer CreateContainer(ConfigContainer configContainer)
+        private static DynamicContainer CreateContainer(ConfigContainer configContainer, List<DynamicField> dynamicFields)
         {
             var dynamicContainer = new DynamicContainer
             {
@@ -144,13 +144,15 @@ namespace Headway.Core.Dynamic
                 ComponentArgs = configContainer.ComponentArgs
             };
 
+            ComponentArgHelper.AddDynamicArgs(dynamicContainer, dynamicFields);
+
             dynamicContainer.Parameters.Add(Parameters.CONTAINER, dynamicContainer);
 
             if(configContainer.ConfigContainers.Any())
             {
                 foreach(var container in  configContainer.ConfigContainers)
                 {
-                    dynamicContainer.DynamicContainers.Add(CreateContainer(container));
+                    dynamicContainer.DynamicContainers.Add(CreateContainer(container, dynamicFields));
                 }
             }
 
