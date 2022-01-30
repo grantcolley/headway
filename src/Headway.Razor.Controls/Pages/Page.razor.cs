@@ -1,4 +1,5 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Pages
 {
-    public class PageBase : ConfigComponentBase
+    [DynamicPage]
+    public abstract class PageBase : ConfigComponentBase
     {
         [Parameter]
         public string Config { get; set; }
