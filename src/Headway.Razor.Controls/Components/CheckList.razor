@@ -1,0 +1,30 @@
+﻿@inherits CheckListBase
+
+<div class="container container-body float-start">
+	<div class="row">
+		<div class="col-sm">
+            @if(checklist != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Field.Label
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var checklistItem in checklist)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" @bind="checklistItem.IsChecked" style="vertical-align:middle"/> @checklistItem.Name                
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+		</div>
+    </div>
+</div>
