@@ -1,9 +1,11 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
 {
+    [DynamicModel]
     public class ConfigContainer : IComponentTree, IComponent
     {
         public ConfigContainer()
