@@ -43,7 +43,7 @@ else
                             <div class="card-body">
                                 @foreach(var rootContainer in dynamicModel.RootContainers)
                                 {
-                                    <DynamicComponent Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
+                                    <DynamicComponent @key=rootContainer.ContainerId Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
                                 }
                                 </div>
                             </EditForm>
