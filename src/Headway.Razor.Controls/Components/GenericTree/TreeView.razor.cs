@@ -108,7 +108,7 @@ namespace Headway.Razor.Controls.Components.GenericTree
             nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LABEL_PROPERTY);
             nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LIST_PROPERTY);
             nodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.UNIQUE_PROPERTY);
-            parentNodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.PARENT_UNIQUE_PROPERTY);
+            parentNodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.UNIQUE_PARENT_PROPERTY);
 
             typeHelper = DynamicTypeHelper.Get<T>();
             modelNodesPropertyInfo = typeHelper.GetPropertyInfo(nodesProperty);
