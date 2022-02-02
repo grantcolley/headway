@@ -25,7 +25,7 @@ namespace Headway.Repository
                 ModelIdProperty = GenericTreeArgs.CONFIG_ID,
                 ItemsProperty = GenericTreeArgs.CONFIG_CONTAINERS,
                 ItemCodeProperty = Args.CODE,
-                ParentItemCodeProperty = Args.PARENT_CODE,
+                ParentItemCodeProperty = Args.CODE_PARENT,
                 OrderByProperty = GenericTreeArgs.CONFIG_CONTAINER_ORDER
             };
         }
