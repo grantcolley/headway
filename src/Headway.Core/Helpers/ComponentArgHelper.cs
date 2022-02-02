@@ -79,6 +79,14 @@ namespace Headway.Core.Helpers
             {
                 var dynamicArgs = ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
                 dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
+
+                var linkedSourceArg = dynamicArgs.FirstOrDefault(a => a.Name.Equals(Args.LINK_SOURCE));
+                if(linkedSourceArg != null)
+                {
+                    var linkedField = dynamicFields.FirstOrDefault(f => f.PropertyName.Equals(linkedSourceArg.Value));
+                    dynamicField.LinkSource = linkedField;
+                    linkedField.LinkDependents.Add(linkedField);
+                }
             }
         }
 

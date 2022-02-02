@@ -10,6 +10,7 @@ namespace Headway.Core.Dynamic
         public DynamicField()
         {
             Parameters = new Dictionary<string, object>();
+            LinkDependents = new List<DynamicField>();
         }
 
         public object Model { get; set; }
@@ -22,9 +23,26 @@ namespace Headway.Core.Dynamic
         public string DynamicComponentTypeName { get; set; }
         public int ConfigContainerId { get; set; }
         public int ValidationMessagesCount { get; set; }
+        public DynamicField LinkSource { get; set; }
+        public List<DynamicField> LinkDependents { get; set; }
         public Type DynamicComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
         public PropertyInfo PropertyInfo { get; set; }
         public MemberExpression MemberExpression { get; set; }
+
+        public bool IsLinkedField { get { return LinkSource != null; } }
+
+        public object LinkValue
+        {
+            get
+            {
+                if (IsLinkedField)
+                {
+                    return LinkSource.PropertyInfo.GetValue(LinkSource.Model);
+                }
+
+                return null;
+            }
+        }
     }
 }
