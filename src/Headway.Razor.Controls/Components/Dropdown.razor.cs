@@ -36,6 +36,8 @@ namespace Headway.Razor.Controls.Components
 
         protected override async Task OnParametersSetAsync()
         {
+            LinkFieldCheck();
+
             var result = await OptionsService.GetOptionItemsAsync(ComponentArgs).ConfigureAwait(false);
 
             optionItems = GetResponse(result);

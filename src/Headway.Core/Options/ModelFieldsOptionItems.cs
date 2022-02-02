@@ -14,11 +14,26 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
-            var modelName = args.Single(a => a.Name.Equals(Args.MODEL)).Value.ToString();
+            string modelName = null;
+
+            if (args.Any(a => a.Name.Equals(Args.LINK_SOURCE)))
+            {
+                modelName = args.Single(a => a.Name.Equals(Args.LINK_VALUE)).Value;
+            }
+            else
+            {
+                modelName = args.Single(a => a.Name.Equals(Args.MODEL)).Value.ToString();
+            }
+
+            if(string.IsNullOrWhiteSpace(modelName))
+            {
+                return Task.FromResult((new List<OptionItem> { new OptionItem() }).AsEnumerable());
+            }
 
             var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 
-            var model = models.Single(m => m.DisplayName.Equals(modelName));
+            var model = models.Single(m => m.DisplayName.Equals(modelName)
+                                        || m.Namespace.Equals(modelName));
 
             var type = Type.GetType(model.Namespace);
 

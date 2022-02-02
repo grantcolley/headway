@@ -43,6 +43,8 @@ namespace Headway.Razor.Controls.Components.Option
             }
             else
             {
+                LinkFieldCheck();
+
                 var result = await OptionsService.GetOptionItemsAsync(ComponentArgs).ConfigureAwait(false);
                 var optionItems = GetResponse(result);
                 options = new List<OptionItem>(optionItems);
