@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -22,6 +23,7 @@ namespace Headway.Core.Dynamic
         public string ComponentArgs { get; set; }
         public string DynamicComponentTypeName { get; set; }
         public int ConfigContainerId { get; set; }
+        public string ContainerUniqueId { get; set; }
         public int ValidationMessagesCount { get; set; }
         public DynamicField LinkSource { get; set; }
         public List<DynamicField> LinkDependents { get; set; }
@@ -29,8 +31,8 @@ namespace Headway.Core.Dynamic
         public Dictionary<string, object> Parameters { get; set; }
         public PropertyInfo PropertyInfo { get; set; }
         public MemberExpression MemberExpression { get; set; }
-
         public bool IsLinkedField { get { return LinkSource != null; } }
+        public bool HasLinkDependents { get { return LinkDependents.Any(); } }
 
         public object LinkValue
         {

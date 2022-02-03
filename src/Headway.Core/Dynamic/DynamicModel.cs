@@ -165,6 +165,11 @@ namespace Headway.Core.Dynamic
 
             if(fieldGroup != null)
             {
+                foreach(var field in fieldGroup)
+                {
+                    field.ContainerUniqueId = container.UniqueId;
+                }
+
                 container.DynamicFields.AddRange(fieldGroup.OrderBy(f => f.Order).ToList());
             }
 
