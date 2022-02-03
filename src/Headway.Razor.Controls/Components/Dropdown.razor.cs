@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Interface;
+using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
@@ -13,6 +14,9 @@ namespace Headway.Razor.Controls.Components
     [DynamicComponent]
     public abstract class DropdownBase : DynamicComponentBase
     {
+        [Inject]
+        public IStateNotificationMediator StateNotification { get; set; }
+
         [Inject]
         public IOptionsService OptionsService { get; set; }
 
@@ -48,6 +52,11 @@ namespace Headway.Razor.Controls.Components
         public virtual void OnValueChanged(string value)
         {
             Field.PropertyInfo.SetValue(Field.Model, value);
+
+            if(Field.HasLinkDependents)
+            {
+                StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);
+            }
         }
     }
 }
