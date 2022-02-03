@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Headway.Core.Mediators
 {
@@ -21,7 +20,6 @@ namespace Headway.Core.Mediators
             }
 
             register.Add(target, action);
-            Debug.WriteLine($"Registered {target}");
         }
 
         public void Deregister(string target)
@@ -29,7 +27,6 @@ namespace Headway.Core.Mediators
             if (register.ContainsKey(target))
             {
                 register.Remove(target);
-                Debug.WriteLine($"Deregistered {target}");
             }
         }
 
