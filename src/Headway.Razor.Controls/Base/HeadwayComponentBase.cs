@@ -2,22 +2,13 @@
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Diagnostics;
 
 namespace Headway.Razor.Controls.Base
 {
-    public abstract class HeadwayComponentBase : ComponentBase, IDisposable
+    public abstract class HeadwayComponentBase : ComponentBase
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
-        public void Dispose()
-        {
-            Debug.WriteLine($"Dispose {GetType().Name}");
-
-            GC.SuppressFinalize(this);
-        }
 
         protected T GetResponse<T>(IServiceResult<T> result)
         {
