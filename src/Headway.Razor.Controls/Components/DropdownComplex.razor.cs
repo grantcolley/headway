@@ -2,6 +2,7 @@
 using Headway.Core.Constants;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
+using Headway.Core.Mediators;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
@@ -14,6 +15,9 @@ namespace Headway.Razor.Controls.Components
     [DynamicComponent]
     public abstract class DropdownComplexBase<T> : DynamicComponentBase
     {
+        [Inject]
+        public IStateNotificationMediator StateNotification { get; set; }
+
         [Inject]
         public IOptionsService OptionsService { get; set; }
 
@@ -63,6 +67,11 @@ namespace Headway.Razor.Controls.Components
                 var optionItem = optionItems.First(
                     o => !string.IsNullOrWhiteSpace(o.Name) && o.Name.Equals(value));
                 Field.PropertyInfo.SetValue(Field.Model, optionItem.Item);
+            }
+
+            if (Field.HasLinkDependents)
+            {
+                StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);
             }
         }
     }
