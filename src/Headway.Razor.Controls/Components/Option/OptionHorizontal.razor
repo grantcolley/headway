@@ -19,7 +19,7 @@
             }
         </div>
         <div class="col-sm-8 option-horizontal-container">
-           <InputRadioGroup @bind-Value="PropertyValue">
+           <InputRadioGroup Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((string value) => OnValueChanged(value))">
                 @foreach (var option in options)
                 {
                     <InputRadio Value="option.Id"/><label class="option-horizontal">@option.Display</label>
