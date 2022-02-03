@@ -24,10 +24,17 @@
 * [Navigation Menu](#navigation-menu)
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
+* [Components](#components)
+   * [Standard Components](#standard-components)
+   * [Generic Components](#generic-components)
+   * [Specialized Components](#specialized-components)
+   * [Communication Between Components](#communication-between-components)
+         * [StateNotificationMediator](#statenotificationmediator)
+         * [Linked Components](#linked-components) 
 * [Configuration](#configuration)
 * [Administration](#administration)
 * [Database](#database)
- * [Notes](#notes)
+* [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
     * [Handle System.Text.Json Circular Reference Errors](#handle-systemtextjson-circular-reference-errors)
@@ -57,6 +64,19 @@ WebApi
 
 ### Page Rendering
 ![Alt text](/readme-images/PageRenderHierarchy.drawio.png?raw=true "Page Render Hierarchy")
+
+## Components
+### Standard Components
+
+### Generic Components
+
+### Specialized Components
+
+### Communication Between Components
+
+#### StateNotificationMediator
+
+#### Linked Components 
 
 ## Configuration
 
