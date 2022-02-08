@@ -3,6 +3,7 @@ using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,15 @@ namespace Headway.Repository
         public ModuleRepository(ApplicationDbContext applicationDbContext, ILogger<ModuleRepository> logger)
             : base(applicationDbContext, logger)
         {
+        }
+
+        public async Task<IEnumerable<Module>> GetModulesAsync()
+        {
+            return await applicationDbContext.Modules
+                .AsNoTracking()
+                .OrderBy(m => m.Order)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Module>> GetModulesAsync(string claim)
@@ -38,10 +48,10 @@ namespace Headway.Repository
             var permissions = userPermissions.Distinct().ToList();
 
             var modules = await applicationDbContext.Modules
+                .AsNoTracking()
                 .Include(m => m.Categories.OrderBy(c => c.Order))
                 .ThenInclude(c => c.MenuItems.OrderBy(mu => mu.Order))
                 .Where(m => permissions.Contains(m.Permission))
-                .AsNoTracking()
                 .OrderBy(m => m.Order)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -51,6 +61,73 @@ namespace Headway.Repository
                 .ToList();
 
             return permittedModules;
+        }
+
+        public async Task<Module> GetModuleAsync(int id)
+        {
+            return await applicationDbContext.Modules
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ModuleId.Equals(id))
+                .ConfigureAwait(false);
+        }
+
+        public async Task<Module> AddModuleAsync(Module module)
+        {
+            var newModule = new Module
+            {
+                ModuleId = module.ModuleId,
+                Name = module.Name,
+                Order = module.Order,
+                Permission = module.Permission
+            };
+
+            await applicationDbContext.Modules
+                .AddAsync(newModule)
+                .ConfigureAwait(false);
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            return newModule;
+        }
+
+        public async Task<Module> UpdateModuleAsync(Module module)
+        {
+            var existing = await applicationDbContext.Modules
+                .FirstOrDefaultAsync(m => m.ModuleId.Equals(module.ModuleId))
+                .ConfigureAwait(false);
+
+            if (existing == null)
+            {
+                throw new NullReferenceException(
+                    $"{nameof(module)} ModuleId {module.ModuleId} not found.");
+            }
+            else
+            {
+                applicationDbContext
+                    .Entry(existing)
+                    .CurrentValues.SetValues(module);
+            }
+
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            return existing;
+        }
+
+        public async Task<int> DeleteModuleAsync(int id)
+        {
+            var module = await applicationDbContext.Modules
+                .FirstOrDefaultAsync(m => m.ModuleId.Equals(id))
+                .ConfigureAwait(false);
+
+            applicationDbContext.Remove(module);
+
+            return await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
         }
     }
 }
