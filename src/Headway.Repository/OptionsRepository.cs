@@ -24,6 +24,7 @@ namespace Headway.Repository
         {
             optionItems[Options.CONTROLLER_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetControllerOptionItemsAsync);
             optionItems[Options.CONFIG_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);
+            optionItems[Options.PERMISSIONS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetPermissionsOptionItems);
 
             complexOptionItems[Options.CONFIG_CONTAINERS] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
         }
@@ -66,6 +67,21 @@ namespace Headway.Repository
                               }).ToList());
 
             return Task.FromResult(optionItems.AsEnumerable());
+        }
+
+        private async Task<IEnumerable<OptionItem>> GetPermissionsOptionItems(List<Arg> args)
+        {
+            var configs = await applicationDbContext.Permissions
+                .OrderBy(p => p.Name)
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            optionItems.AddRange(configs.Select(p => new OptionItem { Id = p.Name, Display = p.Name }).ToList());
+
+            return optionItems;
         }
 
         private async Task<IEnumerable<OptionItem>> GetConfigOptionItems(List<Arg> args)
