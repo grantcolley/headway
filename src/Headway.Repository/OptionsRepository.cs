@@ -27,6 +27,8 @@ namespace Headway.Repository
             optionItems[Options.PERMISSIONS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetPermissionsOptionItems);
 
             complexOptionItems[Options.CONFIG_CONTAINERS] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
+            complexOptionItems[Options.MODULES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetModules);
+            complexOptionItems[Options.CATEGORIES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetCategories);
         }
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
@@ -115,6 +117,44 @@ namespace Headway.Repository
                 var configContainers = configs.Single().ConfigContainers.ToList();
                 configContainers.Insert(0, new ConfigContainer());
                 return JsonSerializer.Serialize(configContainers);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        private async Task<string> GetModules(List<Arg> args)
+        {
+            var modules = await applicationDbContext.Modules
+                .AsNoTracking()
+                .OrderBy(m => m.Name)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            if (modules.Any())
+            {
+                modules.Insert(0, new Module());
+                return JsonSerializer.Serialize(modules);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        private async Task<string> GetCategories(List<Arg> args)
+        {
+            var categories = await applicationDbContext.Categories
+                .AsNoTracking()
+                .OrderBy(c => c.Name)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            if (categories.Any())
+            {
+                categories.Insert(0, new Category());
+                return JsonSerializer.Serialize(categories);
             }
             else
             {
