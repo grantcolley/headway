@@ -144,6 +144,7 @@ namespace Headway.Repository
         public async Task<Category> GetCategoryAsync(int id)
         {
             return await applicationDbContext.Categories
+                .Include(c => c.Module)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.CategoryId.Equals(id))
                 .ConfigureAwait(false);
@@ -191,6 +192,16 @@ namespace Headway.Repository
                 applicationDbContext
                     .Entry(existing)
                     .CurrentValues.SetValues(category);
+
+                if (category.Module == null
+                    || category.Module.ModuleId.Equals(0))
+                {
+                    throw new ArgumentNullException(nameof(category.Module));
+                }
+                else
+                {
+                    existing.Module = category.Module;
+                }
             }
 
             await applicationDbContext
@@ -241,6 +252,7 @@ namespace Headway.Repository
         {
             return await applicationDbContext.MenuItems
                 .AsNoTracking()
+                .Include(mi => mi.Category)
                 .FirstOrDefaultAsync(mi => mi.MenuItemId.Equals(id))
                 .ConfigureAwait(false);
         }
@@ -277,6 +289,7 @@ namespace Headway.Repository
         public async Task<MenuItem> UpdateMenuItemAsync(MenuItem menuItem)
         {
             var existing = await applicationDbContext.MenuItems
+                .Include(mi => mi.Category)
                 .FirstOrDefaultAsync(mi => mi.MenuItemId.Equals(menuItem.MenuItemId))
                 .ConfigureAwait(false);
 
@@ -290,6 +303,16 @@ namespace Headway.Repository
                 applicationDbContext
                     .Entry(existing)
                     .CurrentValues.SetValues(menuItem);
+
+                if (menuItem.Category == null
+                    || menuItem.Category.CategoryId.Equals(0))
+                {
+                    throw new ArgumentNullException(nameof(menuItem.Category));
+                }
+                else
+                {
+                    existing.Category = menuItem.Category;
+                }
             }
 
             await applicationDbContext
