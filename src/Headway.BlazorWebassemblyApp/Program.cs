@@ -2,7 +2,9 @@ using Headway.BlazorWebassemblyApp.Account;
 using Headway.Core.Cache;
 using Headway.Core.Interface;
 using Headway.Core.Mediators;
+using Headway.Core.Model;
 using Headway.Services;
+using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -71,6 +73,10 @@ namespace Headway.BlazorWebassemblyApp
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new OptionsService(httpClient);
             });
+
+            builder.Services.AddTransient<ModulesRequestHandler>();
+
+            builder.Services.AddMediatR(typeof(Module).Assembly);
 
             await builder.Build().RunAsync();
         }

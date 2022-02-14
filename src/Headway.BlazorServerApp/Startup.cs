@@ -3,6 +3,7 @@ using Headway.Core.Interface;
 using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -104,8 +105,11 @@ namespace Headway.BlazorServerApp
                 return new OptionsService(httpClient, tokenProvider);
             });
 
+            services.AddTransient<ModulesRequestHandler>();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddMediatR(typeof(Module).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

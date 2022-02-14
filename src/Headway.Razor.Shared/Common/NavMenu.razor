@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 
+@inject IMediator Mediator
+
 <div class="top-row pl-4 navbar navbar-dark">
     <span class="navbar-brand">Headway</span>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -68,7 +70,8 @@
             {
                 if (user.HasClaim(c => c.Type == ClaimTypes.ROLE && c.Value.Equals(Roles.HEADWAY_USER)))
                 {
-                    modules = await ModuleService.GetModulesAsync().ConfigureAwait(false);
+                    var response = await Mediator.Send(new ModulesRequest()).ConfigureAwait(false);
+                    modules = response.Modules;
                 }
 
                 var cachedSelectedModule = AppCache.Get<string>(AppCacheKeys.ACTIVE_NAV_MODULE);
