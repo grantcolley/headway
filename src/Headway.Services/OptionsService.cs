@@ -34,6 +34,7 @@ namespace Headway.Services
             localOptionItems.Add(typeof(ComponentOptionItems).Name, new ComponentOptionItems());
             localOptionItems.Add(typeof(DocumentOptionItems).Name, new DocumentOptionItems());
             localOptionItems.Add(typeof(ContainerOptionItems).Name, new ContainerOptionItems());
+            localOptionItems.Add(typeof(StaticOptionItems).Name, new StaticOptionItems());
         }
 
         public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
