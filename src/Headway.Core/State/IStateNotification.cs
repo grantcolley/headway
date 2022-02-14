@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Headway.Core.Mediators
+namespace Headway.Core.State
 {
-    public interface IStateNotificationMediator
+    public interface IStateNotification
     {
         void Register(string target, Action action);
         void Deregister(string target);

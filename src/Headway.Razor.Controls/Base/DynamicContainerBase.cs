@@ -1,5 +1,5 @@
 ﻿using Headway.Core.Dynamic;
-using Headway.Core.Mediators;
+using Headway.Core.State;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace Headway.Razor.Controls.Base
     public class DynamicContainerBase : ComponentBase, IDisposable
     {
         [Inject]
-        public IStateNotificationMediator StateNotification { get; set; }
+        public IStateNotification StateNotification { get; set; }
 
         [Parameter]
         public DynamicContainer Container { get; set; }

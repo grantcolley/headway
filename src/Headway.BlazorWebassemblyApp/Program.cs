@@ -3,6 +3,7 @@ using Headway.Core.Cache;
 using Headway.Core.Interface;
 using Headway.Core.Mediators;
 using Headway.Core.Model;
+using Headway.Core.State;
 using Headway.Services;
 using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -42,7 +43,7 @@ namespace Headway.BlazorWebassemblyApp
 
             builder.Services.AddSingleton<IAppCache, AppCache>();
             builder.Services.AddSingleton<IConfigCache, ConfigCache>();
-            builder.Services.AddSingleton<IStateNotificationMediator, StateNotificationMediator>();
+            builder.Services.AddSingleton<IStateNotification, StateNotification>();
 
             builder.Services.AddTransient<IModuleService, ModuleService>(sp =>
             {

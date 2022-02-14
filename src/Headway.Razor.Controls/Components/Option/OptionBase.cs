@@ -2,8 +2,8 @@
 using Headway.Core.Constants;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
-using Headway.Core.Mediators;
 using Headway.Core.Model;
+using Headway.Core.State;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -18,7 +18,7 @@ namespace Headway.Razor.Controls.Components.Option
     public abstract class OptionBase : DynamicComponentBase
     {
         [Inject]
-        public IStateNotificationMediator StateNotification { get; set; }
+        public IStateNotification StateNotification { get; set; }
 
         [Inject]
         public IOptionsService OptionsService { get; set; }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Headway.Core.Mediators
+namespace Headway.Core.State
 {
-    public class StateNotificationMediator : IStateNotificationMediator
+    public class StateNotification : IStateNotification
     {
         private readonly Dictionary<string, Action> register;
 
-        public StateNotificationMediator()
+        public StateNotification()
         {
             register = new Dictionary<string, Action>();
         }
