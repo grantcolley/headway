@@ -23,21 +23,6 @@ namespace Headway.Services
             this.configCache = configCache;
         }
 
-        public async Task<IServiceResult<IEnumerable<Config>>> GetConfigsAsync()
-        {
-            var httpResponseMessage = await httpClient.GetAsync(Controllers.CONFIGURATION).ConfigureAwait(false);
-
-            var serviceResult = await GetServiceResultAsync<IEnumerable<Config>>(httpResponseMessage)
-                .ConfigureAwait(false);
-
-            if (serviceResult.IsSuccess)
-            {
-                configCache.AddConfigs(serviceResult.Result);
-            }
-
-            return serviceResult;
-        }
-
         public async Task<IServiceResult<Config>> GetConfigAsync(string name)
         {
             var config = configCache.GetConfig(name);
