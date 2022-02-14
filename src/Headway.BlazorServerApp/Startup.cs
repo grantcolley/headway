@@ -106,7 +106,7 @@ namespace Headway.BlazorServerApp
                 return new OptionsService(httpClient, tokenProvider);
             });
 
-            services.AddTransient<ModulesRequestHandler>();
+            services.AddTransient<ModulesGetRequestHandler>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor();

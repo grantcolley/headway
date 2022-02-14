@@ -70,7 +70,7 @@
             {
                 if (user.HasClaim(c => c.Type == ClaimTypes.ROLE && c.Value.Equals(Roles.HEADWAY_USER)))
                 {
-                    var response = await Mediator.Send(new ModulesRequest()).ConfigureAwait(false);
+                    var response = await Mediator.Send(new ModulesGetRequest()).ConfigureAwait(false);
                     modules = response.Modules;
                 }
 
