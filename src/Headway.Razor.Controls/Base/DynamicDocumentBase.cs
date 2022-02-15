@@ -28,23 +28,23 @@ namespace Headway.Razor.Controls.Base
 
         protected virtual async Task InitializeDynamicModelAsync()
         {
-            IResponse<DynamicModel<T>> serviceResult;
+            IResponse<DynamicModel<T>> response;
 
             if (!Id.HasValue
                 || Id.Value.Equals(0))
             {
-                serviceResult = await DynamicService
+                response = await DynamicService
                     .CreateDynamicModelInstanceAsync<T>(Config)
                     .ConfigureAwait(false);
             }
             else
             {
-                serviceResult = await DynamicService
+                response = await DynamicService
                     .GetDynamicModelAsync<T>(Id.Value, Config)
                     .ConfigureAwait(false);
             }
 
-            SetCurrentModelContext(serviceResult);
+            SetCurrentModelContext(response);
         }
 
         protected virtual async Task InitializeDynamicListAsync()
@@ -58,9 +58,9 @@ namespace Headway.Razor.Controls.Base
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        protected virtual void SetCurrentModelContext(IResponse<DynamicModel<T>> serviceResult)
+        protected virtual void SetCurrentModelContext(IResponse<DynamicModel<T>> response)
         {
-            dynamicModel = GetResponse(serviceResult);
+            dynamicModel = GetResponse(response);
 
             if(dynamicModel != null)
             {

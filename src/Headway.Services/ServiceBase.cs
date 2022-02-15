@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Interface;
+using Headway.Core.Mediators;
 using Headway.Core.Model;
 using System.Net.Http;
 using System.Text.Json;
@@ -29,34 +30,34 @@ namespace Headway.Services
             this.useAccessToken = useAccessToken;
         }
 
-        public async Task<IResponse<T>> GetServiceResultAsync<T>(HttpResponseMessage httpResponseMessage)
+        public async Task<IResponse<T>> GetResponseAsync<T>(HttpResponseMessage httpResponseMessage)
         {
-            var serviceResult = new ServiceResult<T>
+            var response = new Response<T>
             {
                 IsSuccess = httpResponseMessage.IsSuccessStatusCode,
                 Message = httpResponseMessage.ReasonPhrase
             };
 
-            if (serviceResult.IsSuccess)
+            if (response.IsSuccess)
             {
-                serviceResult.Result = await JsonSerializer.DeserializeAsync<T>
+                response.Result = await JsonSerializer.DeserializeAsync<T>
                     (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
                         new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
             }
 
-            return serviceResult;
+            return response;
         }
 
-        protected static IResponse<T> GetServiceResult<T>(T result, bool isSuccess = true, string message = null)
+        protected static IResponse<T> GetResponseResult<T>(T result, bool isSuccess = true, string message = null)
         {
-            var serviceResult = new ServiceResult<T>
+            var response = new Response<T>
             {
                 IsSuccess = isSuccess,
                 Message = message,
                 Result = result
             };
 
-            return serviceResult;
+            return response;
         }
 
         private void AddHttpClientAuthorisationHeader()

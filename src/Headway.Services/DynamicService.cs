@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
+using Headway.Core.Mediators;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -23,161 +24,161 @@ namespace Headway.Services
 
         public async Task<IResponse<DynamicList<T>>> GetDynamicListAsync<T>(IEnumerable<T> list, string config) where T : class, new()
         {
-            var serviceResultConfig =
+            var responseConfig =
                 await GetConfigAsync(config)
                 .ConfigureAwait(false);
 
-            if (serviceResultConfig.IsSuccess)
+            if (responseConfig.IsSuccess)
             {
-                return new ServiceResult<DynamicList<T>>
+                return new Response<DynamicList<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message,
-                    Result = new DynamicList<T>(list, serviceResultConfig.Result)
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message,
+                    Result = new DynamicList<T>(list, responseConfig.Result)
                 };
             }
             else
             {
-                return new ServiceResult<DynamicList<T>>
+                return new Response<DynamicList<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message
                 };
             }
         }
 
         public async Task<IResponse<DynamicList<T>>> GetDynamicListAsync<T>(string config) where T : class, new()
         {
-            var serviceResultConfig =
+            var responseConfig =
                 await GetConfigAsync(config)
                 .ConfigureAwait(false);
 
-            if (serviceResultConfig.IsSuccess)
+            if (responseConfig.IsSuccess)
             {
-                var configApi = serviceResultConfig.Result.ModelApi;
+                var configApi = responseConfig.Result.ModelApi;
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
-                var serviceResultList = await GetServiceResultAsync<IEnumerable<T>>(response)
+                var responseList = await GetResponseAsync<IEnumerable<T>>(response)
                     .ConfigureAwait(false);
 
-                if (serviceResultList.IsSuccess)
+                if (responseList.IsSuccess)
                 {
-                    return new ServiceResult<DynamicList<T>>
+                    return new Response<DynamicList<T>>
                     {
-                        IsSuccess = serviceResultList.IsSuccess,
-                        Message = serviceResultList.Message,
-                        Result = new DynamicList<T>(serviceResultList.Result, serviceResultConfig.Result)
+                        IsSuccess = responseList.IsSuccess,
+                        Message = responseList.Message,
+                        Result = new DynamicList<T>(responseList.Result, responseConfig.Result)
                     };
                 }
                 else
                 {
-                    return new ServiceResult<DynamicList<T>>
+                    return new Response<DynamicList<T>>
                     {
-                        IsSuccess = serviceResultList.IsSuccess,
-                        Message = serviceResultList.Message
+                        IsSuccess = responseList.IsSuccess,
+                        Message = responseList.Message
                     };
                 }
             }
             else
             {
-                return new ServiceResult<DynamicList<T>>
+                return new Response<DynamicList<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message
                 };
             }
         }
 
         public async Task<IResponse<DynamicModel<T>>> GetDynamicModelAsync<T>(T model, string config) where T : class, new()
         {
-            var serviceResultConfig =
+            var responseConfig =
                 await GetConfigAsync(config)
                 .ConfigureAwait(false);
 
-            if (serviceResultConfig.IsSuccess)
+            if (responseConfig.IsSuccess)
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message,
-                    Result = new DynamicModel<T>(model, serviceResultConfig.Result)
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message,
+                    Result = new DynamicModel<T>(model, responseConfig.Result)
                 };
             }
             else
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message
                 };
             }
         }
 
         public async Task<IResponse<DynamicModel<T>>> GetDynamicModelAsync<T>(int id, string config) where T : class, new()
         {
-            var serviceResultConfig =
+            var responseConfig =
                 await GetConfigAsync(config)
                 .ConfigureAwait(false);
 
-            if (serviceResultConfig.IsSuccess)
+            if (responseConfig.IsSuccess)
             {
-                var configApi = $"{serviceResultConfig.Result.ModelApi}/{id}";
+                var configApi = $"{responseConfig.Result.ModelApi}/{id}";
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
-                var serviceResultModel = await GetServiceResultAsync<T>(response)
+                var responseModel = await GetResponseAsync<T>(response)
                     .ConfigureAwait(false);
 
-                if (serviceResultModel.IsSuccess)
+                if (responseModel.IsSuccess)
                 {
-                    return new ServiceResult<DynamicModel<T>>
+                    return new Response<DynamicModel<T>>
                     {
-                        IsSuccess = serviceResultModel.IsSuccess,
-                        Message = serviceResultModel.Message,
-                        Result = new DynamicModel<T>(serviceResultModel.Result, serviceResultConfig.Result)
+                        IsSuccess = responseModel.IsSuccess,
+                        Message = responseModel.Message,
+                        Result = new DynamicModel<T>(responseModel.Result, responseConfig.Result)
                     };
                 }
                 else
                 {
-                    return new ServiceResult<DynamicModel<T>>
+                    return new Response<DynamicModel<T>>
                     {
-                        IsSuccess = serviceResultModel.IsSuccess,
-                        Message = serviceResultModel.Message
+                        IsSuccess = responseModel.IsSuccess,
+                        Message = responseModel.Message
                     };
                 }
             }
             else
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message
                 };
             }
         }
 
         public async Task<IResponse<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>(string config) where T : class, new()
         {
-            var serviceResultConfig =
+            var responseConfig =
                 await GetConfigAsync(config)
                 .ConfigureAwait(false);
 
-            if (serviceResultConfig.IsSuccess)
+            if (responseConfig.IsSuccess)
             {
                 var model = TypeHelper<T>.Create();
 
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message,
-                    Result = new DynamicModel<T>(model, serviceResultConfig.Result)
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message,
+                    Result = new DynamicModel<T>(model, responseConfig.Result)
                 };
             }
             else
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResultConfig.IsSuccess,
-                    Message = serviceResultConfig.Message
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message
                 };
             }
         }
@@ -188,23 +189,23 @@ namespace Headway.Services
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var serviceResult = await GetServiceResultAsync<T>(addResponse).ConfigureAwait(false);
+            var response = await GetResponseAsync<T>(addResponse).ConfigureAwait(false);
 
-            if (serviceResult.IsSuccess)
+            if (response.IsSuccess)
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResult.IsSuccess,
-                    Message = serviceResult.Message,
-                    Result = new DynamicModel<T>(serviceResult.Result, dynamicModel.Config)
+                    IsSuccess = response.IsSuccess,
+                    Message = response.Message,
+                    Result = new DynamicModel<T>(response.Result, dynamicModel.Config)
                 };
             }
             else
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResult.IsSuccess,
-                    Message = serviceResult.Message,
+                    IsSuccess = response.IsSuccess,
+                    Message = response.Message,
                     Result = dynamicModel
                 };
             }
@@ -216,23 +217,23 @@ namespace Headway.Services
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
-            var serviceResult = await GetServiceResultAsync<T>(updateResponse).ConfigureAwait(false);
+            var response = await GetResponseAsync<T>(updateResponse).ConfigureAwait(false);
 
-            if (serviceResult.IsSuccess)
+            if (response.IsSuccess)
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResult.IsSuccess,
-                    Message = serviceResult.Message,
-                    Result = new DynamicModel<T>(serviceResult.Result, dynamicModel.Config)
+                    IsSuccess = response.IsSuccess,
+                    Message = response.Message,
+                    Result = new DynamicModel<T>(response.Result, dynamicModel.Config)
                 };
             }
             else
             {
-                return new ServiceResult<DynamicModel<T>>
+                return new Response<DynamicModel<T>>
                 {
-                    IsSuccess = serviceResult.IsSuccess,
-                    Message = serviceResult.Message,
+                    IsSuccess = response.IsSuccess,
+                    Message = response.Message,
                     Result = dynamicModel
                 };
             }
@@ -242,7 +243,7 @@ namespace Headway.Services
         {
             var configPath = $"{dynamicModel.Config.ModelApi}/{dynamicModel.Id}";
             var httpResponseMessage = await httpClient.DeleteAsync(configPath).ConfigureAwait(false);
-            return await GetServiceResultAsync<int>(httpResponseMessage).ConfigureAwait(false);
+            return await GetResponseAsync<int>(httpResponseMessage).ConfigureAwait(false);
         }
     }
 }

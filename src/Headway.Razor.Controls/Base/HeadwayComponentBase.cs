@@ -10,16 +10,16 @@ namespace Headway.Razor.Controls.Base
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        protected T GetResponse<T>(IResponse<T> result)
+        protected T GetResponse<T>(IResponse<T> response)
         {
-            if (!result.IsSuccess)
+            if (!response.IsSuccess)
             {
-                RaiseAlert(result.Message);
+                RaiseAlert(response.Message);
                 return default;
             }
             else
             {
-                return result.Result;
+                return response.Result;
             }
         }
 

@@ -37,22 +37,22 @@ namespace Headway.Razor.Controls.Documents
         {
             isSaveInProgress = true;
 
-            IResponse<DynamicModel<T>> serviceResult;
+            IResponse<DynamicModel<T>> response;
 
             if (dynamicModel.Id.Equals(0))
             {
-                serviceResult = await DynamicService
+                response = await DynamicService
                     .AddDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
             }
             else
             {
-                serviceResult = await DynamicService
+                response = await DynamicService
                     .UpdateDynamicModelAsync<T>(dynamicModel)
                     .ConfigureAwait(false);
             }
 
-            SetCurrentModelContext(serviceResult);
+            SetCurrentModelContext(response);
 
             SetActivePage();
 
@@ -63,11 +63,11 @@ namespace Headway.Razor.Controls.Documents
         {
             isDeleteInProgress = true;
 
-            var serviceResult = await DynamicService
+            var response = await DynamicService
                 .DeleteDynamicModelAsync(dynamicModel)
                 .ConfigureAwait(false);
 
-            var result = GetResponse(serviceResult);
+            var result = GetResponse(response);
 
             if (result.Equals(0))
             {

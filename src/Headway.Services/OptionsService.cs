@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
+using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.Options;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace Headway.Services
 
             if (localOptionItems.ContainsKey(optionsCode))
             {
-                return new ServiceResult<IEnumerable<OptionItem>>
+                return new Response<IEnumerable<OptionItem>>
                 {
                     IsSuccess = true,
                     Result = await localOptionItems[optionsCode].GetOptionItemsAsync(args)
@@ -55,7 +56,7 @@ namespace Headway.Services
             var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS, args)
                 .ConfigureAwait(false);
 
-            return await GetServiceResultAsync<IEnumerable<OptionItem>>(httpResponseMessage)
+            return await GetResponseAsync<IEnumerable<OptionItem>>(httpResponseMessage)
                 .ConfigureAwait(false);
         }
 
@@ -66,7 +67,7 @@ namespace Headway.Services
             var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS_COMPLEXOPTIONS, args)
                 .ConfigureAwait(false);
 
-            return await GetServiceResultAsync<IEnumerable<T>>(httpResponseMessage)
+            return await GetResponseAsync<IEnumerable<T>>(httpResponseMessage)
                 .ConfigureAwait(false);
         }
     }

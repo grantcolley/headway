@@ -28,19 +28,19 @@ namespace Headway.Services
 
             if(config != null)
             {
-                return GetServiceResult<Config>(config);
+                return GetResponseResult<Config>(config);
             }
 
             var httpResponseMessage = await httpClient.GetAsync($"{Controllers.CONFIGURATION}/{name}").ConfigureAwait(false);
 
-            var serviceResult = await GetServiceResultAsync<Config>(httpResponseMessage).ConfigureAwait(false);
+            var response = await GetResponseAsync<Config>(httpResponseMessage).ConfigureAwait(false);
 
-            if(serviceResult.IsSuccess)
+            if(response.IsSuccess)
             {
-                configCache.AddConfig(serviceResult.Result);
+                configCache.AddConfig(response.Result);
             }
 
-            return serviceResult;
+            return response;
         }
     }
 }
