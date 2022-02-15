@@ -7,17 +7,17 @@ namespace Headway.Core.Mediators
 {
     public class ConfigGetByNameRequestHandler : IRequestHandler<ConfigGetByNameRequest, ConfigGetByNameRequest.Response>
     {
-        private readonly IConfigurationService configurationService;
+        private readonly IConfigurationApiRequest configurationApiRequest;
 
-        public ConfigGetByNameRequestHandler(IConfigurationService configurationService)
+        public ConfigGetByNameRequestHandler(IConfigurationApiRequest configurationApiRequest)
         {
-            this.configurationService = configurationService;
+            this.configurationApiRequest = configurationApiRequest;
         }
 
         public async Task<ConfigGetByNameRequest.Response> Handle(ConfigGetByNameRequest request, CancellationToken cancellationToken)
         {
             return new ConfigGetByNameRequest.Response(
-                await configurationService.GetConfigAsync(request.Name)
+                await configurationApiRequest.GetConfigAsync(request.Name)
                 .ConfigureAwait(false));
         }
     }

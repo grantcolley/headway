@@ -10,7 +10,7 @@ namespace Headway.Razor.Controls.Base
     public abstract class DynamicDocumentBase<T> : HeadwayComponentBase where T : class, new()
     {
         [Inject]
-        protected IDynamicService DynamicService { get; set; }
+        protected IDynamicApiRequest DynamicService { get; set; }
 
         [Parameter]
         public string Config { get; set; }

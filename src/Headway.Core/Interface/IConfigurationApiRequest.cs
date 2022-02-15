@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IConfigurationService
+    public interface IConfigurationApiRequest
     { 
         Task<IResponse<Config>> GetConfigAsync(string name);
     }

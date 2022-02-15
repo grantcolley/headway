@@ -21,7 +21,7 @@ namespace Headway.Razor.Controls.Components.Option
         public IStateNotification StateNotification { get; set; }
 
         [Inject]
-        public IOptionsService OptionsService { get; set; }
+        public IOptionsApiRequest OptionsService { get; set; }
 
         protected List<OptionItem> options;
 

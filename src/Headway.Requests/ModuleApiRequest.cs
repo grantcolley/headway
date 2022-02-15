@@ -6,21 +6,21 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Headway.Services
+namespace Headway.Requests
 {
-    public class ModuleService : IModuleService
+    public class ModuleApiRequest : IModuleApiRequest
     {
         private readonly HttpClient httpClient;
         private readonly TokenProvider tokenProvider;
         private readonly bool useAccessToken;
 
-        public ModuleService(HttpClient httpClient)
+        public ModuleApiRequest(HttpClient httpClient)
         {
             this.httpClient = httpClient;
             useAccessToken = false;
         }
 
-        public ModuleService(HttpClient httpClient, TokenProvider tokenProvider)
+        public ModuleApiRequest(HttpClient httpClient, TokenProvider tokenProvider)
         {
             this.httpClient = httpClient;
             this.tokenProvider = tokenProvider;

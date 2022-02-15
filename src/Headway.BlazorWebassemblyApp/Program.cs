@@ -4,7 +4,7 @@ using Headway.Core.Interface;
 using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.State;
-using Headway.Services;
+using Headway.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -45,34 +45,34 @@ namespace Headway.BlazorWebassemblyApp
             builder.Services.AddSingleton<IConfigCache, ConfigCache>();
             builder.Services.AddSingleton<IStateNotification, StateNotification>();
 
-            builder.Services.AddTransient<IModuleService, ModuleService>(sp =>
+            builder.Services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>
             {
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new ModuleService(httpClient);
+                return new ModuleApiRequest(httpClient);
             });
 
-            builder.Services.AddTransient<IConfigurationService, ConfigurationService>(sp =>
+            builder.Services.AddTransient<IConfigurationApiRequest, ConfigurationApiRequest>(sp =>
             {
                 var configCache = sp.GetRequiredService<IConfigCache>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new ConfigurationService(httpClient, configCache);
+                return new ConfigurationApiRequest(httpClient, configCache);
             });
 
-            builder.Services.AddTransient<IDynamicService, DynamicService>(sp =>
+            builder.Services.AddTransient<IDynamicApiRequest, DynamicApiRequest>(sp =>
             {
                 var configCache = sp.GetRequiredService<IConfigCache>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new DynamicService(httpClient, configCache);
+                return new DynamicApiRequest(httpClient, configCache);
             });
 
-            builder.Services.AddTransient<IOptionsService, OptionsService>(sp =>
+            builder.Services.AddTransient<IOptionsApiRequest, OptionsApiRequest>(sp =>
             {
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new OptionsService(httpClient);
+                return new OptionsApiRequest(httpClient);
             });
 
             builder.Services.AddTransient<ModulesGetRequestHandler>();

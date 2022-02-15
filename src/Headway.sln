@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Repository", "Headw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.WebApi", "Headway.WebApi\Headway.WebApi.csproj", "{8CEBE0B0-5543-4D58-ADB5-9944449011FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Services", "Headway.Services\Headway.Services.csproj", "{A2A92165-4679-4068-8591-33149A968BF8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorWebassemblyApp", "Headway.BlazorWebassemblyApp\Headway.BlazorWebassemblyApp.csproj", "{17F66A51-074F-4549-949D-558159A3350F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorServerApp", "Headway.BlazorServerApp\Headway.BlazorServerApp.csproj", "{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}"
@@ -28,6 +26,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Shared", "Headway.Razor.Shared\Headway.Razor.Shared.csproj", "{E10CDF03-8AC6-455A-8CAA-3C27A4A3C91A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Controls", "Headway.Razor.Controls\Headway.Razor.Controls.csproj", "{E5504993-547C-4B8B-A208-DB4B9FDEDDBF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Requests", "Headway.Requests\Headway.Requests.csproj", "{C170DD0A-7816-4D2E-8831-E90447C95A91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,6 @@ Global
 		{8CEBE0B0-5543-4D58-ADB5-9944449011FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CEBE0B0-5543-4D58-ADB5-9944449011FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CEBE0B0-5543-4D58-ADB5-9944449011FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2A92165-4679-4068-8591-33149A968BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2A92165-4679-4068-8591-33149A968BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2A92165-4679-4068-8591-33149A968BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2A92165-4679-4068-8591-33149A968BF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17F66A51-074F-4549-949D-558159A3350F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -83,6 +79,10 @@ Global
 		{E5504993-547C-4B8B-A208-DB4B9FDEDDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5504993-547C-4B8B-A208-DB4B9FDEDDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5504993-547C-4B8B-A208-DB4B9FDEDDBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C170DD0A-7816-4D2E-8831-E90447C95A91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C170DD0A-7816-4D2E-8831-E90447C95A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C170DD0A-7816-4D2E-8831-E90447C95A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C170DD0A-7816-4D2E-8831-E90447C95A91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

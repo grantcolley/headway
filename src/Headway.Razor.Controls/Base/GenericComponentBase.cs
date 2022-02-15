@@ -11,7 +11,7 @@ namespace Headway.Razor.Controls.Base
     public abstract class GenericComponentBase<T> : HeadwayComponentBase where T : class, new()
     {
         [Inject]
-        public IDynamicService DynamicService { get; set; }
+        public IDynamicApiRequest DynamicService { get; set; }
 
         [CascadingParameter]
         public EditContext CurrentEditContext { get; set; }

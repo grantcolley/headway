@@ -5,15 +5,15 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Headway.Services
+namespace Headway.Requests
 {
-    public abstract class ServiceBase : IService
+    public abstract class ApiRequestBase : IApiRequest
     {
         protected readonly HttpClient httpClient;
         protected readonly TokenProvider tokenProvider;
         protected readonly bool useAccessToken;
 
-        protected ServiceBase(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
+        protected ApiRequestBase(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
             : this(httpClient, useAccessToken)
         {
             if (tokenProvider != null)
@@ -24,7 +24,7 @@ namespace Headway.Services
             }
         }
 
-        protected ServiceBase(HttpClient httpClient, bool useAccessToken)
+        protected ApiRequestBase(HttpClient httpClient, bool useAccessToken)
         {
             this.httpClient = httpClient;
             this.useAccessToken = useAccessToken;

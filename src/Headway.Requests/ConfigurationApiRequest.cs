@@ -4,19 +4,19 @@ using Headway.Core.Model;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Headway.Services
+namespace Headway.Requests
 {
-    public class ConfigurationService : ServiceBase, IConfigurationService
+    public class ConfigurationApiRequest : ApiRequestBase, IConfigurationApiRequest
     {
         private readonly IConfigCache configCache;
 
-        public ConfigurationService(HttpClient httpClient, IConfigCache configCache)
+        public ConfigurationApiRequest(HttpClient httpClient, IConfigCache configCache)
             : base(httpClient, false)
         {
             this.configCache = configCache;
         }
 
-        public ConfigurationService(HttpClient httpClient, TokenProvider tokenProvider, IConfigCache configCache)
+        public ConfigurationApiRequest(HttpClient httpClient, TokenProvider tokenProvider, IConfigCache configCache)
             : base(httpClient, true, tokenProvider)
         {
             this.configCache = configCache;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IService
+    public interface IApiRequest
     {
         Task<IResponse<T>> GetResponseAsync<T>(HttpResponseMessage httpResponseMessage);
     }

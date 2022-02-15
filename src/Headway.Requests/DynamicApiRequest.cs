@@ -8,16 +8,16 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace Headway.Services
+namespace Headway.Requests
 {
-    public class DynamicService : ConfigurationService, IDynamicService
+    public class DynamicApiRequest : ConfigurationApiRequest, IDynamicApiRequest
     {
-        public DynamicService(HttpClient httpClient, IConfigCache configCache)
+        public DynamicApiRequest(HttpClient httpClient, IConfigCache configCache)
             : base(httpClient, configCache)
         {
         }
 
-        public DynamicService(HttpClient httpClient, TokenProvider tokenProvider, IConfigCache configCache)
+        public DynamicApiRequest(HttpClient httpClient, TokenProvider tokenProvider, IConfigCache configCache)
             : base(httpClient, tokenProvider, configCache)
         {
         }

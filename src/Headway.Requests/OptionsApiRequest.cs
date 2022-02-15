@@ -10,23 +10,23 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace Headway.Services
+namespace Headway.Requests
 {
-    public class OptionsService : ServiceBase, IOptionsService
+    public class OptionsApiRequest : ApiRequestBase, IOptionsApiRequest
     {
         private readonly Dictionary<string, IOptionItems> localOptionItems = new();
 
-        public OptionsService(HttpClient httpClient)
+        public OptionsApiRequest(HttpClient httpClient)
             : this(httpClient, false, null)
         {
         }
 
-        public OptionsService(HttpClient httpClient, TokenProvider tokenProvider)
+        public OptionsApiRequest(HttpClient httpClient, TokenProvider tokenProvider)
             : this(httpClient, true, tokenProvider)
         {
         }
 
-        private OptionsService(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
+        private OptionsApiRequest(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
             : base(httpClient, useAccessToken, tokenProvider)
         {
             localOptionItems.Add(typeof(PageOptionItems).Name, new PageOptionItems());

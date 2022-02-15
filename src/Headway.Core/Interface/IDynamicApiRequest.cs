@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IDynamicService
+    public interface IDynamicApiRequest
     {
         Task<IResponse<DynamicList<T>>> GetDynamicListAsync<T>(IEnumerable<T> list, string config) where T : class, new();
         Task<IResponse<DynamicList<T>>> GetDynamicListAsync<T>(string configName) where T : class, new();

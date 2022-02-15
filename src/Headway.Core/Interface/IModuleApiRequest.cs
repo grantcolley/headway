@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Core.Interface
 {
-    public interface IModuleService
+    public interface IModuleApiRequest
     {
         Task<IEnumerable<Module>> GetModulesAsync();
     }

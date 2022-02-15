@@ -3,7 +3,7 @@ using Headway.Core.Interface;
 using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.State;
-using Headway.Services;
+using Headway.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
@@ -72,38 +72,38 @@ namespace Headway.BlazorServerApp
             services.AddSingleton<IConfigCache, ConfigCache>();
             services.AddSingleton<IStateNotification, StateNotification>();
 
-            services.AddTransient<IModuleService, ModuleService>(sp =>
+            services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>
             {
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new ModuleService(httpClient, tokenProvider);
+                return new ModuleApiRequest(httpClient, tokenProvider);
             });
 
-            services.AddTransient<IConfigurationService, ConfigurationService>(sp =>
+            services.AddTransient<IConfigurationApiRequest, ConfigurationApiRequest>(sp =>
             {
                 var configCache = sp.GetRequiredService<IConfigCache>();
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new ConfigurationService(httpClient, tokenProvider, configCache);
+                return new ConfigurationApiRequest(httpClient, tokenProvider, configCache);
             });
 
-            services.AddTransient<IDynamicService, DynamicService>(sp =>
+            services.AddTransient<IDynamicApiRequest, DynamicApiRequest>(sp =>
             {
                 var configCache = sp.GetRequiredService<IConfigCache>();
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new DynamicService(httpClient, tokenProvider, configCache);
+                return new DynamicApiRequest(httpClient, tokenProvider, configCache);
             });
 
-            services.AddTransient<IOptionsService, OptionsService>(sp =>
+            services.AddTransient<IOptionsApiRequest, OptionsApiRequest>(sp =>
             {
                 var tokenProvider = sp.GetRequiredService<TokenProvider>();
                 var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient("webapi");
-                return new OptionsService(httpClient, tokenProvider);
+                return new OptionsApiRequest(httpClient, tokenProvider);
             });
 
             services.AddTransient<ModulesGetRequestHandler>();

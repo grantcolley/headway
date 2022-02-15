@@ -7,16 +7,16 @@ namespace Headway.Core.Mediators
 {
     public class ModulesGetRequestHandler : IRequestHandler<ModulesGetRequest, ModulesGetRequest.Response>
     {
-        private readonly IModuleService moduleService;
+        private readonly IModuleApiRequest moduleApiRequest;
 
-        public ModulesGetRequestHandler(IModuleService moduleService)
+        public ModulesGetRequestHandler(IModuleApiRequest moduleApiRequest)
         {
-            this.moduleService = moduleService;
+            this.moduleApiRequest = moduleApiRequest;
         }
 
         public async Task<ModulesGetRequest.Response> Handle(ModulesGetRequest request, CancellationToken cancellationToken)
         {
-            return new ModulesGetRequest.Response(await moduleService.GetModulesAsync().ConfigureAwait(false));
+            return new ModulesGetRequest.Response(await moduleApiRequest.GetModulesAsync().ConfigureAwait(false));
         }
     }
 }
