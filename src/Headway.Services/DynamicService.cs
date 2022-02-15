@@ -21,7 +21,7 @@ namespace Headway.Services
         {
         }
 
-        public async Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(IEnumerable<T> list, string config) where T : class, new()
+        public async Task<IResponse<DynamicList<T>>> GetDynamicListAsync<T>(IEnumerable<T> list, string config) where T : class, new()
         {
             var serviceResultConfig =
                 await GetConfigAsync(config)
@@ -46,7 +46,7 @@ namespace Headway.Services
             }
         }
 
-        public async Task<IServiceResult<DynamicList<T>>> GetDynamicListAsync<T>(string config) where T : class, new()
+        public async Task<IResponse<DynamicList<T>>> GetDynamicListAsync<T>(string config) where T : class, new()
         {
             var serviceResultConfig =
                 await GetConfigAsync(config)
@@ -88,7 +88,7 @@ namespace Headway.Services
             }
         }
 
-        public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(T model, string config) where T : class, new()
+        public async Task<IResponse<DynamicModel<T>>> GetDynamicModelAsync<T>(T model, string config) where T : class, new()
         {
             var serviceResultConfig =
                 await GetConfigAsync(config)
@@ -113,7 +113,7 @@ namespace Headway.Services
             }
         }
 
-        public async Task<IServiceResult<DynamicModel<T>>> GetDynamicModelAsync<T>(int id, string config) where T : class, new()
+        public async Task<IResponse<DynamicModel<T>>> GetDynamicModelAsync<T>(int id, string config) where T : class, new()
         {
             var serviceResultConfig =
                 await GetConfigAsync(config)
@@ -155,7 +155,7 @@ namespace Headway.Services
             }
         }
 
-        public async Task<IServiceResult<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>(string config) where T : class, new()
+        public async Task<IResponse<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>(string config) where T : class, new()
         {
             var serviceResultConfig =
                 await GetConfigAsync(config)
@@ -182,7 +182,7 @@ namespace Headway.Services
             }
         }
 
-        public async Task<IServiceResult<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
+        public async Task<IResponse<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
             var addResponse = await httpClient.PostAsJsonAsync(
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
@@ -210,7 +210,7 @@ namespace Headway.Services
             }
         }
 
-        public async Task<IServiceResult<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
+        public async Task<IResponse<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
             var updateResponse = await httpClient.PutAsJsonAsync(
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
@@ -238,7 +238,7 @@ namespace Headway.Services
             }
         }
 
-        public async Task<IServiceResult<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
+        public async Task<IResponse<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
             var configPath = $"{dynamicModel.Config.ModelApi}/{dynamicModel.Id}";
             var httpResponseMessage = await httpClient.DeleteAsync(configPath).ConfigureAwait(false);

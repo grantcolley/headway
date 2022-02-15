@@ -2,7 +2,7 @@
 
 namespace Headway.Services
 {
-    public class ServiceResult<T> : IServiceResult<T>
+    public class ServiceResult<T> : IResponse<T>
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }

@@ -1,7 +1,6 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Interface;
 using Headway.Core.Model;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -23,7 +22,7 @@ namespace Headway.Services
             this.configCache = configCache;
         }
 
-        public async Task<IServiceResult<Config>> GetConfigAsync(string name)
+        public async Task<IResponse<Config>> GetConfigAsync(string name)
         {
             var config = configCache.GetConfig(name);
 

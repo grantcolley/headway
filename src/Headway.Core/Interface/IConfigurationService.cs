@@ -5,6 +5,6 @@ namespace Headway.Core.Interface
 {
     public interface IConfigurationService
     { 
-        Task<IServiceResult<Config>> GetConfigAsync(string name);
+        Task<IResponse<Config>> GetConfigAsync(string name);
     }
 }

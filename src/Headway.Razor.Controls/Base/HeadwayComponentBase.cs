@@ -10,7 +10,7 @@ namespace Headway.Razor.Controls.Base
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        protected T GetResponse<T>(IServiceResult<T> result)
+        protected T GetResponse<T>(IResponse<T> result)
         {
             if (!result.IsSuccess)
             {

@@ -22,7 +22,7 @@ namespace Headway.Razor.Controls.Documents
         {
             isSaveInProgress = true;
 
-            IServiceResult<DynamicModel<T>> serviceResult;
+            IResponse<DynamicModel<T>> serviceResult;
 
             if (dynamicModel.Id.Equals(0))
             {

@@ -37,7 +37,7 @@ namespace Headway.Services
             localOptionItems.Add(typeof(StaticOptionItems).Name, new StaticOptionItems());
         }
 
-        public async Task<IServiceResult<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
+        public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
         {
             var optionsCode = dynamicArgs.Single(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
 
@@ -59,7 +59,7 @@ namespace Headway.Services
                 .ConfigureAwait(false);
         }
 
-        public async Task<IServiceResult<IEnumerable<T>>> GetOptionItemsAsync<T>(List<DynamicArg> dynamicArgs)
+        public async Task<IResponse<IEnumerable<T>>> GetOptionItemsAsync<T>(List<DynamicArg> dynamicArgs)
         {
             var args = ComponentArgHelper.GetArgs(dynamicArgs);
 

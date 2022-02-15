@@ -1,6 +1,6 @@
 ﻿namespace Headway.Core.Interface
 {
-    public interface IServiceResult<T>
+    public interface IResponse<T>
     {
         bool IsSuccess { get; set; }
         string Message { get; set; }

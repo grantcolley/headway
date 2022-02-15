@@ -29,7 +29,7 @@ namespace Headway.Services
             this.useAccessToken = useAccessToken;
         }
 
-        public async Task<IServiceResult<T>> GetServiceResultAsync<T>(HttpResponseMessage httpResponseMessage)
+        public async Task<IResponse<T>> GetServiceResultAsync<T>(HttpResponseMessage httpResponseMessage)
         {
             var serviceResult = new ServiceResult<T>
             {
@@ -47,7 +47,7 @@ namespace Headway.Services
             return serviceResult;
         }
 
-        protected static IServiceResult<T> GetServiceResult<T>(T result, bool isSuccess = true, string message = null)
+        protected static IResponse<T> GetServiceResult<T>(T result, bool isSuccess = true, string message = null)
         {
             var serviceResult = new ServiceResult<T>
             {
