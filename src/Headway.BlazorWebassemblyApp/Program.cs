@@ -76,6 +76,8 @@ namespace Headway.BlazorWebassemblyApp
             });
 
             builder.Services.AddTransient<ModulesGetRequestHandler>();
+            builder.Services.AddTransient<ConfigGetByNameRequestHandler>();
+            builder.Services.AddTransient<OptionItemsRequestHandler>();
 
             builder.Services.AddMediatR(typeof(Module).Assembly);
 
