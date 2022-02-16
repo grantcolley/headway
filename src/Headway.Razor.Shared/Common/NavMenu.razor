@@ -1,7 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 
-@inject IMediator Mediator
-
 <div class="top-row pl-4 navbar navbar-dark">
     <span class="navbar-brand">Headway</span>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -37,7 +35,7 @@
     public IAppCache AppCache { get; set; }
 
     [Inject]
-    public IModuleApiRequest ModuleService { get; set; }
+    public IMediator Mediator { get; set; }
 
     [Inject]
     AuthenticationStateProvider AuthenticationStateProvider { get; set; }
