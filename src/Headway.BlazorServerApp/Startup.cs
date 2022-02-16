@@ -107,6 +107,8 @@ namespace Headway.BlazorServerApp
             });
 
             services.AddTransient<ModulesGetRequestHandler>();
+            services.AddTransient<ConfigGetByNameRequestHandler>();
+            services.AddTransient<OptionItemsRequestHandler>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
