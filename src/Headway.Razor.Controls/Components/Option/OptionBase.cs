@@ -2,9 +2,11 @@
 using Headway.Core.Constants;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
+using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.State;
 using Headway.Razor.Controls.Base;
+using MediatR;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,7 @@ namespace Headway.Razor.Controls.Components.Option
         public IStateNotification StateNotification { get; set; }
 
         [Inject]
-        public IOptionsApiRequest OptionsService { get; set; }
+        public IMediator Mediator { get; set; }
 
         protected List<OptionItem> options;
 
@@ -67,9 +69,9 @@ namespace Headway.Razor.Controls.Components.Option
             {
                 LinkFieldCheck();
 
-                var result = await OptionsService.GetOptionItemsAsync(ComponentArgs).ConfigureAwait(false);
+                var result = await Mediator.Send(new OptionItemsRequest(ComponentArgs)).ConfigureAwait(false);
 
-                var optionItems = GetResponse(result);
+                var optionItems = GetResponse(result.OptionItems);
 
                 options = new List<OptionItem>(optionItems);
             }
