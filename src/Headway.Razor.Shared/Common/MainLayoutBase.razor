@@ -1,17 +1,16 @@
-﻿<MudThemeProvider/>
+﻿@using Headway.Razor.Shared.Theme
+
+<MudThemeProvider Theme="theme"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Typo="Typo.h6">Headway</MudText>        
         <MudSpacer />
         @LoginDisplayFragment                    
     </MudAppBar>
-        <MudDrawer @bind-Open="drawerOpen" Elevation="1">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">Headway</MudText>
-        </MudDrawerHeader>
+    <MudDrawer @bind-Open="drawerOpen" Elevation="1" ClipMode="DrawerClipMode.Always">
         <AuthorizeView>
             <Authorized>
                 <NavMenu IsAuthorized="true" />
@@ -22,7 +21,13 @@
         </AuthorizeView>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <MudToolBar DisableGutters="true">
+                <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                <MudSpacer />
+            </MudToolBar>
+        </MudHidden>
+        <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
             @BodyFragment
         </MudContainer>
     </MudMainContent>
@@ -34,6 +39,8 @@
 
     [Parameter]
     public RenderFragment BodyFragment { get; set; }
+
+    HeadwayTheme theme = new();
 
     bool drawerOpen = true;
 
