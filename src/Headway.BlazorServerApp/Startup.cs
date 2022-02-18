@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using MudBlazor.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
@@ -113,6 +114,7 @@ namespace Headway.BlazorServerApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMediatR(typeof(Module).Assembly);
+            services.AddMudServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,6 +21,7 @@
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.1" />
+    <PackageReference Include="MudBlazor" Version="6.0.6" />
   </ItemGroup>
 
 </Project>

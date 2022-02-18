@@ -1,5 +1,17 @@
-﻿<div class="page">
-    <div class="sidebar">
+﻿<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        @LoginDisplayFragment                    
+    </MudAppBar>
+        <MudDrawer @bind-Open="drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Headway</MudText>
+        </MudDrawerHeader>
         <AuthorizeView>
             <Authorized>
                 <NavMenu IsAuthorized="true" />
@@ -8,20 +20,13 @@
                 <NavMenu IsAuthorized="false" />
             </NotAuthorized>
         </AuthorizeView>
-    </div>
-
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <div class="float-right">
-                @LoginDisplayFragment
-            </div>
-        </div>
-
-        <div class="content px-4">
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
             @BodyFragment
-        </div>
-    </div>
-</div>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
 
 @code {
     [Parameter]
@@ -29,4 +34,11 @@
 
     [Parameter]
     public RenderFragment BodyFragment { get; set; }
+
+    bool drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        drawerOpen = !drawerOpen;
+    }
 }
