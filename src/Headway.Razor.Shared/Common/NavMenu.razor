@@ -1,34 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 
-<div class="top-row pl-4 navbar navbar-dark">
-    <span class="navbar-brand">Headway</span>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <AuthorizeView Roles="@Roles.HEADWAY_USER">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    @if (selectedModule != null)
-                    {
-                        @RenderSelectedModule(selectedModule);
-                    }
-                </div>
-            </div>
-            <div class="row">
-                <div class="col nav-modules-bottom">
-                    @foreach (var module in modules)
-                    {
-                        @RenderModules(module);
-                    }
-                </div>
-            </div>
-        </div>
-    </AuthorizeView>
-</div>
+<AuthorizeView Roles="@Roles.HEADWAY_USER">
+    @foreach (var module in modules)
+    {
+        @RenderModule(module);
+    }
+</AuthorizeView>
 
 @code {
     [Inject]
@@ -43,22 +20,10 @@
     [Parameter]
     public bool IsAuthorized { get; set; }
 
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
     private IEnumerable<Module> modules = new List<Module>();
-
-    private Module selectedModule = null;
 
     protected async override Task OnParametersSetAsync()
     {
-        // can only call async in blazor in the lifecycle events
-        // OnInitializedAsync lifecycle event only gets called before first render
-        // OnParametersSetAsync lifecycle event gets called every time the parameters are set by the parent
-        // In the parent wrap a AuthorizeView around the NavMenu, setting the IsAuthorized parameter base on Authorized and NotAuthorized
-        // When IsAuthorized is true build the navigation menu
-
         if (IsAuthorized)
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
@@ -71,91 +36,31 @@
                     var response = await Mediator.Send(new ModulesGetRequest()).ConfigureAwait(false);
                     modules = response.Modules;
                 }
-
-                var cachedSelectedModule = AppCache.Get<string>(AppCacheKeys.ACTIVE_NAV_MODULE);
-                if (!string.IsNullOrWhiteSpace(cachedSelectedModule))
-                {
-                    await InvokeAsync(() =>
-                    {
-                        selectedModule = modules.FirstOrDefault(
-                            m => m.Name.Equals(cachedSelectedModule));
-
-                        if (selectedModule == null)
-                        {
-                            AppCache.Remove(AppCacheKeys.ACTIVE_NAV_MODULE);
-                        }
-
-                        StateHasChanged();
-                    });
-                }
             }
-        }
-        else
-        {
-            modules = new List<Module>();
         }
 
         await base.OnParametersSetAsync().ConfigureAwait(false);
     }
 
-    private RenderFragment RenderModules(Module module) => __builder =>
+    private RenderFragment RenderModule(Module module) => __builder =>
     {
         @if (module != null)
         {
-            <button type="button" class="nav-module-button" @onclick="() => OnModuleClick(module)">@module.Name</button>
-        }
-    };
+            //<MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">@module.Name</MudText>
+            <MudNavGroup Title="@module.Name" HideExpandIcon="true">
+                @foreach (var category in module.Categories)
+                {
+                    <MudNavGroup Title="@category.Name" Icon="@Icons.Material.Outlined.AssignmentInd" HideExpandIcon="true">
 
-    private RenderFragment RenderSelectedModule(Module module) => __builder =>
-    {
-        @if (module != null)
-        {
-            <table>
-                <tr>
-                    <td>
-                        <br/>
-                        <span class="nav-module pl-4">@module.Name</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @foreach (var category in module.Categories)
+                        @foreach(var menuItem in category.MenuItems)
                         {
-                            <br/>
-                            <span class="nav-category pl-5">@category.Name</span>
-                            <ul class="nav-menu-ul">
-                                @foreach (var menuItem in category.MenuItems)
-                                {
-                                    <li class="nav-item px-3">
-                                        <NavLink class="nav-link" href="@menuItem.NavigateFullPath()" @onclick:stopPropagation Match="NavLinkMatch.All">
-                                            <span class="@menuItem.ImageClass" aria-hidden="true"></span> @menuItem.Name
-                                        </NavLink>
-                                    </li>
-                                }
-                            </ul>
+                            <MudNavLink Href="@menuItem.NavigateFullPath()" Icon="@Icons.Material.Outlined.InsertDriveFile" @onclick:stopPropagation Match="NavLinkMatch.All">@menuItem.Name</MudNavLink>
+                            //Icon="@Icons.Material.Outlined.InsertDriveFile"
+                            //<span class="@menuItem.ImageClass" aria-hidden="true"></span>
                         }
-                    </td>
-                </tr>
-            </table>
+                    </MudNavGroup>
+                }
+            </MudNavGroup>
         }
     };
-
-    private void OnModuleClick(Module module)
-    {
-        selectedModule = module;
-
-        if(selectedModule == null)
-        {
-            AppCache.Remove(AppCacheKeys.ACTIVE_NAV_MODULE);
-        }
-        else
-        {
-            AppCache.Set(AppCacheKeys.ACTIVE_NAV_MODULE, selectedModule.Name);
-        }
-    }
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 }
