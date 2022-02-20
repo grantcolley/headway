@@ -9,35 +9,40 @@
 }
 else
 {
-    <h3>@dynamicList.Title</h3>
+    <MudTable Items="@dynamicList.DynamicListItems" 
+              Hover="true" Dense="true" Striped="true" Breakpoint="Breakpoint.Sm" 
+              Loading="@loading" LoadingProgressColor="Color.Info"
+              Filter="new Func<DynamicListItem<T>,bool>(FilterFunction)">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">@dynamicList.Title</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                @foreach(var column in dynamicList.ConfigItems)
-                {
-                    <th>@column.Label</th>
-                }
-                <th> 
-                    <ComponentTip Text="Create new"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-plus" @onclick="() => Add()"/></ComponentTip>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var listIitem in dynamicList.DynamicListItems)
+            @foreach(var column in dynamicList.ConfigItems)
             {
-                <tr>
-                    @foreach(var column in dynamicList.ConfigItems)
-                    {
-                        <td>
-                            @dynamicList.GetValue(listIitem.Model, column.PropertyName)
-                        </td>
-                    }
-                    <td>
-                        <ComponentTip Text="Edit"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(listIitem.Model, dynamicList.Config.NavigateToProperty))"/></ComponentTip>
-                    </td>
-                </tr>
+                <MudTh>@column.Label</MudTh>
             }
-        </tbody>
-    </table>
+
+            <MudTh>
+                <ComponentTip Text="Create new"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-plus" @onclick="() => Add()"/></ComponentTip>
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+
+            @foreach(var column in dynamicList.ConfigItems)
+            {
+                <MudTd DataLabel="@column.Label">@dynamicList.GetValue(@context.Model, column.PropertyName)</MudTd>                            
+            }
+            
+            <MudTd>
+                <ComponentTip Text="Edit"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateToProperty))"/></ComponentTip>
+            </MudTd>
+
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
 }
