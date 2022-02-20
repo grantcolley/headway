@@ -82,7 +82,7 @@ namespace Headway.Core.Dynamic
         /// <returns>The value of the property.</returns>
         public object GetValue(T target, string fieldName)
         {
-            if (setters.ContainsKey(fieldName))
+            if (getters.ContainsKey(fieldName))
             {
                 return getters[fieldName](target);
             }
@@ -143,7 +143,11 @@ namespace Headway.Core.Dynamic
             foreach (var propertyInfo in propertyInfos)
             {
                 getters.Add(propertyInfo.Name, GetValue<T>(propertyInfo));
-                setters.Add(propertyInfo.Name, SetValue<T>(propertyInfo));
+
+                if (propertyInfo.CanWrite)
+                {
+                    setters.Add(propertyInfo.Name, SetValue<T>(propertyInfo));
+                }
             }
 
             return new DynamicTypeHelper<T>(createInstance, getters, setters, propertyInfos);
