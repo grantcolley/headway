@@ -23,6 +23,10 @@ namespace Headway.Core.Model
         [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Icon is required")]
+        [StringLength(30, ErrorMessage = "Icon must be between 1 and 30 characters")]
+        public string Icon { get; set; }
+
         [Required(ErrorMessage = "Permission is required")]
         [StringLength(20, ErrorMessage = "Permission must be between 1 and 20 characters")]
         public string Permission { get; set; }
