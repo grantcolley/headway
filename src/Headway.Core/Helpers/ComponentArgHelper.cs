@@ -22,7 +22,7 @@ namespace Headway.Core.Helpers
                 }
                 else
                 {
-                    arg.Value = dynamicArg.Value.ToString();
+                    arg.Value = dynamicArg.Value?.ToString();
                 }
 
                 args.Add(arg);
