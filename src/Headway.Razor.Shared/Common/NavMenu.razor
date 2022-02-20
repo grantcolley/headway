@@ -46,17 +46,14 @@
     {
         @if (module != null)
         {
-            //<MudText Typo="Typo.subtitle2" Color="Color.Inherit" Class="ml-4 my-3">@module.Name</MudText>
-            <MudNavGroup Title="@module.Name" HideExpandIcon="true">
+            <MudNavGroup Title="@module.Name" Icon=@IconHelper.GetOutlined(module.Icon) HideExpandIcon="true">
                 @foreach (var category in module.Categories)
                 {
-                    <MudNavGroup Title="@category.Name" Icon="@Icons.Material.Outlined.AssignmentInd" HideExpandIcon="true">
+                    <MudNavGroup Title="@category.Name" Icon=@IconHelper.GetOutlined(category.Icon) HideExpandIcon="true">
 
                         @foreach(var menuItem in category.MenuItems)
                         {
-                            <MudNavLink Href="@menuItem.NavigateFullPath()" Icon="@Icons.Material.Outlined.InsertDriveFile" @onclick:stopPropagation Match="NavLinkMatch.All">@menuItem.Name</MudNavLink>
-                            //Icon="@Icons.Material.Outlined.InsertDriveFile"
-                            //<span class="@menuItem.ImageClass" aria-hidden="true"></span>
+                            <MudNavLink Href="@menuItem.NavigateFullPath()" Icon=@IconHelper.GetOutlined(menuItem.Icon) @onclick:stopPropagation Match="NavLinkMatch.All">@menuItem.Name</MudNavLink>
                         }
                     </MudNavGroup>
                 }
