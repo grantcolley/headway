@@ -170,29 +170,29 @@ namespace Headway.Repository.Data
 
         private static void Navigation(ApplicationDbContext applicationDbContext)
         {
-            var administration = new Module { Name = "Administration", Order = 1, Permission = admin.Name };
+            var administration = new Module { Name = "Administration", Icon = "Engineering", Order = 1, Permission = admin.Name };
 
             applicationDbContext.Modules.Add(administration);
 
-            var authorisationCatgory = new Category { Name = "Authorisation", Order = 1, Permission = admin.Name };
-            var navigationCatgory = new Category { Name = "Navigation", Order = 2, Permission = admin.Name };
-            var configurationCategory = new Category { Name = "Configuration", Order = 3, Permission = admin.Name };
-            var developerToolsCategory = new Category { Name = "Developer Tools", Order = 4, Permission = developer.Name };
+            var authorisationCatgory = new Category { Name = "Authorisation", Icon = "AdminPanelSettings", Order = 1, Permission = admin.Name };
+            var navigationCatgory = new Category { Name = "Navigation", Icon = "Explore", Order = 2, Permission = admin.Name };
+            var configurationCategory = new Category { Name = "Configuration", Icon = "AppSettingsAlt", Order = 3, Permission = admin.Name };
+            var developerToolsCategory = new Category { Name = "Developer Tools", Icon = "Build", Order = 4, Permission = developer.Name };
 
             applicationDbContext.Categories.Add(authorisationCatgory);
             applicationDbContext.Categories.Add(configurationCategory);
             applicationDbContext.Categories.Add(developerToolsCategory);
 
-            var usersMenuItem = new MenuItem { Name = "Users", ImageClass = "oi oi-person", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Users" };
-            var rolesMenuItem = new MenuItem { Name = "Roles", ImageClass = "oi oi-lock-locked", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "Roles" };
-            var permissionsMenuItem = new MenuItem { Name = "Permissions", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "Permissions" };
+            var usersMenuItem = new MenuItem { Name = "Users", Icon = "PersonOutline", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Users" };
+            var rolesMenuItem = new MenuItem { Name = "Roles", Icon = "LockOutlined", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "Roles" };
+            var permissionsMenuItem = new MenuItem { Name = "Permissions", Icon = "Key", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "Permissions" };
 
-            var modulesMenuItem = new MenuItem { Name = "Modules", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Modules" };
-            var categoriesMenuItem = new MenuItem { Name = "Categories", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "Categories" };
-            var menuItemsMenuItem = new MenuItem { Name = "MenuItems", ImageClass = "oi oi-key", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "MenuItems" };
+            var modulesMenuItem = new MenuItem { Name = "Modules", Icon = "AutoAwesomeMosaic", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Modules" };
+            var categoriesMenuItem = new MenuItem { Name = "Categories", Icon = "AutoAwesomeMotion", NavigateTo = "Page", Order = 2, Permission = admin.Name, Config = "Categories" };
+            var menuItemsMenuItem = new MenuItem { Name = "MenuItems", Icon = "Article", NavigateTo = "Page", Order = 3, Permission = admin.Name, Config = "MenuItems" };
 
-            var configureMenuItem = new MenuItem { Name = "Configure", ImageClass = "oi oi-cog", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Configs" };
-            var demoMenuItem = new MenuItem { Name = "Demo", ImageClass = "oi oi-info", NavigateTo = "Page", Order = 2, Permission = developer.Name, Config = "DemoModels" };
+            var configureMenuItem = new MenuItem { Name = "Configure", Icon = "Settings", NavigateTo = "Page", Order = 1, Permission = admin.Name, Config = "Configs" };
+            var demoMenuItem = new MenuItem { Name = "Demo", Icon = "InfoOutlined", NavigateTo = "Page", Order = 2, Permission = developer.Name, Config = "DemoModels" };
 
             applicationDbContext.MenuItems.Add(usersMenuItem);
             applicationDbContext.MenuItems.Add(rolesMenuItem);
