@@ -268,7 +268,7 @@ namespace Headway.Repository
                 MenuItemId = menuItem.MenuItemId,
                 Name = menuItem.Name,
                 Order = menuItem.Order,
-                ImageClass = menuItem.ImageClass,
+                Icon = menuItem.Icon,
                 NavigateTo = menuItem.NavigateTo,
                 Config = menuItem.Config,
                 Permission = menuItem.Permission,
