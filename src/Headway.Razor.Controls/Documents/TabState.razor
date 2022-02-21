@@ -5,7 +5,7 @@
 
 @if (dynamicModel == null)
 {
-    <p><em>Loading...</em></p>
+    <Loading/>
 }
 else
 {
@@ -13,7 +13,7 @@ else
     {
         <div class="container container-body float-start">
             <div class="lead">
-                <h4>@dynamicModel.Config.Title</h4>
+                <MudText Typo="Typo.h6">@dynamicModel.Config.Title</MudText>
             </div>
             <div class="row">
                 <div class="col-sm">
