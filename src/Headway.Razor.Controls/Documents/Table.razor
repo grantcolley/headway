@@ -25,7 +25,9 @@ else
             }
 
             <MudTh>
-                <ComponentTip Text="Create new"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-plus" @onclick="() => Add()"/></ComponentTip>
+                <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
+                    <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
+                </MudTooltip>
             </MudTh>
         </HeaderContent>
         <RowTemplate>
