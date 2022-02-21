@@ -4,6 +4,8 @@ using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Headway.Razor.Controls.Base;
+using MudBlazor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +16,10 @@ namespace Headway.Razor.Controls.Documents
     public abstract class ListDetailBase<T> : GenericComponentBase<T> where T : class, new()
     {
         protected DynamicModel<T> dynamicModel;
-
         protected DynamicList<T> dynamicList;
+        protected string filterString;
+
+        protected bool FilterFunction(DynamicListItem<T> item) => FilterItem(item, filterString);
 
         protected override async Task OnInitializedAsync()
         {
@@ -33,11 +37,6 @@ namespace Headway.Razor.Controls.Documents
         protected async Task NewAsync()
         {
             dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false);
-        }
-
-        protected async Task EditAsync(DynamicListItem<T> listItem)
-        {
-            dynamicModel = await GetDynamicModelAsync(listItem.Model, Config.Name).ConfigureAwait(false);
         }
 
         protected async Task AddAsync(DynamicModel<T> model)
@@ -72,6 +71,36 @@ namespace Headway.Razor.Controls.Documents
             }
 
             await NewAsync().ConfigureAwait(false);
+        }
+
+        protected async void RowClickEvent(TableRowClickEventArgs<DynamicListItem<T>> tableRowClickEventArgs)
+        {
+            if (tableRowClickEventArgs != null
+                && tableRowClickEventArgs.Item != null)
+            {
+                dynamicModel = await GetDynamicModelAsync(tableRowClickEventArgs.Item.Model, Config.Name).ConfigureAwait(false);
+            }
+        }
+
+        private bool FilterItem(DynamicListItem<T> item, string filter)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+            {
+                return true;
+            }
+
+            foreach (var column in dynamicList.ConfigItems)
+            {
+                var value = dynamicList.GetValue(item.Model, column.PropertyName);
+
+                if (value != null
+                    && value.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
