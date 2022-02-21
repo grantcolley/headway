@@ -10,18 +10,14 @@ namespace Headway.Razor.Controls.Documents
     [DynamicDocument]
     public abstract class TableBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
-        protected bool loading;
         protected string filterString;
+
+        protected bool FilterFunction(DynamicListItem<T> item) => FilterItem(item, filterString);
 
         protected override async Task OnInitializedAsync()
         {
-            loading = true;
-
             await InitializeDynamicListAsync().ConfigureAwait(false);
-
             await base.OnInitializedAsync().ConfigureAwait(false);
-
-            loading = false;
         }
 
         protected void Add()
@@ -33,8 +29,6 @@ namespace Headway.Razor.Controls.Documents
         {
             NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{dynamicList.Config.NavigateToConfig}/{id}");
         }
-
-        protected bool FilterFunction(DynamicListItem<T> item) => FilterItem(item, filterString);
 
         private bool FilterItem(DynamicListItem<T> item, string filter)
         {
