@@ -15,12 +15,11 @@
             }
             else
             {
-                <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>    
+                <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">@Field.Label</MudTooltip>   
             }
         </div>
         <div class="col-sm-8">
-            <DateControl class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
-            <DynamicValidationMessage For="FieldExpression" Field="@Field"/>
+            <MudDatePicker @bind-Date="@PropertyValue"/>
         </div>
     </div>
 </div>

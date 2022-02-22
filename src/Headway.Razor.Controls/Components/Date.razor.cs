@@ -10,29 +10,20 @@ namespace Headway.Razor.Controls.Components
     [DynamicComponent]
     public abstract class DateBase : DynamicComponentBase
     {
-        public Expression<Func<DateTime>> FieldExpression
+        public DateTime? PropertyValue
         {
             get
             {
-                return Expression.Lambda<Func<DateTime>>(Field.MemberExpression);
+                return (DateTime?)Field.PropertyInfo.GetValue(Field.Model);
             }
-        }
-
-        public DateTime PropertyValue
-        {
-            get
+            set 
             {
-                return (DateTime)Field.PropertyInfo.GetValue(Field.Model);
+                Field.PropertyInfo.SetValue(Field.Model, value); 
             }
-        }
-
-        public virtual void OnValueChanged(DateTime value)
-        {
-            Field.PropertyInfo.SetValue(Field.Model, value);
         }
     }
 
-    public class DateControl : InputDate<DateTime>
+    public class DateControl : InputDate<DateTime?>
     {
     }
 }
