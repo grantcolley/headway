@@ -9,7 +9,14 @@
                     <thead>
                         <tr>
                             <th>
-                                @Field.Label
+                                @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+                                {
+                                    @Field.Label
+                                }
+                                else
+                                {
+                                     <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">@Field.Label</MudTooltip>    
+                                }
                             </th>
                         </tr>
                     </thead>
