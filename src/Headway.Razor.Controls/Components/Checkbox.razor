@@ -11,15 +11,15 @@
         <div class="col-sm-4 col-form-label">
             @if(string.IsNullOrWhiteSpace(Field.Tooltip))
             {
-                @Field.Label                
+                @Field.Label
             }
             else
             {
-                <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>    
+                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">@Field.Label</MudTooltip>    
             }
         </div>
         <div class="col-sm-1">
-            <input type="checkbox" @bind="PropertyValue" style="vertical-align:bottom"/>
+            <MudCheckBox @bind-Checked="@PropertyValue"></MudCheckBox>
         </div>
         <div class="col-sm-7"></div>
     </div>
