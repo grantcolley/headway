@@ -25,7 +25,7 @@
                         {
                             <tr>
                                 <td>
-                                    <MudCheckBox @bind-Checked="checklistItem.IsChecked" style="vertical-align:middle"/> @checklistItem.Name                
+                                    <input type="checkbox" @bind="checklistItem.IsChecked" style="vertical-align:middle"/> @checklistItem.Name
                                 </td>
                             </tr>
                         }
