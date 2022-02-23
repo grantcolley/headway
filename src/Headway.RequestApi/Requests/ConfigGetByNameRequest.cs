@@ -2,7 +2,7 @@
 using Headway.Core.Model;
 using MediatR;
 
-namespace Headway.Core.Mediators
+namespace Headway.RequestApi.Requests
 {
     public record ConfigGetByNameRequest(string Name) : IRequest<ConfigGetByNameRequest.Response>
     {

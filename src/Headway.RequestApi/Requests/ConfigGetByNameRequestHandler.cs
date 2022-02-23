@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Headway.Core.Mediators
+namespace Headway.RequestApi.Requests
 {
     public class ConfigGetByNameRequestHandler : IRequestHandler<ConfigGetByNameRequest, ConfigGetByNameRequest.Response>
     {

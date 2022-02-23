@@ -2,7 +2,7 @@
 using MediatR;
 using System.Collections.Generic;
 
-namespace Headway.Core.Mediators
+namespace Headway.RequestApi.Requests
 {
     public record ModulesGetRequest : IRequest<ModulesGetRequest.Response>
     {

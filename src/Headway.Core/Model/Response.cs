@@ -1,6 +1,6 @@
 ﻿using Headway.Core.Interface;
 
-namespace Headway.Core.Mediators
+namespace Headway.Core.Model
 {
     public class Response<T> : IResponse<T>
     {
