@@ -3,6 +3,7 @@ using Headway.Core.Interface;
 using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.State;
+using Headway.Razor.Controls.Services;
 using Headway.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -72,6 +73,10 @@ namespace Headway.BlazorServerApp
             services.AddSingleton<IAppCache, AppCache>();
             services.AddSingleton<IConfigCache, ConfigCache>();
             services.AddSingleton<IStateNotification, StateNotification>();
+            services.AddTransient<IShowDialogService, ShowDialogService>();
+            services.AddTransient<ModulesGetRequestHandler>();
+            services.AddTransient<ConfigGetByNameRequestHandler>();
+            services.AddTransient<OptionItemsRequestHandler>();
 
             services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>
             {
@@ -106,10 +111,6 @@ namespace Headway.BlazorServerApp
                 var httpClient = httpClientFactory.CreateClient("webapi");
                 return new OptionsApiRequest(httpClient, tokenProvider);
             });
-
-            services.AddTransient<ModulesGetRequestHandler>();
-            services.AddTransient<ConfigGetByNameRequestHandler>();
-            services.AddTransient<OptionItemsRequestHandler>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
