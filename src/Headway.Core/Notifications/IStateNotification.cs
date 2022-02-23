@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Headway.Core.State
+namespace Headway.Core.Notifications
 {
     public interface IStateNotification
     {

@@ -1,5 +1,5 @@
 ﻿using Headway.Core.Dynamic;
-using Headway.Core.State;
+using Headway.Core.Notifications;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;

@@ -1,6 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Model;
-using Headway.Core.State;
+using Headway.Core.Notifications;
 using Headway.Razor.Controls.Base;
 using Headway.RequestApi.Requests;
 using MediatR;

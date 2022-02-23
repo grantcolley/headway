@@ -1,8 +1,7 @@
 using Headway.BlazorWebassemblyApp.Account;
 using Headway.Core.Cache;
 using Headway.Core.Interface;
-using Headway.Core.Model;
-using Headway.Core.State;
+using Headway.Core.Notifications;
 using Headway.Razor.Controls.Services;
 using Headway.RequestApi.Api;
 using Headway.RequestApi.Requests;

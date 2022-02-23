@@ -2,7 +2,7 @@
 using Headway.Core.Constants;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
-using Headway.Core.State;
+using Headway.Core.Notifications;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;

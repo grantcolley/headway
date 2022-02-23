@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Headway.Core.State
+namespace Headway.Core.Notifications
 {
     public class StateNotification : IStateNotification
     {
