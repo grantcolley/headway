@@ -61,6 +61,13 @@ namespace Headway.Razor.Controls.Documents
 
         protected async Task Delete()
         {
+            var deleteResult = await CanDeleteDialog($"Do you really want to delete {dynamicModel.Title}").ConfigureAwait(false);
+
+            if(deleteResult.Cancelled)
+            {
+                return;
+            }
+
             isDeleteInProgress = true;
 
             var response = await DynamicService
