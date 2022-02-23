@@ -10,23 +10,24 @@
         <MudSpacer />
         @LoginDisplayFragment                    
     </MudAppBar>
-    <MudDrawer @bind-Open="drawerOpen" Elevation="1" ClipMode="DrawerClipMode.Always">
+    <AuthorizeView>
+        <Authorized>
+            <MudDrawer @bind-Open="drawerOpen" Elevation="1" ClipMode="DrawerClipMode.Always">
+                <NavMenu />           
+            </MudDrawer>
+        </Authorized>
+    </AuthorizeView>
+    <MudMainContent>
         <AuthorizeView>
             <Authorized>
-                <NavMenu IsAuthorized="true" />
+                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                    <MudToolBar DisableGutters="true">
+                        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                        <MudSpacer />
+                    </MudToolBar>
+                </MudHidden>
             </Authorized>
-            <NotAuthorized>
-                <NavMenu IsAuthorized="false" />
-            </NotAuthorized>
         </AuthorizeView>
-    </MudDrawer>
-    <MudMainContent>
-        <MudHidden Breakpoint="Breakpoint.SmAndDown">
-            <MudToolBar DisableGutters="true">
-                <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
-                <MudSpacer />
-            </MudToolBar>
-        </MudHidden>
         <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
             @BodyFragment
         </MudContainer>

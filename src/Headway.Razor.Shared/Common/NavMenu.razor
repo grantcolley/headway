@@ -17,25 +17,19 @@
     [Inject]
     AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
-    [Parameter]
-    public bool IsAuthorized { get; set; }
-
     private IEnumerable<Module> modules = new List<Module>();
 
     protected async override Task OnParametersSetAsync()
     {
-        if (IsAuthorized)
-        {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
-            var user = authState.User;
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync().ConfigureAwait(false);
+        var user = authState.User;
 
-            if (user.Identity.IsAuthenticated)
+        if (user.Identity.IsAuthenticated)
+        {
+            if (user.HasClaim(c => c.Type == ClaimTypes.ROLE && c.Value.Equals(Roles.HEADWAY_USER)))
             {
-                if (user.HasClaim(c => c.Type == ClaimTypes.ROLE && c.Value.Equals(Roles.HEADWAY_USER)))
-                {
-                    var response = await Mediator.Send(new ModulesGetRequest()).ConfigureAwait(false);
-                    modules = response.Modules;
-                }
+                var response = await Mediator.Send(new ModulesGetRequest()).ConfigureAwait(false);
+                modules = response.Modules;
             }
         }
 
