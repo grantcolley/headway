@@ -1,8 +1,10 @@
 ﻿using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Model;
+using Headway.Razor.Controls.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using MudBlazor;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
@@ -11,6 +13,9 @@ namespace Headway.Razor.Controls.Base
     {
         [Inject]
         protected IDynamicApiRequest DynamicService { get; set; }
+
+        [Inject]
+        protected IShowDialogService ShowDialogService { get; set; }
 
         [Parameter]
         public string Config { get; set; }
@@ -66,6 +71,11 @@ namespace Headway.Razor.Controls.Base
             {
                 CurrentEditContext = new EditContext(dynamicModel.Model);
             }
+        }
+
+        protected virtual async Task<DialogResult> CanDeleteDialog(string message)
+        {
+            return await ShowDialogService.DeleteAsync(message).ConfigureAwait(false);
         }
     }
 }
