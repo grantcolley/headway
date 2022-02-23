@@ -23,7 +23,7 @@
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
     <ProjectReference Include="..\Headway.Razor.Controls\Headway.Razor.Controls.csproj" />
     <ProjectReference Include="..\Headway.Razor.Shared\Headway.Razor.Shared.csproj" />
-    <ProjectReference Include="..\Headway.Requests\Headway.Requests.csproj" />
+    <ProjectReference Include="..\Headway.RequestApi\Headway.RequestApi.csproj" />
   </ItemGroup>
 
 </Project>

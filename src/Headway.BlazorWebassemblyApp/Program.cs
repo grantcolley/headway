@@ -1,11 +1,11 @@
 using Headway.BlazorWebassemblyApp.Account;
 using Headway.Core.Cache;
 using Headway.Core.Interface;
-using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.State;
 using Headway.Razor.Controls.Services;
-using Headway.Requests;
+using Headway.RequestApi.Api;
+using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -81,7 +81,7 @@ namespace Headway.BlazorWebassemblyApp
                 return new OptionsApiRequest(httpClient);
             });
 
-            builder.Services.AddMediatR(typeof(Module).Assembly);
+            builder.Services.AddMediatR(typeof(ModuleApiRequest).Assembly);
             builder.Services.AddMudServices();
 
             await builder.Build().RunAsync();

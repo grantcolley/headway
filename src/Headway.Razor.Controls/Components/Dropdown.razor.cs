@@ -1,8 +1,8 @@
 ﻿using Headway.Core.Attributes;
-using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.State;
 using Headway.Razor.Controls.Base;
+using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using System;

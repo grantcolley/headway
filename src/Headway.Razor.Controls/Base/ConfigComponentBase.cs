@@ -1,6 +1,5 @@
-﻿using Headway.Core.Interface;
-using Headway.Core.Mediators;
-using Headway.Core.Model;
+﻿using Headway.Core.Model;
+using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using System;

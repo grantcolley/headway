@@ -1,10 +1,10 @@
 using Headway.Core.Cache;
 using Headway.Core.Interface;
-using Headway.Core.Mediators;
 using Headway.Core.Model;
 using Headway.Core.State;
 using Headway.Razor.Controls.Services;
-using Headway.Requests;
+using Headway.RequestApi.Api;
+using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
@@ -114,7 +114,7 @@ namespace Headway.BlazorServerApp
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddMediatR(typeof(Module).Assembly);
+            services.AddMediatR(typeof(ModuleApiRequest).Assembly);
             services.AddMudServices();
         }
 
