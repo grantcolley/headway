@@ -231,9 +231,10 @@ namespace Headway.Repository.Data
                 ModelApi = "Permissions",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "PermissionId",
-                NavigateToConfig = "Permission"
+                NavigatePage = "Page",
+                NavigateProperty = "PermissionId",
+                NavigateConfig = "Permission",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(permissionsConfig);
@@ -255,8 +256,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
                 Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "Permissions"
+                NavigatePage = "Page",
+                NavigateConfig = "Permissions"
             };
 
             applicationDbContext.Configs.Add(permissionConfig);
@@ -283,9 +284,10 @@ namespace Headway.Repository.Data
                 ModelApi = "Roles",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "RoleId",
-                NavigateToConfig = "Role"
+                NavigatePage = "Page",
+                NavigateProperty = "RoleId",
+                NavigateConfig = "Role",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(rolesConfig);
@@ -307,8 +309,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
                 Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "Roles"
+                NavigatePage = "Page",
+                NavigateConfig = "Roles"
             };
 
             applicationDbContext.Configs.Add(roleConfig);
@@ -336,9 +338,10 @@ namespace Headway.Repository.Data
                 ModelApi = "Users",
                 OrderModelBy = "UserName",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "UserId",
-                NavigateToConfig = "User"
+                NavigatePage = "Page",
+                NavigateProperty = "UserId",
+                NavigateConfig = "User",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(usersConfig);
@@ -360,8 +363,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
                 Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "Users"
+                NavigatePage = "Page",
+                NavigateConfig = "Users"
             };
 
             applicationDbContext.Configs.Add(userConfig);
@@ -392,9 +395,10 @@ namespace Headway.Repository.Data
                 ModelApi = "Modules",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "ModuleId",
-                NavigateToConfig = "Module"
+                NavigatePage = "Page",
+                NavigateProperty = "ModuleId",
+                NavigateConfig = "Module",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(modulesConfig);
@@ -416,8 +420,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.Module, Headway.Core",
                 ModelApi = "Modules",
                 Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "Modules"
+                NavigatePage = "Page",
+                NavigateConfig = "Modules"
             };
 
             applicationDbContext.Configs.Add(moduleConfig);
@@ -445,9 +449,10 @@ namespace Headway.Repository.Data
                 ModelApi = "Categories",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "CategoryId",
-                NavigateToConfig = "Category"
+                NavigatePage = "Page",
+                NavigateProperty = "CategoryId",
+                NavigateConfig = "Category",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(categoriesConfig);
@@ -469,8 +474,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.Category, Headway.Core",
                 ModelApi = "Categories",
                 Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "Categories"
+                NavigatePage = "Page",
+                NavigateConfig = "Categories"
             };
 
             applicationDbContext.Configs.Add(categoryConfig);
@@ -499,9 +504,10 @@ namespace Headway.Repository.Data
                 ModelApi = "MenuItems",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "MenuItemId",
-                NavigateToConfig = "MenuItem"
+                NavigatePage = "Page",
+                NavigateProperty = "MenuItemId",
+                NavigateConfig = "MenuItem",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(menuItemsConfig);
@@ -523,8 +529,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.MenuItem, Headway.Core",
                 ModelApi = "MenuItems",
                 Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "MenuItems"
+                NavigatePage = "Page",
+                NavigateConfig = "MenuItems"
             };
 
             applicationDbContext.Configs.Add(menuItemConfig);
@@ -556,9 +562,10 @@ namespace Headway.Repository.Data
                 ModelApi = "Configuration",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "ConfigId",
-                NavigateToConfig = "Config"
+                NavigatePage = "Page",
+                NavigateProperty = "ConfigId",
+                NavigateConfig = "Config",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(configsConfig);
@@ -580,8 +587,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.Config, Headway.Core",
                 ModelApi = "Configuration",
                 Document = "Headway.Razor.Controls.Documents.TabState`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "Configs"
+                NavigatePage = "Page",
+                NavigateConfig = "Configs"
             };
 
             applicationDbContext.Configs.Add(configConfig);
@@ -703,9 +710,10 @@ namespace Headway.Repository.Data
                 ModelApi = "DemoModel",
                 OrderModelBy = "DemoModelId",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToProperty = "DemoModelId",
-                NavigateToConfig = "DemoModel"
+                NavigatePage = "Page",
+                NavigateProperty = "DemoModelId",
+                NavigateConfig = "DemoModel",
+                NavigateResetBreadcrumb = true
             };
 
             applicationDbContext.Configs.Add(demoModelsConfig);
@@ -726,8 +734,8 @@ namespace Headway.Repository.Data
                 Model = "Headway.Core.Model.DemoModel, Headway.Core",
                 ModelApi = "DemoModel",
                 Document = "Headway.Razor.Controls.Documents.TabState`1, Headway.Razor.Controls",
-                NavigateTo = "Page",
-                NavigateToConfig = "DemoModels"
+                NavigatePage = "Page",
+                NavigateConfig = "DemoModels"
             };
 
             applicationDbContext.Configs.Add(demoModelConfig);
