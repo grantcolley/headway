@@ -1,40 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Headway.Core.Notifications
 {
     public class StateNotification : IStateNotification
     {
-        private readonly Dictionary<string, Action> register;
+        private readonly Dictionary<string, Action> actions;
+        private readonly Dictionary<string, Func<object, Task>> functions;
 
         public StateNotification()
         {
-            register = new Dictionary<string, Action>();
+            actions = new Dictionary<string, Action>();
+            functions = new Dictionary<string, Func<object, Task>>();
         }
 
-        public void Register(string target, Action action)
+        public void Register(string target, Func<object, Task> function)
         {
-            if(register.ContainsKey(target))
+            if (functions.ContainsKey(target))
             {
                 return;
             }
 
-            register.Add(target, action);
+            functions.Add(target, function);
+        }
+
+        public void Register(string target, Action action)
+        {
+            if(actions.ContainsKey(target))
+            {
+                return;
+            }
+
+            actions.Add(target, action);
         }
 
         public void Deregister(string target)
         {
-            if (register.ContainsKey(target))
+            if (actions.ContainsKey(target))
             {
-                register.Remove(target);
+                actions.Remove(target);
+            }
+
+            if (functions.ContainsKey(target))
+            {
+                functions.Remove(target);
             }
         }
 
         public void NotifyStateHasChanged(string target)
         {
-            if (register.ContainsKey(target))
+            if (actions.ContainsKey(target))
             {
-                register[target].Invoke();
+                actions[target].Invoke();
+            }
+        }
+
+        public async Task NotifyStateHasChangedAsync(string target, object parameter)
+        {
+            if (functions.ContainsKey(target))
+            {
+                await functions[target].Invoke(parameter).ConfigureAwait(false);
             }
         }
     }
