@@ -22,12 +22,12 @@ namespace Headway.Razor.Controls.Documents
 
         protected void Add()
         {
-            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{dynamicList.Config.NavigateToConfig}");
+            NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}");
         }
 
         protected void Update(object id)
         {
-            NavigationManager.NavigateTo($"{dynamicList.Config.NavigateTo}/{dynamicList.Config.NavigateToConfig}/{id}");
+            NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{id}");
         }
 
         private bool FilterItem(DynamicListItem<T> item, string filter)

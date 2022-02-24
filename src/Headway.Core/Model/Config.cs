@@ -14,6 +14,7 @@ namespace Headway.Core.Model
         }
 
         public int ConfigId { get; set; }
+        public bool NavigateResetBreadcrumb { get; set; }
         public List<ConfigItem> ConfigItems { get; set; }
         public List<ConfigContainer> ConfigContainers { get; set; }
 
@@ -43,13 +44,13 @@ namespace Headway.Core.Model
         [StringLength(150, ErrorMessage = "Document must be between 1 and 150 characters")]
         public string Document { get; set; }
 
-        [StringLength(50, ErrorMessage = "Navigate To cannot exceed 50 characters")]
-        public string NavigateTo { get; set; }
+        [StringLength(50, ErrorMessage = "Navigate Page cannot exceed 50 characters")]
+        public string NavigatePage { get; set; }
 
-        [StringLength(50, ErrorMessage = "Navigate To Property cannot exceed 50 characters")]
-        public string NavigateToProperty { get; set; }
+        [StringLength(50, ErrorMessage = "Navigate Property cannot exceed 50 characters")]
+        public string NavigateProperty { get; set; }
 
-        [StringLength(50, ErrorMessage = "Navigate To Config cannot exceed 50 characters")]
-        public string NavigateToConfig { get; set; }
+        [StringLength(50, ErrorMessage = "Navigate Config cannot exceed 50 characters")]
+        public string NavigateConfig { get; set; }
     }
 }
