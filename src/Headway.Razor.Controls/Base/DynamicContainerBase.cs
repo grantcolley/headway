@@ -14,18 +14,18 @@ namespace Headway.Razor.Controls.Base
         [Parameter]
         public DynamicContainer Container { get; set; }
 
-        protected async override Task OnInitializedAsync()
-        {
-            StateNotification.Register(Container.UniqueId, StateHasChanged);
-
-            await base.OnInitializedAsync().ConfigureAwait(false);
-        }
-
         public void Dispose()
         {
             StateNotification.Deregister(Container.UniqueId);
 
             GC.SuppressFinalize(this);
+        }
+
+        protected async override Task OnInitializedAsync()
+        {
+            StateNotification.Register(Container.UniqueId, StateHasChanged);
+
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
     }
 }
