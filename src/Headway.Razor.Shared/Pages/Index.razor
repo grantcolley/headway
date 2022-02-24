@@ -10,3 +10,21 @@
         <LoginMessage/>
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+    [Inject]
+    public IStateNotification StateNotification { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var breadcrumb = new Breadcrumb
+        {
+            ResetToHome = true
+        };
+
+        await StateNotification.NotifyStateHasChangedAsync(StateNotifications.BREADCRUMBS, breadcrumb)
+            .ConfigureAwait(false);
+
+        await base.OnInitializedAsync();
+    }
+}

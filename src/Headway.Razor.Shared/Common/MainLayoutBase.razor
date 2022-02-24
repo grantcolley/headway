@@ -1,4 +1,4 @@
-﻿@using Headway.Razor.Shared.Theme
+﻿@using Headway.Razor.Shared.Common
 
 <MudThemeProvider Theme="theme"/>
 <MudDialogProvider/>
@@ -23,6 +23,7 @@
                 <MudHidden Breakpoint="Breakpoint.SmAndDown">
                     <MudToolBar DisableGutters="true">
                         <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                            <Breadcrumbs/>
                         <MudSpacer />
                     </MudToolBar>
                 </MudHidden>
@@ -41,11 +42,11 @@
     [Parameter]
     public RenderFragment BodyFragment { get; set; }
 
-    HeadwayTheme theme = new();
+    private HeadwayTheme theme = new();
 
-    bool drawerOpen = true;
+    private bool drawerOpen = true;
 
-    void DrawerToggle()
+    private void DrawerToggle()
     {
         drawerOpen = !drawerOpen;
     }

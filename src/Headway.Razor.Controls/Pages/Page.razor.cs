@@ -1,5 +1,7 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Constants;
+using Headway.Core.Model;
+using Headway.Core.Notifications;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -10,6 +12,9 @@ namespace Headway.Razor.Controls.Pages
     [DynamicPage]
     public abstract class PageBase : ConfigComponentBase
     {
+        [Inject]
+        public IStateNotification StateNotification { get; set; }
+
         [Parameter]
         public string Config { get; set; }
 
@@ -30,6 +35,18 @@ namespace Headway.Razor.Controls.Pages
             }
 
             await base.OnParametersSetAsync().ConfigureAwait(false);
+
+            var id = Id.HasValue ? $" {Id.Value}" : string.Empty;
+
+            var breadcrumb = new Breadcrumb
+            {
+                Text = $"{config.Name}{id}",
+                Href = NavigationManager.Uri.Remove(0, NavigationManager.BaseUri.Length - 1),
+                ResetAfterHome = config.NavigateResetBreadcrumb
+            };
+
+            await StateNotification.NotifyStateHasChangedAsync(StateNotifications.BREADCRUMBS, breadcrumb)
+                .ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => builder =>
