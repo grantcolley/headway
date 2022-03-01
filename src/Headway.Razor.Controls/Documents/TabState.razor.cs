@@ -83,7 +83,7 @@ namespace Headway.Razor.Controls.Documents
 
             Alert = new Alert
             {
-                AlertType = Alerts.DARK,
+                AlertType = Alerts.INFO,
                 Title = dynamicModel.Title,
                 Message = $"has been deleted."
             };

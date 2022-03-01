@@ -27,7 +27,7 @@ namespace Headway.Razor.Controls.Base
         {
             var alert = new Alert
             {
-                AlertType = Alerts.DANGER,
+                AlertType = Alerts.ERROR,
                 Title = "Error",
                 Message = message
             };

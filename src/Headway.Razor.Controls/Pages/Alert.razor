@@ -1,19 +1,10 @@
 ﻿@page "/alert/{AlertType}/{Title}/{Message}"
-@page "/alert/{AlertType}/{Title}/{Message}/{RedirectText}/{RedirectPage}"
 
-<div class="@Class" role="alert">
-    <b>@Title</b>&nbsp;@Message
-    @if(!string.IsNullOrWhiteSpace(RedirectText)
-        && !string.IsNullOrWhiteSpace(RedirectPage))
-    {
-        <p></p>
-        <table>
-            <tbody>
-                <tr>
-                    <td valign="middle"><button class="btn btn-outline-primary fas fa-caret-left" @onclick="@Redirect"></button></td>
-                    <td valign="middle">&nbsp;@RedirectText</td>
-                </tr>
-            </tbody>
-        </table>
-    }
-</div>
+@if (string.IsNullOrWhiteSpace(Title))
+{
+    <MudAlert Severity="@severity"><b>@Title</b>&nbsp;@Message</MudAlert>
+}
+else
+{
+    <MudAlert Severity="@severity">@Message</MudAlert>
+}

@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Headway.Core.Constants;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace Headway.Razor.Controls.Pages
 {
     public partial class Alert : ComponentBase
     {
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
         [Parameter]
         public string AlertType { get; set; }
 
@@ -16,24 +15,21 @@ namespace Headway.Razor.Controls.Pages
         [Parameter]
         public string Message { get; set; }
 
-        [Parameter]
-        public string RedirectText { get; set; }
-
-        [Parameter]
-        public string RedirectPage { get; set; }
-
-        public string Class { get; set; }
+        protected Severity severity;
 
         protected override void OnInitialized()
         {
-            Class = $"alert alert-{AlertType} mt-4";
+            severity = AlertType switch
+            {
+                Alerts.NORMAL => Severity.Normal,
+                Alerts.INFO => Severity.Info,
+                Alerts.SUCCESS => Severity.Success,
+                Alerts.WARNING => Severity.Warning,
+                Alerts.ERROR => Severity.Error,
+                _ => Severity.Normal,
+            };
 
             base.OnInitialized();
-        }
-
-        private void Redirect()
-        {
-            NavigationManager.NavigateTo(RedirectPage);
         }
     }
 }
