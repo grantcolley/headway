@@ -53,8 +53,9 @@ namespace Headway.WebApi
             {
                 options.AddPolicy("local",
                     builder =>
-                        builder.WithOrigins("https://localhost:44300", "https://localhost:44310")
-                               .AllowAnyHeader());
+                        builder.WithOrigins("https://localhost:44300", "https://localhost:44310")                        
+                               .AllowAnyHeader()
+                               .AllowAnyMethod());
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
