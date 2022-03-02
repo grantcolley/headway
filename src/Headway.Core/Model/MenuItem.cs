@@ -21,9 +21,9 @@ namespace Headway.Core.Model
         [StringLength(30, ErrorMessage = "Icon must be between 1 and 30 characters")]
         public string Icon { get; set; }
 
-        [Required(ErrorMessage = "NavigateTo is required")]
-        [StringLength(20, ErrorMessage = "NavigateTo must be between 1 and 20 characters")]
-        public string NavigateTo { get; set; }
+        [Required(ErrorMessage = "NavigatePage is required")]
+        [StringLength(50, ErrorMessage = "NavigatePage must be between 1 and 50 characters")]
+        public string NavigatePage { get; set; }
 
         [Required(ErrorMessage = "Config is required")]
         [StringLength(20, ErrorMessage = "Config must be between 1 and 20 characters")]
@@ -35,7 +35,7 @@ namespace Headway.Core.Model
 
         public string NavigateFullPath()
         {
-            return $@"{NavigateTo}\{Config}";
+            return $@"{NavigatePage}\{Config}";
         }
 
         public bool IsPermitted(IEnumerable<string> permissions)
