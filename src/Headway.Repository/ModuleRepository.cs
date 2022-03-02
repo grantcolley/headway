@@ -269,7 +269,7 @@ namespace Headway.Repository
                 Name = menuItem.Name,
                 Order = menuItem.Order,
                 Icon = menuItem.Icon,
-                NavigateTo = menuItem.NavigateTo,
+                NavigatePage = menuItem.NavigatePage,
                 Config = menuItem.Config,
                 Permission = menuItem.Permission,
                 Category = category
