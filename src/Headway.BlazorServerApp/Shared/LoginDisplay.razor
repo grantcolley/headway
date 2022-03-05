@@ -1,10 +1,10 @@
 ﻿<AuthorizeView>
     <Authorized>
         <form method="post" action="Identity/Account/LogOut">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Log out</MudButton>
+            <MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Log out</MudButton>
         </form>
     </Authorized>
     <NotAuthorized>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Link="Identity/Account/Login" Target="_self">Log in</MudButton>
+        <MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" Link="Identity/Account/Login" Target="_self">Log in</MudButton>
     </NotAuthorized>
 </AuthorizeView>
