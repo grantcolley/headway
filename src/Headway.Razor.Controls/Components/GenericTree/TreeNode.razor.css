@@ -1,18 +1,13 @@
 ﻿.draggable {
+    margin-left: 1em;
     padding: 10px 0px;
     cursor: grab;
-    background: #f7f7f7;
-    color: #4e5154;
     border-radius: 5px;
 }
 
 .draggable:active {
     cursor: grabbing;
     border: 2px dashed orange;
-}
-
-.node-pointer {
-    cursor: pointer;
 }
 
 .treenodes {
@@ -25,8 +20,8 @@
 }
 
 .treenodeslist {
-    list-style: none;
-    background: #f7f7f7;
+    list-style: disc;
+    padding-left: 2em;
 }
 
 .can-drop {
@@ -35,13 +30,4 @@
 
 .no-drop {
     border: 2px dashed red;
-}
-
-.node-label {
-    margin-bottom: 2px;
-}
-
-.show-hide-indicator {
-    width: 20px;
-    margin-right: 1px;
 }

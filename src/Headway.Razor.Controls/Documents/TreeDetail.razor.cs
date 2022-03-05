@@ -36,8 +36,6 @@ namespace Headway.Razor.Controls.Documents
 
         protected async Task NewAsync()
         {
-            treeView?.ClearMessage();
-
             await ResetDynamicModelAsync().ConfigureAwait(false);
         }
 

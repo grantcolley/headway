@@ -15,7 +15,6 @@ namespace Headway.Razor.Controls.Components.GenericTree
         private const string emptyDrop = "";
         private const string noDrop = "no-drop";
         private const string canDrop = "can-drop";
-
         protected string dropClass = "";
 
         protected RenderFragment RenderTreeNode(Node<T> node)
@@ -68,26 +67,11 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
             TreeView.Payload = null;
             dropClass = emptyDrop;
-
-            Node.ExpandNodes = true;
         }
 
         protected async Task SelectAsync()
         {
             await TreeView.SelectActiveNode(Node).ConfigureAwait(false);
-        }
-
-        protected void ExpandCollapseNodes()
-        {
-            if(Node.Nodes.Any()
-                && Node.ExpandNodes.Equals(false))
-            {
-                Node.ExpandNodes = true;
-            }
-            else
-            {
-                Node.ExpandNodes = false;
-            }
         }
 
         private bool IsDecendent(Node<T> node)

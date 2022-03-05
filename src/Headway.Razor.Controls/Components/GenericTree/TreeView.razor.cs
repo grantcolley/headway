@@ -20,8 +20,11 @@ namespace Headway.Razor.Controls.Components.GenericTree
         private string parentNodeUniqueProperty;
 
         protected List<Node<T>> nodes;
+
+        private const string emptyDrop = "";
+        private const string noDrop = "no-drop";
+        private const string canDrop = "can-drop";
         protected string dropClass = "";
-        protected string message = "";
 
         [Parameter]
         public DynamicField Field { get; set; }
@@ -59,8 +62,6 @@ namespace Headway.Razor.Controls.Components.GenericTree
             dropNode.Nodes.Add(dragNode);
             dropNode.ModelNodesPropertyInfo.PropertyType.GetMethod("Add").Invoke(
                 (List<T>)dropNode.ModelNodesPropertyInfo.GetValue(dropNode.Model, null), new T[] { dragNode.Model });
-
-            message = $"Moved {dragNode.Label} to {dropNode.Label}";
         }
 
         public void Add(T model)
@@ -71,11 +72,6 @@ namespace Headway.Razor.Controls.Components.GenericTree
             if(duplicate == null)
             {
                 Add(node);
-                message = $"Added {node.Label}";
-            }
-            else
-            {
-                message = $"{node.Label} already exists with {nodeUniqueProperty} {node.UniqueValue}";
             }
         }
 
@@ -87,20 +83,12 @@ namespace Headway.Razor.Controls.Components.GenericTree
             if (duplicate != null)
             {
                 Remove(duplicate);
-                message = $"Removed {node.Label}";
             }
         }
 
         public async Task SelectActiveNode(Node<T> node)
         {
-            ClearMessage();
-
             await OnSelectActiveNode.InvokeAsync(node.Model);
-        }
-
-        public void ClearMessage()
-        {
-            message = "";
         }
 
         protected override void OnInitialized()
@@ -136,46 +124,39 @@ namespace Headway.Razor.Controls.Components.GenericTree
 
         protected void HandleDragEnter()
         {
-            ClearMessage();
-
             if (Payload == null)
             {
-                dropClass = "";
+                dropClass = emptyDrop;
                 return;
             }
 
             if (nodes.Any(n => n.Equals(Payload.DragNode)))
             {
-                dropClass = "no-drop";
+                dropClass = noDrop;
             }
             else
             {
-                dropClass = "can-drop";
+                dropClass = canDrop;
             }
         }
 
         protected void HandleDragLeave()
         {
-            ClearMessage();
-            dropClass = "";
+            dropClass = emptyDrop;
         }
 
         protected void HandleDrop()
         {
             if (Payload != null)
             {
-                if (dropClass.Equals("can-drop"))
+                if (dropClass.Equals(canDrop))
                 {
                     Add(Payload.DragNode);
-                    message = $"Moved {Payload.DragNode.Label}";
-                }
-                else
-                {
-                    ClearMessage();
                 }
             }
 
             Payload = null;
+            dropClass = emptyDrop;
         }
 
         private void Add(Node<T> dragNode)

@@ -1,27 +1,21 @@
 ﻿.treeview {
     display: flex;
     flex-direction: column;
+    padding: 1rem 1rem 1rem 1rem;
+    border: 1px solid;
+    border-color: #d3d6d8;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
 }
 
 .treeview-header {
     position: relative;
-    padding: 1rem 1rem;
-    color: #41464b;
-    background: #f1f1f1;
-    border: 1px solid transparent;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
 }
 
 .treeview ul {
     flex: 1;
-}
-
-.dropzone {
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-    list-style: none;
-    background: #f9f9f9;
 }
 
 .can-drop {

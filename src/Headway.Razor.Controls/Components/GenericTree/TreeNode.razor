@@ -1,24 +1,21 @@
 ﻿@typeparam T where T : class, new()
 @inherits TreeNodeBase<T>
 
-<li class="draggable  @dropClass" 
+<li class="draggable @dropClass" 
     draggable="true" 
     @ondragstart="@(() => HandleDragStart(Node))"
     @ondrop="HandleDrop"
     @ondragenter="HandleDragEnter"
     @ondragleave="HandleDragLeave">
-    <div class="node-label">
-        <label class="float-left node-pointer show-hide-indicator @Node.ExpandCss" @onclick="() => ExpandCollapseNodes()"/><label class="float-left node-pointer" @onclick="() => SelectAsync()" draggable="false">@Node.Label</label>
+    <div>
+        <label class="float-left"/><label class="float-left" @onclick="() => SelectAsync()" draggable="false">@Node.Label</label>
     </div>
-    @if(Node.ExpandNodes)
-    {
-        <div class="treenodes">
-            <ul class="treenodeslist">
-                @foreach (var node in Node.Nodes)
-                {
-                    @RenderTreeNode(node)
-                }
-            </ul>
-        </div>   
-    }
+    <div class="treenodes">
+        <ul class="treenodeslist">
+            @foreach (var node in Node.Nodes)
+            {
+                @RenderTreeNode(node)
+            }
+        </ul>
+    </div>   
 </li>
