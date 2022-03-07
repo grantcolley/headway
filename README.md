@@ -22,6 +22,12 @@
 
 #### Table of Contents
 * [Getting Started](#getting-started)
+   * [Build a New Application](#build-a-new-application)
+   * [Create the Models](#create-the-models)
+   * [Add a Module](#add-a-module)
+   * [Add a Search Screen](#add-a-search-screen)
+   * [Create a Workflow](#create a workflow)
+   * [Add Permissions](#add-permissions)
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Navigation Menu](#navigation-menu)
 * [Page Layout](#page-layout)
@@ -43,6 +49,17 @@
     * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
 
 ## Getting Started
+### Build a New Application
+
+### Create a Model
+
+### Add a Module
+
+### Add a Search Screen
+
+### Create a Workflow
+
+### Add Permissions
 
 ## Authentication and Authorization
 Identity Provider authenticates user
