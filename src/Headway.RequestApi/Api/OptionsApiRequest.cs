@@ -3,7 +3,6 @@ using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Options;
-using Headway.RequestApi.Requests;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
