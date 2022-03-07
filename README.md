@@ -16,7 +16,7 @@
  * **Class Library** - a services library for calling the *WebApi*.
  * **Class Library** - a repository library for access to data behind the *WebApi*.
 
-![Alt text](/readme-images/architecture.png?raw=true "Headway Architecture") 
+![Alt text](/readme-images/Architecture.png?raw=true "Headway Architecture") 
 
 #### Table of Contents
 * [Getting Started](#getting-started)
