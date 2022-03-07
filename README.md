@@ -5,7 +5,7 @@
 ##### Technologies
 ###### .NET 6.0, Blazor WebAssembly, Blazor Server, IdentityServer4, ASP.NET Core Web API, MudBlazor, MediatR
 #####
-\
+
 
 **Headway** is a framework for building configurable Blazor applications fast. **Headway** is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication:
  * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
