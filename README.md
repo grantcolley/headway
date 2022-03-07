@@ -53,8 +53,8 @@ WebAssembly
    - AuthorizationMessageHandler attaches token to outgoing HttpClient requests 
 
 BlazorServer 
-   - InitialApplicationState gets the access_token, refresh_token and id_token from the HttpContext after authentication ans stores them in a scoped TokenProvider
-   - The scoped TokenProvider is manually injected into each service and the bearer token is added to the Authorization header of outgoing HttpClient requests
+   - InitialApplicationState gets the access_token, refresh_token and id_token from the HttpContext after authentication and stores them in a scoped TokenProvider
+   - The scoped TokenProvider is manually injected into each request class and the bearer token is added to the Authorization header of outgoing HttpClient requests
 
 WebApi
    - Controllers require role authorisation
