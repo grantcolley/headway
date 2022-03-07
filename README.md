@@ -6,16 +6,18 @@
 ###### .NET 6.0, Blazor WebAssembly, Blazor Server, IdentityServer4, ASP.NET Core Web API, MudBlazor, MediatR
 #####
 \
-**Headway** is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication:
- * **Blazor WebAssembly** - running client-side on the browser.
- * **Blazor Server** - where updates and event handling are run on the server and managed over a SignalR connection. 
- * **IdentityServer4** - an OpenID Connect and OAuth 2.0 framework for authentication. 
- * **ASP.NET Core Web API** - for accessing data repositories by authenticated users.
- * **Razor Class Library** - for shared *Razor* components.
- * **Class Library** - for shared classes and interfaces.
- * **Class Library** - a services library for calling the *WebApi*.
- * **Class Library** - a repository library for access to data behind the *WebApi*.
 
+**Headway** is a framework for building configurable Blazor applications fast. **Headway** is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication:
+ * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
+ * **Headway.BlazorServerApp** - Blazor Server where updates and event handling are run on the server and managed over a SignalR connection. 
+ * **Headway.Razor.Shared** - A *Razor Class Library* with shared components and functionality supporting both Blazor hosting models (WASM and Server). 
+ * **Headway.Razor.Controls** - A *Razor Class Library* containing common *Razor* components.
+ * **Headway.Core** - A *Class Library* for shared classes and interfaces.
+ * **Headway.RequestApi** - a *Class Library* for handling requests to the *WebApi*.
+ * **Headway.WebApi** - An ASP.NET Core Web API for accessing data repositories by authenticated users.
+ * **Headway.Repository** - a *Class Library* for accessing the data store behind the *WebApi*.
+ * **Identity Provider** - A *IdentityServer4* project which is a OpenID Connect and OAuth 2.0 framework for authentication.
+ 
 ![Alt text](/readme-images/Architecture.png?raw=true "Headway Architecture") 
 
 #### Table of Contents
