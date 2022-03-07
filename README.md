@@ -26,7 +26,7 @@
    * [Create the Models](#create-the-models)
    * [Add a Module](#add-a-module)
    * [Add a Search Screen](#add-a-search-screen)
-   * [Create a Workflow](#create a workflow)
+   * [Create a Workflow](#create-a-workflow)
    * [Add Permissions](#add-permissions)
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Navigation Menu](#navigation-menu)
@@ -51,7 +51,7 @@
 ## Getting Started
 ### Build a New Application
 
-### Create a Model
+### Create the Models
 
 ### Add a Module
 
