@@ -7,7 +7,7 @@
 #####
 
 
-**Headway** is a framework for building configurable Blazor applications fast. **Headway** is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication:
+**Headway** is a framework for building configurable Blazor applications fast. It is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication:
  * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
  * **Headway.BlazorServerApp** - Blazor Server where updates and event handling are run on the server and managed over a SignalR connection. 
  * **Headway.Razor.Shared** - A *Razor Class Library* with shared components and functionality supporting both Blazor hosting models (WASM and Server). 
