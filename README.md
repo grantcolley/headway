@@ -10,18 +10,8 @@
  
 ![Alt text](/readme-images/Architecture.png?raw=true "Headway Architecture") 
 
-##### The Framework
- * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
- * **Headway.BlazorServerApp** - Blazor Server running updates and event handling on the server over a SignalR connection. 
- * **Headway.Razor.Shared** - A *Razor Class Library* with shared components and functionality serving both Blazor hosting models. 
- * **Headway.Razor.Controls** - A *Razor Class Library* containing common *Razor* components.
- * **Headway.Core** - A *Class Library* for shared classes and interfaces.
- * **Headway.RequestApi** - a *Class Library* for handling requests to the *WebApi*.
- * **Headway.WebApi** - An *ASP.NET Core Web API* for authenticated users to access data persisted in the data store.
- * **Headway.Repository** - a *Class Library* for accessing the data store behind the *WebApi*.
- * **Identity Provider** - An *IdentityServer4* ASP.NET Core Web API, providing an OpenID Connect and OAuth 2.0 framework, for authentication.
-
-#### Table of Contents
+## Table of Contents
+* [The Framework](#the-framework)
 * [Getting Started](#getting-started)
    * [Build a New Application](#build-a-new-application)
    * [Create the Models](#create-the-models)
@@ -48,6 +38,17 @@
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
     * [Handle System.Text.Json Circular Reference Errors](#handle-systemtextjson-circular-reference-errors)
     * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
+
+## The Framework
+ * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
+ * **Headway.BlazorServerApp** - Blazor Server running updates and event handling on the server over a SignalR connection. 
+ * **Headway.Razor.Shared** - A *Razor Class Library* with shared components and functionality serving both Blazor hosting models. 
+ * **Headway.Razor.Controls** - A *Razor Class Library* containing common *Razor* components.
+ * **Headway.Core** - A *Class Library* for shared classes and interfaces.
+ * **Headway.RequestApi** - a *Class Library* for handling requests to the *WebApi*.
+ * **Headway.WebApi** - An *ASP.NET Core Web API* for authenticated users to access data persisted in the data store.
+ * **Headway.Repository** - a *Class Library* for accessing the data store behind the *WebApi*.
+ * **Identity Provider** - An *IdentityServer4* ASP.NET Core Web API, providing an OpenID Connect and OAuth 2.0 framework, for authentication.
 
 ## Getting Started
 ### Build a New Application
