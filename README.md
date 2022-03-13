@@ -14,9 +14,9 @@
  * **Headway.Razor.Controls** - A *Razor Class Library* containing common *Razor* components.
  * **Headway.Core** - A *Class Library* for shared classes and interfaces.
  * **Headway.RequestApi** - a *Class Library* for handling requests to the *WebApi*.
- * **Headway.WebApi** - An ASP.NET Core Web API for accessing data repositories by authenticated users.
+ * **Headway.WebApi** - An *ASP.NET Core Web API* for authenticated users to access data persisted in the data store.
  * **Headway.Repository** - a *Class Library* for accessing the data store behind the *WebApi*.
- * **Identity Provider** - A *IdentityServer4* project which is a OpenID Connect and OAuth 2.0 framework for authentication.
+ * **Identity Provider** - An *IdentityServer4* ASP.NET Core Web API, providing an OpenID Connect and OAuth 2.0 framework, for authentication.
  
 ![Alt text](/readme-images/Architecture.png?raw=true "Headway Architecture") 
 
