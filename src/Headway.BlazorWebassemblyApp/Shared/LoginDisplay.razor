@@ -6,10 +6,10 @@
 
 <AuthorizeView>
     <Authorized>
-        <MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" @onclick="BeginSignOut">Log out</MudButton>
+        <MudButton DisableElevation="true" Variant="Variant.Text" Color="Color.Inherit" @onclick="BeginSignOut">Log out</MudButton>
     </Authorized>
     <NotAuthorized>
-        <MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" Link="authentication/login" Target="_self">Log in</MudButton>
+        <MudButton DisableElevation="true" Variant="Variant.Text" Color="Color.Inherit" Link="authentication/login" Target="_self">Log in</MudButton>
     </NotAuthorized>
 </AuthorizeView>
 
