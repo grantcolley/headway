@@ -9,7 +9,11 @@
         <MudText Typo="Typo.h6">Headway</MudText>        
         <MudSpacer />
         @LoginDisplayFragment
-        <MudIconButton Icon="@modeIcon" Color="Color.Inherit" aria-label="Mode" OnClick="ToggleDarkLight"/>
+        <MudToggleIconButton @bind-Toggled="isDarkMode" 
+                            Icon="@Icons.Material.Filled.DarkMode" 
+                            Color="Color.Inherit"
+                            ToggledIcon="@Icons.Material.Filled.WbSunny"
+                            ToggledColor="Color.Inherit"/>
     </MudAppBar>
     <AuthorizeView>
         <Authorized>
@@ -45,18 +49,11 @@
 
     private HeadwayTheme theme = new();
     private bool isDarkMode = false;
-    private string modeIcon = @Icons.Material.Filled.DarkMode;
-
+    
     private bool drawerOpen = true;
 
     private void DrawerToggle()
     {
         drawerOpen = !drawerOpen;
-    }
-
-    private void ToggleDarkLight()
-    {
-        isDarkMode = !isDarkMode;
-        modeIcon = isDarkMode ? @Icons.Material.Filled.WbSunny : @Icons.Material.Filled.DarkMode;
     }
 }
