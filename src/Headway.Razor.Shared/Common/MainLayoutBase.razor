@@ -9,11 +9,13 @@
         <MudText Typo="Typo.h6">Headway</MudText>        
         <MudSpacer />
         @LoginDisplayFragment
-        <MudToggleIconButton @bind-Toggled="isDarkMode" 
-                            Icon="@Icons.Material.Filled.DarkMode" 
-                            Color="Color.Inherit"
-                            ToggledIcon="@Icons.Material.Filled.WbSunny"
-                            ToggledColor="Color.Inherit"/>
+        <MudTooltip Text="@(isDarkMode ? Mode.LIGHT : Mode.DARK)" Color="Color.Inherit">
+            <MudToggleIconButton @bind-Toggled="isDarkMode" 
+                                 Icon="@Icons.Material.Filled.DarkMode" 
+                                 Color="Color.Inherit"
+                                 ToggledIcon="@Icons.Material.Filled.WbSunny"
+                                 ToggledColor="Color.Inherit"/>
+        </MudTooltip>
     </MudAppBar>
     <AuthorizeView>
         <Authorized>
