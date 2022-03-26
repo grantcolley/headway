@@ -11,46 +11,37 @@ else
 {
     @if(@Alert == null)
     {
-        <div class="container container-body float-start">
-            <div class="lead">
-                <MudText Typo="Typo.h6">@dynamicModel.Config.Title</MudText>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="card">
-                        <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
-                            <DataAnnotationsValidator />
-                            <div class="card-header">
-                                <div class="clearfix">
-                                    @if (isSaveInProgress)
-                                    {
-                                        <i class="fas fa-spinner fa-spin fa-2x float-left"></i>
-                                    }
-                                    else if (!isDeleteInProgress)
-                                    {
-                                        <ComponentTip Class="float-left" Text="Save"><button type="submit" class="btn btn-small borderless btn-outline-primary fas fa-save"/></ComponentTip>
-                                    }
-                                    @if (isDeleteInProgress)
-                                    {
-                                        <i class="fas fa-spinner fa-spin fa-2x float-end"></i>
-                                    }
-                                    else if (!isSaveInProgress)
-                                    {
-                                        <ComponentTip Class="float-end" Text="Delete"><button type="button" class="btn btn-small borderless btn-outline-danger fas fa-trash" @onclick="() => Delete()"/></ComponentTip>
-                                    }
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                @foreach(var rootContainer in dynamicModel.RootContainers)
-                                {
-                                    <DynamicComponent @key=rootContainer.ContainerId Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
-                                }
-                            </div>
-                        </EditForm>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
+            <MudToolBar DisableGutters="true" Style="border-bottom: 1px solid gray;">
+                @if (isSaveInProgress)
+                {
+                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                }
+                else if (!isDeleteInProgress)
+                {
+                    <MudTooltip Text="Save">
+                        <MudIconButton ButtonType="ButtonType.Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
+                    </MudTooltip>
+                }
+                <MudSpacer />
+                @if (isDeleteInProgress)
+                {
+                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                }
+                else if (!isSaveInProgress)
+                {
+                    <MudTooltip Text="Delete">
+                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="Delete" />
+                    </MudTooltip>
+                }
+            </MudToolBar>
+            <MudPaper>
+                @foreach(var rootContainer in dynamicModel.RootContainers)
+                {
+                    <DynamicComponent @key=rootContainer.ContainerId Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
+                }
+            </MudPaper>
+        </EditForm>
     }
     else
     {
