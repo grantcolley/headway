@@ -5,8 +5,8 @@
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <MudAppBar Elevation="0">
-        <MudText Typo="Typo.h6">Headway</MudText>        
+    <MudAppBar Elevation="0">    
+        <MudImage ObjectFit="@ObjectFit.Fill" Height="40" Width="150" Src="/images/Headway.png" Alt="Headway"/>
         <MudSpacer />
         @LoginDisplayFragment
         <MudTooltip Text="@(isDarkMode ? Mode.LIGHT : Mode.DARK)" Color="Color.Inherit">
