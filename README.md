@@ -1,4 +1,4 @@
-# headway
+![Alt text](/readme-images/Headway.png?raw=true "Headway Architecture") 
 
 [![Build status](https://ci.appveyor.com/api/projects/status/xg606j7pr1ib54db?svg=true)](https://ci.appveyor.com/project/grantcolley/headway)
 
