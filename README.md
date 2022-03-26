@@ -1,11 +1,11 @@
-# headway
+![Alt text](/readme-images/Headway.png?raw=true "Headway Architecture") 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/xg606j7pr1ib54db?svg=true)](https://ci.appveyor.com/project/grantcolley/headway)
-
-##### Technologies
 ###### .NET 6.0, Blazor WebAssembly, Blazor Server, IdentityServer4, ASP.NET Core Web API, MudBlazor, MediatR
-#####
-
+###### 
+\
+[![Build status](https://ci.appveyor.com/api/projects/status/xg606j7pr1ib54db?svg=true)](https://ci.appveyor.com/project/grantcolley/headway)
+###### 
+\
 **Headway** is a framework for building configurable Blazor applications fast. It is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication.
  
 ![Alt text](/readme-images/Architecture.png?raw=true "Headway Architecture") 
