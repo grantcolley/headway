@@ -40,11 +40,10 @@
     {
         @if (module != null)
         {
-            <MudNavGroup Title="@module.Name" Icon=@IconHelper.GetOutlined(module.Icon) HideExpandIcon="true">
+            <MudNavGroup Title="@module.Name" Icon=@IconHelper.GetOutlined(module.Icon) HideExpandIcon="true" Expanded="true">
                 @foreach (var category in module.Categories)
                 {
-                    <MudNavGroup Title="@category.Name" Icon=@IconHelper.GetOutlined(category.Icon) HideExpandIcon="true">
-
+                    <MudNavGroup Title="@category.Name" Icon=@IconHelper.GetOutlined(category.Icon) HideExpandIcon="true" Expanded="true">
                         @foreach(var menuItem in category.MenuItems)
                         {
                             <MudNavLink Href="@menuItem.NavigateFullPath()" Icon=@IconHelper.GetOutlined(menuItem.Icon) @onclick:stopPropagation Match="NavLinkMatch.All">@menuItem.Name</MudNavLink>
