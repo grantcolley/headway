@@ -23,11 +23,10 @@ namespace Headway.Razor.Controls.Components
             {
                 return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
             }
-        }
-
-        public virtual void OnValueChanged(string value)
-        {
-            Field.PropertyInfo.SetValue(Field.Model, value);
+            set
+            {
+                Field.PropertyInfo.SetValue(Field.Model, value);
+            }
         }
     }
 }

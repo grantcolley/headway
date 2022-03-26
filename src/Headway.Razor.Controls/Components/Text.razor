@@ -19,8 +19,8 @@
             }
         </div>
         <div class="col-sm-8">
-            <InputText class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
-            <DynamicValidationMessage For="FieldExpression" Field="@Field"/>
+            <MudTextField 
+                @bind-Value="@PropertyValue" For="FieldExpression" Variant="Variant.Outlined"/>
         </div>
     </div>
 </div>
