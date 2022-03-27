@@ -9,13 +9,23 @@ namespace Headway.Razor.Controls.Components
     [DynamicComponent]
     public abstract class CheckListBase : DynamicComponentBase
     {
-        protected List<ChecklistItem> checklist;
+        protected List<ChecklistItem> checklist = new List<ChecklistItem>();
 
         protected override Task OnParametersSetAsync()
         {
-            checklist = (List<ChecklistItem>)Field.PropertyInfo.GetValue(Field.Model, null);
+            var list = (List<ChecklistItem>)Field.PropertyInfo.GetValue(Field.Model, null);
+
+            if (list != null)
+            {
+                checklist = (List<ChecklistItem>)Field.PropertyInfo.GetValue(Field.Model, null);
+            }
 
             return base.OnParametersSetAsync();
+        }
+
+        protected void OnCheckItem(ChecklistItem item)
+        {
+            item.IsChecked = !item.IsChecked;
         }
     }
 }
