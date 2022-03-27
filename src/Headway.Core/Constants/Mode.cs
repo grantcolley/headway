@@ -2,7 +2,7 @@
 {
     public static class Mode
     {
-        public const string DARK = "Dark Mode";
-        public const string LIGHT = "Light Mode";
+        public const string DARK = "Change mode";
+        public const string LIGHT = "Change mode";
     }
 }
