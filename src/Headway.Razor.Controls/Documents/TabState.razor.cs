@@ -23,11 +23,6 @@ namespace Headway.Razor.Controls.Documents
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        protected string GetTabButtonClass(DynamicContainer page)
-        {
-            return page == activePage ? Css.BTN_PRIMARY : Css.BTN_SECONDARY;
-        }
-
         protected void SetActivePage(DynamicContainer page)
         {
             activePage = page;
