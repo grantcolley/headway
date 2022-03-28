@@ -11,66 +11,42 @@ else
 {
     @if(@Alert == null)
     {
-        <div class="container container-body float-start">
-            <div class="lead">
-                <MudText Typo="Typo.h6">@dynamicModel.Config.Title</MudText>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <div class="card">
-                        <EditForm EditContext="CurrentEditContext" OnValidSubmit="@Submit">
-                            <DataAnnotationsValidator />
-                            <div class="card-header">
-                                <div class="container px-1">
-                                    <div class="row">
-                                        <div class="column">
-                                            <div class="clearfix">
-                                                @if (isSaveInProgress)
-                                                {
-                                                    <i class="fas fa-spinner fa-spin fa-2x float-left"></i>
-                                                }
-                                                else if (!isDeleteInProgress)
-                                                {
-                                                    <ComponentTip Class="float-left borderless" Text="Save"><button type="submit" class="btn btn-small borderless btn-outline-primary fas fa-save"/></ComponentTip>
-                                                }
-                                                @if (isDeleteInProgress)
-                                                {
-                                                    <i class="fas fa-spinner fa-spin fa-2x float-end"></i>
-                                                }
-                                                else if (!isSaveInProgress)
-                                                {
-                                                    <ComponentTip Class="float-end borderless" Text="Delete"><button type="button" class="btn btn-small borderless btn-outline-danger fas fa-trash" @onclick="() => Delete()"/></ComponentTip>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="column">
-                                            <div class="btn-group btn-group-sm float-left" role="group">
-                                                @foreach (var page in dynamicModel.RootContainers)
-                                                {
-                                                    <button type="button"
-                                                            class="btn btn-small @GetTabButtonClass(page)"
-                                                            @onclick=@(() => SetActivePage(page))>
-                                                            @(page.Label)
-                                                    </button>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                @if(activePage != null)
-                                {
-                                    <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
-                                }
-                            </div>
-                        </EditForm>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <EditForm EditContext="CurrentEditContext" OnValidSubmit="@Submit">
+            <DataAnnotationsValidator />
+            <MudToolBar DisableGutters="true">
+                @if (isSaveInProgress)
+                {
+                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                }
+                else if (!isDeleteInProgress)
+                {
+                    <MudTooltip Text="Save">
+                        <MudIconButton ButtonType="ButtonType.Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
+                    </MudTooltip>
+                }
+                <MudSpacer />
+                @if (isDeleteInProgress)
+                {
+                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                }
+                else if (!isSaveInProgress)
+                {
+                    <MudTooltip Text="Delete">
+                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="Delete" />
+                    </MudTooltip>
+                }
+            </MudToolBar>
+            <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true">
+                @foreach (var page in dynamicModel.RootContainers)
+                {
+                    <MudTabPanel Text="@(page.Label)" OnClick=@(() => SetActivePage(page))/>
+                }
+            </MudTabs>
+            @if(activePage != null)
+            {
+                <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+            }
+        </EditForm>
     }
     else
     {
