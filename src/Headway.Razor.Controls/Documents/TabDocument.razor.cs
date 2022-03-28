@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Documents
 {
     [DynamicDocument]
-    public abstract class TabStateBase<T> : DynamicDocumentBase<T> where T : class, new()
+    public abstract class TabDocumentBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
         protected DynamicContainer activePage { get; set; }
 

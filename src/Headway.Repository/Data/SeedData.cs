@@ -586,7 +586,7 @@ namespace Headway.Repository.Data
                 Description = "Create, update or delete a config",
                 Model = "Headway.Core.Model.Config, Headway.Core",
                 ModelApi = "Configuration",
-                Document = "Headway.Razor.Controls.Documents.TabState`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Configs"
             };
@@ -733,7 +733,7 @@ namespace Headway.Repository.Data
                 Description = "Demonstrate rendering a model with components",
                 Model = "Headway.Core.Model.DemoModel, Headway.Core",
                 ModelApi = "DemoModel",
-                Document = "Headway.Razor.Controls.Documents.TabState`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "DemoModels"
             };
