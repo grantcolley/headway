@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.Razor.Controls.Documents
 {
     [DynamicDocument]
-    public abstract class CardBase<T> : DynamicDocumentBase<T> where T : class, new()
+    public abstract class DocumentBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
         protected override async Task OnInitializedAsync()
         {

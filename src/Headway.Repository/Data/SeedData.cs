@@ -255,7 +255,7 @@ namespace Headway.Repository.Data
                 Description = "Create, update or delete a permission",
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
-                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Permissions"
             };
@@ -308,7 +308,7 @@ namespace Headway.Repository.Data
                 Description = "Create, update or delete a role",
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
-                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Roles"
             };
@@ -362,7 +362,7 @@ namespace Headway.Repository.Data
                 Description = "Create, update or delete a user",
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
-                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Users"
             };
@@ -419,7 +419,7 @@ namespace Headway.Repository.Data
                 Description = "Create, update or delete a module",
                 Model = "Headway.Core.Model.Module, Headway.Core",
                 ModelApi = "Modules",
-                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Modules"
             };
@@ -473,7 +473,7 @@ namespace Headway.Repository.Data
                 Description = "Create, update or delete a category",
                 Model = "Headway.Core.Model.Category, Headway.Core",
                 ModelApi = "Categories",
-                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Categories"
             };
@@ -528,7 +528,7 @@ namespace Headway.Repository.Data
                 Description = "Create, update or delete a menu item",
                 Model = "Headway.Core.Model.MenuItem, Headway.Core",
                 ModelApi = "MenuItems",
-                Document = "Headway.Razor.Controls.Documents.Card`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "MenuItems"
             };
