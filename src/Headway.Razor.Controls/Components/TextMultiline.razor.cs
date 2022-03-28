@@ -11,7 +11,7 @@ namespace Headway.Razor.Controls.Components
     [DynamicComponent]
     public abstract class TextMultilineBase : DynamicComponentBase
     {
-        protected string rows;
+        protected int rows;
 
         public Expression<Func<string>> FieldExpression
         {
@@ -27,16 +27,20 @@ namespace Headway.Razor.Controls.Components
             {
                 return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
             }
-        }
-
-        public virtual void OnValueChanged(string value)
-        {
-            Field.PropertyInfo.SetValue(Field.Model, value);
+            set
+            {
+                Field.PropertyInfo.SetValue(Field.Model, value);
+            }
         }
 
         protected override void OnInitialized()
         {
-            rows = ComponentArgHelper.GetArgValue(ComponentArgs, Args.TEXT_MULTILINE_ROWS);
+            var val = ComponentArgHelper.GetArgValue(ComponentArgs, Args.TEXT_MULTILINE_ROWS);
+
+            if (int.TryParse(val, out int i))
+            {
+                rows = i;
+            }
 
             base.OnInitialized();
         }
