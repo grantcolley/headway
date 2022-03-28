@@ -1,7 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Razor.Controls.Base;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Linq.Expressions;
 
@@ -24,15 +23,10 @@ namespace Headway.Razor.Controls.Components
             {
                 return (decimal)Field.PropertyInfo.GetValue(Field.Model);
             }
+            set
+            {
+                Field.PropertyInfo.SetValue(Field.Model, value);
+            }
         }
-
-        public virtual void OnValueChanged(decimal value)
-        {
-            Field.PropertyInfo.SetValue(Field.Model, value);
-        }
-    }
-
-    public class DecimalNumber : InputNumber<decimal>
-    {
     }
 }
