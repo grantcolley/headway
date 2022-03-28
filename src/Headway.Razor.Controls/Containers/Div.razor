@@ -7,14 +7,14 @@
             foreach(var dynamicField in Container.DynamicFields)
             {
                 <DivCol Field=dynamicField />
-            }            
+            }
         }
         else
         {
             foreach(var dynamicField in Container.DynamicFields)
             {
                 <DynamicComponent @key=dynamicField.PropertyName Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
-            }            
+            }
         }
     </div>
 </div>
