@@ -1,15 +1,14 @@
 ﻿ @inherits TabsBase
 
 <CascadingValue Value="this">
-    <div class="btn-group" role="group">
-        @foreach (DynamicContainer page in Container.DynamicContainers)
+    <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true">
+        @foreach (var page in Container.DynamicContainers)
         {
-            <button type="button"
-                    class="btn @GetTabButtonClass(page)"
-                    @onclick=@(() => SetActivePage(page))>
-                    @(page.Label)
-            </button>
+            <MudTabPanel Text="@(page.Label)" OnClick=@(() => SetActivePage(page))/>
         }
-    </div>
-    <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+    </MudTabs>
+    @if(activePage != null)
+    {
+        <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+    }
 </CascadingValue>
