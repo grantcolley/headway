@@ -18,8 +18,8 @@
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">@Field.Label</MudTooltip>    
             }
         </div>
-        <div class="col-sm-8 col-form-label">
-            @PropertyValue
+        <div class="col-sm-8">
+            <MudTextField Value="@PropertyValue" Variant="Variant.Outlined" ReadOnly="true"/>
         </div>
     </div>
 </div>
