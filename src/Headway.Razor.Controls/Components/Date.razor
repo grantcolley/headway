@@ -19,8 +19,8 @@
             }
         </div>
         <div class="col-sm-8">
-            <DateControl class="form-control" ValueChanged="OnValueChanged" Value="@PropertyValue" ValueExpression="FieldExpression" />
-            <DynamicValidationMessage For="FieldExpression" Field="@Field"/>
+            <MudTextField T="DateTime" @bind-Value="@PropertyValue" For="FieldExpression" Format="yyyy-MM-dd"
+                        Variant="Variant.Outlined" InputType="InputType.Date"/>
         </div>
     </div>
 </div>
