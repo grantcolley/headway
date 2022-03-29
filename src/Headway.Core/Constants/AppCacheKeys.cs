@@ -2,6 +2,6 @@
 {
     public static class AppCacheKeys
     {
-        public const string ACTIVE_NAV_MODULE = "ActiveNavModule";
+        public const string IsDarkMode = "IsDarkMode";
     }
 }

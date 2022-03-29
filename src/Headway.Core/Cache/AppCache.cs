@@ -13,7 +13,14 @@ namespace Headway.Core.Cache
         {
             lock (cacheLock)
             {
-                return (T)cache.GetValueOrDefault<string, object>(key);
+                if(cache.ContainsKey(key))
+                {
+                    return (T)cache.GetValueOrDefault<string, object>(key);
+                }
+                else
+                {
+                    return default(T);
+                }
             }
         }
 

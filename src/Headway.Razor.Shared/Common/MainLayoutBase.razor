@@ -10,11 +10,12 @@
         <MudSpacer />
         @LoginDisplayFragment
         <MudTooltip Text="@(isDarkMode ? Mode.LIGHT : Mode.DARK)" Color="Color.Inherit">
-            <MudToggleIconButton @bind-Toggled="isDarkMode" 
+            <MudToggleIconButton Toggled="@isDarkMode"
                                  Icon="@Icons.Material.Filled.DarkMode" 
                                  Color="Color.Inherit"
                                  ToggledIcon="@Icons.Material.Filled.WbSunny"
-                                 ToggledColor="Color.Inherit"/>
+                                 ToggledColor="Color.Inherit"
+                                 ToggledChanged="ToggledChanged"/>
         </MudTooltip>
     </MudAppBar>
     <AuthorizeView>
@@ -43,6 +44,9 @@
 </MudLayout>
 
 @code {
+    [Inject]
+    public IAppCache AppCache { get; set; }
+
     [Parameter]
     public RenderFragment LoginDisplayFragment { get; set; }
 
@@ -51,8 +55,21 @@
 
     private HeadwayTheme theme = new();
     private bool isDarkMode = false;
-    
+
     private bool drawerOpen = true;
+
+    protected override void OnParametersSet()
+    {
+        isDarkMode = AppCache.Get<bool>(AppCacheKeys.IsDarkMode);
+
+        base.OnParametersSet();
+    }
+
+    private void ToggledChanged(bool val)
+    {
+        isDarkMode = val;
+        AppCache.Set(AppCacheKeys.IsDarkMode, val);
+    }
 
     private void DrawerToggle()
     {
