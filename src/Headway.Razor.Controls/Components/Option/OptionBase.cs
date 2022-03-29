@@ -42,6 +42,15 @@ namespace Headway.Razor.Controls.Components.Option
             {
                 return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
             }
+            set
+            {
+                Field.PropertyInfo.SetValue(Field.Model, value);
+
+                if (Field.HasLinkDependents)
+                {
+                    StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);
+                }
+            }
         }
 
         protected override async Task OnInitializedAsync()
@@ -76,16 +85,6 @@ namespace Headway.Razor.Controls.Components.Option
             }
 
             await OnInitializedAsync().ConfigureAwait(false);   
-        }
-
-        public virtual void OnValueChanged(string value)
-        {
-            Field.PropertyInfo.SetValue(Field.Model, value);
-
-            if (Field.HasLinkDependents)
-            {
-                StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);
-            }
         }
     }
 }

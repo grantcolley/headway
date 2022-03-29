@@ -19,14 +19,14 @@
             }
         </div>
         <div class="col-sm-8 option-vertical-container">
-           <InputRadioGroup Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((string value) => OnValueChanged(value))">
+           <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression">
                 @foreach (var option in options)
                 {
                     <div class="option-vertical">
-                        <InputRadio Value="option.Id"/><label class="option-vertical-input">@option.Display</label>
+                        <MudRadio Option="@option.Id">@option.Display</MudRadio>
                     </div>
                 }
-           </InputRadioGroup>
+           </MudRadioGroup>
         </div>
     </div>
 </div>

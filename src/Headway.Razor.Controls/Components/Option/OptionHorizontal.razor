@@ -18,13 +18,13 @@
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">@Field.Label</MudTooltip>    
             }
         </div>
-        <div class="col-sm-8 option-horizontal-container">
-           <InputRadioGroup Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((string value) => OnValueChanged(value))">
+        <div class="col-sm-8">
+           <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression">
                 @foreach (var option in options)
                 {
-                    <InputRadio Value="option.Id"/><label class="option-horizontal">@option.Display</label>
+                    <MudRadio Option="@option.Id">@option.Display</MudRadio>
                 }
-           </InputRadioGroup>
+           </MudRadioGroup>
         </div>
     </div>
 </div>
