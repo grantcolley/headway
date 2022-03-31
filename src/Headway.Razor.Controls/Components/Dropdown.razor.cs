@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -23,6 +24,8 @@ namespace Headway.Razor.Controls.Components
 
         protected IEnumerable<OptionItem> optionItems;
 
+        private OptionItem selectedItem;
+
         public Expression<Func<string>> FieldExpression
         {
             get
@@ -31,11 +34,19 @@ namespace Headway.Razor.Controls.Components
             }
         }
 
-        public string PropertyValue
+        public OptionItem SelectedItem
         {
             get
             {
-                return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
+                return selectedItem;
+            }
+            set
+            {
+                if(selectedItem != value)
+                {
+                    selectedItem = value;
+                    Field.PropertyInfo.SetValue(Field.Model, SelectedItem.Id);
+                }
             }
         }
 
@@ -47,14 +58,23 @@ namespace Headway.Razor.Controls.Components
 
             optionItems = GetResponse(result.OptionItems);
 
+            var id = Field.PropertyInfo.GetValue(Field.Model)?.ToString();
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                SelectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id));
+            }
+
+            if(selectedItem == null)
+            {
+                selectedItem = optionItems.FirstOrDefault();
+            }
+
             await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
-        public virtual void OnValueChanged(string value)
+        public virtual void OnValueChanged(IEnumerable<OptionItem> values)
         {
-            Field.PropertyInfo.SetValue(Field.Model, value);
-
-            if(Field.HasLinkDependents)
+            if (Field.HasLinkDependents)
             {
                 StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);
             }

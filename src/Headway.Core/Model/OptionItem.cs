@@ -7,12 +7,22 @@
 
         public override bool Equals(object obj)
         {
+            if(obj == null)
+            {
+                return false;
+            }
+
             var optionItem = obj as OptionItem;
-            return optionItem.Id == this.Id;
+            return optionItem?.Id == this.Id;
         }
 
         public override int GetHashCode()
         {
+            if(string.IsNullOrWhiteSpace(Id))
+            {
+                return "empty".GetHashCode();
+            }
+
             return Id.GetHashCode();
         }
 

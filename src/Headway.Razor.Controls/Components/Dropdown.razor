@@ -19,17 +19,16 @@
             }
         </div>
         <div class="col-sm-8">
-            <InputSelect class="form-control" Value="@PropertyValue" ValueExpression="FieldExpression" ValueChanged="@((string value) => OnValueChanged(value))">
+            <MudSelect  T="OptionItem" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                        @bind-Value="SelectedItem" SelectedValuesChanged="OnValueChanged">
                 @if (optionItems != null)
                 {
                     @foreach (var optionItem in optionItems)
                     {
-                        <option value="@optionItem.Id">@optionItem.Display</option>
+                        <MudSelectItem T="OptionItem" Value="@optionItem"/>
                     }
                 }
-            </InputSelect>
-
-            <DynamicValidationMessage For="FieldExpression" Field="@Field"/>
+            </MudSelect>
         </div>
     </div>
 </div>
