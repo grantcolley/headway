@@ -6,10 +6,14 @@
 
 <AuthorizeView>
     <Authorized>
-        <MudButton DisableElevation="true" Variant="Variant.Text" Color="Color.Inherit" @onclick="BeginSignOut">Log out</MudButton>
+        <MudTooltip Text="Log out" Color="Color.Inherit">
+            <MudIconButton ButtonType="ButtonType.Button" OnClick="BeginSignOut" Color="Color.Inherit" Icon="@Icons.Material.Filled.Logout"/>
+        </MudTooltip>
     </Authorized>
     <NotAuthorized>
-        <MudButton DisableElevation="true" Variant="Variant.Text" Color="Color.Inherit" Link="authentication/login" Target="_self">Log in</MudButton>
+        <MudTooltip Text="Log in" Color="Color.Inherit">
+            <MudIconButton Link="authentication/login" Target="_self" Color="Color.Inherit" Icon="@Icons.Material.Filled.Login"/>
+        </MudTooltip>
     </NotAuthorized>
 </AuthorizeView>
 
