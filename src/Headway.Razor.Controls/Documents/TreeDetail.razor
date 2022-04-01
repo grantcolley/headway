@@ -6,27 +6,23 @@
 		<div class="col-sm">
             @if(dynamicModel != null)
             {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                <ComponentTip Class="float-left borderless" Text="Clear selection"><button type="button" class="btn btn-small borderless btn-outline-dark fas fa-undo" @onclick="() => NewAsync()"/></ComponentTip>
-                                <ComponentTip Class="float-left borderless" Text="Add to or update tree"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-share-square" @onclick="() => AddAsync(dynamicModel)"/></ComponentTip>
-                                <ComponentTip Class="float-end borderless" Text="Remove from tree"><button type="button" class="btn btn-small borderless btn-outline-danger fas fa-times" @onclick="() => RemoveAsync(dynamicModel)"/></ComponentTip>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(var rootContainer in dynamicModel.RootContainers)
-                        {
-                            <tr>
-                                <td>
-                                    <DynamicComponent @key="rootContainer.UniqueId" Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                <MudToolBar DisableGutters="true" Style="border-bottom: 1px solid gray;">
+                    <MudTooltip Text="Clear selection">
+                        <MudIconButton ButtonType="ButtonType.Button" Color="Color.Inherit" Icon="@Icons.Material.Filled.Undo" OnClick="NewAsync"/>
+                    </MudTooltip>
+                    <MudTooltip Text="Add to or update list">
+                        <MudIconButton ButtonType="ButtonType.Button" Color="Color.Inherit" Icon="@Icons.Material.Filled.Add" OnClick="() => AddAsync(dynamicModel)"/>
+                    </MudTooltip>
+                    <MudSpacer />
+                    <MudTooltip Text="Remove from list">
+                        <MudIconButton ButtonType="ButtonType.Button" Color="Color.Inherit" Icon="@Icons.Material.Filled.Close" OnClick="() => RemoveAsync(dynamicModel)"/>
+                    </MudTooltip>
+                </MudToolBar>
+
+                @foreach(var rootContainer in dynamicModel.RootContainers)
+                {
+                    <DynamicComponent @key="rootContainer.UniqueId" Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
+                }
             }
 		</div>
 		<div class="col-sm">
