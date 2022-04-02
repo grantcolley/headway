@@ -12,5 +12,6 @@
         public const string MODULES_OPTION_ITEMS = "Modules";
         public const string CATEGORIES_OPTION_ITEMS = "Categories";
         public const string STATIC_OPTION_ITEMS = "StaticOptionItems";
+        public const string COMPLEX_OPTION_ITEMS = "ComplexOptionItems";
     }
 }

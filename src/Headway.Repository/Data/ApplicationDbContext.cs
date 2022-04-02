@@ -22,6 +22,7 @@ namespace Headway.Repository.Data
         public DbSet<DemoModel> DemoModels { get; set; }
         public DbSet<DemoModelItem> DemoModelItems { get; set; }
         public DbSet<DemoModelTreeItem> DemoModelTreeItems { get; set; }
+        public DbSet<DemoModelComplexProperty> DemoModelComplexProperties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

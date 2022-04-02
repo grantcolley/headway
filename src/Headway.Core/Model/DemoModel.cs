@@ -22,6 +22,7 @@ namespace Headway.Core.Model
         public string OptionHorizontal { get; set; }
         public string Dropdown { get; set; }
         public DateTime Date { get; set; }
+        public DemoModelComplexProperty DropdownComplex { get; set; }
         public List<DemoModelItem> DemoModelItems { get; set; }
         public List<DemoModelTreeItem> DemoModelTreeItems { get; set; }
 
