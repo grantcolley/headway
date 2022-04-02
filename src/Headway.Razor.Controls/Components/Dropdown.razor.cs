@@ -5,10 +5,8 @@ using Headway.Razor.Controls.Base;
 using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
@@ -25,14 +23,6 @@ namespace Headway.Razor.Controls.Components
         protected IEnumerable<OptionItem> optionItems;
 
         private OptionItem selectedItem;
-
-        public Expression<Func<string>> FieldExpression
-        {
-            get
-            {
-                return Expression.Lambda<Func<string>>(Field.MemberExpression);
-            }
-        }
 
         public OptionItem SelectedItem
         {
