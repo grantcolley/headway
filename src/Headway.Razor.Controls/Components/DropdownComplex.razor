@@ -21,15 +21,16 @@
             }
         </div>
         <div class="col-sm-8">
-            <InputSelect class="form-control" Value="@value" ValueExpression="(() => value)" ValueChanged="@((string val) => OnValueChanged(val))">
+            <MudSelect  T="GenericItem<T>" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                        @bind-Value="SelectedItem" SelectedValuesChanged="OnValueChanged">
                 @if (optionItems != null)
                 {
                     @foreach (var optionItem in optionItems)
                     {
-                        <option value="@optionItem.Name">@optionItem.Name</option>
+                        <MudSelectItem T="GenericItem<T>" Value="@optionItem"/>
                     }
                 }
-            </InputSelect>
+            </MudSelect>
         </div>
     </div>
 </div>

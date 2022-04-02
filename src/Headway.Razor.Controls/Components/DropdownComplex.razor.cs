@@ -21,28 +21,33 @@ namespace Headway.Razor.Controls.Components
         [Inject]
         public IOptionsApiRequest OptionsService { get; set; }
 
-        protected string value { get; set; }
-
         protected IEnumerable<GenericItem<T>> optionItems;
+
+        private GenericItem<T> selectedItem;
+
+        public GenericItem<T> SelectedItem
+        {
+            get
+            {
+                return selectedItem;
+            }
+            set
+            {
+                if (selectedItem != value)
+                {
+                    selectedItem = value;
+                    Field.PropertyInfo.SetValue(Field.Model, SelectedItem.Item);
+                }
+            }
+        }
 
         protected override async Task OnParametersSetAsync()
         {
-            value = null;
+            LinkFieldCheck();
 
             var displayName = ComponentArgs.Single(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
-            
-            var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
-            
-            if (Field.PropertyInfo.GetValue(Field.Model) != null)
-            {
-                var val = propertyInfo.GetValue(Field.PropertyInfo.GetValue(Field.Model));
-                if (val != null)
-                {
-                    value = val.ToString();
-                }
-            }
 
-            LinkFieldCheck();
+            var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
 
             var result = await OptionsService.GetOptionItemsAsync<T>(ComponentArgs).ConfigureAwait(false);
 
@@ -50,25 +55,24 @@ namespace Headway.Razor.Controls.Components
 
             if (items.Any())
             {
-                optionItems = items.Select( oi => new GenericItem<T>(oi, propertyInfo));
+                optionItems = items.Select(oi => new GenericItem<T>(oi, propertyInfo));
+
+                if (Field.PropertyInfo.GetValue(Field.Model) != null)
+                {
+                    var value = propertyInfo.GetValue(Field.PropertyInfo.GetValue(Field.Model));
+                    if (value != null)
+                    {
+                        selectedItem = optionItems.FirstOrDefault(
+                            oi => oi.Name != null && oi.Name.Equals(value));
+                    }
+                }
             }
 
             await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
-        public virtual void OnValueChanged(string value)
+        public virtual void OnValueChanged(IEnumerable<GenericItem<T>> values)
         {
-            if(string.IsNullOrWhiteSpace(value))
-            {
-                Field.PropertyInfo.SetValue(Field.Model, null);
-            }
-            else
-            {
-                var optionItem = optionItems.First(
-                    o => !string.IsNullOrWhiteSpace(o.Name) && o.Name.Equals(value));
-                Field.PropertyInfo.SetValue(Field.Model, optionItem.Item);
-            }
-
             if (Field.HasLinkDependents)
             {
                 StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);

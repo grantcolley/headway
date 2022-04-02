@@ -18,5 +18,31 @@ namespace Headway.Razor.Controls.Model
 
         public T Item { get; private set; }
         public string Name { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var optionItem = obj as GenericItem<T>;
+            return optionItem?.Name == this.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                return "empty".GetHashCode();
+            }
+
+            return Name.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
