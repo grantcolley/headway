@@ -4,17 +4,17 @@
 <div class="container container-body float-start">
 	<div class="row">
 		<div class="col-sm">
+            <div class="treeview-header">
+                @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+                {
+                    @Field.Label                    
+                }
+                else
+                {
+                    <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>
+                }
+            </div>
             <div class="treeview">
-                <div class="treeview-header">
-                    @if(string.IsNullOrWhiteSpace(Field.Tooltip))
-                    {
-                        @Field.Label                    
-                    }
-                    else
-                    {
-                        <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>
-                    }
-                </div>
                 <ul class="@dropClass"
                     ondragover="event.preventDefault();"
                     ondragstart="event.dataTransfer.setData('', event.target.id);"
