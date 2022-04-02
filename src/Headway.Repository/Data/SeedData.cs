@@ -72,6 +72,8 @@ namespace Headway.Repository.Data
             ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelTreeItems");
             ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModels");
             ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModels, RESEED, 1)");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModelComplexProperties");
+            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModelComplexProperties, RESEED, 1)");
             ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE MenuItems");
             ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Categories");
             ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Categories, RESEED, 1)");
@@ -164,6 +166,15 @@ namespace Headway.Repository.Data
             };
 
             applicationDbContext.DemoModels.Add(demoModel);
+
+            var demoModelComplexProperties = new List<DemoModelComplexProperty>
+            {
+                new DemoModelComplexProperty{ Name ="Complex Property 1" },
+                new DemoModelComplexProperty{ Name ="Complex Property 2" },
+                new DemoModelComplexProperty{ Name ="Complex Property 3" }
+            };
+
+            applicationDbContext.DemoModelComplexProperties.AddRange(demoModelComplexProperties);
 
             applicationDbContext.SaveChanges();
         }
@@ -758,8 +769,9 @@ namespace Headway.Repository.Data
             demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Date", Label = "Date", Order = 8, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Date, Headway.Razor.Controls", Tooltip = "Date" });
             demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OptionVertical", Label = "OptionVertical", Order = 9, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Option.OptionVertical, Headway.Razor.Controls", Tooltip = "OptionVertical", ComponentArgs = $"Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
             demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Dropdown", Label = "Dropdown", Order = 10, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", Tooltip = "Dropdown", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.STATIC_OPTION_ITEMS}|Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItems", Label = "Demo Model Items", Order = 11, ConfigContainer = demoModelContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=DemoModelItemsListDetail" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItems", Label = "Demo Model Tree Items", Order = 12, Tooltip = "Drag and drop items in a nested tree hierarchy", ConfigContainer = demoModelContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelTreeItem", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Name|Name={Args.LIST_PROPERTY};Value=DemoModelTreeItems" });
+            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DropdownComplex", Label = "DropdownComplex", Order = 11, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.COMPLEX_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.DemoModelComplexProperty, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
+            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItems", Label = "Demo Model Items", Order = 12, ConfigContainer = demoModelContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=DemoModelItemsListDetail" });
+            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItems", Label = "Demo Model Tree Items", Order = 13, Tooltip = "Drag and drop items in a nested tree hierarchy", ConfigContainer = demoModelContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelTreeItem", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Name|Name={Args.LIST_PROPERTY};Value=DemoModelTreeItems" });
 
             applicationDbContext.SaveChanges();
         }
