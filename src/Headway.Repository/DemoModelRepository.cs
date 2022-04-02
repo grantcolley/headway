@@ -42,6 +42,7 @@ namespace Headway.Repository
         {
             var demoModel = await applicationDbContext.DemoModels
                 .AsNoTracking()
+                .Include(m => m.DropdownComplex)
                 .Include(m => m.DemoModelItems)
                 .Include(m => m.DemoModelTreeItems)
                 .SingleAsync(m => m.DemoModelId.Equals(id))
@@ -73,6 +74,7 @@ namespace Headway.Repository
         public async Task<DemoModel> UpdateDemoModelAsync(DemoModel demoModel)
         {
             var existing = await applicationDbContext.DemoModels
+                .Include(m => m.DropdownComplex)
                 .Include(m => m.DemoModelItems)
                 .Include(m => m.DemoModelTreeItems)
                 .FirstOrDefaultAsync(m => m.DemoModelId.Equals(demoModel.DemoModelId))
@@ -88,6 +90,16 @@ namespace Headway.Repository
                 applicationDbContext
                     .Entry(existing)
                     .CurrentValues.SetValues(demoModel);
+
+                if (demoModel.DropdownComplex == null
+                    || demoModel.DropdownComplex.Id.Equals(0))
+                {
+                    existing.DropdownComplex = null;
+                }
+                else
+                {
+                    existing.DropdownComplex = demoModel.DropdownComplex;
+                }
 
                 var removeDemoModelItems = (from demoModelItem in existing.DemoModelItems
                                    where !demoModel.DemoModelItems.Any(i => i.DemoModelItemId.Equals(demoModelItem.DemoModelItemId))
@@ -159,6 +171,7 @@ namespace Headway.Repository
         public async Task<int> DeleteDemoModelAsync(int id)
         {
             var demoModel = await applicationDbContext.DemoModels
+                .Include(m => m.DropdownComplex)
                 .Include(m => m.DemoModelItems)
                 .Include(m => m.DemoModelTreeItems)
                 .FirstOrDefaultAsync(m => m.DemoModelId.Equals(id))
