@@ -1,4 +1,4 @@
-![Alt text](/readme-images/Headway-dark.png?raw=true "Headway Architecture") 
+![Alt text](/readme-images/Headway-dark.png?raw=true "Headway") 
 
 ###### .NET 6.0, Blazor WebAssembly, Blazor Server, IdentityServer4, ASP.NET Core Web API, MudBlazor, MediatR
 ###### 
