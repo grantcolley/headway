@@ -1,20 +1,137 @@
-using Microsoft.AspNetCore.Hosting;
+using Headway.Core.Cache;
+using Headway.Core.Interface;
+using Headway.Core.Model;
+using Headway.Core.Notifications;
+using Headway.Razor.Controls.Services;
+using Headway.RequestApi.Api;
+using Headway.RequestApi.Requests;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using MudBlazor.Services;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 
-namespace Headway.BlazorServerApp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddServerSideBlazor();
+
+builder.Services.AddMediatR(typeof(ModuleApiRequest).Assembly);
+
+builder.Services.AddMudServices();
+
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+builder.Services.AddAuthentication(options =>
 {
-    public class Program
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
     {
-        public static void Main(string[] args)
+        options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.Authority = "https://localhost:5001/";
+        options.ClientId = "headwayblazorserverapp";
+        options.ClientSecret = "headwayblazorserverappsecret";
+        options.ResponseType = "code";
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("email");
+        options.Scope.Add("webapi");
+        options.SaveTokens = true;
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.ClaimActions.Add(new JsonKeyClaimAction("role", "role", "role"));
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            NameClaimType = "name",
+            RoleClaimType = "role"
+        };
+    });
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+builder.Services.AddHttpClient("webapi", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:44320");
+});
+
+builder.Services.AddScoped<TokenProvider>();
+builder.Services.AddSingleton<IAppCache, AppCache>();
+builder.Services.AddSingleton<IConfigCache, ConfigCache>();
+builder.Services.AddSingleton<IStateNotification, StateNotification>();
+builder.Services.AddTransient<IShowDialogService, ShowDialogService>();
+builder.Services.AddTransient<ModulesGetRequestHandler>();
+builder.Services.AddTransient<ConfigGetByNameRequestHandler>();
+builder.Services.AddTransient<OptionItemsRequestHandler>();
+
+builder.Services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>
+{
+    var tokenProvider = sp.GetRequiredService<TokenProvider>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("webapi");
+    return new ModuleApiRequest(httpClient, tokenProvider);
+});
+
+builder.Services.AddTransient<IConfigurationApiRequest, ConfigurationApiRequest>(sp =>
+{
+    var configCache = sp.GetRequiredService<IConfigCache>();
+    var tokenProvider = sp.GetRequiredService<TokenProvider>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("webapi");
+    return new ConfigurationApiRequest(httpClient, tokenProvider, configCache);
+});
+
+builder.Services.AddTransient<IDynamicApiRequest, DynamicApiRequest>(sp =>
+{
+    var configCache = sp.GetRequiredService<IConfigCache>();
+    var tokenProvider = sp.GetRequiredService<TokenProvider>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("webapi");
+    return new DynamicApiRequest(httpClient, tokenProvider, configCache);
+});
+
+builder.Services.AddTransient<IOptionsApiRequest, OptionsApiRequest>(sp =>
+{
+    var tokenProvider = sp.GetRequiredService<TokenProvider>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("webapi");
+    return new OptionsApiRequest(httpClient, tokenProvider);
+});
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapBlazorHub();
+    endpoints.MapFallbackToPage("/_Host");
+});
+
+app.Run();
