@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text.Json.Serialization;
@@ -60,12 +61,21 @@ builder.Services.AddCors(options =>
                    .AllowAnyMethod());
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    var identityProvider = builder.Configuration["IdentityProvider:DefaultProvider"];
+
+    options.Authority = $"https://{builder.Configuration[$"{identityProvider}:Domain"]}";
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.Authority = "https://localhost:5001";
-        options.Audience = "webapi";
-    });
+        ValidIssuer = builder.Configuration[$"{identityProvider}:Domain"],
+        ValidAudience = builder.Configuration[$"{identityProvider}:Audience"]
+    };
+});
 
 var app = builder.Build();
 
