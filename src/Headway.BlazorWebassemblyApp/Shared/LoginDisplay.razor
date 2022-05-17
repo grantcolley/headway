@@ -6,6 +6,7 @@
 
 <AuthorizeView>
     <Authorized>
+        @context.User.Identity.Name
         <MudTooltip Text="Log out" Color="Color.Inherit">
             <MudIconButton ButtonType="ButtonType.Button" OnClick="BeginSignOut" Color="Color.Inherit" Icon="@Icons.Material.Filled.Logout"/>
         </MudTooltip>
