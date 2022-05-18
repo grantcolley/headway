@@ -22,8 +22,12 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddOidcAuthentication(options =>
 {
-    builder.Configuration.Bind("OidcConfiguration", options.ProviderOptions);
+    var identityProvider = builder.Configuration["IdentityProvider:DefaultProvider"];
+
+    builder.Configuration.Bind(identityProvider, options.ProviderOptions);
     options.UserOptions.RoleClaim = "role";
+    options.ProviderOptions.ResponseType = "code";
+    options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration[$"{identityProvider}:Audience"]);
 }).AddAccountClaimsPrincipalFactory<UserAccountFactory>();
 
 builder.Services.AddHttpClient("webapi", (sp, client) =>

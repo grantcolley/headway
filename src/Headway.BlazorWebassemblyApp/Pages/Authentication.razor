@@ -1,7 +1,34 @@
 ﻿@page "/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-<RemoteAuthenticatorView Action="@Action" />
+@using Microsoft.Extensions.Configuration
+
+@inject NavigationManager Navigation
+@inject IConfiguration Configuration
+
+@if(identityProvider != null && identityProvider.Equals("Auth0"))
+{
+    <RemoteAuthenticatorView Action="@Action">
+       <LogOut>
+           @{
+               Navigation.NavigateTo($"{Configuration["Auth0:Authority"]}/v2/logout?client_id={Configuration["Auth0:ClientId"]}");
+           }
+       </LogOut>
+    </RemoteAuthenticatorView>   
+}
+else
+{
+    <RemoteAuthenticatorView Action="@Action" />
+}
 
 @code{
     [Parameter] public string Action { get; set; }
+
+    private string identityProvider;
+
+    protected override void OnInitialized()
+    {
+        identityProvider = Configuration["IdentityProvider:DefaultProvider"];
+
+        base.OnInitialized();
+    }
 }
