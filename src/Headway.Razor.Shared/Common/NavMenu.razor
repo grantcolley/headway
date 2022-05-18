@@ -1,11 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 
-<AuthorizeView Roles="@Roles.HEADWAY_USER">
-    @foreach (var module in modules)
-    {
-        @RenderModule(module);
-    }
-</AuthorizeView>
+@foreach (var module in modules)
+{
+    @RenderModule(module);
+}
 
 @code {
     [Inject]
