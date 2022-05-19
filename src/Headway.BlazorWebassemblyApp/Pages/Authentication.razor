@@ -5,12 +5,12 @@
 @inject NavigationManager Navigation
 @inject IConfiguration Configuration
 
-@if(identityProvider != null && identityProvider.Equals("Auth0"))
+@if(identityProvider != null && identityProvider.Equals(IdentityProvider.AUTH_0))
 {
     <RemoteAuthenticatorView Action="@Action">
        <LogOut>
            @{
-               Navigation.NavigateTo($"{Configuration["Auth0:Authority"]}/v2/logout?client_id={Configuration["Auth0:ClientId"]}");
+               Navigation.NavigateTo($"{Configuration[$"{identityProvider}:Authority"]}/v2/logout?client_id={Configuration[$"{identityProvider}:ClientId"]}");
            }
        </LogOut>
     </RemoteAuthenticatorView>   
