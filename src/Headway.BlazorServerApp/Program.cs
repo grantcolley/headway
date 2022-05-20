@@ -1,4 +1,6 @@
+using Auth0.AspNetCore.Authentication;
 using Headway.Core.Cache;
+using Headway.Core.Constants;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
@@ -30,32 +32,51 @@ builder.Services.AddMudServices();
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-builder.Services.AddAuthentication(options =>
+var identityProvider = builder.Configuration["IdentityProvider:DefaultProvider"];
+
+if (identityProvider.Equals(IdentityProvider.IDENTITY_SERVER_4))
 {
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-})
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+    builder.Services.AddAuthentication(options =>
     {
-        options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.Authority = "https://localhost:5001/";
-        options.ClientId = "headwayblazorserverapp";
-        options.ClientSecret = "headwayblazorserverappsecret";
-        options.ResponseType = "code";
-        options.Scope.Add("openid");
-        options.Scope.Add("profile");
-        options.Scope.Add("email");
-        options.Scope.Add("webapi");
-        options.SaveTokens = true;
-        options.GetClaimsFromUserInfoEndpoint = true;
-        options.ClaimActions.Add(new JsonKeyClaimAction("role", "role", "role"));
-        options.TokenValidationParameters = new TokenValidationParameters
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
+        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
         {
-            NameClaimType = "name",
-            RoleClaimType = "role"
-        };
-    });
+            options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.Authority = builder.Configuration[$"{identityProvider}:Authority"];
+            options.ClientId = builder.Configuration[$"{identityProvider}:ClientId"];
+            options.ClientSecret = builder.Configuration[$"{identityProvider}:ClientSecret"];
+            options.ResponseType = "code";
+            options.Scope.Add("openid");
+            options.Scope.Add("profile");
+            options.Scope.Add("email");
+            options.Scope.Add("webapi");
+            options.SaveTokens = true;
+            options.GetClaimsFromUserInfoEndpoint = true;
+            options.ClaimActions.Add(new JsonKeyClaimAction("role", "role", "role"));
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                NameClaimType = "name",
+                RoleClaimType = "role"
+            };
+        });
+}
+else if(identityProvider.Equals(IdentityProvider.AUTH_0))
+{
+    builder.Services
+        .AddAuth0WebAppAuthentication(Auth0Constants.AuthenticationScheme, options =>
+        {
+            options.Domain = builder.Configuration[$"{identityProvider}:Domain"];
+            options.ClientId = builder.Configuration[$"{identityProvider}:ClientId"];
+            options.ClientSecret = builder.Configuration[$"{identityProvider}:ClientSecret"];
+            options.ResponseType = "code";
+        }).WithAccessToken(options =>
+        {
+            options.Audience = builder.Configuration[$"{identityProvider}:Audience"];
+        });
+}
 
 builder.Services.AddHttpClient("webapi", client =>
 {

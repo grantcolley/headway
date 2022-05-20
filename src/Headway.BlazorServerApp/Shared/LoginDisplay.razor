@@ -1,6 +1,7 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <form method="post" action="Identity/Account/LogOut">
+        <form method="post" action="LogOut">
+            @context.User.Identity.Name
             <MudTooltip Text="Log out" Color="Color.Inherit">
                 <MudIconButton ButtonType="ButtonType.Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Logout"/>
             </MudTooltip>
@@ -8,7 +9,7 @@
     </Authorized>
     <NotAuthorized>
         <MudTooltip Text="Log in" Color="Color.Inherit">
-            <MudIconButton Link="Identity/Account/Login" Target="_self" Color="Color.Inherit" Icon="@Icons.Material.Filled.Login"/>
+            <MudIconButton Link="Login" Target="_self" Color="Color.Inherit" Icon="@Icons.Material.Filled.Login"/>
         </MudTooltip>
     </NotAuthorized>
 </AuthorizeView>

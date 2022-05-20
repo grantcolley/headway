@@ -10,10 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="5.2.0" />
+    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.0.3" />
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.5" />
     <PackageReference Include="MudBlazor" Version="6.0.6" />
   </ItemGroup>
 
@@ -22,10 +23,6 @@
     <ProjectReference Include="..\Headway.Razor.Controls\Headway.Razor.Controls.csproj" />
     <ProjectReference Include="..\Headway.Razor.Shared\Headway.Razor.Shared.csproj" />
     <ProjectReference Include="..\Headway.RequestApi\Headway.RequestApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Pages\Shared\" />
   </ItemGroup>
 
 </Project>
