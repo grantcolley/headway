@@ -64,9 +64,9 @@
 ### Add Permissions
 
 ## Authentication and Authorization
-Identity Provider authenticates user
-OidcConfiguration
-Token contains a RoleClaim
+The Identity Provider authenticates the user returning a token containing a RoleClaim.
+
+#### General Overview:
 WebAssembly 
    - UserAccountFactory converts the RemoteUserAccount into a ClaimPrincipal for the application
    - AuthorizationMessageHandler attaches token to outgoing HttpClient requests 
@@ -76,7 +76,11 @@ BlazorServer
    - The scoped TokenProvider is manually injected into each request class and the bearer token is added to the Authorization header of outgoing HttpClient requests
 
 WebApi
-   - Controllers require role authorisation
+   - Controllers have role authorisation
+
+For implementation Details:
+   - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
+   - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
 
 ## Navigation Menu
 
