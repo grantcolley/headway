@@ -66,7 +66,7 @@
 ## Authentication and Authorization
 The Identity Provider authenticates the user returning a token containing a RoleClaim.
 
-Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json):
+Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.:
 ```C#
   "IdentityProvider": {
     "DefaultProvider": "Auth0"
