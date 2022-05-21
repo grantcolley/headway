@@ -67,6 +67,10 @@
 ## Authentication
 Authentication is done through an Identity Provider returns a token containing a RoleClaim.
 
+[**Blazor WebAssembly**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/) uses [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html), which is safe means of representing claims that can be transferred between parties.
+Token-based authentication involves issuing an athenticated user with a token containing claims which is sent to a resource such as a WebApi with an extra authorization header in the form of a Bearer token.
+To get the access token Blazor WebAssembly uses *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*. This is where the user is sent to the authentication provider for login and then returned to the Blazor WebAssembly application with an authorization code. The Blazor WebAssembly then makes a call to the authentication provider with the code and requests an access token and an ID token, which are stored in the browser's session storage.
+
 Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.
 ```C#
   "IdentityProvider": {
