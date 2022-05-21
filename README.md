@@ -71,6 +71,8 @@ Authentication is done through an Identity Provider returns a token containing a
 Token-based authentication involves issuing an athenticated user with a token containing claims which is sent to a resource such as a WebApi with an extra authorization header in the form of a Bearer token.
 To get the access token Blazor WebAssembly uses [*Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow-with-proof-key-for-code-exchange-pkce). This is where the user is sent to the authentication provider for login and then returned to the Blazor WebAssembly application with an authorization code. The Blazor WebAssembly then makes a call to the authentication provider with the code and requests an access token and an ID token, which are stored in the browser's session storage.
 
+#### General Overview:
+**Identity Providers**
 Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.
 ```C#
   "IdentityProvider": {
@@ -78,19 +80,18 @@ Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:De
   },
 ```
 
-#### General Overview:
-WebAssembly 
+**WebAssembly**
    - UserAccountFactory converts the RemoteUserAccount into a ClaimPrincipal for the application
    - AuthorizationMessageHandler attaches token to outgoing HttpClient requests 
 
-BlazorServer 
+**BlazorServer** 
    - InitialApplicationState gets the access_token, refresh_token and id_token from the HttpContext after authentication and stores them in a scoped TokenProvider
    - The scoped TokenProvider is manually injected into each request class and the bearer token is added to the Authorization header of outgoing HttpClient requests
 
-WebApi
+**WebApi**
    - Controllers have role authorisation
 
-For implementation Details:
+**Implementation Examples**
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
    - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
 \
