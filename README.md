@@ -94,7 +94,7 @@ Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:De
 **Implementation Examples**
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
    - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
-\
+
 > For more on [ASP.NET Core Blazor authentication and authorization](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/).
 
 ## Authorization
