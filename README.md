@@ -100,7 +100,7 @@ Headway currently supports authentication from two identity providers **Identity
 **WebApi**
    - Controllers have role authorisation
 
-**Implementation Examples**
+**Implementation Examples for Identity Providers**
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
    - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
 
