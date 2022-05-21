@@ -65,7 +65,14 @@
 ### Add Permissions
 
 ## Authentication
-Authentication is done through an Identity Provider returns a token containing a RoleClaim.
+
+> [ASP.NET Core Blazor authentication and authorization](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/).
+> \
+> "Security scenarios differ between Blazor Server and Blazor WebAssembly apps. Because Blazor Server apps run on the server, authorization checks are able to determine:
+> - The UI options presented to a user (for example, which menu entries are available to a user).
+> - Access rules for areas of the app and components.
+>
+>Blazor WebAssembly apps run on the client. Authorization is only used to determine which UI options to show. Since client-side checks can be modified or bypassed by a user, a Blazor WebAssembly app can't enforce authorization access rules. "
 
 [**Blazor WebAssembly**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/) uses [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html), which is safe means of representing claims that can be transferred between parties.
 Token-based authentication involves issuing an athenticated user with a token containing claims which is sent to a resource such as a WebApi with an extra authorization header in the form of a Bearer token.
@@ -73,7 +80,9 @@ To get the access token Blazor WebAssembly uses [*Authorization Clode Flow with 
 
 #### General Overview:
 **Identity Providers**
-Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.
+Authentication is done through an Identity Provider that returns a token containing a RoleClaim called `headwayuser`.
+
+Headway currently supports authentication from two identity providers **IdentityServer4** and **Auth0**. You can toggle between them by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.
 ```C#
   "IdentityProvider": {
     "DefaultProvider": "Auth0"
@@ -94,8 +103,6 @@ Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:De
 **Implementation Examples**
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
    - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
-
-> For more on [ASP.NET Core Blazor authentication and authorization](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/).
 
 ## Authorization
 
