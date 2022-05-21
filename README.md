@@ -19,7 +19,8 @@
    * [Add a Search Screen](#add-a-search-screen)
    * [Create a Workflow](#create-a-workflow)
    * [Add Permissions](#add-permissions)
-* [Authentication and Authorization](#authentication-and-authorization)
+* [Authentication](#authentication)
+* [Authorization](#authorization)
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
 * [Navigation Menu](#navigation-menu)
@@ -63,8 +64,8 @@
 
 ### Add Permissions
 
-## Authentication and Authorization
-The Identity Provider authenticates the user returning a token containing a RoleClaim.
+## Authentication
+Authentication is done through an Identity Provider returns a token containing a RoleClaim.
 
 Toggle between **IdentityServer4** and **Auth0** by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.
 ```C#
@@ -88,6 +89,10 @@ WebApi
 For implementation Details:
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
    - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
+\
+> For more on [ASP.NET Core Blazor authentication and authorization](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/).
+
+## Authorization
 
 ## Page Layout
 ![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
