@@ -91,7 +91,7 @@ The Blazor application obtains the token from the Identity Provider using an *au
 
 [**Blazor WebAssembly**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/) uses *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*, which introduces a secret created by the calling application that can be verified by the authorization server. The secret is called the `Code Verifier`. It must do this because the entire source is stored in the browser so it cannot use a `Client Secret` because it is not secure.
 
-> The key difference between **Blazor Server** using the *Authorization Code Flow* and **Blazor WebAssembly** using the *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*, is **Blazor Server** uses in the exchange the `Client Secret` which is securely stored on the server. **Blazor WebAssembly** on the other hand, has to create a `code_verifier` and generate a `code_challenge` from it, which can be used in the exchange.
+> The key difference between **Blazor Server** using the *Authorization Code Flow* and **Blazor WebAssembly** using the *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*, is **Blazor Server** can use a `Client Secret` in the exchange because it can be securely stored on the server. **Blazor WebAssembly** on the other hand cannot securely store a `Client Secret` so it has to create a `code_verifier` and then generate a `code_challenge` from it, which can be used in the exchange instead.
 
 #### Authorization Code Flow vs Authorization Code Flow with PKCE
 [Authorization Code Flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow) steps:
@@ -110,7 +110,7 @@ The Blazor application obtains the token from the Identity Provider using an *au
 \
 The *PKCE Authorization Code Flow* builds on the standard *Authentication Code Flow* so it has very similar steps.
 1. User clicks login in the application.
-2. The application creates a `code_verifier` and generates a `code_challenge` from it.
+2. The application creates a `code_verifier` and then generates a `code_challenge` from it.
 3. The user is redirected to the authorization server (`/authorize` endpoint) along with the `code_challenge`.
 4. The authorization server redirects the user to a login prompt.
 5. The user authenticates.
