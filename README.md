@@ -82,7 +82,7 @@
 >
 >Blazor WebAssembly apps run on the client. Authorization is only used to determine which UI options to show. Since client-side checks can be modified or bypassed by a user, a Blazor WebAssembly app can't enforce authorization access rules. "
 
-Blazor applications use [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html), which is safe means of representing claims that can be transferred between parties.
+Blazor applications use [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html), which is a safe means of representing claims that can be transferred between parties.
 Token-based authentication involves an authorization server issuing an athenticated user with a token containing claims, which can be sent to a resource such as a WebApi, with an extra authorization header in the form of a Bearer token. This allows the WebApi to validate the claim and provide the user access to the resource.
 
 The Blazor application obtains the token from the Identity Provider using an *authorization flow*. The type of *flow* used depends on the Blazor hosting model.
