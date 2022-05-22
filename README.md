@@ -22,11 +22,12 @@
 * [Authentication](#authentication)
    * [Blazor Server vs Blazor WebAssembly](#blazor-server-vs-blazor-webassembly)
    * [Authorization Code Flow vs Authorization Code Flow with PKCE](#authorization-code-flow-vs-authorization-code-flow-with-pkce)
-   * [Identity Providers](#identity-providers)
-   * [Blazor WebAssembly](#blazor-webassembly)
-   * [Blazor Server](#blazor-server)
-   * [WebApi](#webapi)
-   * [Other Implementation Examples for Identity Providers](#other-implementation-examples-for-identity-providers)
+   * [Headway Authentication](#headway-authentication)
+       * [Identity Providers](#identity-providers)
+       * [Blazor WebAssembly](#blazor-webassembly)
+       * [Blazor Server](#blazor-server)
+       * [WebApi](#webapi)
+       * [Other Implementation Examples for Identity Providers](#other-implementation-examples-for-identity-providers)
 * [Authorization](#authorization)
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
@@ -73,7 +74,7 @@
 
 ## Authentication
 
-#### Blazor Server vs Blazor WebAssembly
+### Blazor Server vs Blazor WebAssembly
 > [ASP.NET Core Blazor authentication and authorization](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/).
 > \
 > "Security scenarios differ between Blazor Server and Blazor WebAssembly apps. Because Blazor Server apps run on the server, authorization checks are able to determine:
@@ -93,7 +94,7 @@ The Blazor application obtains the token from the Identity Provider using an *au
 
 > The key difference between **Blazor Server** using the *Authorization Code Flow* and **Blazor WebAssembly** using the *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*, is **Blazor Server** can use a `Client Secret` in the exchange because it can be securely stored on the server. **Blazor WebAssembly** on the other hand cannot securely store a `Client Secret` so it has to create a `code_verifier` and then generate a `code_challenge` from it, which can be used in the exchange instead.
 
-#### Authorization Code Flow vs Authorization Code Flow with PKCE
+### Authorization Code Flow vs Authorization Code Flow with PKCE
 [Authorization Code Flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow) steps:
 1. User clicks login in the application.
 2. The user is redirected to the authorization server (`/authorize` endpoint).
@@ -120,10 +121,11 @@ The *PKCE Authorization Code Flow* builds on the standard *Authentication Code F
 9. The authorization server sends to the application an `ID Token` and `Access Token` (and optionally, a `Refresh Token`). The `Access Token` contains user claims.
 11. When the application wants to access a resource such as a WebApi it adds the `Access Token` containing user claims to the authorization header of a `HttpClient` request in the form of a `Bearer` token.
 
+### Headway Authentication
 #### Identity Providers
-Authentication is done through an Identity Provider that returns a token containing a RoleClaim called `headwayuser`.
+To access resources via the **Headway.WebApi** the authentication server must issue a token to the user containing a RoleClaim called `headwayuser` and the users `email`. The application can then access further information about the user from the **Headway.WebApi** to determine what the user is authorised to do e.g. **Headway.WebApi** will return the menu items to build up the navigation panel. If a user does not have permission to access a menu item then **Headway.WebApi** simply wont return it.
 
-Headway currently supports authentication from two identity providers **IdentityServer4** and **Auth0**. You can toggle between them by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.
+Headway currently supports authentication from two identity providers **IdentityServer4** and **Auth0**. During development you can toggle between them by setting `IdentityProvider:DefaultProvider` in the *appsettings.json* files for [Headway.BlazorServerApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorServerApp/appsettings.json), [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/blob/main/src/Headway.BlazorWebassemblyApp/wwwroot/appsettings.json) and [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) e.g.
 ```C#
   "IdentityProvider": {
     "DefaultProvider": "Auth0"
