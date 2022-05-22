@@ -87,9 +87,9 @@ Token-based authentication involves an authorization server issuing an athentica
 
 The Blazor application obtains the token from the Identity Provider using an *authorization flow*. The type of *flow* used depends on the Blazor hosting model.
 
-[**Blazor Server**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/) uses *Authorization Code Flow* in which a `Client Secret` is passed in the exchange. It can do this because it is a *regular web application* where the source code and `Client Secret` is securely stored *server-side* and not publicly exposed.
+[**Blazor Server**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/) uses *Authorization Code Flow* in which a `Client Secret` is passed in the exchange. It can do this because it is a *'regular web application'* where the source code and `Client Secret` is securely stored *server-side* and not publicly exposed.
 
-[**Blazor WebAssembly**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/) uses *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)* which introduces a secret created by the calling application called the `Code Verifier`, that can be verified by the authorization server. It must do this because the entire source is stored in the browser and therefore cannot securely store a `Client Secret`.
+[**Blazor WebAssembly**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/) uses *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*, which introduces a secret created by the calling application that can be verified by the authorization server. The secret is called the `Code Verifier`. It must do this because the entire source is stored in the browser so it cannot use a `Client Secret` because it is not secure.
 
 > The key difference between **Blazor Server** using the *Authorization Code Flow* and **Blazor WebAssembly** using the *Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)*, is **Blazor Server** uses in the exchange the `Client Secret` which is securely stored on the server. **Blazor WebAssembly** on the other hand, has to create a `code_verifier` and generate a `code_challenge` from it, which can be used in the exchange.
 
