@@ -95,29 +95,30 @@ The Blazor application obtains the token from the Identity Provider using an *au
 
 #### Authorization Code Flow vs Authorization Code Flow with PKCE
 [Authorization Code Flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow) steps:
-1. User clicks login in the application
-2. The user is redirected to the authorization server (`/authorize` endpoint)
-3. The authorization server redirects the user to a login prompt
-4. The user authenticates
-5. the authorization server redirects the user back to the application with an `authorization code`, which can be used once
-6. The applications send the `authorization code` along with the applications `Client ID` and `Client Secret` to the authorization server (`/oauth/token` endpoint)
-7. The authorization server verifies the `authorization code`, `Client ID` and `Client Secret`
-8. The authorization server responds with an `ID Token` and `Access Token` (and optionally, a `Refresh Token`) 
-9. The application adds the `Access Token` to the authorization header in the form of a `Bearer` token of an `HttpClient` request to a WebApi to access a resource
+1. User clicks login in the application.
+2. The user is redirected to the authorization server (`/authorize` endpoint).
+3. The authorization server redirects the user to a login prompt.
+4. The user authenticates.
+5. the authorization server redirects the user back to the application with an `authorization code`, which can only be used once.
+6. The application sends the `authorization code` along with the applications `Client ID` and `Client Secret` to the authorization server (`/oauth/token` endpoint).
+7. The authorization server verifies the `authorization code`, `Client ID` and `Client Secret`.
+8. The authorization server sends to the application an `ID Token` and `Access Token` (and optionally, a `Refresh Token`) .
+9. The `Access Token` contains user claims.
+10. When the application wants to access a resource such as a WebApi it adds the `Access Token` containing user claims to the authorization header of a `HttpClient` request in the form of a `Bearer` token.
 
 [Authorization Clode Flow with Proof of Key for Code Exchange (PKCE)](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow-with-proof-key-for-code-exchange-pkce) steps:
 \
-The *PKCE Authorization Code Flow* has very similar steps because it builds on the standard *Authentication Code Flow*.
-1. User clicks login in the application
-2. The application creates a `code_verifier` and generates a `code_challenge` from it
-3. The user is redirected to the authorization server (`/authorize` endpoint) along with the `code_challenge`
-4. The authorization server redirects the user to a login prompt
-5. The user authenticates
-6. the authorization server stores `code_challenge` and then redirects the user back to the application with an `authorization code`, which can be used once
-7. The applications send the `authorization code` along with the `code_verifier` (created in step 2.) to the authorization server (`/oauth/token` endpoint)
-8. The authorization server verifies the `code_challenge` and `code_verifier`
-9. The authorization server responds with an `ID Token` and `Access Token` (and optionally, a `Refresh Token`) 
-10. The application adds the `Access Token` to the authorization header in the form of a `Bearer` token of an `HttpClient` request to a WebApi to access a resource
+The *PKCE Authorization Code Flow* builds on the standard *Authentication Code Flow* so it has very similar steps.
+1. User clicks login in the application.
+2. The application creates a `code_verifier` and generates a `code_challenge` from it.
+3. The user is redirected to the authorization server (`/authorize` endpoint) along with the `code_challenge`.
+4. The authorization server redirects the user to a login prompt.
+5. The user authenticates.
+6. the authorization server stores the `code_challenge` and then redirects the user back to the application with an `authorization code`, which can only be used once.
+7. The application sends the `authorization code` along with the `code_verifier` (created in step 2.) to the authorization server (`/oauth/token` endpoint).
+8. The authorization server verifies the `code_challenge` and `code_verifier`.
+9. The authorization server sends to the application an `ID Token` and `Access Token` (and optionally, a `Refresh Token`). The `Access Token` contains user claims.
+11. When the application wants to access a resource such as a WebApi it adds the `Access Token` containing user claims to the authorization header of a `HttpClient` request in the form of a `Bearer` token.
 
 #### Identity Providers
 Authentication is done through an Identity Provider that returns a token containing a RoleClaim called `headwayuser`.
