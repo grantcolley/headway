@@ -20,6 +20,7 @@
    * [Create a Workflow](#create-a-workflow)
    * [Add Permissions](#add-permissions)
 * [Authentication](#authentication)
+   * [Token-based Authentication](#token-based-authentication)
    * [Blazor Server vs Blazor WebAssembly](#blazor-server-vs-blazor-webassembly)
    * [Authorization Code Flow vs Authorization Code Flow with PKCE](#authorization-code-flow-vs-authorization-code-flow-with-pkce)
    * [Headway Authentication](#headway-authentication)
@@ -74,6 +75,32 @@
 
 ## Authentication
 
+### Token-based Authentication
+Blazor applications use [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html), which is a safe means of representing claims that can be transferred between parties.
+Token-based authentication involves an authorization server issuing an athenticated user with a token containing claims, which can be sent to a resource such as a WebApi, with an extra authorization header in the form of a Bearer token. This allows the WebApi to validate the claim and provide the user access to the resource.
+
+[**Headway.WebApi**](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs) authentication is configured for the `Bearer` *Authenticate* and *Challenge* scheme. **JwtBearer** middleware is added to validate the token based on the values of the `TokenValidationParameters`, *ValidIssuer* and *ValidAudience*.  
+
+```C#
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    var identityProvider = builder.Configuration["IdentityProvider:DefaultProvider"];
+
+    options.Authority = $"https://{builder.Configuration[$"{identityProvider}:Domain"]}";
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = builder.Configuration[$"{identityProvider}:Domain"],
+        ValidAudience = builder.Configuration[$"{identityProvider}:Audience"]
+    };
+});
+```
+
+Blazor applications obtain a token from an Identity Provider using an *authorization flow*. The type of *flow* used depends on the Blazor hosting model.
+
 ### Blazor Server vs Blazor WebAssembly
 > [ASP.NET Core Blazor authentication and authorization](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/).
 > \
@@ -82,11 +109,6 @@
 > - Access rules for areas of the app and components.
 >
 >Blazor WebAssembly apps run on the client. Authorization is only used to determine which UI options to show. Since client-side checks can be modified or bypassed by a user, a Blazor WebAssembly app can't enforce authorization access rules. "
-
-Blazor applications use [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html), which is a safe means of representing claims that can be transferred between parties.
-Token-based authentication involves an authorization server issuing an athenticated user with a token containing claims, which can be sent to a resource such as a WebApi, with an extra authorization header in the form of a Bearer token. This allows the WebApi to validate the claim and provide the user access to the resource.
-
-The Blazor application obtains the token from the Identity Provider using an *authorization flow*. The type of *flow* used depends on the Blazor hosting model.
 
 [**Blazor Server**](https://docs.microsoft.com/en-us/aspnet/core/blazor/security/server/) uses *Authorization Code Flow* in which a `Client Secret` is passed in the exchange. It can do this because it is a *'regular web application'* where the source code and `Client Secret` is securely stored *server-side* and not publicly exposed.
 
