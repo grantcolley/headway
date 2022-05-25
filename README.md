@@ -63,6 +63,8 @@
 ## Getting Started
 ### Build a New Application
 
+![Alt text](/readme-images/StandardRemediationFlow.png?raw=true "Standard Remediation Flow") 
+
 ### Create the Models
 
 ### Add a Module
