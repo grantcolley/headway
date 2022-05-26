@@ -13,7 +13,7 @@
 ## Table of Contents
 * [The Framework](#the-framework)
 * [Getting Started](#getting-started)
-   * [Build a New Application](#build-a-new-application)
+   * [Building a New Headway Application](#building-a-new-headway-application)
    * [Create the Models](#create-the-models)
    * [Add a Module](#add-a-module)
    * [Add a Search Screen](#add-a-search-screen)
