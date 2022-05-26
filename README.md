@@ -13,7 +13,10 @@
 ## Table of Contents
 * [The Framework](#the-framework)
 * [Getting Started](#getting-started)
-   * [Building a New Headway Application](#building-a-new-headway-application)
+   * [Building an Example Headway Application](#building-an-example-headway-application)
+       * [Introduction to RemediatR](#introduction-to-remediatr)
+       * [RemediatR Roles](#remediatr-roles)
+       * [RemediatR Flow](#remediatr-flow)
    * [Create the Models](#create-the-models)
    * [Add a Module](#add-a-module)
    * [Add a Search Screen](#add-a-search-screen)
@@ -61,7 +64,21 @@
  * **Identity Provider** - An *IdentityServer4* ASP.NET Core Web API, providing an OpenID Connect and OAuth 2.0 framework, for authentication.
 
 ## Getting Started
-### Build a New Application
+### Building an Example Headway Application
+An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
+
+#### Introduction to RemediatR
+The example application will be called **RemediatR**. Its purpose will be to refund customers that have been wronged in some way. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with payment of the refunded amount.
+
+#### RemediatR Roles
+Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
+-	**Remediation Owner** – monitors and progresses the case from start through to completion 
+-	**Remediation Reviewer** – reviews the case as part of a four-eyes check, at critical points
+-	**Finance User** – calculates the refund including any compensatory interest due
+-	**Finance Reviewer** – reviews the refund calculated as part of a four-eyes check 
+-	**Remunerator** – processes the refund payment
+
+#### RemediatR Flow
 
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true "Standard Remediation Flow") 
 
