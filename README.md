@@ -13,6 +13,7 @@
 ## Table of Contents
 * [The Framework](#the-framework)
 * [Getting Started](#getting-started)
+   * [Seed Data](#seed-data) 
    * [Building an Example Headway Application](#building-an-example-headway-application)
        * [Introduction to RemediatR](#introduction-to-remediatr)
        * [RemediatR Roles](#remediatr-roles)
@@ -64,6 +65,9 @@
  * **Identity Provider** - An *IdentityServer4* ASP.NET Core Web API, providing an OpenID Connect and OAuth 2.0 framework, for authentication.
 
 ## Getting Started
+### Seed Data
+
+
 ### Building an Example Headway Application
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
