@@ -70,7 +70,6 @@ An example application will be created using Headway to demonstrate features bui
 #### Introduction to RemediatR
 The example application will be called **RemediatR**. Its purpose will be to refund customers that have been wronged in some way. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with payment of the refunded amount.
 
-#### RemediatR Roles
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
 -	**Remediation Owner** – monitors and progresses the case from start through to completion 
 -	**Remediation Reviewer** – reviews the case as part of a four-eyes check, at critical points
@@ -78,7 +77,7 @@ Different users will be responsible for different stages in the flow. They will 
 -	**Finance Reviewer** – reviews the refund calculated as part of a four-eyes check 
 -	**Remunerator** – processes the refund payment
 
-#### RemediatR Flow
+The RemediatR Flow is as follows:
 
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true "Standard Remediation Flow") 
 
