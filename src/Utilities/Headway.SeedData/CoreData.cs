@@ -124,23 +124,13 @@ namespace Headway.SeedData
         {
             var grant = new User { UserName = "grant", Email = "grant@email.com" };
             var alice = new User { UserName = "alice", Email = "alice@email.com" };
-            var bob = new User { UserName = "bob", Email = "bob@email.com" };
-            var jane = new User { UserName = "jane", Email = "jane@email.com" };
-            var will = new User { UserName = "will", Email = "will@email.com" };
 
             applicationDbContext.Users.Add(grant);
             applicationDbContext.Users.Add(alice);
-            applicationDbContext.Users.Add(bob);
-            applicationDbContext.Users.Add(jane);
-            applicationDbContext.Users.Add(will);
 
             grant.Roles.Add(developerRole);
             alice.Roles.Add(adminRole);
             alice.Roles.Add(userRole);
-            bob.Roles.Add(adminRole);
-            bob.Roles.Add(userRole);
-            jane.Roles.Add(userRole);
-            will.Roles.Add(userRole);
 
             applicationDbContext.SaveChanges();
         }
