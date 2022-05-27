@@ -74,7 +74,7 @@ To help get you started the **Headway** *framework* comes with [seed data](https
 >  |grant@email.com|Developer|headwayuser|
 
 Add the connection string to [appsettings.json](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) of **Headway.WebApi**.
-> Note Headway will know whether you are pointing to a MS SQL Server database based on the connection string. This can be extended to use other databases if required by looking at [DesignTimeDbContextFactory.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) in **Headway.Repository**.
+> Note Headway will know whether you are pointing to **SQLite** or a **MS SQL Server** database based on the connection string. This can be extended to use other databases if required by looking at [DesignTimeDbContextFactory.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) in **Headway.Repository**.
 
 ```C#
   "ConnectionStrings": {
