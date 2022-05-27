@@ -66,8 +66,8 @@
 ### Seed Data
 ![Alt text](/readme-images/HeadwayDefaultSeedData.jpg?raw=true "Headway with Default Seed Data") 
 
-The **Headway** *framework* comes with [seed data](https://github.com/grantcolley/headway/blob/main/src/Utilities/Headway.SeedData/CoreData.cs) that provides a basic configuration to get including default menu, roles, permissions and a couple of users, to help get you started.
-> The default seed data come with two user accounts which will need to be registered with an [identity provider](#identity-providers) that will issue a token to the user containing a RoleClaim called `headwayuser`. The two default users and their Headway role is:
+To help get you started the **Headway** *framework* comes with [seed data](https://github.com/grantcolley/headway/blob/main/src/Utilities/Headway.SeedData/CoreData.cs) that provides basic configuration for a default navigation menu, roles, permissions and a couple of users.
+> The default seed data come with two user accounts which will need to be registered with an [identity provider](#identity-providers) that will issue a token to the user containing a RoleClaim called `headwayuser`. The two default users are:
 >  |User|Headway Role|Indentity Provider RoleClaim|
 >  |----|------------|----------------------------|
 >  |alice@email.com|Admin|headwayuser|
