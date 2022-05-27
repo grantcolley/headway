@@ -79,7 +79,7 @@ Add the connection string to [appsettings.json](https://github.com/grantcolley/h
 ```C#
   "ConnectionStrings": {
     /*"DefaultConnection": "Data Source=..\\..\\db\\Headway.db;"*/
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=Headway;Trusted_Connection=True;MultipleActiveResultSets=true"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=Headway;Trusted_Connection=True;"
   }
 ````
 
