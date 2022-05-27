@@ -107,7 +107,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
-    SeedData.Initialise(applicationDbContext);
+    Headway.SeedData.CoreData.Initialise(applicationDbContext);
 }
 
 app.Run();

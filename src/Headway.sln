@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Controls", "H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RequestApi", "Headway.RequestApi\Headway.RequestApi.csproj", "{B4A2729D-722F-4F68-B95C-D7BDC545ACB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.SeedData", "Headway.SeedData\Headway.SeedData.csproj", "{DB92D1D8-764A-4961-9E52-EBAE39C0A1A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{B4A2729D-722F-4F68-B95C-D7BDC545ACB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4A2729D-722F-4F68-B95C-D7BDC545ACB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4A2729D-722F-4F68-B95C-D7BDC545ACB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB92D1D8-764A-4961-9E52-EBAE39C0A1A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB92D1D8-764A-4961-9E52-EBAE39C0A1A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB92D1D8-764A-4961-9E52-EBAE39C0A1A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB92D1D8-764A-4961-9E52-EBAE39C0A1A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{FCB4BAB8-FC8B-443A-8338-35633C98A36C} = {E79B3B54-22DF-4B81-A1CA-F52C2B920D0C}
 		{BE89438D-63A4-4519-B12E-B64580A17E53} = {E79B3B54-22DF-4B81-A1CA-F52C2B920D0C}
 		{1CDD388A-BCCF-461A-9527-B952592823A7} = {E79B3B54-22DF-4B81-A1CA-F52C2B920D0C}
+		{DB92D1D8-764A-4961-9E52-EBAE39C0A1A3} = {E79B3B54-22DF-4B81-A1CA-F52C2B920D0C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E425CDCE-DCB2-45E6-B010-7B862B9FC224}

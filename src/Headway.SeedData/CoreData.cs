@@ -1,12 +1,13 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Model;
 using Headway.Core.Options;
+using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace Headway.Repository.Data
+namespace Headway.SeedData
 {
-    public class SeedData
+    public class CoreData
     {
         private static Permission user = null;
         private static Permission admin = null;
