@@ -16,8 +16,6 @@
    * [Seed Data](#seed-data) 
    * [Building an Example Headway Application](#building-an-example-headway-application)
        * [Introduction to RemediatR](#introduction-to-remediatr)
-       * [RemediatR Roles](#remediatr-roles)
-       * [RemediatR Flow](#remediatr-flow)
    * [Create the Models](#create-the-models)
    * [Add a Module](#add-a-module)
    * [Add a Search Screen](#add-a-search-screen)
@@ -66,7 +64,12 @@
 
 ## Getting Started
 ### Seed Data
-
+The **Headway** *framework* comes with seed data that provides a basic configuration to get including default menu, roles, permissions and a couple of users, to help get you started.
+> The default seed data come with two user accounts which will need to be registered with an [identity provider](#identity-providers) that will issue a token to the user containing a RoleClaim called `headwayuser`. The two default users and their Headway role is:
+>  |User|Headway Role|Indentity Provider RoleClaim|
+>  |----|------------|----------------------------|
+>  |alice@email.com|Admin|headwayuser|
+>  |grant@email.com|Developer|headwayuser|
 
 ### Building an Example Headway Application
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
