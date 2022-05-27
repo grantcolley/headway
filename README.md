@@ -64,7 +64,7 @@
 
 ## Getting Started
 ### Seed Data
-![Alt text](/readme-images/Headway.jpg?raw=true "Headway with Default Seed Data") 
+![Alt text](/readme-images/HeadwayDefaultSeedData.jpg?raw=true "Headway with Default Seed Data") 
 
 The **Headway** *framework* comes with [seed data](https://github.com/grantcolley/headway/blob/main/src/Utilities/Headway.SeedData/CoreData.cs) that provides a basic configuration to get including default menu, roles, permissions and a couple of users, to help get you started.
 > The default seed data come with two user accounts which will need to be registered with an [identity provider](#identity-providers) that will issue a token to the user containing a RoleClaim called `headwayuser`. The two default users and their Headway role is:
@@ -84,7 +84,7 @@ Add the connection string to [appsettings.json](https://github.com/grantcolley/h
 ````
 
 Create the database and schema using [EF Core migrations](#entityframework-core-migrations) in [Headway.MigrationsSqlServer](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlServer) or [MigrationsSqlite](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlite), depending on which database you choose. If you are using Visual Studio in the `Developer PowerShell` navigate to **Headway.WebApi** folder and run the following:
-![Alt text](/readme-images/EFCoreMigrations.PNG.jpg?raw=true "Headway EF Core Migrations") 
+![Alt text](/readme-images/EFCoreMigrations.jpg?raw=true "Headway EF Core Migrations") 
 
 ### Building an Example Headway Application
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
