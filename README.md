@@ -78,8 +78,13 @@ Add the connection string to [appsettings.json](https://github.com/grantcolley/h
 
 ```C#
   "ConnectionStrings": {
+
+    /* SQLite*/
     /*"DefaultConnection": "Data Source=..\\..\\db\\Headway.db;"*/
+    
+    /* MS SQL Server*/
     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=Headway;Trusted_Connection=True;"
+    
   }
 ````
 
