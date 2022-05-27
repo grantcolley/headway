@@ -5,10 +5,10 @@
 \
 [![Build status](https://ci.appveyor.com/api/projects/status/xg606j7pr1ib54db?svg=true)](https://ci.appveyor.com/project/grantcolley/headway)
 ###### 
-\
+
 **Headway** is a framework for building configurable Blazor applications fast. It is based on the [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup) project, providing a solution for a *Blazor* app supporting both hosting models, *Blazor WebAssembly* and *Blazor Server*, a *WebApi* for accessing data and an *Identity Provider* for authentication.
- 
-![Alt text](/readme-images/Architecture.png?raw=true "Headway Architecture") 
+
+![Alt text](/readme-images/HeadwayDefaultSeedData.jpg?raw=true "Headway with Default Seed Data") 
 
 ## Table of Contents
 * [The Framework](#the-framework)
@@ -62,10 +62,10 @@
  * **Headway.Repository** - a *Class Library* for accessing the data store behind the *WebApi*.
  * **Identity Provider** - An *IdentityServer4* ASP.NET Core Web API, providing an OpenID Connect and OAuth 2.0 framework, for authentication.
 
+![Alt text](/readme-images/Architecture.png?raw=true "Headway Architecture") 
+
 ## Getting Started
 ### Seed Data
-![Alt text](/readme-images/HeadwayDefaultSeedData.jpg?raw=true "Headway with Default Seed Data") 
-
 To help get you started the **Headway** *framework* comes with [seed data](https://github.com/grantcolley/headway/blob/main/src/Utilities/Headway.SeedData/CoreData.cs) that provides basic configuration for a default navigation menu, roles, permissions and a couple of users.
 > The default seed data come with two user accounts which will need to be registered with an [identity provider](#identity-providers) that will issue a token to the user containing a RoleClaim called `headwayuser`. The two default users are:
 >  |User|Headway Role|Indentity Provider RoleClaim|
