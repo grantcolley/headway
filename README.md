@@ -66,7 +66,11 @@
 
 ## Getting Started
 ### Seed Data
-
+> The default seed data come with two user accounts which will need to be registered with an [identity provider](#identity-providers) that will issue a token to the user containing a RoleClaim called `headwayuser`. The two default users and their Headway role is:
+>  |User|Headway Role|
+>  |----|------------|
+>  |alice@email.com|Admin|
+>  |grant@email.com|Developer|
 
 ### Building an Example Headway Application
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
