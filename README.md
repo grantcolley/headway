@@ -71,6 +71,19 @@ The **Headway** *framework* comes with [seed data](https://github.com/grantcolle
 >  |alice@email.com|Admin|headwayuser|
 >  |grant@email.com|Developer|headwayuser|
 
+Add the connection string to [appsettings.json](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) of **Headway.WebApi**.
+> Note Headway will know whether you are pointing to a MS SQL Server database based on the connection string. This can be extended to use other databases if required by looking at [DesignTimeDbContextFactory.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) in **Headway.Repository**.
+
+```C#
+  "ConnectionStrings": {
+    /*"DefaultConnection": "Data Source=..\\..\\db\\Headway.db;"*/
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=Headway;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+````
+
+Create the database and schema using EF Core migrations in [Headway.MigrationsSqlServer](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlServer) or [MigrationsSqlite](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlite), depending on which database you choose. If you are using Visual Studio in the `Developer PowerShell` navigate to **Headway.WebApi** folder and run the following:
+[]()
+
 ### Building an Example Headway Application
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
