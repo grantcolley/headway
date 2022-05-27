@@ -17,8 +17,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
-		<ProjectReference Include="..\Headway.Repository\Headway.Repository.csproj" />
+		<ProjectReference Include="..\..\Headway.Core\Headway.Core.csproj" />
+		<ProjectReference Include="..\..\Headway.Repository\Headway.Repository.csproj" />
 	</ItemGroup>
 	
 </Project>

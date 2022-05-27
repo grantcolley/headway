@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Headway.SeedData\Headway.SeedData.csproj" />
     <ProjectReference Include="..\Utilities\Headway.MigrationsSqlite\Headway.MigrationsSqlite.csproj" />
     <ProjectReference Include="..\Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj" />
+    <ProjectReference Include="..\Utilities\Headway.SeedData\Headway.SeedData.csproj" />
   </ItemGroup>
 
 </Project>
