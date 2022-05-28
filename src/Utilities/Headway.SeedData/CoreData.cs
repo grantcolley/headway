@@ -228,7 +228,7 @@ namespace Headway.SeedData
             {
                 Name = "Permissions",
                 Title = "Permissions",
-                Description = "Permissions list",
+                Description = "List of User Permissions",
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
                 OrderModelBy = "Name",
@@ -254,7 +254,7 @@ namespace Headway.SeedData
             {
                 Name = "Permission",
                 Title = "Permission",
-                Description = "Create, update or delete a permission",
+                Description = "Create, update or delete a User Permission",
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
@@ -281,7 +281,7 @@ namespace Headway.SeedData
             {
                 Name = "Roles",
                 Title = "Roles",
-                Description = "Roles list",
+                Description = "List of User Roles",
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
                 OrderModelBy = "Name",
@@ -307,7 +307,7 @@ namespace Headway.SeedData
             {
                 Name = "Role",
                 Title = "Role",
-                Description = "Create, update or delete a role",
+                Description = "Create, update or delete a User Role",
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
@@ -335,7 +335,7 @@ namespace Headway.SeedData
             {
                 Name = "Users",
                 Title = "Users",
-                Description = "Users list",
+                Description = "List of Users",
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
                 OrderModelBy = "UserName",
@@ -361,7 +361,7 @@ namespace Headway.SeedData
             {
                 Name = "User",
                 Title = "User",
-                Description = "Create, update or delete a user",
+                Description = "Create, update or delete a User",
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
@@ -392,7 +392,7 @@ namespace Headway.SeedData
             {
                 Name = "Modules",
                 Title = "Modules",
-                Description = "Modules list",
+                Description = "List of navigation Modules",
                 Model = "Headway.Core.Model.Module, Headway.Core",
                 ModelApi = "Modules",
                 OrderModelBy = "Name",
@@ -418,7 +418,7 @@ namespace Headway.SeedData
             {
                 Name = "Module",
                 Title = "Module",
-                Description = "Create, update or delete a module",
+                Description = "Create, update or delete a navigation Module",
                 Model = "Headway.Core.Model.Module, Headway.Core",
                 ModelApi = "Modules",
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
@@ -446,7 +446,7 @@ namespace Headway.SeedData
             {
                 Name = "Categories",
                 Title = "Categories",
-                Description = "Categories list",
+                Description = "List of Categories for a Module",
                 Model = "Headway.Core.Model.Category, Headway.Core",
                 ModelApi = "Categories",
                 OrderModelBy = "Name",
@@ -472,7 +472,7 @@ namespace Headway.SeedData
             {
                 Name = "Category",
                 Title = "Category",
-                Description = "Create, update or delete a category",
+                Description = "Create, update or delete a Category for a Module",
                 Model = "Headway.Core.Model.Category, Headway.Core",
                 ModelApi = "Categories",
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
@@ -501,7 +501,7 @@ namespace Headway.SeedData
             {
                 Name = "MenuItems",
                 Title = "Menu Items",
-                Description = "Menu Items list",
+                Description = "List of Menu Items for a Category",
                 Model = "Headway.Core.Model.MenuItem, Headway.Core",
                 ModelApi = "MenuItems",
                 OrderModelBy = "Name",
@@ -527,7 +527,7 @@ namespace Headway.SeedData
             {
                 Name = "MenuItem",
                 Title = "Menu Item",
-                Description = "Create, update or delete a menu item",
+                Description = "Create, update or delete a Menu Item for a Category",
                 Model = "Headway.Core.Model.MenuItem, Headway.Core",
                 ModelApi = "MenuItems",
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
@@ -559,7 +559,7 @@ namespace Headway.SeedData
             {
                 Name = "Configs",
                 Title = "Configs",
-                Description = "Configs list",
+                Description = "List of Configs for rendering an object on a page",
                 Model = "Headway.Core.Model.Config, Headway.Core",
                 ModelApi = "Configuration",
                 OrderModelBy = "Name",
@@ -585,7 +585,7 @@ namespace Headway.SeedData
             {
                 Name = "Config",
                 Title = "Config",
-                Description = "Create, update or delete a config",
+                Description = "Config for rendering a custom object on a page",
                 Model = "Headway.Core.Model.Config, Headway.Core",
                 ModelApi = "Configuration",
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
@@ -625,7 +625,7 @@ namespace Headway.SeedData
             {
                 Name = "ConfigItem",
                 Title = "ConfigItem",
-                Description = "Create, update or delete a config item for a config",
+                Description = "Config Item maps to a custom object's property to be rendered on the screeen",
                 Model = "Headway.Core.Model.ConfigItem, Headway.Core",
                 ModelApi = "Configuration",
                 Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
@@ -658,7 +658,7 @@ namespace Headway.SeedData
             {
                 Name = "ConfigItemsListDetail",
                 Title = "ConfigItemsListDetail",
-                Description = "List of config items for a config",
+                Description = "List of custom object properties to be rendered on the screeen",
                 Model = "Headway.Core.Model.ConfigItem, Headway.Core",
                 ModelApi = "Configuration",
                 OrderModelBy = "Order"
@@ -678,7 +678,7 @@ namespace Headway.SeedData
             {
                 Name = "ConfigContainer",
                 Title = "ConfigContainer",
-                Description = "Create, update or delete a config container for a config",
+                Description = "Container for rendering Config Items for a Config",
                 Model = "Headway.Core.Model.ConfigContainer, Headway.Core",
                 ModelApi = "Configuration",
                 Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
@@ -707,7 +707,7 @@ namespace Headway.SeedData
             {
                 Name = "DemoModels",
                 Title = "DemoModels",
-                Description = "Demo Models list",
+                Description = "List of Demo Models to demonstrate rendering objects on a page",
                 Model = "Headway.Core.Model.DemoModel, Headway.Core",
                 ModelApi = "DemoModel",
                 OrderModelBy = "DemoModelId",
@@ -732,7 +732,7 @@ namespace Headway.SeedData
             {
                 Name = "DemoModel",
                 Title = "Demo",
-                Description = "Demonstrate rendering a model with components",
+                Description = "Demonstrate rendering an object on a page",
                 Model = "Headway.Core.Model.DemoModel, Headway.Core",
                 ModelApi = "DemoModel",
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
@@ -773,7 +773,7 @@ namespace Headway.SeedData
             {
                 Name = "DemoModelItem",
                 Title = "DemoModelItem",
-                Description = "Create, update or delete a demo model item",
+                Description = "Config for rendering a custom object associated with the Demo Model",
                 Model = "Headway.Core.Model.DemoModelItem, Headway.Core",
                 ModelApi = "DemoModel",
                 Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
@@ -798,7 +798,7 @@ namespace Headway.SeedData
             {
                 Name = "DemoModelItemsListDetail",
                 Title = "DemoModelItemsListDetail",
-                Description = "List of demo model items",
+                Description = "Config for rendering a list of custom objects associated with the Demo Model",
                 Model = "Headway.Core.Model.DemoModelItem, Headway.Core",
                 ModelApi = "DemoModel",
                 OrderModelBy = "Order"
@@ -818,7 +818,7 @@ namespace Headway.SeedData
             {
                 Name = "DemoModelTreeItem",
                 Title = "DemoModelTreeItem",
-                Description = "Create, update or delete a demo model tree item",
+                Description = "Config for rendering a treeview of custom objects associated with the Demo Model",
                 Model = "Headway.Core.Model.DemoModelTreeItem, Headway.Core",
                 ModelApi = "DemoModel",
                 Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
