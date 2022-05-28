@@ -15,12 +15,19 @@
 * [Getting Started](#getting-started)
    * [Seed Data](#seed-data) 
    * [Building an Example Headway Application](#building-an-example-headway-application)
-       * [Introduction to RemediatR](#introduction-to-remediatr)
-   * [Create the Models](#create-the-models)
-   * [Add a Module](#add-a-module)
-   * [Add a Search Screen](#add-a-search-screen)
-   * [Create a Workflow](#create-a-workflow)
-   * [Add Permissions](#add-permissions)
+      * [Introduction to the Example Headway Application](#introduction-to-the-example-headway-application)
+      * [Create the Example Headway Application](#create-the-example-headway-application)
+         * [Create a Model](#create-a-model)
+         * [Create Navigation](#create-navigation)
+         * [Create Config for Rendering a List of Models](#create-config-for-rendering-a-list-of-models)
+         * [Create Config for Rendering a Model](#create-config-for-rendering-a-model)
+         * [Create a Flow](#create-a-flow)
+         * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
+         * [Create Roles and Permissions](#create-roles-and-permissions)
+         * [Create Users](#create-users)
+         * [Bind Permissions to the Flow](#bind-permissions-to-the-flow)
+         * [Capture History](#capture-history)
+         * [Capture an Audit Trail](#capture-an-audit-trail)
 * [Authentication](#authentication)
    * [Token-based Authentication](#token-based-authentication)
    * [Blazor Server vs Blazor WebAssembly](#blazor-server-vs-blazor-webassembly)
@@ -78,7 +85,7 @@ The [database and schema](#database) can be created using EntityFramework Migrat
 ### Building an Example Headway Application
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
-#### Introduction to RemediatR
+#### Introduction to the Example Headway Application
 The example application will be called **RemediatR**. Its purpose will be to refund customers that have been wronged in some way. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with payment of the refunded amount.
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
@@ -92,17 +99,18 @@ The RemediatR Flow is as follows:
 
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true "Standard Remediation Flow") 
 
-### Create the Models
-
-### Add a Module
-
-### Add a Search Screen
-
-### Create a Workflow
-
-### Add Permissions
-
-## Authentication
+### Create the Example Headway Application
+#### Create a Model
+#### Create Navigation
+#### Create Config for Rendering a List of Models
+#### Create Config for Rendering a Model
+#### Create a Flow
+#### Bind the Flow to a Model
+#### Create Roles and Permissions
+#### Create Users
+#### Bind Permissions to the Flow
+#### Capture History
+#### Capture an Audit Trail
 
 ### Token-based Authentication
 Blazor applications use [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://jwt.io/introduction), which is a safe means of representing claims that can be transferred between parties.
