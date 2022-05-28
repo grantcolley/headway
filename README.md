@@ -73,23 +73,7 @@ To help get you started the **Headway** *framework* comes with [seed data](https
 >  |alice@email.com|Admin|headwayuser|
 >  |grant@email.com|Developer|headwayuser|
 
-Add the connection string to [appsettings.json](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) of **Headway.WebApi**.
-> Note Headway will know whether you are pointing to **SQLite** or a **MS SQL Server** database based on the connection string. This can be extended to use other databases if required by looking at [DesignTimeDbContextFactory.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) in **Headway.Repository**.
-
-```C#
-  "ConnectionStrings": {
-
-    /* SQLite*/
-    /*"DefaultConnection": "Data Source=..\\..\\db\\Headway.db;"*/
-    
-    /* MS SQL Server*/
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=Headway;Trusted_Connection=True;"
-    
-  }
-````
-
-Create the database and schema using [EF Core migrations](#entityframework-core-migrations) in [Headway.MigrationsSqlServer](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlServer) or [MigrationsSqlite](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlite), depending on which database you choose. If you are using Visual Studio in the `Developer PowerShell` navigate to **Headway.WebApi** folder and run the following:
-![Alt text](/readme-images/EFCoreMigrations.jpg?raw=true "Headway EF Core Migrations") 
+The [database and schema](#database) can be created using EntityFramework Migrations.  
 
 ### Building an Example Headway Application
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
@@ -241,6 +225,25 @@ Headway currently supports authentication from two identity providers **Identity
 ## Administration
 
 ## Database
+The database sits behind **Headway.WebApi** and access is through the **Headway.Repository** library. The 
+
+Currently **Headway** can use **MS SQL Server** or **SQLite** although this can be extended to any data store. Add the connection string to [appsettings.json](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) of **Headway.WebApi**.
+> Note Headway will know whether you are pointing to **SQLite** or a **MS SQL Server** database based on the connection string. This can be extended to use other databases if required by looking at [DesignTimeDbContextFactory.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) in **Headway.Repository**.
+
+```C#
+  "ConnectionStrings": {
+
+    /* SQLite*/
+    /*"DefaultConnection": "Data Source=..\\..\\db\\Headway.db;"*/
+    
+    /* MS SQL Server*/
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=Headway;Trusted_Connection=True;"
+    
+  }
+````
+
+Create the database and schema using [EF Core migrations](#entityframework-core-migrations) in [Headway.MigrationsSqlServer](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlServer) or [MigrationsSqlite](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlite), depending on which database you choose. If you are using Visual Studio in the `Developer PowerShell` navigate to **Headway.WebApi** folder and run the following:
+![Alt text](/readme-images/EFCoreMigrations.jpg?raw=true "Headway EF Core Migrations") 
 
 ## Notes
 
