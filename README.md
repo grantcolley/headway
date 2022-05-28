@@ -191,7 +191,8 @@ Headway currently supports authentication from two identity providers **Identity
    - The scoped TokenProvider is manually injected into each request class and the bearer token is added to the Authorization header of outgoing HttpClient requests
 
 #### WebApi
-   - Controllers are emelished with the `[Authorize(Roles = Core.Constants.Roles.HEADWAY_USER)]` attribute.
+   - Accessible only to authenticated users carrying the `headwayuser` role claim and controllers are embelished with the `[Authorize(Roles="headwayuser")]` attribute.
+   - A further check is made on every request using the `email` claim to confirm the user has the relevant *Headway role or permission* required to access to resource being requested.
 
 #### Other Implementation Examples for Identity Providers
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
@@ -225,10 +226,12 @@ Headway currently supports authentication from two identity providers **Identity
 ## Administration
 
 ## Database
-The database sits behind **Headway.WebApi** and access is through the **Headway.Repository** library. The 
+Data access is abstracted behind interfaces. **Headway.Repository** provides concrete implementation for the data access layer interfaces. it currently supports **MS SQL Server** and **SQLite**, however this can be extended to any data store supported by *EntityFramework Core*.
 
-Currently **Headway** can use **MS SQL Server** or **SQLite** although this can be extended to any data store. Add the connection string to [appsettings.json](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) of **Headway.WebApi**.
-> Note Headway will know whether you are pointing to **SQLite** or a **MS SQL Server** database based on the connection string. This can be extended to use other databases if required by looking at [DesignTimeDbContextFactory.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) in **Headway.Repository**.
+> **Headway.Repository** is not limited to *EntityFramework Core* can be replaced with a completely different data access implementation.
+
+Add the connection string to [appsettings.json](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/appsettings.json) of **Headway.WebApi**.
+> Note Headway will know whether you are pointing to **SQLite** or a **MS SQL Server** database based on the connection string. This can be extended in [DesignTimeDbContextFactory.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/DesignTimeDbContextFactory.cs) to use other databases if required.
 
 ```C#
   "ConnectionStrings": {
