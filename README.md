@@ -191,7 +191,7 @@ Headway currently supports authentication from two identity providers **Identity
    - The scoped TokenProvider is manually injected into each request class and the bearer token is added to the Authorization header of outgoing HttpClient requests
 
 #### WebApi
-   - Controllers have role authorisation
+   - Controllers are emelished with the `[Authorize(Roles = Core.Constants.Roles.HEADWAY_USER)]` attribute.
 
 #### Other Implementation Examples for Identity Providers
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
