@@ -1,5 +1,8 @@
 ﻿using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Headway.RemediatR.Repository
 {
