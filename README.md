@@ -18,10 +18,11 @@
       * [Introduction to the Example Headway Application](#introduction-to-the-example-headway-application)
       * [Building RemediatR](#building-remediatr)
          * [Create the Models](#create-the-models)
-         * [Create Navigation](#create-navigation)
-         * [Create Config for Rendering a List of Models](#create-config-for-rendering-a-list-of-models)
-         * [Create Config for Rendering a Model](#create-config-for-rendering-a-model)
-         * [Create a Flow](#create-a-flow)
+         * [Create the Repository](#create-the-repository)
+         * [Create WebApi Access](#create-webapi-access)
+         * [Configure Navigation](#configure-navigation)
+         * [Configure Model Layout](#configure-model-layout)
+         * [Configure a Flow](#configure-a-flow)
          * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
          * [Create Roles and Permissions](#create-roles-and-permissions)
          * [Create Users](#create-users)
@@ -108,10 +109,11 @@ Create a new class library project called [Headway.RemediatR](https://github.com
 - [Program](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Program.cs) - the program the redress falls under
 - [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Redress.cs) - an instance of the redress
 
-#### Create Navigation
-#### Create Config for Rendering a List of Models
-#### Create Config for Rendering a Model
-#### Create a Flow
+#### Create the Repository
+#### Create WebApi Access
+#### Configure Navigation
+#### Configure Model Layout
+#### Configure a Flow
 #### Bind the Flow to a Model
 #### Create Roles and Permissions
 #### Create Users
