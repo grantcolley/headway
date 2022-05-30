@@ -110,13 +110,13 @@ Create a new class library project called [Headway.RemediatR.Core](https://githu
 
 #### Create the Repository
 This example uses EntityFramework Code First.
-1. In **Headway.RemediatR.Core**:
+1. In **Headway.RemediatR.Core**
     - add a reference to project **Headway.Core**
     - create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository) interface 
-2. Create a new class library project called **Headway.RemediatR.Repository**: 
+2. Create a new class library project called **Headway.RemediatR.Repository**
     - add a reference to project **Headway.RemediatR.Core**
     - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository)
-2. In **Headway.Repository**: 
+2. In **Headway.Repository**
     - add a reference to project **Headway.RemediatR.Core**
     - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
 
