@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Headway.RemediatR.Core\Headway.RemediatR.Core.csproj" />
+    <ProjectReference Include="..\Headway.Repository\Headway.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
