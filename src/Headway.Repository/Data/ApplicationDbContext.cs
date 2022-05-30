@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Model;
+using Headway.RemediatR.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Headway.Repository.Data
@@ -23,6 +24,13 @@ namespace Headway.Repository.Data
         public DbSet<DemoModelItem> DemoModelItems { get; set; }
         public DbSet<DemoModelTreeItem> DemoModelTreeItems { get; set; }
         public DbSet<DemoModelComplexProperty> DemoModelComplexProperties { get; set; }
+
+        // RemediatR
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<CustomerProduct> CustomerProducts { get; set; }
+        public DbSet<Program> Programs { get; set; }
+        public DbSet<Redress> Redresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
