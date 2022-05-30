@@ -1,5 +1,5 @@
 ﻿using Headway.Core.Model;
-using Headway.RemediatR.Model;
+using Headway.RemediatR.Core.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Headway.Repository.Data
