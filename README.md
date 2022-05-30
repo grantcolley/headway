@@ -105,9 +105,8 @@ The RemediatR Flow is as follows:
 Create a new class library project called [Headway.RemediatR](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR) for the models:
 - [Customer](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Customer.cs) - details of the customer to be redressed
 - [Product](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Product.cs) - the product sold to the customer needing redress 
-- [Flow](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Flow.cs) - workflow the redress program will follow
 - [Program](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Program.cs) - the program the redress falls under
-- [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Redress.cs) - an instance of the redress
+- [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Redress.cs) - an instance of a redress case
 
 #### Create the Repository
 #### Create WebApi Access
