@@ -21,7 +21,7 @@
          * [Create the Repository](#create-the-repository)
          * [Configure Navigation](#configure-navigation)
          * [Configure Model Layout](#configure-model-layout)
-         * [Create a Flow](#create-a-flow)
+         * [Configure a Flow](#configure-a-flow)
          * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
          * [Create Roles and Permissions](#create-roles-and-permissions)
          * [Create Users](#create-users)
@@ -108,10 +108,10 @@ Create a new class library project called [Headway.RemediatR](https://github.com
 - [Program](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Program.cs) - the program the redress falls under
 - [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Redress.cs) - an instance of the redress
 
-#### Configure Navigation
 #### Create the Repository
+#### Configure Navigation
 #### Configure Model Layout
-#### Create a Flow
+#### Configure a Flow
 #### Bind the Flow to a Model
 #### Create Roles and Permissions
 #### Create Users
