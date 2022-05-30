@@ -102,13 +102,25 @@ The RemediatR Flow is as follows:
 
 ### Building RemediatR
 #### Create the Models
-Create a new class library project called [Headway.RemediatR](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR) for the models:
-- [Customer](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Customer.cs) - details of the customer to be redressed
-- [Product](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Product.cs) - the product sold to the customer needing redress 
-- [Program](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Program.cs) - the program the redress falls under
-- [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Redress.cs) - an instance of a redress case
+Create a new class library project called [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) for the models:
+- [Customer](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model/Customer.cs) - details of the customer to be redressed
+- [Product](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model/Product.cs) - the product sold to the customer needing redress 
+- [Program](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model/Program.cs) - the program the redress falls under
+- [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model/Redress.cs) - an instance of a redress case
 
 #### Create the Repository
+This example uses EntityFramework Code First.
+1. In **Headway.RemediatR.Core**:
+    - add a reference to project **Headway.Core**
+    - create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository) interface 
+2. Create a new class library project called **Headway.RemediatR.Repository**: 
+    - add a reference to project **Headway.RemediatR.Core**
+    - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository)
+2. In **Headway.Repository**: 
+    - add a reference to project **Headway.RemediatR.Core**
+    - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
+
+
 #### Create WebApi Access
 #### Configure Navigation
 #### Configure Model Layout
