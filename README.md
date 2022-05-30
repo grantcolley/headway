@@ -109,6 +109,7 @@ Create a new class library project called [Headway.RemediatR](https://github.com
 - [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Redress.cs) - an instance of the redress
 
 #### Configure Navigation
+#### Create the Repository
 #### Configure Model Layout
 #### Create a Flow
 #### Bind the Flow to a Model
