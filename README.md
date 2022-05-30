@@ -108,7 +108,7 @@ The RemediatR Flow is as follows:
 This example uses EntityFramework Code First.
 1. In **Headway.RemediatR.Core**
     - add a reference to project **Headway.Core**
-    - create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository) interface 
+    - create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) interface 
 2. Create a new class library project called [Headway.RemediatR.Repository]()
     - add a reference to project **Headway.RemediatR.Core**
     - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository)
