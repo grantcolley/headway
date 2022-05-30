@@ -2,6 +2,11 @@
 {
     public class Customer
     {
+        public Customer()
+        {
+            Products = new List<CustomerProduct>();
+        }
+
         public int CustomerId { get; set; }
         public string? Title { get; set; }
         public string? FirstName { get; set; }
@@ -15,5 +20,6 @@
         public string? Address5 { get; set; }
         public string? Country { get; set; }
         public string? PostCode { get; set; }
+        public List<CustomerProduct> Products { get; set; }
     }
 }
