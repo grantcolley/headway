@@ -19,6 +19,7 @@
       * [Building RemediatR](#building-remediatr)
          * [Create the Models](#create-the-models)
          * [Create the Repository](#create-the-repository)
+         * [Create WebApi Access](#create-webapi-access)
          * [Configure Navigation](#configure-navigation)
          * [Configure Model Layout](#configure-model-layout)
          * [Configure a Flow](#configure-a-flow)
