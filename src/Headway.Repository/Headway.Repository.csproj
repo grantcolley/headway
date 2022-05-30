@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
+    <ProjectReference Include="..\Headway.RemediatR\Headway.RemediatR.csproj" />
   </ItemGroup>
 
 </Project>
