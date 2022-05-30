@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RequestApi", "Headw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.SeedData", "Utilities\Headway.SeedData\Headway.SeedData.csproj", "{187264DE-EC5E-45D2-895D-9930F294E3EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.RemediatR", "Headway.RemediatR\Headway.RemediatR.csproj", "{923EF260-4956-4BC3-A8E1-BA2CCC30D89A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RemediatR", "Headway.RemediatR\Headway.RemediatR.csproj", "{923EF260-4956-4BC3-A8E1-BA2CCC30D89A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Flows", "Headway.Flows\Headway.Flows.csproj", "{DFACA7FB-8DD8-434E-8783-AB0DB3A58A04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{923EF260-4956-4BC3-A8E1-BA2CCC30D89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{923EF260-4956-4BC3-A8E1-BA2CCC30D89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{923EF260-4956-4BC3-A8E1-BA2CCC30D89A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFACA7FB-8DD8-434E-8783-AB0DB3A58A04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFACA7FB-8DD8-434E-8783-AB0DB3A58A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFACA7FB-8DD8-434E-8783-AB0DB3A58A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFACA7FB-8DD8-434E-8783-AB0DB3A58A04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
