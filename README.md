@@ -16,8 +16,8 @@
    * [Seed Data](#seed-data) 
    * [Building an Example Headway Application](#building-an-example-headway-application)
       * [Introduction to the Example Headway Application](#introduction-to-the-example-headway-application)
-      * [Create the Example Headway Application](#create-the-example-headway-application)
-         * [Create a Model](#create-a-model)
+      * [Building RemediatR](#building-remediatr)
+         * [Create the Models](#create-the-models)
          * [Create Navigation](#create-navigation)
          * [Create Config for Rendering a List of Models](#create-config-for-rendering-a-list-of-models)
          * [Create Config for Rendering a Model](#create-config-for-rendering-a-model)
@@ -86,7 +86,7 @@ The [database and schema](#database) can be created using EntityFramework Migrat
 An example application will be created using Headway to demonstrate features built into the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
 #### Introduction to the Example Headway Application
-The example application will be called **RemediatR**. **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
+The example application called **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
 -	**Remediation Owner** – monitors and progresses the case from start through to completion 
@@ -99,8 +99,8 @@ The RemediatR Flow is as follows:
 
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true "Standard Remediation Flow") 
 
-### Create the Example Headway Application
-#### Create a Model
+### Building RemediatR
+#### Create the Models
 Create a new class library project called [Headway.RemediatR](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR) for the models:
 - [Customer](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Customer.cs) - details of the customer to be redressed
 - [Product](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Product.cs) - the product sold to the customer needing redress 
