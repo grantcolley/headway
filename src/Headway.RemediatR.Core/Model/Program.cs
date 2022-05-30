@@ -1,4 +1,4 @@
-﻿namespace Headway.RemediatR.Model
+﻿namespace Headway.RemediatR.Core.Model
 {
     public class Program
     {

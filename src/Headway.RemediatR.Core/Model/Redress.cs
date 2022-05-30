@@ -1,4 +1,6 @@
-﻿namespace Headway.RemediatR.Model
+﻿using System.Collections.Generic;
+
+namespace Headway.RemediatR.Core.Model
 {
     public class Redress
     {
