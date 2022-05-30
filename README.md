@@ -83,10 +83,10 @@ To help get you started the **Headway** *framework* comes with [seed data](https
 The [database and schema](#database) can be created using EntityFramework Migrations.  
 
 ### Building an Example Headway Application
-An example application will be created using Headway to demonstrate features built into the **Headway** framework including, creating a workflow, configuring dynamically rendered page layout that binds to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
+An example application will be created using Headway to demonstrate features built into the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
 #### Introduction to the Example Headway Application
-The example application will be called **RemediatR**. Its purpose will be to refund customers that have been wronged in some way. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with payment of the refunded amount.
+The example application will be called **RemediatR**. **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
 -	**Remediation Owner** – monitors and progresses the case from start through to completion 
@@ -101,6 +101,13 @@ The RemediatR Flow is as follows:
 
 ### Create the Example Headway Application
 #### Create a Model
+Create a new class library project called [Headway.RemediatR](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR) for the models:
+- [Customer](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Customer.cs) - details of the customer to be redressed
+- [Product](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Product.cs) - the product sold to the customer needing redress 
+- [Flow](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Flow.cs) - workflow the redress program will follow
+- [Program](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Program.cs) - the program the redress falls under
+- [Redress](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR/Model/Redress.cs) - an instance of the redress
+
 #### Create Navigation
 #### Create Config for Rendering a List of Models
 #### Create Config for Rendering a Model
