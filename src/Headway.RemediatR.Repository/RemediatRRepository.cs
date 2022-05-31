@@ -1,24 +1,22 @@
 ﻿using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
+using Headway.Repository;
+using Headway.Repository.Data;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.RemediatR.Repository
 {
-    public class RemediatRRepository : IRemediatRRepository
+    public class RemediatRRepository : RepositoryBase<RemediatRRepository>, IRemediatRRepository
     {
-        public Task<Product> AddProductAsync(Product product)
+        public RemediatRRepository(ApplicationDbContext applicationDbContext, ILogger<RemediatRRepository> logger)
+            : base(applicationDbContext, logger)
         {
-            throw new NotImplementedException();
         }
 
-        public Task<int> DeleteProductAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
+        public Task<IEnumerable<Product>> GetProductsAsync()
         {
             throw new NotImplementedException();
         }
@@ -28,17 +26,17 @@ namespace Headway.RemediatR.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Product>> GetProductsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsAuthorisedAsync(string claim, string permission)
+        public Task<Product> AddProductAsync(Product product)
         {
             throw new NotImplementedException();
         }
 
         public Task<Product> UpdateProductAsync(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> DeleteProductAsync(int id)
         {
             throw new NotImplementedException();
         }
