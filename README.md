@@ -57,7 +57,7 @@
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
     * [Handle System.Text.Json Circular Reference Errors](#handle-systemtextjson-circular-reference-errors)
-    * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
+    * [Configure ASP.Net Core use Json.Net](#configure-aspnet-core-use-jsonnet)
 
 ## The Framework
  * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
@@ -373,7 +373,7 @@ The query results will now contain a circular reference, where the parent refere
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 ```
 
-### Make ASP.Net Core use Json.Net
+### Configure ASP.Net Core use Json.Net
 The default JSON serializer for ASP.NET Core is now `System.Text.Json`. However, `System.Text.Json` is new and might currently be missing features supported by `Newtonsoft.Json (Json.NET)`. 
 \
 I [reported a bug in System.Text.Json](https://github.com/dotnet/aspnetcore/issues/34069) where duplicate values are nulled out when setting `JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles`. 
