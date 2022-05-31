@@ -2,7 +2,6 @@
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.RequestApi.Requests;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
