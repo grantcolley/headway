@@ -17,7 +17,7 @@
    * [Building an Example Headway Application](#building-an-example-headway-application)
       * [Introduction to the Example Headway Application](#introduction-to-the-example-headway-application)
       * [Building RemediatR](#building-remediatr)
-         * [Create the Models](#create-the-models)
+         * [Create the Models and Interfaces](#create-the-models-and-interfaces)
          * [Create the Repository](#create-the-repository)
          * [Create WebApi Access](#create-webapi-access)
          * [Configure Navigation](#configure-navigation)
@@ -57,7 +57,7 @@
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
     * [Handle System.Text.Json Circular Reference Errors](#handle-systemtextjson-circular-reference-errors)
-    * [Make ASP.Net Core use Json.Net](#make-aspnet-core-use-jsonnet)
+    * [Configure ASP.Net Core use Json.Net](#configure-aspnet-core-use-jsonnet)
 
 ## The Framework
  * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
@@ -101,22 +101,21 @@ The RemediatR Flow is as follows:
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true "Standard Remediation Flow") 
 
 ### Building RemediatR
-#### Create the Models
-1. Create a new class library project called [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) for the [models](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model).
+#### Create the Models and Interfaces
+1. Create a new class library project called [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) 
+    - add a reference to project **Headway.Core**
+    - Create the [models](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model)
+    - create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) interface 
 
 #### Create the Repository
-This example uses EntityFramework Code First.
-1. In **Headway.RemediatR.Core**
-    - add a reference to project **Headway.Core**
-    - create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) interface 
-2. Create a new class library project called [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
+> This example uses EntityFramework Code First.
+1. Create a new class library project called [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
     - add a reference to project **Headway.Repository**
     - add a reference to project **Headway.RemediatR.Core**
     - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository.cs)
 2. In **Headway.Repository**
     - add a reference to project **Headway.RemediatR.Core**
     - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
-
 
 #### Create WebApi Access
 #### Configure Navigation
@@ -374,7 +373,7 @@ The query results will now contain a circular reference, where the parent refere
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 ```
 
-### Make ASP.Net Core use Json.Net
+### Configure ASP.Net Core use Json.Net
 The default JSON serializer for ASP.NET Core is now `System.Text.Json`. However, `System.Text.Json` is new and might currently be missing features supported by `Newtonsoft.Json (Json.NET)`. 
 \
 I [reported a bug in System.Text.Json](https://github.com/dotnet/aspnetcore/issues/34069) where duplicate values are nulled out when setting `JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles`. 
