@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Headway.RemediatR.Core.Enums;
+using System.Collections.Generic;
 
 namespace Headway.RemediatR.Core.Model
 {
@@ -22,6 +23,9 @@ namespace Headway.RemediatR.Core.Model
         public string? Address5 { get; set; }
         public string? Country { get; set; }
         public string? PostCode { get; set; }
+        public int? SortCode { get; set; }
+        public int? AccountNumber { get; set; }
+        public AccountStatus AccountStatus { get; set; }
         public List<CustomerProduct> Products { get; set; }
     }
 }
