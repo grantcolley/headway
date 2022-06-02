@@ -90,11 +90,10 @@ An example application will be created using Headway to demonstrate features bui
 The example application called **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
--	**Remediation Owner** – monitors and progresses the case from start through to completion 
--	**Remediation Reviewer** – reviews the case as part of a four-eyes check, at critical points
--	**Finance User** – calculates the refund including any compensatory interest due
--	**Finance Reviewer** – reviews the refund calculated as part of a four-eyes check 
--	**Remunerator** – processes the refund payment
+-	**Redress Case Owner** – creates, monitors and progresses the redress case from start through to completion 
+-	**Redress Reviewer** – reviews the redress case at critical points e.g. prior to customer communication or redress completion
+-	**Refund Assessor** – calculates the refund amount, including any compensatory interest due
+-	**Refund Reviewer** – reviews the refund calculated as part of a four-eyes check to ensure the refunded amount is accurate
 
 The RemediatR Flow is as follows:
 
