@@ -97,7 +97,7 @@ Different users will be responsible for different stages in the flow. They will 
 
 The RemediatR Flow is as follows:
 
-![Alt text](/readme-images/StandardRemediationFlow.png?raw=true "Standard Remediation Flow") 
+![Alt text](/readme-images/StandardRemediationFlow.png?raw=true) 
 
 ### Building RemediatR
 #### Create the Models and Interfaces
