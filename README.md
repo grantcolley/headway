@@ -91,7 +91,7 @@ The example application called **RemediatR** will provide a platform to refund (
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
 -	**Redress Case Owner** – creates, monitors and progresses the redress case from start through to completion 
--	**Redress Reviewer** – reviews the redress case at critical points e.g. prior to sending communication to the custmer or redress completion
+-	**Redress Reviewer** – reviews the redress case at critical points e.g. prior to customer communication or redress completion
 -	**Refund Assessor** – calculates the refund amount, including any compensatory interest due
 -	**Refund Reviewer** – reviews the refund calculated as part of a four-eyes check to ensure the refunded amount is accurate
 
