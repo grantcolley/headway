@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Headway.MigrationsSqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220120220621_Headway_Create")]
-    partial class Headway_Create
+    [Migration("20220603094158_CreateHeadway")]
+    partial class CreateHeadway
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -31,6 +31,11 @@ namespace Headway.MigrationsSqlServer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int?>("ModuleId")
                         .HasColumnType("int");
@@ -90,17 +95,20 @@ namespace Headway.MigrationsSqlServer.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("NavigateTo")
+                    b.Property<string>("NavigateConfig")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("NavigateToConfig")
+                    b.Property<string>("NavigatePage")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("NavigateToProperty")
+                    b.Property<string>("NavigateProperty")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("NavigateResetBreadcrumb")
+                        .HasColumnType("bit");
 
                     b.Property<string>("OrderModelBy")
                         .HasMaxLength(50)
@@ -127,19 +135,24 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConfigContainerId"), 1L, 1);
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ComponentArgs")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ConfigContainerId1")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ConfigId")
+                    b.Property<int>("ConfigId")
                         .HasColumnType("int");
 
                     b.Property<string>("Container")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<bool>("IsRootContainer")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Label")
                         .HasMaxLength(50)
@@ -152,6 +165,10 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
+
+                    b.Property<string>("ParentCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ConfigContainerId");
 
@@ -183,7 +200,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                     b.Property<int?>("ConfigContainerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ConfigId")
+                    b.Property<int>("ConfigId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConfigName")
@@ -238,6 +255,12 @@ namespace Headway.MigrationsSqlServer.Migrations
                     b.Property<decimal>("Decimal")
                         .HasColumnType("decimal(5,2)");
 
+                    b.Property<string>("Dropdown")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DropdownComplexId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Integer")
                         .HasColumnType("int");
 
@@ -249,8 +272,8 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TextMultiline")
                         .HasMaxLength(50)
@@ -258,7 +281,25 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.HasKey("DemoModelId");
 
+                    b.HasIndex("DropdownComplexId");
+
                     b.ToTable("DemoModels");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelComplexProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DemoModelComplexProperties");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.DemoModelItem", b =>
@@ -269,7 +310,7 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DemoModelItemId"), 1L, 1);
 
-                    b.Property<int?>("DemoModelId")
+                    b.Property<int>("DemoModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -295,7 +336,12 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DemoModelTreeItemId"), 1L, 1);
 
-                    b.Property<int?>("DemoModelId")
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("DemoModelId")
                         .HasColumnType("int");
 
                     b.Property<int?>("DemoModelTreeItemId1")
@@ -308,6 +354,10 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
+
+                    b.Property<string>("ParentCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("DemoModelTreeItemId");
 
@@ -334,7 +384,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("ImageClass")
+                    b.Property<string>("Icon")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -344,10 +394,10 @@ namespace Headway.MigrationsSqlServer.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("NavigateTo")
+                    b.Property<string>("NavigatePage")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
@@ -374,6 +424,11 @@ namespace Headway.MigrationsSqlServer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuleId"), 1L, 1);
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -538,7 +593,9 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.HasOne("Headway.Core.Model.Config", null)
                         .WithMany("ConfigContainers")
-                        .HasForeignKey("ConfigId");
+                        .HasForeignKey("ConfigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Headway.Core.Model.ConfigItem", b =>
@@ -549,29 +606,42 @@ namespace Headway.MigrationsSqlServer.Migrations
 
                     b.HasOne("Headway.Core.Model.Config", null)
                         .WithMany("ConfigItems")
-                        .HasForeignKey("ConfigId");
+                        .HasForeignKey("ConfigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ConfigContainer");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModel", b =>
+                {
+                    b.HasOne("Headway.Core.Model.DemoModelComplexProperty", "DropdownComplex")
+                        .WithMany()
+                        .HasForeignKey("DropdownComplexId");
+
+                    b.Navigation("DropdownComplex");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.DemoModelItem", b =>
                 {
                     b.HasOne("Headway.Core.Model.DemoModel", null)
                         .WithMany("DemoModelItems")
-                        .HasForeignKey("DemoModelId");
+                        .HasForeignKey("DemoModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Headway.Core.Model.DemoModelTreeItem", b =>
                 {
-                    b.HasOne("Headway.Core.Model.DemoModel", "DemoModel")
+                    b.HasOne("Headway.Core.Model.DemoModel", null)
                         .WithMany("DemoModelTreeItems")
-                        .HasForeignKey("DemoModelId");
+                        .HasForeignKey("DemoModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Headway.Core.Model.DemoModelTreeItem", null)
                         .WithMany("DemoModelTreeItems")
                         .HasForeignKey("DemoModelTreeItemId1");
-
-                    b.Navigation("DemoModel");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.MenuItem", b =>

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Headway.MigrationsSqlServer.Migrations
 {
-    public partial class Headway_Create : Migration
+    public partial class CreateHeadway : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                 {
                     ConfigId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    NavigateResetBreadcrumb = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
@@ -22,9 +23,9 @@ namespace Headway.MigrationsSqlServer.Migrations
                     ModelApi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderModelBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Document = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    NavigateTo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    NavigateToProperty = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    NavigateToConfig = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    NavigatePage = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    NavigateProperty = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    NavigateConfig = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,23 +33,16 @@ namespace Headway.MigrationsSqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DemoModels",
+                name: "DemoModelComplexProperties",
                 columns: table => new
                 {
-                    DemoModelId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Checkbox = table.Column<bool>(type: "bit", nullable: false),
-                    Integer = table.Column<int>(type: "int", nullable: false),
-                    OptionVertical = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OptionHorizontal = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    TextMultiline = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Decimal = table.Column<decimal>(type: "decimal(5,2)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DemoModels", x => x.DemoModelId);
+                    table.PrimaryKey("PK_DemoModelComplexProperties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +53,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Order = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Permission = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -114,13 +109,15 @@ namespace Headway.MigrationsSqlServer.Migrations
                 {
                     ConfigContainerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsRootContainer = table.Column<bool>(type: "bit", nullable: false),
+                    ConfigId = table.Column<int>(type: "int", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
+                    ComponentArgs = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Container = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ParentCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Label = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ConfigContainerId1 = table.Column<int>(type: "int", nullable: true),
-                    ConfigId = table.Column<int>(type: "int", nullable: true)
+                    ConfigContainerId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,53 +131,35 @@ namespace Headway.MigrationsSqlServer.Migrations
                         name: "FK_ConfigContainers_Configs_ConfigId",
                         column: x => x.ConfigId,
                         principalTable: "Configs",
-                        principalColumn: "ConfigId");
+                        principalColumn: "ConfigId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DemoModelItems",
+                name: "DemoModels",
                 columns: table => new
                 {
-                    DemoModelItemId = table.Column<int>(type: "int", nullable: false)
+                    DemoModelId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DemoModelId = table.Column<int>(type: "int", nullable: true)
+                    Checkbox = table.Column<bool>(type: "bit", nullable: false),
+                    Integer = table.Column<int>(type: "int", nullable: false),
+                    OptionVertical = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OptionHorizontal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dropdown = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DropdownComplexId = table.Column<int>(type: "int", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    TextMultiline = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Decimal = table.Column<decimal>(type: "decimal(5,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DemoModelItems", x => x.DemoModelItemId);
+                    table.PrimaryKey("PK_DemoModels", x => x.DemoModelId);
                     table.ForeignKey(
-                        name: "FK_DemoModelItems_DemoModels_DemoModelId",
-                        column: x => x.DemoModelId,
-                        principalTable: "DemoModels",
-                        principalColumn: "DemoModelId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DemoModelTreeItems",
-                columns: table => new
-                {
-                    DemoModelTreeItemId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    DemoModelId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DemoModelTreeItemId1 = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DemoModelTreeItems", x => x.DemoModelTreeItemId);
-                    table.ForeignKey(
-                        name: "FK_DemoModelTreeItems_DemoModels_DemoModelId",
-                        column: x => x.DemoModelId,
-                        principalTable: "DemoModels",
-                        principalColumn: "DemoModelId");
-                    table.ForeignKey(
-                        name: "FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1",
-                        column: x => x.DemoModelTreeItemId1,
-                        principalTable: "DemoModelTreeItems",
-                        principalColumn: "DemoModelTreeItemId");
+                        name: "FK_DemoModels_DemoModelComplexProperties_DropdownComplexId",
+                        column: x => x.DropdownComplexId,
+                        principalTable: "DemoModelComplexProperties",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -192,6 +171,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     ModuleId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Permission = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -282,6 +262,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                 {
                     ConfigItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ConfigId = table.Column<int>(type: "int", nullable: false),
                     IsIdentity = table.Column<bool>(type: "bit", nullable: false),
                     IsTitle = table.Column<bool>(type: "bit", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
@@ -291,8 +272,7 @@ namespace Headway.MigrationsSqlServer.Migrations
                     PropertyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Label = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Tooltip = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Component = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    ConfigId = table.Column<int>(type: "int", nullable: true)
+                    Component = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -306,7 +286,58 @@ namespace Headway.MigrationsSqlServer.Migrations
                         name: "FK_ConfigItems_Configs_ConfigId",
                         column: x => x.ConfigId,
                         principalTable: "Configs",
-                        principalColumn: "ConfigId");
+                        principalColumn: "ConfigId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModelItems",
+                columns: table => new
+                {
+                    DemoModelItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DemoModelId = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModelItems", x => x.DemoModelItemId);
+                    table.ForeignKey(
+                        name: "FK_DemoModelItems_DemoModels_DemoModelId",
+                        column: x => x.DemoModelId,
+                        principalTable: "DemoModels",
+                        principalColumn: "DemoModelId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModelTreeItems",
+                columns: table => new
+                {
+                    DemoModelTreeItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    DemoModelId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ParentCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    DemoModelTreeItemId1 = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModelTreeItems", x => x.DemoModelTreeItemId);
+                    table.ForeignKey(
+                        name: "FK_DemoModelTreeItems_DemoModels_DemoModelId",
+                        column: x => x.DemoModelId,
+                        principalTable: "DemoModels",
+                        principalColumn: "DemoModelId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1",
+                        column: x => x.DemoModelTreeItemId1,
+                        principalTable: "DemoModelTreeItems",
+                        principalColumn: "DemoModelTreeItemId");
                 });
 
             migrationBuilder.CreateTable(
@@ -318,8 +349,8 @@ namespace Headway.MigrationsSqlServer.Migrations
                     Order = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    ImageClass = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    NavigateTo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    NavigatePage = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Config = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Permission = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
@@ -380,6 +411,11 @@ namespace Headway.MigrationsSqlServer.Migrations
                 name: "IX_DemoModelItems_DemoModelId",
                 table: "DemoModelItems",
                 column: "DemoModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModels_DropdownComplexId",
+                table: "DemoModels",
+                column: "DropdownComplexId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DemoModelTreeItems_DemoModelId",
@@ -491,6 +527,9 @@ namespace Headway.MigrationsSqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Configs");
+
+            migrationBuilder.DropTable(
+                name: "DemoModelComplexProperties");
 
             migrationBuilder.DropTable(
                 name: "Modules");
