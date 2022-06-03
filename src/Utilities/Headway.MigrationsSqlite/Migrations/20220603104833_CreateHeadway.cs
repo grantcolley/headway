@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace Headway.MigrationsSqlite.Migrations
 {
-    public partial class HeadwayCreate : Migration
+    public partial class CreateHeadway : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,21 +15,34 @@ namespace Headway.MigrationsSqlite.Migrations
                 {
                     ConfigId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Model = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    ModelApi = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Container = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    NavigateTo = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
-                    NavigateToProperty = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    NavigateToConfig = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
-                    NavigateBack = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
-                    NavigateBackProperty = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    NavigateBackConfig = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true)
+                    NavigateResetBreadcrumb = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    Model = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    ModelApi = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    OrderModelBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Document = table.Column<string>(type: "TEXT", maxLength: 150, nullable: true),
+                    NavigatePage = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    NavigateProperty = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    NavigateConfig = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Configs", x => x.ConfigId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModelComplexProperties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModelComplexProperties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -37,6 +53,7 @@ namespace Headway.MigrationsSqlite.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Order = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Icon = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
                     Permission = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -87,28 +104,62 @@ namespace Headway.MigrationsSqlite.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ConfigItems",
+                name: "ConfigContainers",
                 columns: table => new
                 {
-                    ConfigItemId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ConfigContainerId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IsIdentity = table.Column<bool>(type: "INTEGER", nullable: true),
-                    IsTitle = table.Column<bool>(type: "INTEGER", nullable: true),
+                    ConfigId = table.Column<int>(type: "INTEGER", nullable: false),
                     Order = table.Column<int>(type: "INTEGER", nullable: false),
-                    PropertyName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Label = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Component = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    ConfigId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ComponentArgs = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Container = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    Code = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    ParentCode = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Label = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    ConfigContainerId1 = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConfigItems", x => x.ConfigItemId);
+                    table.PrimaryKey("PK_ConfigContainers", x => x.ConfigContainerId);
                     table.ForeignKey(
-                        name: "FK_ConfigItems_Configs_ConfigId",
+                        name: "FK_ConfigContainers_ConfigContainers_ConfigContainerId1",
+                        column: x => x.ConfigContainerId1,
+                        principalTable: "ConfigContainers",
+                        principalColumn: "ConfigContainerId");
+                    table.ForeignKey(
+                        name: "FK_ConfigContainers_Configs_ConfigId",
                         column: x => x.ConfigId,
                         principalTable: "Configs",
                         principalColumn: "ConfigId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModels",
+                columns: table => new
+                {
+                    DemoModelId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Checkbox = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Integer = table.Column<int>(type: "INTEGER", nullable: false),
+                    OptionVertical = table.Column<string>(type: "TEXT", nullable: true),
+                    OptionHorizontal = table.Column<string>(type: "TEXT", nullable: true),
+                    Dropdown = table.Column<string>(type: "TEXT", nullable: true),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DropdownComplexId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Text = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    TextMultiline = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Decimal = table.Column<decimal>(type: "decimal(5, 2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModels", x => x.DemoModelId);
+                    table.ForeignKey(
+                        name: "FK_DemoModels_DemoModelComplexProperties_DropdownComplexId",
+                        column: x => x.DropdownComplexId,
+                        principalTable: "DemoModelComplexProperties",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -120,6 +171,7 @@ namespace Headway.MigrationsSqlite.Migrations
                     Order = table.Column<int>(type: "INTEGER", nullable: false),
                     ModuleId = table.Column<int>(type: "INTEGER", nullable: true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Icon = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
                     Permission = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -129,8 +181,7 @@ namespace Headway.MigrationsSqlite.Migrations
                         name: "FK_Categories_Modules_ModuleId",
                         column: x => x.ModuleId,
                         principalTable: "Modules",
-                        principalColumn: "ModuleId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "ModuleId");
                 });
 
             migrationBuilder.CreateTable(
@@ -206,6 +257,90 @@ namespace Headway.MigrationsSqlite.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ConfigItems",
+                columns: table => new
+                {
+                    ConfigItemId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ConfigId = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsIdentity = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsTitle = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Order = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComponentArgs = table.Column<string>(type: "TEXT", nullable: true),
+                    ConfigName = table.Column<string>(type: "TEXT", nullable: true),
+                    ConfigContainerId = table.Column<int>(type: "INTEGER", nullable: true),
+                    PropertyName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Label = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Tooltip = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Component = table.Column<string>(type: "TEXT", maxLength: 150, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConfigItems", x => x.ConfigItemId);
+                    table.ForeignKey(
+                        name: "FK_ConfigItems_ConfigContainers_ConfigContainerId",
+                        column: x => x.ConfigContainerId,
+                        principalTable: "ConfigContainers",
+                        principalColumn: "ConfigContainerId");
+                    table.ForeignKey(
+                        name: "FK_ConfigItems_Configs_ConfigId",
+                        column: x => x.ConfigId,
+                        principalTable: "Configs",
+                        principalColumn: "ConfigId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModelItems",
+                columns: table => new
+                {
+                    DemoModelItemId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DemoModelId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Order = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModelItems", x => x.DemoModelItemId);
+                    table.ForeignKey(
+                        name: "FK_DemoModelItems_DemoModels_DemoModelId",
+                        column: x => x.DemoModelId,
+                        principalTable: "DemoModels",
+                        principalColumn: "DemoModelId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DemoModelTreeItems",
+                columns: table => new
+                {
+                    DemoModelTreeItemId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Order = table.Column<int>(type: "INTEGER", nullable: false),
+                    DemoModelId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Code = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    ParentCode = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    DemoModelTreeItemId1 = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DemoModelTreeItems", x => x.DemoModelTreeItemId);
+                    table.ForeignKey(
+                        name: "FK_DemoModelTreeItems_DemoModels_DemoModelId",
+                        column: x => x.DemoModelId,
+                        principalTable: "DemoModels",
+                        principalColumn: "DemoModelId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1",
+                        column: x => x.DemoModelTreeItemId1,
+                        principalTable: "DemoModelTreeItems",
+                        principalColumn: "DemoModelTreeItemId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MenuItems",
                 columns: table => new
                 {
@@ -214,8 +349,8 @@ namespace Headway.MigrationsSqlite.Migrations
                     Order = table.Column<int>(type: "INTEGER", nullable: false),
                     CategoryId = table.Column<int>(type: "INTEGER", nullable: true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    ImageClass = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
-                    NavigateTo = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Icon = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    NavigatePage = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Config = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     Permission = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
                 },
@@ -226,8 +361,7 @@ namespace Headway.MigrationsSqlite.Migrations
                         name: "FK_MenuItems_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "CategoryId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -242,6 +376,27 @@ namespace Headway.MigrationsSqlite.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConfigContainers_ConfigContainerId1",
+                table: "ConfigContainers",
+                column: "ConfigContainerId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfigContainers_ConfigId",
+                table: "ConfigContainers",
+                column: "ConfigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfigContainers_Name",
+                table: "ConfigContainers",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfigItems_ConfigContainerId",
+                table: "ConfigItems",
+                column: "ConfigContainerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ConfigItems_ConfigId",
                 table: "ConfigItems",
                 column: "ConfigId");
@@ -251,6 +406,26 @@ namespace Headway.MigrationsSqlite.Migrations
                 table: "Configs",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModelItems_DemoModelId",
+                table: "DemoModelItems",
+                column: "DemoModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModels_DropdownComplexId",
+                table: "DemoModels",
+                column: "DropdownComplexId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModelTreeItems_DemoModelId",
+                table: "DemoModelTreeItems",
+                column: "DemoModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DemoModelTreeItems_DemoModelTreeItemId1",
+                table: "DemoModelTreeItems",
+                column: "DemoModelTreeItemId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuItems_CategoryId",
@@ -315,6 +490,12 @@ namespace Headway.MigrationsSqlite.Migrations
                 name: "ConfigItems");
 
             migrationBuilder.DropTable(
+                name: "DemoModelItems");
+
+            migrationBuilder.DropTable(
+                name: "DemoModelTreeItems");
+
+            migrationBuilder.DropTable(
                 name: "MenuItems");
 
             migrationBuilder.DropTable(
@@ -327,7 +508,10 @@ namespace Headway.MigrationsSqlite.Migrations
                 name: "RoleUser");
 
             migrationBuilder.DropTable(
-                name: "Configs");
+                name: "ConfigContainers");
+
+            migrationBuilder.DropTable(
+                name: "DemoModels");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -340,6 +524,12 @@ namespace Headway.MigrationsSqlite.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Configs");
+
+            migrationBuilder.DropTable(
+                name: "DemoModelComplexProperties");
 
             migrationBuilder.DropTable(
                 name: "Modules");

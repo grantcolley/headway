@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Headway.MigrationsSqlite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
@@ -13,14 +15,18 @@ namespace Headway.MigrationsSqlite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0-preview.4.21253.1");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
 
             modelBuilder.Entity("Headway.Core.Model.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("ModuleId")
                         .HasColumnType("INTEGER");
@@ -54,53 +60,52 @@ namespace Headway.MigrationsSqlite.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Container")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(150)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Model")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ModelApi")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NavigateBack")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NavigateBackConfig")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NavigateBackProperty")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NavigateTo")
-                        .HasMaxLength(20)
+                    b.Property<string>("NavigateConfig")
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NavigateToConfig")
-                        .HasMaxLength(20)
+                    b.Property<string>("NavigatePage")
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NavigateToProperty")
+                    b.Property<string>("NavigateProperty")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("NavigateResetBreadcrumb")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("OrderModelBy")
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("ConfigId");
@@ -111,6 +116,59 @@ namespace Headway.MigrationsSqlite.Migrations
                     b.ToTable("Configs");
                 });
 
+            modelBuilder.Entity("Headway.Core.Model.ConfigContainer", b =>
+                {
+                    b.Property<int>("ConfigContainerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ComponentArgs")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ConfigContainerId1")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ConfigId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Container")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Label")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ParentCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ConfigContainerId");
+
+                    b.HasIndex("ConfigContainerId1");
+
+                    b.HasIndex("ConfigId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ConfigContainers");
+                });
+
             modelBuilder.Entity("Headway.Core.Model.ConfigItem", b =>
                 {
                     b.Property<int>("ConfigItemId")
@@ -118,16 +176,25 @@ namespace Headway.MigrationsSqlite.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Component")
-                        .HasMaxLength(100)
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ConfigId")
+                    b.Property<string>("ComponentArgs")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ConfigContainerId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsIdentity")
+                    b.Property<int>("ConfigId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsTitle")
+                    b.Property<string>("ConfigName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsIdentity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsTitle")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Label")
@@ -143,11 +210,139 @@ namespace Headway.MigrationsSqlite.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Tooltip")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ConfigItemId");
+
+                    b.HasIndex("ConfigContainerId");
 
                     b.HasIndex("ConfigId");
 
                     b.ToTable("ConfigItems");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModel", b =>
+                {
+                    b.Property<int>("DemoModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Checkbox")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Decimal")
+                        .HasColumnType("decimal(5, 2)");
+
+                    b.Property<string>("Dropdown")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("DropdownComplexId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Integer")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("OptionHorizontal")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OptionVertical")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TextMultiline")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("DemoModelId");
+
+                    b.HasIndex("DropdownComplexId");
+
+                    b.ToTable("DemoModels");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelComplexProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DemoModelComplexProperties");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelItem", b =>
+                {
+                    b.Property<int>("DemoModelItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DemoModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DemoModelItemId");
+
+                    b.HasIndex("DemoModelId");
+
+                    b.ToTable("DemoModelItems");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelTreeItem", b =>
+                {
+                    b.Property<int>("DemoModelTreeItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DemoModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DemoModelTreeItemId1")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ParentCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("DemoModelTreeItemId");
+
+                    b.HasIndex("DemoModelId");
+
+                    b.HasIndex("DemoModelTreeItemId1");
+
+                    b.ToTable("DemoModelTreeItems");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.MenuItem", b =>
@@ -164,7 +359,7 @@ namespace Headway.MigrationsSqlite.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ImageClass")
+                    b.Property<string>("Icon")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("TEXT");
@@ -174,9 +369,9 @@ namespace Headway.MigrationsSqlite.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NavigateTo")
+                    b.Property<string>("NavigatePage")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Order")
@@ -202,6 +397,11 @@ namespace Headway.MigrationsSqlite.Migrations
                     b.Property<int>("ModuleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -352,11 +552,63 @@ namespace Headway.MigrationsSqlite.Migrations
                     b.Navigation("Module");
                 });
 
+            modelBuilder.Entity("Headway.Core.Model.ConfigContainer", b =>
+                {
+                    b.HasOne("Headway.Core.Model.ConfigContainer", null)
+                        .WithMany("ConfigContainers")
+                        .HasForeignKey("ConfigContainerId1");
+
+                    b.HasOne("Headway.Core.Model.Config", null)
+                        .WithMany("ConfigContainers")
+                        .HasForeignKey("ConfigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Headway.Core.Model.ConfigItem", b =>
                 {
+                    b.HasOne("Headway.Core.Model.ConfigContainer", "ConfigContainer")
+                        .WithMany()
+                        .HasForeignKey("ConfigContainerId");
+
                     b.HasOne("Headway.Core.Model.Config", null)
                         .WithMany("ConfigItems")
-                        .HasForeignKey("ConfigId");
+                        .HasForeignKey("ConfigId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ConfigContainer");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModel", b =>
+                {
+                    b.HasOne("Headway.Core.Model.DemoModelComplexProperty", "DropdownComplex")
+                        .WithMany()
+                        .HasForeignKey("DropdownComplexId");
+
+                    b.Navigation("DropdownComplex");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelItem", b =>
+                {
+                    b.HasOne("Headway.Core.Model.DemoModel", null)
+                        .WithMany("DemoModelItems")
+                        .HasForeignKey("DemoModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelTreeItem", b =>
+                {
+                    b.HasOne("Headway.Core.Model.DemoModel", null)
+                        .WithMany("DemoModelTreeItems")
+                        .HasForeignKey("DemoModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Headway.Core.Model.DemoModelTreeItem", null)
+                        .WithMany("DemoModelTreeItems")
+                        .HasForeignKey("DemoModelTreeItemId1");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.MenuItem", b =>
@@ -420,7 +672,26 @@ namespace Headway.MigrationsSqlite.Migrations
 
             modelBuilder.Entity("Headway.Core.Model.Config", b =>
                 {
+                    b.Navigation("ConfigContainers");
+
                     b.Navigation("ConfigItems");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.ConfigContainer", b =>
+                {
+                    b.Navigation("ConfigContainers");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModel", b =>
+                {
+                    b.Navigation("DemoModelItems");
+
+                    b.Navigation("DemoModelTreeItems");
+                });
+
+            modelBuilder.Entity("Headway.Core.Model.DemoModelTreeItem", b =>
+                {
+                    b.Navigation("DemoModelTreeItems");
                 });
 
             modelBuilder.Entity("Headway.Core.Model.Module", b =>
