@@ -17,23 +17,7 @@ namespace Headway.RemediatR.Repository
         {
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync()
-        {
-            return await applicationDbContext.Products
-                .AsNoTracking()
-                .ToListAsync()
-                .ConfigureAwait(false);
-        }
-
-        public async Task<Product> GetProductAsync(int id)
-        {
-            return await applicationDbContext.Products
-                .AsNoTracking()
-                .SingleAsync(p => p.ProductId.Equals(id))
-                .ConfigureAwait(false);
-        }
-
-        public async Task<Product> AddProductAsync(Product product)
+        public async Task<Product> AddCustomerProductAsync(Customer customer, Product product)
         {
             await applicationDbContext.Products
                 .AddAsync(product)
@@ -46,24 +30,13 @@ namespace Headway.RemediatR.Repository
             return product;
         }
 
-        public async Task<Product> UpdateProductAsync(Product product)
+        public async Task<int> DeleteCustomerProductAsync(Customer customer, Product product)
         {
-            applicationDbContext.Products.Update(product);
-
-            await applicationDbContext
-                .SaveChangesAsync()
+            var deleteProduct = await applicationDbContext.Products
+                .SingleAsync(p => p.ProductId.Equals(product.ProductId))
                 .ConfigureAwait(false);
 
-            return product;
-        }
-
-        public async Task<int> DeleteProductAsync(int id)
-        {
-            var product = await applicationDbContext.Products
-                .SingleAsync(p => p.ProductId.Equals(id))
-                .ConfigureAwait(false);
-
-            applicationDbContext.Products.Remove(product);
+            applicationDbContext.Products.Remove(deleteProduct);
 
             return await applicationDbContext
                 .SaveChangesAsync()
@@ -82,6 +55,7 @@ namespace Headway.RemediatR.Repository
         {
             return await applicationDbContext.Customers
                 .AsNoTracking()
+                .Include(c => c.Products)
                 .SingleAsync(c => c.CustomerId.Equals(id))
                 .ConfigureAwait(false);
         }
