@@ -7,7 +7,7 @@ namespace Headway.RemediatR.Core.Model
     {
         public Customer()
         {
-            Products = new List<CustomerProduct>();
+            Products = new List<Product>();
         }
 
         public int CustomerId { get; set; }
@@ -26,6 +26,6 @@ namespace Headway.RemediatR.Core.Model
         public int? SortCode { get; set; }
         public int? AccountNumber { get; set; }
         public AccountStatus AccountStatus { get; set; }
-        public List<CustomerProduct> Products { get; set; }
+        public List<Product>? Products { get; set; }
     }
 }

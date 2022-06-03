@@ -28,7 +28,6 @@ namespace Headway.Repository.Data
         // RemediatR
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<CustomerProduct> CustomerProducts { get; set; }
         public DbSet<Program> Programs { get; set; }
         public DbSet<Redress> Redresses { get; set; }
 

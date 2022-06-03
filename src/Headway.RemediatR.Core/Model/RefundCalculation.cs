@@ -6,8 +6,10 @@ namespace Headway.RemediatR.Core.Model
     {
         public decimal? BasicRefundAmount { get; set; }
         public decimal? CompensatoryAmount { get; set; }
+        public decimal? CompensatoryInterestAmount { get; set; }
+        public decimal? TotalCompensatoryAmount { get; set; }
         public decimal? TotalRefundAmount { get; set; }
-        public DateTime? SubmittedDate { get; set; }
-        public string? SubmittedBy { get; set; }
+        public DateTime? CalculatedDate { get; set; }
+        public string? CalculatedBy { get; set; }
     }
 }
