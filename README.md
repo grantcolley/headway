@@ -18,7 +18,7 @@
    * [Introduction to RemediatR](#introduction-to-remediatr)
    * [Building RemediatR in Easy Steps](#building-remediatr-in-easy-steps)
    * [Create](#create)
-      * [1. Create New RemediatR Libraries](#1-create-new-remediatr-libraries)
+      * [1. Create the RemediatR Projects](#1-create-new-remediatr-projects)
       * [2. Create the Models and Interfaces](#2-create-the-models-and-interfaces)
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
@@ -107,7 +107,7 @@ The RemediatR Flow is as follows:
 **RemediatR** can be built using the **Headway** platform in several easy steps involving creating a few models and repository layer, and configuring the rest.
 
 ### Create
-#### 1. Create New RemediatR Libraries
+#### 1. Create the RemediatR Projects
 - [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
 - [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
 
