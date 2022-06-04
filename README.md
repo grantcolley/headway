@@ -14,21 +14,25 @@
 * [The Framework](#the-framework)
 * [Getting Started](#getting-started)
    * [Seed Data](#seed-data) 
-   * [Building an Example Headway Application](#building-an-example-headway-application)
-      * [Introduction to the Example Headway Application](#introduction-to-the-example-headway-application)
-      * [Building RemediatR](#building-remediatr)
-         * [Create the Models and Interfaces](#create-the-models-and-interfaces)
-         * [Create the Repository](#create-the-repository)
-         * [Create WebApi Access](#create-webapi-access)
-         * [Configure Navigation](#configure-navigation)
-         * [Configure Model Layout](#configure-model-layout)
-         * [Configure a Flow](#configure-a-flow)
-         * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
-         * [Create Roles and Permissions](#create-roles-and-permissions)
-         * [Create Users](#create-users)
-         * [Bind Permissions to the Flow](#bind-permissions-to-the-flow)
-         * [Capture History](#capture-history)
-         * [Capture an Audit Trail](#capture-an-audit-trail)
+* [Building an Example Headway Application](#building-an-example-headway-application)   
+   * [Introduction to RemediatR](#introduction-to-remediatr)
+   * [Building RemediatR in Easy Steps](#building-remediatr-in-easy-steps)
+   * [Create](#create)
+      * [1. Create the RemediatR Libraries](#1-create-the-remediatr-libraries)
+      * [2. Create the Models and Interfaces](#2-create-the-models-and-interfaces)
+      * [3. Create the Repository](#3-create-the-repository)
+      * [4. Create WebApi Access](#4-create-webapi-access)
+   * [Configure](#configure)
+     * [Configure Navigation](#5-configure-navigation)
+     * [Configure Model Layout](#configure-model-layout)
+     * [Configure a Flow](#configure-a-flow)
+     * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
+     * [Add Roles and Permissions](#add-roles-and-permissions)
+     * [Add Users](#add-users)
+     * [Bind Permissions to the Flow](#bind-permissions-to-the-flow)
+   * [Optional Extras](#optional-extras)
+     * [Capture History](#capture-history)
+     * [Capture an Audit Trail](#capture-an-audit-trail)
 * [Authentication](#authentication)
    * [Token-based Authentication](#token-based-authentication)
    * [Blazor Server vs Blazor WebAssembly](#blazor-server-vs-blazor-webassembly)
@@ -83,11 +87,11 @@ To help get you started the **Headway** *framework* comes with [seed data](https
 
 The [database and schema](#database) can be created using EntityFramework Migrations.  
 
-### Building an Example Headway Application
-An example application will be created using Headway to demonstrate features built into the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
+## Building an Example Headway Application
+An example application will be created using **Headway** to demonstrate features built into the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
-#### Introduction to the Example Headway Application
-The example application called **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
+### Introduction to RemediatR
+The example application is called **RemediatR**. **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
 -	**Redress Case Owner** – creates, monitors and progresses the redress case from start through to completion 
@@ -99,31 +103,42 @@ The RemediatR Flow is as follows:
 
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true) 
 
-### Building RemediatR
-#### Create the Models and Interfaces
-1. Create a new class library project called [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) 
-    - Add a reference to project **Headway.Core**
-    - Create the [models](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model)
-    - Create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) interface 
+### Building RemediatR in Easy Steps
+**RemediatR** can be built using the **Headway** platform in several easy steps involving creating a few models and repository layer, and configuring the rest.
 
-#### Create the Repository
+### Create
+#### 1. Create the RemediatR Libraries
+- [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
+- [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
+
+#### 2. Create the Models and Interfaces
+- In [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) 
+  - Add a reference to project **Headway.Core**
+  - Create the [models](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model)
+  - Create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) interface 
+
+#### 3. Create the Repository
 > This example uses EntityFramework Code First.
-1. Create a new class library project called [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
-    - Add a reference to project **Headway.Repository**
-    - Add a reference to project **Headway.RemediatR.Core**
-    - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository.cs)
-2. In **Headway.Repository**
-    - Add a reference to project **Headway.RemediatR.Core**
-    - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
+- In [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
+  - Add a reference to project **Headway.Repository**
+  - Add a reference to project **Headway.RemediatR.Core**
+  - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository.cs)-
+- In **Headway.Repository**
+  - Add a reference to project **Headway.RemediatR.Core**
+  - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
 
-#### Create WebApi Access
+#### 4. Create WebApi Access
+
+### Configure
 #### Configure Navigation
 #### Configure Model Layout
 #### Configure a Flow
 #### Bind the Flow to a Model
-#### Create Roles and Permissions
-#### Create Users
+#### Add Roles and Permissions
+#### Add Users
 #### Bind Permissions to the Flow
+
+### Optional Extras
 #### Capture History
 #### Capture an Audit Trail
 
