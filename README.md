@@ -18,7 +18,7 @@
    * [Introduction to RemediatR](#introduction-to-remediatr)
    * [Building RemediatR in Easy Steps](#building-remediatr-in-easy-steps)
    * [Create](#create)
-      * [1. Create the RemediatR Libraries](#1-create-new-remediatr-libraries)
+      * [1. Create New RemediatR Libraries](#1-create-new-remediatr-libraries)
       * [2. Create the Models and Interfaces](#2-create-the-models-and-interfaces)
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
