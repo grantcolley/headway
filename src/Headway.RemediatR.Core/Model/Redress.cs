@@ -7,13 +7,13 @@ namespace Headway.RemediatR.Core.Model
     {
         public Redress()
         {
-            Products = new List<Product>();
+            RedressProducts = new List<RedressProduct>();
         }
 
         public int RedressId { get; set; }
         public Customer? Customer { get; set; }
         public Program? Program { get; set; }
-        public List<Product>? Products { get; set; }
+        public List<RedressProduct>? RedressProducts { get; set; }
         public RefundCalculation? RefundCalculation { get; set; }
         public RefundCalculation? RefundVerification { get; set; }
         public DateTime? CreatedDate { get; set; }
