@@ -4,6 +4,7 @@ namespace Headway.RemediatR.Core.Model
 {
     public class RefundCalculation
     {
+        public int RefundCalculationId { get; set; }
         public decimal? BasicRefundAmount { get; set; }
         public decimal? CompensatoryAmount { get; set; }
         public decimal? CompensatoryInterestAmount { get; set; }
