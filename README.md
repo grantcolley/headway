@@ -126,12 +126,11 @@ The RemediatR Flow is as follows:
 - In **Headway.Repository**
   - Add a reference to project **Headway.RemediatR.Core**
   - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
-  - Create the schema and update the database
-    - In Visual Studio Developer PowerShell
-    - `> cd Headway.WebApi`
-    - `> dotnet ef migrations add RemediatR --project ..\Utilities\Headway.MigrationsSqlServer`
-    - `> dotnet ef database update --project ..\Utilities\Headway.MigrationsSqlServer`    
-
+- Create the schema and update the database
+  - In Visual Studio Developer PowerShell
+  - `> cd Headway.WebApi`
+  - `> dotnet ef migrations add RemediatR --project ..\Utilities\Headway.MigrationsSqlServer`
+  - `> dotnet ef database update --project ..\Utilities\Headway.MigrationsSqlServer`    
 
 #### 4. Create WebApi Access
 
