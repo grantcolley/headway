@@ -30,6 +30,7 @@ namespace Headway.Repository.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Program> Programs { get; set; }
         public DbSet<Redress> Redresses { get; set; }
+        public DbSet<RedressProduct> RedressProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
