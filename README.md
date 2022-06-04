@@ -17,10 +17,10 @@
 * [Building an Example Headway Application](#building-an-example-headway-application)
    * [Introduction to RemediatR](#introduction-to-remediatr)
    * [Create](#create)
-     1. [Create the RemediatR Libraries](#1-create-the-remediatr-libraries)
-     2. [Create the Models and Interfaces](#2-create-the-models-and-interfaces)
-     3. [Create the Repository](#3-create-the-repository)
-     4. [Create WebApi Access](#4-create-webapi-access)
+   1. [Create the RemediatR Libraries](#1-create-the-remediatr-libraries)
+   2. [Create the Models and Interfaces](#2-create-the-models-and-interfaces)
+   3. [Create the Repository](#3-create-the-repository)
+   4. [Create WebApi Access](#4-create-webapi-access)
    * [Configure](#configure)
      5. [Configure Navigation](#5-configure-navigation)
      * [Configure Model Layout](#configure-model-layout)
@@ -102,27 +102,27 @@ The RemediatR Flow is as follows:
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true) 
 
 ### Create
-#### Create the RemediatR Libraries
+#### 1. Create the RemediatR Libraries
 - [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
 - [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
 
-#### Create the Models and Interfaces
-1. In [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) 
-    - Add a reference to project **Headway.Core**
-    - Create the [models](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model)
-    - Create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) interface 
+#### 2. Create the Models and Interfaces
+- In [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) 
+  - Add a reference to project **Headway.Core**
+  - Create the [models](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Model)
+  - Create the [IRemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) interface 
 
-#### Create the Repository
+#### 3. Create the Repository
 > This example uses EntityFramework Code First.
-1. In [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
-    - Add a reference to project **Headway.Repository**
-    - Add a reference to project **Headway.RemediatR.Core**
-    - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository.cs)
-2. In **Headway.Repository**
-    - Add a reference to project **Headway.RemediatR.Core**
-    - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
+- In [Headway.RemediatR.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository)
+  - Add a reference to project **Headway.Repository**
+  - Add a reference to project **Headway.RemediatR.Core**
+  - Create [RemediatRRepository](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Repository/RemediatRRepository.cs)-
+- In **Headway.Repository**
+  - Add a reference to project **Headway.RemediatR.Core**
+  - Update [ApplicationDbContext](https://github.com/grantcolley/headway/blob/main/src/Headway.Repository/Data/ApplicationDbContext.cs) with the models
 
-#### Create WebApi Access
+#### 4. Create WebApi Access
 
 ### Configure
 #### Configure Navigation
