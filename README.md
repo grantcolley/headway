@@ -14,21 +14,23 @@
 * [The Framework](#the-framework)
 * [Getting Started](#getting-started)
    * [Seed Data](#seed-data) 
-* [Building an Example Headway Application](#building-an-example-headway-application)
+* [Building an Example Headway Application](#building-an-example-headway-application)   
    * [Introduction to RemediatR](#introduction-to-remediatr)
+   * [Building RemediatR in Easy Steps](#building-remediatr-in-easy-steps)
    * [Create](#create)
-   1. [Create the RemediatR Libraries](#1-create-the-remediatr-libraries)
-   2. [Create the Models and Interfaces](#2-create-the-models-and-interfaces)
-   3. [Create the Repository](#3-create-the-repository)
-   4. [Create WebApi Access](#4-create-webapi-access)
+      * [1. Create the RemediatR Libraries](#1-create-the-remediatr-libraries)
+      * [2. Create the Models and Interfaces](#2-create-the-models-and-interfaces)
+      * [3. Create the Repository](#3-create-the-repository)
+      * [4. Create WebApi Access](#4-create-webapi-access)
    * [Configure](#configure)
-     5. [Configure Navigation](#5-configure-navigation)
+     * [Configure Navigation](#5-configure-navigation)
      * [Configure Model Layout](#configure-model-layout)
      * [Configure a Flow](#configure-a-flow)
      * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
-     * [Create Roles and Permissions](#create-roles-and-permissions)
-     * [Create Users](#create-users)
+     * [Add Roles and Permissions](#add-roles-and-permissions)
+     * [Add Users](#add-users)
      * [Bind Permissions to the Flow](#bind-permissions-to-the-flow)
+   * [Optional Extras](#optional-extras)
      * [Capture History](#capture-history)
      * [Capture an Audit Trail](#capture-an-audit-trail)
 * [Authentication](#authentication)
@@ -86,9 +88,9 @@ To help get you started the **Headway** *framework* comes with [seed data](https
 The [database and schema](#database) can be created using EntityFramework Migrations.  
 
 ## Building an Example Headway Application
-An example application will be created using Headway to demonstrate features built into the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
+An example application will be created using **Headway** to demonstrate features built into the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
-#### Introduction to RemediatR
+### Introduction to RemediatR
 The example application is called **RemediatR**. **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with collection relevant customer and product data, then progress onto refund calculation, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
@@ -100,6 +102,9 @@ Different users will be responsible for different stages in the flow. They will 
 The RemediatR Flow is as follows:
 
 ![Alt text](/readme-images/StandardRemediationFlow.png?raw=true) 
+
+### Building RemediatR in Easy Steps
+**RemediatR** can be built using the **Headway** platform in several easy steps involving creating a few models and repository layer, and configuring the rest.
 
 ### Create
 #### 1. Create the RemediatR Libraries
@@ -129,9 +134,11 @@ The RemediatR Flow is as follows:
 #### Configure Model Layout
 #### Configure a Flow
 #### Bind the Flow to a Model
-#### Create Roles and Permissions
-#### Create Users
+#### Add Roles and Permissions
+#### Add Users
 #### Bind Permissions to the Flow
+
+### Optional Extras
 #### Capture History
 #### Capture an Audit Trail
 
