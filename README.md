@@ -133,6 +133,10 @@ The RemediatR Flow is as follows:
   - `> dotnet ef database update --project ..\Utilities\Headway.MigrationsSqlServer`    
 
 #### 4. Create WebApi Access
+- In [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
+  - Create the [RemediatRRoles](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Constants/RemediatRRoles.cs) constants. 
+- In **Headway.WebApi**
+  - Create the [RemediatR controller](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi/Controllers) classes.
 
 ### Configure
 #### Configure Navigation
