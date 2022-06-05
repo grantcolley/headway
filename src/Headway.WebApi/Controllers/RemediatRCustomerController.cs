@@ -1,5 +1,5 @@
 ﻿using Headway.Core.Attributes;
-using Headway.Core.Constants;
+using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var authorised = await IsAuthorisedAsync(Roles.REMEDIATR_CUSTOMER_READ)
+            var authorised = await IsAuthorisedAsync(RemediatRRoles.REMEDIATR_CUSTOMER_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -42,7 +42,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{customerId}")]
         public async Task<IActionResult> Get(int customerId)
         {
-            var authorised = await IsAuthorisedAsync(Roles.REMEDIATR_CUSTOMER_READ)
+            var authorised = await IsAuthorisedAsync(RemediatRRoles.REMEDIATR_CUSTOMER_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -60,7 +60,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Customer customer)
         {
-            var authorised = await IsAuthorisedAsync(Roles.REMEDIATR_CUSTOMER_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRRoles.REMEDIATR_CUSTOMER_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -78,7 +78,7 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Customer customer)
         {
-            var authorised = await IsAuthorisedAsync(Roles.REMEDIATR_CUSTOMER_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRRoles.REMEDIATR_CUSTOMER_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -96,7 +96,7 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{customerId}")]
         public async Task<IActionResult> Delete(int customerId)
         {
-            var authorised = await IsAuthorisedAsync(Roles.REMEDIATR_CUSTOMER_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRRoles.REMEDIATR_CUSTOMER_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)
