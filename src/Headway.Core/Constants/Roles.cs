@@ -7,6 +7,7 @@
         public const string USER = "User";
 
         // RemediatR
+        public const string REMEDIATR_ADMIN = "remediatradmin";
         public const string REMEDIATR_CUSTOMER_READ = "remediatrcustomerread";
         public const string REMEDIATR_CUSTOMER_WRITE = "remediatrcustomerwrite";
     }
