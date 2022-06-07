@@ -24,7 +24,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            if (user.HasClaim(c => c.Value.Equals(Roles.HEADWAY_USER)))
+            if (user.HasClaim(c => c.Value.Equals(Claim.HEADWAY_USER)))
             {
                 var response = await Mediator.Send(new ModulesGetRequest()).ConfigureAwait(false);
                 modules = response.Modules;
