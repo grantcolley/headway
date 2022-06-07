@@ -31,6 +31,7 @@
      * [Add Users](#add-users)
      * [Bind Permissions to the Flow](#bind-permissions-to-the-flow)
    * [Optional Extras](#optional-extras)
+     * [Seed Data](#seed-data)
      * [Capture History](#capture-history)
      * [Capture an Audit Trail](#capture-an-audit-trail)
 * [Authentication](#authentication)
@@ -148,7 +149,10 @@ The RemediatR Flow is as follows:
 #### Bind Permissions to the Flow
 
 ### Optional Extras
+#### Seed Data
+
 #### Capture History
+
 #### Capture an Audit Trail
 
 ### Token-based Authentication
