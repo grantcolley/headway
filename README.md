@@ -149,7 +149,7 @@ The RemediatR Flow is as follows:
 #### Bind Permissions to the Flow
 
 ### Optional Extras
-#### Pepare Seed Data
+#### Prepare Seed Data
 
 #### Capture History
 
