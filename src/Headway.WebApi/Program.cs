@@ -102,12 +102,28 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-// Seed data for testing purposes only...
-using (var scope = app.Services.CreateScope())
+var useSeedData = bool.Parse(builder.Configuration["SeedData:UseSeedData"]);
+var useDefaultData = bool.Parse(builder.Configuration["SeedData:UseDefaultData"]);
+var userRemediatRData = bool.Parse(builder.Configuration["SeedData:UserRemediatRData"]);
+
+if(useSeedData)
 {
-    var services = scope.ServiceProvider;
-    var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
-    Headway.SeedData.CoreData.Initialise(applicationDbContext);
+    // Seed data for testing purposes only...
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var applicationDbContext = services.GetRequiredService<ApplicationDbContext>();
+
+        if(useDefaultData)
+        {
+            Headway.SeedData.CoreData.Initialise(applicationDbContext);
+        }
+
+        if (userRemediatRData)
+        {
+            Headway.SeedData.RemediatRData.Initialise(applicationDbContext);
+        }
+    }
 }
 
 app.Run();
