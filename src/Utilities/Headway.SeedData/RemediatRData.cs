@@ -1,85 +1,115 @@
 ﻿using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Headway.SeedData
 {
     public class RemediatRData
     {
-        private static Permission user = null;
-        private static Permission admin = null;
-        private static Permission developer = null;
+        private static ApplicationDbContext dbContext;
 
-        private static Role developerRole = null;
-        private static Role adminRole = null;
-        private static Role userRole = null;
+        private static Dictionary<string, Permission> permissions = new Dictionary<string, Permission>();
+        private static Dictionary<string, Role> roles = new Dictionary<string, Role>();
+        private static Dictionary<string, User> users = new Dictionary<string, User>();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
-            TruncateTables(applicationDbContext);
+            dbContext = applicationDbContext;
 
-            Permissions(applicationDbContext);
-            Roles(applicationDbContext);
-            Users(applicationDbContext);
+            TruncateTables();
+
+            Permissions();
+            Roles();
+            Users();
+            AssignUsersRoles();
         }
 
-        private static void TruncateTables(ApplicationDbContext applicationDbContext)
+        private static void TruncateTables()
         {
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
+            //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
+            //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
+            //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
+            //((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
+            //((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
         }
 
-        private static void Permissions(ApplicationDbContext applicationDbContext)
+        private static void Permissions()
         {
-            user = new Permission { Name = "User", Description = "Headway User" };
-            admin = new Permission { Name = "Admin", Description = "Administrator" };
-            developer = new Permission { Name = "Developer", Description = "Developer" };
+            permissions.Add("Redress Read", new Permission { Name = "Redress Read", Description = "RemediatR Redress Read" });
+            permissions.Add("Redress Write", new Permission { Name = "Redress Write", Description = "RemediatR Redress Write" });
+            permissions.Add("Redress Transition", new Permission { Name = "Redress Transition", Description = "RemediatR Redress Transition" });
+            permissions.Add("Communication Dispatch Transition", new Permission { Name = "Communication Dispatch Transition", Description = "RemediatR Communication Dispatch Transition" });
+            permissions.Add("Awaiting Response Transition", new Permission { Name = "Awaiting Response Transition", Description = "RemediatR Awaiting Response Transition" });
+            permissions.Add("Redress Review Transition", new Permission { Name = "Redress Review Transition", Description = "RemediatR Redress Refund Review Transition" });
+            permissions.Add("Redress Complete", new Permission { Name = "Redress Complete", Description = "RemediatR Redress Complete" });
+            permissions.Add("Refund Calculation Complete", new Permission { Name = "Refund Calculation Complete", Description = "RemediatR Refund Calculation Complete" });
+            permissions.Add("Refund Varification Complete", new Permission { Name = "Refund Varification Complete", Description = "RemediatR Refund Varification Complete" });
+            permissions.Add("Refund Review Transition", new Permission { Name = "Refund Review Transition", Description = "RemediatR Refund Review Transition" });
+            permissions.Add("Admin", new Permission { Name = "Admin", Description = "RemediatR Administrator" });
 
-            applicationDbContext.Permissions.Add(user);
-            applicationDbContext.Permissions.Add(admin);
-            applicationDbContext.Permissions.Add(developer);
+            foreach(var permission in permissions.Values)
+            {
+                dbContext.Permissions.Add(permission);
+            }
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void Roles(ApplicationDbContext applicationDbContext)
+        private static void Roles()
         {
-            developerRole = new Role { Name = "Developer", Description = "Developer Role" };
-            adminRole = new Role { Name = "Admin", Description = "Administrator Role" };
-            userRole = new Role { Name = "User", Description = "Headway User Role" };
+            roles.Add("Redress Case Owner", new Role { Name = "Redress Case Owner", Description = "RemediatR Redress Case Owner" });
+            roles.Add("Redress Reviewer", new Role { Name = "Redress Reviewer", Description = "RemediatR Redress Reviewer" });
+            roles.Add("Refund Assessor", new Role { Name = "Refund Assessor", Description = "RemediatR Refund Assessor" });
+            roles.Add("Refund Reviewer", new Role { Name = "Refund Reviewer", Description = "RemediatR Refund Reviewer" });
+            roles.Add("Admin", new Role { Name = "Admin", Description = "RemediatR Administrator" });
 
-            applicationDbContext.Roles.Add(adminRole);
-            applicationDbContext.Roles.Add(developerRole);
-            applicationDbContext.Roles.Add(userRole);
+            foreach (var role in roles.Values)
+            {
+                dbContext.Roles.Add(role);
+            }
 
-            adminRole.Permissions.Add(admin);
-            adminRole.Permissions.Add(user);
-            developerRole.Permissions.Add(developer);
-            developerRole.Permissions.Add(admin);
-            developerRole.Permissions.Add(user);
-            userRole.Permissions.Add(user);
+            roles["Redress Case Owner"].Permissions.Add(permissions["Redress Write"]);
+            roles["Redress Case Owner"].Permissions.Add(permissions["Redress Transition"]);
+            roles["Redress Case Owner"].Permissions.Add(permissions["Communication Dispatch Transition"]);
+            roles["Redress Case Owner"].Permissions.Add(permissions["Awaiting Response Transition"]);
+            roles["Redress Reviewer"].Permissions.Add(permissions["Redress Review Transition"]);
+            roles["Redress Reviewer"].Permissions.Add(permissions["Redress Complete"]);
+            roles["Refund Assessor"].Permissions.Add(permissions["Refund Calculation Complete"]);
+            roles["Refund Assessor"].Permissions.Add(permissions["Refund Varification Complete"]);
+            roles["Refund Reviewer"].Permissions.Add(permissions["Refund Review Transition"]);
+            roles["Admin"].Permissions.Add(permissions["Admin"]);
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void Users(ApplicationDbContext applicationDbContext)
+        private static void Users()
         {
-            var bob = new User { UserName = "bob", Email = "bob@email.com" };
-            var jane = new User { UserName = "jane", Email = "jane@email.com" };
-            var will = new User { UserName = "will", Email = "will@email.com" };
+            users.Add("bill", new User { UserName = "bill", Email = "bill@email.com" });
+            users.Add("jane", new User { UserName = "jane", Email = "jane@email.com" });
+            users.Add("will", new User { UserName = "will", Email = "will@email.com" });
+            users.Add("mel", new User { UserName = "mel", Email = "mel@email.com" });
+            users.Add("grace", new User { UserName = "grace", Email = "grace@email.com" });
+            users.Add("mary", new User { UserName = "mary", Email = "mary@email.com" });
 
-            applicationDbContext.Users.Add(bob);
-            applicationDbContext.Users.Add(jane);
-            applicationDbContext.Users.Add(will);
+            foreach (var user in users.Values)
+            {
+                dbContext.Users.Add(user);
+            }
 
-            bob.Roles.Add(userRole);
-            jane.Roles.Add(userRole);
-            will.Roles.Add(userRole);
+            dbContext.SaveChanges();
+        }
 
-            applicationDbContext.SaveChanges();
+        private static void AssignUsersRoles()
+        {
+            users["grace"].Roles.Add(roles["Redress Case Owner"]);
+            users["mel"].Roles.Add(roles["Redress Reviewer"]);
+            users["jane"].Roles.Add(roles["Refund Assessor"]);
+            users["will"].Roles.Add(roles["Refund Assessor"]);
+            users["mary"].Roles.Add(roles["Refund Reviewer"]);
+            users["bill"].Roles.Add(roles["Admin"]);
+
+            dbContext.SaveChanges();
         }
     }
 }
