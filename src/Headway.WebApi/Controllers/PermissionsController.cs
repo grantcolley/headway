@@ -24,7 +24,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -42,7 +42,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{permissionId}")]
         public async Task<IActionResult> Get(int permissionId)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -60,7 +60,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Permission permission)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -78,7 +78,7 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Permission permission)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -96,7 +96,7 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{permissionId}")]
         public async Task<IActionResult> Delete(int permissionId)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)

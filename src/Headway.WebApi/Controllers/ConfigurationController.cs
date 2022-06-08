@@ -24,7 +24,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -42,7 +42,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> Get(string name)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -60,7 +60,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -78,7 +78,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Config config)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -96,7 +96,7 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Config config)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -114,7 +114,7 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{configId}")]
         public async Task<IActionResult> Delete(int configId)
         {
-            var authorised = await IsAuthorisedAsync(Roles.ADMIN)
+            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
