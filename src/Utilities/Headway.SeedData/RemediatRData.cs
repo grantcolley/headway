@@ -36,6 +36,8 @@ namespace Headway.SeedData
 
         private static void Permissions()
         {
+            permissions.Add("Customer Read", new Permission { Name = "Customer Read", Description = "RemediatR Customer Read" });
+            permissions.Add("Customer Write", new Permission { Name = "Customer Write", Description = "RemediatR Customer Write" });
             permissions.Add("Redress Read", new Permission { Name = "Redress Read", Description = "RemediatR Redress Read" });
             permissions.Add("Redress Write", new Permission { Name = "Redress Write", Description = "RemediatR Redress Write" });
             permissions.Add("Redress Transition", new Permission { Name = "Redress Transition", Description = "RemediatR Redress Transition" });
@@ -69,10 +71,14 @@ namespace Headway.SeedData
                 dbContext.Roles.Add(role);
             }
 
+            roles["Redress Case Owner"].Permissions.Add(permissions["Customer Read"]);
+            roles["Redress Case Owner"].Permissions.Add(permissions["Customer Write"]);
+            roles["Redress Case Owner"].Permissions.Add(permissions["Redress Read"]);
             roles["Redress Case Owner"].Permissions.Add(permissions["Redress Write"]);
             roles["Redress Case Owner"].Permissions.Add(permissions["Redress Transition"]);
             roles["Redress Case Owner"].Permissions.Add(permissions["Communication Dispatch Transition"]);
             roles["Redress Case Owner"].Permissions.Add(permissions["Awaiting Response Transition"]);
+            roles["Redress Reviewer"].Permissions.Add(permissions["Customer Read"]);
             roles["Redress Reviewer"].Permissions.Add(permissions["Redress Review Transition"]);
             roles["Redress Reviewer"].Permissions.Add(permissions["Redress Complete"]);
             roles["Refund Assessor"].Permissions.Add(permissions["Refund Calculation Complete"]);
