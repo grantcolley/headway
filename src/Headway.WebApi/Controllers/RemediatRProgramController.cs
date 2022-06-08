@@ -24,7 +24,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -42,7 +42,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{programId}")]
         public async Task<IActionResult> Get(int programId)
         {
-            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -60,7 +60,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] RemediatR.Core.Model.Program program)
         {
-            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -78,7 +78,7 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] RemediatR.Core.Model.Program program)
         {
-            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -96,7 +96,7 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{programId}")]
         public async Task<IActionResult> Delete(int programId)
         {
-            var authorised = await IsAuthorisedAsync(Permissions.ADMIN)
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
 
             if (!authorised)

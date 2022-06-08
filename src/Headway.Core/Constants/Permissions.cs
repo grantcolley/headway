@@ -1,6 +1,6 @@
 ﻿namespace Headway.Core.Constants
 {
-    public static class Permissions
+    public static class HeadwayAuthorisation
     {
         // Default
         public const string ADMIN = "Admin";

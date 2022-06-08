@@ -23,7 +23,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] List<Arg> args)
         {
-            var authorised = await IsAuthorisedAsync(Permissions.USER)
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.USER)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -41,7 +41,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> ComplexOptions([FromBody] List<Arg> args)
         {
-            var authorised = await IsAuthorisedAsync(Permissions.USER)
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.USER)
                 .ConfigureAwait(false);
 
             if (!authorised)

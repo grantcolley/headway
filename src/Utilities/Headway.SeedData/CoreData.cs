@@ -9,23 +9,18 @@ namespace Headway.SeedData
 {
     public class CoreData
     {
-        private static Permission user = null;
-        private static Permission admin = null;
-        private static Permission developer = null;
-
-        private static Role developerRole = null;
-        private static Role adminRole = null;
-        private static Role userRole = null;
+        private static Dictionary<string, Permission> permissions = new Dictionary<string, Permission>();
+        private static Dictionary<string, Role> roles = new Dictionary<string, Role>();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
             TruncateTables(applicationDbContext);
 
-            Permissions(applicationDbContext);
-            Roles(applicationDbContext);
-            Users(applicationDbContext);
+            CreatePermissions(applicationDbContext);
+            CreateRoles(applicationDbContext);
+            CreateUsers(applicationDbContext);
 
-            DemoModels(applicationDbContext);
+            CreateDemoModel(applicationDbContext);
 
             Navigation(applicationDbContext);
 
@@ -87,28 +82,30 @@ namespace Headway.SeedData
             ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Configs, RESEED, 1)");
         }
 
-        private static void Permissions(ApplicationDbContext applicationDbContext)
+        private static void CreatePermissions(ApplicationDbContext applicationDbContext)
         {
-            user = new Permission { Name = "User", Description = "Headway User" };
-            admin = new Permission { Name = "Admin", Description = "Administrator" };
-            developer = new Permission { Name = "Developer", Description = "Developer" };
+            permissions.Add(HeadwayAuthorisation.USER, new Permission { Name = HeadwayAuthorisation.USER, Description = "Headway User" });
+            permissions.Add(HeadwayAuthorisation.ADMIN, new Permission { Name = HeadwayAuthorisation.ADMIN, Description = "Administrator" });
+            permissions.Add(HeadwayAuthorisation.DEVELOPER, new Permission { Name = HeadwayAuthorisation.DEVELOPER, Description = "Developer" });
 
-            applicationDbContext.Permissions.Add(user);
-            applicationDbContext.Permissions.Add(admin);
-            applicationDbContext.Permissions.Add(developer);
+            foreach(var permission in permissions.Values)
+            {
+                applicationDbContext.Permissions.Add(permission);
+            }
 
             applicationDbContext.SaveChanges();
         }
 
-        private static void Roles(ApplicationDbContext applicationDbContext)
+        private static void CreateRoles(ApplicationDbContext applicationDbContext)
         {
-            developerRole = new Role { Name = "Developer", Description = "Developer Role" };
-            adminRole = new Role { Name = "Admin", Description = "Administrator Role" };
-            userRole = new Role { Name = "User", Description = "Headway User Role" };
+            roles.Add("", new Role { Name = "Developer", Description = "Developer Role" });
+            roles.Add("", new Role { Name = "Admin", Description = "Administrator Role" });
+            roles.Add("", new Role { Name = "User", Description = "Headway User Role" });
 
-            applicationDbContext.Roles.Add(adminRole);
-            applicationDbContext.Roles.Add(developerRole);
-            applicationDbContext.Roles.Add(userRole);
+            foreach (var role in roles.Values)
+            {
+                applicationDbContext.Roles.Add(role);
+            }
 
             adminRole.Permissions.Add(admin);
             adminRole.Permissions.Add(user);
@@ -120,7 +117,7 @@ namespace Headway.SeedData
             applicationDbContext.SaveChanges();
         }
 
-        private static void Users(ApplicationDbContext applicationDbContext)
+        private static void CreateUsers(ApplicationDbContext applicationDbContext)
         {
             var grant = new User { UserName = "grant", Email = "grant@email.com" };
             var alice = new User { UserName = "alice", Email = "alice@email.com" };
@@ -135,7 +132,7 @@ namespace Headway.SeedData
             applicationDbContext.SaveChanges();
         }
 
-        private static void DemoModels(ApplicationDbContext applicationDbContext)
+        private static void CreateDemoModel(ApplicationDbContext applicationDbContext)
         {
             var demoModel = new DemoModel
             {
