@@ -1,4 +1,5 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Constants;
+using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
@@ -127,6 +128,38 @@ namespace Headway.SeedData
             users["bill"].Roles.Add(roles[RemediatRAuthorisation.REFUND_ASSESSOR]);
             users["will"].Roles.Add(roles[RemediatRAuthorisation.REFUND_ASSESSOR]);
             users["mary"].Roles.Add(roles[RemediatRAuthorisation.REFUND_REVIEWER]);
+
+            dbContext.SaveChanges();
+        }
+
+        private static void Navigation()
+        {
+            var remediatR = new Module { Name = "RemediatR", Icon = "SPaceDashboard", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ };
+
+            dbContext.Modules.Add(remediatR);
+
+            var customerCatgory = new Category { Name = "Customer", Icon = "PersonOutlined", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ };
+            var redressCatgory = new Category { Name = "Redress", Icon = "Balance", Order = 2, Permission = RemediatRAuthorisation.REDRESS_READ };
+            var programCatgory = new Category { Name = "Program", Icon = "ListAlt", Order = 2, Permission = HeadwayAuthorisation.ADMIN };
+
+            dbContext.Categories.Add(customerCatgory);
+            dbContext.Categories.Add(redressCatgory);
+
+            var customersMenuItem = new MenuItem { Name = "Customers", Icon = "PeopleOutlined", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ, Config = "Customers" };
+            var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "FactCheck", NavigatePage = "Page", Order = 2, Permission = RemediatRAuthorisation.REDRESS_READ, Config = "Redress Cases" };
+            var programsMenuItem = new MenuItem { Name = "Programs", Icon = "List", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Programs" };
+
+            dbContext.MenuItems.Add(customersMenuItem);
+            dbContext.MenuItems.Add(redressCasesMenuItem);
+            dbContext.MenuItems.Add(programsMenuItem);
+
+            customerCatgory.MenuItems.Add(customersMenuItem);
+            redressCatgory.MenuItems.Add(redressCasesMenuItem);
+            programCatgory.MenuItems.Add(programsMenuItem);
+
+            remediatR.Categories.Add(customerCatgory);
+            remediatR.Categories.Add(redressCatgory);
+            remediatR.Categories.Add(programCatgory);
 
             dbContext.SaveChanges();
         }
