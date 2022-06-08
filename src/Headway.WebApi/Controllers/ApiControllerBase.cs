@@ -11,7 +11,7 @@ namespace Headway.WebApi.Controllers
     [ApiController]
     [EnableCors("local")]
     [Route("[controller]")]
-    [Authorize(Roles = Core.Constants.Claim.HEADWAY_USER)]
+    [Authorize(Roles = Core.Constants.Claims.HEADWAY_USER)]
     public abstract class ApiControllerBase<T> : ControllerBase
     {
         protected readonly IRepository repository;
