@@ -24,7 +24,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.REDRESS_READ)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -42,7 +42,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{redressId}")]
         public async Task<IActionResult> Get(int redressId)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.REDRESS_READ)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -60,7 +60,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Redress redress)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.REDRESS_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -78,7 +78,7 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Redress redress)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.REDRESS_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -96,7 +96,7 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{redressId}")]
         public async Task<IActionResult> Delete(int redressId)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.REDRESS_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)

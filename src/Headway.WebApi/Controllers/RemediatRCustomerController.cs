@@ -24,7 +24,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.CUSTOMER_READ)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -42,7 +42,7 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{customerId}")]
         public async Task<IActionResult> Get(int customerId)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.CUSTOMER_READ)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -60,7 +60,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Customer customer)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.CUSTOMER_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -78,7 +78,7 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Customer customer)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.CUSTOMER_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -96,7 +96,7 @@ namespace Headway.WebApi.Controllers
         [HttpDelete("{customerId}")]
         public async Task<IActionResult> Delete(int customerId)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRPermissions.CUSTOMER_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_WRITE)
                 .ConfigureAwait(false);
 
             if (!authorised)

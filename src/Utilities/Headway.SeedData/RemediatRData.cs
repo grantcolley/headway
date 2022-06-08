@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Model;
+using Headway.RemediatR.Core.Constants;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace Headway.SeedData
 
             TruncateTables();
 
-            Permissions();
-            Roles();
-            Users();
+            CreatePermissions();
+            CreateRoles();
+            CreateUsers();
             AssignUsersRoles();
         }
 
@@ -34,21 +35,26 @@ namespace Headway.SeedData
             //((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
         }
 
-        private static void Permissions()
+        private static void CreatePermissions()
         {
-            permissions.Add("Customer Read", new Permission { Name = "Customer Read", Description = "RemediatR Customer Read" });
-            permissions.Add("Customer Write", new Permission { Name = "Customer Write", Description = "RemediatR Customer Write" });
-            permissions.Add("Redress Read", new Permission { Name = "Redress Read", Description = "RemediatR Redress Read" });
-            permissions.Add("Redress Write", new Permission { Name = "Redress Write", Description = "RemediatR Redress Write" });
-            permissions.Add("Redress Transition", new Permission { Name = "Redress Transition", Description = "RemediatR Redress Transition" });
-            permissions.Add("Communication Dispatch Transition", new Permission { Name = "Communication Dispatch Transition", Description = "RemediatR Communication Dispatch Transition" });
-            permissions.Add("Awaiting Response Transition", new Permission { Name = "Awaiting Response Transition", Description = "RemediatR Awaiting Response Transition" });
-            permissions.Add("Redress Review Transition", new Permission { Name = "Redress Review Transition", Description = "RemediatR Redress Refund Review Transition" });
-            permissions.Add("Redress Complete", new Permission { Name = "Redress Complete", Description = "RemediatR Redress Complete" });
-            permissions.Add("Refund Calculation Complete", new Permission { Name = "Refund Calculation Complete", Description = "RemediatR Refund Calculation Complete" });
-            permissions.Add("Refund Varification Complete", new Permission { Name = "Refund Varification Complete", Description = "RemediatR Refund Varification Complete" });
-            permissions.Add("Refund Review Transition", new Permission { Name = "Refund Review Transition", Description = "RemediatR Refund Review Transition" });
-            permissions.Add("Admin", new Permission { Name = "Admin", Description = "RemediatR Administrator" });
+            permissions.Add(RemediatRAuthorisation.CUSTOMER_READ, new Permission { Name = RemediatRAuthorisation.CUSTOMER_READ, Description = "RemediatR Customer Read" });
+            permissions.Add(RemediatRAuthorisation.CUSTOMER_WRITE, new Permission { Name = RemediatRAuthorisation.CUSTOMER_WRITE, Description = "RemediatR Customer Write" });
+
+            permissions.Add(RemediatRAuthorisation.REDRESS_READ, new Permission { Name = RemediatRAuthorisation.REDRESS_READ, Description = "RemediatR Redress Read" });
+            permissions.Add(RemediatRAuthorisation.REDRESS_WRITE, new Permission { Name = RemediatRAuthorisation.REDRESS_WRITE, Description = "RemediatR Redress Write" });
+            permissions.Add(RemediatRAuthorisation.REDRESS_TRANSITION, new Permission { Name = RemediatRAuthorisation.REDRESS_TRANSITION, Description = "RemediatR Redress Transition" });
+            permissions.Add(RemediatRAuthorisation.COMMUNICATION_DISPATCH_TRANSITION, new Permission { Name = RemediatRAuthorisation.COMMUNICATION_DISPATCH_TRANSITION, Description = "RemediatR Communication Dispatch Transition" });
+            permissions.Add(RemediatRAuthorisation.AWAITING_REPONSE_TRANSITION, new Permission { Name = RemediatRAuthorisation.AWAITING_REPONSE_TRANSITION, Description = "RemediatR Awaiting Response Transition" });
+
+            permissions.Add(RemediatRAuthorisation.REDRESS_REVIEW_TRANSITION, new Permission { Name = RemediatRAuthorisation.REDRESS_REVIEW_TRANSITION, Description = "RemediatR Redress Refund Review Transition" });
+            permissions.Add(RemediatRAuthorisation.REDRESS_COMPLETE, new Permission { Name = RemediatRAuthorisation.REDRESS_COMPLETE, Description = "RemediatR Redress Complete" });
+
+            permissions.Add(RemediatRAuthorisation.REFUND_READ, new Permission { Name = RemediatRAuthorisation.REFUND_READ, Description = "RemediatR Refund Read" });
+            permissions.Add(RemediatRAuthorisation.REFUND_WRITE, new Permission { Name = RemediatRAuthorisation.REFUND_WRITE, Description = "RemediatR Refund Write" });
+            permissions.Add(RemediatRAuthorisation.REFUND_CACULATION_COMPLETE, new Permission { Name = RemediatRAuthorisation.REFUND_CACULATION_COMPLETE, Description = "RemediatR Refund Calculation Complete" });
+            permissions.Add(RemediatRAuthorisation.REFUND_VERIFICATION_COMPLETE, new Permission { Name = RemediatRAuthorisation.REFUND_VERIFICATION_COMPLETE, Description = "RemediatR Refund Varification Complete" });
+
+            permissions.Add(RemediatRAuthorisation.REFUND_REVIEW_TRANSITION, new Permission { Name = RemediatRAuthorisation.REFUND_REVIEW_TRANSITION, Description = "RemediatR Refund Review Transition" });
 
             foreach(var permission in permissions.Values)
             {
@@ -58,44 +64,52 @@ namespace Headway.SeedData
             dbContext.SaveChanges();
         }
 
-        private static void Roles()
+        private static void CreateRoles()
         {
-            roles.Add("Redress Case Owner", new Role { Name = "Redress Case Owner", Description = "RemediatR Redress Case Owner" });
-            roles.Add("Redress Reviewer", new Role { Name = "Redress Reviewer", Description = "RemediatR Redress Reviewer" });
-            roles.Add("Refund Assessor", new Role { Name = "Refund Assessor", Description = "RemediatR Refund Assessor" });
-            roles.Add("Refund Reviewer", new Role { Name = "Refund Reviewer", Description = "RemediatR Refund Reviewer" });
-            roles.Add("Admin", new Role { Name = "Admin", Description = "RemediatR Administrator" });
+            roles.Add(RemediatRAuthorisation.REDRESS_CASE_OWNER, new Role { Name = RemediatRAuthorisation.REDRESS_CASE_OWNER, Description = "RemediatR Redress Case Owner" });
+            roles.Add(RemediatRAuthorisation.REDRESS_REVIEWER, new Role { Name = RemediatRAuthorisation.REDRESS_REVIEWER, Description = "RemediatR Redress Reviewer" });
+            roles.Add(RemediatRAuthorisation.REFUND_ASSESSOR, new Role { Name = RemediatRAuthorisation.REFUND_ASSESSOR, Description = "RemediatR Refund Assessor" });
+            roles.Add(RemediatRAuthorisation.REFUND_REVIEWER, new Role { Name = RemediatRAuthorisation.REFUND_REVIEWER, Description = "RemediatR Refund Reviewer" });
 
             foreach (var role in roles.Values)
             {
                 dbContext.Roles.Add(role);
             }
 
-            roles["Redress Case Owner"].Permissions.Add(permissions["Customer Read"]);
-            roles["Redress Case Owner"].Permissions.Add(permissions["Customer Write"]);
-            roles["Redress Case Owner"].Permissions.Add(permissions["Redress Read"]);
-            roles["Redress Case Owner"].Permissions.Add(permissions["Redress Write"]);
-            roles["Redress Case Owner"].Permissions.Add(permissions["Redress Transition"]);
-            roles["Redress Case Owner"].Permissions.Add(permissions["Communication Dispatch Transition"]);
-            roles["Redress Case Owner"].Permissions.Add(permissions["Awaiting Response Transition"]);
-            roles["Redress Reviewer"].Permissions.Add(permissions["Customer Read"]);
-            roles["Redress Reviewer"].Permissions.Add(permissions["Redress Review Transition"]);
-            roles["Redress Reviewer"].Permissions.Add(permissions["Redress Complete"]);
-            roles["Refund Assessor"].Permissions.Add(permissions["Refund Calculation Complete"]);
-            roles["Refund Assessor"].Permissions.Add(permissions["Refund Varification Complete"]);
-            roles["Refund Reviewer"].Permissions.Add(permissions["Refund Review Transition"]);
-            roles["Admin"].Permissions.Add(permissions["Admin"]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.CUSTOMER_READ]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.CUSTOMER_WRITE]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_READ]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_WRITE]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_TRANSITION]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_READ]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.COMMUNICATION_DISPATCH_TRANSITION]);
+            roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(permissions[RemediatRAuthorisation.AWAITING_REPONSE_TRANSITION]);
+
+            roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.CUSTOMER_READ]);
+            roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_READ]);
+            roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_READ]);
+            roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_REVIEW_TRANSITION]);
+            roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_COMPLETE]);
+
+            roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_READ]);
+            roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_WRITE]);
+            roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_READ]);
+            roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_CACULATION_COMPLETE]);
+            roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_VERIFICATION_COMPLETE]);
+
+            roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_READ]);
+            roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.REDRESS_READ]);
+            roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(permissions[RemediatRAuthorisation.REFUND_REVIEW_TRANSITION]);
 
             dbContext.SaveChanges();
         }
 
-        private static void Users()
+        private static void CreateUsers()
         {
-            users.Add("bill", new User { UserName = "bill", Email = "bill@email.com" });
-            users.Add("jane", new User { UserName = "jane", Email = "jane@email.com" });
-            users.Add("will", new User { UserName = "will", Email = "will@email.com" });
-            users.Add("mel", new User { UserName = "mel", Email = "mel@email.com" });
             users.Add("grace", new User { UserName = "grace", Email = "grace@email.com" });
+            users.Add("mel", new User { UserName = "mel", Email = "mel@email.com" });
+            users.Add("bill", new User { UserName = "bill", Email = "bill@email.com" });
+            users.Add("will", new User { UserName = "will", Email = "will@email.com" });
             users.Add("mary", new User { UserName = "mary", Email = "mary@email.com" });
 
             foreach (var user in users.Values)
@@ -108,12 +122,11 @@ namespace Headway.SeedData
 
         private static void AssignUsersRoles()
         {
-            users["grace"].Roles.Add(roles["Redress Case Owner"]);
-            users["mel"].Roles.Add(roles["Redress Reviewer"]);
-            users["jane"].Roles.Add(roles["Refund Assessor"]);
-            users["will"].Roles.Add(roles["Refund Assessor"]);
-            users["mary"].Roles.Add(roles["Refund Reviewer"]);
-            users["bill"].Roles.Add(roles["Admin"]);
+            users["grace"].Roles.Add(roles[RemediatRAuthorisation.REDRESS_CASE_OWNER]);
+            users["mel"].Roles.Add(roles[RemediatRAuthorisation.REDRESS_REVIEWER]);
+            users["bill"].Roles.Add(roles[RemediatRAuthorisation.REFUND_ASSESSOR]);
+            users["will"].Roles.Add(roles[RemediatRAuthorisation.REFUND_ASSESSOR]);
+            users["mary"].Roles.Add(roles[RemediatRAuthorisation.REFUND_REVIEWER]);
 
             dbContext.SaveChanges();
         }
