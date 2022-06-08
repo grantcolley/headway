@@ -196,7 +196,7 @@ namespace Headway.SeedData
             dbContext.Categories.Add(configurationCategory);
             dbContext.Categories.Add(developerToolsCategory);
 
-            var usersMenuItem = new MenuItem { Name = "Users", Icon = "PersonOutline", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Users" };
+            var usersMenuItem = new MenuItem { Name = "Users", Icon = "SupervisedUserCircle", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Users" };
             var rolesMenuItem = new MenuItem { Name = "Roles", Icon = "LockOutlined", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Roles" };
             var permissionsMenuItem = new MenuItem { Name = "Permissions", Icon = "Key", NavigatePage = "Page", Order = 3, Permission = HeadwayAuthorisation.ADMIN, Config = "Permissions" };
 
