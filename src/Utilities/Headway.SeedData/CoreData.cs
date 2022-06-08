@@ -9,130 +9,144 @@ namespace Headway.SeedData
 {
     public class CoreData
     {
+        private static ApplicationDbContext dbContext;
+
         private static Dictionary<string, Permission> permissions = new Dictionary<string, Permission>();
         private static Dictionary<string, Role> roles = new Dictionary<string, Role>();
+        private static Dictionary<string, User> users = new Dictionary<string, User>();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
-            TruncateTables(applicationDbContext);
+            dbContext = applicationDbContext;
 
-            CreatePermissions(applicationDbContext);
-            CreateRoles(applicationDbContext);
-            CreateUsers(applicationDbContext);
+            TruncateTables();
 
-            CreateDemoModel(applicationDbContext);
+            CreatePermissions();
+            CreateRoles();
+            CreateUsers();
+            AssignUsersRoles();
 
-            Navigation(applicationDbContext);
+            CreateDemoModel();
 
-            PermissionsConfig(applicationDbContext);
-            PermissionConfig(applicationDbContext);
+            Navigation();
 
-            RolesConfig(applicationDbContext);
-            RoleConfig(applicationDbContext);
+            PermissionsConfig();
+            PermissionConfig();
 
-            UsersConfig(applicationDbContext);
-            UserConfig(applicationDbContext);
+            RolesConfig();
+            RoleConfig();
 
-            ModulesConfig(applicationDbContext);
-            ModuleConfig(applicationDbContext);
-            CategoriesConfig(applicationDbContext);
-            CategoryConfig(applicationDbContext);
-            MenuItemsConfig(applicationDbContext);
-            MenuItemConfig(applicationDbContext);
+            UsersConfig();
+            UserConfig();
 
-            ConfigsConfig(applicationDbContext);
-            ConfigConfig(applicationDbContext);
-            ConfigItemConfig(applicationDbContext);
-            ConfigItemsListDetailConfig(applicationDbContext);
-            ConfigContainerConfig(applicationDbContext);
+            ModulesConfig();
+            ModuleConfig();
+            CategoriesConfig();
+            CategoryConfig();
+            MenuItemsConfig();
+            MenuItemConfig();
 
-            DemoModelsConfig(applicationDbContext);
-            DemoModelConfig(applicationDbContext);
-            DemoModelItemConfig(applicationDbContext);
-            DemoModelItemsListDetailConfig(applicationDbContext);
-            DemoModelTreeItemConfig(applicationDbContext);
+            ConfigsConfig();
+            ConfigConfig();
+            ConfigItemConfig();
+            ConfigItemsListDetailConfig();
+            ConfigContainerConfig();
+
+            DemoModelsConfig();
+            DemoModelConfig();
+            DemoModelItemConfig();
+            DemoModelItemsListDetailConfig();
+            DemoModelTreeItemConfig();
         }
 
-        private static void TruncateTables(ApplicationDbContext applicationDbContext)
+        private static void TruncateTables()
         {
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Roles");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Roles, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Permissions");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Permissions, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelItems");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelTreeItems");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModels");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModels, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModelComplexProperties");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModelComplexProperties, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE MenuItems");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Categories");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Categories, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Modules");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Modules, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE ConfigItems");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM ConfigContainers");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (ConfigContainers, RESEED, 1)");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DELETE FROM Configs");
-            ((DbContext)applicationDbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Configs, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Roles");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Roles, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Permissions");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Permissions, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelItems");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelTreeItems");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModels");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModels, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModelComplexProperties");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModelComplexProperties, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE MenuItems");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Categories");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Categories, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Modules");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Modules, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE ConfigItems");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM ConfigContainers");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (ConfigContainers, RESEED, 1)");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Configs");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Configs, RESEED, 1)");
         }
 
-        private static void CreatePermissions(ApplicationDbContext applicationDbContext)
+        private static void CreatePermissions()
         {
             permissions.Add(HeadwayAuthorisation.USER, new Permission { Name = HeadwayAuthorisation.USER, Description = "Headway User" });
-            permissions.Add(HeadwayAuthorisation.ADMIN, new Permission { Name = HeadwayAuthorisation.ADMIN, Description = "Administrator" });
-            permissions.Add(HeadwayAuthorisation.DEVELOPER, new Permission { Name = HeadwayAuthorisation.DEVELOPER, Description = "Developer" });
+            permissions.Add(HeadwayAuthorisation.ADMIN, new Permission { Name = HeadwayAuthorisation.ADMIN, Description = "Headway Administrator" });
+            permissions.Add(HeadwayAuthorisation.DEVELOPER, new Permission { Name = HeadwayAuthorisation.DEVELOPER, Description = "Headway Developer" });
 
             foreach(var permission in permissions.Values)
             {
-                applicationDbContext.Permissions.Add(permission);
+                dbContext.Permissions.Add(permission);
             }
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void CreateRoles(ApplicationDbContext applicationDbContext)
+        private static void CreateRoles()
         {
-            roles.Add("", new Role { Name = "Developer", Description = "Developer Role" });
-            roles.Add("", new Role { Name = "Admin", Description = "Administrator Role" });
-            roles.Add("", new Role { Name = "User", Description = "Headway User Role" });
+            roles.Add(HeadwayAuthorisation.USER, new Role { Name = HeadwayAuthorisation.USER, Description = "Headway User" });
+            roles.Add(HeadwayAuthorisation.ADMIN, new Role { Name = HeadwayAuthorisation.ADMIN, Description = "Headway Administrator" });
+            roles.Add(HeadwayAuthorisation.DEVELOPER, new Role { Name = HeadwayAuthorisation.DEVELOPER, Description = "Headway Developer" });
 
             foreach (var role in roles.Values)
             {
-                applicationDbContext.Roles.Add(role);
+                dbContext.Roles.Add(role);
             }
 
-            adminRole.Permissions.Add(admin);
-            adminRole.Permissions.Add(user);
-            developerRole.Permissions.Add(developer);
-            developerRole.Permissions.Add(admin);
-            developerRole.Permissions.Add(user);
-            userRole.Permissions.Add(user);
+            roles[HeadwayAuthorisation.USER].Permissions.Add(permissions[HeadwayAuthorisation.USER]);
 
-            applicationDbContext.SaveChanges();
+            roles[HeadwayAuthorisation.ADMIN].Permissions.Add(permissions[HeadwayAuthorisation.USER]);
+            roles[HeadwayAuthorisation.ADMIN].Permissions.Add(permissions[HeadwayAuthorisation.ADMIN]);
+
+            roles[HeadwayAuthorisation.DEVELOPER].Permissions.Add(permissions[HeadwayAuthorisation.USER]);
+            roles[HeadwayAuthorisation.DEVELOPER].Permissions.Add(permissions[HeadwayAuthorisation.ADMIN]);
+            roles[HeadwayAuthorisation.DEVELOPER].Permissions.Add(permissions[HeadwayAuthorisation.DEVELOPER]);
+
+            dbContext.SaveChanges();
         }
 
-        private static void CreateUsers(ApplicationDbContext applicationDbContext)
+        private static void CreateUsers()
         {
-            var grant = new User { UserName = "grant", Email = "grant@email.com" };
-            var alice = new User { UserName = "alice", Email = "alice@email.com" };
+            users.Add("grant", new User { UserName = "grant", Email = "grant@email.com" });
+            users.Add("alice", new User { UserName = "alice", Email = "alice@email.com" });
 
-            applicationDbContext.Users.Add(grant);
-            applicationDbContext.Users.Add(alice);
+            foreach(var user in users.Values)
+            {
+                dbContext.Users.Add(user);
+            }
 
-            grant.Roles.Add(developerRole);
-            alice.Roles.Add(adminRole);
-            alice.Roles.Add(userRole);
-
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void CreateDemoModel(ApplicationDbContext applicationDbContext)
+        private static void AssignUsersRoles()
+        {
+            users["grant"].Roles.Add(roles[HeadwayAuthorisation.DEVELOPER]);
+            users["alice"].Roles.Add(roles[HeadwayAuthorisation.ADMIN]);
+
+            dbContext.SaveChanges();
+        }
+
+        private static void CreateDemoModel()
         {
             var demoModel = new DemoModel
             {
@@ -153,7 +167,7 @@ namespace Headway.SeedData
                  }
             };
 
-            applicationDbContext.DemoModels.Add(demoModel);
+            dbContext.DemoModels.Add(demoModel);
 
             var demoModelComplexProperties = new List<DemoModelComplexProperty>
             {
@@ -162,45 +176,45 @@ namespace Headway.SeedData
                 new DemoModelComplexProperty{ Name ="Complex Property 3" }
             };
 
-            applicationDbContext.DemoModelComplexProperties.AddRange(demoModelComplexProperties);
+            dbContext.DemoModelComplexProperties.AddRange(demoModelComplexProperties);
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void Navigation(ApplicationDbContext applicationDbContext)
+        private static void Navigation()
         {
-            var administration = new Module { Name = "Administration", Icon = "Engineering", Order = 1, Permission = admin.Name };
+            var administration = new Module { Name = "Administration", Icon = "Engineering", Order = 1, Permission = HeadwayAuthorisation.ADMIN };
 
-            applicationDbContext.Modules.Add(administration);
+            dbContext.Modules.Add(administration);
 
-            var authorisationCatgory = new Category { Name = "Authorisation", Icon = "AdminPanelSettings", Order = 1, Permission = admin.Name };
-            var navigationCatgory = new Category { Name = "Navigation", Icon = "Explore", Order = 2, Permission = admin.Name };
-            var configurationCategory = new Category { Name = "Configuration", Icon = "AppSettingsAlt", Order = 3, Permission = admin.Name };
-            var developerToolsCategory = new Category { Name = "Developer Tools", Icon = "Build", Order = 4, Permission = developer.Name };
+            var authorisationCatgory = new Category { Name = "Authorisation", Icon = "AdminPanelSettings", Order = 1, Permission = HeadwayAuthorisation.ADMIN };
+            var navigationCatgory = new Category { Name = "Navigation", Icon = "Explore", Order = 2, Permission = HeadwayAuthorisation.ADMIN };
+            var configurationCategory = new Category { Name = "Configuration", Icon = "AppSettingsAlt", Order = 3, Permission = HeadwayAuthorisation.ADMIN };
+            var developerToolsCategory = new Category { Name = "Developer Tools", Icon = "Build", Order = 4, Permission = HeadwayAuthorisation.DEVELOPER };
 
-            applicationDbContext.Categories.Add(authorisationCatgory);
-            applicationDbContext.Categories.Add(configurationCategory);
-            applicationDbContext.Categories.Add(developerToolsCategory);
+            dbContext.Categories.Add(authorisationCatgory);
+            dbContext.Categories.Add(configurationCategory);
+            dbContext.Categories.Add(developerToolsCategory);
 
-            var usersMenuItem = new MenuItem { Name = "Users", Icon = "PersonOutline", NavigatePage = "Page", Order = 1, Permission = admin.Name, Config = "Users" };
-            var rolesMenuItem = new MenuItem { Name = "Roles", Icon = "LockOutlined", NavigatePage = "Page", Order = 2, Permission = admin.Name, Config = "Roles" };
-            var permissionsMenuItem = new MenuItem { Name = "Permissions", Icon = "Key", NavigatePage = "Page", Order = 3, Permission = admin.Name, Config = "Permissions" };
+            var usersMenuItem = new MenuItem { Name = "Users", Icon = "PersonOutline", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Users" };
+            var rolesMenuItem = new MenuItem { Name = "Roles", Icon = "LockOutlined", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Roles" };
+            var permissionsMenuItem = new MenuItem { Name = "Permissions", Icon = "Key", NavigatePage = "Page", Order = 3, Permission = HeadwayAuthorisation.ADMIN, Config = "Permissions" };
 
-            var modulesMenuItem = new MenuItem { Name = "Modules", Icon = "AutoAwesomeMosaic", NavigatePage = "Page", Order = 1, Permission = admin.Name, Config = "Modules" };
-            var categoriesMenuItem = new MenuItem { Name = "Categories", Icon = "AutoAwesomeMotion", NavigatePage = "Page", Order = 2, Permission = admin.Name, Config = "Categories" };
-            var menuItemsMenuItem = new MenuItem { Name = "MenuItems", Icon = "Article", NavigatePage = "Page", Order = 3, Permission = admin.Name, Config = "MenuItems" };
+            var modulesMenuItem = new MenuItem { Name = "Modules", Icon = "AutoAwesomeMosaic", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Modules" };
+            var categoriesMenuItem = new MenuItem { Name = "Categories", Icon = "AutoAwesomeMotion", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Categories" };
+            var menuItemsMenuItem = new MenuItem { Name = "MenuItems", Icon = "Article", NavigatePage = "Page", Order = 3, Permission = HeadwayAuthorisation.ADMIN, Config = "MenuItems" };
 
-            var configureMenuItem = new MenuItem { Name = "Configure", Icon = "Settings", NavigatePage = "Page", Order = 1, Permission = admin.Name, Config = "Configs" };
-            var demoMenuItem = new MenuItem { Name = "Demo", Icon = "InfoOutlined", NavigatePage = "Page", Order = 2, Permission = developer.Name, Config = "DemoModels" };
+            var configureMenuItem = new MenuItem { Name = "Configure", Icon = "Settings", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Configs" };
+            var demoMenuItem = new MenuItem { Name = "Demo", Icon = "InfoOutlined", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.DEVELOPER, Config = "DemoModels" };
 
-            applicationDbContext.MenuItems.Add(usersMenuItem);
-            applicationDbContext.MenuItems.Add(rolesMenuItem);
-            applicationDbContext.MenuItems.Add(permissionsMenuItem);
-            applicationDbContext.MenuItems.Add(modulesMenuItem);
-            applicationDbContext.MenuItems.Add(categoriesMenuItem);
-            applicationDbContext.MenuItems.Add(menuItemsMenuItem);
-            applicationDbContext.MenuItems.Add(configureMenuItem);
-            applicationDbContext.MenuItems.Add(demoMenuItem);
+            dbContext.MenuItems.Add(usersMenuItem);
+            dbContext.MenuItems.Add(rolesMenuItem);
+            dbContext.MenuItems.Add(permissionsMenuItem);
+            dbContext.MenuItems.Add(modulesMenuItem);
+            dbContext.MenuItems.Add(categoriesMenuItem);
+            dbContext.MenuItems.Add(menuItemsMenuItem);
+            dbContext.MenuItems.Add(configureMenuItem);
+            dbContext.MenuItems.Add(demoMenuItem);
 
             authorisationCatgory.MenuItems.Add(usersMenuItem);
             authorisationCatgory.MenuItems.Add(rolesMenuItem);
@@ -216,10 +230,10 @@ namespace Headway.SeedData
             administration.Categories.Add(configurationCategory);
             administration.Categories.Add(developerToolsCategory);
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void PermissionsConfig(ApplicationDbContext applicationDbContext)
+        private static void PermissionsConfig()
         {
             var permissionsConfig = new Config
             {
@@ -236,16 +250,16 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(permissionsConfig);
+            dbContext.Configs.Add(permissionsConfig);
 
             permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", Order = 1 });
             permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
             permissionsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void PermissionConfig(ApplicationDbContext applicationDbContext)
+        private static void PermissionConfig()
         {
             var permissionConfig = new Config
             {
@@ -259,7 +273,7 @@ namespace Headway.SeedData
                 NavigateConfig = "Permissions"
             };
 
-            applicationDbContext.Configs.Add(permissionConfig);
+            dbContext.Configs.Add(permissionConfig);
 
             var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", Code = "PERMISSION_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -269,10 +283,10 @@ namespace Headway.SeedData
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void RolesConfig(ApplicationDbContext applicationDbContext)
+        private static void RolesConfig()
         {
             var rolesConfig = new Config
             {
@@ -289,16 +303,16 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(rolesConfig);
+            dbContext.Configs.Add(rolesConfig);
 
             rolesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", Order = 1 });
             rolesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
             rolesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void RoleConfig(ApplicationDbContext applicationDbContext)
+        private static void RoleConfig()
         {
             var roleConfig = new Config
             {
@@ -312,7 +326,7 @@ namespace Headway.SeedData
                 NavigateConfig = "Roles"
             };
 
-            applicationDbContext.Configs.Add(roleConfig);
+            dbContext.Configs.Add(roleConfig);
 
             var roleConfigContainer = new ConfigContainer { Name = "Role Div", Code = "ROLE_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -323,10 +337,10 @@ namespace Headway.SeedData
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void UsersConfig(ApplicationDbContext applicationDbContext)
+        private static void UsersConfig()
         {
             var usersConfig = new Config
             {
@@ -343,16 +357,16 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(usersConfig);
+            dbContext.Configs.Add(usersConfig);
 
             usersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", Order = 1 });
             usersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", Order = 2 });
             usersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void UserConfig(ApplicationDbContext applicationDbContext)
+        private static void UserConfig()
         {
             var userConfig = new Config
             {
@@ -366,7 +380,7 @@ namespace Headway.SeedData
                 NavigateConfig = "Users"
             };
 
-            applicationDbContext.Configs.Add(userConfig);
+            dbContext.Configs.Add(userConfig);
 
             var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER_DIV", Order = 1, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls" };
             var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH_DIV", ParentCode = "USER_DEV", Order = 1, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", ComponentArgs = "Name=LayoutHorizontal;Value=True" };
@@ -380,10 +394,10 @@ namespace Headway.SeedData
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleChecklist", Label = "Roles", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void ModulesConfig(ApplicationDbContext applicationDbContext)
+        private static void ModulesConfig()
         {
             var modulesConfig = new Config
             {
@@ -400,16 +414,16 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(modulesConfig);
+            dbContext.Configs.Add(modulesConfig);
 
             modulesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModuleId", Label = "Module Id", Order = 1 });
             modulesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
             modulesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 3 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void ModuleConfig(ApplicationDbContext applicationDbContext)
+        private static void ModuleConfig()
         {
             var moduleConfig = new Config
             {
@@ -423,7 +437,7 @@ namespace Headway.SeedData
                 NavigateConfig = "Modules"
             };
 
-            applicationDbContext.Configs.Add(moduleConfig);
+            dbContext.Configs.Add(moduleConfig);
 
             var moduleConfigContainer = new ConfigContainer { Name = "Module Div", Code = "MODULE_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -434,10 +448,10 @@ namespace Headway.SeedData
             moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = moduleConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
             moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 4, ConfigContainer = moduleConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void CategoriesConfig(ApplicationDbContext applicationDbContext)
+        private static void CategoriesConfig()
         {
             var categoriesConfig = new Config
             {
@@ -454,16 +468,16 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(categoriesConfig);
+            dbContext.Configs.Add(categoriesConfig);
 
             categoriesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CategoryId", Label = "Category Id", Order = 1 });
             categoriesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
             categoriesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 3 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void CategoryConfig(ApplicationDbContext applicationDbContext)
+        private static void CategoryConfig()
         {
             var categoryConfig = new Config
             {
@@ -477,7 +491,7 @@ namespace Headway.SeedData
                 NavigateConfig = "Categories"
             };
 
-            applicationDbContext.Configs.Add(categoryConfig);
+            dbContext.Configs.Add(categoryConfig);
 
             var categoryConfigContainer = new ConfigContainer { Name = "Category Div", Code = "CATEGORY_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -489,10 +503,10 @@ namespace Headway.SeedData
             categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 4, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
             categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Module", Label = "Module", Order = 5, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.MODULES_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.Module, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void MenuItemsConfig(ApplicationDbContext applicationDbContext)
+        private static void MenuItemsConfig()
         {
             var menuItemsConfig = new Config
             {
@@ -509,16 +523,16 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(menuItemsConfig);
+            dbContext.Configs.Add(menuItemsConfig);
 
             menuItemsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "MenuItemId", Label = "Menu Item Id", Order = 1 });
             menuItemsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
             menuItemsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 3 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void MenuItemConfig(ApplicationDbContext applicationDbContext)
+        private static void MenuItemConfig()
         {
             var menuItemConfig = new Config
             {
@@ -532,7 +546,7 @@ namespace Headway.SeedData
                 NavigateConfig = "MenuItems"
             };
 
-            applicationDbContext.Configs.Add(menuItemConfig);
+            dbContext.Configs.Add(menuItemConfig);
 
             var menuItemConfigContainer = new ConfigContainer { Name = "Menu Item Div", Code = "MENUITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -547,10 +561,10 @@ namespace Headway.SeedData
             menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 5, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
             menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Category", Label = "Category", Order = 6, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CATEGORIES_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.Category, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void ConfigsConfig(ApplicationDbContext applicationDbContext)
+        private static void ConfigsConfig()
         {
             var configsConfig = new Config
             {
@@ -567,16 +581,16 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(configsConfig);
+            dbContext.Configs.Add(configsConfig);
 
             configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", Order = 1 });
             configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
             configsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void ConfigConfig(ApplicationDbContext applicationDbContext)
+        private static void ConfigConfig()
         {
             var configConfig = new Config
             {
@@ -590,7 +604,7 @@ namespace Headway.SeedData
                 NavigateConfig = "Configs"
             };
 
-            applicationDbContext.Configs.Add(configConfig);
+            dbContext.Configs.Add(configConfig);
 
             var configConfigContainer1 = new ConfigContainer { Name = "Model Div", Code = "MODEL DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model", Order = 1 };
             var configConfigContainer2 = new ConfigContainer { Name = "Fields Div", Code = "FIELDS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Fields", Order = 2 };
@@ -613,10 +627,10 @@ namespace Headway.SeedData
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateConfig", Label = "Navigate Config", Order = 11, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", Order = 12, ConfigContainer = configConfigContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigItemsListDetail" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Tooltip = "Drag and drop containers into nested hierarchy", Order = 13, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Label|Name={Args.LIST_PROPERTY};Value=ConfigContainers" });
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void ConfigItemConfig(ApplicationDbContext applicationDbContext)
+        private static void ConfigItemConfig()
         {
             var configItemConfig = new Config
             {
@@ -628,7 +642,7 @@ namespace Headway.SeedData
                 Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
             };
 
-            applicationDbContext.Configs.Add(configItemConfig);
+            dbContext.Configs.Add(configItemConfig);
 
             var configItemConfigContainer = new ConfigContainer { Name = "Config Item Div", Code = "CONFIG_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -646,10 +660,10 @@ namespace Headway.SeedData
             configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigName", Label = "Config Name", Order = 10, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
             configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainer", Label = "Container", Order = 11, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_CONTAINERS}|Name={Args.SEARCH_PARAMETER};Value=Config|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.ConfigContainer, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void ConfigItemsListDetailConfig(ApplicationDbContext applicationDbContext)
+        private static void ConfigItemsListDetailConfig()
         {
             var configItemsListDetailConfig = new Config
             {
@@ -661,15 +675,15 @@ namespace Headway.SeedData
                 OrderModelBy = "Order"
             };
 
-            applicationDbContext.Configs.Add(configItemsListDetailConfig);
+            dbContext.Configs.Add(configItemsListDetailConfig);
 
             configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "Property Name", Order = 1 });
             configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void ConfigContainerConfig(ApplicationDbContext applicationDbContext)
+        private static void ConfigContainerConfig()
         {
             var configContainerConfig = new Config
             {
@@ -681,7 +695,7 @@ namespace Headway.SeedData
                 Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
             };
 
-            applicationDbContext.Configs.Add(configContainerConfig);
+            dbContext.Configs.Add(configContainerConfig);
 
             var configContainerConfigContainer = new ConfigContainer { Name = "Config Container Div", Code = "CONFIG_CONTAINER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -695,10 +709,10 @@ namespace Headway.SeedData
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 6, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", Order = 8, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ContainerOptionItems)}" });
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void DemoModelsConfig(ApplicationDbContext applicationDbContext)
+        private static void DemoModelsConfig()
         {
             var demoModelsConfig = new Config
             {
@@ -715,15 +729,15 @@ namespace Headway.SeedData
                 NavigateResetBreadcrumb = true
             };
 
-            applicationDbContext.Configs.Add(demoModelsConfig);
+            dbContext.Configs.Add(demoModelsConfig);
 
             demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelId", Label = "Demo Model Id", Order = 1 });
             demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Text", Label = "Text", Order = 2 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void DemoModelConfig(ApplicationDbContext applicationDbContext)
+        private static void DemoModelConfig()
         {
             var demoModelConfig = new Config
             {
@@ -737,7 +751,7 @@ namespace Headway.SeedData
                 NavigateConfig = "DemoModels"
             };
 
-            applicationDbContext.Configs.Add(demoModelConfig);
+            dbContext.Configs.Add(demoModelConfig);
 
             var demoModelContainer1 = new ConfigContainer { Name = "Model Components Div", Code = "MODEL_COMPONENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model Components", Order = 1 };
             var demoModelContainer2 = new ConfigContainer { Name = "List Component Div", Code = "LIST_COMPONENT_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "List Component", Order = 2 };
@@ -761,10 +775,10 @@ namespace Headway.SeedData
             demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItems", Label = "Demo Model Items", Order = 12, ConfigContainer = demoModelContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=DemoModelItemsListDetail" });
             demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItems", Label = "Demo Model Tree Items", Order = 13, Tooltip = "Drag and drop items in a nested tree hierarchy", ConfigContainer = demoModelContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelTreeItem", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Name|Name={Args.LIST_PROPERTY};Value=DemoModelTreeItems" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void DemoModelItemConfig(ApplicationDbContext applicationDbContext)
+        private static void DemoModelItemConfig()
         {
             var demoModelItemConfig = new Config
             {
@@ -776,7 +790,7 @@ namespace Headway.SeedData
                 Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
             };
 
-            applicationDbContext.Configs.Add(demoModelItemConfig);
+            dbContext.Configs.Add(demoModelItemConfig);
 
             var demoModelItemConfigContainer = new ConfigContainer { Name = "Demo Model Item Div", Code = "DEMO_MODEL_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -786,10 +800,10 @@ namespace Headway.SeedData
             demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void DemoModelItemsListDetailConfig(ApplicationDbContext applicationDbContext)
+        private static void DemoModelItemsListDetailConfig()
         {
             var demoModelItemsListDetailConfig = new Config
             {
@@ -801,15 +815,15 @@ namespace Headway.SeedData
                 OrderModelBy = "Order"
             };
 
-            applicationDbContext.Configs.Add(demoModelItemsListDetailConfig);
+            dbContext.Configs.Add(demoModelItemsListDetailConfig);
 
             demoModelItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 1 });
             demoModelItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
 
-        private static void DemoModelTreeItemConfig(ApplicationDbContext applicationDbContext)
+        private static void DemoModelTreeItemConfig()
         {
             var demoModelTreeItemConfig = new Config
             {
@@ -821,7 +835,7 @@ namespace Headway.SeedData
                 Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
             };
 
-            applicationDbContext.Configs.Add(demoModelTreeItemConfig);
+            dbContext.Configs.Add(demoModelTreeItemConfig);
 
             var demoModelTreeItemConfigContainer = new ConfigContainer { Name = "Demo Model Tree Item Div", Code = "DEMO_MODEL_TREE_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Order = 1 };
 
@@ -832,7 +846,7 @@ namespace Headway.SeedData
             demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 3, ConfigContainer = demoModelTreeItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 4, ConfigContainer = demoModelTreeItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
 
-            applicationDbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
     }
 }
