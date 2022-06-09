@@ -18,11 +18,11 @@ namespace Headway.Core.Model
         public List<Role> Roles { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
-        [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters")]
+        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
-        [StringLength(30, ErrorMessage = "Description must be between 1 and 30 characters")]
+        [StringLength(150, ErrorMessage = "Description must be between 1 and 150 characters")]
         public string Description { get; set; }
     }
 }
