@@ -92,7 +92,6 @@ namespace Headway.SeedData
         {
             permissions.Add(HeadwayAuthorisation.USER, new Permission { Name = HeadwayAuthorisation.USER, Description = "Headway User" });
             permissions.Add(HeadwayAuthorisation.ADMIN, new Permission { Name = HeadwayAuthorisation.ADMIN, Description = "Headway Administrator" });
-            permissions.Add(HeadwayAuthorisation.DEVELOPER, new Permission { Name = HeadwayAuthorisation.DEVELOPER, Description = "Headway Developer" });
 
             foreach(var permission in permissions.Values)
             {
@@ -106,7 +105,6 @@ namespace Headway.SeedData
         {
             roles.Add(HeadwayAuthorisation.USER, new Role { Name = HeadwayAuthorisation.USER, Description = "Headway User" });
             roles.Add(HeadwayAuthorisation.ADMIN, new Role { Name = HeadwayAuthorisation.ADMIN, Description = "Headway Administrator" });
-            roles.Add(HeadwayAuthorisation.DEVELOPER, new Role { Name = HeadwayAuthorisation.DEVELOPER, Description = "Headway Developer" });
 
             foreach (var role in roles.Values)
             {
@@ -117,10 +115,6 @@ namespace Headway.SeedData
 
             roles[HeadwayAuthorisation.ADMIN].Permissions.Add(permissions[HeadwayAuthorisation.USER]);
             roles[HeadwayAuthorisation.ADMIN].Permissions.Add(permissions[HeadwayAuthorisation.ADMIN]);
-
-            roles[HeadwayAuthorisation.DEVELOPER].Permissions.Add(permissions[HeadwayAuthorisation.USER]);
-            roles[HeadwayAuthorisation.DEVELOPER].Permissions.Add(permissions[HeadwayAuthorisation.ADMIN]);
-            roles[HeadwayAuthorisation.DEVELOPER].Permissions.Add(permissions[HeadwayAuthorisation.DEVELOPER]);
 
             dbContext.SaveChanges();
         }
