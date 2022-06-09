@@ -25,6 +25,7 @@ namespace Headway.SeedData
             CreateRoles();
             CreateUsers();
             AssignUsersRoles();
+            Navigation();
         }
 
         private static void TruncateTables()
