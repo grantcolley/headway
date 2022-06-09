@@ -121,7 +121,6 @@ namespace Headway.SeedData
 
         private static void CreateUsers()
         {
-            users.Add("grant", new User { UserName = "grant", Email = "grant@email.com" });
             users.Add("alice", new User { UserName = "alice", Email = "alice@email.com" });
 
             foreach(var user in users.Values)
@@ -134,7 +133,6 @@ namespace Headway.SeedData
 
         private static void AssignUsersRoles()
         {
-            users["grant"].Roles.Add(roles[HeadwayAuthorisation.DEVELOPER]);
             users["alice"].Roles.Add(roles[HeadwayAuthorisation.ADMIN]);
 
             dbContext.SaveChanges();
