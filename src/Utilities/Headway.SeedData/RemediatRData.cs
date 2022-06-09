@@ -135,7 +135,7 @@ namespace Headway.SeedData
 
         private static void CreateNavigation()
         {
-            var remediatR = new Module { Name = "RemediatR", Icon = "SPaceDashboard", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ };
+            var remediatR = new Module { Name = "RemediatR", Icon = "SpaceDashboard", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ };
 
             dbContext.Modules.Add(remediatR);
 
