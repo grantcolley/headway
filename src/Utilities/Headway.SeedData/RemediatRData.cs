@@ -25,7 +25,7 @@ namespace Headway.SeedData
             CreateRoles();
             CreateUsers();
             AssignUsersRoles();
-            Navigation();
+            CreateNavigation();
         }
 
         private static void TruncateTables()
@@ -133,7 +133,7 @@ namespace Headway.SeedData
             dbContext.SaveChanges();
         }
 
-        private static void Navigation()
+        private static void CreateNavigation()
         {
             var remediatR = new Module { Name = "RemediatR", Icon = "SPaceDashboard", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ };
 
@@ -145,6 +145,7 @@ namespace Headway.SeedData
 
             dbContext.Categories.Add(customerCatgory);
             dbContext.Categories.Add(redressCatgory);
+            dbContext.Categories.Add(programCatgory);
 
             var customersMenuItem = new MenuItem { Name = "Customers", Icon = "PeopleOutlined", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ, Config = "Customers" };
             var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "FactCheck", NavigatePage = "Page", Order = 2, Permission = RemediatRAuthorisation.REDRESS_READ, Config = "Redress Cases" };
