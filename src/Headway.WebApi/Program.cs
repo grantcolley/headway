@@ -117,11 +117,13 @@ if(useSeedData)
         if(useDefaultData)
         {
             Headway.SeedData.CoreData.Initialise(applicationDbContext);
-        }
 
-        if (userRemediatRData)
-        {
-            Headway.SeedData.RemediatRData.Initialise(applicationDbContext);
+            if (userRemediatRData)
+            {
+                Headway.SeedData.RemediatRData.Initialise(applicationDbContext);
+            }
+
+            Headway.SeedData.DeveloperData.Initialise(applicationDbContext);
         }
     }
 }
