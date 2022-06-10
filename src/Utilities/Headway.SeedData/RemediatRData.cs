@@ -135,21 +135,21 @@ namespace Headway.SeedData
 
         private static void CreateNavigation()
         {
-            var remediatR = new Module { Name = "RemediatR", Icon = "SpaceDashboard", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ };
+            var remediatR = new Module { Name = "RemediatR", Icon = "Balance", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ };
 
             dbContext.Modules.Add(remediatR);
 
-            var customerCatgory = new Category { Name = "Customer", Icon = "PersonOutlined", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ };
-            var redressCatgory = new Category { Name = "Redress", Icon = "Balance", Order = 2, Permission = RemediatRAuthorisation.REDRESS_READ };
-            var programCatgory = new Category { Name = "Program", Icon = "ListAlt", Order = 2, Permission = HeadwayAuthorisation.ADMIN };
+            var customerCatgory = new Category { Name = "Customer", Icon = "PersonOutline", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ };
+            var redressCatgory = new Category { Name = "Redress", Icon = "ListAlt", Order = 2, Permission = RemediatRAuthorisation.REDRESS_READ };
+            var programCatgory = new Category { Name = "Program", Icon = "Apps", Order = 2, Permission = HeadwayAuthorisation.ADMIN };
 
             dbContext.Categories.Add(customerCatgory);
             dbContext.Categories.Add(redressCatgory);
             dbContext.Categories.Add(programCatgory);
 
-            var customersMenuItem = new MenuItem { Name = "Customers", Icon = "PeopleOutlined", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ, Config = "Customers" };
-            var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "FactCheck", NavigatePage = "Page", Order = 2, Permission = RemediatRAuthorisation.REDRESS_READ, Config = "Redress Cases" };
-            var programsMenuItem = new MenuItem { Name = "Programs", Icon = "List", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Programs" };
+            var customersMenuItem = new MenuItem { Name = "Customers", Icon = "PeopleOutline", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ, Config = "Customers" };
+            var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "List", NavigatePage = "Page", Order = 2, Permission = RemediatRAuthorisation.REDRESS_READ, Config = "Redress Cases" };
+            var programsMenuItem = new MenuItem { Name = "Programs", Icon = "AppRegistration", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Programs" };
 
             dbContext.MenuItems.Add(customersMenuItem);
             dbContext.MenuItems.Add(redressCasesMenuItem);
