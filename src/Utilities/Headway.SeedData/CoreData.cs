@@ -175,7 +175,7 @@ namespace Headway.SeedData
 
         private static void Navigation()
         {
-            var administration = new Module { Name = "Administration", Icon = "Engineering", Order = 1, Permission = HeadwayAuthorisation.ADMIN };
+            var administration = new Module { Name = "Administration", Icon = "Engineering", Order = 2, Permission = HeadwayAuthorisation.ADMIN };
 
             dbContext.Modules.Add(administration);
 
