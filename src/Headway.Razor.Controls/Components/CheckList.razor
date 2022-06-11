@@ -1,6 +1,11 @@
 ﻿@inherits CheckListBase
 
-<MudTable Items="@checklist" Hover="true" CustomHeader="true">
+<MudTable Items="@checklist" Hover="true" CustomHeader="true"
+          Filter="new Func<ChecklistItem,bool>(FilterFunction)">
+    <ToolBarContent>
+        <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" 
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
     <HeaderContent>
         <MudTHeadRow Class="header-centered">
             <MudTh>@Field.Label</MudTh>
