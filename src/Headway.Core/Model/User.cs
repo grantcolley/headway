@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Headway.Core.Model
 {
@@ -17,6 +18,40 @@ namespace Headway.Core.Model
         public int UserId { get; set; }
         public List<Role> Roles { get; set; }
         public List<Permission> Permissions { get; set; }
+
+        [NotMapped]
+        public string RoleList
+        {
+            get
+            {
+                if (Roles == null)
+                {
+                    return string.Empty;
+                }
+
+                return string.Join(", ",
+                    Roles.Select(r => r.Name)
+                    .OrderBy(n => n)
+                    .Distinct());
+            }
+        }
+
+        [NotMapped]
+        public string PermissionList
+        {
+            get
+            {
+                if (Permissions == null)
+                {
+                    return string.Empty;
+                }
+
+                return string.Join(", ",
+                    Permissions.Select(p => p.Name)
+                    .OrderBy(n => n)
+                    .Distinct());
+            }
+        }
 
         [NotMapped]
         public List<ChecklistItem> PermissionChecklist { get; set; }
