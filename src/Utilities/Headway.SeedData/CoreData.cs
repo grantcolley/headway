@@ -375,10 +375,19 @@ namespace Headway.SeedData
             dbContext.Configs.Add(userConfig);
 
             var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER_DIV", Order = 1, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls" };
-            var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH_DIV", ParentCode = "USER_DEV", Order = 1, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", ComponentArgs = "Name=LayoutHorizontal;Value=True" };
-            userConfigContainer.ConfigContainers.Add(authConfigContainer);
+            var assignConfigContainer = new ConfigContainer { Name = "Assignments Div", Code = "ASSIGNMENTS_DIV", ParentCode = "USER_DEV", Order = 2, Container = "Headway.Razor.Controls.Containers.Tabs, Headway.Razor.Controls" };
+            var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH_DIV", ParentCode = "ASSIGNMENTS_DIV", Order = 3, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var membConfigContainer = new ConfigContainer { Name = "Membership Div", Code = "MEMBERSHIP_DIV", ParentCode = "ASSIGNMENTS_DIV", Order = 4, Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+
+            assignConfigContainer.ConfigContainers.Add(authConfigContainer);
+            assignConfigContainer.ConfigContainers.Add(membConfigContainer);
+
+            userConfigContainer.ConfigContainers.Add(assignConfigContainer);
+
             userConfig.ConfigContainers.Add(userConfigContainer);
+            userConfig.ConfigContainers.Add(assignConfigContainer);
             userConfig.ConfigContainers.Add(authConfigContainer);
+            userConfig.ConfigContainers.Add(membConfigContainer);
 
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", IsIdentity = true, Order = 1, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", IsTitle = true, Order = 2, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
