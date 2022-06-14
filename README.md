@@ -272,6 +272,7 @@ Headway currently supports authentication from two identity providers **Identity
 #### StateNotificationMediator
 
 #### Linked Components 
+Fields can be linked so the value of a component can be determined dynamically at runtime based on the value of another. For example, the selected item of a drop down list can drive the items in another drop down list e.g. two dropdown lists, the first containing a list of models, the second containing a list of fields belonging to the model selected in the first which can only be poulated after the model has been selected in the first.
 
 ## Configuration
 
