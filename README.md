@@ -272,7 +272,11 @@ Headway currently supports authentication from two identity providers **Identity
 #### StateNotificationMediator
 
 #### Linked Components 
-Fields can be linked so the value of a component can be determined dynamically at runtime based on the value of another. For example, the selected item of a drop down list can drive the items in another drop down list e.g. two dropdown lists, the first containing a list of models, the second containing a list of fields belonging to the model selected in the first which can only be poulated after the model has been selected in the first.
+Fields can be linked to each other so the value of one can be determined dynamically at runtime based on the value of another. For example, the selected item of one drop down list can drive the items displayed in another drop down list e.g. in a scenario where two dropdown lists, the first containing a list of models, and the second containing a list of fields belonging to the model selected in the first. The second can therefore only be poulated after the model has been selected in the first.
+
+This can be achived by linking two fields in a model by setting the LinkedSource KEY VALUE pair in the target fields **ConfigItem.ComponentArgs** e.g. `Name=LinkedSource;VALUE=[LINKED FIELD NAME]`.
+At runtime, when creating a fields dynamic args which are those args where the value is only known at runtime e.g. the value of another field, if the field has a LinkedSource KEY VALUE pair in its ComponentArgs, then it will set the 
+
 
 ## Configuration
 
