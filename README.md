@@ -55,6 +55,7 @@
    * [Communication Between Components](#communication-between-components)
         * [StateNotificationMediator](#statenotificationmediator)
         * [Linked Components](#linked-components) 
+          * [Linking two DynamicFields in the same DynamicModel](#linking-two-dynamicfields-in-the-same-dynamicmodel)   
 * [Configuration](#configuration)
 * [Administration](#administration)
 * [Database](#database)
@@ -272,11 +273,15 @@ Headway currently supports authentication from two identity providers **Identity
 #### StateNotificationMediator
 
 #### Linked Components 
-Fields can be linked to each other so the value of one can be determined dynamically at runtime based on the value of another. For example, the selected item of one drop down list can drive the items displayed in another drop down list e.g. in a scenario where two dropdown lists, the first containing a list of models, and the second containing a list of fields belonging to the model selected in the first. The second can therefore only be poulated after the model has been selected in the first.
+Fields can be linked to each other so the value of one can be determined dynamically at runtime based on the value of another. For example, the selected item of one drop down list can drive the items displayed in another drop down list e.g. in a scenario with two dropdown lists, the first containing a list of models, and the second containing a list of fields belonging to the model selected in the first. Populating the second dropdown list can only be done after an item has been selected in the first.
 
-This can be achived by linking two fields in a model by setting the LinkedSource KEY VALUE pair in the target fields **ConfigItem.ComponentArgs** e.g. `Name=LinkedSource;VALUE=[LINKED FIELD NAME]`.
-At runtime, when creating a fields dynamic args which are those args where the value is only known at runtime e.g. the value of another field, if the field has a LinkedSource KEY VALUE pair in its ComponentArgs, then it will set the 
-
+###### Linking two DynamicFields in the same DynamicModel
+ * In the linked target fields [ConfigItem.ComponentArgs](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Model/ConfigItem.cs#L15) property add a `LinkedSource` key/value pair: 
+   \
+   e.g. `Name=LinkedSource;VALUE=[LINKED FIELD NAME]`
+ * At runtime, the fields are mapped in [ComponentArgHelper.AddDynamicArgs()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Helpers/ComponentArgHelper.cs#L76-L91) where the LinkedSource and LinkedDependents of the respective target and source fields are given a reference to each other.
+ * At runtime the `OnParametersSetAsync` method of a razor component inheriting from `DynamicComponentBase`, will call its [DynamicComponentBase.LinkFieldCheck()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Razor.Controls/Base/DynamicComponentBase.cs#L26-L42) method to fetch the value selected in the *LinkedSource* field.
+ * Updating the source component will trigger a `StateHasChanged` to refresh the container e.g. Dropdown.razor's [OnValueChanged](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Razor.Controls/Components/Dropdown.razor.cs#L65-L71) method.
 
 ## Configuration
 
