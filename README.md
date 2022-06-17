@@ -290,6 +290,31 @@ Fields can be linked to each other so at runtime the value of one can be depende
  * At runtime, when the [DynamicModel](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Dynamic/DynamicModel.cs) is created, linked fields will be mapped together in [ComponentArgHelper.AddDynamicArgs()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Helpers/ComponentArgHelper.cs#L76-L91), where target and source fields reference each other via their respective `LinkedSource` and `LinkedDependents` fields.
 
 ###### Linking DynamicFields in different DynamicModels
+It is possible to link two DynamicFields in different DynamicModels. Consider the example we have [Config.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/Config.cs) and [ConfigItem.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ConfigItem.cs) where `ConfigItem.PropertyName` is dependent on the value of `Config.Model`.
+
+```C#
+    [DynamicModel]
+    public class Config
+    {
+        // code omitted for brevity
+        
+        public string Model { get; set; }
+        
+        public List<ConfigItem> ConfigItems { get; set; }
+        
+        // code omitted for brevity
+    }
+    
+    [DynamicModel]
+    public class ConfigItem
+    {
+        // code omitted for brevity
+        
+        public string PropertyName { get; set; }
+
+        // code omitted for brevity
+    }
+```
 
 ## Configuration
 
