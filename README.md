@@ -56,7 +56,8 @@
         * [StateNotificationMediator](#statenotificationmediator)
         * [Linked Components](#linked-components) 
           * [Making a Component Link Enabled](#making-a-component-link-enabled)
-          * [Linking two DynamicFields in the same DynamicModel](#linking-two-dynamicfields-in-the-same-dynamicmodel)   
+          * [Linking two DynamicFields in the same DynamicModel](#linking-two-dynamicfields-in-the-same-dynamicmodel)
+          * [Linking DynamicFields in different DynamicModels](#linking-dynamicfields-in-different-dynamicmodels)
 * [Configuration](#configuration)
 * [Administration](#administration)
 * [Database](#database)
@@ -279,16 +280,16 @@ Fields can be linked to each other so at runtime the value of one can be depende
 ###### Making a Component Link Enabled
  * A link enabled component, such as [Dropdown.razor](https://github.com/grantcolley/headway/blob/main/src/Headway.Razor.Controls/Components/Dropdown.razor.cs), must inherit from [DynamicComponentBase](https://github.com/grantcolley/headway/blob/main/src/Headway.Razor.Controls/Base/DynamicComponentBase.cs).
  * The component must inherit [IStateNotification](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Razor.Controls/Components/Dropdown.razor.cs#L17-L18).
- * The component must also call [DynamicComponentBase.LinkFieldCheck()](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Razor.Controls/Components/Dropdown.razor.cs#L43-L45) to obtain the value of the [LinkedSource](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Core/Dynamic/DynamicField.cs#L28) field.
- * Finally, if the backing field has any [LinkedDependents](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Core/Dynamic/DynamicField.cs#L29) the component must [notify the state has changed](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Razor.Controls/Components/Dropdown.razor.cs#L65-L71) when its value changes.
+ * It must also call [DynamicComponentBase.LinkFieldCheck()](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Razor.Controls/Components/Dropdown.razor.cs#L43-L45) to obtain the value of the [LinkedSource](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Core/Dynamic/DynamicField.cs#L28) field.
+ * Finally, if the backing field has any [LinkedDependents](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Core/Dynamic/DynamicField.cs#L29) the component must [notify state has changed](https://github.com/grantcolley/headway/blob/89d2c0070484552f226af13e10052590a89f917b/src/Headway.Razor.Controls/Components/Dropdown.razor.cs#L65-L71) when its value changes.
 
 ###### Linking two DynamicFields in the same DynamicModel
  * In the target field's [ConfigItem.ComponentArgs](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Model/ConfigItem.cs#L15) property add a `LinkedSource` key/value pair: 
    \
    e.g. `Name=LinkedSource;VALUE=[LINKED FIELD NAME]`
  * At runtime, when the [DynamicModel](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Dynamic/DynamicModel.cs) is created, linked fields will be mapped together in [ComponentArgHelper.AddDynamicArgs()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Helpers/ComponentArgHelper.cs#L76-L91), where target and source fields reference each other via their respective `LinkedSource` and `LinkedDependents` fields.
- * At runtime the `OnParametersSetAsync` method of a razor component inheriting from `DynamicComponentBase`, will call its 
- * Updating the source component will trigger a `StateHasChanged` to refresh the container e.g. Dropdown.razor's [OnValueChanged](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Razor.Controls/Components/Dropdown.razor.cs#L65-L71) method.
+
+###### Linking DynamicFields in different DynamicModels
 
 ## Configuration
 
