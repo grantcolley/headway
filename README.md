@@ -291,6 +291,8 @@ Fields can be linked to each other so at runtime the value of one can be depende
 
 ###### Linking DynamicFields in different DynamicModels
 It is possible to link two DynamicFields in different DynamicModels. Consider the example we have [Config.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/Config.cs) and [ConfigItem.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ConfigItem.cs) where `ConfigItem.PropertyName` is dependent on the value of `Config.Model`.
+\
+`Config.Model` is rendered as a dropdown containing a list of classes with the `[DynamicModel]` attribute. `ConfigItem.PropertyName` is rendered as a dropdown containing a list of properties belonging to the class selected in `Config.Model`.
 
 ```C#
     [DynamicModel]
