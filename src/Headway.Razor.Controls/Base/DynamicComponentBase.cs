@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
@@ -39,6 +40,24 @@ namespace Headway.Razor.Controls.Base
 
                 linkValueArg.Value = value;
             }
+        }
+
+        protected void PropagateLinkedFields(List<DynamicField> dynamicFields)
+        {
+            var propagateFieldsArg = ComponentArgs.FirstOrDefault(a => a.Name.Equals(Args.PROPAGATE_FIELDS));
+
+            if (propagateFieldsArg == null
+                || propagateFieldsArg.Value == null)
+            {
+                return;
+            }
+
+            var sourceFieldArgNames = propagateFieldsArg.Value.ToString().Split(',');
+            var sourceFieldArgs = (from a in ComponentArgs
+                                   join n in sourceFieldArgNames on a.Name equals n
+                                   select a).ToList();
+
+            ComponentArgHelper.PropagateDynamicArgs(dynamicFields, sourceFieldArgs);
         }
     }
 }
