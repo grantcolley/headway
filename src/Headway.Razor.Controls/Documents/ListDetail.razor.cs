@@ -37,6 +37,7 @@ namespace Headway.Razor.Controls.Documents
         protected async Task NewAsync()
         {
             dynamicModel = await CreateDynamicModelAsync(Config.Name).ConfigureAwait(false);
+            PropagateLinkedFields(dynamicModel.DynamicFields);
         }
 
         protected async Task AddAsync(DynamicModel<T> model)
@@ -79,6 +80,7 @@ namespace Headway.Razor.Controls.Documents
                 && tableRowClickEventArgs.Item != null)
             {
                 dynamicModel = await GetDynamicModelAsync(tableRowClickEventArgs.Item.Model, Config.Name).ConfigureAwait(false);
+                PropagateLinkedFields(dynamicModel.DynamicFields);
             }
         }
 
