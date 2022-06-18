@@ -57,7 +57,7 @@
         * [Linked Components](#linked-components) 
           * [Making a Component Link Enabled](#making-a-component-link-enabled)
           * [Linking two DynamicFields in the same DynamicModel](#linking-two-dynamicfields-in-the-same-dynamicmodel)
-          * [Linking DynamicFields in different DynamicModels](#linking-dynamicfields-in-different-dynamicmodels)
+          * [Propagating Linked DynamicFields across different DynamicModels](#propagating-linked-dynamicfields-across-different-dynamicmodels)
 * [Configuration](#configuration)
 * [Administration](#administration)
 * [Database](#database)
@@ -289,7 +289,7 @@ Fields can be linked to each other so at runtime the value of one can be depende
    e.g. `Name=LinkedSource;VALUE=[LINKED FIELD NAME]`
  * At runtime, when the [DynamicModel](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Dynamic/DynamicModel.cs) is created, linked fields will be mapped together in [ComponentArgHelper.AddDynamicArgs()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Helpers/ComponentArgHelper.cs#L76-L91), where target and source fields reference each other via their respective `LinkedSource` and `LinkedDependents` fields.
 
-###### Linking DynamicFields in different DynamicModels
+###### Propagating Linked DynamicFields across different DynamicModels
 It is possible to link two DynamicFields in different DynamicModels. Consider the example we have [Config.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/Config.cs) and [ConfigItem.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ConfigItem.cs) where `ConfigItem.PropertyName` is dependent on the value of `Config.Model`.
 \
 `Config.Model` is rendered as a dropdown containing a list of classes with the `[DynamicModel]` attribute. `ConfigItem.PropertyName` is rendered as a dropdown containing a list of properties belonging to the class selected in `Config.Model`.
