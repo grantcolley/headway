@@ -1,4 +1,4 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Helpers;
 using MudBlazor;
 
 namespace Headway.Razor.Controls.Helpers
