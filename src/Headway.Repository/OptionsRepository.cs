@@ -104,11 +104,11 @@ namespace Headway.Repository
 
         private async Task<string> GetConfigContainers(List<Arg> args)
         {
-            var configName = args.Single(a => a.Name.Equals(Args.SEARCH_PARAMETER)).Value;
+            var configId = args.First(a => a.Name.Equals(Args.LINK_VALUE)).Value;
 
             var configs = await applicationDbContext.Configs
                 .Include(c => c.ConfigContainers)
-                .Where(c => c.Name.Equals(configName))
+                .Where(c => c.ConfigId.Equals(int.Parse(configId)))
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
