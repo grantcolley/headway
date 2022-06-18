@@ -81,11 +81,28 @@ namespace Headway.Core.Helpers
                 dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
 
                 var linkedSourceArg = dynamicArgs.FirstOrDefault(a => a.Name.Equals(Args.LINK_SOURCE));
-                if(linkedSourceArg != null)
+                if(linkedSourceArg != null
+                    && linkedSourceArg.Value != null)
                 {
-                    var linkedField = dynamicFields.FirstOrDefault(f => f.PropertyName.Equals(linkedSourceArg.Value));
-                    dynamicField.LinkSource = linkedField;
-                    linkedField.LinkDependents.Add(linkedField);
+                    DynamicFieldHelper.LinkFields(dynamicField, dynamicFields, linkedSourceArg.Value.ToString());
+                }
+            }
+        }
+
+        public static void PropagateDynamicArgs(List<DynamicField> dynamicFields, List<DynamicArg> sourceArgs)
+        {
+            foreach (var dynamicField in dynamicFields)
+            {
+                var componentArg = dynamicField.Parameters.FirstOrDefault(a => a.Key.Equals(Parameters.COMPONENT_ARGS)).Value;
+                var dynamicArg = componentArg as List<DynamicArg>;
+                if (dynamicArg != null)
+                {
+                    var linkedSourceArg = dynamicArg.FirstOrDefault(a => a.Name.Equals(Args.LINK_SOURCE));
+                    if (linkedSourceArg != null
+                        && linkedSourceArg.Value != null)
+                    {
+                        DynamicFieldHelper.LinkFields(dynamicField, sourceArgs, linkedSourceArg.Value.ToString());
+                    }
                 }
             }
         }
@@ -110,30 +127,21 @@ namespace Headway.Core.Helpers
                     var name = nameValue[0].Split('=');
                     var value = nameValue[1].Split('=');
 
-                    bool isDynamicField = false;
+                    var dynamicArg = new DynamicArg { Name = name[1], Value = value[1] };
+                    dynamicArgs.Add(dynamicArg);
 
-                    if (nameValue.Length > 2)
+                    if (dynamicArg.Name.Equals(Args.PROPAGATE_FIELDS))
                     {
-                        var isField = nameValue[2].Split('=');
-                        if (isField[1].Equals("true", System.StringComparison.OrdinalIgnoreCase))
+                        var propagateFields = dynamicArg.Value.ToString().Split(',');
+                        foreach(var propagateField in propagateFields)
                         {
-                            isDynamicField = true;
+                            var field = dynamicFields.FirstOrDefault(f => f.PropertyName.Equals(propagateField));
+                            if(field != null)
+                            {
+                                dynamicArgs.Add(new DynamicArg { Name = field.PropertyName, Value = field });
+                            }
                         }
                     }
-
-                    var dynamicArg = new DynamicArg { Name = name[1] };
-
-                    if (isDynamicField)
-                    {
-                        var field = dynamicFields.FirstOrDefault(f => f.PropertyName.Equals(value[1]));
-                        dynamicArg.Value = field;
-                    }
-                    else
-                    {
-                        dynamicArg.Value = value[1];
-                    }
-
-                    dynamicArgs.Add(dynamicArg);
                 }
             }
 
