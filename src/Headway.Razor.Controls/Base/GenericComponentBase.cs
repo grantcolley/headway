@@ -8,19 +8,13 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
 {
-    public abstract class GenericComponentBase<T> : HeadwayComponentBase where T : class, new()
+    public abstract class GenericComponentBase<T> : DynamicComponentBase where T : class, new()
     {
         [Inject]
         public IDynamicApiRequest DynamicService { get; set; }
 
         [CascadingParameter]
         public EditContext CurrentEditContext { get; set; }
-
-        [Parameter]
-        public DynamicField Field { get; set; }
-
-        [Parameter]
-        public List<DynamicArg> ComponentArgs { get; set; }
 
         [Parameter]
         public Config Config { get; set; }
