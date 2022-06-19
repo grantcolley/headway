@@ -287,28 +287,35 @@ Fields can be linked to each other so at runtime the value of one can be depende
  * In the target field's [ConfigItem.ComponentArgs](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Model/ConfigItem.cs#L15) property add a `LinkedSource` key/value pair: 
    \
    e.g. `Name=LinkedSource;VALUE=[LINKED FIELD NAME]`
- * At runtime, when the [DynamicModel](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Dynamic/DynamicModel.cs) is created, linked fields will be mapped together in [ComponentArgHelper.AddDynamicArgs()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Helpers/ComponentArgHelper.cs#L76-L91), where target and source fields reference each other via their respective `LinkedSource` and `LinkedDependents` fields.
+ * At runtime, when the [DynamicModel](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Dynamic/DynamicModel.cs) is created, linked fields will be mapped together in [ComponentArgHelper.AddDynamicArgs()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Helpers/ComponentArgHelper.cs#L76-L91), so the target references the source field via it's `LinkedSource` property.
 
 ###### Propagating Linked DynamicFields across different DynamicModels
-It is possible to link two DynamicFields in different DynamicModels. Consider the example we have [Config.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/Config.cs) and [ConfigItem.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ConfigItem.cs) where `ConfigItem.PropertyName` is dependent on the value of `Config.Model`.
+It is possible to link two DynamicFields in different DynamicModels. This is done using `PropagateFields` key/value pair: 
+\
+   e.g. `Name=PropagateFields;VALUE=[COMMA SEPARATED LINKED FIELD NAMES]`
+\
+Consider the example we have [Config.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/Config.cs) and [ConfigItem.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ConfigItem.cs) where `ConfigItem.PropertyName` is dependent on the value of `Config.Model`.
+\
 \
 `Config.Model` is rendered as a dropdown containing a list of classes with the `[DynamicModel]` attribute. `ConfigItem.PropertyName` is rendered as a dropdown containing a list of properties belonging to the class selected in `Config.Model`.
 
 ```C#
     [DynamicModel]
-    public class Config
+    public class DemoModel
     {
         // code omitted for brevity
         
+        public int DemoModelId { get; set; }
+
         public string Model { get; set; }
         
-        public List<ConfigItem> ConfigItems { get; set; }
+        public List<DemoModelItem> DemoModelItems { get; set; }
         
         // code omitted for brevity
     }
     
     [DynamicModel]
-    public class ConfigItem
+    public class DemoModelItem
     {
         // code omitted for brevity
         
@@ -317,6 +324,15 @@ It is possible to link two DynamicFields in different DynamicModels. Consider th
         // code omitted for brevity
     }
 ```
+To map the linked source `DemoModel.Model` to target `DemoModelItem.PropertyName`:
+\
+ * In the `DemoModel`'s `ConfigItem` for `DemoModelItems`, it's [ConfigItem.ComponentArgs](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Model/ConfigItem.cs#L15) property will contain a `PropagateFields` key/value pair: 
+   \
+   e.g. `Name=PropagateFields;VALUE=Model`
+ * In the `DemoModelItem`'s `ConfigItem` for `PropertyName`, it's [ConfigItem.ComponentArgs](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Model/ConfigItem.cs#L15) property will contain a `LinkedSource` key/value pair: 
+   \
+   e.g. `Name=LinkedSource;VALUE=Model`
+ * At runtime, when the [DynamicModel](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Dynamic/DynamicModel.cs) is created, the linked source `DemoModel.Model` will be propagated in [ComponentArgHelper.AddDynamicArgs()](https://github.com/grantcolley/headway/blob/5e352324d85ec6f2690c44b2a9eabf53b87fec22/src/Headway.Core/Helpers/ComponentArgHelper.cs#L76-L91), where the propagated args will be passed into the `DemoModel.DemoModelItems`'s component as a [DynamicArg](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/DynamicArg.cs) whose value is the source field `DemoModel.Model`. The component for `DemoModel.DemoModelItems` inherit from [DynamicComponentBase](https://github.com/grantcolley/headway/blob/41b67011e0b82fea0b694b5492f9885ccccb8a7b/src/Headway.Razor.Controls/Base/DynamicComponentBase.cs#L45-L61), which will map the linked fields together so the target references the source field via it's `LinkedSource` property.
 
 ## Configuration
 
