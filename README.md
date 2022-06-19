@@ -304,8 +304,6 @@ Consider the example we have [Config.cs](https://github.com/grantcolley/headway/
     public class DemoModel
     {
         // code omitted for brevity
-        
-        public int DemoModelId { get; set; }
 
         public string Model { get; set; }
         
