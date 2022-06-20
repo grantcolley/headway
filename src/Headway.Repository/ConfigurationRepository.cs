@@ -56,7 +56,7 @@ namespace Headway.Repository
         public async Task<Config> GetConfigAsync(string name)
         {
             var config = await applicationDbContext.Configs
-                .AsNoTrackingWithIdentityResolution()
+                .AsNoTracking()
                 .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
