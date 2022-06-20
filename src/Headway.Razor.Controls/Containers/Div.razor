@@ -17,4 +17,11 @@
             }
         }
     </div>
+
+    <div class="row" style="margin-top:20px;margin-bottom:20px">
+        @foreach(var container in Container.DynamicContainers)
+        {
+            <DynamicComponent @key=container.ContainerId Type="container.DynamicComponent" Parameters="container.Parameters" />   
+        }
+    </div>
 </div>
