@@ -375,7 +375,7 @@ namespace Headway.SeedData
             dbContext.Configs.Add(userConfig);
 
             var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "User", Order = 1 };
-            var assignConfigContainer = new ConfigContainer { Name = "Assignments Div", Code = "ASSIGNMENTS_DIV", ParentCode = "USER_DEV", Container = "Headway.Razor.Controls.Containers.Tabs, Headway.Razor.Controls", Label = "Assignments", Order = 2 };
+            var assignConfigContainer = new ConfigContainer { Name = "Assignments Div", Code = "ASSIGNMENTS_DIV", ParentCode = "USER_DIV", Container = "Headway.Razor.Controls.Containers.Tabs, Headway.Razor.Controls", Label = "Assignments", Order = 2 };
             var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH_DIV", ParentCode = "ASSIGNMENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
             var membConfigContainer = new ConfigContainer { Name = "Membership Div", Code = "MEMBERSHIP_DIV", ParentCode = "ASSIGNMENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 4, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
