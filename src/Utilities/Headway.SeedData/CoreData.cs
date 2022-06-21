@@ -313,21 +313,27 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a User Role",
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
-                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Roles"
             };
 
             dbContext.Configs.Add(roleConfig);
 
-            var roleConfigContainer = new ConfigContainer { Name = "Role Div", Code = "ROLE_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Role", Order = 1 };
+            var roleConfigContainer = new ConfigContainer { Name = "Role Div", Code = "ROLE DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Role", Order = 1 };
+            var authConfigContainer = new ConfigContainer { Name = "Role Auth Div", Code = "ROLE AUTH DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var memberConfigContainer = new ConfigContainer { Name = "Role Membership Div", Code = "ROLE MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             roleConfig.ConfigContainers.Add(roleConfigContainer);
+            roleConfig.ConfigContainers.Add(authConfigContainer);
+            roleConfig.ConfigContainers.Add(memberConfigContainer);
 
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", IsIdentity = true, Order = 1, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 5, ConfigContainer = memberConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = memberConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
 
             dbContext.SaveChanges();
         }
@@ -375,8 +381,8 @@ namespace Headway.SeedData
             dbContext.Configs.Add(userConfig);
 
             var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "User", Order = 1 };
-            var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
-            var membConfigContainer = new ConfigContainer { Name = "Membership Div", Code = "MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var authConfigContainer = new ConfigContainer { Name = "User Auth Div", Code = "USER AUTH DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var membConfigContainer = new ConfigContainer { Name = "User Membership Div", Code = "USER MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             userConfig.ConfigContainers.Add(userConfigContainer);
             userConfig.ConfigContainers.Add(authConfigContainer);

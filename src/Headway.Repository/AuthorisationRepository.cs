@@ -226,6 +226,7 @@ namespace Headway.Repository
         public async Task<Role> GetRoleAsync(int roleId)
         {
             var role = await applicationDbContext.Roles
+                .Include(r => r.Users)
                 .Include(r => r.Permissions)
                 .AsNoTracking()
                 .SingleAsync(r => r.RoleId.Equals(roleId))
