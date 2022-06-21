@@ -367,25 +367,18 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a User",
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
-                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Users"
             };
 
             dbContext.Configs.Add(userConfig);
 
-            var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "User", Order = 1 };
-            var assignConfigContainer = new ConfigContainer { Name = "Assignments Div", Code = "ASSIGNMENTS_DIV", ParentCode = "USER_DIV", Container = "Headway.Razor.Controls.Containers.Tabs, Headway.Razor.Controls", Label = "Assignments", Order = 2 };
-            var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH_DIV", ParentCode = "ASSIGNMENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
-            var membConfigContainer = new ConfigContainer { Name = "Membership Div", Code = "MEMBERSHIP_DIV", ParentCode = "ASSIGNMENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 4, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
-
-            assignConfigContainer.ConfigContainers.Add(authConfigContainer);
-            assignConfigContainer.ConfigContainers.Add(membConfigContainer);
-
-            userConfigContainer.ConfigContainers.Add(assignConfigContainer);
+            var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "User", Order = 1 };
+            var authConfigContainer = new ConfigContainer { Name = "Auth Div", Code = "AUTH DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var membConfigContainer = new ConfigContainer { Name = "Membership Div", Code = "MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             userConfig.ConfigContainers.Add(userConfigContainer);
-            userConfig.ConfigContainers.Add(assignConfigContainer);
             userConfig.ConfigContainers.Add(authConfigContainer);
             userConfig.ConfigContainers.Add(membConfigContainer);
 
@@ -394,6 +387,8 @@ namespace Headway.SeedData
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleChecklist", Label = "Roles", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 6, ConfigContainer = membConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 7, ConfigContainer = membConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
 
             dbContext.SaveChanges();
         }

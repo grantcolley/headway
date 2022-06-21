@@ -19,46 +19,6 @@ namespace Headway.Core.Model
         public List<Role> Roles { get; set; }
         public List<Permission> Permissions { get; set; }
 
-        [NotMapped]
-        public string RoleList
-        {
-            get
-            {
-                if (Roles == null)
-                {
-                    return string.Empty;
-                }
-
-                return string.Join(", ",
-                    Roles.Select(r => r.Name)
-                    .OrderBy(n => n)
-                    .Distinct());
-            }
-        }
-
-        [NotMapped]
-        public string PermissionList
-        {
-            get
-            {
-                if (Permissions == null)
-                {
-                    return string.Empty;
-                }
-
-                return string.Join(", ",
-                    Permissions.Select(p => p.Name)
-                    .OrderBy(n => n)
-                    .Distinct());
-            }
-        }
-
-        [NotMapped]
-        public List<ChecklistItem> PermissionChecklist { get; set; }
-
-        [NotMapped]
-        public List<ChecklistItem> RoleChecklist { get; set; }
-
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
         public string UserName { get; set; }
@@ -66,5 +26,56 @@ namespace Headway.Core.Model
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Email is not a valid e-mail address.")]
         public string Email { get; set; }
+
+        [NotMapped]
+        public List<ChecklistItem> PermissionChecklist { get; set; }
+
+        [NotMapped]
+        public List<ChecklistItem> RoleChecklist { get; set; }
+
+        [NotMapped]
+        public List<string> RoleList
+        {
+            get
+            {
+                if (RoleChecklist == null)
+                {
+                    return new List<string>();
+                }
+
+                return RoleChecklist
+                    .Where(r => r.IsChecked)
+                    .Select(r => r.Name)
+                    .ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<string> PermissionList
+        {
+            get
+            {
+                if (PermissionChecklist == null
+                    || RoleChecklist == null)
+                {
+                    return new List<string>();
+                }
+
+                var rolePermissions = RoleChecklist
+                    .Where(r => r.IsChecked)
+                    .SelectMany(r => r.SubItems)
+                    .ToList();
+
+                var assignedPermissions = PermissionChecklist
+                    .Where(p => p.IsChecked)
+                    .Select(r => r.Name)
+                    .ToList();
+
+                return assignedPermissions
+                    .Union(rolePermissions)
+                    .OrderBy(p => p)
+                    .ToList();
+            }
+        }
     }
 }
