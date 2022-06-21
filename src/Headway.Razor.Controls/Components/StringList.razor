@@ -1,6 +1,6 @@
 ﻿@inherits StringListBase
 
-<MudTable Items="@list" Hover="true" CustomHeader="true"
+<MudTable Items="@list" Hover="true" CustomHeader="true" Striped="true"
           Filter="new Func<string,bool>(FilterFunction)">
     <ToolBarContent>
         <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" 
