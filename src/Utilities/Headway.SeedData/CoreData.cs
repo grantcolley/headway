@@ -260,20 +260,24 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a User Permission",
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
-                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Permissions"
             };
 
             dbContext.Configs.Add(permissionConfig);
 
-            var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", Code = "PERMISSION_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Permission", Order = 1 };
+            var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", Code = "PERMISSION DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Permission", Order = 1 };
+            var membershipConfigContainer = new ConfigContainer { Name = "Permission Membership Div", Code = "PERMISSION MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             permissionConfig.ConfigContainers.Add(permissionConfigContainer);
+            permissionConfig.ConfigContainers.Add(membershipConfigContainer);
 
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 5, ConfigContainer = membershipConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = membershipConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
 
             dbContext.SaveChanges();
         }

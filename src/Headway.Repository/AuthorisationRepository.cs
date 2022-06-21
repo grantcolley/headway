@@ -171,10 +171,31 @@ namespace Headway.Repository
 
         public async Task<Permission> GetPermissionAsync(int permissionId)
         {
-            return await applicationDbContext.Permissions
+            var permissions = await applicationDbContext.Permissions
                 .AsNoTracking()
+                .Include(p => p.Roles)
+                .Include(p => p.Users)
                 .SingleAsync(p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
+
+            var roles = await applicationDbContext.Roles
+                .Include(r => r.Users)
+                .Where(r => r.Permissions.Any(p => p.PermissionId.Equals(permissionId)))
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            var users = roles
+                .SelectMany(r => r.Users)
+                .ToList();
+
+            users = users
+                .Where(u => !permissions.Users.Any(pu => pu.UserId.Equals(u.UserId)))
+                .ToList();
+
+            permissions.Users.AddRange(users);
+
+            return permissions;
         }
 
         public async Task<Permission> AddPermissionAsync(Permission permission)

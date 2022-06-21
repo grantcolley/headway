@@ -19,40 +19,6 @@ namespace Headway.Core.Model
         public List<User> Users { get; set; }
         public List<Role> Roles { get; set; }
 
-        [NotMapped]
-        public string UserList
-        {
-            get
-            {
-                if (Users == null)
-                {
-                    return string.Empty;
-                }
-
-                return string.Join(", ",
-                    Users.Select(u => u.Email)
-                    .OrderBy(e => e)
-                    .Distinct());
-            }
-        }
-
-        [NotMapped]
-        public string RoleList
-        {
-            get
-            {
-                if (Roles == null)
-                {
-                    return string.Empty;
-                }
-
-                return string.Join(", ",
-                    Roles.Select(r => r.Name)
-                    .OrderBy(n => n)
-                    .Distinct());
-            }
-        }
-
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
         public string Name { get; set; }
@@ -60,5 +26,37 @@ namespace Headway.Core.Model
         [Required(ErrorMessage = "Description is required")]
         [StringLength(150, ErrorMessage = "Description must be between 1 and 150 characters")]
         public string Description { get; set; }
+
+        [NotMapped]
+        public List<string> UserList
+        {
+            get
+            {
+                if (Users == null)
+                {
+                    return new List<string>();
+                }
+
+                return Users.Select(u => u.Email)
+                    .OrderBy(e => e)
+                    .ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<string> RoleList
+        {
+            get
+            {
+                if (Roles == null)
+                {
+                    return new List<string>();
+                }
+
+                return Roles.Select(r => r.Name)
+                    .OrderBy(r => r)
+                    .ToList();
+            }
+        }
     }
 }
