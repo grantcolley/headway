@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
@@ -13,6 +14,8 @@ namespace Headway.Core.Model
         {
             Roles = new List<Role>();
             Permissions = new List<Permission>();
+            PermissionChecklist = new List<ChecklistItem>();
+            RoleChecklist = new List<ChecklistItem>();
         }
 
         public int UserId { get; set; }
@@ -34,6 +37,7 @@ namespace Headway.Core.Model
         public List<ChecklistItem> RoleChecklist { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public List<string> RoleList
         {
             get
@@ -51,6 +55,7 @@ namespace Headway.Core.Model
         }
 
         [NotMapped]
+        [JsonIgnore]
         public List<string> PermissionList
         {
             get

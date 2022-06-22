@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
@@ -28,6 +29,7 @@ namespace Headway.Core.Model
         public string Description { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public List<string> UserList
         {
             get
@@ -37,13 +39,16 @@ namespace Headway.Core.Model
                     return new List<string>();
                 }
 
-                return Users.Select(u => u.Email)
+                return Users
+                    .Where(u => u != null)
+                    .Select(u => u.Email)
                     .OrderBy(e => e)
                     .ToList();
             }
         }
 
         [NotMapped]
+        [JsonIgnore]
         public List<string> RoleList
         {
             get
@@ -53,7 +58,9 @@ namespace Headway.Core.Model
                     return new List<string>();
                 }
 
-                return Roles.Select(r => r.Name)
+                return Roles
+                    .Where(r => r != null)
+                    .Select(r => r.Name)
                     .OrderBy(r => r)
                     .ToList();
             }

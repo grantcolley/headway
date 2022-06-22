@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
@@ -32,6 +33,7 @@ namespace Headway.Core.Model
         public List<ChecklistItem> PermissionChecklist { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public List<string> PermissionList
         {
             get
@@ -50,6 +52,7 @@ namespace Headway.Core.Model
         }
 
         [NotMapped]
+        [JsonIgnore]
         public List<string> UserList
         {
             get
@@ -59,7 +62,9 @@ namespace Headway.Core.Model
                     return new List<string>();
                 }
 
-                return Users.Select(u => u.Email)
+                return Users
+                    .Where(u => u != null)
+                    .Select(u => u.Email)
                     .OrderBy(e => e)
                     .ToList();
             }
