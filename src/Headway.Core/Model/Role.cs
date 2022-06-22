@@ -13,6 +13,7 @@ namespace Headway.Core.Model
         {
             Users = new List<User>();
             Permissions = new List<Permission>();
+            PermissionChecklist = new List<ChecklistItem>();
         }
 
         public int RoleId { get; set; }
