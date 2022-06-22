@@ -284,10 +284,10 @@ namespace Headway.Repository
                 await applicationDbContext
                     .SaveChangesAsync()
                     .ConfigureAwait(false);
-
-                role.PermissionChecklist = await GetPermissionChecklistAsync(role.Permissions)
-                    .ConfigureAwait(false);
             }
+
+            role.PermissionChecklist = await GetPermissionChecklistAsync(role.Permissions)
+                .ConfigureAwait(false);
 
             return role;
         }
