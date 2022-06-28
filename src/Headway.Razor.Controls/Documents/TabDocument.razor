@@ -11,7 +11,7 @@ else
 {
     @if(@Alert == null)
     {
-        <EditForm EditContext="CurrentEditContext" OnValidSubmit="@Submit">
+        <EditForm EditContext="CurrentEditContext">
             <DataAnnotationsValidator />
             <MudToolBar DisableGutters="true">
                 @if (isSaveInProgress)
@@ -21,10 +21,10 @@ else
                 else if (!isDeleteInProgress)
                 {
                     <MudTooltip Text="Save">
-                        <MudIconButton ButtonType="ButtonType.Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
+                        <MudIconButton ButtonType="ButtonType.Button" OnClick="@Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
                     </MudTooltip>
                 }
-                <MudText Typo="Typo.h6">@dynamicModel.Title</MudText>
+                <MudText Typo="Typo.h6">@dynamicModel.Title @dynamicModel.Id</MudText>
                 <MudSpacer />
                 @if (isDeleteInProgress)
                 {

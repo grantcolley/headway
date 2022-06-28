@@ -4,6 +4,7 @@ using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Base;
 using Headway.Razor.Controls.Model;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,11 +21,29 @@ namespace Headway.Razor.Controls.Documents
 
             SetActivePage();
 
+            Debug.Print("TabDocumentBase.OnInitializedAsync()");
+
             await base.OnInitializedAsync().ConfigureAwait(false);
+        }
+
+        protected override Task OnParametersSetAsync()
+        {
+            Debug.Print("TabDocumentBase.OnParametersSetAsync()");
+
+            return base.OnParametersSetAsync();
+        }
+
+        protected override Task OnAfterRenderAsync(bool firstRender)
+        {
+            Debug.Print("TabDocumentBase.OnAfterRenderAsync()");
+
+            return base.OnAfterRenderAsync(firstRender);
         }
 
         protected void SetActivePage(DynamicContainer page)
         {
+            Debug.Print("TabDocumentBase.SetActivePage()");
+
             activePage = page;
         }
 
@@ -32,24 +51,30 @@ namespace Headway.Razor.Controls.Documents
         {
             isSaveInProgress = true;
 
-            IResponse<DynamicModel<T>> response;
-
-            if (dynamicModel.Id.Equals(0))
+            if (CurrentEditContext != null
+                && CurrentEditContext.Validate())
             {
-                response = await DynamicService
-                    .AddDynamicModelAsync<T>(dynamicModel)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                response = await DynamicService
-                    .UpdateDynamicModelAsync<T>(dynamicModel)
-                    .ConfigureAwait(false);
-            }
+                IResponse<DynamicModel<T>> response;
 
-            SetCurrentModelContext(response);
+                if (dynamicModel.Id.Equals(0))
+                {
+                    response = await DynamicService
+                        .AddDynamicModelAsync<T>(dynamicModel)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    response = await DynamicService
+                        .UpdateDynamicModelAsync<T>(dynamicModel)
+                        .ConfigureAwait(false);
+                }
 
-            SetActivePage();
+                HydrateDynamicModel(response);
+
+                await InvokeAsync(() => this.StateHasChanged());
+
+                Debug.Print("TabDocumentBase.Submit()");
+            }
 
             isSaveInProgress = false;
         }
