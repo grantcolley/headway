@@ -1,4 +1,5 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Constants;
+using Headway.Core.Dynamic;
 using Headway.Core.Interface;
 using Headway.Razor.Controls.Model;
 using Headway.Razor.Controls.Services;
@@ -84,21 +85,66 @@ namespace Headway.Razor.Controls.Base
             CurrentEditContext = new EditContext(dynamicModel.Model);
         }
 
-        protected virtual void HydrateDynamicModel(IResponse<DynamicModel<T>> response)
+        protected virtual async Task Submit()
         {
-            if (response == null)
+            isSaveInProgress = true;
+
+            if (CurrentEditContext != null
+                && CurrentEditContext.Validate())
             {
-                throw new ArgumentNullException(nameof(IResponse<DynamicModel<T>>));
+                IResponse<DynamicModel<T>> response;
+
+                if (dynamicModel.Id.Equals(0))
+                {
+                    response = await DynamicService
+                        .AddDynamicModelAsync<T>(dynamicModel)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    response = await DynamicService
+                        .UpdateDynamicModelAsync<T>(dynamicModel)
+                        .ConfigureAwait(false);
+                }
+
+                GetResponse(response);
+
+                await InvokeAsync(() => StateHasChanged());
             }
 
-            var responseModel = GetResponse(response);
+            isSaveInProgress = false;
+        }
 
-            if (responseModel == null)
+        protected virtual async Task Delete()
+        {
+            var deleteResult = await CanDeleteDialog($"Do you really want to delete {dynamicModel.Title}").ConfigureAwait(false);
+
+            if (deleteResult.Cancelled)
             {
-                throw new NullReferenceException(nameof(DynamicModel<T>));
+                return;
             }
 
-            // rehydrate model... dynamicModel
+            isDeleteInProgress = true;
+
+            var response = await DynamicService
+                .DeleteDynamicModelAsync(dynamicModel)
+                .ConfigureAwait(false);
+
+            var result = GetResponse(response);
+
+            if (result.Equals(0))
+            {
+                return;
+            }
+
+            Alert = new Alert
+            {
+                AlertType = Alerts.INFO,
+                Title = dynamicModel.Title,
+                Message = $"has been deleted."
+            };
+
+            isDeleteInProgress = false;
         }
 
         protected virtual async Task<DialogResult> CanDeleteDialog(string message)
