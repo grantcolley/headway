@@ -34,6 +34,8 @@ namespace Headway.Core.Dynamic
                 titleFieldName = titleField.PropertyName;
             }
 
+            SetStaticFields();
+
             BuildDynamicComponents();
         }
 
@@ -63,16 +65,19 @@ namespace Headway.Core.Dynamic
             }
         }
 
-        private void BuildDynamicComponents()
+        public void Reset(T model)
         {
-            DynamicFields = new List<DynamicField>();
+            Model = model;
 
-            var constantExpression = Expression.Constant(Model);
+            SetStaticFields();
+        }
 
-            if(!string.IsNullOrWhiteSpace(idFieldName))
+        private void SetStaticFields()
+        {
+            if (!string.IsNullOrWhiteSpace(idFieldName))
             {
                 var property = Helper.SupportedProperties.FirstOrDefault(p => p.Name.Equals(idFieldName));
-                if(property != null)
+                if (property != null)
                 {
                     Id = Convert.ToInt32(property.GetValue(Model));
                 }
@@ -86,6 +91,15 @@ namespace Headway.Core.Dynamic
                     Title = property.GetValue(Model)?.ToString();
                 }
             }
+        }
+
+        private void BuildDynamicComponents()
+        {
+            SetStaticFields();
+
+            DynamicFields = new List<DynamicField>();
+
+            var constantExpression = Expression.Constant(Model);
 
             DynamicFields = new List<DynamicField>((from p in Helper.SupportedProperties
                                                     join c in Config.ConfigItems on p.Name equals c.PropertyName
