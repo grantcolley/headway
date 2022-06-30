@@ -192,22 +192,15 @@ namespace Headway.RequestApi.Api
 
             if (response.IsSuccess)
             {
-                return new Response<DynamicModel<T>>
-                {
-                    IsSuccess = response.IsSuccess,
-                    Message = response.Message,
-                    Result = new DynamicModel<T>(response.Result, dynamicModel.Config)
-                };
+                dynamicModel.Reset(response.Result);
             }
-            else
+
+            return new Response<DynamicModel<T>>
             {
-                return new Response<DynamicModel<T>>
-                {
-                    IsSuccess = response.IsSuccess,
-                    Message = response.Message,
-                    Result = dynamicModel
-                };
-            }
+                IsSuccess = response.IsSuccess,
+                Message = response.Message,
+                Result = dynamicModel
+            };
         }
 
         public async Task<IResponse<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
@@ -220,22 +213,15 @@ namespace Headway.RequestApi.Api
 
             if (response.IsSuccess)
             {
-                return new Response<DynamicModel<T>>
-                {
-                    IsSuccess = response.IsSuccess,
-                    Message = response.Message,
-                    Result = new DynamicModel<T>(response.Result, dynamicModel.Config)
-                };
+                dynamicModel.Reset(response.Result);
             }
-            else
+
+            return new Response<DynamicModel<T>>
             {
-                return new Response<DynamicModel<T>>
-                {
-                    IsSuccess = response.IsSuccess,
-                    Message = response.Message,
-                    Result = dynamicModel
-                };
-            }
+                IsSuccess = response.IsSuccess,
+                Message = response.Message,
+                Result = dynamicModel
+            };
         }
 
         public async Task<IResponse<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
