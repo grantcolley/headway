@@ -108,8 +108,6 @@ namespace Headway.Razor.Controls.Base
                 }
 
                 GetResponse(response);
-
-                await InvokeAsync(() => StateHasChanged());
             }
 
             isSaveInProgress = false;
