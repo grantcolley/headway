@@ -69,6 +69,11 @@ namespace Headway.Core.Dynamic
         {
             Model = model;
 
+            foreach(var dynamicField in DynamicFields)
+            {
+                dynamicField.Model = model;
+            }
+
             SetStaticFields();
         }
 
