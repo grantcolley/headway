@@ -260,6 +260,7 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a User Permission",
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Permissions"
@@ -317,6 +318,7 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a User Role",
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
+                CreateLocal = false,
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Roles"
@@ -377,6 +379,7 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a User",
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
+                CreateLocal = false,
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Users"
@@ -438,6 +441,7 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a navigation Module",
                 Model = "Headway.Core.Model.Module, Headway.Core",
                 ModelApi = "Modules",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Modules"
@@ -492,6 +496,7 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a Category for a Module",
                 Model = "Headway.Core.Model.Category, Headway.Core",
                 ModelApi = "Categories",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Categories"
@@ -547,6 +552,7 @@ namespace Headway.SeedData
                 Description = "Create, update or delete a Menu Item for a Category",
                 Model = "Headway.Core.Model.MenuItem, Headway.Core",
                 ModelApi = "MenuItems",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "MenuItems"
@@ -605,6 +611,7 @@ namespace Headway.SeedData
                 Description = "Config for rendering a custom object on a page",
                 Model = "Headway.Core.Model.Config, Headway.Core",
                 ModelApi = "Configuration",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Configs"
@@ -626,13 +633,15 @@ namespace Headway.SeedData
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsTitle = false, Order = 4, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Model", Label = "Model", Order = 5, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelOptionItems)}" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModelApi", Label = "Model Api", Order = 6, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONTROLLER_OPTION_ITEMS}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OrderModelBy", Label = "Order Model By", Order = 7, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};VALUE=Model" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Document", Label = "Document", Order = 8, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(DocumentOptionItems)}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigatePage", Label = "Navigate Page", Order = 9, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(PageOptionItems)}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateProperty", Label = "Navigate Property", Order = 10, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateConfig", Label = "Navigate Config", Order = 11, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", Order = 12, ConfigContainer = configConfigContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigItemsListDetail|Name={Args.PROPAGATE_FIELDS};Value=Model,ConfigId" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Tooltip = "Drag and drop containers into nested hierarchy", Order = 13, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Label|Name={Args.LIST_PROPERTY};Value=ConfigContainers" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CreateLocal", Label = "Create Local", Order = 7, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OrderModelBy", Label = "Order Model By", Order = 8, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};VALUE=Model" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Document", Label = "Document", Order = 9, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(DocumentOptionItems)}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigatePage", Label = "Navigate Page", Order = 10, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(PageOptionItems)}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateResetBreadcrumb", Label = "Navigate Reset Breadcrumb", Order = 11, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateProperty", Label = "Navigate Property", Order = 12, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateConfig", Label = "Navigate Config", Order = 13, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });            
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", Order = 14, ConfigContainer = configConfigContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigItemsListDetail|Name={Args.PROPAGATE_FIELDS};Value=Model,ConfigId" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Tooltip = "Drag and drop containers into nested hierarchy", Order = 15, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Label|Name={Args.LIST_PROPERTY};Value=ConfigContainers" });
             dbContext.SaveChanges();
         }
 
@@ -645,6 +654,7 @@ namespace Headway.SeedData
                 Description = "Config Item maps to a custom object's property to be rendered on the screeen",
                 Model = "Headway.Core.Model.ConfigItem, Headway.Core",
                 ModelApi = "Configuration",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
             };
 
@@ -698,6 +708,7 @@ namespace Headway.SeedData
                 Description = "Container for rendering Config Items for a Config",
                 Model = "Headway.Core.Model.ConfigContainer, Headway.Core",
                 ModelApi = "Configuration",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
             };
 
@@ -752,6 +763,7 @@ namespace Headway.SeedData
                 Description = "Demonstrate rendering an object on a page",
                 Model = "Headway.Core.Model.DemoModel, Headway.Core",
                 ModelApi = "DemoModel",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "DemoModels"
@@ -793,6 +805,7 @@ namespace Headway.SeedData
                 Description = "Config for rendering a custom object associated with the Demo Model",
                 Model = "Headway.Core.Model.DemoModelItem, Headway.Core",
                 ModelApi = "DemoModel",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
             };
 
@@ -838,6 +851,7 @@ namespace Headway.SeedData
                 Description = "Config for rendering a treeview of custom objects associated with the Demo Model",
                 Model = "Headway.Core.Model.DemoModelTreeItem, Headway.Core",
                 ModelApi = "DemoModel",
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
             };
 
