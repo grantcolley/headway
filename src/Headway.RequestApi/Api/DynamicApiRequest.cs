@@ -163,14 +163,20 @@ namespace Headway.RequestApi.Api
 
             if (responseConfig.IsSuccess)
             {
-                var model = TypeHelper<T>.Create();
-
-                return new Response<DynamicModel<T>>
+                if(responseConfig.Result.CreateLocal)
                 {
-                    IsSuccess = responseConfig.IsSuccess,
-                    Message = responseConfig.Message,
-                    Result = new DynamicModel<T>(model, responseConfig.Result)
-                };
+                    var model = TypeHelper<T>.Create();
+
+                    return new Response<DynamicModel<T>>
+                    {
+                        IsSuccess = responseConfig.IsSuccess,
+                        Message = responseConfig.Message,
+                        Result = new DynamicModel<T>(model, responseConfig.Result)
+                    };
+                }
+
+                return await GetDynamicModelAsync<T>(0, config)
+                    .ConfigureAwait(false);
             }
             else
             {
