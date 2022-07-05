@@ -30,7 +30,6 @@
      * [5. Bind the Flow to a Model](#5-bind-the-flow-to-a-model)
      * [6. Bind Permissions to the Flow](#6-bind-permissions-to-the-flow)
    * [Optional Extras](#optional-extras)
-     * [Prepare Seed Data](#prepare-seed-data)
      * [Capture History](#capture-history)
      * [Capture an Audit Trail](#capture-an-audit-trail)
 * [Authentication](#authentication)
@@ -166,8 +165,6 @@ Alternatively, modules, categories and menu items can be configured under the Na
 #### 6. Bind Permissions to the Flow
 
 ### Optional Extras
-#### Prepare Seed Data
-Seed data for Headway RemediatR can be found in [RemediatRData.cs](https://github.com/grantcolley/headway/blob/main/src/Utilities/Headway.SeedData/RemediatRData.cs).
 
 #### Capture History
 
