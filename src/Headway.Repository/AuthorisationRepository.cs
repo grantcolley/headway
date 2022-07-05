@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
@@ -29,12 +30,21 @@ namespace Headway.Repository
 
         public async Task<User> GetUserAsync(int userId)
         {
-            var user = await applicationDbContext.Users
-                .Include(u => u.Permissions)
-                .Include(u => u.Roles)
-                .AsNoTracking()
-                .SingleAsync(u => u.UserId.Equals(userId))
-                .ConfigureAwait(false);
+            User user;
+
+            if (userId.Equals(0))
+            {
+                user = TypeHelper<User>.Create();
+            }
+            else
+            {
+                user = await applicationDbContext.Users
+                    .Include(u => u.Permissions)
+                    .Include(u => u.Roles)
+                    .AsNoTracking()
+                    .SingleAsync(u => u.UserId.Equals(userId))
+                    .ConfigureAwait(false);
+            }
 
             user.PermissionChecklist = await GetPermissionChecklistAsync(user.Permissions)
                 .ConfigureAwait(false);
@@ -246,12 +256,21 @@ namespace Headway.Repository
 
         public async Task<Role> GetRoleAsync(int roleId)
         {
-            var role = await applicationDbContext.Roles
-                .Include(r => r.Users)
-                .Include(r => r.Permissions)
-                .AsNoTracking()
-                .SingleAsync(r => r.RoleId.Equals(roleId))
-                .ConfigureAwait(false);
+            Role role;
+
+            if (roleId.Equals(0))
+            {
+                role = TypeHelper<Role>.Create();
+            }
+            else
+            {
+                role = await applicationDbContext.Roles
+                    .Include(r => r.Users)
+                    .Include(r => r.Permissions)
+                    .AsNoTracking()
+                    .SingleAsync(r => r.RoleId.Equals(roleId))
+                    .ConfigureAwait(false);
+            }
 
             role.PermissionChecklist = await GetPermissionChecklistAsync(role.Permissions)
                 .ConfigureAwait(false);
