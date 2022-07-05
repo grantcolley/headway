@@ -23,12 +23,12 @@
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
    * [Configure](#configure)
-     * [Configure Authorisation](#configure-authorisation)
-     * [Configure Navigation](#configure-navigation)
-     * [Configure Model Layout](#configure-model-layout)
-     * [Configure a Flow](#configure-a-flow)
-     * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
-     * [Bind Permissions to the Flow](#bind-permissions-to-the-flow)
+     * [1. Configure Authorisation](#1-configure-authorisation)
+     * [2. Configure Navigation](#2-configure-navigation)
+     * [3. Configure Model Layout](#3-configure-model-layout)
+     * [4. Configure a Flow](#4-configure-a-flow)
+     * [5. Bind the Flow to a Model](#5-bind-the-flow-to-a-model)
+     * [6. Bind Permissions to the Flow](#6-bind-permissions-to-the-flow)
    * [Optional Extras](#optional-extras)
      * [Prepare Seed Data](#prepare-seed-data)
      * [Capture History](#capture-history)
@@ -142,20 +142,28 @@ The RemediatR Flow is as follows:
   - Create the [RemediatR controller](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi/Controllers) classes.
 
 ### Configure
-#### Configure Authorisation
+#### 1. Configure Authorisation
 Seed data for RemediatR permissions, roles and users can be found in [RemediatRData.cs](https://github.com/grantcolley/headway/blob/f0d688849192d3ed07211e86fd6a0d37294ef90c/src/Utilities/Headway.SeedData/RemediatRData.cs#L40-L134).
 
-Alternatively, permissions, roles and users can be configured in the Administration module.
+Alternatively, permissions, roles and users can be configured under the Authorisation category in the Administration module.
 
 ![Alt text](/readme-images/RemediatR_Authorisation.jpg?raw=true "Configure RemediatR Authorisation") 
 
 
-#### Configure Navigation
-#### Configure Model Layout
-#### Configure a Flow
-#### Bind the Flow to a Model
+#### 2. Configure Navigation
+Seed data for RemediatR navigation can be found in [RemediatRData.cs](https://github.com/grantcolley/headway/blob/f10f8234c2b866d057b98b2af0988f449dd09aee/src/Utilities/Headway.SeedData/RemediatRData.cs#L136-L167)
 
-#### Bind Permissions to the Flow
+Alternatively, modules, categories and menu items can be configured under the Navigation category in the Administration module.
+
+![Alt text](/readme-images/RemediatR_Navigation.jpg?raw=true "Configure RemediatR Navigation") 
+
+#### 3. Configure Model Layout
+
+#### 4. Configure a Flow
+
+#### 5. Bind the Flow to a Model
+
+#### 6. Bind Permissions to the Flow
 
 ### Optional Extras
 #### Prepare Seed Data
