@@ -121,7 +121,7 @@ namespace Headway.Repository
             }
             else
             {
-                return string.Empty;
+                return JsonSerializer.Serialize(new List<ConfigContainer>());
             }
         }
 
@@ -140,7 +140,7 @@ namespace Headway.Repository
             }
             else
             {
-                return string.Empty;
+                return JsonSerializer.Serialize(new List<Module>());
             }
         }
 
@@ -159,7 +159,7 @@ namespace Headway.Repository
             }
             else
             {
-                return string.Empty;
+                return JsonSerializer.Serialize(new List<Category>());
             }
         }
 
@@ -178,7 +178,7 @@ namespace Headway.Repository
             }
             else
             {
-                return string.Empty;
+                return JsonSerializer.Serialize(new List<DemoModelComplexProperty>());
             }
         }
     }
