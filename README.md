@@ -23,12 +23,11 @@
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
    * [Configure](#configure)
-     * [Configure Navigation](#5-configure-navigation)
+     * [Configure Authorisation](#configure-authorisation)
+     * [Configure Navigation](#configure-navigation)
      * [Configure Model Layout](#configure-model-layout)
      * [Configure a Flow](#configure-a-flow)
      * [Bind the Flow to a Model](#bind-the-flow-to-a-model)
-     * [Add Roles and Permissions](#add-roles-and-permissions)
-     * [Add Users](#add-users)
      * [Bind Permissions to the Flow](#bind-permissions-to-the-flow)
    * [Optional Extras](#optional-extras)
      * [Prepare Seed Data](#prepare-seed-data)
@@ -143,12 +142,19 @@ The RemediatR Flow is as follows:
   - Create the [RemediatR controller](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi/Controllers) classes.
 
 ### Configure
+#### Configure Authorisation
+Seed data for RemediatR permissions, roles and users can be found in [RemediatRData.cs](https://github.com/grantcolley/headway/blob/f0d688849192d3ed07211e86fd6a0d37294ef90c/src/Utilities/Headway.SeedData/RemediatRData.cs#L40-L134).
+
+Alternatively, permissions, roles and users can be configured in the Administration module.
+
+![Alt text](/readme-images/RemediatR_Authorisation.jpg?raw=true "Configure RemediatR Authorisation") 
+
+
 #### Configure Navigation
 #### Configure Model Layout
 #### Configure a Flow
 #### Bind the Flow to a Model
-#### Add Roles and Permissions
-#### Add Users
+
 #### Bind Permissions to the Flow
 
 ### Optional Extras
