@@ -2,7 +2,6 @@
 using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
 using Headway.Repository.Data;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace Headway.SeedData
@@ -26,6 +25,8 @@ namespace Headway.SeedData
             CreateUsers();
             AssignUsersRoles();
             CreateNavigation();
+
+            ProgramsConfig();
         }
 
         private static void TruncateTables()
@@ -162,6 +163,62 @@ namespace Headway.SeedData
             remediatR.Categories.Add(customerCatgory);
             remediatR.Categories.Add(redressCatgory);
             remediatR.Categories.Add(programCatgory);
+
+            dbContext.SaveChanges();
+        }
+
+        private static void ProgramsConfig()
+        {
+            var programsConfig = new Config
+            {
+                Name = "Programs",
+                Title = "Programs",
+                Description = "List of RemediatR programs",
+                Model = "Headway.RemediatR.Core.Model.Program, Headway.RemediatR.Core",
+                ModelApi = "RemediatRProgram",
+                OrderModelBy = "Name",
+                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                NavigatePage = "Page",
+                NavigateProperty = "ProgramId",
+                NavigateConfig = "Program",
+                NavigateResetBreadcrumb = true
+            };
+
+            dbContext.Configs.Add(programsConfig);
+
+            programsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramId", Label = "Program Id", Order = 1 });
+            programsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
+            programsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void ProgramConfig()
+        {
+            var programConfig = new Config
+            {
+                Name = "Program",
+                Title = "Program",
+                Description = "Create, update or delete a User Permission",
+                Model = "Headway.RemediatR.Core.Model.Program, Headway.RemediatR.Core",
+                ModelApi = "RemediatRProgram",
+                CreateLocal = true,
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
+                NavigatePage = "Page",
+                NavigateConfig = "Programs"
+            };
+
+            dbContext.Configs.Add(programConfig);
+
+            var programConfigContainer = new ConfigContainer { Name = "Program Div", Code = "PROGRAM DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Program", Order = 1 };
+
+            programConfig.ConfigContainers.Add(programConfigContainer);
+
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramId", Label = "Program Id", IsIdentity = true, Order = 1, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+
+            // more fields....
 
             dbContext.SaveChanges();
         }
