@@ -17,6 +17,10 @@ namespace Headway.RemediatR.Core.Model
         [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
         public string? Name { get; set; }
 
+        [Required(ErrorMessage = "Description is required")]
+        [StringLength(150, ErrorMessage = "Description must be between 1 and 150 characters")]
+        public string? Description { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? Compensation { get; set; }
 
