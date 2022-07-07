@@ -50,7 +50,7 @@
    * [Standard Components](#standard-components)
    * [Dropdown Components](#dropdown-components)
         * [Dropdown](#dropdown)
-        * [DropdownEnum](#dropdownenum)
+        * [DropdownSimple](#dropdownsimple)
         * [DropdownComplex](#dropdowncomplex)        
    * [Generic Components](#generic-components)
    * [Specialized Components](#specialized-components)
@@ -285,7 +285,7 @@ Headway currently supports authentication from two identity providers **Identity
 #### Dropdown
 The source for a standard dropdown is `IEnumerable<OptionItem>` and the selected item is bound to `@bind-Value="SelectedItem"`.
 
-#### Dropdown<T>
+#### DropdownSimple
 
 #### DropdownComplex
 
