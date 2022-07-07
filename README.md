@@ -283,8 +283,9 @@ Headway currently supports authentication from two identity providers **Identity
 
 ### Dropdown Components
 #### Dropdown
+The source for a standard dropdown is `IEnumerable<OptionItem>` and the selected item is bound to `@bind-Value="SelectedItem"`.
 
-#### DropdownEnum
+#### Dropdown<T>
 
 #### DropdownComplex
 
