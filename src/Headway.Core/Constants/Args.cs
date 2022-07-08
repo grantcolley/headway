@@ -5,6 +5,7 @@
         public const string CODE = "Code";
         public const string CODE_PARENT = "ParentCode";
         public const string COMPONENT = "Component";
+        public const string ENUM = "ENUM";
         public const string LABEL_PROPERTY = "LabelProperty";
         public const string LAYOUT_HORIZONTAL = "LayoutHorizontal";
         public const string LINK_SOURCE = "LinkSource";
