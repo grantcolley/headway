@@ -22,7 +22,7 @@
       * [2. Create the Models and Interfaces](#2-create-the-models-and-interfaces)
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
-      * [5. Create the WebApi Controllers](#5-reate-the-webapi-controllers)
+      * [5. Create the WebApi Controllers](#5-create-the-webapi-controllers)
    * [Reference](#reference)      
    * [Configure](#configure)
      * [1. Configure Authorisation](#1-configure-authorisation)
@@ -148,7 +148,7 @@ The RemediatR Flow is as follows:
 
 #### 5. Create the WebApi Controllers
 
-### Reference](#reference)  
+### Reference 
 Projects **Headway.BlazorWebassemblyApp** and **Headway.BlazorServerApp** to add a project refence to **Headway.RemediatR.Core**. When the solution is compiled then **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
 
 ### Configure
