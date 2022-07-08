@@ -35,7 +35,20 @@ namespace Headway.Razor.Controls.Components
                 if(selectedItem != value)
                 {
                     selectedItem = value;
-                    Field.PropertyInfo.SetValue(Field.Model, SelectedItem.Id);
+
+                    if (selectedItem == null
+                        || string.IsNullOrWhiteSpace(selectedItem.Id))
+                    {
+                        Field.PropertyInfo.SetValue(Field.Model, null);
+                    }
+                    else if (selectedItem.IsNumericId)
+                    {
+                        Field.PropertyInfo.SetValue(Field.Model, int.Parse(SelectedItem.Id));
+                    }
+                    else
+                    {
+                        Field.PropertyInfo.SetValue(Field.Model, SelectedItem.Id);
+                    }
                 }
             }
         }
