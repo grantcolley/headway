@@ -1,4 +1,4 @@
-﻿namespace Headway.RemediatR.Core.Model
+﻿namespace Headway.RemediatR.Core.Enums
 {
     public enum RateType
     {
