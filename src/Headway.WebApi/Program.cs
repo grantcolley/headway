@@ -1,5 +1,7 @@
 using Headway.Core.Constants;
 using Headway.Core.Interface;
+using Headway.RemediatR.Core.Interface;
+using Headway.RemediatR.Repository;
 using Headway.Repository;
 using Headway.Repository.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -51,6 +53,7 @@ builder.Services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
 builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
 builder.Services.AddScoped<IOptionsRepository, OptionsRepository>();
 builder.Services.AddScoped<IDemoModelRepository, DemoModelRepository>();
+builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();
 
 builder.Services.AddCors(options =>
 {
