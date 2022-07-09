@@ -1,6 +1,5 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Constants;
-using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
