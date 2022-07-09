@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Headway.RemediatR.Core.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
