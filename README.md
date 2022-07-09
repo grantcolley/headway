@@ -22,6 +22,8 @@
       * [2. Create the Models and Interfaces](#2-create-the-models-and-interfaces)
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
+      * [5. Create the WebApi Controllers](#5-create-the-webapi-controllers)
+   * [Reference](#reference)      
    * [Configure](#configure)
      * [1. Configure Authorisation](#1-configure-authorisation)
      * [2. Configure Navigation](#2-configure-navigation)
@@ -144,6 +146,20 @@ The RemediatR Flow is as follows:
 - In **Headway.WebApi**
   - Create the [RemediatR controller](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi/Controllers) classes.
 
+#### 5. Create the WebApi Controllers
+- In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
+  - Add a reference to project **Headway.RemediatR.Core**
+  - Add a reference to project **Headway.RemediatR.Repository**
+  - Create the [RemediatRCustomerController](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/RemediatRCustomerController.cs) controller.
+  - Create the [RemediatRProgramController](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/RemediatRProgramController.cs) controller.
+  - Create the [RemediatRRedressController](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/RemediatRRedressController.cs) controller.
+  - Add a scoped service for [IRemediatRRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) to [Program.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs) 
+      \
+      `builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();`
+      
+### Reference 
+- In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp) and [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp) add a project reference to [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) so when the solution is compiled **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
+ 
 ### Configure
 #### 1. Configure Authorisation
 Seed data for RemediatR permissions, roles and users can be found in [RemediatRData.cs](https://github.com/grantcolley/headway/blob/f0d688849192d3ed07211e86fd6a0d37294ef90c/src/Utilities/Headway.SeedData/RemediatRData.cs#L40-L134).
