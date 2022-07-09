@@ -18,11 +18,11 @@ namespace Headway.Core.Options
 
             if (args.Any(a => a.Name.Equals(Args.LINK_SOURCE)))
             {
-                modelName = args.Single(a => a.Name.Equals(Args.LINK_VALUE)).Value;
+                modelName = args.First(a => a.Name.Equals(Args.LINK_VALUE)).Value;
             }
             else
             {
-                modelName = args.Single(a => a.Name.Equals(Args.MODEL)).Value.ToString();
+                modelName = args.First(a => a.Name.Equals(Args.MODEL)).Value.ToString();
             }
 
             if(string.IsNullOrWhiteSpace(modelName))
@@ -32,7 +32,7 @@ namespace Headway.Core.Options
 
             var models = TypeAttributeHelper.GetHeadwayTypesByAttribute(typeof(DynamicModelAttribute));
 
-            var model = models.Single(m => m.DisplayName.Equals(modelName)
+            var model = models.First(m => m.DisplayName.Equals(modelName)
                                         || m.Namespace.Equals(modelName));
 
             var type = Type.GetType(model.Namespace);

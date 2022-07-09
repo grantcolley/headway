@@ -42,7 +42,7 @@ namespace Headway.Repository
                     .Include(u => u.Permissions)
                     .Include(u => u.Roles)
                     .AsNoTracking()
-                    .SingleAsync(u => u.UserId.Equals(userId))
+                    .FirstAsync(u => u.UserId.Equals(userId))
                     .ConfigureAwait(false);
             }
 
@@ -96,7 +96,7 @@ namespace Headway.Repository
             var user = await applicationDbContext.Users
                 .Include(u => u.Permissions)
                 .Include(u => u.Roles)
-                .SingleAsync(u => u.UserId.Equals(updateUser.UserId))
+                .FirstAsync(u => u.UserId.Equals(updateUser.UserId))
                 .ConfigureAwait(false);
 
             if (!user.UserName.Equals(updateUser.UserName))
@@ -161,7 +161,7 @@ namespace Headway.Repository
         public async Task<int> DeleteUserAsync(int userId)
         {
             var user = await applicationDbContext.Users
-                .SingleAsync(u => u.UserId.Equals(userId))
+                .FirstAsync(u => u.UserId.Equals(userId))
                 .ConfigureAwait(false);
 
             applicationDbContext.Users.Remove(user);
@@ -185,7 +185,7 @@ namespace Headway.Repository
                 .AsNoTracking()
                 .Include(p => p.Roles)
                 .Include(p => p.Users)
-                .SingleAsync(p => p.PermissionId.Equals(permissionId))
+                .FirstAsync(p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
 
             var roles = await applicationDbContext.Roles
@@ -235,7 +235,7 @@ namespace Headway.Repository
         public async Task<int> DeletePermissionAsync(int permissionId)
         {
             var permission = await applicationDbContext.Permissions
-                .SingleAsync(p => p.PermissionId.Equals(permissionId))
+                .FirstAsync(p => p.PermissionId.Equals(permissionId))
                 .ConfigureAwait(false);
 
             applicationDbContext.Permissions.Remove(permission);
@@ -268,7 +268,7 @@ namespace Headway.Repository
                     .Include(r => r.Users)
                     .Include(r => r.Permissions)
                     .AsNoTracking()
-                    .SingleAsync(r => r.RoleId.Equals(roleId))
+                    .FirstAsync(r => r.RoleId.Equals(roleId))
                     .ConfigureAwait(false);
             }
 
@@ -315,7 +315,7 @@ namespace Headway.Repository
         {
             var role = await applicationDbContext.Roles
                 .Include(r => r.Permissions)
-                .SingleAsync(r => r.RoleId.Equals(updateRole.RoleId))
+                .FirstAsync(r => r.RoleId.Equals(updateRole.RoleId))
                 .ConfigureAwait(false);
 
             if (!role.Name.Equals(updateRole.Name))
@@ -360,7 +360,7 @@ namespace Headway.Repository
         public async Task<int> DeleteRoleAsync(int roleId)
         {
             var role = await applicationDbContext.Roles
-                .SingleAsync(r => r.RoleId.Equals(roleId))
+                .FirstAsync(r => r.RoleId.Equals(roleId))
                 .ConfigureAwait(false);
 
             applicationDbContext.Roles.Remove(role);

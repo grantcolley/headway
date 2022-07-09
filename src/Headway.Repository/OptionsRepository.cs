@@ -34,7 +34,7 @@ namespace Headway.Repository
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.Single(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
+            var optionsCode = args.First(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
 
             if (complexOptionItems.ContainsKey(optionsCode))
             {
@@ -46,7 +46,7 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<OptionItem>> GetOptionItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.Single(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
+            var optionsCode = args.First(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
 
             if (optionItems.ContainsKey(optionsCode))
             {
@@ -115,7 +115,7 @@ namespace Headway.Repository
 
             if (configs.Any())
             {
-                var configContainers = configs.Single().ConfigContainers.ToList();
+                var configContainers = configs.First().ConfigContainers.ToList();
                 configContainers.Insert(0, new ConfigContainer());
                 return JsonSerializer.Serialize(configContainers);
             }

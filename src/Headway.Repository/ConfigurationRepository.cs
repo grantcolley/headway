@@ -45,7 +45,7 @@ namespace Headway.Repository
                 .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
-                .SingleAsync(c => c.ConfigId.Equals(id))
+                .FirstAsync(c => c.ConfigId.Equals(id))
                 .ConfigureAwait(false);
 
             config.ConfigContainers = GenericTreeHelper.GetTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
@@ -60,7 +60,7 @@ namespace Headway.Repository
                 .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
-                .SingleAsync(c => c.Name.Equals(name))
+                .FirstAsync(c => c.Name.Equals(name))
                 .ConfigureAwait(false);
 
             config.ConfigContainers = GenericTreeHelper.GetTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
@@ -172,7 +172,7 @@ namespace Headway.Repository
         public async Task<int> DeleteConfigAsync(int configId)
         {
             var config = await applicationDbContext.Configs
-                .SingleAsync(c => c.ConfigId.Equals(configId))
+                .FirstAsync(c => c.ConfigId.Equals(configId))
                 .ConfigureAwait(false);
 
             applicationDbContext.Configs.Remove(config);

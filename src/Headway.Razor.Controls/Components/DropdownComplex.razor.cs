@@ -45,7 +45,7 @@ namespace Headway.Razor.Controls.Components
         {
             LinkFieldCheck();
 
-            var displayName = ComponentArgs.Single(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
+            var displayName = ComponentArgs.First(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
 
             var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
 

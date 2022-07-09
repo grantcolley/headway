@@ -180,7 +180,7 @@ namespace Headway.Core.Dynamic
 
         private static void MapDynamicContainerFields(DynamicContainer container, IEnumerable<IGrouping<int,DynamicField>> fieldGroups)
         {
-            var fieldGroup = fieldGroups.SingleOrDefault(fg => fg.Key.Equals(container.ContainerId));
+            var fieldGroup = fieldGroups.FirstOrDefault(fg => fg.Key.Equals(container.ContainerId));
 
             if(fieldGroup != null)
             {

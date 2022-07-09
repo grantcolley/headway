@@ -32,7 +32,7 @@ namespace Headway.RemediatR.Repository
         public async Task<int> DeleteCustomerProductAsync(Customer customer, Product product)
         {
             var deleteProduct = await applicationDbContext.Products
-                .SingleAsync(p => p.ProductId.Equals(product.ProductId))
+                .FirstAsync(p => p.ProductId.Equals(product.ProductId))
                 .ConfigureAwait(false);
 
             applicationDbContext.Products.Remove(deleteProduct);
@@ -55,7 +55,7 @@ namespace Headway.RemediatR.Repository
             return await applicationDbContext.Customers
                 .AsNoTracking()
                 .Include(c => c.Products)
-                .SingleAsync(c => c.CustomerId.Equals(id))
+                .FirstAsync(c => c.CustomerId.Equals(id))
                 .ConfigureAwait(false);
         }
 
@@ -86,7 +86,7 @@ namespace Headway.RemediatR.Repository
         public async Task<int> DeleteCustomerAsync(int id)
         {
             var customer = await applicationDbContext.Customers
-                .SingleAsync(c => c.CustomerId.Equals(id))
+                .FirstAsync(c => c.CustomerId.Equals(id))
                 .ConfigureAwait(false);
 
             applicationDbContext.Customers.Remove(customer);
@@ -108,7 +108,7 @@ namespace Headway.RemediatR.Repository
         {
             return await applicationDbContext.Programs
                 .AsNoTracking()
-                .SingleAsync(p => p.ProgramId.Equals(id))
+                .FirstAsync(p => p.ProgramId.Equals(id))
                 .ConfigureAwait(false);
         }
 
@@ -139,7 +139,7 @@ namespace Headway.RemediatR.Repository
         public async Task<int> DeleteProgramAsync(int id)
         {
             var program = await applicationDbContext.Programs
-                .SingleAsync(p => p.ProgramId.Equals(id))
+                .FirstAsync(p => p.ProgramId.Equals(id))
                 .ConfigureAwait(false);
 
             applicationDbContext.Programs.Remove(program);
@@ -164,7 +164,7 @@ namespace Headway.RemediatR.Repository
         {
             return await applicationDbContext.Redresses
                 .AsNoTracking()
-                .SingleAsync(r => r.RedressId.Equals(id))
+                .FirstAsync(r => r.RedressId.Equals(id))
                 .ConfigureAwait(false);
         }
 
@@ -195,7 +195,7 @@ namespace Headway.RemediatR.Repository
         public async Task<int> DeleteRedressAsync(int id)
         {
             var redress = await applicationDbContext.Redresses
-                .SingleAsync(r => r.RedressId.Equals(id))
+                .FirstAsync(r => r.RedressId.Equals(id))
                 .ConfigureAwait(false);
 
             applicationDbContext.Redresses.Remove(redress);

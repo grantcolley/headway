@@ -27,8 +27,8 @@ namespace Headway.Razor.Controls.Components
         {
             var args = ComponentArgHelper.GetArgs(ComponentArgs);
 
-            model = args.Single(a => a.Name.Equals(Args.MODEL)).Value;
-            componentName = args.Single(a => a.Name.Equals(Args.COMPONENT)).Value;
+            model = args.First(a => a.Name.Equals(Args.MODEL)).Value;
+            componentName = args.First(a => a.Name.Equals(Args.COMPONENT)).Value;
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }

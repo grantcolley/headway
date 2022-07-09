@@ -40,7 +40,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
         {
-            var optionsCode = dynamicArgs.Single(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
+            var optionsCode = dynamicArgs.First(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
 
             var args = ComponentArgHelper.GetArgs(dynamicArgs);
 

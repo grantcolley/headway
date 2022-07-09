@@ -45,7 +45,7 @@ namespace Headway.Repository
                 .Include(m => m.DropdownComplex)
                 .Include(m => m.DemoModelItems)
                 .Include(m => m.DemoModelTreeItems)
-                .SingleAsync(m => m.DemoModelId.Equals(id))
+                .FirstAsync(m => m.DemoModelId.Equals(id))
                 .ConfigureAwait(false);
 
             demoModel.DemoModelTreeItems = GenericTreeHelper.GetTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);

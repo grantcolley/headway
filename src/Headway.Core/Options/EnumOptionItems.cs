@@ -12,7 +12,7 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
-            var enumName = args.Single(a => a.Name.Equals(Args.ENUM)).Value.ToString();
+            var enumName = args.First(a => a.Name.Equals(Args.ENUM)).Value.ToString();
 
             var type = Type.GetType(enumName);
 
