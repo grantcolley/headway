@@ -25,7 +25,7 @@ namespace Headway.Repository
             optionItems[Options.CONTROLLER_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetControllerOptionItemsAsync);
             optionItems[Options.CONFIG_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);
             optionItems[Options.PERMISSIONS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetPermissionsOptionItems);
-
+            optionItems[Options.COUNTRY_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetCountryOptionItems);
             complexOptionItems[Options.CONFIG_CONTAINERS] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
             complexOptionItems[Options.MODULES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetModules);
             complexOptionItems[Options.CATEGORIES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetCategories);
@@ -98,6 +98,21 @@ namespace Headway.Repository
             List<OptionItem> optionItems = new() { new OptionItem() };
 
             optionItems.AddRange(configs.Select(c => new OptionItem { Id = c.Name, Display = c.Title }).ToList());
+
+            return optionItems;
+        }
+
+        private async Task<IEnumerable<OptionItem>> GetCountryOptionItems(List<Arg> args)
+        {
+            var configs = await applicationDbContext.Countries
+                .OrderBy(c => c.Name)
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            optionItems.AddRange(configs.Select(c => new OptionItem { Id = c.Name, Display = c.Name }).ToList());
 
             return optionItems;
         }
