@@ -183,6 +183,7 @@ Alternatively, modules, categories and menu items can be configured under the Na
 
 #### 3. Configure Model Layout
 - Configure [Programs](https://github.com/grantcolley/headway/blob/756333bd498ad30667ee9877a217fc60542b6ad0/src/Utilities/Headway.SeedData/RemediatRData.cs#L178-L228)
+- Configure [Customers](https://github.com/grantcolley/headway/blob/deeb6dfd7de513913b7d4366535590cb500996a0/src/Utilities/Headway.SeedData/RemediatR/RemediatRData.cs#L322-L387)
 
 #### 4. Configure a Flow
 
