@@ -26,6 +26,7 @@ namespace Headway.Repository.Data
         public DbSet<DemoModelComplexProperty> DemoModelComplexProperties { get; set; }
 
         // RemediatR
+        public DbSet<Country> Countries { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Program> Programs { get; set; }
@@ -68,6 +69,14 @@ namespace Headway.Repository.Data
 
             builder.Entity<ConfigContainer>()
                 .HasIndex(cc => cc.Name)
+                .IsUnique();
+
+            builder.Entity<Country>()
+                .HasIndex(c => c.Name)
+                .IsUnique();
+
+            builder.Entity<Program>()
+                .HasIndex(p => p.Name)
                 .IsUnique();
         }
     }
