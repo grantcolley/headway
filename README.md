@@ -23,6 +23,7 @@
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
       * [5. Create the WebApi Controllers](#5-create-the-webapi-controllers)
+      * [6. Create RemediatR Options](#6-create-remediatr-options)
    * [Reference](#reference)      
    * [Configure](#configure)
      * [1. Configure Authorisation](#1-configure-authorisation)
@@ -156,7 +157,9 @@ The RemediatR Flow is as follows:
   - Add a scoped service for [IRemediatRRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) to [Program.cs](https://github.com/grantcolley/headway/blob/0ff19d343f2cf182a860082af7f6be1895785fd0/src/Headway.WebApi/Program.cs#L56) 
       \
       `builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();`
-      
+
+#### 6. Create RemediatR Options
+
 ### Reference 
 - In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp) and [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp) add a project reference to [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) so when the solution is compiled **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
  
