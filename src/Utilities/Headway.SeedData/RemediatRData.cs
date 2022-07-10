@@ -1,8 +1,11 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
+using Headway.RemediatR.Core.Enums;
+using Headway.RemediatR.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace Headway.SeedData
@@ -11,9 +14,10 @@ namespace Headway.SeedData
     {
         private static ApplicationDbContext dbContext;
 
-        private static Dictionary<string, Permission> permissions = new Dictionary<string, Permission>();
-        private static Dictionary<string, Role> roles = new Dictionary<string, Role>();
-        private static Dictionary<string, User> users = new Dictionary<string, User>();
+        private static Dictionary<string, Permission> permissions = new();
+        private static Dictionary<string, Role> roles = new();
+        private static Dictionary<string, User> users = new();
+        private static Dictionary<string, Program> programs = new();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
@@ -26,6 +30,7 @@ namespace Headway.SeedData
             CreateUsers();
             AssignUsersRoles();
             CreateNavigation();
+            CreatePrograms();
 
             ProgramsConfig();
             ProgramConfig();
@@ -166,6 +171,58 @@ namespace Headway.SeedData
             remediatR.Categories.Add(customerCatgory);
             remediatR.Categories.Add(redressCatgory);
             remediatR.Categories.Add(programCatgory);
+
+            dbContext.SaveChanges();
+        }
+
+        private static void CreatePrograms()
+        {
+            programs.Add(
+                "IRMS", 
+                new Program 
+                {
+                    Name = "IRMS", 
+                    Description = "Interest Rate Missold", 
+                    Compensation = 400.00m, 
+                    CompensatoryInterest = 5.00m, 
+                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(300)), 
+                    ProductType = ProductType.Vehicle, 
+                    RateType = RateType.Fixed, 
+                    RepaymentType = RepaymentType.Repayment
+                });
+
+            programs.Add(
+                "BTL-IOC",
+                new Program
+                {
+                    Name = "BTL-RP",
+                    Description = "Buy To Let Mortgage Redemption Penalty",
+                    Compensation = 1500.00m,
+                    CompensatoryInterest = 7.50m,
+                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(200)),
+                    ProductType = ProductType.Home,
+                    RateType = RateType.Variable,
+                    RepaymentType = RepaymentType.InterestOnly
+                });
+
+            programs.Add(
+                "STULIOC",
+                new Program
+                {
+                    Name = "STULIOC",
+                    Description = "Student Loan Introductory Offer Conversion",
+                    Compensation = 275.00m,
+                    CompensatoryInterest = 3.75m,
+                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(450)),
+                    ProductType = ProductType.Student,
+                    RateType = RateType.Tracker,
+                    RepaymentType = RepaymentType.Repayment
+                });
+
+            foreach (var program in programs.Values)
+            {
+                dbContext.Programs.Add(program);
+            }
 
             dbContext.SaveChanges();
         }
