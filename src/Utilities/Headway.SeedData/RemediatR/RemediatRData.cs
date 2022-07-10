@@ -54,12 +54,19 @@ namespace Headway.SeedData.RemediatR
         {
             List<Country> countries = new();
 
-            var lines = File.ReadAllLines("countries.csv");
+            var lines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "countries.csv"));
 
             foreach (var line in lines.Skip(1))
             {
                 var c = line.Split('\u002C');
-                countries.Add(new Country { Code = c[0], Latitude = decimal.Parse(c[1]), Longitude = decimal.Parse(c[2]), Name = c[3] });
+
+                countries.Add(new Country 
+                {
+                    Code = c[0], 
+                    Latitude = string.IsNullOrWhiteSpace(c[1]) ? default(decimal?) : decimal.Parse(c[1]), 
+                    Longitude = string.IsNullOrWhiteSpace(c[2]) ? default(decimal?) : decimal.Parse(c[2]), 
+                    Name = c[3] 
+                });
             }
 
             foreach (var country in countries)
