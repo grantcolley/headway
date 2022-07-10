@@ -332,7 +332,7 @@ namespace Headway.SeedData.RemediatR
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateProperty = "CustomerId",
-                NavigateConfig = "CUstomer",
+                NavigateConfig = "Customer",
                 NavigateResetBreadcrumb = true
             };
 
@@ -354,7 +354,7 @@ namespace Headway.SeedData.RemediatR
                 Description = "Create, update or delete a RemediatR customer",
                 Model = "Headway.RemediatR.Core.Model.Customer, Headway.RemediatR.Core",
                 ModelApi = "RemediatRCustomer",
-                CreateLocal = false,
+                CreateLocal = true,
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Customers"
