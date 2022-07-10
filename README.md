@@ -153,7 +153,7 @@ The RemediatR Flow is as follows:
   - Create the [RemediatRCustomerController](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/RemediatRCustomerController.cs) controller.
   - Create the [RemediatRProgramController](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/RemediatRProgramController.cs) controller.
   - Create the [RemediatRRedressController](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/RemediatRRedressController.cs) controller.
-  - Add a scoped service for [IRemediatRRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) to [Program.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs) 
+  - Add a scoped service for [IRemediatRRepository](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Interface/IRemediatRRepository.cs) to [Program.cs](https://github.com/grantcolley/headway/blob/0ff19d343f2cf182a860082af7f6be1895785fd0/src/Headway.WebApi/Program.cs#L56) 
       \
       `builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();`
       
