@@ -48,11 +48,9 @@ namespace Headway.RemediatR.Core.Model
         [StringLength(50, ErrorMessage = "Address Line 5 cannot exceed 50 characters")]
         public string? Address5 { get; set; }
 
-        [Required(ErrorMessage = "Country is required")]
         [StringLength(50, ErrorMessage = "Country cannot exceed 50 characters")]
         public string? Country { get; set; }
 
-        [Required(ErrorMessage = "Post Code is required")]
         [StringLength(10, ErrorMessage = "Post Code cannot exceed 10 characters")]
         public string? PostCode { get; set; }
 
