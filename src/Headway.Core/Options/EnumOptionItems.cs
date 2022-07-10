@@ -27,8 +27,7 @@ namespace Headway.Core.Options
                 {
 
                     Id = ((int)Enum.Parse(type, item)).ToString(),
-                    Display = item,
-                    IsNumericId = true
+                    Display = item
                 });
             }
 
