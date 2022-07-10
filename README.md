@@ -177,7 +177,7 @@ Alternatively, modules, categories and menu items can be configured under the Na
 ![Alt text](/readme-images/RemediatR_Navigation.jpg?raw=true "Configure RemediatR Navigation") 
 
 #### 3. Configure Model Layout
-- Configure [Programs](https://github.com/grantcolley/headway/blob/70d4b03a5225884a0fddb6bd577786e60334a684/src/Utilities/Headway.SeedData/RemediatRData.cs#L178-L228)
+- Configure [Programs](https://github.com/grantcolley/headway/blob/756333bd498ad30667ee9877a217fc60542b6ad0/src/Utilities/Headway.SeedData/RemediatRData.cs#L178-L228)
 
 #### 4. Configure a Flow
 
