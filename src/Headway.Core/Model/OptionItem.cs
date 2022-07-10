@@ -4,7 +4,6 @@
     {
         public string Id { get; set; }
         public string Display { get; set; }
-        public bool IsNumericId { get; set; }
 
         public override bool Equals(object obj)
         {
