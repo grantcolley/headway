@@ -159,6 +159,8 @@ The RemediatR Flow is as follows:
       `builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();`
 
 #### 6. Create RemediatR Options
+- In [Headway.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.Repository)
+  - Add `GetCountryOptionItems` method to [OptionsRepository](https://github.com/grantcolley/headway/blob/e1e7ba29ecf8fe9e4ff182d4954b3a934fa53a54/src/Headway.Repository/OptionsRepository.cs#L105-L118)
 
 ### Reference 
 - In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp) and [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp) add a project reference to [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) so when the solution is compiled **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
