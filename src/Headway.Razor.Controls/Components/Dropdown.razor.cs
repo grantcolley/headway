@@ -1,4 +1,6 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Constants;
+using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
 using Headway.Razor.Controls.Base;
@@ -24,6 +26,8 @@ namespace Headway.Razor.Controls.Components
 
         private OptionItem selectedItem;
 
+        private bool isNumericId = false;
+
         public OptionItem SelectedItem
         {
             get
@@ -41,7 +45,7 @@ namespace Headway.Razor.Controls.Components
                     {
                         Field.PropertyInfo.SetValue(Field.Model, null);
                     }
-                    else if (selectedItem.IsNumericId)
+                    else if (isNumericId)
                     {
                         Field.PropertyInfo.SetValue(Field.Model, int.Parse(SelectedItem.Id));
                     }
@@ -53,6 +57,18 @@ namespace Headway.Razor.Controls.Components
             }
         }
 
+        protected override void OnInitialized()
+        {
+            var isNumericIdArg = ComponentArgHelper.GetArg(ComponentArgs, Args.IS_NUMERIC_ID);
+
+            if (isNumericIdArg != null)
+            {
+                isNumericId = bool.Parse(isNumericIdArg.Value);
+            }
+
+            base.OnInitialized();
+        }
+
         protected override async Task OnParametersSetAsync()
         {
             LinkFieldCheck();
@@ -61,10 +77,18 @@ namespace Headway.Razor.Controls.Components
 
             optionItems = GetResponse(result.OptionItems);
 
-            var id = Field.PropertyInfo.GetValue(Field.Model)?.ToString();
-            if (!string.IsNullOrWhiteSpace(id))
+            if (isNumericId)
             {
-                SelectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id));
+                var id = (int)Field.PropertyInfo.GetValue(Field.Model);
+                SelectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id.ToString()));
+            }
+            else
+            {
+                var id = Field.PropertyInfo.GetValue(Field.Model)?.ToString();
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    SelectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id));
+                }
             }
 
             if(selectedItem == null)
