@@ -22,10 +22,12 @@ namespace Headway.Core.Options
 
             foreach (var optionItem in optionItemsArray)
             {
+                var item = optionItem.ToString();
                 optionItems.Add(new OptionItem 
                 {
-                    Id = optionItem.ToString(),
-                    Display = optionItem.ToString(),
+
+                    Id = ((int)Enum.Parse(type, item)).ToString(),
+                    Display = item,
                     IsNumericId = true
                 });
             }
