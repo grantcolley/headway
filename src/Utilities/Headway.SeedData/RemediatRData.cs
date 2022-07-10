@@ -2,6 +2,7 @@
 using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
 using Headway.Repository.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace Headway.SeedData
@@ -27,11 +28,13 @@ namespace Headway.SeedData
             CreateNavigation();
 
             ProgramsConfig();
+            ProgramConfig();
         }
 
         private static void TruncateTables()
         {
-            //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Programs");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Programs, RESEED, 1)");
             //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
             //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
             //((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
@@ -217,8 +220,13 @@ namespace Headway.SeedData
             programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramId", Label = "Program Id", IsIdentity = true, Order = 1, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-
-            // more fields....
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Compensation", Label = "Compensation", Order = 4, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX};Value=9999999999999.99" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CompensatoryInterest", Label = "Compensatory Interest", Order = 5, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX_LENGTH};Value=5|Name={Args.MAX};Value=99.99" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StartDate", Label = "Start Date", Order = 6, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "EndDate", Label = "End Date", Order = 7, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductType", Label = "ProductType", Order = 8, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_OPTION_ITEMS}|Name={Args.ENUM};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RateType", Label = "RateType", Order = 9, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_OPTION_ITEMS}|Name={Args.ENUM};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core" });
+            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RepaymentType", Label = "RepaymentType", Order = 10, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_OPTION_ITEMS}|Name={Args.ENUM};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core" });
 
             dbContext.SaveChanges();
         }
