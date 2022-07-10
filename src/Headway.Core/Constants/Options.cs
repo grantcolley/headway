@@ -6,6 +6,7 @@
         public const string CONFIG_OPTION_ITEMS = "ConfigOptionItems";
         public const string CONTROLLER = "Controller";
         public const string CONTROLLER_OPTION_ITEMS = "ControllerOptionItems";
+        public const string COUNTRY_OPTION_ITEMS = "CountryOptionItems";
         public const string DISPLAY_FIELD = "DisplayField";
         public const string ENUM_OPTION_ITEMS = "EnumOptionItems";
         public const string OPTIONS_CODE = "OptionsCode";
