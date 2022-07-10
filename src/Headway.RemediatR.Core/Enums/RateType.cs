@@ -4,6 +4,7 @@
     {
         Unknown = 0,
         Fixed = 1,
-        Variable = 2
+        Tracker = 2,
+        Variable = 3
     }
 }
