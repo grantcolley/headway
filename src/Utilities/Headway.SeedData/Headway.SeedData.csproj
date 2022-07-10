@@ -21,5 +21,11 @@
 		<ProjectReference Include="..\..\Headway.RemediatR.Core\Headway.RemediatR.Core.csproj" />
 		<ProjectReference Include="..\..\Headway.Repository\Headway.Repository.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="RemediatR\countries.csv">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 	
 </Project>

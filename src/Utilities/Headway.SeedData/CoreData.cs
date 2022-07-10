@@ -26,8 +26,6 @@ namespace Headway.SeedData
             CreateUsers();
             AssignUsersRoles();
 
-            CreateDemoModel();
-
             Navigation();
 
             PermissionsConfig();
@@ -51,12 +49,6 @@ namespace Headway.SeedData
             ConfigItemConfig();
             ConfigItemsListDetailConfig();
             ConfigContainerConfig();
-
-            DemoModelsConfig();
-            DemoModelConfig();
-            DemoModelItemConfig();
-            DemoModelItemsListDetailConfig();
-            DemoModelTreeItemConfig();
         }
 
         private static void TruncateTables()
@@ -70,12 +62,6 @@ namespace Headway.SeedData
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Roles, RESEED, 1)");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Permissions");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Permissions, RESEED, 1)");
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelItems");
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE DemoModelTreeItems");
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModels");
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModels, RESEED, 1)");
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM DemoModelComplexProperties");
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (DemoModelComplexProperties, RESEED, 1)");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE MenuItems");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Categories");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Categories, RESEED, 1)");
@@ -134,41 +120,6 @@ namespace Headway.SeedData
         private static void AssignUsersRoles()
         {
             users["alice"].Roles.Add(roles[HeadwayAuthorisation.ADMIN]);
-
-            dbContext.SaveChanges();
-        }
-
-        private static void CreateDemoModel()
-        {
-            var demoModel = new DemoModel
-            {
-                Text = "Sample text...",
-                DemoModelItems = new List<DemoModelItem>
-                {
-                    new DemoModelItem { Name = "Item 1", Order = 1 },
-                    new DemoModelItem { Name = "Item 2", Order = 2 }
-                },
-                DemoModelTreeItems = new List<DemoModelTreeItem>
-                {
-                    new DemoModelTreeItem { Name = "Tree Item 1", Code = "TREE_ITEM_1", Order = 1 },
-                    new DemoModelTreeItem { Name = "Child Item 1.1", Code = "Child_ITEM_1.1", ParentCode = "TREE_ITEM_1", Order = 1 },
-                    new DemoModelTreeItem { Name = "Child Item 1.2", Code = "Child_ITEM_1.2", ParentCode = "TREE_ITEM_1", Order = 2 },
-                    new DemoModelTreeItem { Name = "Tree Item 2", Code = "TREE_ITEM_2", Order = 2 },
-                    new DemoModelTreeItem { Name = "Child Item 2.1", Code = "Child_ITEM_2.1", ParentCode = "TREE_ITEM_2", Order = 1 },
-                    new DemoModelTreeItem { Name = "Child Item 2.2", Code = "Child_ITEM_2.2", ParentCode = "TREE_ITEM_2", Order = 2 }
-                 }
-            };
-
-            dbContext.DemoModels.Add(demoModel);
-
-            var demoModelComplexProperties = new List<DemoModelComplexProperty>
-            {
-                new DemoModelComplexProperty{ Name ="Complex Property 1" },
-                new DemoModelComplexProperty{ Name ="Complex Property 2" },
-                new DemoModelComplexProperty{ Name ="Complex Property 3" }
-            };
-
-            dbContext.DemoModelComplexProperties.AddRange(demoModelComplexProperties);
 
             dbContext.SaveChanges();
         }
@@ -726,146 +677,6 @@ namespace Headway.SeedData
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 6, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", Order = 8, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ContainerOptionItems)}" });
-            dbContext.SaveChanges();
-        }
-
-        private static void DemoModelsConfig()
-        {
-            var demoModelsConfig = new Config
-            {
-                Name = "DemoModels",
-                Title = "DemoModels",
-                Description = "List of Demo Models to demonstrate rendering objects on a page",
-                Model = "Headway.Core.Model.DemoModel, Headway.Core",
-                ModelApi = "DemoModel",
-                OrderModelBy = "DemoModelId",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                NavigatePage = "Page",
-                NavigateProperty = "DemoModelId",
-                NavigateConfig = "DemoModel",
-                NavigateResetBreadcrumb = true
-            };
-
-            dbContext.Configs.Add(demoModelsConfig);
-
-            demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelId", Label = "Demo Model Id", Order = 1 });
-            demoModelsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Text", Label = "Text", Order = 2 });
-
-            dbContext.SaveChanges();
-        }
-
-        private static void DemoModelConfig()
-        {
-            var demoModelConfig = new Config
-            {
-                Name = "DemoModel",
-                Title = "Demo",
-                Description = "Demonstrate rendering an object on a page",
-                Model = "Headway.Core.Model.DemoModel, Headway.Core",
-                ModelApi = "DemoModel",
-                CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
-                NavigatePage = "Page",
-                NavigateConfig = "DemoModels"
-            };
-
-            dbContext.Configs.Add(demoModelConfig);
-
-            var demoModelContainer1 = new ConfigContainer { Name = "Model Components Div", Code = "MODEL_COMPONENTS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model Components", Order = 1 };
-            var demoModelContainer2 = new ConfigContainer { Name = "List Component Div", Code = "LIST_COMPONENT_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "List Component", Order = 2 };
-            var demoModelContainer3 = new ConfigContainer { Name = "Tree Component Div", Code = "TREE_COMPONENT_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Tree Component", Order = 3 };
-
-            demoModelConfig.ConfigContainers.Add(demoModelContainer1);
-            demoModelConfig.ConfigContainers.Add(demoModelContainer2);
-            demoModelConfig.ConfigContainers.Add(demoModelContainer3);
-
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelId", Label = "Demo Model Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls", Tooltip = "Text" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Text", Label = "Text", IsTitle = true, Order = 2, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls", Tooltip = "Text" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "TextMultiline", Label = "TextMultiline", Order = 3, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", Tooltip = "TextMultiline", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Integer", Label = "Integer", Order = 4, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls", Tooltip = "Integer" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Checkbox", Label = "Checkbox", Order = 5, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls", Tooltip = "Checkbox" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Decimal", Label = "Decimal", Order = 6, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Decimal, Headway.Razor.Controls", Tooltip = "Decimal" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OptionHorizontal", Label = "OptionHorizontal", Order = 7, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Option.OptionHorizontal, Headway.Razor.Controls", Tooltip = "OptionHorizontal", ComponentArgs = $"Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Date", Label = "Date", Order = 8, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Date, Headway.Razor.Controls", Tooltip = "Date" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OptionVertical", Label = "OptionVertical", Order = 9, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Option.OptionVertical, Headway.Razor.Controls", Tooltip = "OptionVertical", ComponentArgs = $"Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Dropdown", Label = "Dropdown", Order = 10, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", Tooltip = "Dropdown", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.STATIC_OPTION_ITEMS}|Name=one;Value=Option 1|Name=two;Value=Option 2|Name=three;Value=Option 3" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DropdownComplex", Label = "DropdownComplex", Order = 11, ConfigContainer = demoModelContainer1, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.COMPLEX_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.DemoModelComplexProperty, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItems", Label = "Demo Model Items", Order = 12, ConfigContainer = demoModelContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=DemoModelItemsListDetail" });
-            demoModelConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItems", Label = "Demo Model Tree Items", Order = 13, Tooltip = "Drag and drop items in a nested tree hierarchy", ConfigContainer = demoModelContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "DemoModelTreeItem", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Name|Name={Args.LIST_PROPERTY};Value=DemoModelTreeItems" });
-
-            dbContext.SaveChanges();
-        }
-
-        private static void DemoModelItemConfig()
-        {
-            var demoModelItemConfig = new Config
-            {
-                Name = "DemoModelItem",
-                Title = "DemoModelItem",
-                Description = "Config for rendering a custom object associated with the Demo Model",
-                Model = "Headway.Core.Model.DemoModelItem, Headway.Core",
-                ModelApi = "DemoModel",
-                CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
-            };
-
-            dbContext.Configs.Add(demoModelItemConfig);
-
-            var demoModelItemConfigContainer = new ConfigContainer { Name = "Demo Model Item Div", Code = "DEMO_MODEL_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Demo Model Item", Order = 1 };
-
-            demoModelItemConfig.ConfigContainers.Add(demoModelItemConfigContainer);
-
-            demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelItemId", Label = "Item Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            demoModelItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = demoModelItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-
-            dbContext.SaveChanges();
-        }
-
-        private static void DemoModelItemsListDetailConfig()
-        {
-            var demoModelItemsListDetailConfig = new Config
-            {
-                Name = "DemoModelItemsListDetail",
-                Title = "DemoModelItemsListDetail",
-                Description = "Config for rendering a list of custom objects associated with the Demo Model",
-                Model = "Headway.Core.Model.DemoModelItem, Headway.Core",
-                ModelApi = "DemoModel",
-                OrderModelBy = "Order"
-            };
-
-            dbContext.Configs.Add(demoModelItemsListDetailConfig);
-
-            demoModelItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 1 });
-            demoModelItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
-
-            dbContext.SaveChanges();
-        }
-
-        private static void DemoModelTreeItemConfig()
-        {
-            var demoModelTreeItemConfig = new Config
-            {
-                Name = "DemoModelTreeItem",
-                Title = "DemoModelTreeItem",
-                Description = "Config for rendering a treeview of custom objects associated with the Demo Model",
-                Model = "Headway.Core.Model.DemoModelTreeItem, Headway.Core",
-                ModelApi = "DemoModel",
-                CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
-            };
-
-            dbContext.Configs.Add(demoModelTreeItemConfig);
-
-            var demoModelTreeItemConfigContainer = new ConfigContainer { Name = "Demo Model Tree Item Div", Code = "DEMO_MODEL_TREE_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Demo Model Tree Item", Order = 1 };
-
-            demoModelTreeItemConfig.ConfigContainers.Add(demoModelTreeItemConfigContainer);
-
-            demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DemoModelTreeItemId", Label = "Tree Item Id", IsIdentity = true, Order = 1, ConfigContainer = demoModelTreeItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ItemCode", Label = "Item Code", Order = 2, ConfigContainer = demoModelTreeItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 3, ConfigContainer = demoModelTreeItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            demoModelTreeItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 4, ConfigContainer = demoModelTreeItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-
             dbContext.SaveChanges();
         }
     }

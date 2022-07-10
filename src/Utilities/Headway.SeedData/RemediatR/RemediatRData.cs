@@ -7,8 +7,10 @@ using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-namespace Headway.SeedData
+namespace Headway.SeedData.RemediatR
 {
     public class RemediatRData
     {
@@ -25,6 +27,7 @@ namespace Headway.SeedData
 
             TruncateTables();
 
+            CreateCountries();
             CreatePermissions();
             CreateRoles();
             CreateUsers();
@@ -34,16 +37,37 @@ namespace Headway.SeedData
 
             ProgramsConfig();
             ProgramConfig();
+            CustomersConfig();
+            CustomerConfig();
         }
 
         private static void TruncateTables()
         {
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Programs");
-            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Programs, RESEED, 1)");
-            //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
-            //((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
-            //((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
-            //((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
+            dbContext.Database.ExecuteSqlRaw("TRUNCATE TABLE Countries");
+            dbContext.Database.ExecuteSqlRaw("DELETE FROM Programs");
+            dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Programs, RESEED, 1)");
+            dbContext.Database.ExecuteSqlRaw("DELETE FROM Customers");
+            dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Customers, RESEED, 1)");
+        }
+
+        private static void CreateCountries()
+        {
+            List<Country> countries = new();
+
+            var lines = File.ReadAllLines("countries.csv");
+
+            foreach (var line in lines.Skip(1))
+            {
+                var c = line.Split('\u002C');
+                countries.Add(new Country { Code = c[0], Latitude = decimal.Parse(c[1]), Longitude = decimal.Parse(c[2]), Name = c[3] });
+            }
+
+            foreach (var country in countries)
+            {
+                dbContext.Countries.Add(country);
+            }
+
+            dbContext.SaveChanges();
         }
 
         private static void CreatePermissions()
@@ -67,7 +91,7 @@ namespace Headway.SeedData
 
             permissions.Add(RemediatRAuthorisation.REFUND_REVIEW_TRANSITION, new Permission { Name = RemediatRAuthorisation.REFUND_REVIEW_TRANSITION, Description = "RemediatR Refund Review Transition" });
 
-            foreach(var permission in permissions.Values)
+            foreach (var permission in permissions.Values)
             {
                 dbContext.Permissions.Add(permission);
             }
@@ -178,16 +202,16 @@ namespace Headway.SeedData
         private static void CreatePrograms()
         {
             programs.Add(
-                "IRMS", 
-                new Program 
+                "IRMS",
+                new Program
                 {
-                    Name = "IRMS", 
-                    Description = "Interest Rate Missold", 
-                    Compensation = 400.00m, 
-                    CompensatoryInterest = 5.00m, 
-                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(300)), 
-                    ProductType = ProductType.Vehicle, 
-                    RateType = RateType.Fixed, 
+                    Name = "IRMS",
+                    Description = "Interest Rate Missold",
+                    Compensation = 400.00m,
+                    CompensatoryInterest = 5.00m,
+                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(300)),
+                    ProductType = ProductType.Vehicle,
+                    RateType = RateType.Fixed,
                     RepaymentType = RepaymentType.Repayment
                 });
 
@@ -259,7 +283,7 @@ namespace Headway.SeedData
             {
                 Name = "Program",
                 Title = "Program",
-                Description = "Create, update or delete a User Permission",
+                Description = "Create, update or delete a RemediatR program",
                 Model = "Headway.RemediatR.Core.Model.Program, Headway.RemediatR.Core",
                 ModelApi = "RemediatRProgram",
                 CreateLocal = true,
@@ -284,6 +308,73 @@ namespace Headway.SeedData
             programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductType", Label = "ProductType", Order = 8, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_OPTION_ITEMS}|Name={Args.ENUM};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core|Name={Args.IS_NUMERIC_ID};Value=true" });
             programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RateType", Label = "RateType", Order = 9, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_OPTION_ITEMS}|Name={Args.ENUM};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core|Name={Args.IS_NUMERIC_ID};Value=true" });
             programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RepaymentType", Label = "RepaymentType", Order = 10, ConfigContainer = programConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_OPTION_ITEMS}|Name={Args.ENUM};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core|Name={Args.IS_NUMERIC_ID};Value=true" });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void CustomersConfig()
+        {
+            var customersConfig = new Config
+            {
+                Name = "Customers",
+                Title = "Customers",
+                Description = "List of RemediatR customers",
+                Model = "Headway.RemediatR.Core.Model.Customer, Headway.RemediatR.Core",
+                ModelApi = "RemediatRCustomer",
+                OrderModelBy = "Surname",
+                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                NavigatePage = "Page",
+                NavigateProperty = "CustomerId",
+                NavigateConfig = "CUstomer",
+                NavigateResetBreadcrumb = true
+            };
+
+            dbContext.Configs.Add(customersConfig);
+
+            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerId", Label = "Customer Id", Order = 1 });
+            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FirstName", Label = "First Name", Order = 2 });
+            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Surname", Label = "Surname", Order = 3 });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void CustomerConfig()
+        {
+            var customerConfig = new Config
+            {
+                Name = "Customer",
+                Title = "Customer",
+                Description = "Create, update or delete a RemediatR customer",
+                Model = "Headway.RemediatR.Core.Model.Customer, Headway.RemediatR.Core",
+                ModelApi = "RemediatRCustomer",
+                CreateLocal = false,
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
+                NavigatePage = "Page",
+                NavigateConfig = "Customers"
+            };
+
+            dbContext.Configs.Add(customerConfig);
+
+            var customerConfigContainer = new ConfigContainer { Name = "Customer Div", Code = "CUSTOMER DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Customer", Order = 1 };
+
+            customerConfig.ConfigContainers.Add(customerConfigContainer);
+
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerId", Label = "Customer Id", IsIdentity = true, Order = 1, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", Order = 2, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.STATIC_OPTION_ITEMS}|Name=Ms;Value=Ms|Name=Mr;Value=Mr|Name=Mrs;Value=Mrs" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FirstName", Label = "FirstName", Order = 3, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Surname", Label = "Surname", IsTitle = true, Order = 4, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AccountStatus", Label = "Account Status", Order = 5, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_OPTION_ITEMS}|Name={Args.ENUM};Value=Headway.RemediatR.Core.Enums.AccountStatus, Headway.RemediatR.Core|Name={Args.IS_NUMERIC_ID};Value=true" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Telephone", Label = "Telephone", Order = 6, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 7, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "SortCode", Label = "Sort Code", Order = 8, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AccountNumber", Label = "Account Number", Order = 9, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address1", Label = "Address1", Order = 10, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address2", Label = "Address2", Order = 11, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address3", Label = "Address3", Order = 12, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address4", Label = "Address4", Order = 13, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address5", Label = "Address5", Order = 14, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Country", Label = "Country", Order = 15, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.COUNTRY_OPTION_ITEMS}" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PostCode", Label = "PostCode", Order = 16, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
 
             dbContext.SaveChanges();
         }
