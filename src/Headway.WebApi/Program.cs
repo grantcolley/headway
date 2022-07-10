@@ -4,6 +4,7 @@ using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Repository;
 using Headway.Repository;
 using Headway.Repository.Data;
+using Headway.SeedData.RemediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -123,7 +124,7 @@ if(useSeedData)
 
             if (userRemediatRData)
             {
-                Headway.SeedData.RemediatRData.Initialise(applicationDbContext);
+                RemediatRData.Initialise(applicationDbContext);
             }
 
             Headway.SeedData.DeveloperData.Initialise(applicationDbContext);
