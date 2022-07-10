@@ -1,0 +1,26 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits DateNullableBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                @Field.Label                
+            }
+            else
+            {
+                <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">@Field.Label</MudTooltip>   
+            }
+        </div>
+        <div class="col-sm-8">
+            <MudTextField T="DateTime?" @bind-Value="@PropertyValue" For="FieldExpression" Format="yyyy-MM-dd"
+                        Variant="Variant.Outlined" InputType="InputType.Date"/>
+        </div>
+    </div>
+</div>
