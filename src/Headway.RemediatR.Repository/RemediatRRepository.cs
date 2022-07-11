@@ -5,6 +5,7 @@ using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.RemediatR.Repository
@@ -72,8 +73,44 @@ namespace Headway.RemediatR.Repository
             return customer;
         }
 
-        public async Task<Customer> UpdateCustomerAsync(Customer customer)
+        public async Task<Customer> UpdateCustomerAsync(Customer addCustomer)
         {
+            var customer = await applicationDbContext.Customers
+                .Include(c => c.Products)
+                .FirstAsync(c => c.CustomerId.Equals(addCustomer.CustomerId))
+                .ConfigureAwait(false);
+
+            if (customer.Title != addCustomer.Title) customer.Title = addCustomer.Title;
+            if (customer.FirstName != addCustomer.FirstName) customer.FirstName = addCustomer.FirstName;
+            if (customer.Surname != addCustomer.Surname) customer.Surname = addCustomer.Surname;
+            if (customer.Telephone != addCustomer.Telephone) customer.Telephone = addCustomer.Telephone;
+            if (customer.Email != addCustomer.Email) customer.Email = addCustomer.Email;
+            if (customer.AccountNumber != addCustomer.AccountNumber) customer.AccountNumber = addCustomer.AccountNumber;
+            if (customer.SortCode != addCustomer.SortCode) customer.SortCode = addCustomer.SortCode;
+            if (customer.AccountStatus != addCustomer.AccountStatus) customer.AccountStatus = addCustomer.AccountStatus;
+            if (customer.Address1 != addCustomer.Address1) customer.Address1 = addCustomer.Address1;
+            if (customer.Address2 != addCustomer.Address2) customer.Address2 = addCustomer.Address2;
+            if (customer.Address3 != addCustomer.Address3) customer.Address3 = addCustomer.Address3;
+            if (customer.Address4 != addCustomer.Address4) customer.Address4 = addCustomer.Address4;
+            if (customer.Address5 != addCustomer.Address5) customer.Address5 = addCustomer.Address5;
+            if (customer.Country != addCustomer.Country) customer.Country = addCustomer.Country;
+            if (customer.PostCode != addCustomer.PostCode) customer.PostCode = addCustomer.PostCode;
+
+            var removeProducts = customer.Products
+                .Where(cp => !addCustomer.Products.Any(acp => acp.ProductId.Equals(cp.ProductId)))
+                .ToList();
+
+            foreach (var product in removeProducts)
+            {
+                customer.Products.Remove(product);
+            }
+
+            var addProducts = addCustomer.Products
+                .Where(acp => !customer.Products.Any(cp => cp.ProductId.Equals(acp.ProductId)))
+                .ToList();
+
+            customer.Products.AddRange(addProducts);
+
             applicationDbContext.Customers.Update(customer);
 
             await applicationDbContext
@@ -86,8 +123,16 @@ namespace Headway.RemediatR.Repository
         public async Task<int> DeleteCustomerAsync(int id)
         {
             var customer = await applicationDbContext.Customers
+                .Include(c => c.Products)
                 .FirstAsync(c => c.CustomerId.Equals(id))
                 .ConfigureAwait(false);
+
+            for (int i = 0; i < customer.Products.Count; i++)
+            {
+                var product = customer.Products[i];
+                customer.Products.Remove(product);
+                applicationDbContext.Products.Remove(product);
+            }
 
             applicationDbContext.Customers.Remove(customer);
 
