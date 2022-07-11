@@ -11,6 +11,8 @@ namespace Headway.RemediatR.Core.Model
         public ProductType ProductType { get; set; }
         public RateType RateType { get; set; }
         public RepaymentType RepaymentType { get; set; }
+
+        [Required]
         public DateTime? StartDate { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
