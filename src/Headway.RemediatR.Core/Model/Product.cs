@@ -11,7 +11,7 @@ namespace Headway.RemediatR.Core.Model
         public ProductType ProductType { get; set; }
         public RateType RateType { get; set; }
         public RepaymentType RepaymentType { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
