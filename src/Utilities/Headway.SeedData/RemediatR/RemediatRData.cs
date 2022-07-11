@@ -48,6 +48,8 @@ namespace Headway.SeedData.RemediatR
             dbContext.Database.ExecuteSqlRaw("TRUNCATE TABLE Countries");
             dbContext.Database.ExecuteSqlRaw("DELETE FROM Programs");
             dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Programs, RESEED, 1)");
+            dbContext.Database.ExecuteSqlRaw("DELETE FROM Products");
+            dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Products, RESEED, 1)");
             dbContext.Database.ExecuteSqlRaw("DELETE FROM Customers");
             dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Customers, RESEED, 1)");
         }
