@@ -13,7 +13,7 @@ namespace Headway.RemediatR.Core.Model
 
         public int CustomerId { get; set; }
         public AccountStatus AccountStatus { get; set; }
-        public List<Product>? Products { get; set; }
+        public List<Product> Products { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         [StringLength(5, ErrorMessage = "Title cannot exceed 5 characters")]
