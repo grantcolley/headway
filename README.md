@@ -164,7 +164,7 @@ The RemediatR Flow is as follows:
   - Add `GetCountryOptionItems` method to [OptionsRepository](https://github.com/grantcolley/headway/blob/e1e7ba29ecf8fe9e4ff182d4954b3a934fa53a54/src/Headway.Repository/OptionsRepository.cs#L105-L118)
 
 #### 7. Create validation
-- Add `` to the following projects
+- Add `<PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />` to the following projects
   - [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
   - [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
 - In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
