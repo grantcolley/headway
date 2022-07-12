@@ -12,7 +12,7 @@ else
     @if(@Alert == null)
     {
         <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
-            <DataAnnotationsValidator/>
+            <FluentValidationValidator/>
             <MudToolBar DisableGutters="true" Style="border-bottom: 1px solid gray;">
                 @if (isSaveInProgress)
                 {
