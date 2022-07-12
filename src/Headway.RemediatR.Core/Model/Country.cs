@@ -7,12 +7,12 @@ namespace Headway.RemediatR.Core.Model
     {
         public int CountryId { get; set; }
 
-        [Required(ErrorMessage = "Code is required")]
-        [StringLength(2, ErrorMessage = "Code must be 2 characters")]
+        [Required]
+        [StringLength(2)]
         public string? Code { get; set; }
 
-        [Required(ErrorMessage = "Country is required")]
-        [StringLength(50, ErrorMessage = "Country cannot exceed 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string? Name { get; set; }
 
         [Column(TypeName = "decimal(9, 6)")]

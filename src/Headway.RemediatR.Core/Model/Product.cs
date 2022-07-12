@@ -13,19 +13,19 @@ namespace Headway.RemediatR.Core.Model
         public RepaymentType RepaymentType { get; set; }
 
         [Required]
-        public DateTime? StartDate { get; set; }
-
-        [Required(ErrorMessage = "Name is required")]
-        [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Name { get; set; }
 
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal? Value { get; set; }
+        [Required]
+        public DateTime? StartDate { get; set; }
 
-        [Range(3, 360, ErrorMessage = "Duration must be between 3 and 360")]
+        [Range(3, 360)]
         public int? Duration { get; set; }
 
         [Column(TypeName = "decimal(4, 2)")]
         public decimal? Rate { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? Value { get; set; }
     }
 }

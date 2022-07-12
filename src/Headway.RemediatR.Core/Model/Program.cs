@@ -14,12 +14,12 @@ namespace Headway.RemediatR.Core.Model
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
-        [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "Description is required")]
-        [StringLength(150, ErrorMessage = "Description must be between 1 and 150 characters")]
+        [Required]
+        [StringLength(150)]
         public string? Description { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]

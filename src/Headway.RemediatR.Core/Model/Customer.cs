@@ -15,51 +15,51 @@ namespace Headway.RemediatR.Core.Model
         public AccountStatus AccountStatus { get; set; }
         public List<Product> Products { get; set; }
 
-        [Required(ErrorMessage = "Title is required")]
-        [StringLength(5, ErrorMessage = "Title cannot exceed 5 characters")]
+        [Required]
+        [StringLength(5)]
         public string? Title { get; set; }
 
-        [Required(ErrorMessage = "Firstname is required")]
-        [StringLength(50, ErrorMessage = "Firstname cannot exceed 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string? FirstName { get; set; }
 
-        [Required(ErrorMessage = "Surname is required")]
-        [StringLength(50, ErrorMessage = "Surname cannot exceed 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string? Surname { get; set; }
 
-        [StringLength(15, ErrorMessage = "Telephone cannot exceed 50 characters")]
+        [StringLength(15)]
         public string? Telephone { get; set; }
 
-        [StringLength(50, ErrorMessage = "Email cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Email { get; set; }
 
-        [StringLength(50, ErrorMessage = "Address Line 1 cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Address1 { get; set; }
 
-        [StringLength(50, ErrorMessage = "Address Line 2 cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Address2 { get; set; }
 
-        [StringLength(50, ErrorMessage = "Address Line 3 cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Address3 { get; set; }
 
-        [StringLength(50, ErrorMessage = "Address Line 4 cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Address4 { get; set; }
 
-        [StringLength(50, ErrorMessage = "Address Line 5 cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Address5 { get; set; }
 
-        [StringLength(50, ErrorMessage = "Country cannot exceed 50 characters")]
+        [StringLength(50)]
         public string? Country { get; set; }
 
-        [StringLength(10, ErrorMessage = "Post Code cannot exceed 10 characters")]
+        [StringLength(10)]
         public string? PostCode { get; set; }
 
         [MaxLength(8)]
-        [RegularExpression(@"^(\d){2}-(\d){2}-(\d){2}$", ErrorMessage = "Sort Code must be 3 sets of 2 digits, separated by hyphens e.g. 12-34-56")]
+        [RegularExpression(@"^(\d){2}-(\d){2}-(\d){2}$")]
         public string? SortCode { get; set; }
 
         [MaxLength(8)]
-        [RegularExpression(@"^(\d){8}$", ErrorMessage = "AccountNumber must be 8 digits")]
+        [RegularExpression(@"^(\d){8}$")]
         public string? AccountNumber { get; set; }
     }
 }

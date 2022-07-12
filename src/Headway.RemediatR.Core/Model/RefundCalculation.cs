@@ -8,6 +8,11 @@ namespace Headway.RemediatR.Core.Model
     {
         public int RefundCalculationId { get; set; }
 
+        [MaxLength(50)]
+        public string? CalculatedBy { get; set; }
+
+        public DateTime? CalculatedDate { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? BasicRefundAmount { get; set; }
 
@@ -22,10 +27,5 @@ namespace Headway.RemediatR.Core.Model
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? TotalRefundAmount { get; set; }
-
-        public DateTime? CalculatedDate { get; set; }
-
-        [MaxLength(50)]
-        public string? CalculatedBy { get; set; }
     }
 }
