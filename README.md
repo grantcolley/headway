@@ -164,7 +164,6 @@ The RemediatR Flow is as follows:
   - Add `GetCountryOptionItems` method to [OptionsRepository](https://github.com/grantcolley/headway/blob/e1e7ba29ecf8fe9e4ff182d4954b3a934fa53a54/src/Headway.Repository/OptionsRepository.cs#L105-L118)
 
 #### 7. Create validation
-- In [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) add package `<PackageReference Include="FluentValidation" Version="11.1.0" />`
 - In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
   - add package `<PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />`
   - add to [Program.cs]()
@@ -174,6 +173,20 @@ The RemediatR Flow is as follows:
       .AddFluentValidation(
           fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("Headway.RemediatR.Core")))
   ```
+- In [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
+  - add package `<PackageReference Include="FluentValidation" Version="11.1.0" />`
+  - add validators:
+    - [CustomerValidation]()
+    - [ProductValidator]()
+    - [ProgramValidator]()
+- In [Headway.Razor.Controls](https://github.com/grantcolley/headway/tree/main/src/Headway.Razor.Controls)
+  - add package `<PackageReference Include="Blazored.FluentValidation" Version="2.1.0-preview.2" />`  
+  - inside `<EditForm>` components add `<FluentValidationValidator />` e.g.
+    ```C#
+        <EditForm EditContext="CurrentEditContext">
+            <FluentValidationValidator />
+    ```
+
 
 
 ### Reference 
