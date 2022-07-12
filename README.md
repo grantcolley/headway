@@ -170,7 +170,11 @@ The RemediatR Flow is as follows:
 - In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
   - add to [Program.cs]()
   \
-  `builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("Headway.RemediatR.Core")))`
+  ```C#
+  builder.Services.AddControllers()
+      .AddFluentValidation(
+          fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("Headway.RemediatR.Core")))
+  ```
 
 
 ### Reference 
