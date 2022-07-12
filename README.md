@@ -167,7 +167,6 @@ The RemediatR Flow is as follows:
 - In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
   - add package `<PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />`
   - add to [Program.cs](https://github.com/grantcolley/headway/blob/e5b0f0b204911eae920fd264a1ff953b762b2abd/src/Headway.WebApi/Program.cs#L27-L30)
-  \
   ```C#
   builder.Services.AddControllers()
       .AddFluentValidation(
