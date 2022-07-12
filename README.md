@@ -24,6 +24,7 @@
       * [4. Create WebApi Access](#4-create-webapi-access)
       * [5. Create the WebApi Controllers](#5-create-the-webapi-controllers)
       * [6. Create RemediatR Options](#6-create-remediatr-options)
+      * [7. Create validation](#7-create-validation)
    * [Reference](#reference)      
    * [Configure](#configure)
      * [1. Configure Authorisation](#1-configure-authorisation)
@@ -161,6 +162,13 @@ The RemediatR Flow is as follows:
 #### 6. Create RemediatR Options
 - In [Headway.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.Repository)
   - Add `GetCountryOptionItems` method to [OptionsRepository](https://github.com/grantcolley/headway/blob/e1e7ba29ecf8fe9e4ff182d4954b3a934fa53a54/src/Headway.Repository/OptionsRepository.cs#L105-L118)
+
+#### 7. Create validation
+- Add `` to the following projects
+  - [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
+  - [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
+- In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi) add to [Program.cs]() `builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("Headway.RemediatR.Core")))`
+
 
 ### Reference 
 - In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp) and [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp) add a project reference to [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) so when the solution is compiled **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
