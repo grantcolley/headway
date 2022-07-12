@@ -166,7 +166,7 @@ The RemediatR Flow is as follows:
 #### 7. Create validation
 - In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
   - add package `<PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />`
-  - add to [Program.cs]()
+  - add to [Program.cs](https://github.com/grantcolley/headway/blob/e5b0f0b204911eae920fd264a1ff953b762b2abd/src/Headway.WebApi/Program.cs#L27-L30)
   \
   ```C#
   builder.Services.AddControllers()
@@ -176,9 +176,10 @@ The RemediatR Flow is as follows:
 - In [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core)
   - add package `<PackageReference Include="FluentValidation" Version="11.1.0" />`
   - add validators:
-    - [CustomerValidation]()
-    - [ProductValidator]()
-    - [ProgramValidator]()
+    - [CustomerValidation](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Validation/CustomerValidation.cs)
+    - [ProductValidator](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Validation/ProductValidator.cs)
+    - [ProgramValidator](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Validation/ProgramValidator.cs)
+
 - In [Headway.Razor.Controls](https://github.com/grantcolley/headway/tree/main/src/Headway.Razor.Controls)
   - add package `<PackageReference Include="Blazored.FluentValidation" Version="2.1.0-preview.2" />`  
   - inside `<EditForm>` components add `<FluentValidationValidator />` e.g.
@@ -186,9 +187,7 @@ The RemediatR Flow is as follows:
         <EditForm EditContext="CurrentEditContext">
             <FluentValidationValidator />
     ```
-
-
-
+    
 ### Reference 
 - In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp) and [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp) add a project reference to [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) so when the solution is compiled **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
  
