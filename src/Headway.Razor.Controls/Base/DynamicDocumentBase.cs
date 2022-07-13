@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
@@ -31,6 +32,8 @@ namespace Headway.Razor.Controls.Base
         protected DynamicList<T> dynamicList;
         protected Status Status { get; set; }
         protected Alert Alert { get; set; }
+
+        protected List<string> messages = new();
 
         protected bool isSaveInProgress = false;
 
@@ -89,8 +92,7 @@ namespace Headway.Razor.Controls.Base
         {
             isSaveInProgress = true;
 
-            if (CurrentEditContext != null
-                && CurrentEditContext.Validate())
+            if (Validate())
             {
                 IResponse<DynamicModel<T>> response;
 
@@ -113,8 +115,28 @@ namespace Headway.Razor.Controls.Base
             isSaveInProgress = false;
         }
 
+        protected virtual bool Validate()
+        {
+            messages.Clear();
+
+            if (CurrentEditContext != null
+                && !CurrentEditContext.Validate())
+            {
+                messages.AddRange(CurrentEditContext.GetValidationMessages());
+                return false;
+            }
+
+            return true;
+        }
+
         protected virtual async Task Delete()
         {
+            if (dynamicModel.Id.Equals(0))
+            {
+                // add message here....................
+                return;
+            }
+
             var deleteResult = await CanDeleteDialog($"Do you really want to delete {dynamicModel.Title}").ConfigureAwait(false);
 
             if (deleteResult.Cancelled)
