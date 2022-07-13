@@ -1,0 +1,28 @@
+﻿@using Headway.Razor.Controls.Services
+
+<MudBadge Content="@count" Overlap="true" Class="mx-6 my-4">
+    <MudIconButton Icon=@IconHelper.GetOutlined("Error") Color="Color.Error" OnClick="Click" />
+</MudBadge>
+
+@code {
+    [Inject]
+    protected IShowDialogService ShowDialogService { get; set; }
+
+    [Parameter]
+    public List<string> Messages { get; set; }
+
+    private int count;
+
+    protected override Task OnParametersSetAsync()
+    {
+        count = Messages.Count();
+
+        return base.OnParametersSetAsync();
+    }
+
+    private async Task Click()
+    {
+        var message = string.Join("\n", Messages);
+        await ShowDialogService.ValidationErrorsAsync(message).ConfigureAwait(false);
+    }
+}
