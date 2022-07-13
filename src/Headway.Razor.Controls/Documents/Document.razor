@@ -24,8 +24,16 @@ else
                         <MudIconButton ButtonType="ButtonType.Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
                     </MudTooltip>
                 }
+
                 <MudText Typo="Typo.h6">@dynamicModel.Title</MudText>
+
+                @if (messages.Any())
+                {
+                    <ValidationBadge Messages="@messages" />
+                }
+
                 <MudSpacer />
+
                 @if (isDeleteInProgress)
                 {
                     <MudProgressCircular Color="Color.Default" Indeterminate="true" />
