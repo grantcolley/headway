@@ -24,7 +24,7 @@
       * [4. Create WebApi Access](#4-create-webapi-access)
       * [5. Create the WebApi Controllers](#5-create-the-webapi-controllers)
       * [6. Create RemediatR Options](#6-create-remediatr-options)
-      * [7. Create validation](#7-create-validation)
+      * [7. Create model validation](#7-create-model-validation)
    * [Reference](#reference)      
    * [Configure](#configure)
      * [1. Configure Authorisation](#1-configure-authorisation)
@@ -163,7 +163,7 @@ The RemediatR Flow is as follows:
 - In [Headway.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.Repository)
   - Add `GetCountryOptionItems` method to [OptionsRepository](https://github.com/grantcolley/headway/blob/e1e7ba29ecf8fe9e4ff182d4954b3a934fa53a54/src/Headway.Repository/OptionsRepository.cs#L105-L118)
 
-#### 7. Create validation
+#### 7. Create model validation
 - In [Headway.WebApi](https://github.com/grantcolley/headway/tree/main/src/Headway.WebApi)
   - add package `<PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />`
   - add to [Program.cs](https://github.com/grantcolley/headway/blob/e5b0f0b204911eae920fd264a1ff953b762b2abd/src/Headway.WebApi/Program.cs#L27-L30)
