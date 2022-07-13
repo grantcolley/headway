@@ -23,7 +23,7 @@
       * [3. Create the Repository](#3-create-the-repository)
       * [4. Create WebApi Access](#4-create-webapi-access)
       * [5. Create the WebApi Controllers](#5-create-the-webapi-controllers)
-      * [6. Create RemediatR Options](#6-create-remediatr-options)
+      * [6. Create model Options](#6-create-model-options)
       * [7. Create model validation](#7-create-model-validation)
    * [Reference](#reference)      
    * [Configure](#configure)
@@ -159,7 +159,7 @@ The RemediatR Flow is as follows:
       \
       `builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();`
 
-#### 6. Create RemediatR Options
+#### 6. Create model Options
 - In [Headway.Repository](https://github.com/grantcolley/headway/tree/main/src/Headway.Repository)
   - Add `GetCountryOptionItems` method to [OptionsRepository](https://github.com/grantcolley/headway/blob/e1e7ba29ecf8fe9e4ff182d4954b3a934fa53a54/src/Headway.Repository/OptionsRepository.cs#L105-L118)
 
