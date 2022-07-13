@@ -1,0 +1,19 @@
+﻿<MudDialog DisableSidePadding="true">
+    <DialogContent>
+        <MudContainer Style="max-height: 300px; overflow-y: scroll">
+            <MudText Style="white-space: pre-wrap;">@ContentText</MudText>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="@Color" OnClick="Ok">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string ContentText { get; set; }
+    [Parameter] public string ButtonText { get; set; }
+    [Parameter] public Color Color { get; set; }
+
+    void Ok() => MudDialog.Close(DialogResult.Ok(true));
+}
