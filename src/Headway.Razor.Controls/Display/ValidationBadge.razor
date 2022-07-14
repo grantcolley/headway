@@ -23,6 +23,8 @@
     private async Task Click()
     {
         var message = string.Join("\n", Messages);
-        await ShowDialogService.ValidationErrorsAsync(message).ConfigureAwait(false);
+        await ShowDialogService.ShowAsync(
+            "Validation Errors", message, "Ok", false, Color.Error, true)
+            .ConfigureAwait(false);
     }
 }
