@@ -133,11 +133,17 @@ namespace Headway.Razor.Controls.Base
         {
             if (dynamicModel.Id.Equals(0))
             {
-                // add message here....................
+                await ShowDialogService.ShowAsync(
+                    "Delete", $"Cannot delete an object with Id equal to 0",
+                    "Close", false, Color.Warning, false)
+                    .ConfigureAwait(false);
                 return;
             }
 
-            var deleteResult = await CanDeleteDialog($"Do you really want to delete {dynamicModel.Title}").ConfigureAwait(false);
+            var deleteResult = await ShowDialogService.ShowAsync(
+                "Delete", $"Do you really want to delete {dynamicModel.Title}",
+                "Delete", true, Color.Warning, false)
+                .ConfigureAwait(false);
 
             if (deleteResult.Cancelled)
             {
@@ -165,11 +171,6 @@ namespace Headway.Razor.Controls.Base
             };
 
             isDeleteInProgress = false;
-        }
-
-        protected virtual async Task<DialogResult> CanDeleteDialog(string message)
-        {
-            return await ShowDialogService.DeleteAsync(message).ConfigureAwait(false);
         }
     }
 }
