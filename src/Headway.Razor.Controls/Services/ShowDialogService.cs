@@ -13,32 +13,29 @@ namespace Headway.Razor.Controls.Services
             this.dialogService = dialogService;
         }
 
-        public async Task<DialogResult> ValidationErrorsAsync(string message)
+        public Task<DialogResult> ShowAsync(
+            string title, string message, string buttonText, 
+            bool closeButton, Color color, bool scrollable)
         {
             var parameters = new DialogParameters();
             parameters.Add("ContentText", message);
-            parameters.Add("ButtonText", "Ok");
-            parameters.Add("Color", Color.Error);
+            parameters.Add("ButtonText", buttonText);
+            parameters.Add("Color", color);
 
-            var options = new DialogOptions() { MaxWidth = MaxWidth.ExtraSmall };
+            var options = new DialogOptions() 
+            {
+                CloseButton = closeButton,
+                MaxWidth = MaxWidth.ExtraSmall                 
+            };
 
-            var result = dialogService.Show<ScrollableDialog>("Validation Errors", parameters, options);
-
-            return await result.Result.ConfigureAwait(false);
-        }
-
-        public async Task<DialogResult> DeleteAsync(string message)
-        {
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", message);
-            parameters.Add("ButtonText", "Delete");
-            parameters.Add("Color", Color.Error);
-
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-
-            var result = dialogService.Show<StandardDialog>("Delete", parameters, options);
-
-            return await result.Result.ConfigureAwait(false);
+            if (scrollable)
+            {
+                return dialogService.Show<ScrollableDialog>(title, parameters, options).Result;
+            }
+            else
+            {
+                return dialogService.Show<ScrollableDialog>(title, parameters, options).Result;
+            }
         }
     }
 }
