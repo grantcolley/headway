@@ -27,10 +27,7 @@ else
 
                 <MudText Typo="Typo.h6">@dynamicModel.Title @dynamicModel.Id</MudText>
 
-                @if (messages.Any())
-                {
-                    <ValidationBadge Messages="@messages" />
-                }
+                <ValidationBadge Messages="@messages" />
 
                 <MudSpacer />
 
