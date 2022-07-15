@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
 {
-    public abstract class DynamicDocumentBase<T> : HeadwayComponentBase where T : class, new()
+    public abstract class DynamicDocumentBase<T> : HeadwayComponentBase, IDisposable where T : class, new()
     {
         [Inject]
         protected IDynamicApiRequest DynamicService { get; set; }
@@ -39,6 +39,8 @@ namespace Headway.Razor.Controls.Base
 
         protected bool isDeleteInProgress = false;
 
+        private bool disposedValue;
+
         protected virtual async Task InitializeDynamicModelAsync()
         {
             IResponse<DynamicModel<T>> response;
@@ -57,7 +59,15 @@ namespace Headway.Razor.Controls.Base
                     .ConfigureAwait(false);
             }
 
-            SetCurrentModelContext(response);
+            dynamicModel = GetResponse(response);
+
+            CurrentEditContext = new EditContext(dynamicModel.Model);
+            CurrentEditContext.OnValidationStateChanged += CurrentEditContextOnValidationStateChanged;
+        }
+
+        private void CurrentEditContextOnValidationStateChanged(object sender, ValidationStateChangedEventArgs e)
+        {
+            GetValidationMessages();
         }
 
         protected virtual async Task InitializeDynamicListAsync()
@@ -71,28 +81,11 @@ namespace Headway.Razor.Controls.Base
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
-        protected virtual void SetCurrentModelContext(IResponse<DynamicModel<T>> response)
-        {
-            if (response == null)
-            {
-                throw new ArgumentNullException(nameof(IResponse<DynamicModel<T>>));
-            }
-
-            dynamicModel = GetResponse(response);
-
-            if(dynamicModel == null)
-            {
-                throw new NullReferenceException(nameof(DynamicModel<T>));
-            }
-
-            CurrentEditContext = new EditContext(dynamicModel.Model);
-        }
-
         protected virtual async Task Submit()
         {
             isSaveInProgress = true;
-
-            if (Validate())
+            if (CurrentEditContext != null
+                && CurrentEditContext.Validate())
             {
                 IResponse<DynamicModel<T>> response;
 
@@ -115,18 +108,19 @@ namespace Headway.Razor.Controls.Base
             isSaveInProgress = false;
         }
 
-        protected virtual bool Validate()
+        protected virtual void GetValidationMessages()
         {
+            var before = messages.Count;
+
             messages.Clear();
+            messages.AddRange(CurrentEditContext.GetValidationMessages());
 
-            if (CurrentEditContext != null
-                && !CurrentEditContext.Validate())
+            var after = messages.Count;
+
+            if(before != after)
             {
-                messages.AddRange(CurrentEditContext.GetValidationMessages());
-                return false;
+                StateHasChanged();
             }
-
-            return true;
         }
 
         protected virtual async Task Delete()
@@ -171,6 +165,33 @@ namespace Headway.Razor.Controls.Base
             };
 
             isDeleteInProgress = false;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if(CurrentEditContext != null)
+                    {
+                        CurrentEditContext.OnValidationStateChanged -= CurrentEditContextOnValidationStateChanged;
+                    }
+                }
+
+                CurrentEditContext = null;
+                dynamicModel = null;
+                dynamicList = null;
+                messages = null;
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
