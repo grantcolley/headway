@@ -7,8 +7,11 @@ using Headway.Razor.Controls.Base;
 using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
@@ -28,31 +31,33 @@ namespace Headway.Razor.Controls.Components
 
         private bool isNumericId = false;
 
-        public OptionItem SelectedItem
+        public Expression<Func<string>> FieldExpression
         {
             get
             {
-                return selectedItem;
+                return Expression.Lambda<Func<string>>(Field.MemberExpression);
+            }
+        }
+
+        public string PropertyValue
+        {
+            get
+            {
+                return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
             }
             set
             {
-                if(selectedItem != value)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    selectedItem = value;
-
-                    if (selectedItem == null
-                        || string.IsNullOrWhiteSpace(selectedItem.Id))
-                    {
-                        Field.PropertyInfo.SetValue(Field.Model, null);
-                    }
-                    else if (isNumericId)
-                    {
-                        Field.PropertyInfo.SetValue(Field.Model, int.Parse(SelectedItem.Id));
-                    }
-                    else
-                    {
-                        Field.PropertyInfo.SetValue(Field.Model, SelectedItem.Id);
-                    }
+                    Field.PropertyInfo.SetValue(Field.Model, null);
+                }
+                else if (isNumericId)
+                {
+                    Field.PropertyInfo.SetValue(Field.Model, int.Parse(value));
+                }
+                else
+                {
+                    Field.PropertyInfo.SetValue(Field.Model, value);
                 }
             }
         }
@@ -80,14 +85,14 @@ namespace Headway.Razor.Controls.Components
             if (isNumericId)
             {
                 var id = (int)Field.PropertyInfo.GetValue(Field.Model);
-                SelectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id.ToString()));
+                selectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id.ToString()));
             }
             else
             {
                 var id = Field.PropertyInfo.GetValue(Field.Model)?.ToString();
                 if (!string.IsNullOrWhiteSpace(id))
                 {
-                    SelectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id));
+                    selectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(id));
                 }
             }
 
@@ -96,15 +101,19 @@ namespace Headway.Razor.Controls.Components
                 selectedItem = optionItems.FirstOrDefault();
             }
 
+            PropertyValue = selectedItem.Id;
+
             await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
-        public virtual void OnValueChanged(IEnumerable<OptionItem> values)
+        protected virtual void OnValueChanged(IEnumerable<string> values)
         {
             if (Field.HasLinkDependents)
             {
                 StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);
             }
+
+            StateHasChanged();
         }
     }
 }
