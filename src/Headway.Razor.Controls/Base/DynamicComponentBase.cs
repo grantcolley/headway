@@ -3,6 +3,7 @@ using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,9 @@ namespace Headway.Razor.Controls.Base
 {
     public abstract class DynamicComponentBase : HeadwayComponentBase
     {
+        [CascadingParameter]
+        public EditContext CurrentEditContext { get; set; }
+
         [Parameter]
         public DynamicField Field { get; set; }
 
