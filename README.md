@@ -50,11 +50,15 @@
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
 * [Navigation Menu](#navigation-menu)
+* [Documents](#documents)
+   * [Document](#document)
+   * [TabDocument](#tabdocument)
+   * [Document Validation](#document-validation)
 * [Components](#components)
    * [Standard Components](#standard-components)
    * [Dropdown Components](#dropdown-components)
         * [Dropdown](#dropdown)
-        * [DropdownSimple](#dropdownsimple)
+        * [DropdownEnum](#dropdownenum) 
         * [DropdownComplex](#dropdowncomplex)        
    * [Generic Components](#generic-components)
    * [Specialized Components](#specialized-components)
@@ -178,14 +182,6 @@ The RemediatR Flow is as follows:
     - [CustomerValidation](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Validation/CustomerValidation.cs)
     - [ProductValidator](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Validation/ProductValidator.cs)
     - [ProgramValidator](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Validation/ProgramValidator.cs)
-
-- In [Headway.Razor.Controls](https://github.com/grantcolley/headway/tree/main/src/Headway.Razor.Controls)
-  - add package `<PackageReference Include="Blazored.FluentValidation" Version="2.1.0-preview.2" />`  
-  - inside `<EditForm>` components add `<FluentValidationValidator />` e.g.
-    ```C#
-        <EditForm EditContext="CurrentEditContext">
-            <FluentValidationValidator />
-    ```
     
 ### Reference 
 - In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp) and [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp) add a project reference to [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) so when the solution is compiled **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
@@ -326,6 +322,18 @@ Headway currently supports authentication from two identity providers **Identity
 
 ## Navigation Menu
 
+## Documents
+### Document
+
+### TabDocument
+
+### Document Validation
+Headway documents use [Blazored.FluentValidation](https://github.com/Blazored/FluentValidation) where the `<FluentValidationValidator />` is placed inside the `<EditForm>` e.g.
+```C#
+    <EditForm EditContext="CurrentEditContext">
+        <FluentValidationValidator />
+```
+    
 ## Components
 ### Standard Components
 
@@ -333,7 +341,7 @@ Headway currently supports authentication from two identity providers **Identity
 #### Dropdown
 The source for a standard dropdown is `IEnumerable<OptionItem>` and the selected item is bound to `@bind-Value="SelectedItem"`.
 
-#### DropdownSimple
+#### DropdownEnum
 
 #### DropdownComplex
 
