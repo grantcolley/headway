@@ -27,8 +27,6 @@ namespace Headway.Razor.Controls.Components
 
         protected IEnumerable<OptionItem> optionItems;
 
-        private OptionItem selectedItem;
-
         private bool isNumericId = false;
 
         public Expression<Func<string>> FieldExpression
@@ -81,6 +79,8 @@ namespace Headway.Razor.Controls.Components
             var result = await Mediator.Send(new OptionItemsRequest(ComponentArgs)).ConfigureAwait(false);
 
             optionItems = GetResponse(result.OptionItems);
+
+            OptionItem selectedItem = null;
 
             if (isNumericId)
             {
