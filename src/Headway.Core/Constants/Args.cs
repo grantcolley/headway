@@ -5,7 +5,6 @@
         public const string CODE = "Code";
         public const string CODE_PARENT = "ParentCode";
         public const string COMPONENT = "Component";
-        public const string ENUM = "ENUM";
         public const string FORMAT = "Format";
         public const string FORMAT_F2 = "F2";
         public const string IS_NUMERIC_ID = "IsNumericId";
