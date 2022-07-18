@@ -34,6 +34,7 @@ namespace Headway.SeedData.RemediatR
             AssignUsersRoles();
             CreateNavigation();
             CreatePrograms();
+            CreateCustomers();
 
             ProgramsConfig();
             ProgramConfig();
@@ -262,6 +263,41 @@ namespace Headway.SeedData.RemediatR
             dbContext.SaveChanges();
         }
 
+        private static void CreateCustomers()
+        {
+            List<Customer> customers = new();
+
+            var lines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "customers.csv"));
+
+            foreach (var line in lines.Skip(1))
+            {
+                var c = line.Split('\u002C');
+
+                customers.Add(new Customer
+                {
+                    Title = c[0],
+                    FirstName = c[1],
+                    Surname = c[2],
+                    Address1 = c[3],
+                    Address2 = c[4],
+                    PostCode = c[5],
+                    Country = c[6],
+                    Telephone = c[7],
+                    Email = c[8],
+                    SortCode = c[9],
+                    AccountNumber = c[10],
+                    AccountStatus = AccountStatus.Active
+                });
+            }
+
+            foreach (var customer in customers)
+            {
+                dbContext.Customers.Add(customer);
+            }
+
+            dbContext.SaveChanges();
+        }
+
         private static void ProgramsConfig()
         {
             var programsConfig = new Config
@@ -343,8 +379,9 @@ namespace Headway.SeedData.RemediatR
             dbContext.Configs.Add(customersConfig);
 
             customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerId", Label = "Customer Id", Order = 1 });
-            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FirstName", Label = "First Name", Order = 2 });
-            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Surname", Label = "Surname", Order = 3 });
+            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", Order = 2 });
+            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FirstName", Label = "First Name", Order = 3 });
+            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Surname", Label = "Surname", Order = 4 });
 
             dbContext.SaveChanges();
         }
@@ -388,7 +425,7 @@ namespace Headway.SeedData.RemediatR
             customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address5", Label = "Address5", Order = 14, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Country", Label = "Country", Order = 15, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.COUNTRY_OPTION_ITEMS}" });
             customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PostCode", Label = "PostCode", Order = 16, ConfigContainer = customerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Products", Label = "Products", Order = 17, ConfigContainer = productsConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "Product", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ProductsListDetail" });//| Name={Args.PROPAGATE_FIELDS};Value=Model,ConfigId" });
+            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Products", Label = "Products", Order = 17, ConfigContainer = productsConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "Product", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ProductsListDetail" });
 
             dbContext.SaveChanges();
         }
