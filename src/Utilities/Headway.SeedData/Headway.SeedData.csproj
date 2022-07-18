@@ -26,6 +26,9 @@
 	  <None Update="RemediatR\countries.csv">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
+	  <None Update="RemediatR\customers.csv">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 	
 </Project>
