@@ -273,7 +273,7 @@ namespace Headway.SeedData.RemediatR
             {
                 var c = line.Split('\u002C');
 
-                customers.Add(new Customer
+                var customer = new Customer
                 {
                     Title = c[0],
                     FirstName = c[1],
@@ -287,7 +287,21 @@ namespace Headway.SeedData.RemediatR
                     SortCode = c[9],
                     AccountNumber = c[10],
                     AccountStatus = AccountStatus.Active
+                };
+
+                customer.Products.Add(new Product
+                {
+                    Name = c[11],
+                    ProductType = (ProductType)Enum.Parse(typeof(ProductType),c[12]),
+                    RateType = (RateType)Enum.Parse(typeof(RateType), c[13]),
+                    RepaymentType = (RepaymentType)Enum.Parse(typeof(RepaymentType), c[14]),
+                    Duration = int.Parse(c[15]),
+                    Rate = decimal.Parse(c[16]),
+                    StartDate = DateTime.Parse(c[17]),
+                    Value = decimal.Parse(c[18])
                 });
+
+                customers.Add(customer);
             }
 
             foreach (var customer in customers)
