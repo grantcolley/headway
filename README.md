@@ -58,7 +58,7 @@
    * [Standard Components](#standard-components)
    * [Dropdown Components](#dropdown-components)
         * [Dropdown](#dropdown)
-        * [DropdownSimple](#dropdownsimple)
+        * [DropdownEnum](#dropdownenum) 
         * [DropdownComplex](#dropdowncomplex)        
    * [Generic Components](#generic-components)
    * [Specialized Components](#specialized-components)
@@ -341,7 +341,7 @@ Headway documents use [Blazored.FluentValidation](https://github.com/Blazored/Fl
 #### Dropdown
 The source for a standard dropdown is `IEnumerable<OptionItem>` and the selected item is bound to `@bind-Value="SelectedItem"`.
 
-#### DropdownSimple
+#### DropdownEnum
 
 #### DropdownComplex
 
