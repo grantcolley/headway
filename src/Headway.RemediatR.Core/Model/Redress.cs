@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Headway.RemediatR.Core.Model
 {
     public class Redress
     {
-        public Redress()
-        {
-            RedressProducts = new List<RedressProduct>();
-        }
-
         public int RedressId { get; set; }
         public Customer? Customer { get; set; }
         public Program? Program { get; set; }
-        public List<RedressProduct>? RedressProducts { get; set; }
+        public RedressProduct? RedressProduct { get; set; }
         public RefundCalculation? RefundCalculation { get; set; }
         public RefundCalculation? RefundVerification { get; set; }
 
@@ -22,9 +16,9 @@ namespace Headway.RemediatR.Core.Model
         public string? RedressCaseOwner { get; set; }
 
         [MaxLength(50)]
-        public string? RedressLoadBy { get; set; }
+        public string? RedressCreateBy { get; set; }
 
-        public DateTime? RedressLoadDate { get; set; }
+        public DateTime? RedressCreateDate { get; set; }
 
         [MaxLength(50)]
         public string? RefundReviewStatus { get; set; }
