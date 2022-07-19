@@ -199,7 +199,7 @@ namespace Headway.RemediatR.Repository
             return await applicationDbContext.Redresses
                 .Include(r => r.Customer)
                 .Include(r => r.Program)
-                .Include(r => r.RedressProducts)
+                .Include(r => r.RedressProduct)
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
