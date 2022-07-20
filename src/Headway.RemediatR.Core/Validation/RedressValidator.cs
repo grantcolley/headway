@@ -13,7 +13,7 @@ namespace Headway.RemediatR.Core.Validation
             RuleFor(v => v.Program)
                 .NotNull().WithMessage("Program is required");
 
-            RuleFor(v => v.RedressProduct)
+            RuleFor(v => v.Product)
                 .NotNull().WithMessage("Product is required");
 
             //RuleFor(v => v.RefundCalculation).SetValidator(new RefundCalculationValidator());
