@@ -194,15 +194,33 @@ namespace Headway.RemediatR.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Redress>> GetRedressesAsync()
+        public async Task<IEnumerable<RedressCase>> GetRedressesAsync()
         {
-            return await applicationDbContext.Redresses
+            var redressCases = await applicationDbContext.Redresses
                 .Include(r => r.Customer)
                 .Include(r => r.Program)
                 .Include(r => r.Product)
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
+
+            return redressCases.Select(r =>
+            {
+                var redressCase = new RedressCase { RedressId = r.RedressId, };
+
+                if(r.Customer != null)
+                {
+                    redressCase.CustomerName = $"{r.Customer.FirstName} {r.Customer.Surname}";
+                }
+
+                if(r.Program != null)
+                {
+                    redressCase.ProgramName = $"{r.Program.Name}";
+                }
+
+                return redressCase;
+
+            }).ToList();
         }
 
         public async Task<Redress> GetRedressAsync(int id)
