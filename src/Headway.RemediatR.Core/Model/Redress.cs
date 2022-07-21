@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.RemediatR.Core.Model
 {
@@ -105,5 +106,26 @@ namespace Headway.RemediatR.Core.Model
         public string? FinalRedressReviewBy { get; set; }
 
         public DateTime? FinalRedressReviewDate { get; set; }
+
+        [NotMapped]
+        public string? CustomerName 
+        {
+            get
+            {
+                return Customer != null ? $"{Customer.Title} {Customer.FirstName} {Customer.Surname}" : string.Empty; 
+            }
+        }
+
+        [NotMapped]
+        public string? ProgramName         
+        {
+            get { return Program != null ? Program.Name : string.Empty; } 
+        }
+
+        [NotMapped]
+        public string? ProductName 
+        {
+            get { return Product != null ? Product.Name : string.Empty; } 
+        }
     }
 }
