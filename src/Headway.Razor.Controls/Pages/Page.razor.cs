@@ -40,7 +40,7 @@ namespace Headway.Razor.Controls.Pages
 
             var breadcrumb = new Breadcrumb
             {
-                Text = $"{config.Name}{id}",
+                Text = $"{config.Title}{id}",
                 Href = NavigationManager.Uri.Remove(0, NavigationManager.BaseUri.Length - 1),
                 ResetAfterHome = config.NavigateResetBreadcrumb
             };
