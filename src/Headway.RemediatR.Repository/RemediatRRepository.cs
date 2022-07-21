@@ -204,31 +204,24 @@ namespace Headway.RemediatR.Repository
                 .ToListAsync()
                 .ConfigureAwait(false);
 
-            return redressCases.Select(r =>
-            {
-                var redressCase = new RedressCase { RedressId = r.RedressId, };
-
-                if(r.Customer != null)
+            return redressCases.Select(r => new RedressCase
                 {
-                    redressCase.CustomerName = $"{r.Customer.FirstName} {r.Customer.Surname}";
-                }
-
-                if(r.Program != null)
-                {
-                    redressCase.ProgramName = $"{r.Program.Name}";
-                }
-
-                return redressCase;
-
-            }).ToList();
+                    RedressId = r.RedressId,
+                    CustomerName = r.CustomerName,
+                    ProductName = r.ProductName,
+                    ProgramName = r.ProgramName
+                })
+                .ToList();
         }
 
         public async Task<Redress> GetRedressAsync(int id)
         {
-            return await applicationDbContext.Redresses
+            var redress = await applicationDbContext.Redresses
                 .AsNoTracking()
                 .FirstAsync(r => r.RedressId.Equals(id))
                 .ConfigureAwait(false);
+
+            return redress;
         }
 
         public async Task<Redress> AddRedressAsync(Redress redress)
