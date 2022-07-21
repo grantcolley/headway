@@ -216,12 +216,10 @@ namespace Headway.RemediatR.Repository
 
         public async Task<Redress> GetRedressAsync(int id)
         {
-            var redress = await applicationDbContext.Redresses
+            return await applicationDbContext.Redresses
                 .AsNoTracking()
                 .FirstAsync(r => r.RedressId.Equals(id))
                 .ConfigureAwait(false);
-
-            return redress;
         }
 
         public async Task<Redress> AddRedressAsync(Redress redress)
