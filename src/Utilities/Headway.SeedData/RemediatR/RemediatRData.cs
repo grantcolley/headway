@@ -42,6 +42,8 @@ namespace Headway.SeedData.RemediatR
             CustomerConfig();
             ProductConfig();
             ProductsListDetailConfig();
+            RedressCasesConfig();
+            RedressConfig();
         }
 
         private static void TruncateTables()
@@ -193,7 +195,7 @@ namespace Headway.SeedData.RemediatR
             dbContext.Categories.Add(programCatgory);
 
             var customersMenuItem = new MenuItem { Name = "Customers", Icon = "PeopleOutline", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ, Config = "Customers" };
-            var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "List", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ, Config = "Redress Cases" };
+            var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "List", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ, Config = "RedressCases" };
             var programsMenuItem = new MenuItem { Name = "Programs", Icon = "AppRegistration", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Programs" };
 
             dbContext.MenuItems.Add(customersMenuItem);
@@ -494,6 +496,54 @@ namespace Headway.SeedData.RemediatR
             productsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StartDate", Label = "Start Date", Order = 2 });
             productsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Duration", Label = "Duration", Order = 3 });
             productsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Value", Label = "Value", Order = 4 });
+            dbContext.SaveChanges();
+        }
+
+        private static void RedressCasesConfig()
+        {
+            var redressCasesConfig = new Config
+            {
+                Name = "RedressCases",
+                Title = "Redress Cases",
+                Description = "List of RemediatR redress cases",
+                Model = "Headway.RemediatR.Core.Model.RedressCase, Headway.RemediatR.Core",
+                ModelApi = "RemediatRRedress",
+                OrderModelBy = "Name",
+                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                NavigatePage = "Page",
+                NavigateProperty = "RedressId",
+                NavigateConfig = "Redress",
+                NavigateResetBreadcrumb = true
+            };
+
+            dbContext.Configs.Add(redressCasesConfig);
+
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressId", Label = "Redress Id", Order = 1 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerName", Label = "Customer", Order = 2 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramName", Label = "Program Name", Order = 3 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Status", Label = "Status", Order = 4 });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void RedressConfig()
+        {
+            var redressConfig = new Config
+            {
+                Name = "Redress",
+                Title = "Redress",
+                Description = "Manage a RemediatR redress case",
+                Model = "Headway.RemediatR.Core.Model.Redress, Headway.RemediatR.Core",
+                ModelApi = "RemediatRRedress",
+                CreateLocal = true,
+                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
+                NavigatePage = "Page",
+                NavigateConfig = "RedressCases"
+            };
+
+            dbContext.Configs.Add(redressConfig);
+
+
             dbContext.SaveChanges();
         }
     }
