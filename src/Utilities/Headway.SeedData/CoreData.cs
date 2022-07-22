@@ -48,6 +48,8 @@ namespace Headway.SeedData
             ConfigConfig();
             ConfigItemConfig();
             ConfigItemsListDetailConfig();
+            ConfigSearchItemConfig();
+            ConfigSearchItemsListDetailConfig();
             ConfigContainerConfig();
         }
 
@@ -572,11 +574,13 @@ namespace Headway.SeedData
 
             var configConfigContainer1 = new ConfigContainer { Name = "Model Div", Code = "MODEL DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model", Order = 1 };
             var configConfigContainer2 = new ConfigContainer { Name = "Fields Div", Code = "FIELDS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Fields", Order = 2 };
-            var configConfigContainer3 = new ConfigContainer { Name = "Containers Div", Code = "CONTAINERS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Containers", Order = 3 };
+            var configConfigContainer3 = new ConfigContainer { Name = "Search Div", Code = "SEARCH_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Search", Order = 3 };
+            var configConfigContainer4 = new ConfigContainer { Name = "Containers Div", Code = "CONTAINERS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Containers", Order = 4 };
 
             configConfig.ConfigContainers.Add(configConfigContainer1);
             configConfig.ConfigContainers.Add(configConfigContainer2);
             configConfig.ConfigContainers.Add(configConfigContainer3);
+            configConfig.ConfigContainers.Add(configConfigContainer4);
 
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = true, Order = 1, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
@@ -590,9 +594,10 @@ namespace Headway.SeedData
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigatePage", Label = "Navigate Page", Order = 10, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(PageOptionItems)}" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateResetBreadcrumb", Label = "Navigate Reset Breadcrumb", Order = 11, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateProperty", Label = "Navigate Property", Order = 12, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateConfig", Label = "Navigate Config", Order = 13, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });            
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateConfig", Label = "Navigate Config", Order = 13, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
             configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", Order = 14, ConfigContainer = configConfigContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigItemsListDetail|Name={Args.PROPAGATE_FIELDS};Value=Model,ConfigId" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Tooltip = "Drag and drop containers into nested hierarchy", Order = 15, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Label|Name={Args.LIST_PROPERTY};Value=ConfigContainers" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigSearchItems", Label = "Config Search Items", Order = 15, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigSearchItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigSearchItemsListDetail" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Tooltip = "Drag and drop containers into nested hierarchy", Order = 16, ConfigContainer = configConfigContainer4, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Label|Name={Args.LIST_PROPERTY};Value=ConfigContainers" });
             dbContext.SaveChanges();
         }
 
@@ -602,7 +607,7 @@ namespace Headway.SeedData
             {
                 Name = "ConfigItem",
                 Title = "ConfigItem",
-                Description = "Config Item maps to a custom object's property to be rendered on the screeen",
+                Description = "Config Item maps to a custom object's property to be rendered on the screen",
                 Model = "Headway.Core.Model.ConfigItem, Headway.Core",
                 ModelApi = "Configuration",
                 CreateLocal = true,
@@ -616,7 +621,7 @@ namespace Headway.SeedData
             configItemConfig.ConfigContainers.Add(configItemConfigContainer);
 
             configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItemId", Label = "Config Item Id", IsIdentity = true, Order = 1, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "PropertyName", Order = 2, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};VALUE=Model" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "PropertyName", Order = 2, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
             configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 3, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Tooltip", Label = "Tooltip", Order = 4, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
             configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "IsIdentity", Label = "IsIdentity", Order = 5, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
@@ -636,7 +641,7 @@ namespace Headway.SeedData
             {
                 Name = "ConfigItemsListDetail",
                 Title = "ConfigItemsListDetail",
-                Description = "List of custom object properties to be rendered on the screeen",
+                Description = "List of custom object properties to be rendered on the screen",
                 Model = "Headway.Core.Model.ConfigItem, Headway.Core",
                 ModelApi = "Configuration",
                 OrderModelBy = "Order"
@@ -646,6 +651,54 @@ namespace Headway.SeedData
 
             configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "Property Name", Order = 1 });
             configItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void ConfigSearchItemConfig()
+        {
+            var configSearchItemConfig = new Config
+            {
+                Name = "ConfigSearchItem",
+                Title = "ConfigSearchItem",
+                Description = "Config Search Item configures a dynamic search component",
+                Model = "Headway.Core.Model.ConfigSearchItem, Headway.Core",
+                ModelApi = "Configuration",
+                CreateLocal = true,
+                Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
+            };
+
+            dbContext.Configs.Add(configSearchItemConfig);
+
+            var configSearchItemConfigContainer = new ConfigContainer { Name = "Config Search Item Div", Code = "CONFIG_SEARCH_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Config Search Item", Order = 1 };
+
+            configSearchItemConfig.ConfigContainers.Add(configSearchItemConfigContainer);
+
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigSearchItemId", Label = "Config Search Item Id", IsIdentity = true, Order = 1, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 2, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Tooltip", Label = "Tooltip", Order = 3, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 4, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Component", Label = "Component", Order = 5, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ComponentOptionItems)}" });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void ConfigSearchItemsListDetailConfig()
+        {
+            var configSearchItemsListDetailConfig = new Config
+            {
+                Name = "ConfigSearchItemsListDetail",
+                Title = "ConfigSearchItemsListDetail",
+                Description = "List of config search items for configuring a dynamic search component",
+                Model = "Headway.Core.Model.ConfigSearchItem, Headway.Core",
+                ModelApi = "Configuration",
+                OrderModelBy = "Order"
+            };
+
+            dbContext.Configs.Add(configSearchItemsListDetailConfig);
+
+            configSearchItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 1 });
+            configSearchItemsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 2 });
 
             dbContext.SaveChanges();
         }
