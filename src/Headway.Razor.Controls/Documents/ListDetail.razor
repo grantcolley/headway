@@ -34,7 +34,7 @@
                               Filter="new Func<DynamicListItem<T>,bool>(FilterFunction)"
                               OnRowClick="RowClickEvent" T="DynamicListItem<T>">
                         <ToolBarContent>
-                            <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                            <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.FilterAlt" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                         </ToolBarContent>
                         <HeaderContent>
                             @foreach(var column in dynamicList.ConfigItems)
