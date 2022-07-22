@@ -20,6 +20,7 @@ namespace Headway.Repository.Data
         public DbSet<Config> Configs { get; set; }
         public DbSet<ConfigItem> ConfigItems { get; set; }
         public DbSet<ConfigContainer> ConfigContainers { get; set; }
+        public DbSet<ConfigSearchItem> ConfigSearchItems { get; set; }
         public DbSet<DemoModel> DemoModels { get; set; }
         public DbSet<DemoModelItem> DemoModelItems { get; set; }
         public DbSet<DemoModelTreeItem> DemoModelTreeItems { get; set; }
