@@ -43,6 +43,7 @@ namespace Headway.Repository
             var config = await applicationDbContext.Configs
                 .AsNoTracking()
                 .Include(c => c.ConfigContainers)
+                .Include(c => c.ConfigSearchItems)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
                 .FirstAsync(c => c.ConfigId.Equals(id))
@@ -58,6 +59,7 @@ namespace Headway.Repository
             var config = await applicationDbContext.Configs
                 .AsNoTracking()
                 .Include(c => c.ConfigContainers)
+                .Include(c => c.ConfigSearchItems)
                 .Include(c => c.ConfigItems)
                 .ThenInclude(ci => ci.ConfigContainer)
                 .FirstAsync(c => c.Name.Equals(name))
@@ -89,6 +91,7 @@ namespace Headway.Repository
         {
             var existing = await applicationDbContext.Configs
                 .Include(c => c.ConfigItems)
+                .Include(c => c.ConfigSearchItems)
                 .Include(c => c.ConfigContainers)
                 .FirstOrDefaultAsync(c => c.ConfigId.Equals(config.ConfigId))
                 .ConfigureAwait(false);
@@ -128,6 +131,33 @@ namespace Headway.Repository
                     else
                     {
                         applicationDbContext.Entry(existingConfigItem).CurrentValues.SetValues(configItem);
+                    }
+                }
+
+                var removeConfigSearchItems = (from configSearchItem in existing.ConfigSearchItems
+                                         where !config.ConfigSearchItems.Any(i => i.ConfigSearchItemId.Equals(configSearchItem.ConfigSearchItemId))
+                                         select configSearchItem)
+                                         .ToList();
+
+                applicationDbContext.RemoveRange(removeConfigSearchItems);
+
+                foreach (var configSearchItem in config.ConfigSearchItems)
+                {
+                    ConfigSearchItem existingConfigSearchItem = null;
+
+                    if (configSearchItem.ConfigSearchItemId > 0)
+                    {
+                        existingConfigSearchItem = existing.ConfigSearchItems
+                            .FirstOrDefault(ci => ci.ConfigSearchItemId.Equals(configSearchItem.ConfigSearchItemId));
+                    }
+
+                    if (existingConfigSearchItem == null)
+                    {
+                        existing.ConfigSearchItems.Add(configSearchItem);
+                    }
+                    else
+                    {
+                        applicationDbContext.Entry(existingConfigSearchItem).CurrentValues.SetValues(configSearchItem);
                     }
                 }
 
