@@ -11,6 +11,7 @@ namespace Headway.Core.Model
         {
             ConfigItems = new List<ConfigItem>();
             ConfigContainers = new List<ConfigContainer>();
+            ConfigSearchItems = new List<ConfigSearchItem>();
         }
 
         public int ConfigId { get; set; }
@@ -18,6 +19,7 @@ namespace Headway.Core.Model
         public bool CreateLocal { get; set; }
         public List<ConfigItem> ConfigItems { get; set; }
         public List<ConfigContainer> ConfigContainers { get; set; }
+        public List<ConfigSearchItem> ConfigSearchItems { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
