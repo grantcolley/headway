@@ -70,6 +70,7 @@ namespace Headway.SeedData
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Modules");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Modules, RESEED, 1)");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE ConfigItems");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE ConfigSearchItems");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM ConfigContainers");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (ConfigContainers, RESEED, 1)");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Configs");
