@@ -37,7 +37,7 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
         public string Label { get; set; }
 
-        [StringLength(250, ErrorMessage = "ComponentArgs must be between 1 and 250 characters")]
+        [StringLength(250, ErrorMessage = "ComponentArgs must be between 1 and 350 characters")]
         public string ComponentArgs { get; set; }
     }
 }
