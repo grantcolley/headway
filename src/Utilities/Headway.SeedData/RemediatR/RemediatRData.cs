@@ -510,18 +510,47 @@ namespace Headway.SeedData.RemediatR
                 ModelApi = "RemediatRRedress",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                DocumentArgs = $"",
                 NavigatePage = "Page",
                 NavigateProperty = "RedressId",
                 NavigateConfig = "Redress",
                 NavigateResetBreadcrumb = true
             };
 
+            redressCasesConfig.ConfigSearchItems.AddRange(new List<ConfigSearchItem>
+            {
+                new ConfigSearchItem
+                {
+                    Label = "Product Type",
+                    Tooltip = "The type of product in scope for redress",
+                    Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core",
+                    Order = 1
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Rate Type",
+                    Tooltip = "The rate type in scope for redress",
+                    Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core",
+                    Order = 2
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Repayment Type",
+                    Tooltip = "The repayment type in scope for redress",
+                    Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core",
+                    Order = 3
+                }
+            });
+
             dbContext.Configs.Add(redressCasesConfig);
 
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressId", Label = "Redress Id", Order = 1 });
-            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerName", Label = "Customer", Order = 2 });
-            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramName", Label = "Program Name", Order = 3 });
-            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductName", Label = "Product Name", Order = 4 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerName", Label = "CustomerName", Order = 2 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramName", Label = "ProgramName", Order = 3 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductName", Label = "ProductName", Order = 4 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Status", Label = "Status", Order = 5 });
 
             dbContext.SaveChanges();
