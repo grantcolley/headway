@@ -16,5 +16,8 @@ namespace Headway.Core.Model
 
         [StringLength(150, ErrorMessage = "Component cannot exceed 150 characters")]
         public string Component { get; set; }
+
+        [StringLength(350, ErrorMessage = "ComponentArgs must be between 1 and 350 characters")]
+        public string ComponentArgs { get; set; }
     }
 }
