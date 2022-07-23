@@ -1,12 +1,12 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Components
@@ -27,8 +27,8 @@ namespace Headway.Razor.Controls.Components
         {
             var args = ComponentArgHelper.GetArgs(ComponentArgs);
 
-            model = args.First(a => a.Name.Equals(Args.MODEL)).Value;
-            componentName = args.First(a => a.Name.Equals(Args.COMPONENT)).Value;
+            model = args.ArgValue(Args.MODEL);
+            componentName = args.ArgValue(Args.COMPONENT);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }

@@ -1,10 +1,10 @@
 ﻿using Headway.Core.Constants;
+using Headway.Core.Extensions;
 using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Text.Json;
 
 namespace Headway.Core.Converters
@@ -28,8 +28,8 @@ namespace Headway.Core.Converters
                 var args = JsonSerializer.Deserialize(value.ToString(), typeof(List<Arg>)) as List<Arg>;
                 if(args != null)
                 {
-                    var typeName = args.First(a => a.Name.Equals(Args.TYPE)).Value;
-                    var json = args.First(a => a.Name.Equals(Args.VALUE)).Value;
+                    var typeName = args.ArgValue(Args.TYPE);
+                    var json = args.ArgValue(Args.VALUE);
                     var type = Type.GetType(typeName);
                     return JsonSerializer.Deserialize(json, type);
                 }

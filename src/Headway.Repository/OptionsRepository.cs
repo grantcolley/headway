@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Constants;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
@@ -35,7 +36,7 @@ namespace Headway.Repository
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.First(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
+            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
 
             if (complexOptionItems.ContainsKey(optionsCode))
             {
@@ -47,7 +48,7 @@ namespace Headway.Repository
 
         public async Task<IEnumerable<OptionItem>> GetOptionItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.First(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
+            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
 
             if (optionItems.ContainsKey(optionsCode))
             {
@@ -134,7 +135,7 @@ namespace Headway.Repository
 
         private async Task<string> GetConfigContainers(List<Arg> args)
         {
-            var configId = args.First(a => a.Name.Equals(Args.LINK_VALUE)).Value;
+            var configId = args.ArgValue(Args.LINK_VALUE);
 
             var configs = await applicationDbContext.Configs
                 .Include(c => c.ConfigContainers)
