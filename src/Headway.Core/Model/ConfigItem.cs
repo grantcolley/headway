@@ -12,8 +12,7 @@ namespace Headway.Core.Model
         public bool IsIdentity { get; set; }
         public bool IsTitle { get; set; }
         public int Order { get; set; }
-        public string ComponentArgs { get; set; }
-        public string ConfigName { get; set; }
+        
         public ConfigContainer ConfigContainer { get; set; }
 
         [NotMapped]
@@ -32,5 +31,11 @@ namespace Headway.Core.Model
 
         [StringLength(150, ErrorMessage = "Component cannot exceed 150 characters")]
         public string Component { get; set; }
+
+        [StringLength(250, ErrorMessage = "ComponentArgs must be between 1 and 250 characters")]
+        public string ComponentArgs { get; set; }
+
+        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
+        public string ConfigName { get; set; }
     }
 }

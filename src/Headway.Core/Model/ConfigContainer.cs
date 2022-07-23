@@ -16,7 +16,6 @@ namespace Headway.Core.Model
         public int ConfigContainerId { get; set; }
         public int ConfigId { get; set; }
         public int Order { get; set; }
-        public string ComponentArgs { get; set; }
 
         public List<ConfigContainer> ConfigContainers { get; set; }
 
@@ -37,5 +36,8 @@ namespace Headway.Core.Model
 
         [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
         public string Label { get; set; }
+
+        [StringLength(250, ErrorMessage = "ComponentArgs must be between 1 and 250 characters")]
+        public string ComponentArgs { get; set; }
     }
 }
