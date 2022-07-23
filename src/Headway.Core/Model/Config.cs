@@ -47,7 +47,7 @@ namespace Headway.Core.Model
         [StringLength(150, ErrorMessage = "Document must be between 1 and 150 characters")]
         public string Document { get; set; }
 
-        [StringLength(150, ErrorMessage = "DocumentArgs must be between 1 and 150 characters")]
+        [StringLength(150, ErrorMessage = "DocumentArgs must be between 1 and 250 characters")]
         public string DocumentArgs { get; set; }
 
         [StringLength(50, ErrorMessage = "Navigate Page cannot exceed 50 characters")]
