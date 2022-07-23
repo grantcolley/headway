@@ -1,10 +1,10 @@
 ﻿using Headway.Core.Constants;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Options;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -39,7 +39,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
         {
-            var optionsCode = dynamicArgs.First(a => a.Name.Equals(Options.OPTIONS_CODE)).Value.ToString();
+            var optionsCode = dynamicArgs.DynamicArgToString(Options.OPTIONS_CODE);
 
             var args = ComponentArgHelper.GetArgs(dynamicArgs);
 
