@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
@@ -34,7 +35,7 @@ namespace Headway.Razor.Controls.Base
             {
                 var value = Field.LinkValue;
 
-                var linkValueArg = ComponentArgs.FirstOrDefault(a => a.Name.Equals(Args.LINK_VALUE));
+                var linkValueArg = ComponentArgs.DynamicArgOrDefault(Args.LINK_VALUE);
 
                 if(linkValueArg == null)
                 {
@@ -48,7 +49,7 @@ namespace Headway.Razor.Controls.Base
 
         protected void PropagateLinkedFields(List<DynamicField> dynamicFields)
         {
-            var propagateFieldsArg = ComponentArgs.FirstOrDefault(a => a.Name.Equals(Args.PROPAGATE_FIELDS));
+            var propagateFieldsArg = ComponentArgs.DynamicArgOrDefault(Args.PROPAGATE_FIELDS);
 
             if (propagateFieldsArg == null
                 || propagateFieldsArg.Value == null)

@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Constants;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Notifications;
@@ -45,7 +46,7 @@ namespace Headway.Razor.Controls.Components
         {
             LinkFieldCheck();
 
-            var displayName = ComponentArgs.First(a => a.Name.Equals(Options.DISPLAY_FIELD)).Value.ToString();
+            var displayName = ComponentArgs.DynamicArgToString(Options.DISPLAY_FIELD);
 
             var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
 

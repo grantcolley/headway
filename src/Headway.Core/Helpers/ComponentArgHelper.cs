@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace Headway.Core.Helpers
 
         public static Arg GetArg(IEnumerable<DynamicArg> dynamicArgs, string name)
         {
-            var dynamicArg = dynamicArgs.FirstOrDefault(a => a.Name.Equals(name));
+            var dynamicArg = dynamicArgs.DynamicArgOrDefault(name);
 
             if (dynamicArg == null)
             {
@@ -56,7 +57,7 @@ namespace Headway.Core.Helpers
 
         public static string GetArgValue(IEnumerable<DynamicArg> dynamicArgs, string name)
         {
-            var dynamicArg = dynamicArgs?.FirstOrDefault(a => a.Name.Equals(name));
+            var dynamicArg = dynamicArgs?.DynamicArgOrDefault(name);
 
             if (dynamicArg == null)
             {
@@ -80,7 +81,7 @@ namespace Headway.Core.Helpers
                 var dynamicArgs = ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
                 dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
 
-                var linkedSourceArg = dynamicArgs.FirstOrDefault(a => a.Name.Equals(Args.LINK_SOURCE));
+                var linkedSourceArg = dynamicArgs.DynamicArgOrDefault(Args.LINK_SOURCE);
                 if(linkedSourceArg != null
                     && linkedSourceArg.Value != null)
                 {
@@ -97,7 +98,7 @@ namespace Headway.Core.Helpers
                 var dynamicArg = componentArg as List<DynamicArg>;
                 if (dynamicArg != null)
                 {
-                    var linkedSourceArg = dynamicArg.FirstOrDefault(a => a.Name.Equals(Args.LINK_SOURCE));
+                    var linkedSourceArg = dynamicArg.DynamicArgOrDefault(Args.LINK_SOURCE);
                     if (linkedSourceArg != null
                         && linkedSourceArg.Value != null)
                     {

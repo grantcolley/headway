@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Headway.Core.Helpers
                 return;
             }
 
-            var sourceFieldArg = sourceArgs.FirstOrDefault(a => a.Name.Equals(propertyName));
+            var sourceFieldArg = sourceArgs.DynamicArgOrDefault(propertyName);
             if (sourceFieldArg == null
                 || sourceFieldArg.Value == null)
             {
