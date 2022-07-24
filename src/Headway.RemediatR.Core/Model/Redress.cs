@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Headway.Core.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.RemediatR.Core.Model
 {
+    [DynamicModel]
     public class Redress
     {
         public int RedressId { get; set; }

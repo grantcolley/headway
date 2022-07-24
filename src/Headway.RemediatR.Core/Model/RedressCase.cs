@@ -1,5 +1,8 @@
-﻿namespace Headway.RemediatR.Core.Model
+﻿using Headway.Core.Attributes;
+
+namespace Headway.RemediatR.Core.Model
 {
+    [DynamicModel]
     public class RedressCase
     {
         public int RedressId { get; set; }

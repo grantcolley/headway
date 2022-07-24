@@ -1,9 +1,11 @@
-﻿using Headway.RemediatR.Core.Enums;
+﻿using Headway.Core.Attributes;
+using Headway.RemediatR.Core.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Headway.RemediatR.Core.Model
 {
+    [DynamicModel]
     public class Customer
     {
         public Customer()
