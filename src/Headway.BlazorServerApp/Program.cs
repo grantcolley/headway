@@ -1,10 +1,12 @@
 using Auth0.AspNetCore.Authentication;
+using Headway.BlazorServerApp.Extensions;
 using Headway.Core.Cache;
 using Headway.Core.Constants;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
 using Headway.Razor.Controls.Services;
+using Headway.RemediatR.Core.Model;
 using Headway.RequestApi.Api;
 using Headway.RequestApi.Requests;
 using MediatR;
@@ -138,6 +140,8 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseAdditionalAssemblies(new[] { typeof(Redress).Assembly });
 
 app.UseHttpsRedirection();
 
