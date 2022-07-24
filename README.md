@@ -184,7 +184,19 @@ The RemediatR Flow is as follows:
     - [ProgramValidator](https://github.com/grantcolley/headway/blob/main/src/Headway.RemediatR.Core/Validation/ProgramValidator.cs)
     
 ### Reference 
-- In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp) and [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp) add a project reference to [Headway.RemediatR.Core](https://github.com/grantcolley/headway/tree/main/src/Headway.RemediatR.Core) so when the solution is compiled **Headway.RemediatR.Core.dll** will be added to the output folder of the client projects.
+- In [Headway.BlazorServerApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorServerApp)
+  - Add a project reference to **Headway.RemediatR.Core**
+  - add to [Program.cs](https://github.com/grantcolley/headway/blob/bc1836e107ec9a752839987e91fdcb074d52a8fd/src/Headway.BlazorServerApp/Program.cs#L144) to ensure the *RemediatR.Core* assembly is eager loaded and it's classes available to be scanned for *Headway* attributes.
+  ```C#
+    app.UseAdditionalAssemblies(new[] { typeof(Redress).Assembly });
+  ```
+  
+- In [Headway.BlazorWebassemblyApp](https://github.com/grantcolley/headway/tree/main/src/Headway.BlazorWebassemblyApp)
+  - Add a project reference to **Headway.RemediatR.Core**  
+  - add to [Program.cs](https://github.com/grantcolley/headway/blob/bc1836e107ec9a752839987e91fdcb074d52a8fd/src/Headway.BlazorWebassemblyApp/Program.cs#L88) to ensure the *RemediatR.Core* assembly is eager loaded and it's classes available to be scanned for *Headway* attributes. 
+  ```C#
+    builder.Services.UseAdditionalAssemblies(new[] { typeof(Redress).Assembly });
+  ```
  
 ### Configure
 #### 1. Configure Authorisation
