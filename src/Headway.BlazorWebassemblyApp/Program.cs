@@ -1,9 +1,11 @@
 using Headway.BlazorWebassemblyApp;
 using Headway.BlazorWebassemblyApp.Account;
+using Headway.BlazorWebassemblyApp.Extensions;
 using Headway.Core.Cache;
 using Headway.Core.Interface;
 using Headway.Core.Notifications;
 using Headway.Razor.Controls.Services;
+using Headway.RemediatR.Core.Model;
 using Headway.RequestApi.Api;
 using Headway.RequestApi.Requests;
 using MediatR;
@@ -82,5 +84,7 @@ builder.Services.AddTransient<IOptionsApiRequest, OptionsApiRequest>(sp =>
 
 builder.Services.AddMediatR(typeof(ModuleApiRequest).Assembly);
 builder.Services.AddMudServices();
+
+builder.Services.UseAdditionalAssemblies(new[] { typeof(Redress).Assembly });
 
 await builder.Build().RunAsync();
