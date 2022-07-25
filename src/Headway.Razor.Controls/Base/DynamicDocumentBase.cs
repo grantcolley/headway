@@ -1,6 +1,8 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Interface;
+using Headway.Core.Model;
 using Headway.Razor.Controls.Model;
 using Headway.Razor.Controls.Services;
 using Microsoft.AspNetCore.Components;
@@ -27,10 +29,15 @@ namespace Headway.Razor.Controls.Base
         public int? Id { get; set; }
 
         protected EditContext CurrentEditContext { get; set; }
+
         protected DynamicModel<T> dynamicModel { get; set; }
 
         protected DynamicList<T> dynamicList;
+
+        protected List<Arg> args = new();
+
         protected Status Status { get; set; }
+
         protected Alert Alert { get; set; }
 
         protected List<string> messages = new();
@@ -61,6 +68,8 @@ namespace Headway.Razor.Controls.Base
 
             dynamicModel = GetResponse(response);
 
+            ExtractArgs(dynamicModel.Config);
+
             CurrentEditContext = new EditContext(dynamicModel.Model);
             CurrentEditContext.OnValidationStateChanged += CurrentEditContextOnValidationStateChanged;
         }
@@ -78,7 +87,16 @@ namespace Headway.Razor.Controls.Base
 
             dynamicList = GetResponse(result);
 
-            await base.OnInitializedAsync().ConfigureAwait(false);
+            ExtractArgs(dynamicList.Config);
+        }
+
+        protected void ExtractArgs(Config config)
+        {
+            if (config != null
+                && !string.IsNullOrWhiteSpace(config.DocumentArgs))
+            {
+                args = config.DocumentArgs.ToArgsList();
+            }
         }
 
         protected virtual async Task Submit()
