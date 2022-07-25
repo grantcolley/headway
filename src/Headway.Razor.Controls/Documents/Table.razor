@@ -25,9 +25,12 @@ else
             }
 
             <MudTh>
-                <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
-                    <button type="button" class="btn btn-small borderless btn-outline-primary fas fa-plus" @onclick="() => Add()"/>
-                </MudTooltip>
+                @if(!showSearch)
+                {
+                    <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
+                        <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => Add()"/>
+                    </MudTooltip>
+                }
             </MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -38,7 +41,7 @@ else
             }
             
             <MudTd>
-                <ComponentTip Text="Edit"><button type="button" class="btn btn-small borderless btn-outline-primary fas fa-edit" @onclick="() => Update(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateProperty))"/></ComponentTip>
+                <ComponentTip Text="Edit"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => Update(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateProperty))"/></ComponentTip>
             </MudTd>
 
         </RowTemplate>
