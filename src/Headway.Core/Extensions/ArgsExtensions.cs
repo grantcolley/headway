@@ -15,5 +15,21 @@ namespace Headway.Core.Extensions
         {
             return args.Any(a => a.Name.Equals(name));
         }
+
+        public static List<Arg> ToArgsList(this string componentArgs)
+        {
+            var args = new List<Arg>();
+
+            var argsSplit = componentArgs.Split('|');
+            for (var i = 0; i <= argsSplit.Length - 1; i++)
+            {
+                var argSplit = argsSplit[i].Split(';');
+                var name = argSplit[0].Split('=');
+                var value = argSplit[1].Split('=');
+                args.Add(new Arg { Name = name[1], Value = value[1] });
+            }
+
+            return args;
+        }
     }
 }
