@@ -65,7 +65,7 @@ namespace Headway.SeedData.RemediatR
 
             foreach (var line in lines.Skip(1))
             {
-                var c = line.Split('\u002C');
+                var c = line.Split(',');
 
                 countries.Add(new Country 
                 {
@@ -273,7 +273,7 @@ namespace Headway.SeedData.RemediatR
 
             foreach (var line in lines.Skip(1))
             {
-                var c = line.Split('\u002C');
+                var c = line.Split(',');
 
                 var customer = new Customer
                 {
@@ -511,7 +511,7 @@ namespace Headway.SeedData.RemediatR
                 ModelApi = "RemediatRRedress",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                DocumentArgs = $"",
+                DocumentArgs = $"Name={Args.SHOW_SEARCH};Value={Args.TRUE}|Name={Css.ROW_BUTTON};Value={Css.BTN_IMAGE_PLUS}",
                 NavigatePage = "Page",
                 NavigateProperty = "RedressId",
                 NavigateConfig = "Redress",
