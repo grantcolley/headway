@@ -24,11 +24,6 @@ namespace Headway.Razor.Controls.Documents
         {
             await InitializeDynamicListAsync().ConfigureAwait(false);
 
-            if (args.HasArg(Args.SHOW_SEARCH))
-            {
-                showSearch = bool.Parse(args.ArgValue(Args.SHOW_SEARCH));
-            }
-
             if (args.HasArg(Css.HEADER_BUTTON))
             {
                 headerButtonIcon = args.ArgValue(Css.HEADER_BUTTON);

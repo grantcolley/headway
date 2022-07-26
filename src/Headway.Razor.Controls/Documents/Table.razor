@@ -25,13 +25,17 @@ else
             }
 
             <MudTh>
-                @if(!showSearch)
+                @if(dynamicList.DynamicSearchComponent != null)
+                {
+                    <DynamicComponent Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
+                }
+                else
                 {
                     <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
                         <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => Add()"/>
-                    </MudTooltip>
+                    </MudTooltip>                
                 }
-            </MudTh>
+        </MudTh>
         </HeaderContent>
         <RowTemplate>
 
