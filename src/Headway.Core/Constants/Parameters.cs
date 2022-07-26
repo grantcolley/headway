@@ -7,5 +7,6 @@
         public const string CONTAINER = "Container";
         public const string FIELD = "Field";
         public const string ID = "Id";
+        public const string SEARCH_ITEMS = "SearchItems";
     }
 }
