@@ -1,5 +1,8 @@
-﻿using Headway.Core.Helpers;
+﻿using Headway.Core.Constants;
+using Headway.Core.Extensions;
+using Headway.Core.Helpers;
 using Headway.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,8 +14,37 @@ namespace Headway.Core.Dynamic
 
         public DynamicList(IEnumerable<T> listItems, Config config)
         {
-            Config = config;
+            SearchParameters = new Dictionary<string, object>();
+
             TypeHelper = DynamicTypeHelper.Get<T>();
+
+            Config = config;
+
+            if(!string.IsNullOrWhiteSpace(Config.SearchComponent))
+            {
+                DynamicSearchComponent = Type.GetType(Config.SearchComponent);
+
+                var dynamicSearchItems = new List<DynamicSearchItem>();
+
+                foreach(var configSearchItems in Config.ConfigSearchItems)
+                {
+                    var dynamicSearchItem = new DynamicSearchItem
+                    {
+                        Order = configSearchItems.Order,
+                        Label = configSearchItems.Label,
+                        Tooltip = configSearchItems.Tooltip,
+                        SearchComponent = Type.GetType(configSearchItems.Component)
+                    };
+
+                    var args = configSearchItems.ComponentArgs.ToArgsList();
+
+                    dynamicSearchItem.Parameters.Add(Parameters.COMPONENT_ARGS, args);
+
+                    dynamicSearchItems.Add(dynamicSearchItem);
+                }
+
+                SearchParameters.Add(Parameters.SEARCH_ITEMS, dynamicSearchItems);
+            }
 
             dynamicListItems = listItems.Select(i => new DynamicListItem<T>(i)).ToList();
         }
@@ -21,11 +53,17 @@ namespace Headway.Core.Dynamic
 
         public Config Config { get; private set; }
 
-        public List<ConfigItem> ConfigItems 
+        public Type DynamicSearchComponent { get; private set; }
+
+        public Dictionary<string, object> SearchParameters { get; private set; }
+
+        public string Title { get { return Config.Title; } }
+
+        public List<ConfigItem> ConfigItems
         {
             get
             {
-                if(Config == null)
+                if (Config == null)
                 {
                     return new List<ConfigItem>();
                 }
@@ -33,8 +71,6 @@ namespace Headway.Core.Dynamic
                 return Config.ConfigItems.OrderBy(c => c.Order).ToList();
             }
         }
-
-        public string Title { get { return Config.Title; } }
 
         public List<DynamicListItem<T>> DynamicListItems 
         { 
