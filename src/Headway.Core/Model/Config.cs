@@ -58,5 +58,8 @@ namespace Headway.Core.Model
 
         [StringLength(50, ErrorMessage = "Navigate Config cannot exceed 50 characters")]
         public string NavigateConfig { get; set; }
+
+        [StringLength(150, ErrorMessage = "Search Component cannot exceed 150 characters")]
+        public string SearchComponent { get; set; }
     }
 }
