@@ -1,4 +1,7 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Constants;
+using Headway.Core.Dynamic;
+using Headway.Core.Helpers;
+using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +9,11 @@ namespace Headway.Core.Extensions
 {
     public static class ArgsExtensions
     {
+        public static Arg ArgOrDefault(this IEnumerable<Arg> args, string name)
+        {
+            return args.FirstOrDefault(a => a.Name.Equals(name));
+        }
+
         public static string ArgValue(this IEnumerable<Arg> args, string name)
         {
             return args.First(a => a.Name.Equals(name)).Value;
@@ -30,6 +38,22 @@ namespace Headway.Core.Extensions
             }
 
             return args;
+        }
+
+        public static void AddSearchArgs(this List<DynamicSearchItem> dynamicSearchItems)
+        {
+            foreach (var dynamicSearchItem in dynamicSearchItems)
+            {
+                var args = dynamicSearchItem.ComponentArgs.ToArgsList();
+                dynamicSearchItem.Parameters.Add(Parameters.COMPONENT_ARGS, args);
+
+                var linkedSourceArg = args.ArgOrDefault(Args.LINK_SOURCE);
+                if (linkedSourceArg != null
+                    && linkedSourceArg.Value != null)
+                {
+                    DynamicLinkHelper.LinkSearchItems(dynamicSearchItem, dynamicSearchItems, linkedSourceArg.Value.ToString());
+                }
+            }
         }
     }
 }
