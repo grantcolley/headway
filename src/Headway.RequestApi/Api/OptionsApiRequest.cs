@@ -39,9 +39,13 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
         {
-            var optionsCode = dynamicArgs.DynamicArgToString(Options.OPTIONS_CODE);
-
             var args = ComponentArgHelper.GetArgs(dynamicArgs);
+            return await GetOptionItemsAsync(args);
+        }
+
+        public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<Arg> args)
+        {
+            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
 
             if (localOptionItems.ContainsKey(optionsCode))
             {
