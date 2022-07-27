@@ -74,22 +74,6 @@ namespace Headway.Core.Helpers
             }
         }
 
-        public static void AddDynamicArgs(List<DynamicField> dynamicFields)
-        {
-            foreach (var dynamicField in dynamicFields)
-            {
-                var dynamicArgs = ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
-                dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
-
-                var linkedSourceArg = dynamicArgs.DynamicArgOrDefault(Args.LINK_SOURCE);
-                if(linkedSourceArg != null
-                    && linkedSourceArg.Value != null)
-                {
-                    DynamicFieldHelper.LinkFields(dynamicField, dynamicFields, linkedSourceArg.Value.ToString());
-                }
-            }
-        }
-
         public static void PropagateDynamicArgs(List<DynamicField> dynamicFields, List<DynamicArg> sourceArgs)
         {
             foreach (var dynamicField in dynamicFields)
@@ -102,8 +86,24 @@ namespace Headway.Core.Helpers
                     if (linkedSourceArg != null
                         && linkedSourceArg.Value != null)
                     {
-                        DynamicFieldHelper.LinkFields(dynamicField, sourceArgs, linkedSourceArg.Value.ToString());
+                        DynamicLinkHelper.LinkFields(dynamicField, sourceArgs, linkedSourceArg.Value.ToString());
                     }
+                }
+            }
+        }
+
+        public static void AddDynamicArgs(List<DynamicField> dynamicFields)
+        {
+            foreach (var dynamicField in dynamicFields)
+            {
+                var dynamicArgs = ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
+                dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
+
+                var linkedSourceArg = dynamicArgs.DynamicArgOrDefault(Args.LINK_SOURCE);
+                if(linkedSourceArg != null
+                    && linkedSourceArg.Value != null)
+                {
+                    DynamicLinkHelper.LinkFields(dynamicField, dynamicFields, linkedSourceArg.Value.ToString());
                 }
             }
         }
