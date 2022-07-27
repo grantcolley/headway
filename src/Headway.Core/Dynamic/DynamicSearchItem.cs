@@ -12,8 +12,27 @@ namespace Headway.Core.Dynamic
 
         public int Order { get; set; }
         public string Label { get; set; }
+        public string ParameterName { get; set; }
         public string Tooltip { get; set; }
+        public string ComponentArgs { get; set; }
+        public string Value { get; set; }
         public Type SearchComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
+        public DynamicSearchItem LinkSource { get; set; }
+        public bool IsLinkedSearchItem { get { return LinkSource != null; } }
+        public bool HasLinkDependents { get; set; }
+
+        public object LinkValue
+        {
+            get
+            {
+                if (IsLinkedSearchItem)
+                {
+                    return LinkSource.Value;
+                }
+
+                return null;
+            }
+        }
     }
 }
