@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Headway.Razor.Controls.SearchComponents
 {
-    public class StandardSearchComponentBase : HeadwayComponentBase
+    public class StandardSearchComponentBase : SearchComponentBase
     {
         [Parameter]
         public List<DynamicSearchItem> SearchItems { get; set; }
