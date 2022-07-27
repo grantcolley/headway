@@ -20,7 +20,9 @@ namespace Headway.Core.Dynamic
 
             Config = config;
 
-            if(!string.IsNullOrWhiteSpace(Config.SearchComponent))
+            SearchComonentUniqueId = Guid.NewGuid().ToString();
+
+            if (!string.IsNullOrWhiteSpace(Config.SearchComponent))
             {
                 DynamicSearchComponent = Type.GetType(Config.SearchComponent);
 
@@ -34,6 +36,7 @@ namespace Headway.Core.Dynamic
                         Label = configSearchItems.Label,
                         Tooltip = configSearchItems.Tooltip,
                         ComponentArgs = configSearchItems.ComponentArgs,
+                        SearchComonentUniqueId = SearchComonentUniqueId,
                         SearchComponent = Type.GetType(configSearchItems.Component)
                     };
 
@@ -51,6 +54,8 @@ namespace Headway.Core.Dynamic
         public DynamicTypeHelper<T> TypeHelper { get; private set; }
 
         public Config Config { get; private set; }
+
+        public string SearchComonentUniqueId { get; set; }
 
         public Type DynamicSearchComponent { get; private set; }
 
