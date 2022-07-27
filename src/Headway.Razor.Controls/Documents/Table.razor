@@ -27,7 +27,7 @@ else
             <MudTh>
                 @if(dynamicList.DynamicSearchComponent != null)
                 {
-                    <DynamicComponent Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
+                    <DynamicComponent @key="dynamicList.SearchComonentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
                 }
                 else
                 {
