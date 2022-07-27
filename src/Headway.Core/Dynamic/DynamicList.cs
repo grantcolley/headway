@@ -33,15 +33,14 @@ namespace Headway.Core.Dynamic
                         Order = configSearchItems.Order,
                         Label = configSearchItems.Label,
                         Tooltip = configSearchItems.Tooltip,
+                        ComponentArgs = configSearchItems.ComponentArgs,
                         SearchComponent = Type.GetType(configSearchItems.Component)
                     };
 
-                    var args = configSearchItems.ComponentArgs.ToArgsList();
-
-                    dynamicSearchItem.Parameters.Add(Parameters.COMPONENT_ARGS, args);
-
                     dynamicSearchItems.Add(dynamicSearchItem);
                 }
+
+                dynamicSearchItems.AddSearchArgs();
 
                 SearchParameters.Add(Parameters.SEARCH_ITEMS, dynamicSearchItems);
             }
