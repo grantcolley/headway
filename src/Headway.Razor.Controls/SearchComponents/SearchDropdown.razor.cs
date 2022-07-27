@@ -1,0 +1,67 @@
+﻿using Headway.Core.Attributes;
+using Headway.Core.Model;
+using Headway.Core.Notifications;
+using Headway.Razor.Controls.Base;
+using Headway.RequestApi.Requests;
+using MediatR;
+using Microsoft.AspNetCore.Components;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Headway.Razor.Controls.Components
+{
+    [DynamicComponent]
+    public abstract class SearchDropdownBase : SearchItemComponentBase
+    {
+        [Inject]
+        public IStateNotification StateNotification { get; set; }
+
+        [Inject]
+        public IMediator Mediator { get; set; }
+
+        protected IEnumerable<OptionItem> optionItems;
+
+        public string PropertyValue
+        {
+            get { return SearchItem.Value; }
+            set { SearchItem.Value = value; }
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            LinkFieldCheck();
+
+            var result = await Mediator.Send(new OptionItemsRequest(ComponentArgs)).ConfigureAwait(false);
+
+            optionItems = GetResponse(result.OptionItems);
+
+            OptionItem selectedItem = null;
+
+            if (!string.IsNullOrWhiteSpace(SearchItem.Value))
+            {
+                selectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(SearchItem.Value));
+
+                if (selectedItem == null)
+                {
+                    selectedItem = optionItems.FirstOrDefault();
+                }
+            }
+
+            PropertyValue = selectedItem.Id;
+
+            await base.OnParametersSetAsync().ConfigureAwait(false);
+        }
+
+        protected virtual void OnValueChanged(IEnumerable<string> values)
+        {
+            if (SearchItem.HasLinkDependents)
+            {
+                StateNotification.NotifyStateHasChanged(SearchItem.SearchComonentUniqueId);
+            }
+
+            StateHasChanged();
+        }
+    }
+}
