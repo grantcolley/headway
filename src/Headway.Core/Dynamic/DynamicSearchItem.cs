@@ -16,13 +16,14 @@ namespace Headway.Core.Dynamic
         public string Tooltip { get; set; }
         public string ComponentArgs { get; set; }
         public string Value { get; set; }
+        public string SearchComonentUniqueId { get; set; }
         public Type SearchComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
         public DynamicSearchItem LinkSource { get; set; }
         public bool IsLinkedSearchItem { get { return LinkSource != null; } }
         public bool HasLinkDependents { get; set; }
 
-        public object LinkValue
+        public string LinkValue
         {
             get
             {
