@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Headway.Razor.Controls.Base
             {
                 var value = SearchItem.LinkValue;
 
-                var linkValueArg = ComponentArgs.DynamicArgOrDefault(Args.LINK_VALUE);
+                var linkValueArg = ComponentArgs.ArgOrDefault(Args.LINK_VALUE);
 
                 if (linkValueArg == null)
                 {
