@@ -9,18 +9,18 @@
 <div class="mb-1">
     <div class="row">
         <div class="col-sm-4 col-form-label">
-            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            @if(string.IsNullOrWhiteSpace(SearchItem.Tooltip))
             {
-                @Field.Label                
+                @SearchItem.Label                
             }
             else
             {
-                <ComponentTip Text="@Field.Tooltip">@Field.Label</ComponentTip>    
+                <ComponentTip Text="@SearchItem.Tooltip">@SearchItem.Label</ComponentTip>    
             }
         </div>
         <div class="col-sm-8">
             <MudSelect  T="string" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
-                        @bind-Value="PropertyValue" For="FieldExpression" SelectedValuesChanged="OnValueChanged">
+                        @bind-Value="PropertyValue" SelectedValuesChanged="OnValueChanged">
                 @if (optionItems != null)
                 {
                     @foreach (var optionItem in optionItems)
