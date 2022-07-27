@@ -16,7 +16,7 @@ namespace Headway.Core.Dynamic
         public string Tooltip { get; set; }
         public string ComponentArgs { get; set; }
         public string Value { get; set; }
-        public string SearchComonentUniqueId { get; set; }
+        public string SearchComponentUniqueId { get; set; }
         public Type SearchComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
         public DynamicSearchItem LinkSource { get; set; }
