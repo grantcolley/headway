@@ -33,7 +33,7 @@ namespace Headway.Razor.Controls.Components
         {
             LinkFieldCheck();
 
-            var result = await Mediator.Send(new OptionItemsRequest(ComponentArgs)).ConfigureAwait(false);
+            var result = await Mediator.Send(new SearchOptionItemsRequest(ComponentArgs)).ConfigureAwait(false);
 
             optionItems = GetResponse(result.OptionItems);
 
@@ -58,7 +58,7 @@ namespace Headway.Razor.Controls.Components
         {
             if (SearchItem.HasLinkDependents)
             {
-                StateNotification.NotifyStateHasChanged(SearchItem.SearchComonentUniqueId);
+                StateNotification.NotifyStateHasChanged(SearchItem.SearchComponentUniqueId);
             }
 
             StateHasChanged();
