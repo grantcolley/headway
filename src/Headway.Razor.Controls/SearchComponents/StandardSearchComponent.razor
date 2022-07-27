@@ -1,0 +1,12 @@
+﻿@inherits StandardSearchComponentBase
+
+<div class="container container-body float-start">
+    <div class="row" style="margin-top:20px;margin-bottom:20px">
+        @foreach(var searchItem in SearchItems)
+        {
+            <div class="col">
+                <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
+            </div>
+        }
+    </div>
+</div>
