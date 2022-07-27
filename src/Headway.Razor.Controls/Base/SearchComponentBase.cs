@@ -1,44 +1,30 @@
-﻿using Headway.Core.Constants;
-using Headway.Core.Dynamic;
-using Headway.Core.Extensions;
-using Headway.Core.Model;
+﻿using Headway.Core.Notifications;
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.Base
 {
-    public class SearchComponentBase : HeadwayComponentBase
+    public class SearchComponentBase : ComponentBase, IDisposable
     {
-        [Parameter]
-        public DynamicSearchItem SearchItem { get; set; }
+        [Inject]
+        public IStateNotification StateNotification { get; set; }
 
         [Parameter]
-        public List<Arg> ComponentArgs { get; set; }
+        public string SearchComonentUniqueId { get; set; }
 
-        protected void LinkFieldCheck()
+        public void Dispose()
         {
-            if (SearchItem.IsLinkedSearchItem)
-            {
-                SetLinkedValue();
-            }
+            StateNotification.Deregister(SearchComonentUniqueId);
+
+            GC.SuppressFinalize(this);
         }
 
-        protected void SetLinkedValue()
+        protected async override Task OnInitializedAsync()
         {
-            if (SearchItem.IsLinkedSearchItem)
-            {
-                var value = SearchItem.LinkValue;
+            StateNotification.Register(SearchComonentUniqueId, StateHasChanged);
 
-                var linkValueArg = ComponentArgs.ArgOrDefault(Args.LINK_VALUE);
-
-                if (linkValueArg == null)
-                {
-                    linkValueArg = new Arg { Name = Args.LINK_VALUE };
-                    ComponentArgs.Add(linkValueArg);
-                }
-
-                linkValueArg.Value = value;
-            }
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
     }
 }
