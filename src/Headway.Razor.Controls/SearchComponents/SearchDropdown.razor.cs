@@ -5,12 +5,11 @@ using Headway.Razor.Controls.Base;
 using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Controls.Components
+namespace Headway.Razor.Controls.SearchComponents
 {
     [DynamicComponent]
     public abstract class SearchDropdownBase : SearchItemComponentBase
@@ -42,11 +41,11 @@ namespace Headway.Razor.Controls.Components
             if (!string.IsNullOrWhiteSpace(SearchItem.Value))
             {
                 selectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(SearchItem.Value));
+            }
 
-                if (selectedItem == null)
-                {
-                    selectedItem = optionItems.FirstOrDefault();
-                }
+            if (selectedItem == null)
+            {
+                selectedItem = optionItems.First();
             }
 
             PropertyValue = selectedItem.Id;
