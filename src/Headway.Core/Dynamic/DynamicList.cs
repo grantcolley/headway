@@ -40,6 +40,7 @@ namespace Headway.Core.Dynamic
                         SearchComponent = Type.GetType(configSearchItems.Component)
                     };
 
+                    dynamicSearchItem.Parameters.Add(Parameters.SEARCH_ITEM, dynamicSearchItem);
                     dynamicSearchItems.Add(dynamicSearchItem);
                 }
 
