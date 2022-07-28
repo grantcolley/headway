@@ -525,24 +525,24 @@ namespace Headway.SeedData.RemediatR
                 {
                     Label = "Product Type",
                     Tooltip = "The type of product in scope for redress",
-                    Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls",
-                    ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core",
                     Order = 1
                 },
                 new ConfigSearchItem
                 {
                     Label = "Rate Type",
                     Tooltip = "The rate type in scope for redress",
-                    Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls",
-                    ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core",
                     Order = 2
                 },
                 new ConfigSearchItem
                 {
                     Label = "Repayment Type",
                     Tooltip = "The repayment type in scope for redress",
-                    Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls",
-                    ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core",
                     Order = 3
                 }
             });
