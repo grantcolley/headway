@@ -9,49 +9,56 @@
 }
 else
 {
-    @if(dynamicList.DynamicSearchComponent != null)
-    {
-        <DynamicComponent @key="dynamicList.SearchComponentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
-    }
+    <MudGrid>
 
-    <MudTable Items="@dynamicList.DynamicListItems" 
-              Hover="true" Dense="true" Striped="true" Breakpoint="Breakpoint.Sm"
-              Filter="new Func<DynamicListItem<T>,bool>(FilterFunction)">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">@dynamicList.Title</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.FilterAlt" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-        </ToolBarContent>
-        <HeaderContent>
+        @if(dynamicList.DynamicSearchComponent != null)
+        {
+            <MudItem xs="12">
+                <DynamicComponent @key="dynamicList.SearchComponentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
+            </MudItem>
+        }
 
-            @foreach(var column in dynamicList.ConfigItems)
-            {
-                <MudTh>@column.Label</MudTh>
-            }
+        <MudItem xs="12">
+            <MudTable Items="@dynamicList.DynamicListItems" 
+                      Hover="true" Dense="true" Striped="true" Breakpoint="Breakpoint.Sm"
+                      Filter="new Func<DynamicListItem<T>,bool>(FilterFunction)">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">@dynamicList.Title</MudText>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.FilterAlt" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                <HeaderContent>
 
-            <MudTh>
-                @if(dynamicList.DynamicSearchComponent == null)
-                {
-                    <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
-                        <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => Add()"/>
-                    </MudTooltip>                
-                }
-        </MudTh>
-        </HeaderContent>
-        <RowTemplate>
+                    @foreach(var column in dynamicList.ConfigItems)
+                    {
+                        <MudTh>@column.Label</MudTh>
+                    }
 
-            @foreach(var column in dynamicList.ConfigItems)
-            {
-                <MudTd DataLabel="@column.Label">@dynamicList.GetValue(@context.Model, column.PropertyName)</MudTd>                            
-            }
+                    <MudTh>
+                        @if(dynamicList.DynamicSearchComponent == null)
+                        {
+                            <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
+                                <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => Add()"/>
+                            </MudTooltip>                
+                        }
+                </MudTh>
+                </HeaderContent>
+                <RowTemplate>
+
+                    @foreach(var column in dynamicList.ConfigItems)
+                    {
+                        <MudTd DataLabel="@column.Label">@dynamicList.GetValue(@context.Model, column.PropertyName)</MudTd>                            
+                    }
             
-            <MudTd>
-                <ComponentTip Text="Edit"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => Update(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateProperty))"/></ComponentTip>
-            </MudTd>
+                    <MudTd>
+                        <ComponentTip Text="Edit"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => Update(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateProperty))"/></ComponentTip>
+                    </MudTd>
 
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager />
-        </PagerContent>
-    </MudTable>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager />
+                </PagerContent>
+            </MudTable>
+        </MudItem>
+    </MudGrid>
 }
