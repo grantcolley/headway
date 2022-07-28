@@ -19,7 +19,7 @@
             }
         </div>
         <div class="col-sm-8">
-            <MudSelect  T="string" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+            <MudSelect  T="string" Margin="Margin.Dense" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
                         @bind-Value="PropertyValue" SelectedValuesChanged="OnValueChanged">
                 @if (optionItems != null)
                 {
