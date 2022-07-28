@@ -8,7 +8,7 @@
         public const string CONTROLLER_OPTION_ITEMS = "ControllerOptionItems";
         public const string COUNTRY_OPTION_ITEMS = "CountryOptionItems";
         public const string DISPLAY_FIELD = "DisplayField";
-        public const string ENUM_OPTION_ITEMS = "EnumOptionItems";
+        public const string ENUM_NAMES_OPTION_ITEMS = "EnumNamesOptionItems";
         public const string OPTIONS_CODE = "OptionsCode";
         public const string PERMISSIONS_OPTION_ITEMS = "Permissions";
         public const string MODULES_OPTION_ITEMS = "Modules";
