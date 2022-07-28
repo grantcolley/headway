@@ -97,7 +97,7 @@ namespace Headway.Razor.Controls.Components
 
             if(selectedItem == null)
             {
-                selectedItem = optionItems.FirstOrDefault();
+                selectedItem = optionItems.First();
             }
 
             PropertyValue = selectedItem.Id;
