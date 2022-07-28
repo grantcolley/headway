@@ -1,12 +1,24 @@
 ﻿@inherits StandardSearchComponentBase
 
-<div class="container container-body float-start">
-    <div class="row" style="margin-top:20px;margin-bottom:20px">
-        @foreach(var searchItem in SearchItems)
-        {
-            <div class="col">
-                <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
+<div class="row" style="margin-top:20px;margin-bottom:20px">
+    <div class="col-sm-10">
+        <div class="container container-body float-start">
+            <div class="row" style="margin-top:20px;margin-bottom:20px">
+                @foreach(var searchItem in SearchItems)
+                {
+                    <div class="col">
+                        <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
+                    </div>
+                }
             </div>
-        }
+        </div>
+    </div>
+
+    <div class="col-sm-1">
+        <MudSpacer />
+    </div>
+
+    <div class="col-sm-1">
+        <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Search" Class="align-center"></MudIconButton>
     </div>
 </div>
