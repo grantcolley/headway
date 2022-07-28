@@ -9,6 +9,11 @@
 }
 else
 {
+    @if(dynamicList.DynamicSearchComponent != null)
+    {
+        <DynamicComponent @key="dynamicList.SearchComponentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
+    }
+
     <MudTable Items="@dynamicList.DynamicListItems" 
               Hover="true" Dense="true" Striped="true" Breakpoint="Breakpoint.Sm"
               Filter="new Func<DynamicListItem<T>,bool>(FilterFunction)">
@@ -25,11 +30,7 @@ else
             }
 
             <MudTh>
-                @if(dynamicList.DynamicSearchComponent != null)
-                {
-                    <DynamicComponent @key="dynamicList.SearchComponentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
-                }
-                else
+                @if(dynamicList.DynamicSearchComponent == null)
                 {
                     <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
                         <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => Add()"/>
