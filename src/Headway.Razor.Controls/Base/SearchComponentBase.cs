@@ -11,18 +11,18 @@ namespace Headway.Razor.Controls.Base
         public IStateNotification StateNotification { get; set; }
 
         [Parameter]
-        public string SearchComonentUniqueId { get; set; }
+        public string SearchComponentUniqueId { get; set; }
 
         public void Dispose()
         {
-            StateNotification.Deregister(SearchComonentUniqueId);
+            StateNotification.Deregister(SearchComponentUniqueId);
 
             GC.SuppressFinalize(this);
         }
 
         protected async override Task OnInitializedAsync()
         {
-            StateNotification.Register(SearchComonentUniqueId, StateHasChanged);
+            StateNotification.Register(SearchComponentUniqueId, StateHasChanged);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
         }
