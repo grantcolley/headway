@@ -14,7 +14,9 @@ else
         @if(dynamicList.DynamicSearchComponent != null)
         {
             <MudItem xs="12">
-                <DynamicComponent @key="dynamicList.SearchComponentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
+                <CascadingValue Value="searchCallback">
+                    <DynamicComponent @key="dynamicList.SearchComponentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
+                </CascadingValue>
             </MudItem>
         }
 
