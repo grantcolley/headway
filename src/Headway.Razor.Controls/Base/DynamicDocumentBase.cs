@@ -48,6 +48,12 @@ namespace Headway.Razor.Controls.Base
 
         private bool disposedValue;
 
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
         protected virtual async Task InitializeDynamicModelAsync()
         {
             IResponse<DynamicModel<T>> response;
@@ -72,11 +78,6 @@ namespace Headway.Razor.Controls.Base
 
             CurrentEditContext = new EditContext(dynamicModel.Model);
             CurrentEditContext.OnValidationStateChanged += CurrentEditContextOnValidationStateChanged;
-        }
-
-        private void CurrentEditContextOnValidationStateChanged(object sender, ValidationStateChangedEventArgs e)
-        {
-            GetValidationMessages();
         }
 
         protected virtual async Task InitializeDynamicListAsync()
@@ -206,10 +207,9 @@ namespace Headway.Razor.Controls.Base
             }
         }
 
-        public void Dispose()
+        private void CurrentEditContextOnValidationStateChanged(object sender, ValidationStateChangedEventArgs e)
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            GetValidationMessages();
         }
     }
 }
