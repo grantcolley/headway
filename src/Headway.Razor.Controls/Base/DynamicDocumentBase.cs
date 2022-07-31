@@ -17,7 +17,7 @@ namespace Headway.Razor.Controls.Base
     public abstract class DynamicDocumentBase<T> : HeadwayComponentBase, IDisposable where T : class, new()
     {
         [Inject]
-        protected IDynamicApiRequest DynamicService { get; set; }
+        protected IDynamicApiRequest DynamicApiRequest { get; set; }
 
         [Inject]
         protected IShowDialogService ShowDialogService { get; set; }
@@ -61,13 +61,13 @@ namespace Headway.Razor.Controls.Base
             if (!Id.HasValue
                 || Id.Value.Equals(0))
             {
-                response = await DynamicService
+                response = await DynamicApiRequest
                     .CreateDynamicModelInstanceAsync<T>(Config)
                     .ConfigureAwait(false);
             }
             else
             {
-                response = await DynamicService
+                response = await DynamicApiRequest
                     .GetDynamicModelAsync<T>(Id.Value, Config)
                     .ConfigureAwait(false);
             }
@@ -83,7 +83,7 @@ namespace Headway.Razor.Controls.Base
         protected virtual async Task InitializeDynamicListAsync()
         {
             var result =
-                await DynamicService.GetDynamicListAsync<T>(Config)
+                await DynamicApiRequest.GetDynamicListAsync<T>(Config)
                 .ConfigureAwait(false);
 
             dynamicList = GetResponse(result);
@@ -110,13 +110,13 @@ namespace Headway.Razor.Controls.Base
 
                 if (dynamicModel.Id.Equals(0))
                 {
-                    response = await DynamicService
+                    response = await DynamicApiRequest
                         .AddDynamicModelAsync<T>(dynamicModel)
                         .ConfigureAwait(false);
                 }
                 else
                 {
-                    response = await DynamicService
+                    response = await DynamicApiRequest
                         .UpdateDynamicModelAsync<T>(dynamicModel)
                         .ConfigureAwait(false);
                 }
@@ -165,7 +165,7 @@ namespace Headway.Razor.Controls.Base
 
             isDeleteInProgress = true;
 
-            var response = await DynamicService
+            var response = await DynamicApiRequest
                 .DeleteDynamicModelAsync(dynamicModel)
                 .ConfigureAwait(false);
 
