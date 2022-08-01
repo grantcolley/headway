@@ -1,11 +1,9 @@
 ﻿@inherits StandardSearchComponentBase
 
-<MudPaper Class="d-flex flex-row flex-grow-1 gap-4" Elevation="1">
+<MudPaper Class="d-flex flex-row gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
     @foreach(var searchItem in SearchItems)
     {
-        <div class="col">
-            <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
-        </div>
+        <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
     }
 
     <MudSpacer />
