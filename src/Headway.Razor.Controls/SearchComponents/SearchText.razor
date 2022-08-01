@@ -1,0 +1,19 @@
+﻿@inherits SearchTextBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @if(string.IsNullOrWhiteSpace(SearchItem.Tooltip))
+            {
+                @SearchItem.Label                
+            }
+            else
+            {
+                <ComponentTip Text="@SearchItem.Tooltip">@SearchItem.Label</ComponentTip>    
+            }
+        </div>
+        <div class="col-sm-8">
+            <MudTextField @bind-Value="@PropertyValue" Margin="Margin.Dense" Variant="Variant.Outlined"/>
+        </div>
+    </div>
+</div>
