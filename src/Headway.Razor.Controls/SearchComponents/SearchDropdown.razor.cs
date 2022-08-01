@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Razor.Controls.SearchComponents
 {
-    [DynamicComponent]
+    [DynamicSearchComponent]
     public abstract class SearchDropdownBase : SearchItemComponentBase
     {
         [Inject]
