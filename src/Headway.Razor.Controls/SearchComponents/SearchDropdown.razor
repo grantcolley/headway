@@ -3,8 +3,9 @@
 @if(string.IsNullOrWhiteSpace(SearchItem.Tooltip))
 {
     <MudSelect  T="string" @bind-Value="PropertyValue" Label="@SearchItem.Label"
-                FullWidth=true Margin="Margin.Dense" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
-                SelectedValuesChanged="OnValueChanged">
+                Style="@style" SelectedValuesChanged="OnValueChanged"
+                Variant="Variant.Text" FullWidth=true Margin="Margin.Dense" 
+                AnchorOrigin="Origin.BottomCenter" MultiSelection="false">
         @if (optionItems != null)
         {
             @foreach (var optionItem in optionItems)
@@ -17,9 +18,10 @@
 else
 {
     <ComponentTip Text="@SearchItem.Tooltip">
-        <MudSelect  T="string" @bind-Value="PropertyValue" Label="@SearchItem.Label"
-                    FullWidth=true Margin="Margin.Dense" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
-                    SelectedValuesChanged="OnValueChanged">
+        <MudSelect  T="string" @bind-Value="PropertyValue" Label="@SearchItem.Label" 
+                    Style="@style" SelectedValuesChanged="OnValueChanged"
+                    Variant="Variant.Text" FullWidth=true Margin="Margin.Dense" 
+                    AnchorOrigin="Origin.BottomCenter" MultiSelection="false">
             @if (optionItems != null)
             {
                 @foreach (var optionItem in optionItems)
