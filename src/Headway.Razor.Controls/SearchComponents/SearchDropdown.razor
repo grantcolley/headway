@@ -1,28 +1,32 @@
 ﻿@inherits SearchDropdownBase
 
-<div class="mb-1">
-    <div class="row">
-        <div class="col-sm-4 col-form-label">
-            @if(string.IsNullOrWhiteSpace(SearchItem.Tooltip))
+@if(string.IsNullOrWhiteSpace(SearchItem.Tooltip))
+{
+    <MudSelect  T="string" @bind-Value="PropertyValue" Label="@SearchItem.Label"
+                FullWidth=true Margin="Margin.Dense" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                SelectedValuesChanged="OnValueChanged">
+        @if (optionItems != null)
+        {
+            @foreach (var optionItem in optionItems)
             {
-                @SearchItem.Label                
+                <MudSelectItem T="string" Value="@optionItem.Id">@optionItem.Display</MudSelectItem>
             }
-            else
+        }
+    </MudSelect>
+}
+else
+{
+    <ComponentTip Text="@SearchItem.Tooltip">
+        <MudSelect  T="string" @bind-Value="PropertyValue" Label="@SearchItem.Label"
+                    FullWidth=true Margin="Margin.Dense" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                    SelectedValuesChanged="OnValueChanged">
+            @if (optionItems != null)
             {
-                <ComponentTip Text="@SearchItem.Tooltip">@SearchItem.Label</ComponentTip>    
-            }
-        </div>
-        <div class="col-sm-8">
-            <MudSelect  T="string" Margin="Margin.Dense" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
-                        @bind-Value="PropertyValue" SelectedValuesChanged="OnValueChanged">
-                @if (optionItems != null)
+                @foreach (var optionItem in optionItems)
                 {
-                    @foreach (var optionItem in optionItems)
-                    {
-                        <MudSelectItem T="string" Value="@optionItem.Id">@optionItem.Display</MudSelectItem>
-                    }
+                    <MudSelectItem T="string" Value="@optionItem.Id">@optionItem.Display</MudSelectItem>
                 }
-            </MudSelect>
-        </div>
-    </div>
-</div>
+            }
+        </MudSelect>
+    </ComponentTip>
+}
