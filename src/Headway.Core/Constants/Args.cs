@@ -20,6 +20,7 @@
         public const string MIN = "Min";
         public const string MODEL = "Model";
         public const string PROPAGATE_FIELDS = "PropagateFields";
+        public const string STYLE = "Style";
         public const string TEXT_MULTILINE_ROWS = "Rows";
         public const string TRUE = "true";
         public const string TYPE = "Type";
