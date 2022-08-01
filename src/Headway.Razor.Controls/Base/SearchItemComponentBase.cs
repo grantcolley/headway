@@ -15,6 +15,12 @@ namespace Headway.Razor.Controls.Base
         [Parameter]
         public List<Arg> ComponentArgs { get; set; }
 
+        public string PropertyValue
+        {
+            get { return SearchItem.Value; }
+            set { SearchItem.Value = value; }
+        }
+
         protected void LinkFieldCheck()
         {
             if (SearchItem.IsLinkedSearchItem)
