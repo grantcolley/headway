@@ -22,12 +22,6 @@ namespace Headway.Razor.Controls.SearchComponents
 
         protected IEnumerable<OptionItem> optionItems;
 
-        public string PropertyValue
-        {
-            get { return SearchItem.Value; }
-            set { SearchItem.Value = value; }
-        }
-
         protected override async Task OnParametersSetAsync()
         {
             LinkFieldCheck();
