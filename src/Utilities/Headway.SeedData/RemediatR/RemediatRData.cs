@@ -386,11 +386,30 @@ namespace Headway.SeedData.RemediatR
                 ModelApi = "RemediatRCustomer",
                 OrderModelBy = "Surname",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                SearchComponent = "Headway.Razor.Controls.SearchComponents.StandardSearchComponent, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateProperty = "CustomerId",
                 NavigateConfig = "Customer",
                 NavigateResetBreadcrumb = true
             };
+
+            customersConfig.ConfigSearchItems.AddRange(new List<ConfigSearchItem>
+            {
+                new ConfigSearchItem
+                {
+                    Label = "Customer Id",
+                    Tooltip = "The customer identifier",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
+                    Order = 1
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Customer Name",
+                    Tooltip = "The rate type in scope for redress",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
+                    Order = 2
+                }
+            });
 
             dbContext.Configs.Add(customersConfig);
 
