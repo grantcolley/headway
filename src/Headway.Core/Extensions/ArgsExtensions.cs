@@ -44,14 +44,17 @@ namespace Headway.Core.Extensions
         {
             foreach (var dynamicSearchItem in dynamicSearchItems)
             {
-                var args = dynamicSearchItem.ComponentArgs.ToArgsList();
-                dynamicSearchItem.Parameters.Add(Parameters.COMPONENT_ARGS, args);
-
-                var linkedSourceArg = args.ArgOrDefault(Args.LINK_SOURCE);
-                if (linkedSourceArg != null
-                    && linkedSourceArg.Value != null)
+                if (!string.IsNullOrWhiteSpace(dynamicSearchItem.ComponentArgs))
                 {
-                    DynamicLinkHelper.LinkSearchItems(dynamicSearchItem, dynamicSearchItems, linkedSourceArg.Value.ToString());
+                    var args = dynamicSearchItem.ComponentArgs.ToArgsList();
+                    dynamicSearchItem.Parameters.Add(Parameters.COMPONENT_ARGS, args);
+
+                    var linkedSourceArg = args.ArgOrDefault(Args.LINK_SOURCE);
+                    if (linkedSourceArg != null
+                        && linkedSourceArg.Value != null)
+                    {
+                        DynamicLinkHelper.LinkSearchItems(dynamicSearchItem, dynamicSearchItems, linkedSourceArg.Value.ToString());
+                    }
                 }
             }
         }
