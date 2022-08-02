@@ -11,10 +11,12 @@ namespace Headway.Core.Dynamic
     public class DynamicList<T> where T : class, new()
     {
         private readonly List<DynamicListItem<T>> dynamicListItems;
+        private readonly List<DynamicSearchItem> dynamicSearchItems;
 
         public DynamicList(IEnumerable<T> listItems, Config config)
         {
             SearchParameters = new Dictionary<string, object>();
+            dynamicSearchItems = new List<DynamicSearchItem>();
 
             TypeHelper = DynamicTypeHelper.Get<T>();
 
@@ -26,14 +28,13 @@ namespace Headway.Core.Dynamic
             {
                 DynamicSearchComponent = Type.GetType(Config.SearchComponent);
 
-                var dynamicSearchItems = new List<DynamicSearchItem>();
-
                 foreach(var configSearchItems in Config.ConfigSearchItems)
                 {
                     var dynamicSearchItem = new DynamicSearchItem
                     {
                         Order = configSearchItems.Order,
                         Label = configSearchItems.Label,
+                        ParameterName = configSearchItems.ParameterName,
                         Tooltip = configSearchItems.Tooltip,
                         ComponentArgs = configSearchItems.ComponentArgs,
                         SearchComponentUniqueId = SearchComponentUniqueId,
@@ -65,6 +66,8 @@ namespace Headway.Core.Dynamic
 
         public string Title { get { return Config.Title; } }
 
+        public bool UseSearchCriteria { get { return dynamicSearchItems.Any(); } }
+
         public List<ConfigItem> ConfigItems
         {
             get
@@ -90,6 +93,20 @@ namespace Headway.Core.Dynamic
                 return dynamicListItems.OrderBy(
                     i => TypeHelper.GetValue(i.Model, Config.OrderModelBy))
                     .ToList();
+            }
+        }
+
+        public SearchCriteria GetSearchCriteria
+        {
+            get 
+            {
+                return new SearchCriteria(
+                    dynamicSearchItems.Select(
+                        si => new SearchCriterion 
+                        {
+                            ParameterName = si.ParameterName, 
+                            Value = si.Value 
+                        }).ToList());
             }
         }
 
