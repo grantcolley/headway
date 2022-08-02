@@ -9,6 +9,8 @@
 }
 else
 {
+    <MudText Typo="Typo.h6" Class="mb-2 pl-4">@dynamicList.Title</MudText>
+
     <MudGrid>
 
         @if(dynamicList.DynamicSearchComponent != null)
@@ -25,8 +27,6 @@ else
                       Hover="true" Dense="true" Striped="true" Breakpoint="Breakpoint.Sm"
                       Filter="new Func<DynamicListItem<T>,bool>(FilterFunction)">
                 <ToolBarContent>
-                    <MudText Typo="Typo.h6">@dynamicList.Title</MudText>
-                    <MudSpacer />
                     <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.FilterAlt" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 </ToolBarContent>
                 <HeaderContent>
