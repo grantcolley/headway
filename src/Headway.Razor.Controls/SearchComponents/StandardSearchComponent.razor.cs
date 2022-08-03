@@ -1,8 +1,10 @@
-﻿using Headway.Razor.Controls.Base;
+﻿using Headway.Core.Attributes;
+using Headway.Razor.Controls.Base;
 
 namespace Headway.Razor.Controls.SearchComponents
 {
-    public class StandardSearchComponentBase : SearchComponentBase
+    [DynamicSearchComponent]
+    public abstract class StandardSearchComponentBase : SearchComponentBase
     {
     }
 }
