@@ -3,7 +3,7 @@ using Headway.Razor.Controls.Base;
 
 namespace Headway.Razor.Controls.SearchComponents
 {
-    [DynamicSearchComponent]
+    [DynamicSearchItemComponent]
     public abstract class SearchTextBase : SearchItemComponentBase
     {
     }
