@@ -33,6 +33,7 @@ namespace Headway.RequestApi.Api
             localOptionItems.Add(typeof(ModelFieldsOptionItems).Name, new ModelFieldsOptionItems());
             localOptionItems.Add(typeof(ComponentOptionItems).Name, new ComponentOptionItems());
             localOptionItems.Add(typeof(SearchComponentOptionItems).Name, new SearchComponentOptionItems());
+            localOptionItems.Add(typeof(SearchItemComponentOptionItems).Name, new SearchItemComponentOptionItems());
             localOptionItems.Add(typeof(DocumentOptionItems).Name, new DocumentOptionItems());
             localOptionItems.Add(typeof(ContainerOptionItems).Name, new ContainerOptionItems());
             localOptionItems.Add(typeof(StaticOptionItems).Name, new StaticOptionItems());
