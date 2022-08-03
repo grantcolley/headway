@@ -17,6 +17,7 @@ namespace Headway.Core.Model
         public int ConfigId { get; set; }
         public bool NavigateResetBreadcrumb { get; set; }
         public bool CreateLocal { get; set; }
+        public bool UseSearchComponent { get; set; }
         public List<ConfigItem> ConfigItems { get; set; }
         public List<ConfigContainer> ConfigContainers { get; set; }
         public List<ConfigSearchItem> ConfigSearchItems { get; set; }
