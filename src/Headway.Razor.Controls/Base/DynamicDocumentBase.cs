@@ -42,6 +42,8 @@ namespace Headway.Razor.Controls.Base
 
         protected List<string> messages = new();
 
+        protected SearchCallback searchCallback = new();
+
         protected bool isSaveInProgress = false;
 
         protected bool isDeleteInProgress = false;
@@ -52,6 +54,13 @@ namespace Headway.Razor.Controls.Base
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        protected override Task OnInitializedAsync()
+        {
+            searchCallback.Seach = Search;
+
+            return base.OnInitializedAsync();
         }
 
         protected virtual async Task InitializeDynamicModelAsync()
@@ -98,6 +107,11 @@ namespace Headway.Razor.Controls.Base
             {
                 args = config.DocumentArgs.ToArgsList();
             }
+        }
+
+        protected virtual async Task Search()
+        {
+            //await InitializeDynamicListAsync().ConfigureAwait(false);
         }
 
         protected virtual async Task Submit()
