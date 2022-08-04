@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Interface;
+using Headway.Core.Model;
 using Headway.RemediatR.Core.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace Headway.RemediatR.Core.Interface
         Task<Product> AddCustomerProductAsync(Customer customer, Product product);
         Task<int> DeleteCustomerProductAsync(Customer customer, Product product);
         Task<IEnumerable<Customer>> GetCustomersAsync();
+        Task<IEnumerable<Customer>> GetCustomersAsync(SearchCriteria searchCriteria);
         Task<Customer> GetCustomerAsync(int id);
         Task<Customer> AddCustomerAsync(Customer customer);
         Task<Customer> UpdateCustomerAsync(Customer customer);
