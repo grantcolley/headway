@@ -1,6 +1,7 @@
 ﻿@inherits StandardSearchComponentBase
 
 <MudPaper Class="d-flex flex-row gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
+
     @foreach(var searchItem in SearchItems)
     {
         <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
@@ -8,5 +9,13 @@
 
     <MudSpacer />
 
-    <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Search" OnClick="Search" Class="align-center"></MudIconButton>
+    @if (isSearchInProgress)     
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+    <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Search" OnClick="Search" Class="align-center"></MudIconButton>        
+    }
+
 </MudPaper>
