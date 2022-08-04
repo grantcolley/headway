@@ -4,11 +4,11 @@ namespace Headway.Core.Model
 {
     public class SearchCriteria
     {
-        public SearchCriteria(List<SearchCriterion> criteria)
+        public SearchCriteria()
         {
-            Clauses = new List<SearchCriterion>(criteria);
+            Clauses = new List<SearchCriterion>();
         }
 
-        public List<SearchCriterion> Clauses { get; }
+        public List<SearchCriterion> Clauses { get; set; }
     }
 }
