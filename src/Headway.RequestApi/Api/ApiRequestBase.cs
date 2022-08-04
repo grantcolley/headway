@@ -1,6 +1,5 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.RequestApi.Requests;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
