@@ -1,4 +1,5 @@
-﻿using Headway.RemediatR.Core.Interface;
+﻿using Headway.Core.Model;
+using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
 using Headway.Repository;
 using Headway.Repository.Data;
@@ -40,6 +41,71 @@ namespace Headway.RemediatR.Repository
 
             return await applicationDbContext
                 .SaveChangesAsync()
+                .ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<Customer>> GetCustomersAsync(SearchCriteria searchCriteria)
+        {
+            var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
+            var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
+
+            int customerId = 0;
+            string surname = string.Empty;
+
+
+            if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
+            {
+                _ = int.TryParse(customerIdClause.Value, out customerId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(surnameClause.Value))
+            {
+                surname = surnameClause.Value.ToLowerInvariant();
+            }
+
+            if (customerId > 0
+                && !string.IsNullOrWhiteSpace(surname))
+            {
+                return await applicationDbContext.Customers
+                    .AsNoTracking()
+                    .Include(c => c.Products)
+                    .Where(c => c.CustomerId.Equals(customerId)
+                                && !string.IsNullOrWhiteSpace(c.Surname)
+                                && c.Surname.ToLowerInvariant().Contains(surname))
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+            }
+
+            if (customerId > 0)
+            {
+                var customer = await applicationDbContext.Customers
+                    .AsNoTracking()
+                    .Include(c => c.Products)
+                    .FirstAsync(c => c.CustomerId.Equals(customerId))
+                    .ConfigureAwait(false);
+
+                if (customer != null)
+                {
+                    return new List<Customer>(new[] { customer });
+                }
+
+                return new List<Customer>();
+            }
+
+            if (!string.IsNullOrWhiteSpace(surname))
+            {
+                return await applicationDbContext.Customers
+                    .AsNoTracking()
+                    .Include(c => c.Products)
+                    .Where(c => !string.IsNullOrWhiteSpace(c.Surname)
+                                    && c.Surname.ToLowerInvariant().Contains(surname))
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+            }
+
+            return await applicationDbContext.Customers
+                .AsNoTracking()
+                .ToListAsync()
                 .ConfigureAwait(false);
         }
 
