@@ -22,6 +22,8 @@ namespace Headway.Razor.Controls.Base
         [Parameter]
         public List<DynamicSearchItem> SearchItems { get; set; }
 
+        protected bool isSearchInProgress = false;
+
         public void Dispose()
         {
             StateNotification.Deregister(SearchComponentUniqueId);
@@ -38,7 +40,11 @@ namespace Headway.Razor.Controls.Base
 
         protected async Task Search()
         {
+            isSearchInProgress = true;
+
             await SearchAction?.Seach.Invoke();
+
+            isSearchInProgress = false;
         }
     }
 }
