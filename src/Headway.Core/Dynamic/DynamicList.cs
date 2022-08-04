@@ -66,7 +66,7 @@ namespace Headway.Core.Dynamic
 
         public string Title { get { return Config.Title; } }
 
-        public bool UseSearchCriteria { get { return dynamicSearchItems.Any(); } }
+        public bool UseSearchCriteria { get { return Config.UseSearchComponent; } }
 
         public List<ConfigItem> ConfigItems
         {
@@ -96,17 +96,19 @@ namespace Headway.Core.Dynamic
             }
         }
 
-        public SearchCriteria GetSearchCriteria
+        public SearchCriteria SearchCriteria
         {
-            get 
+            get
             {
-                return new SearchCriteria(
-                    dynamicSearchItems.Select(
-                        si => new SearchCriterion 
+                return new SearchCriteria
+                {
+                    Clauses = dynamicSearchItems.Select(
+                        si => new SearchCriterion
                         {
-                            ParameterName = si.ParameterName, 
-                            Value = si.Value 
-                        }).ToList());
+                            ParameterName = si.ParameterName,
+                            Value = si.Value
+                        }).ToList()
+                };
             }
         }
 
@@ -133,6 +135,14 @@ namespace Headway.Core.Dynamic
             }
 
             dynamicListItems.Remove(dynamicListItem);
+        }
+
+        public void RePopulateList(IEnumerable<T> listItems)
+        {
+            dynamicListItems.Clear();
+            dynamicListItems.AddRange(
+                listItems.Select(i => new DynamicListItem<T>(i)
+                ).ToList());
         }
     }
 }
