@@ -111,7 +111,11 @@ namespace Headway.Razor.Controls.Base
 
         protected virtual async Task Search()
         {
-            //await InitializeDynamicListAsync().ConfigureAwait(false);
+            var response = await DynamicApiRequest
+                      .SearchDynamicListAsync<T>(dynamicList)
+                      .ConfigureAwait(false);
+
+            GetResponse(response);
         }
 
         protected virtual async Task Submit()
