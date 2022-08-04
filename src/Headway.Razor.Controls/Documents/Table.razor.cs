@@ -3,7 +3,6 @@ using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Extensions;
 using Headway.Razor.Controls.Base;
-using Headway.Razor.Controls.Model;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -17,15 +16,13 @@ namespace Headway.Razor.Controls.Documents
         protected string rowButtonIcon = Css.BTN_IMAGE_EDIT;
         protected bool showSearch = false;
 
-        protected SearchCallback searchCallback = new();
-
         protected string filterString;
 
         protected bool FilterFunction(DynamicListItem<T> item) => FilterItem(item, filterString);
 
         protected override async Task OnInitializedAsync()
         {
-            searchCallback.Seach = Search;
+            await base.OnInitializedAsync().ConfigureAwait(false);
 
             await InitializeDynamicListAsync().ConfigureAwait(false);
 
@@ -38,13 +35,6 @@ namespace Headway.Razor.Controls.Documents
             {
                 rowButtonIcon = args.ArgValue(Css.ROW_BUTTON);
             }
-
-            await base.OnInitializedAsync().ConfigureAwait(false);
-        }
-
-        protected async Task Search()
-        {
-            await InitializeDynamicListAsync().ConfigureAwait(false);
         }
 
         protected void Add()
