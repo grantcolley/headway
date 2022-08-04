@@ -1,7 +1,9 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Constants;
+using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -98,6 +100,39 @@ namespace Headway.RequestApi.Api
                     Message = responseConfig.Message
                 };
             }
+        }
+
+        public async Task<IResponse<DynamicList<T>>> SearchDynamicListAsync<T>(DynamicList<T> dynamicList) where T : class, new()
+        {
+            if (dynamicList.UseSearchCriteria)
+            {
+                var uri = $"{dynamicList.Config.ModelApi}/{Controllers.SEARCH_ACTION}";
+
+                using var response = await httpClient
+                    .PostAsJsonAsync(uri, dynamicList.SearchCriteria)
+                    .ConfigureAwait(false);
+                var responseList = await GetResponseAsync<IEnumerable<T>>(response)
+                    .ConfigureAwait(false);
+
+                if(responseList.IsSuccess)
+                {
+                    dynamicList.RePopulateList(responseList.Result);
+                }
+
+                return new Response<DynamicList<T>>
+                {
+                    IsSuccess = responseList.IsSuccess,
+                    Message = responseList.Message,
+                    Result = dynamicList
+                };
+            }
+
+            return new Response<DynamicList<T>>
+            {
+                IsSuccess = false,
+                Message = $"{nameof(dynamicList.Config.UseSearchComponent)} is false",
+                Result = dynamicList
+            };
         }
 
         public async Task<IResponse<DynamicModel<T>>> GetDynamicModelAsync<T>(T model, string config) where T : class, new()
