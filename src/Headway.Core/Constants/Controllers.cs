@@ -6,5 +6,6 @@
         public const string MODULES_CLAIMMODULES = "Modules/ClaimModules";
         public const string OPTIONS = "Options";
         public const string OPTIONS_COMPLEXOPTIONS = "Options/ComplexOptions";
+        public const string SEARCH_ACTION = "Search";
     }
 }
