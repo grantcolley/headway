@@ -13,9 +13,9 @@ namespace Headway.Razor.Controls.Components
 
         protected async override Task OnInitializedAsync()
         {
-            activePage = Container.DynamicContainers.First();
-
             await base.OnInitializedAsync().ConfigureAwait(false);
+
+            activePage = Container.DynamicContainers.First();
         }
 
         protected async void SetActivePage(DynamicContainer page)

@@ -23,6 +23,8 @@ namespace Headway.Razor.Controls.Documents
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync().ConfigureAwait(false);
+
             await NewAsync().ConfigureAwait(false);
 
             var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
@@ -30,8 +32,6 @@ namespace Headway.Razor.Controls.Documents
             var listConfig = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LIST_CONFIG);
 
             dynamicList = await GetDynamicListAsync(list, listConfig).ConfigureAwait(false);
-
-            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected async Task NewAsync()

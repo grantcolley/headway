@@ -55,6 +55,8 @@ namespace Headway.Razor.Controls.Components.Option
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync().ConfigureAwait(false);
+
             var arg = ComponentArgHelper.GetArg(ComponentArgs, Options.OPTIONS_CODE);
 
             if(arg == null)
@@ -67,8 +69,6 @@ namespace Headway.Razor.Controls.Components.Option
             {
                 dynamicOptions = true;
             }
-
-            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected override async Task OnParametersSetAsync()

@@ -21,9 +21,9 @@ namespace Headway.Razor.Controls.Components
 
         protected override async Task OnInitializedAsync()
         {
-            await GetConfig(Field.ConfigName).ConfigureAwait(false);
-
             await base.OnInitializedAsync().ConfigureAwait(false);
+
+            await GetConfig(Field.ConfigName).ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => builder =>

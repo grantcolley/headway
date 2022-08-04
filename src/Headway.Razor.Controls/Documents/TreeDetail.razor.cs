@@ -18,9 +18,9 @@ namespace Headway.Razor.Controls.Documents
 
         protected override async Task OnInitializedAsync()
         {
-            await ResetDynamicModelAsync().ConfigureAwait(false);
-
             await base.OnInitializedAsync().ConfigureAwait(false);
+
+            await ResetDynamicModelAsync().ConfigureAwait(false);
         }
 
         protected RenderFragment RenderTreeView() => builder =>

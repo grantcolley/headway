@@ -23,9 +23,9 @@ namespace Headway.Razor.Controls.Base
 
         protected async override Task OnInitializedAsync()
         {
-            StateNotification.Register(Container.UniqueId, StateHasChanged);
-
             await base.OnInitializedAsync().ConfigureAwait(false);
+
+            StateNotification.Register(Container.UniqueId, StateHasChanged);
         }
     }
 }

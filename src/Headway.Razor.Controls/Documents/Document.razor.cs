@@ -9,9 +9,9 @@ namespace Headway.Razor.Controls.Documents
     {
         protected override async Task OnInitializedAsync()
         {
-            await InitializeDynamicModelAsync().ConfigureAwait(false);
-
             await base.OnInitializedAsync().ConfigureAwait(false);
+
+            await InitializeDynamicModelAsync().ConfigureAwait(false);
         }
     }
 }

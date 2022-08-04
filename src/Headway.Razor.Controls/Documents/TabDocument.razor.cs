@@ -13,11 +13,11 @@ namespace Headway.Razor.Controls.Documents
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync().ConfigureAwait(false);
+
             await InitializeDynamicModelAsync().ConfigureAwait(false);
 
             SetActivePage();
-
-            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected override Task OnParametersSetAsync()

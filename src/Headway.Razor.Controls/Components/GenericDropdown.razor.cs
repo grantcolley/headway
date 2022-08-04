@@ -25,12 +25,12 @@ namespace Headway.Razor.Controls.Components
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync().ConfigureAwait(false);
+
             var args = ComponentArgHelper.GetArgs(ComponentArgs);
 
             model = args.ArgValue(Args.MODEL);
             componentName = args.ArgValue(Args.COMPONENT);
-
-            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => __builder =>

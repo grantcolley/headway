@@ -31,9 +31,9 @@ namespace Headway.Razor.Controls.Base
 
         protected async override Task OnInitializedAsync()
         {
-            StateNotification.Register(SearchComponentUniqueId, StateHasChanged);
-
             await base.OnInitializedAsync().ConfigureAwait(false);
+
+            StateNotification.Register(SearchComponentUniqueId, StateHasChanged);
         }
 
         protected async Task Search()
