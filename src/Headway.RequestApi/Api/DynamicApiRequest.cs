@@ -54,6 +54,18 @@ namespace Headway.RequestApi.Api
 
             if (responseConfig.IsSuccess)
             {
+                if(responseConfig.Result.UseSearchComponent)
+                {
+                    var list = TypeHelper<T>.CreateList();
+
+                    return new Response<DynamicList<T>>
+                    {
+                        IsSuccess = responseConfig.IsSuccess,
+                        Message = responseConfig.Message,
+                        Result = new DynamicList<T>(list, responseConfig.Result)
+                    };
+                }
+
                 var configApi = responseConfig.Result.ModelApi;
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
