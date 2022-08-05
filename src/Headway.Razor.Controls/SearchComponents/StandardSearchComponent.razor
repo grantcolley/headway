@@ -4,7 +4,9 @@
 
     @foreach(var searchItem in SearchItems)
     {
-        <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
+        <CascadingValue Value="searchItemCallback">
+            <DynamicComponent Type="searchItem.SearchComponent" Parameters="searchItem.Parameters" />
+        </CascadingValue>
     }
 
     <MudSpacer />
@@ -15,7 +17,7 @@
     }
     else
     {
-    <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Search" OnClick="Search" Class="align-center"></MudIconButton>        
+        <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Search" OnClick="OnClick" Class="align-center"></MudIconButton>        
     }
 
 </MudPaper>
