@@ -2,11 +2,11 @@
 
 @if(string.IsNullOrWhiteSpace(SearchItem.Tooltip))
 {                
-    <MudTextField @bind-Value="@PropertyValue" Label="@SearchItem.Label" Margin="Margin.Dense" Variant="Variant.Text"/>
+    <MudTextField @bind-Value="@PropertyValue" Label="@SearchItem.Label" Margin="Margin.Dense" Variant="Variant.Text" OnKeyDown="OnKeyDown"/>
 }
 else
 {
     <ComponentTip Text="@SearchItem.Tooltip">
-        <MudTextField @bind-Value="@PropertyValue" Label="@SearchItem.Label" Margin="Margin.Dense" Variant="Variant.Text"/>
+        <MudTextField @bind-Value="@PropertyValue" Label="@SearchItem.Label" Margin="Margin.Dense" Variant="Variant.Text" OnKeyDown="OnKeyDown"/>
     </ComponentTip>    
 }
