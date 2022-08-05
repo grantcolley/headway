@@ -2,13 +2,18 @@
 using Headway.Core.Dynamic;
 using Headway.Core.Extensions;
 using Headway.Core.Model;
+using Headway.Razor.Controls.Callbacks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System.Collections.Generic;
 
 namespace Headway.Razor.Controls.Base
 {
     public class SearchItemComponentBase : HeadwayComponentBase
     {
+        [CascadingParameter]
+        public SearchItemCallback SearchItemCallBack { get; set; }
+
         [Parameter]
         public DynamicSearchItem SearchItem { get; set; }
 
@@ -19,6 +24,14 @@ namespace Headway.Razor.Controls.Base
         {
             get { return SearchItem.Value; }
             set { SearchItem.Value = value; }
+        }
+
+        protected async void OnKeyDown(KeyboardEventArgs e)
+        {
+            if(e.Key.Equals(KeyCodes.ENTER))
+            {
+                await SearchItemCallBack?.OnKeyDown.Invoke();
+            }
         }
 
         protected void LinkFieldCheck()

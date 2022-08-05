@@ -14,13 +14,15 @@ namespace Headway.Razor.Controls.Base
         public IStateNotification StateNotification { get; set; }
 
         [CascadingParameter]
-        public SearchCallback SearchAction { get; set; }
+        public SearchCallback SearchCallBack { get; set; }
 
         [Parameter]
         public string SearchComponentUniqueId { get; set; }
 
         [Parameter]
         public List<DynamicSearchItem> SearchItems { get; set; }
+
+        protected SearchItemCallback searchItemCallback = new();
 
         protected bool isSearchInProgress = false;
 
@@ -35,16 +37,25 @@ namespace Headway.Razor.Controls.Base
         {
             await base.OnInitializedAsync().ConfigureAwait(false);
 
+            searchItemCallback.OnKeyDown = SearchItemEnter;
+
             StateNotification.Register(SearchComponentUniqueId, StateHasChanged);
         }
 
-        protected async Task Search()
+        protected async Task OnClick()
         {
             isSearchInProgress = true;
 
-            await SearchAction?.Search.Invoke();
+            await SearchCallBack?.Click.Invoke();
 
             isSearchInProgress = false;
+
+            StateHasChanged();
+        }
+
+        protected async Task SearchItemEnter()
+        {
+            await OnClick();
         }
     }
 }

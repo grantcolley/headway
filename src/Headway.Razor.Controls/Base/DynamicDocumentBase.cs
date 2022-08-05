@@ -59,7 +59,7 @@ namespace Headway.Razor.Controls.Base
 
         protected override Task OnInitializedAsync()
         {
-            searchCallback.Search = Search;
+            searchCallback.Click = Search;
 
             return base.OnInitializedAsync();
         }
