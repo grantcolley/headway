@@ -37,10 +37,10 @@ else
                     }
 
                     <MudTh>
-                        @if(dynamicList.DynamicSearchComponent == null)
+                        @if(HasHeaderButton)
                         {
                             <MudTooltip Text="Create new" Arrow="true" Placement="Placement.Right">
-                                <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => Add()"/>
+                                <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => HeaderButtonClick()"/>
                             </MudTooltip>                
                         }
                     </MudTh>
@@ -53,7 +53,10 @@ else
                     }
             
                     <MudTd>
-                        <ComponentTip Text="Edit"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => Update(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateProperty))"/></ComponentTip>
+                        @if(HasRowButton)
+                        {
+                            <ComponentTip Text="Edit"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => RowButtonClick(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateProperty))"/></ComponentTip>                        
+                        }
                     </MudTd>
 
                 </RowTemplate>

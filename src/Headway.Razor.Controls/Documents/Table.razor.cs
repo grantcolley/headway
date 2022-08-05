@@ -12,13 +12,17 @@ namespace Headway.Razor.Controls.Documents
     [DynamicDocument]
     public abstract class TableBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
-        protected string headerButtonIcon = Css.BTN_IMAGE_PLUS;
-        protected string rowButtonIcon = Css.BTN_IMAGE_EDIT;
+        protected string headerButtonIcon = string.Empty;
+        protected string rowButtonIcon = string.Empty;
         protected bool showSearch = false;
 
         protected string filterString;
 
         protected bool FilterFunction(DynamicListItem<T> item) => FilterItem(item, filterString);
+
+        protected bool HasHeaderButton { get { return !string.IsNullOrWhiteSpace(headerButtonIcon); } }
+
+        protected bool HasRowButton { get { return !string.IsNullOrWhiteSpace(rowButtonIcon); } }
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,12 +41,12 @@ namespace Headway.Razor.Controls.Documents
             }
         }
 
-        protected void Add()
+        protected void HeaderButtonClick()
         {
             NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}");
         }
 
-        protected void Update(object id)
+        protected void RowButtonClick(object id)
         {
             NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{id}");
         }

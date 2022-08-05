@@ -89,6 +89,7 @@ namespace Headway.SeedData
                 ModelApi = "DemoModel",
                 OrderModelBy = "DemoModelId",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                DocumentArgs = $"Name={Css.HEADER_BUTTON};Value={Css.BTN_IMAGE_PLUS}|Name={Css.ROW_BUTTON};Value={Css.BTN_IMAGE_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "DemoModelId",
                 NavigateConfig = "DemoModel",
