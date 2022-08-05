@@ -1,6 +1,6 @@
 ﻿using Headway.Core.Dynamic;
 using Headway.Core.Notifications;
-using Headway.Razor.Controls.Model;
+using Headway.Razor.Controls.Callbacks;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace Headway.Razor.Controls.Base
         {
             isSearchInProgress = true;
 
-            await SearchAction?.Seach.Invoke();
+            await SearchAction?.Search.Invoke();
 
             isSearchInProgress = false;
         }

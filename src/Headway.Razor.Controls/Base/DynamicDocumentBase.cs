@@ -3,6 +3,7 @@ using Headway.Core.Dynamic;
 using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.Razor.Controls.Callbacks;
 using Headway.Razor.Controls.Model;
 using Headway.Razor.Controls.Services;
 using Microsoft.AspNetCore.Components;
@@ -58,7 +59,7 @@ namespace Headway.Razor.Controls.Base
 
         protected override Task OnInitializedAsync()
         {
-            searchCallback.Seach = Search;
+            searchCallback.Search = Search;
 
             return base.OnInitializedAsync();
         }
