@@ -116,6 +116,8 @@ namespace Headway.Razor.Controls.Base
                       .ConfigureAwait(false);
 
             GetResponse(response);
+
+            StateHasChanged();
         }
 
         protected virtual async Task Submit()
