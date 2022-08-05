@@ -94,11 +94,16 @@ namespace Headway.RemediatR.Repository
 
             if (!string.IsNullOrWhiteSpace(surname))
             {
+                if(surname.Equals("*"))
+                {
+                    return await GetCustomersAsync();
+                }
+
                 return await applicationDbContext.Customers
                     .AsNoTracking()
                     .Include(c => c.Products)
                     .Where(c => !string.IsNullOrWhiteSpace(c.Surname)
-                                    && c.Surname.ToLowerInvariant().Contains(surname))
+                                    && c.Surname.ToLower().Contains(surname))
                     .ToListAsync()
                     .ConfigureAwait(false);
             }
