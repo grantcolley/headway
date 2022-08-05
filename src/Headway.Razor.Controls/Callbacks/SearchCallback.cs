@@ -5,6 +5,6 @@ namespace Headway.Razor.Controls.Callbacks
 {
     public class SearchCallback
     {
-        public Func<Task> Search { get; set; }
+        public Func<Task> Click { get; set; }
     }
 }
