@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
@@ -55,6 +56,24 @@ namespace Headway.WebApi.Controllers
                 .ConfigureAwait(false);
 
             return Ok(redress);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Search([FromBody] SearchCriteria searchCriteria)
+        {
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var redresses = await remediatRRepository
+                .GetRedressesAsync(searchCriteria)
+                .ConfigureAwait(false);
+
+            return Ok(redresses);
         }
 
         [HttpPost]
