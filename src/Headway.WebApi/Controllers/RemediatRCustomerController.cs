@@ -61,7 +61,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Search([FromBody] SearchCriteria searchCriteria)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
