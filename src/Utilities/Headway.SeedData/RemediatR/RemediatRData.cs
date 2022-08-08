@@ -550,7 +550,7 @@ namespace Headway.SeedData.RemediatR
                 new ConfigSearchItem
                 {
                     Label = "Program",
-                    ParameterName = "Program",
+                    ParameterName = "Name",
                     Tooltip = "The redress program",
                     Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
                     ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.Programs}|Name={Args.STYLE};Value=min-width:150px",
