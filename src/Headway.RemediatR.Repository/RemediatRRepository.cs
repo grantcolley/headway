@@ -290,62 +290,56 @@ namespace Headway.RemediatR.Repository
 
         public async Task<IEnumerable<RedressCase>> GetRedressesCasesAsync(SearchCriteria searchCriteria)
         {
-            var productTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("ProductType"));
-            if (!string.IsNullOrWhiteSpace(productTypeClause.Value))
+
+            var programClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Program"));
+            var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
+            var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
+
+            int customerId = 0;
+            string surname = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
             {
-                productTypeClause.Value = ((int)Enum.Parse<ProductType>(productTypeClause.Value)).ToString();
+                _ = int.TryParse(customerIdClause.Value, out customerId);
             }
 
-            var rateTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("RateType"));
-            if (!string.IsNullOrWhiteSpace(rateTypeClause.Value))
+            if (!string.IsNullOrWhiteSpace(surnameClause.Value))
             {
-                rateTypeClause.Value = ((int)Enum.Parse<RateType>(rateTypeClause.Value)).ToString();
+                surname = surnameClause.Value.ToLowerInvariant();
             }
 
-            var repaymentTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("RepaymentType"));
-            if (!string.IsNullOrWhiteSpace(repaymentTypeClause.Value))
-            {
-                repaymentTypeClause.Value = ((int)Enum.Parse<RepaymentType>(repaymentTypeClause.Value)).ToString();
-            }
-
-            var productParameters = new List<SqlParameter>();
-            var productRawSql = @"SELECT * FROM Products ";
+            var parameters = new List<SqlParameter>();
+            var rawSql = @"SELECT * FROM Redresses ";
             bool firstClause = true;
 
             for (int i = 0; i < searchCriteria.Clauses.Count; i++)
             {
-                if (string.IsNullOrWhiteSpace(searchCriteria.Clauses[i].Value)
-                    || searchCriteria.Clauses[i].Value.ToLowerInvariant().Equals("unknown"))
+                if (string.IsNullOrWhiteSpace(searchCriteria.Clauses[i].Value))
                 {
                     continue;
                 }
 
                 if (firstClause)
                 {
-                    productRawSql += $" WHERE {searchCriteria.Clauses[i].ParameterName} = @{searchCriteria.Clauses[i].ParameterName}";
+                    rawSql += $" WHERE {searchCriteria.Clauses[i].ParameterName} = @{searchCriteria.Clauses[i].ParameterName}";
                     firstClause = false;
                 }
                 else
                 {
-                    productRawSql += $" AND {searchCriteria.Clauses[i].ParameterName} = @{searchCriteria.Clauses[i].ParameterName}";
+                    rawSql += $" AND {searchCriteria.Clauses[i].ParameterName} = @{searchCriteria.Clauses[i].ParameterName}";
                 }
 
-                productParameters.Add(new SqlParameter($"@{searchCriteria.Clauses[i].ParameterName}", int.Parse(searchCriteria.Clauses[i].Value)));
+                parameters.Add(new SqlParameter($"@{searchCriteria.Clauses[i].ParameterName}", int.Parse(searchCriteria.Clauses[i].Value)));
             }
 
-            var products = await applicationDbContext.Products
-                .FromSqlRaw(productRawSql, productParameters.ToArray())
-                .AsNoTracking()
-                .ToArrayAsync()
-                .ConfigureAwait(false);
-
             var redressCases = await applicationDbContext.Redresses
-                    .Include(r => r.Customer)
-                    .Include(r => r.Program)
-                    .Include(r => r.Product)
-                    .AsNoTracking()
-                    .ToListAsync()
-                    .ConfigureAwait(false);
+                .FromSqlRaw(rawSql, parameters.ToArray())
+                .Include(r => r.Customer)
+                .Include(r => r.Program)
+                .Include(r => r.Product)
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             return redressCases.Select(r => new RedressCase
             {
