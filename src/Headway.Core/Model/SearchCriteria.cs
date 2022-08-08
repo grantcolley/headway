@@ -9,6 +9,7 @@ namespace Headway.Core.Model
             Clauses = new List<SearchCriterion>();
         }
 
+        public string SourceConfig { get; set; }
         public List<SearchCriterion> Clauses { get; set; }
     }
 }

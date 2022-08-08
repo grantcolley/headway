@@ -102,6 +102,7 @@ namespace Headway.Core.Dynamic
             {
                 return new SearchCriteria
                 {
+                    SourceConfig = Config.Name,
                     Clauses = dynamicSearchItems.Select(
                         si => new SearchCriterion
                         {
