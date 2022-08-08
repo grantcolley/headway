@@ -4,6 +4,7 @@ using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
+using Headway.RemediatR.Core.Constants;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -27,11 +28,12 @@ namespace Headway.Repository
             optionItems[Options.CONFIG_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);
             optionItems[Options.PERMISSIONS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetPermissionsOptionItems);
             optionItems[Options.COUNTRY_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetCountryOptionItems);
-            
+            optionItems[RemediatROptions.Programs] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetRemediatRPrograms);
+
             complexOptionItems[Options.CONFIG_CONTAINERS] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
             complexOptionItems[Options.MODULES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetModules);
             complexOptionItems[Options.CATEGORIES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetCategories);
-            complexOptionItems[Options.COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetDemoModelComplexProperties);            
+            complexOptionItems[Options.COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetDemoModelComplexProperties);
         }
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
@@ -129,6 +131,21 @@ namespace Headway.Repository
                                         Id = c.Name, 
                                         Display = c.Name 
                                     }).ToList());
+
+            return optionItems;
+        }
+
+        private async Task<IEnumerable<OptionItem>> GetRemediatRPrograms(List<Arg> args)
+        {
+            var configs = await applicationDbContext.Programs
+                .OrderBy(p => p.Name)
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            optionItems.AddRange(configs.Select(p => new OptionItem { Id = p.Name, Display = p.Name }).ToList());
 
             return optionItems;
         }
