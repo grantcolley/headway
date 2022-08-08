@@ -572,33 +572,6 @@ namespace Headway.SeedData.RemediatR
                     Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
                     Order = 3
                 }
-                //new ConfigSearchItem
-                //{
-                //    Label = "Product Type",
-                //    ParameterName = "ProductType",
-                //    Tooltip = "The type of product in scope for redress",
-                //    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
-                //    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
-                //    Order = 1
-                //},
-                //new ConfigSearchItem
-                //{
-                //    Label = "Rate Type",
-                //    ParameterName = "RateType",
-                //    Tooltip = "The rate type in scope for redress",
-                //    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
-                //    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
-                //    Order = 2
-                //},
-                //new ConfigSearchItem
-                //{
-                //    Label = "Repayment Type",
-                //    ParameterName = "RepaymentType",
-                //    Tooltip = "The repayment type in scope for redress",
-                //    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
-                //    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
-                //    Order = 3
-                //}
             });
 
             dbContext.Configs.Add(redressCasesConfig);
