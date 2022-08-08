@@ -350,9 +350,10 @@ namespace Headway.RemediatR.Repository
             return redressCases.Select(r => new RedressCase
             {
                 RedressId = r.RedressId,
+                ProgramName = r.ProgramName,
                 CustomerName = r.CustomerName,
                 ProductName = r.ProductName,
-                ProgramName = r.ProgramName
+                Status = string.Empty
             })
                 .ToList();
         }
