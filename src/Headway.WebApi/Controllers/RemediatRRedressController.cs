@@ -3,8 +3,11 @@ using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
+using Headway.RemediatR.Repository.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -69,11 +72,25 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var redresses = await remediatRRepository
-                .GetRedressesAsync(searchCriteria)
-                .ConfigureAwait(false);
+            IEnumerable<RedressCase> redressCases;
 
-            return Ok(redresses);
+            switch(searchCriteria.SourceConfig)
+            {
+                case RemediatRSearchSource.REDRESSCASES:
+                    redressCases = await remediatRRepository
+                        .GetRedressesCasesAsync(searchCriteria)
+                        .ConfigureAwait(false);
+                    break;
+                case RemediatRSearchSource.NEWREDRESSCASE:
+                    redressCases = await remediatRRepository
+                        .GetRedressesCasesAsync(searchCriteria)
+                        .ConfigureAwait(false);
+                    break;
+                default:
+                    throw new NotImplementedException(searchCriteria.SourceConfig);
+            }
+
+            return Ok(redressCases);
         }
 
         [HttpPost]
