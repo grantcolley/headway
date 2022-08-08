@@ -536,7 +536,7 @@ namespace Headway.SeedData.RemediatR
                 ModelApi = "RemediatRRedress",
                 OrderModelBy = "Name",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
-                DocumentArgs = $"Name={Css.ROW_BUTTON};Value={Css.BTN_IMAGE_PLUS}",
+                DocumentArgs = $"Name={Css.ROW_BUTTON};Value={Css.BTN_IMAGE_EDIT}",
                 SearchComponent = "Headway.Razor.Controls.SearchComponents.StandardSearchComponent, Headway.Razor.Controls",
                 UseSearchComponent = true,
                 NavigatePage = "Page",
