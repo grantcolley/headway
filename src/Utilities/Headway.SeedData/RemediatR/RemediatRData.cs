@@ -3,6 +3,7 @@ using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Enums;
 using Headway.RemediatR.Core.Model;
+using Headway.RemediatR.Repository.Constants;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -528,7 +529,7 @@ namespace Headway.SeedData.RemediatR
         {
             var redressCasesConfig = new Config
             {
-                Name = "RedressCases",
+                Name = RemediatRSearchSource.REDRESSCASES,
                 Title = "Redress Cases",
                 Description = "List of RemediatR redress cases",
                 Model = "Headway.RemediatR.Core.Model.RedressCase, Headway.RemediatR.Core",
@@ -548,31 +549,56 @@ namespace Headway.SeedData.RemediatR
             {
                 new ConfigSearchItem
                 {
-                    Label = "Product Type",
-                    ParameterName = "ProductType",
-                    Tooltip = "The type of product in scope for redress",
+                    Label = "Program",
+                    ParameterName = "Program",
+                    Tooltip = "The redress program",
                     Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
-                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.Programs}|Name={Args.STYLE};Value=min-width:150px",
                     Order = 1
                 },
                 new ConfigSearchItem
                 {
-                    Label = "Rate Type",
-                    ParameterName = "RateType",
-                    Tooltip = "The rate type in scope for redress",
-                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
-                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                    Label = "Customer Id",
+                    ParameterName = "CustomerId",
+                    Tooltip = "The customer identifier",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
                     Order = 2
                 },
                 new ConfigSearchItem
                 {
-                    Label = "Repayment Type",
-                    ParameterName = "RepaymentType",
-                    Tooltip = "The repayment type in scope for redress",
-                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
-                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                    Label = "Surname",
+                    ParameterName = "Surname",
+                    Tooltip = "The customer surname",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
                     Order = 3
                 }
+                //new ConfigSearchItem
+                //{
+                //    Label = "Product Type",
+                //    ParameterName = "ProductType",
+                //    Tooltip = "The type of product in scope for redress",
+                //    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                //    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                //    Order = 1
+                //},
+                //new ConfigSearchItem
+                //{
+                //    Label = "Rate Type",
+                //    ParameterName = "RateType",
+                //    Tooltip = "The rate type in scope for redress",
+                //    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                //    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                //    Order = 2
+                //},
+                //new ConfigSearchItem
+                //{
+                //    Label = "Repayment Type",
+                //    ParameterName = "RepaymentType",
+                //    Tooltip = "The repayment type in scope for redress",
+                //    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                //    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                //    Order = 3
+                //}
             });
 
             dbContext.Configs.Add(redressCasesConfig);
