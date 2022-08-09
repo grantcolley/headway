@@ -309,11 +309,13 @@ namespace Headway.RemediatR.Repository
             if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
             {
                 int customerId;
-                _ = int.TryParse(customerIdClause.Value, out customerId);
-                redresses = redresses.Where(r => 
-                    r.Customer != null 
-                    && r.Customer.CustomerId.Equals(customerId))
-                    .ToList();
+                if (int.TryParse(customerIdClause.Value, out customerId))
+                {
+                    redresses = redresses.Where(r =>
+                        r.Customer != null
+                        && r.Customer.CustomerId.Equals(customerId))
+                        .ToList();
+                }
             }
             else if (!string.IsNullOrWhiteSpace(surnameClause.Value))
             {
