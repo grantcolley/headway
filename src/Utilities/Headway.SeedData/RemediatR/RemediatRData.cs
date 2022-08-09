@@ -44,6 +44,7 @@ namespace Headway.SeedData.RemediatR
             ProductConfig();
             ProductsListDetailConfig();
             RedressCasesConfig();
+            CreateRedressCasesConfig();
             RedressConfig();
         }
 
@@ -196,15 +197,18 @@ namespace Headway.SeedData.RemediatR
             dbContext.Categories.Add(programCatgory);
 
             var customersMenuItem = new MenuItem { Name = "Customers", Icon = "PeopleOutline", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.CUSTOMER_READ, Config = "Customers" };
-            var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "List", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ, Config = "RedressCases" };
+            var redressCasesMenuItem = new MenuItem { Name = "Redress Cases", Icon = "List", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ, Config = RemediatRSearchSource.REDRESSCASES };
+            var createRedressCasesMenuItem = new MenuItem { Name = "Create Redress Cases", Icon = "PlaylistAdd", NavigatePage = "Page", Order = 1, Permission = RemediatRAuthorisation.REDRESS_READ, Config = RemediatRSearchSource.CREATE_REDRESS_CASES };
             var programsMenuItem = new MenuItem { Name = "Programs", Icon = "AppRegistration", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Programs" };
 
             dbContext.MenuItems.Add(customersMenuItem);
             dbContext.MenuItems.Add(redressCasesMenuItem);
+            dbContext.MenuItems.Add(createRedressCasesMenuItem);
             dbContext.MenuItems.Add(programsMenuItem);
 
             customerCatgory.MenuItems.Add(customersMenuItem);
             redressCatgory.MenuItems.Add(redressCasesMenuItem);
+            redressCatgory.MenuItems.Add(createRedressCasesMenuItem);
             programCatgory.MenuItems.Add(programsMenuItem);
 
             remediatR.Categories.Add(customerCatgory);
@@ -534,7 +538,7 @@ namespace Headway.SeedData.RemediatR
                 Description = "List of RemediatR redress cases",
                 Model = "Headway.RemediatR.Core.Model.RedressCase, Headway.RemediatR.Core",
                 ModelApi = "RemediatRRedress",
-                OrderModelBy = "Name",
+                OrderModelBy = "CustomerName",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
                 DocumentArgs = $"Name={Css.ROW_BUTTON};Value={Css.BTN_IMAGE_EDIT}",
                 SearchComponent = "Headway.Razor.Controls.SearchComponents.StandardSearchComponent, Headway.Razor.Controls",
@@ -581,6 +585,96 @@ namespace Headway.SeedData.RemediatR
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramName", Label = "ProgramName", Order = 3 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductName", Label = "ProductName", Order = 4 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Status", Label = "Status", Order = 5 });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void CreateRedressCasesConfig()
+        {
+            var redressCasesConfig = new Config
+            {
+                Name = RemediatRSearchSource.CREATE_REDRESS_CASES,
+                Title = "Create Redress Case",
+                Description = "Create a RemediatR redress case",
+                Model = "Headway.RemediatR.Core.Model.RedressCase, Headway.RemediatR.Core",
+                ModelApi = "RemediatRRedress",
+                OrderModelBy = "CustomerName",
+                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                DocumentArgs = $"Name={Css.ROW_BUTTON};Value={Css.BTN_IMAGE_PLUS}",
+                SearchComponent = "Headway.Razor.Controls.SearchComponents.StandardSearchComponent, Headway.Razor.Controls",
+                UseSearchComponent = true,
+                NavigatePage = "Page",
+                NavigateProperty = "RedressId",
+                NavigateConfig = "Redress",
+                NavigateResetBreadcrumb = true
+            };
+
+            redressCasesConfig.ConfigSearchItems.AddRange(new List<ConfigSearchItem>
+            {
+                new ConfigSearchItem
+                {
+                    Label = "Program",
+                    ParameterName = "Name",
+                    Tooltip = "The redress program",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.Programs}|Name={Args.STYLE};Value=min-width:150px",
+                    Order = 1
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Customer Id",
+                    ParameterName = "CustomerId",
+                    Tooltip = "The customer identifier",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
+                    Order = 2
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Surname",
+                    ParameterName = "Surname",
+                    Tooltip = "The customer surname",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
+                    Order = 3
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Product Type",
+                    ParameterName = "ProductType",
+                    Tooltip = "The type of product in scope for redress",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                    Order = 4
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Rate Type",
+                    ParameterName = "RateType",
+                    Tooltip = "The rate type in scope for redress",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                    Order = 5
+                },
+                new ConfigSearchItem
+                {
+                    Label = "Repayment Type",
+                    ParameterName = "RepaymentType",
+                    Tooltip = "The repayment type in scope for redress",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                    Order = 6
+                }
+            });
+
+            dbContext.Configs.Add(redressCasesConfig);
+
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressId", Label = "Redress Id", Order = 1 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerName", Label = "Customer", Order = 2 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramName", Label = "Program", Order = 3 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductName", Label = "Product", Order = 4 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Product Type", Label = "ProductType", Order = 5 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RateType", Label = "Rate Type", Order = 6 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RepaymentType", Label = "Repayment Type", Order = 7 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Status", Label = "Status", Order = 8 });
 
             dbContext.SaveChanges();
         }
