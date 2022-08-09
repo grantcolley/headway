@@ -290,58 +290,41 @@ namespace Headway.RemediatR.Repository
 
         public async Task<IEnumerable<RedressCase>> GetRedressesCasesAsync(SearchCriteria searchCriteria)
         {
-
             var programClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Name"));
             var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
             var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
 
-            int customerId = 0;
-            string surname = string.Empty;
-
-            if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
-            {
-                _ = int.TryParse(customerIdClause.Value, out customerId);
-            }
-
-            if (!string.IsNullOrWhiteSpace(surnameClause.Value))
-            {
-                surname = surnameClause.Value.ToLowerInvariant();
-            }
-
-            var parameters = new List<SqlParameter>();
-            var rawSql = @"SELECT * FROM Redresses ";
-            bool firstClause = true;
-
-            for (int i = 0; i < searchCriteria.Clauses.Count; i++)
-            {
-                if (string.IsNullOrWhiteSpace(searchCriteria.Clauses[i].Value))
-                {
-                    continue;
-                }
-
-                if (firstClause)
-                {
-                    rawSql += $" WHERE {searchCriteria.Clauses[i].ParameterName} = @{searchCriteria.Clauses[i].ParameterName}";
-                    firstClause = false;
-                }
-                else
-                {
-                    rawSql += $" AND {searchCriteria.Clauses[i].ParameterName} = @{searchCriteria.Clauses[i].ParameterName}";
-                }
-
-                parameters.Add(new SqlParameter($"@{searchCriteria.Clauses[i].ParameterName}", int.Parse(searchCriteria.Clauses[i].Value)));
-            }
-
-            var redressCases = await applicationDbContext.Redresses
-                .FromSqlRaw(rawSql, parameters.ToArray())
+            var redresses = await applicationDbContext.Redresses
                 .Include(r => r.Customer)
                 .Include(r => r.Program)
-                .Include(r => r.Product)
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
 
-            return redressCases.Select(r => new RedressCase
+            if (!string.IsNullOrWhiteSpace(programClause.Value))
+            {
+                redresses = redresses.Where(r => r.ProgramName == programClause.Value).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
+            {
+                int customerId;
+                _ = int.TryParse(customerIdClause.Value, out customerId);
+                redresses = redresses.Where(r => 
+                    r.Customer != null 
+                    && r.Customer.CustomerId.Equals(customerId))
+                    .ToList();
+            }
+            else if (!string.IsNullOrWhiteSpace(surnameClause.Value))
+            {
+                redresses = redresses.Where(r =>
+                    r.Customer != null 
+                    && !string.IsNullOrWhiteSpace(r.Customer.Surname)
+                    && r.Customer.Surname.ToLowerInvariant().Contains(surnameClause.Value.ToLowerInvariant()))
+                    .ToList();
+            }
+
+            return redresses.Select(r => new RedressCase
             {
                 RedressId = r.RedressId,
                 ProgramName = r.ProgramName,
