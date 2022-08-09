@@ -106,6 +106,7 @@ namespace Headway.Core.Dynamic
                     Clauses = dynamicSearchItems.Select(
                         si => new SearchCriterion
                         {
+                            Name = si.Label,
                             ParameterName = si.ParameterName,
                             Value = si.Value
                         }).ToList()
