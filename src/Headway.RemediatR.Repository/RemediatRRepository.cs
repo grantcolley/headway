@@ -291,7 +291,7 @@ namespace Headway.RemediatR.Repository
         public async Task<IEnumerable<RedressCase>> GetRedressesCasesAsync(SearchCriteria searchCriteria)
         {
 
-            var programClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Program"));
+            var programClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Name"));
             var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
             var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
 
