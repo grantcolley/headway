@@ -3,6 +3,6 @@
     public static class RemediatRSearchSource
     {
         public const string REDRESSCASES = "RedressCases";
-        public const string NEWREDRESSCASE = "NewRedressCase";
+        public const string CREATE_REDRESS_CASES = "CreateRedressCases";
     }
 }
