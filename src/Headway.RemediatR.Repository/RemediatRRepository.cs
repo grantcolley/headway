@@ -271,37 +271,112 @@ namespace Headway.RemediatR.Repository
             var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
             var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
 
-            var redresses = await applicationDbContext.Redresses
-                .Include(r => r.Customer)
-                .Include(r => r.Program)
-                .Where(r => r.Program != null && r.Program.Name == programClause.Value)
-                .AsNoTracking()
-                .ToListAsync()
-                .ConfigureAwait(false);
+            int customerId = 0;
+            string surname = string.Empty;
+            string program = string.Empty;
 
             if (!string.IsNullOrWhiteSpace(programClause.Value))
             {
-                redresses = redresses.Where(r => r.ProgramName == programClause.Value).ToList();
+                program = programClause.Value;
             }
 
             if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
             {
-                int customerId;
-                if (int.TryParse(customerIdClause.Value, out customerId))
-                {
-                    redresses = redresses.Where(r =>
-                        r.Customer != null
-                        && r.Customer.CustomerId.Equals(customerId))
-                        .ToList();
-                }
+                _ = int.TryParse(customerIdClause.Value, out customerId);
             }
-            else if (!string.IsNullOrWhiteSpace(surnameClause.Value))
+
+            if (!string.IsNullOrWhiteSpace(surnameClause.Value))
             {
-                redresses = redresses.Where(r =>
-                    r.Customer != null 
-                    && !string.IsNullOrWhiteSpace(r.Customer.Surname)
-                    && r.Customer.Surname.ToLowerInvariant().Contains(surnameClause.Value.ToLowerInvariant()))
-                    .ToList();
+                surname = surnameClause.Value.ToLowerInvariant();
+            }
+
+            List<Redress> redresses;
+
+            if (customerId.Equals(0)
+                && string.IsNullOrWhiteSpace(surname)
+                && string.IsNullOrWhiteSpace(program))
+            {
+                redresses = await applicationDbContext.Redresses
+                    .Include(r => r.Customer)
+                    .Include(r => r.Program)
+                    .Include(r => r.Product)
+                    .AsNoTracking()
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(program))
+                {
+                    if (customerId > 0)
+                    {
+                        // customer id
+                        redresses = await applicationDbContext.Redresses
+                             .Include(r => r.Customer)
+                             .Include(r => r.Program)
+                             .Where(r => r.Customer != null
+                                        && r.Customer.CustomerId.Equals(customerId))
+                             .AsNoTracking()
+                             .ToListAsync()
+                             .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        // surname
+                        redresses = await applicationDbContext.Redresses
+                            .Include(r => r.Customer)
+                            .Include(r => r.Program)
+                            .Where(r => r.Customer != null
+                                    && !string.IsNullOrWhiteSpace(r.Customer.Surname)
+                                    && r.Customer.Surname.ToLowerInvariant().Contains(surname))
+                            .AsNoTracking()
+                            .ToListAsync()
+                            .ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    if (customerId > 0)
+                    {
+                        // program and customer id
+                        redresses = await applicationDbContext.Redresses
+                             .Include(r => r.Customer)
+                             .Include(r => r.Program)
+                             .Where(r => r.Program != null
+                                        && r.Program.Name == program
+                                        && r.Customer != null
+                                        && r.Customer.CustomerId.Equals(customerId))
+                             .AsNoTracking()
+                             .ToListAsync()
+                             .ConfigureAwait(false);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(surname))
+                    {
+                        // program and surname
+                        redresses = await applicationDbContext.Redresses
+                            .Include(r => r.Customer)
+                            .Include(r => r.Program)
+                            .Where(r => r.Program != null
+                                    && r.Program.Name == program
+                                    && r.Customer != null
+                                    && !string.IsNullOrWhiteSpace(r.Customer.Surname)
+                                    && r.Customer.Surname.ToLowerInvariant().Contains(surname))
+                            .AsNoTracking()
+                            .ToListAsync()
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        // program
+                        redresses = await applicationDbContext.Redresses
+                            .Include(r => r.Customer)
+                            .Include(r => r.Program)
+                            .Where(r => r.Program != null && r.Program.Name == programClause.Value)
+                            .AsNoTracking()
+                            .ToListAsync()
+                            .ConfigureAwait(false);
+                    }
+                }
             }
 
             return redresses.Select(r => new RedressCase
