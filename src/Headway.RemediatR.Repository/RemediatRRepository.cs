@@ -66,24 +66,10 @@ namespace Headway.RemediatR.Repository
                 surname = surnameClause.Value.ToLowerInvariant();
             }
 
-            if (customerId > 0
-                && !string.IsNullOrWhiteSpace(surname))
-            {
-                return await applicationDbContext.Customers
-                    .AsNoTracking()
-                    .Include(c => c.Products)
-                    .Where(c => c.CustomerId.Equals(customerId)
-                                && !string.IsNullOrWhiteSpace(c.Surname)
-                                && c.Surname.ToLowerInvariant().Contains(surname))
-                    .ToListAsync()
-                    .ConfigureAwait(false);
-            }
-
             if (customerId > 0)
             {
                 var customer = await applicationDbContext.Customers
                     .AsNoTracking()
-                    .Include(c => c.Products)
                     .FirstAsync(c => c.CustomerId.Equals(customerId))
                     .ConfigureAwait(false);
 
@@ -94,27 +80,18 @@ namespace Headway.RemediatR.Repository
 
                 return new List<Customer>();
             }
-
+            
             if (!string.IsNullOrWhiteSpace(surname))
             {
-                if(surname.Equals("*"))
-                {
-                    return await GetCustomersAsync();
-                }
-
                 return await applicationDbContext.Customers
                     .AsNoTracking()
-                    .Include(c => c.Products)
                     .Where(c => !string.IsNullOrWhiteSpace(c.Surname)
                                     && c.Surname.ToLower().Contains(surname))
                     .ToListAsync()
                     .ConfigureAwait(false);
             }
 
-            return await applicationDbContext.Customers
-                .AsNoTracking()
-                .ToListAsync()
-                .ConfigureAwait(false);
+            return await GetCustomersAsync().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Customer>> GetCustomersAsync()
@@ -297,6 +274,7 @@ namespace Headway.RemediatR.Repository
             var redresses = await applicationDbContext.Redresses
                 .Include(r => r.Customer)
                 .Include(r => r.Program)
+                .Where(r => r.Program != null && r.Program.Name == programClause.Value)
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
