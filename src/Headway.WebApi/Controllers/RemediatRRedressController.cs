@@ -81,7 +81,7 @@ namespace Headway.WebApi.Controllers
                         .GetRedressesCasesAsync(searchCriteria)
                         .ConfigureAwait(false);
                     break;
-                case RemediatRSearchSource.CREATE_REDRESS_CASES:
+                case RemediatRSearchSource.NEW_REDRESS_CASE:
                     redressCases = await remediatRRepository
                         .SearchNewRedressCasesAsync(searchCriteria)
                         .ConfigureAwait(false);
