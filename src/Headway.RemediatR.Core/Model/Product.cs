@@ -14,6 +14,7 @@ namespace Headway.RemediatR.Core.Model
         public ProductType ProductType { get; set; }
         public RateType RateType { get; set; }
         public RepaymentType RepaymentType { get; set; }
+        public Redress? Redress { get; set; }
 
         [Required]
         [StringLength(50)]
