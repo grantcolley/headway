@@ -9,9 +9,12 @@ namespace Headway.RemediatR.Core.Model
     public class Redress
     {
         public int RedressId { get; set; }
+        public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
-        public Program? Program { get; set; }
+        public int ProductId { get; set; }
         public Product? Product { get; set; }
+        public int ProgramId { get; set; }
+        public Program? Program { get; set; }
         public RefundCalculation? RefundCalculation { get; set; }
         public RefundCalculation? RefundVerification { get; set; }
 
