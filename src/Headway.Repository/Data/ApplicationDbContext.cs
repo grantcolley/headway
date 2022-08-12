@@ -78,6 +78,11 @@ namespace Headway.Repository.Data
             builder.Entity<Program>()
                 .HasIndex(p => p.Name)
                 .IsUnique();
+
+            builder.Entity<Redress>()
+                .HasOne(r => r.Product)
+                .WithOne(p => p.Redress)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
