@@ -179,6 +179,7 @@ namespace Headway.Repository
         public async Task<Category> UpdateCategoryAsync(Category category)
         {
             var existing = await applicationDbContext.Categories
+                .Include(c => c.Module)
                 .FirstOrDefaultAsync(c => c.CategoryId.Equals(category.CategoryId))
                 .ConfigureAwait(false);
 
@@ -198,7 +199,7 @@ namespace Headway.Repository
                 {
                     throw new ArgumentNullException(nameof(category.Module));
                 }
-                else
+                else if(!category.Module.ModuleId.Equals(existing.Module.ModuleId))
                 {
                     existing.Module = category.Module;
                 }
@@ -315,9 +316,16 @@ namespace Headway.Repository
                 }
             }
 
-            await applicationDbContext
-                .SaveChangesAsync()
-                .ConfigureAwait(false);
+            try
+            {
+                await applicationDbContext
+                    .SaveChangesAsync()
+                    .ConfigureAwait(false);
+            }
+            catch(Exception ex)
+            {
+
+            }
 
             return existing;
         }
