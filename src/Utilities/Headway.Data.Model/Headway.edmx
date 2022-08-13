@@ -1,0 +1,1789 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HeadwayModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="ModuleId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Permission" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigContainers">
+          <Key>
+            <PropertyRef Name="ConfigContainerId" />
+          </Key>
+          <Property Name="ConfigContainerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConfigId" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="ComponentArgs" Type="nvarchar" MaxLength="350" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Container" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ParentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Label" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConfigContainerId1" Type="int" />
+        </EntityType>
+        <EntityType Name="ConfigItems">
+          <Key>
+            <PropertyRef Name="ConfigItemId" />
+          </Key>
+          <Property Name="ConfigItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConfigId" Type="int" Nullable="false" />
+          <Property Name="IsIdentity" Type="bit" Nullable="false" />
+          <Property Name="IsTitle" Type="bit" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="ComponentArgs" Type="nvarchar" MaxLength="350" />
+          <Property Name="ConfigName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConfigContainerId" Type="int" />
+          <Property Name="PropertyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Label" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tooltip" Type="nvarchar" MaxLength="50" />
+          <Property Name="Component" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Configs">
+          <Key>
+            <PropertyRef Name="ConfigId" />
+          </Key>
+          <Property Name="ConfigId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NavigateResetBreadcrumb" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ModelApi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderModelBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="Document" Type="nvarchar" MaxLength="150" />
+          <Property Name="NavigatePage" Type="nvarchar" MaxLength="50" />
+          <Property Name="NavigateProperty" Type="nvarchar" MaxLength="50" />
+          <Property Name="NavigateConfig" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateLocal" Type="bit" Nullable="false" />
+          <Property Name="DocumentArgs" Type="nvarchar" MaxLength="350" />
+          <Property Name="SearchComponent" Type="nvarchar" MaxLength="150" />
+          <Property Name="UseSearchComponent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfigSearchItems">
+          <Key>
+            <PropertyRef Name="ConfigSearchItemId" />
+          </Key>
+          <Property Name="ConfigSearchItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="Label" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tooltip" Type="nvarchar" MaxLength="50" />
+          <Property Name="Component" Type="nvarchar" MaxLength="150" />
+          <Property Name="ConfigId" Type="int" />
+          <Property Name="ComponentArgs" Type="nvarchar" MaxLength="350" />
+          <Property Name="ParameterName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountStatus" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address4" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address5" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="SortCode" Type="nvarchar" MaxLength="8" />
+          <Property Name="AccountNumber" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="DemoModelComplexProperties">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DemoModelItems">
+          <Key>
+            <PropertyRef Name="DemoModelItemId" />
+          </Key>
+          <Property Name="DemoModelItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DemoModelId" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DemoModels">
+          <Key>
+            <PropertyRef Name="DemoModelId" />
+          </Key>
+          <Property Name="DemoModelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Checkbox" Type="bit" Nullable="false" />
+          <Property Name="Integer" Type="int" Nullable="false" />
+          <Property Name="OptionVertical" Type="nvarchar(max)" />
+          <Property Name="OptionHorizontal" Type="nvarchar(max)" />
+          <Property Name="Dropdown" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DropdownComplexId" Type="int" />
+          <Property Name="Text" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TextMultiline" Type="nvarchar" MaxLength="50" />
+          <Property Name="Decimal" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DemoModelTreeItems">
+          <Key>
+            <PropertyRef Name="DemoModelTreeItemId" />
+          </Key>
+          <Property Name="DemoModelTreeItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="DemoModelId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ParentCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="DemoModelTreeItemId1" Type="int" />
+        </EntityType>
+        <EntityType Name="MenuItems">
+          <Key>
+            <PropertyRef Name="MenuItemId" />
+          </Key>
+          <Property Name="MenuItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="NavigatePage" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Config" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Permission" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modules">
+          <Key>
+            <PropertyRef Name="ModuleId" />
+          </Key>
+          <Property Name="ModuleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Permission" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PermissionRole">
+          <Key>
+            <PropertyRef Name="PermissionsPermissionId" />
+            <PropertyRef Name="RolesRoleId" />
+          </Key>
+          <Property Name="PermissionsPermissionId" Type="int" Nullable="false" />
+          <Property Name="RolesRoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PermissionUser">
+          <Key>
+            <PropertyRef Name="PermissionsPermissionId" />
+            <PropertyRef Name="UsersUserId" />
+          </Key>
+          <Property Name="PermissionsPermissionId" Type="int" Nullable="false" />
+          <Property Name="UsersUserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductType" Type="int" Nullable="false" />
+          <Property Name="RateType" Type="int" Nullable="false" />
+          <Property Name="RepaymentType" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="Rate" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Programs">
+          <Key>
+            <PropertyRef Name="ProgramId" />
+          </Key>
+          <Property Name="ProgramId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductType" Type="int" Nullable="false" />
+          <Property Name="RateType" Type="int" Nullable="false" />
+          <Property Name="RepaymentType" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime2" Precision="7" />
+          <Property Name="EndDate" Type="datetime2" Precision="7" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Compensation" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CompensatoryInterest" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Redresses">
+          <Key>
+            <PropertyRef Name="RedressId" />
+          </Key>
+          <Property Name="RedressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="ProgramId" Type="int" Nullable="false" />
+          <Property Name="RefundCalculationId" Type="int" />
+          <Property Name="RefundVerificationRefundCalculationId" Type="int" />
+          <Property Name="RedressCaseOwner" Type="nvarchar" MaxLength="50" />
+          <Property Name="RedressCreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="RedressCreateDate" Type="datetime2" Precision="7" />
+          <Property Name="RefundReviewStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefundReviewComment" Type="nvarchar" MaxLength="250" />
+          <Property Name="RefundReviewBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefundReviewDate" Type="datetime2" Precision="7" />
+          <Property Name="RedressReviewStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="RedressReviewComment" Type="nvarchar" MaxLength="250" />
+          <Property Name="RedressReviewBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="RedressReviewDate" Type="datetime2" Precision="7" />
+          <Property Name="RedressValidationStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="RedressValidationComment" Type="nvarchar" MaxLength="250" />
+          <Property Name="RedressValidationBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="RedressValidationDate" Type="datetime2" Precision="7" />
+          <Property Name="CommunicationGenerationStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="CommunicationGenerationBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CommunicationGenerationDate" Type="datetime2" Precision="7" />
+          <Property Name="CommunicationDispatchStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="CommunicationDispatchComment" Type="nvarchar" MaxLength="250" />
+          <Property Name="CommunicationDispatchBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CommunicationDispatchDate" Type="datetime2" Precision="7" />
+          <Property Name="ResponseRequired" Type="bit" />
+          <Property Name="ResponseReceived" Type="bit" />
+          <Property Name="AwaitingResponseStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="AwaitingResponseComment" Type="nvarchar" MaxLength="250" />
+          <Property Name="AwaitingResponseBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="AwaitingResponseDate" Type="datetime2" Precision="7" />
+          <Property Name="PaymentGenerationStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentGenerationBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentGenerationDate" Type="datetime2" Precision="7" />
+          <Property Name="FinalRedressReviewStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="FinalRedressReviewComment" Type="nvarchar" MaxLength="250" />
+          <Property Name="FinalRedressReviewBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="FinalRedressReviewDate" Type="datetime2" Precision="7" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RefundCalculation">
+          <Key>
+            <PropertyRef Name="RefundCalculationId" />
+          </Key>
+          <Property Name="RefundCalculationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BasicRefundAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CompensatoryAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CompensatoryInterestAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCompensatoryAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRefundAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CalculatedDate" Type="datetime2" Precision="7" />
+          <Property Name="CalculatedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleUser">
+          <Key>
+            <PropertyRef Name="RolesRoleId" />
+            <PropertyRef Name="UsersUserId" />
+          </Key>
+          <Property Name="RolesRoleId" Type="int" Nullable="false" />
+          <Property Name="UsersUserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="450" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Categories_Modules_ModuleId">
+          <End Role="Modules" Type="Self.Modules" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modules">
+              <PropertyRef Name="ModuleId" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="ModuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigContainers_ConfigContainers_ConfigContainerId1">
+          <End Role="ConfigContainers" Type="Self.ConfigContainers" Multiplicity="0..1" />
+          <End Role="ConfigContainers1" Type="Self.ConfigContainers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigContainers">
+              <PropertyRef Name="ConfigContainerId" />
+            </Principal>
+            <Dependent Role="ConfigContainers1">
+              <PropertyRef Name="ConfigContainerId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigContainers_Configs_ConfigId">
+          <End Role="Configs" Type="Self.Configs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ConfigContainers" Type="Self.ConfigContainers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Configs">
+              <PropertyRef Name="ConfigId" />
+            </Principal>
+            <Dependent Role="ConfigContainers">
+              <PropertyRef Name="ConfigId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigItems_ConfigContainers_ConfigContainerId">
+          <End Role="ConfigContainers" Type="Self.ConfigContainers" Multiplicity="0..1" />
+          <End Role="ConfigItems" Type="Self.ConfigItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigContainers">
+              <PropertyRef Name="ConfigContainerId" />
+            </Principal>
+            <Dependent Role="ConfigItems">
+              <PropertyRef Name="ConfigContainerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigItems_Configs_ConfigId">
+          <End Role="Configs" Type="Self.Configs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ConfigItems" Type="Self.ConfigItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Configs">
+              <PropertyRef Name="ConfigId" />
+            </Principal>
+            <Dependent Role="ConfigItems">
+              <PropertyRef Name="ConfigId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigSearchItems_Configs_ConfigId">
+          <End Role="Configs" Type="Self.Configs" Multiplicity="0..1" />
+          <End Role="ConfigSearchItems" Type="Self.ConfigSearchItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Configs">
+              <PropertyRef Name="ConfigId" />
+            </Principal>
+            <Dependent Role="ConfigSearchItems">
+              <PropertyRef Name="ConfigId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModelItems_DemoModels_DemoModelId">
+          <End Role="DemoModels" Type="Self.DemoModels" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DemoModelItems" Type="Self.DemoModelItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModels">
+              <PropertyRef Name="DemoModelId" />
+            </Principal>
+            <Dependent Role="DemoModelItems">
+              <PropertyRef Name="DemoModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModels_DemoModelComplexProperties_DropdownComplexId">
+          <End Role="DemoModelComplexProperties" Type="Self.DemoModelComplexProperties" Multiplicity="0..1" />
+          <End Role="DemoModels" Type="Self.DemoModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModelComplexProperties">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemoModels">
+              <PropertyRef Name="DropdownComplexId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModelTreeItems_DemoModels_DemoModelId">
+          <End Role="DemoModels" Type="Self.DemoModels" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DemoModelTreeItems" Type="Self.DemoModelTreeItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModels">
+              <PropertyRef Name="DemoModelId" />
+            </Principal>
+            <Dependent Role="DemoModelTreeItems">
+              <PropertyRef Name="DemoModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1">
+          <End Role="DemoModelTreeItems" Type="Self.DemoModelTreeItems" Multiplicity="0..1" />
+          <End Role="DemoModelTreeItems1" Type="Self.DemoModelTreeItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModelTreeItems">
+              <PropertyRef Name="DemoModelTreeItemId" />
+            </Principal>
+            <Dependent Role="DemoModelTreeItems1">
+              <PropertyRef Name="DemoModelTreeItemId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuItems_Categories_CategoryId">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="MenuItems" Type="Self.MenuItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="MenuItems">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermissionRole_Permissions_PermissionsPermissionId">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="PermissionId" />
+            </Principal>
+            <Dependent Role="PermissionRole">
+              <PropertyRef Name="PermissionsPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermissionRole_Roles_RolesRoleId">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="PermissionRole">
+              <PropertyRef Name="RolesRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermissionUser_Permissions_PermissionsPermissionId">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PermissionUser" Type="Self.PermissionUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="PermissionId" />
+            </Principal>
+            <Dependent Role="PermissionUser">
+              <PropertyRef Name="PermissionsPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PermissionUser_Users_UsersUserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PermissionUser" Type="Self.PermissionUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PermissionUser">
+              <PropertyRef Name="UsersUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Customers_CustomerId">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_Customers_CustomerId">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Redresses" Type="Self.Redresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_Products_ProductId">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Redresses" Type="Self.Redresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_Programs_ProgramId">
+          <End Role="Programs" Type="Self.Programs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Redresses" Type="Self.Redresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programs">
+              <PropertyRef Name="ProgramId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_RefundCalculation_RefundCalculationId">
+          <End Role="RefundCalculation" Type="Self.RefundCalculation" Multiplicity="0..1" />
+          <End Role="Redresses" Type="Self.Redresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefundCalculation">
+              <PropertyRef Name="RefundCalculationId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="RefundCalculationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId">
+          <End Role="RefundCalculation" Type="Self.RefundCalculation" Multiplicity="0..1" />
+          <End Role="Redresses" Type="Self.Redresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefundCalculation">
+              <PropertyRef Name="RefundCalculationId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="RefundVerificationRefundCalculationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_Roles_RolesRoleId">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="RolesRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_Users_UsersUserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="UsersUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HeadwayModelStoreContainer">
+          <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigContainers" EntityType="Self.ConfigContainers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigItems" EntityType="Self.ConfigItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Configs" EntityType="Self.Configs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfigSearchItems" EntityType="Self.ConfigSearchItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DemoModelComplexProperties" EntityType="Self.DemoModelComplexProperties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DemoModelItems" EntityType="Self.DemoModelItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DemoModels" EntityType="Self.DemoModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DemoModelTreeItems" EntityType="Self.DemoModelTreeItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuItems" EntityType="Self.MenuItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PermissionRole" EntityType="Self.PermissionRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permissions" EntityType="Self.Permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PermissionUser" EntityType="Self.PermissionUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Programs" EntityType="Self.Programs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Redresses" EntityType="Self.Redresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RefundCalculation" EntityType="Self.RefundCalculation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleUser" EntityType="Self.RoleUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Categories_Modules_ModuleId" Association="Self.FK_Categories_Modules_ModuleId">
+            <End Role="Modules" EntitySet="Modules" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigContainers_ConfigContainers_ConfigContainerId1" Association="Self.FK_ConfigContainers_ConfigContainers_ConfigContainerId1">
+            <End Role="ConfigContainers" EntitySet="ConfigContainers" />
+            <End Role="ConfigContainers1" EntitySet="ConfigContainers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigContainers_Configs_ConfigId" Association="Self.FK_ConfigContainers_Configs_ConfigId">
+            <End Role="Configs" EntitySet="Configs" />
+            <End Role="ConfigContainers" EntitySet="ConfigContainers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigItems_ConfigContainers_ConfigContainerId" Association="Self.FK_ConfigItems_ConfigContainers_ConfigContainerId">
+            <End Role="ConfigContainers" EntitySet="ConfigContainers" />
+            <End Role="ConfigItems" EntitySet="ConfigItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigItems_Configs_ConfigId" Association="Self.FK_ConfigItems_Configs_ConfigId">
+            <End Role="Configs" EntitySet="Configs" />
+            <End Role="ConfigItems" EntitySet="ConfigItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigSearchItems_Configs_ConfigId" Association="Self.FK_ConfigSearchItems_Configs_ConfigId">
+            <End Role="Configs" EntitySet="Configs" />
+            <End Role="ConfigSearchItems" EntitySet="ConfigSearchItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModelItems_DemoModels_DemoModelId" Association="Self.FK_DemoModelItems_DemoModels_DemoModelId">
+            <End Role="DemoModels" EntitySet="DemoModels" />
+            <End Role="DemoModelItems" EntitySet="DemoModelItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModels_DemoModelComplexProperties_DropdownComplexId" Association="Self.FK_DemoModels_DemoModelComplexProperties_DropdownComplexId">
+            <End Role="DemoModelComplexProperties" EntitySet="DemoModelComplexProperties" />
+            <End Role="DemoModels" EntitySet="DemoModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModelTreeItems_DemoModels_DemoModelId" Association="Self.FK_DemoModelTreeItems_DemoModels_DemoModelId">
+            <End Role="DemoModels" EntitySet="DemoModels" />
+            <End Role="DemoModelTreeItems" EntitySet="DemoModelTreeItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1" Association="Self.FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1">
+            <End Role="DemoModelTreeItems" EntitySet="DemoModelTreeItems" />
+            <End Role="DemoModelTreeItems1" EntitySet="DemoModelTreeItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuItems_Categories_CategoryId" Association="Self.FK_MenuItems_Categories_CategoryId">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="MenuItems" EntitySet="MenuItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermissionRole_Permissions_PermissionsPermissionId" Association="Self.FK_PermissionRole_Permissions_PermissionsPermissionId">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="PermissionRole" EntitySet="PermissionRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermissionRole_Roles_RolesRoleId" Association="Self.FK_PermissionRole_Roles_RolesRoleId">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="PermissionRole" EntitySet="PermissionRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermissionUser_Permissions_PermissionsPermissionId" Association="Self.FK_PermissionUser_Permissions_PermissionsPermissionId">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="PermissionUser" EntitySet="PermissionUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PermissionUser_Users_UsersUserId" Association="Self.FK_PermissionUser_Users_UsersUserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PermissionUser" EntitySet="PermissionUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Customers_CustomerId" Association="Self.FK_Products_Customers_CustomerId">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_Customers_CustomerId" Association="Self.FK_Redresses_Customers_CustomerId">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_Products_ProductId" Association="Self.FK_Redresses_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_Programs_ProgramId" Association="Self.FK_Redresses_Programs_ProgramId">
+            <End Role="Programs" EntitySet="Programs" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_RefundCalculation_RefundCalculationId" Association="Self.FK_Redresses_RefundCalculation_RefundCalculationId">
+            <End Role="RefundCalculation" EntitySet="RefundCalculation" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId" Association="Self.FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId">
+            <End Role="RefundCalculation" EntitySet="RefundCalculation" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_Roles_RolesRoleId" Association="Self.FK_RoleUser_Roles_RolesRoleId">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_Users_UsersUserId" Association="Self.FK_RoleUser_Users_UsersUserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HeadwayModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="ModuleId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Permission" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Categories_Modules_ModuleId" FromRole="Categories" ToRole="Modules" />
+          <NavigationProperty Name="MenuItems" Relationship="Self.FK_MenuItems_Categories_CategoryId" FromRole="Categories" ToRole="MenuItems" />
+        </EntityType>
+        <EntityType Name="ConfigContainer">
+          <Key>
+            <PropertyRef Name="ConfigContainerId" />
+          </Key>
+          <Property Name="ConfigContainerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConfigId" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="ComponentArgs" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Container" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConfigContainerId1" Type="Int32" />
+          <NavigationProperty Name="ConfigContainers1" Relationship="Self.FK_ConfigContainers_ConfigContainers_ConfigContainerId1" FromRole="ConfigContainers" ToRole="ConfigContainers1" />
+          <NavigationProperty Name="ConfigContainer1" Relationship="Self.FK_ConfigContainers_ConfigContainers_ConfigContainerId1" FromRole="ConfigContainers1" ToRole="ConfigContainers" />
+          <NavigationProperty Name="Config" Relationship="Self.FK_ConfigContainers_Configs_ConfigId" FromRole="ConfigContainers" ToRole="Configs" />
+          <NavigationProperty Name="ConfigItems" Relationship="Self.FK_ConfigItems_ConfigContainers_ConfigContainerId" FromRole="ConfigContainers" ToRole="ConfigItems" />
+        </EntityType>
+        <EntityType Name="ConfigItem">
+          <Key>
+            <PropertyRef Name="ConfigItemId" />
+          </Key>
+          <Property Name="ConfigItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConfigId" Type="Int32" Nullable="false" />
+          <Property Name="IsIdentity" Type="Boolean" Nullable="false" />
+          <Property Name="IsTitle" Type="Boolean" Nullable="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="ComponentArgs" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="ConfigName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConfigContainerId" Type="Int32" />
+          <Property Name="PropertyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tooltip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Component" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ConfigContainer" Relationship="Self.FK_ConfigItems_ConfigContainers_ConfigContainerId" FromRole="ConfigItems" ToRole="ConfigContainers" />
+          <NavigationProperty Name="Config" Relationship="Self.FK_ConfigItems_Configs_ConfigId" FromRole="ConfigItems" ToRole="Configs" />
+        </EntityType>
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="ConfigId" />
+          </Key>
+          <Property Name="ConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NavigateResetBreadcrumb" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModelApi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderModelBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Document" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NavigatePage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NavigateProperty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NavigateConfig" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateLocal" Type="Boolean" Nullable="false" />
+          <Property Name="DocumentArgs" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="SearchComponent" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UseSearchComponent" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ConfigContainers" Relationship="Self.FK_ConfigContainers_Configs_ConfigId" FromRole="Configs" ToRole="ConfigContainers" />
+          <NavigationProperty Name="ConfigItems" Relationship="Self.FK_ConfigItems_Configs_ConfigId" FromRole="Configs" ToRole="ConfigItems" />
+          <NavigationProperty Name="ConfigSearchItems" Relationship="Self.FK_ConfigSearchItems_Configs_ConfigId" FromRole="Configs" ToRole="ConfigSearchItems" />
+        </EntityType>
+        <EntityType Name="ConfigSearchItem">
+          <Key>
+            <PropertyRef Name="ConfigSearchItemId" />
+          </Key>
+          <Property Name="ConfigSearchItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tooltip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Component" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ConfigId" Type="Int32" />
+          <Property Name="ComponentArgs" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="ParameterName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Config" Relationship="Self.FK_ConfigSearchItems_Configs_ConfigId" FromRole="ConfigSearchItems" ToRole="Configs" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountStatus" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SortCode" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Customers_CustomerId" FromRole="Customers" ToRole="Products" />
+          <NavigationProperty Name="Redresses" Relationship="Self.FK_Redresses_Customers_CustomerId" FromRole="Customers" ToRole="Redresses" />
+        </EntityType>
+        <EntityType Name="DemoModelComplexProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DemoModels" Relationship="Self.FK_DemoModels_DemoModelComplexProperties_DropdownComplexId" FromRole="DemoModelComplexProperties" ToRole="DemoModels" />
+        </EntityType>
+        <EntityType Name="DemoModelItem">
+          <Key>
+            <PropertyRef Name="DemoModelItemId" />
+          </Key>
+          <Property Name="DemoModelItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DemoModelId" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DemoModel" Relationship="Self.FK_DemoModelItems_DemoModels_DemoModelId" FromRole="DemoModelItems" ToRole="DemoModels" />
+        </EntityType>
+        <EntityType Name="DemoModel">
+          <Key>
+            <PropertyRef Name="DemoModelId" />
+          </Key>
+          <Property Name="DemoModelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Checkbox" Type="Boolean" Nullable="false" />
+          <Property Name="Integer" Type="Int32" Nullable="false" />
+          <Property Name="OptionVertical" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OptionHorizontal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dropdown" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DropdownComplexId" Type="Int32" />
+          <Property Name="Text" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TextMultiline" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Decimal" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="DemoModelComplexProperty" Relationship="Self.FK_DemoModels_DemoModelComplexProperties_DropdownComplexId" FromRole="DemoModels" ToRole="DemoModelComplexProperties" />
+          <NavigationProperty Name="DemoModelItems" Relationship="Self.FK_DemoModelItems_DemoModels_DemoModelId" FromRole="DemoModels" ToRole="DemoModelItems" />
+          <NavigationProperty Name="DemoModelTreeItems" Relationship="Self.FK_DemoModelTreeItems_DemoModels_DemoModelId" FromRole="DemoModels" ToRole="DemoModelTreeItems" />
+        </EntityType>
+        <EntityType Name="DemoModelTreeItem">
+          <Key>
+            <PropertyRef Name="DemoModelTreeItemId" />
+          </Key>
+          <Property Name="DemoModelTreeItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="DemoModelId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DemoModelTreeItemId1" Type="Int32" />
+          <NavigationProperty Name="DemoModel" Relationship="Self.FK_DemoModelTreeItems_DemoModels_DemoModelId" FromRole="DemoModelTreeItems" ToRole="DemoModels" />
+          <NavigationProperty Name="DemoModelTreeItems1" Relationship="Self.FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1" FromRole="DemoModelTreeItems" ToRole="DemoModelTreeItems1" />
+          <NavigationProperty Name="DemoModelTreeItem1" Relationship="Self.FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1" FromRole="DemoModelTreeItems1" ToRole="DemoModelTreeItems" />
+        </EntityType>
+        <EntityType Name="MenuItem">
+          <Key>
+            <PropertyRef Name="MenuItemId" />
+          </Key>
+          <Property Name="MenuItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NavigatePage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Config" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Permission" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_MenuItems_Categories_CategoryId" FromRole="MenuItems" ToRole="Categories" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ModuleId" />
+          </Key>
+          <Property Name="ModuleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Icon" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Permission" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_Modules_ModuleId" FromRole="Modules" ToRole="Categories" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Roles" Relationship="Self.PermissionRole" FromRole="Permissions" ToRole="Roles" />
+          <NavigationProperty Name="Users" Relationship="Self.PermissionUser" FromRole="Permissions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductType" Type="Int32" Nullable="false" />
+          <Property Name="RateType" Type="Int32" Nullable="false" />
+          <Property Name="RepaymentType" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="Rate" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Products_Customers_CustomerId" FromRole="Products" ToRole="Customers" />
+          <NavigationProperty Name="Redresses" Relationship="Self.FK_Redresses_Products_ProductId" FromRole="Products" ToRole="Redresses" />
+        </EntityType>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="ProgramId" />
+          </Key>
+          <Property Name="ProgramId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductType" Type="Int32" Nullable="false" />
+          <Property Name="RateType" Type="Int32" Nullable="false" />
+          <Property Name="RepaymentType" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="7" />
+          <Property Name="EndDate" Type="DateTime" Precision="7" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Compensation" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompensatoryInterest" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Redresses" Relationship="Self.FK_Redresses_Programs_ProgramId" FromRole="Programs" ToRole="Redresses" />
+        </EntityType>
+        <EntityType Name="Redress">
+          <Key>
+            <PropertyRef Name="RedressId" />
+          </Key>
+          <Property Name="RedressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ProgramId" Type="Int32" Nullable="false" />
+          <Property Name="RefundCalculationId" Type="Int32" />
+          <Property Name="RefundVerificationRefundCalculationId" Type="Int32" />
+          <Property Name="RedressCaseOwner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RedressCreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RedressCreateDate" Type="DateTime" Precision="7" />
+          <Property Name="RefundReviewStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefundReviewComment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RefundReviewBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefundReviewDate" Type="DateTime" Precision="7" />
+          <Property Name="RedressReviewStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RedressReviewComment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RedressReviewBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RedressReviewDate" Type="DateTime" Precision="7" />
+          <Property Name="RedressValidationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RedressValidationComment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RedressValidationBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RedressValidationDate" Type="DateTime" Precision="7" />
+          <Property Name="CommunicationGenerationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CommunicationGenerationBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CommunicationGenerationDate" Type="DateTime" Precision="7" />
+          <Property Name="CommunicationDispatchStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CommunicationDispatchComment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CommunicationDispatchBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CommunicationDispatchDate" Type="DateTime" Precision="7" />
+          <Property Name="ResponseRequired" Type="Boolean" />
+          <Property Name="ResponseReceived" Type="Boolean" />
+          <Property Name="AwaitingResponseStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AwaitingResponseComment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="AwaitingResponseBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AwaitingResponseDate" Type="DateTime" Precision="7" />
+          <Property Name="PaymentGenerationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentGenerationBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentGenerationDate" Type="DateTime" Precision="7" />
+          <Property Name="FinalRedressReviewStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FinalRedressReviewComment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FinalRedressReviewBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FinalRedressReviewDate" Type="DateTime" Precision="7" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Redresses_Customers_CustomerId" FromRole="Redresses" ToRole="Customers" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Redresses_Products_ProductId" FromRole="Redresses" ToRole="Products" />
+          <NavigationProperty Name="Program" Relationship="Self.FK_Redresses_Programs_ProgramId" FromRole="Redresses" ToRole="Programs" />
+          <NavigationProperty Name="RefundCalculation" Relationship="Self.FK_Redresses_RefundCalculation_RefundCalculationId" FromRole="Redresses" ToRole="RefundCalculation" />
+          <NavigationProperty Name="RefundCalculation1" Relationship="Self.FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId" FromRole="Redresses" ToRole="RefundCalculation" />
+        </EntityType>
+        <EntityType Name="RefundCalculation">
+          <Key>
+            <PropertyRef Name="RefundCalculationId" />
+          </Key>
+          <Property Name="RefundCalculationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BasicRefundAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompensatoryAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompensatoryInterestAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalCompensatoryAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalRefundAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CalculatedDate" Type="DateTime" Precision="7" />
+          <Property Name="CalculatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Redresses" Relationship="Self.FK_Redresses_RefundCalculation_RefundCalculationId" FromRole="RefundCalculation" ToRole="Redresses" />
+          <NavigationProperty Name="Redresses1" Relationship="Self.FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId" FromRole="RefundCalculation" ToRole="Redresses" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Permissions" Relationship="Self.PermissionRole" FromRole="Roles" ToRole="Permissions" />
+          <NavigationProperty Name="Users" Relationship="Self.RoleUser" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Permissions" Relationship="Self.PermissionUser" FromRole="Users" ToRole="Permissions" />
+          <NavigationProperty Name="Roles" Relationship="Self.RoleUser" FromRole="Users" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK_Categories_Modules_ModuleId">
+          <End Role="Modules" Type="Self.Module" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modules">
+              <PropertyRef Name="ModuleId" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="ModuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuItems_Categories_CategoryId">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="MenuItems" Type="Self.MenuItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="MenuItems">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigContainers_ConfigContainers_ConfigContainerId1">
+          <End Role="ConfigContainers" Type="Self.ConfigContainer" Multiplicity="0..1" />
+          <End Role="ConfigContainers1" Type="Self.ConfigContainer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigContainers">
+              <PropertyRef Name="ConfigContainerId" />
+            </Principal>
+            <Dependent Role="ConfigContainers1">
+              <PropertyRef Name="ConfigContainerId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigContainers_Configs_ConfigId">
+          <End Role="Configs" Type="Self.Config" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ConfigContainers" Type="Self.ConfigContainer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Configs">
+              <PropertyRef Name="ConfigId" />
+            </Principal>
+            <Dependent Role="ConfigContainers">
+              <PropertyRef Name="ConfigId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigItems_ConfigContainers_ConfigContainerId">
+          <End Role="ConfigContainers" Type="Self.ConfigContainer" Multiplicity="0..1" />
+          <End Role="ConfigItems" Type="Self.ConfigItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConfigContainers">
+              <PropertyRef Name="ConfigContainerId" />
+            </Principal>
+            <Dependent Role="ConfigItems">
+              <PropertyRef Name="ConfigContainerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigItems_Configs_ConfigId">
+          <End Role="Configs" Type="Self.Config" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ConfigItems" Type="Self.ConfigItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Configs">
+              <PropertyRef Name="ConfigId" />
+            </Principal>
+            <Dependent Role="ConfigItems">
+              <PropertyRef Name="ConfigId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfigSearchItems_Configs_ConfigId">
+          <End Role="Configs" Type="Self.Config" Multiplicity="0..1" />
+          <End Role="ConfigSearchItems" Type="Self.ConfigSearchItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Configs">
+              <PropertyRef Name="ConfigId" />
+            </Principal>
+            <Dependent Role="ConfigSearchItems">
+              <PropertyRef Name="ConfigId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Customers_CustomerId">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_Customers_CustomerId">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Redresses" Type="Self.Redress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModels_DemoModelComplexProperties_DropdownComplexId">
+          <End Role="DemoModelComplexProperties" Type="Self.DemoModelComplexProperty" Multiplicity="0..1" />
+          <End Role="DemoModels" Type="Self.DemoModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModelComplexProperties">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemoModels">
+              <PropertyRef Name="DropdownComplexId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModelItems_DemoModels_DemoModelId">
+          <End Role="DemoModels" Type="Self.DemoModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DemoModelItems" Type="Self.DemoModelItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModels">
+              <PropertyRef Name="DemoModelId" />
+            </Principal>
+            <Dependent Role="DemoModelItems">
+              <PropertyRef Name="DemoModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModelTreeItems_DemoModels_DemoModelId">
+          <End Role="DemoModels" Type="Self.DemoModel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DemoModelTreeItems" Type="Self.DemoModelTreeItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModels">
+              <PropertyRef Name="DemoModelId" />
+            </Principal>
+            <Dependent Role="DemoModelTreeItems">
+              <PropertyRef Name="DemoModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1">
+          <End Role="DemoModelTreeItems" Type="Self.DemoModelTreeItem" Multiplicity="0..1" />
+          <End Role="DemoModelTreeItems1" Type="Self.DemoModelTreeItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemoModelTreeItems">
+              <PropertyRef Name="DemoModelTreeItemId" />
+            </Principal>
+            <Dependent Role="DemoModelTreeItems1">
+              <PropertyRef Name="DemoModelTreeItemId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_Products_ProductId">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Redresses" Type="Self.Redress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_Programs_ProgramId">
+          <End Role="Programs" Type="Self.Program" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Redresses" Type="Self.Redress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Programs">
+              <PropertyRef Name="ProgramId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_RefundCalculation_RefundCalculationId">
+          <End Role="RefundCalculation" Type="Self.RefundCalculation" Multiplicity="0..1" />
+          <End Role="Redresses" Type="Self.Redress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefundCalculation">
+              <PropertyRef Name="RefundCalculationId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="RefundCalculationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId">
+          <End Role="RefundCalculation" Type="Self.RefundCalculation" Multiplicity="0..1" />
+          <End Role="Redresses" Type="Self.Redress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefundCalculation">
+              <PropertyRef Name="RefundCalculationId" />
+            </Principal>
+            <Dependent Role="Redresses">
+              <PropertyRef Name="RefundVerificationRefundCalculationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PermissionRole">
+          <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+        </Association>
+        <Association Name="PermissionUser">
+          <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="RoleUser">
+          <End Role="Roles" Type="Self.Role" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="HeadwayEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="ConfigContainers" EntityType="Self.ConfigContainer" />
+          <EntitySet Name="ConfigItems" EntityType="Self.ConfigItem" />
+          <EntitySet Name="Configs" EntityType="Self.Config" />
+          <EntitySet Name="ConfigSearchItems" EntityType="Self.ConfigSearchItem" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="DemoModelComplexProperties" EntityType="Self.DemoModelComplexProperty" />
+          <EntitySet Name="DemoModelItems" EntityType="Self.DemoModelItem" />
+          <EntitySet Name="DemoModels" EntityType="Self.DemoModel" />
+          <EntitySet Name="DemoModelTreeItems" EntityType="Self.DemoModelTreeItem" />
+          <EntitySet Name="MenuItems" EntityType="Self.MenuItem" />
+          <EntitySet Name="Modules" EntityType="Self.Module" />
+          <EntitySet Name="Permissions" EntityType="Self.Permission" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Programs" EntityType="Self.Program" />
+          <EntitySet Name="Redresses" EntityType="Self.Redress" />
+          <EntitySet Name="RefundCalculations" EntityType="Self.RefundCalculation" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Categories_Modules_ModuleId" Association="Self.FK_Categories_Modules_ModuleId">
+            <End Role="Modules" EntitySet="Modules" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuItems_Categories_CategoryId" Association="Self.FK_MenuItems_Categories_CategoryId">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="MenuItems" EntitySet="MenuItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigContainers_ConfigContainers_ConfigContainerId1" Association="Self.FK_ConfigContainers_ConfigContainers_ConfigContainerId1">
+            <End Role="ConfigContainers" EntitySet="ConfigContainers" />
+            <End Role="ConfigContainers1" EntitySet="ConfigContainers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigContainers_Configs_ConfigId" Association="Self.FK_ConfigContainers_Configs_ConfigId">
+            <End Role="Configs" EntitySet="Configs" />
+            <End Role="ConfigContainers" EntitySet="ConfigContainers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigItems_ConfigContainers_ConfigContainerId" Association="Self.FK_ConfigItems_ConfigContainers_ConfigContainerId">
+            <End Role="ConfigContainers" EntitySet="ConfigContainers" />
+            <End Role="ConfigItems" EntitySet="ConfigItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigItems_Configs_ConfigId" Association="Self.FK_ConfigItems_Configs_ConfigId">
+            <End Role="Configs" EntitySet="Configs" />
+            <End Role="ConfigItems" EntitySet="ConfigItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfigSearchItems_Configs_ConfigId" Association="Self.FK_ConfigSearchItems_Configs_ConfigId">
+            <End Role="Configs" EntitySet="Configs" />
+            <End Role="ConfigSearchItems" EntitySet="ConfigSearchItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Customers_CustomerId" Association="Self.FK_Products_Customers_CustomerId">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_Customers_CustomerId" Association="Self.FK_Redresses_Customers_CustomerId">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModels_DemoModelComplexProperties_DropdownComplexId" Association="Self.FK_DemoModels_DemoModelComplexProperties_DropdownComplexId">
+            <End Role="DemoModelComplexProperties" EntitySet="DemoModelComplexProperties" />
+            <End Role="DemoModels" EntitySet="DemoModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModelItems_DemoModels_DemoModelId" Association="Self.FK_DemoModelItems_DemoModels_DemoModelId">
+            <End Role="DemoModels" EntitySet="DemoModels" />
+            <End Role="DemoModelItems" EntitySet="DemoModelItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModelTreeItems_DemoModels_DemoModelId" Association="Self.FK_DemoModelTreeItems_DemoModels_DemoModelId">
+            <End Role="DemoModels" EntitySet="DemoModels" />
+            <End Role="DemoModelTreeItems" EntitySet="DemoModelTreeItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1" Association="Self.FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1">
+            <End Role="DemoModelTreeItems" EntitySet="DemoModelTreeItems" />
+            <End Role="DemoModelTreeItems1" EntitySet="DemoModelTreeItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_Products_ProductId" Association="Self.FK_Redresses_Products_ProductId">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_Programs_ProgramId" Association="Self.FK_Redresses_Programs_ProgramId">
+            <End Role="Programs" EntitySet="Programs" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_RefundCalculation_RefundCalculationId" Association="Self.FK_Redresses_RefundCalculation_RefundCalculationId">
+            <End Role="RefundCalculation" EntitySet="RefundCalculations" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId" Association="Self.FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId">
+            <End Role="RefundCalculation" EntitySet="RefundCalculations" />
+            <End Role="Redresses" EntitySet="Redresses" />
+          </AssociationSet>
+          <AssociationSet Name="PermissionRole" Association="Self.PermissionRole">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="PermissionUser" Association="Self.PermissionUser">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="RoleUser" Association="Self.RoleUser">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HeadwayModelStoreContainer" CdmEntityContainer="HeadwayEntities">
+          <EntitySetMapping Name="C__EFMigrationsHistory">
+            <EntityTypeMapping TypeName="HeadwayModel.C__EFMigrationsHistory">
+              <MappingFragment StoreEntitySet="__EFMigrationsHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="HeadwayModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigContainers">
+            <EntityTypeMapping TypeName="HeadwayModel.ConfigContainer">
+              <MappingFragment StoreEntitySet="ConfigContainers">
+                <ScalarProperty Name="ConfigContainerId" ColumnName="ConfigContainerId" />
+                <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="ComponentArgs" ColumnName="ComponentArgs" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Container" ColumnName="Container" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ParentCode" ColumnName="ParentCode" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="ConfigContainerId1" ColumnName="ConfigContainerId1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigItems">
+            <EntityTypeMapping TypeName="HeadwayModel.ConfigItem">
+              <MappingFragment StoreEntitySet="ConfigItems">
+                <ScalarProperty Name="ConfigItemId" ColumnName="ConfigItemId" />
+                <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+                <ScalarProperty Name="IsIdentity" ColumnName="IsIdentity" />
+                <ScalarProperty Name="IsTitle" ColumnName="IsTitle" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="ComponentArgs" ColumnName="ComponentArgs" />
+                <ScalarProperty Name="ConfigName" ColumnName="ConfigName" />
+                <ScalarProperty Name="ConfigContainerId" ColumnName="ConfigContainerId" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
+                <ScalarProperty Name="Component" ColumnName="Component" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Configs">
+            <EntityTypeMapping TypeName="HeadwayModel.Config">
+              <MappingFragment StoreEntitySet="Configs">
+                <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+                <ScalarProperty Name="NavigateResetBreadcrumb" ColumnName="NavigateResetBreadcrumb" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ModelApi" ColumnName="ModelApi" />
+                <ScalarProperty Name="OrderModelBy" ColumnName="OrderModelBy" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="NavigatePage" ColumnName="NavigatePage" />
+                <ScalarProperty Name="NavigateProperty" ColumnName="NavigateProperty" />
+                <ScalarProperty Name="NavigateConfig" ColumnName="NavigateConfig" />
+                <ScalarProperty Name="CreateLocal" ColumnName="CreateLocal" />
+                <ScalarProperty Name="DocumentArgs" ColumnName="DocumentArgs" />
+                <ScalarProperty Name="SearchComponent" ColumnName="SearchComponent" />
+                <ScalarProperty Name="UseSearchComponent" ColumnName="UseSearchComponent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfigSearchItems">
+            <EntityTypeMapping TypeName="HeadwayModel.ConfigSearchItem">
+              <MappingFragment StoreEntitySet="ConfigSearchItems">
+                <ScalarProperty Name="ConfigSearchItemId" ColumnName="ConfigSearchItemId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
+                <ScalarProperty Name="Component" ColumnName="Component" />
+                <ScalarProperty Name="ConfigId" ColumnName="ConfigId" />
+                <ScalarProperty Name="ComponentArgs" ColumnName="ComponentArgs" />
+                <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="HeadwayModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="HeadwayModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountStatus" ColumnName="AccountStatus" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="Address4" ColumnName="Address4" />
+                <ScalarProperty Name="Address5" ColumnName="Address5" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="SortCode" ColumnName="SortCode" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DemoModelComplexProperties">
+            <EntityTypeMapping TypeName="HeadwayModel.DemoModelComplexProperty">
+              <MappingFragment StoreEntitySet="DemoModelComplexProperties">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DemoModelItems">
+            <EntityTypeMapping TypeName="HeadwayModel.DemoModelItem">
+              <MappingFragment StoreEntitySet="DemoModelItems">
+                <ScalarProperty Name="DemoModelItemId" ColumnName="DemoModelItemId" />
+                <ScalarProperty Name="DemoModelId" ColumnName="DemoModelId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DemoModels">
+            <EntityTypeMapping TypeName="HeadwayModel.DemoModel">
+              <MappingFragment StoreEntitySet="DemoModels">
+                <ScalarProperty Name="DemoModelId" ColumnName="DemoModelId" />
+                <ScalarProperty Name="Checkbox" ColumnName="Checkbox" />
+                <ScalarProperty Name="Integer" ColumnName="Integer" />
+                <ScalarProperty Name="OptionVertical" ColumnName="OptionVertical" />
+                <ScalarProperty Name="OptionHorizontal" ColumnName="OptionHorizontal" />
+                <ScalarProperty Name="Dropdown" ColumnName="Dropdown" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DropdownComplexId" ColumnName="DropdownComplexId" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="TextMultiline" ColumnName="TextMultiline" />
+                <ScalarProperty Name="Decimal" ColumnName="Decimal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DemoModelTreeItems">
+            <EntityTypeMapping TypeName="HeadwayModel.DemoModelTreeItem">
+              <MappingFragment StoreEntitySet="DemoModelTreeItems">
+                <ScalarProperty Name="DemoModelTreeItemId" ColumnName="DemoModelTreeItemId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="DemoModelId" ColumnName="DemoModelId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ParentCode" ColumnName="ParentCode" />
+                <ScalarProperty Name="DemoModelTreeItemId1" ColumnName="DemoModelTreeItemId1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuItems">
+            <EntityTypeMapping TypeName="HeadwayModel.MenuItem">
+              <MappingFragment StoreEntitySet="MenuItems">
+                <ScalarProperty Name="MenuItemId" ColumnName="MenuItemId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="NavigatePage" ColumnName="NavigatePage" />
+                <ScalarProperty Name="Config" ColumnName="Config" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="HeadwayModel.Module">
+              <MappingFragment StoreEntitySet="Modules">
+                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="HeadwayModel.Permission">
+              <MappingFragment StoreEntitySet="Permissions">
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="HeadwayModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="RateType" ColumnName="RateType" />
+                <ScalarProperty Name="RepaymentType" ColumnName="RepaymentType" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Programs">
+            <EntityTypeMapping TypeName="HeadwayModel.Program">
+              <MappingFragment StoreEntitySet="Programs">
+                <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="RateType" ColumnName="RateType" />
+                <ScalarProperty Name="RepaymentType" ColumnName="RepaymentType" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Compensation" ColumnName="Compensation" />
+                <ScalarProperty Name="CompensatoryInterest" ColumnName="CompensatoryInterest" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Redresses">
+            <EntityTypeMapping TypeName="HeadwayModel.Redress">
+              <MappingFragment StoreEntitySet="Redresses">
+                <ScalarProperty Name="RedressId" ColumnName="RedressId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+                <ScalarProperty Name="RefundCalculationId" ColumnName="RefundCalculationId" />
+                <ScalarProperty Name="RefundVerificationRefundCalculationId" ColumnName="RefundVerificationRefundCalculationId" />
+                <ScalarProperty Name="RedressCaseOwner" ColumnName="RedressCaseOwner" />
+                <ScalarProperty Name="RedressCreateBy" ColumnName="RedressCreateBy" />
+                <ScalarProperty Name="RedressCreateDate" ColumnName="RedressCreateDate" />
+                <ScalarProperty Name="RefundReviewStatus" ColumnName="RefundReviewStatus" />
+                <ScalarProperty Name="RefundReviewComment" ColumnName="RefundReviewComment" />
+                <ScalarProperty Name="RefundReviewBy" ColumnName="RefundReviewBy" />
+                <ScalarProperty Name="RefundReviewDate" ColumnName="RefundReviewDate" />
+                <ScalarProperty Name="RedressReviewStatus" ColumnName="RedressReviewStatus" />
+                <ScalarProperty Name="RedressReviewComment" ColumnName="RedressReviewComment" />
+                <ScalarProperty Name="RedressReviewBy" ColumnName="RedressReviewBy" />
+                <ScalarProperty Name="RedressReviewDate" ColumnName="RedressReviewDate" />
+                <ScalarProperty Name="RedressValidationStatus" ColumnName="RedressValidationStatus" />
+                <ScalarProperty Name="RedressValidationComment" ColumnName="RedressValidationComment" />
+                <ScalarProperty Name="RedressValidationBy" ColumnName="RedressValidationBy" />
+                <ScalarProperty Name="RedressValidationDate" ColumnName="RedressValidationDate" />
+                <ScalarProperty Name="CommunicationGenerationStatus" ColumnName="CommunicationGenerationStatus" />
+                <ScalarProperty Name="CommunicationGenerationBy" ColumnName="CommunicationGenerationBy" />
+                <ScalarProperty Name="CommunicationGenerationDate" ColumnName="CommunicationGenerationDate" />
+                <ScalarProperty Name="CommunicationDispatchStatus" ColumnName="CommunicationDispatchStatus" />
+                <ScalarProperty Name="CommunicationDispatchComment" ColumnName="CommunicationDispatchComment" />
+                <ScalarProperty Name="CommunicationDispatchBy" ColumnName="CommunicationDispatchBy" />
+                <ScalarProperty Name="CommunicationDispatchDate" ColumnName="CommunicationDispatchDate" />
+                <ScalarProperty Name="ResponseRequired" ColumnName="ResponseRequired" />
+                <ScalarProperty Name="ResponseReceived" ColumnName="ResponseReceived" />
+                <ScalarProperty Name="AwaitingResponseStatus" ColumnName="AwaitingResponseStatus" />
+                <ScalarProperty Name="AwaitingResponseComment" ColumnName="AwaitingResponseComment" />
+                <ScalarProperty Name="AwaitingResponseBy" ColumnName="AwaitingResponseBy" />
+                <ScalarProperty Name="AwaitingResponseDate" ColumnName="AwaitingResponseDate" />
+                <ScalarProperty Name="PaymentGenerationStatus" ColumnName="PaymentGenerationStatus" />
+                <ScalarProperty Name="PaymentGenerationBy" ColumnName="PaymentGenerationBy" />
+                <ScalarProperty Name="PaymentGenerationDate" ColumnName="PaymentGenerationDate" />
+                <ScalarProperty Name="FinalRedressReviewStatus" ColumnName="FinalRedressReviewStatus" />
+                <ScalarProperty Name="FinalRedressReviewComment" ColumnName="FinalRedressReviewComment" />
+                <ScalarProperty Name="FinalRedressReviewBy" ColumnName="FinalRedressReviewBy" />
+                <ScalarProperty Name="FinalRedressReviewDate" ColumnName="FinalRedressReviewDate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefundCalculations">
+            <EntityTypeMapping TypeName="HeadwayModel.RefundCalculation">
+              <MappingFragment StoreEntitySet="RefundCalculation">
+                <ScalarProperty Name="RefundCalculationId" ColumnName="RefundCalculationId" />
+                <ScalarProperty Name="BasicRefundAmount" ColumnName="BasicRefundAmount" />
+                <ScalarProperty Name="CompensatoryAmount" ColumnName="CompensatoryAmount" />
+                <ScalarProperty Name="CompensatoryInterestAmount" ColumnName="CompensatoryInterestAmount" />
+                <ScalarProperty Name="TotalCompensatoryAmount" ColumnName="TotalCompensatoryAmount" />
+                <ScalarProperty Name="TotalRefundAmount" ColumnName="TotalRefundAmount" />
+                <ScalarProperty Name="CalculatedDate" ColumnName="CalculatedDate" />
+                <ScalarProperty Name="CalculatedBy" ColumnName="CalculatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="HeadwayModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HeadwayModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PermissionRole" TypeName="HeadwayModel.PermissionRole" StoreEntitySet="PermissionRole">
+            <EndProperty Name="Permissions">
+              <ScalarProperty Name="PermissionId" ColumnName="PermissionsPermissionId" />
+            </EndProperty>
+            <EndProperty Name="Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RolesRoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PermissionUser" TypeName="HeadwayModel.PermissionUser" StoreEntitySet="PermissionUser">
+            <EndProperty Name="Permissions">
+              <ScalarProperty Name="PermissionId" ColumnName="PermissionsPermissionId" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="UserId" ColumnName="UsersUserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="RoleUser" TypeName="HeadwayModel.RoleUser" StoreEntitySet="RoleUser">
+            <EndProperty Name="Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RolesRoleId" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="UserId" ColumnName="UsersUserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

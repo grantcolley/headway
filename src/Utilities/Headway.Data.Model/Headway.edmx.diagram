@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="adf28fa7729043018ed4ff0489a34477" Name="Diagram1">
+        <EntityTypeShape EntityType="HeadwayModel.C__EFMigrationsHistory" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Category" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.ConfigContainer" Width="1.5" PointX="10" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.ConfigItem" Width="1.5" PointX="12.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Config" Width="1.5" PointX="7.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.ConfigSearchItem" Width="1.5" PointX="10" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Country" Width="1.5" PointX="14.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Customer" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.DemoModelComplexProperty" Width="1.5" PointX="7.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.DemoModelItem" Width="1.5" PointX="12.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.DemoModel" Width="1.5" PointX="10" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.DemoModelTreeItem" Width="1.5" PointX="12.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.MenuItem" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Module" Width="1.5" PointX="0.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Permission" Width="1.5" PointX="14.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Product" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Program" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Redress" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.RefundCalculation" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.Role" Width="1.5" PointX="17" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HeadwayModel.User" Width="1.5" PointX="19.25" PointY="1.875" IsExpanded="true" />
+        <AssociationConnector Association="HeadwayModel.FK_Categories_Modules_ModuleId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_MenuItems_Categories_CategoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_ConfigContainers_ConfigContainers_ConfigContainerId1" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_ConfigContainers_Configs_ConfigId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_ConfigItems_ConfigContainers_ConfigContainerId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_ConfigItems_Configs_ConfigId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_ConfigSearchItems_Configs_ConfigId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_Products_Customers_CustomerId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_Redresses_Customers_CustomerId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_DemoModels_DemoModelComplexProperties_DropdownComplexId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_DemoModelItems_DemoModels_DemoModelId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_DemoModelTreeItems_DemoModels_DemoModelId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_Redresses_Products_ProductId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_Redresses_Programs_ProgramId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_Redresses_RefundCalculation_RefundCalculationId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.FK_Redresses_RefundCalculation_RefundVerificationRefundCalculationId" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.PermissionRole" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.PermissionUser" ManuallyRouted="false" />
+        <AssociationConnector Association="HeadwayModel.RoleUser" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
