@@ -16,8 +16,10 @@ namespace Headway.Core.Model
 
         public int CategoryId { get; set; }
         public int Order { get; set; }
-        public Module Module { get; set; }
         public List<MenuItem> MenuItems { get; set; }
+
+        [Required]
+        public Module Module { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters")]
