@@ -11,6 +11,8 @@ namespace Headway.Core.Model
     {
         public int MenuItemId { get; set; }
         public int Order { get; set; }
+
+        [Required]
         public Category Category { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
