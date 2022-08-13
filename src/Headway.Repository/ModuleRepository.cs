@@ -310,22 +310,15 @@ namespace Headway.Repository
                 {
                     throw new ArgumentNullException(nameof(menuItem.Category));
                 }
-                else
+                else if (!menuItem.Category.CategoryId.Equals(existing.Category.CategoryId))
                 {
                     existing.Category = menuItem.Category;
                 }
             }
 
-            try
-            {
-                await applicationDbContext
-                    .SaveChangesAsync()
-                    .ConfigureAwait(false);
-            }
-            catch(Exception ex)
-            {
-
-            }
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
 
             return existing;
         }
