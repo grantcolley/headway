@@ -13,10 +13,10 @@ namespace Headway.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HeadwayEntities : DbContext
+    public partial class HeadwayEntities1 : DbContext
     {
-        public HeadwayEntities()
-            : base("name=HeadwayEntities")
+        public HeadwayEntities1()
+            : base("name=HeadwayEntities1")
         {
         }
     

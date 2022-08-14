@@ -22,7 +22,7 @@ namespace Headway.Data.Model
     
         public int CategoryId { get; set; }
         public int Order { get; set; }
-        public Nullable<int> ModuleId { get; set; }
+        public int ModuleId { get; set; }
         public string Name { get; set; }
         public string Icon { get; set; }
         public string Permission { get; set; }

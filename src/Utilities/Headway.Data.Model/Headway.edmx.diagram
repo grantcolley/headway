@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="adf28fa7729043018ed4ff0489a34477" Name="Diagram1">
+      <Diagram DiagramId="1b46e752552a4942ba0315277ad3ab5a" Name="Diagram1">
         <EntityTypeShape EntityType="HeadwayModel.C__EFMigrationsHistory" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="HeadwayModel.Category" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="HeadwayModel.ConfigContainer" Width="1.5" PointX="10" PointY="2.125" IsExpanded="true" />

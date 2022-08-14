@@ -54,70 +54,70 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Category.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Config.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="ConfigContainer.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="ConfigItem.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="ConfigSearchItem.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Country.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Customer.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="C__EFMigrationsHistory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="DemoModel.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="DemoModelComplexProperty.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="DemoModelItem.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="DemoModelTreeItem.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
-    <Compile Include="MenuItem.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Context.cs">
+    <Compile Include="Headway.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+      <DependentUpon>Headway.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model1.cs">
+    <Compile Include="Headway.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Headway.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Headway.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MenuItem.cs">
+      <DependentUpon>Headway.tt</DependentUpon>
+    </Compile>
     <Compile Include="Module.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Permission.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -126,16 +126,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Redress.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="RefundCalculation.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Headway.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -154,19 +154,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Headway.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Headway.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="Headway.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Headway.edmx</DependentUpon>
+      <LastGenOutput>Headway.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Headway.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Headway.edmx</DependentUpon>
+      <LastGenOutput>Headway.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

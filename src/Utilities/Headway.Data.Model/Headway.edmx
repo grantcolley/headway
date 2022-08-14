@@ -18,7 +18,7 @@
           </Key>
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
-          <Property Name="ModuleId" Type="int" />
+          <Property Name="ModuleId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Icon" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Permission" Type="nvarchar" MaxLength="20" Nullable="false" />
@@ -170,7 +170,7 @@
           </Key>
           <Property Name="MenuItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
-          <Property Name="CategoryId" Type="int" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Icon" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="NavigatePage" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -325,7 +325,9 @@
           <Property Name="Email" Type="nvarchar" MaxLength="450" Nullable="false" />
         </EntityType>
         <Association Name="FK_Categories_Modules_ModuleId">
-          <End Role="Modules" Type="Self.Modules" Multiplicity="0..1" />
+          <End Role="Modules" Type="Self.Modules" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Modules">
@@ -453,7 +455,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MenuItems_Categories_CategoryId">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MenuItems" Type="Self.MenuItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -762,7 +766,7 @@
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="ModuleId" Type="Int32" />
+          <Property Name="ModuleId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Icon" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Permission" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
@@ -936,7 +940,7 @@
           </Key>
           <Property Name="MenuItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Icon" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NavigatePage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1085,7 +1089,9 @@
           <NavigationProperty Name="Roles" Relationship="Self.RoleUser" FromRole="Users" ToRole="Roles" />
         </EntityType>
         <Association Name="FK_Categories_Modules_ModuleId">
-          <End Role="Modules" Type="Self.Module" Multiplicity="0..1" />
+          <End Role="Modules" Type="Self.Module" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Categories" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Modules">
@@ -1097,7 +1103,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MenuItems_Categories_CategoryId">
-          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MenuItems" Type="Self.MenuItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -1314,7 +1322,7 @@
           <End Role="Roles" Type="Self.Role" Multiplicity="*" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="HeadwayEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HeadwayEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="ConfigContainers" EntityType="Self.ConfigContainer" />
@@ -1422,7 +1430,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HeadwayModelStoreContainer" CdmEntityContainer="HeadwayEntities">
+        <EntityContainerMapping StorageEntityContainer="HeadwayModelStoreContainer" CdmEntityContainer="HeadwayEntities1">
           <EntitySetMapping Name="C__EFMigrationsHistory">
             <EntityTypeMapping TypeName="HeadwayModel.C__EFMigrationsHistory">
               <MappingFragment StoreEntitySet="__EFMigrationsHistory">
