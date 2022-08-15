@@ -1,4 +1,5 @@
-﻿using Headway.Core.Attributes;
+﻿using FluentValidation;
+using Headway.Core.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -68,6 +69,20 @@ namespace Headway.Core.Model
                     .OrderBy(e => e)
                     .ToList();
             }
+        }
+    }
+
+    public class RoleValidator : AbstractValidator<Role>
+    {
+        public RoleValidator()
+        {
+            RuleFor(v => v.Name)
+                .NotNull().WithMessage("A name is required")
+                .Length(1, 50).WithMessage("Name cannot exceed 50 characters");
+
+            RuleFor(v => v.Description)
+                .NotNull().WithMessage("A description is required")
+                .EmailAddress().WithMessage("Description cannot exceed 150 characters");
         }
     }
 }

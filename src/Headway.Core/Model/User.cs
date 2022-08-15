@@ -1,4 +1,5 @@
-﻿using Headway.Core.Attributes;
+﻿using FluentValidation;
+using Headway.Core.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,8 +27,8 @@ namespace Headway.Core.Model
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Email is not a valid e-mail address.")]
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [NotMapped]
@@ -81,6 +82,20 @@ namespace Headway.Core.Model
                     .OrderBy(p => p)
                     .ToList();
             }
+        }
+    }
+
+    public class UserValidator : AbstractValidator<User>
+    {
+        public UserValidator()
+        {
+            RuleFor(v => v.UserName)
+                .NotNull().WithMessage("User Name is required")
+                .Length(1, 50).WithMessage("User Name cannot exceed 50 characters");
+
+            RuleFor(v => v.Email)
+                .NotNull().WithMessage("Email is required")
+                .EmailAddress().WithMessage("A valid email address is required");
         }
     }
 }
