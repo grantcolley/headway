@@ -124,6 +124,7 @@ namespace Headway.Razor.Controls.Base
         protected virtual async Task Submit()
         {
             isSaveInProgress = true;
+
             if (CurrentEditContext != null
                 && CurrentEditContext.Validate())
             {
