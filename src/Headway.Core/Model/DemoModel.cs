@@ -1,4 +1,5 @@
-﻿using Headway.Core.Attributes;
+﻿using FluentValidation;
+using Headway.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,14 +27,27 @@ namespace Headway.Core.Model
         public List<DemoModelItem> DemoModelItems { get; set; }
         public List<DemoModelTreeItem> DemoModelTreeItems { get; set; }
 
-        [Required(ErrorMessage = "Text is required")]
-        [StringLength(20, ErrorMessage = "Text must be between 1 and 20 characters")]
+        [Required]
+        [StringLength(20)]
         public string Text { get; set; }
 
-        [StringLength(50, ErrorMessage = "TextMultiline must be between 1 and 50 characters")]
+        [StringLength(50)]
         public string TextMultiline { get; set; }
 
         [Column(TypeName = "decimal(5, 2)")]
         public decimal Decimal { get; set; }
+    }
+
+    public class DemoModelValidator : AbstractValidator<DemoModel>
+    {
+        public DemoModelValidator()
+        {
+            RuleFor(v => v.Text)
+                .NotNull().WithMessage("Text is required")
+                .Length(1, 20).WithMessage("Text cannot exceed 20 characters");
+
+            RuleFor(v => v.TextMultiline)
+                .Length(1, 50).WithMessage("TextMultiline cannot exceed 50 characters");
+        }
     }
 }
