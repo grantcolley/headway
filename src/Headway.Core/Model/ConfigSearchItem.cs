@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
 {
@@ -7,21 +8,44 @@ namespace Headway.Core.Model
         public int ConfigSearchItemId { get; set; }
         public int Order { get; set; }
 
-        [Required(ErrorMessage = "Label is required")]
-        [StringLength(50, ErrorMessage = "Label must be between 1 and 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string Label { get; set; }
 
-        [Required(ErrorMessage = "Parameter name is required")]
-        [StringLength(50, ErrorMessage = "Parameter name must be between 1 and 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string ParameterName { get; set; }
 
-        [StringLength(50, ErrorMessage = "Tooltip cannot exceed 50 characters")]
+        [StringLength(50)]
         public string Tooltip { get; set; }
 
-        [StringLength(150, ErrorMessage = "Component cannot exceed 150 characters")]
+        [StringLength(150)]
         public string Component { get; set; }
 
-        [StringLength(350, ErrorMessage = "ComponentArgs must be between 1 and 350 characters")]
+        [StringLength(350)]
         public string ComponentArgs { get; set; }
+    }
+
+    public class ConfigSearchItemValidator : AbstractValidator<ConfigSearchItem>
+    {
+        public ConfigSearchItemValidator()
+        {
+            RuleFor(v => v.ParameterName)
+                .NotNull().WithMessage("Parameter Name is required")
+                .Length(1, 50).WithMessage("Parameter Name cannot exceed 50 characters");
+
+            RuleFor(v => v.Label)
+                .NotNull().WithMessage("Label is required")
+                .Length(1, 50).WithMessage("Label cannot exceed 50 characters");
+
+            RuleFor(v => v.Tooltip)
+                .Length(1, 50).WithMessage("Tooltip cannot exceed 50 characters");
+
+            RuleFor(v => v.Component)
+                .Length(1, 150).WithMessage("Component cannot exceed 150 characters");
+
+            RuleFor(v => v.ComponentArgs)
+                .Length(1, 350).WithMessage("Component Args cannot exceed 350 characters");
+        }
     }
 }

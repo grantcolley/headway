@@ -1,4 +1,5 @@
-﻿using Headway.Core.Attributes;
+﻿using FluentValidation;
+using Headway.Core.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,45 +23,92 @@ namespace Headway.Core.Model
         public List<ConfigContainer> ConfigContainers { get; set; }
         public List<ConfigSearchItem> ConfigSearchItems { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
-        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Title is required")]
-        [StringLength(50, ErrorMessage = "Title must be between 1 and 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Description is required")]
-        [StringLength(150, ErrorMessage = "Description must be between 1 and 150 characters")]
+        [Required]
+        [StringLength(150)]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Model is required")]
-        [StringLength(150, ErrorMessage = "Model must be between 1 and 150 characters")]
+        [Required]
+        [StringLength(150)]
         public string Model { get; set; }
 
-        [Required(ErrorMessage = "Model Api is required")]
-        [StringLength(50, ErrorMessage = "Model Api must be between 1 and 50 characters")]
+        [Required]
+        [StringLength(50)]
         public string ModelApi { get; set; }
 
-        [StringLength(50, ErrorMessage = "Order Model By must be between 1 and 50 characters")]
+        [StringLength(50)]
         public string OrderModelBy { get; set; }
 
-        [StringLength(150, ErrorMessage = "Document must be between 1 and 150 characters")]
+        [StringLength(150)]
         public string Document { get; set; }
 
-        [StringLength(350, ErrorMessage = "DocumentArgs must be between 1 and 350 characters")]
+        [StringLength(350)]
         public string DocumentArgs { get; set; }
 
-        [StringLength(50, ErrorMessage = "Navigate Page cannot exceed 50 characters")]
+        [StringLength(50)]
         public string NavigatePage { get; set; }
 
-        [StringLength(50, ErrorMessage = "Navigate Property cannot exceed 50 characters")]
+        [StringLength(50)]
         public string NavigateProperty { get; set; }
 
-        [StringLength(50, ErrorMessage = "Navigate Config cannot exceed 50 characters")]
+        [StringLength(50)]
         public string NavigateConfig { get; set; }
 
-        [StringLength(150, ErrorMessage = "Search Component cannot exceed 150 characters")]
+        [StringLength(150)]
         public string SearchComponent { get; set; }
+    }
+
+    public class ConfigValidator : AbstractValidator<Config>
+    {
+        public ConfigValidator()
+        {
+            RuleFor(v => v.Name)
+                .NotNull().WithMessage("Name is required")
+                .Length(1, 50).WithMessage("Name cannot exceed 50 characters");
+
+            RuleFor(v => v.Title)
+                .NotNull().WithMessage("Title is required")
+                .Length(1, 50).WithMessage("Title cannot exceed 50 characters");
+
+            RuleFor(v => v.Description)
+                .NotNull().WithMessage("Description is required")
+                .Length(1, 150).WithMessage("Description cannot exceed 150 characters");
+
+            RuleFor(v => v.Model)
+                .NotNull().WithMessage("Model is required")
+                .Length(1, 150).WithMessage("Model cannot exceed 150 characters");
+
+            RuleFor(v => v.ModelApi)
+                .NotNull().WithMessage("ModelApi is required")
+                .Length(1, 50).WithMessage("ModelApi cannot exceed 50 characters");
+
+            RuleFor(v => v.OrderModelBy)
+                .Length(1, 50).WithMessage("OrderModelBy cannot exceed 50 characters");
+
+            RuleFor(v => v.Document)
+                .Length(1, 150).WithMessage("Document cannot exceed 150 characters");
+
+            RuleFor(v => v.DocumentArgs)
+                .Length(1, 350).WithMessage("Document cannot exceed 350 characters");
+
+            RuleFor(v => v.NavigatePage)
+                .Length(1, 150).WithMessage("NavigatePage cannot exceed 150 characters");
+
+            RuleFor(v => v.NavigateProperty)
+                .Length(1, 50).WithMessage("NavigateProperty cannot exceed 50 characters");
+
+            RuleFor(v => v.NavigateConfig)
+                .Length(1, 50).WithMessage("NavigateConfig cannot exceed 50 characters");
+
+            RuleFor(v => v.SearchComponent)
+                .Length(1, 150).WithMessage("SearchComponent cannot exceed 150 characters");
+        }
     }
 }
