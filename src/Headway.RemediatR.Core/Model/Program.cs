@@ -1,4 +1,5 @@
-﻿using Headway.Core.Attributes;
+﻿using FluentValidation;
+using Headway.Core.Attributes;
 using Headway.RemediatR.Core.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -29,5 +30,19 @@ namespace Headway.RemediatR.Core.Model
 
         [Column(TypeName = "decimal(4, 2)")]
         public decimal? CompensatoryInterest { get; set; }
+    }
+
+    public class ProgramValidator : AbstractValidator<Program>
+    {
+        public ProgramValidator()
+        {
+            RuleFor(v => v.Name)
+                .NotEmpty().WithMessage("Name is required")
+                .Length(1, 50).WithMessage("Name cannot exceed 50 characters");
+
+            RuleFor(v => v.Description)
+                .NotEmpty().WithMessage("Description is required")
+                .Length(1, 150).WithMessage("Description cannot exceed 150 characters");
+        }
     }
 }

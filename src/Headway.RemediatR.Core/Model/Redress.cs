@@ -1,4 +1,5 @@
-﻿using Headway.Core.Attributes;
+﻿using FluentValidation;
+using Headway.Core.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -131,6 +132,24 @@ namespace Headway.RemediatR.Core.Model
         public string? ProductName 
         {
             get { return Product != null ? Product.Name : string.Empty; } 
+        }
+    }
+
+    public class RedressValidator : AbstractValidator<Redress>
+    {
+        public RedressValidator()
+        {
+            RuleFor(v => v.Customer)
+                .NotNull().WithMessage("Customer is required");
+
+            RuleFor(v => v.Program)
+                .NotNull().WithMessage("Program is required");
+
+            RuleFor(v => v.Product)
+                .NotNull().WithMessage("Product is required");
+
+            //RuleFor(v => v.RefundCalculation).SetValidator(new RefundCalculationValidator());
+            //RuleFor(v => v.RefundVerification).SetValidator(new RefundCalculationValidator());
         }
     }
 }
