@@ -47,7 +47,7 @@ namespace Headway.Core.Model
                 .Length(1, 20).WithMessage("Text cannot exceed 20 characters");
 
             RuleFor(v => v.TextMultiline)
-                .Length(1, 50).WithMessage("TextMultiline cannot exceed 50 characters");
+                .Length(1, 50).WithMessage("Text Multi line cannot exceed 50 characters");
         }
     }
 }

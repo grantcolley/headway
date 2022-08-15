@@ -59,10 +59,10 @@ namespace Headway.Core.Model
                 .Length(1, 150).WithMessage("Component cannot exceed 150 characters");
 
             RuleFor(v => v.ComponentArgs)
-                .Length(1, 350).WithMessage("ComponentArgs cannot exceed 350 characters");
+                .Length(1, 350).WithMessage("Component Args cannot exceed 350 characters");
 
             RuleFor(v => v.ConfigName)
-                .Length(1, 50).WithMessage("ConfigName cannot exceed 50 characters");
+                .Length(1, 50).WithMessage("Config Name cannot exceed 50 characters");
         }
     }
 }

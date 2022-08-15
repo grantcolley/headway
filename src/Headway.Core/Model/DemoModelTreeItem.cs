@@ -44,7 +44,7 @@ namespace Headway.Core.Model
                 .Length(1, 50).WithMessage("Code cannot exceed 50 characters");
 
             RuleFor(v => v.ParentCode)
-                .Length(1, 50).WithMessage("ParentCode cannot exceed 50 characters");
+                .Length(1, 50).WithMessage("Parent Code cannot exceed 50 characters");
         }
     }
 }

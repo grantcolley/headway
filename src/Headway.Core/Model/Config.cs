@@ -86,29 +86,29 @@ namespace Headway.Core.Model
                 .Length(1, 150).WithMessage("Model cannot exceed 150 characters");
 
             RuleFor(v => v.ModelApi)
-                .NotNull().WithMessage("ModelApi is required")
-                .Length(1, 50).WithMessage("ModelApi cannot exceed 50 characters");
+                .NotNull().WithMessage("Model Api is required")
+                .Length(1, 50).WithMessage("Model Api cannot exceed 50 characters");
 
             RuleFor(v => v.OrderModelBy)
-                .Length(1, 50).WithMessage("OrderModelBy cannot exceed 50 characters");
+                .Length(1, 50).WithMessage("Order Model By cannot exceed 50 characters");
 
             RuleFor(v => v.Document)
                 .Length(1, 150).WithMessage("Document cannot exceed 150 characters");
 
             RuleFor(v => v.DocumentArgs)
-                .Length(1, 350).WithMessage("Document cannot exceed 350 characters");
+                .Length(1, 350).WithMessage("Document Args cannot exceed 350 characters");
 
             RuleFor(v => v.NavigatePage)
-                .Length(1, 150).WithMessage("NavigatePage cannot exceed 150 characters");
+                .Length(1, 150).WithMessage("Navigate Page cannot exceed 150 characters");
 
             RuleFor(v => v.NavigateProperty)
-                .Length(1, 50).WithMessage("NavigateProperty cannot exceed 50 characters");
+                .Length(1, 50).WithMessage("Navigate Property cannot exceed 50 characters");
 
             RuleFor(v => v.NavigateConfig)
-                .Length(1, 50).WithMessage("NavigateConfig cannot exceed 50 characters");
+                .Length(1, 50).WithMessage("Navigate Config cannot exceed 50 characters");
 
             RuleFor(v => v.SearchComponent)
-                .Length(1, 150).WithMessage("SearchComponent cannot exceed 150 characters");
+                .Length(1, 150).WithMessage("Search Component cannot exceed 150 characters");
         }
     }
 }

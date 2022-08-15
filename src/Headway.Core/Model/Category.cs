@@ -76,7 +76,7 @@ namespace Headway.Core.Model
 
             RuleFor(v => v.Icon)
                 .NotNull().WithMessage("Icon is required")
-                .Length(1, 30).WithMessage("Name cannot exceed 30 characters");
+                .Length(1, 30).WithMessage("Icon cannot exceed 30 characters");
 
             RuleFor(v => v.Permission)
                 .NotNull().WithMessage("Permission is required")

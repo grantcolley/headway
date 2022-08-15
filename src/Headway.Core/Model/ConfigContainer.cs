@@ -65,7 +65,7 @@ namespace Headway.Core.Model
                 .Length(1, 50).WithMessage("Label cannot exceed 50 characters");
 
             RuleFor(v => v.ComponentArgs)
-                .Length(1, 350).WithMessage("ComponentArgs cannot exceed 350 characters");
+                .Length(1, 350).WithMessage("Component Args cannot exceed 350 characters");
         }
     }
 }

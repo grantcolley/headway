@@ -73,12 +73,12 @@ namespace Headway.Core.Model
         public PermissionValidator()
         {
             RuleFor(v => v.Name)
-                .NotNull().WithMessage("A name is required")
+                .NotNull().WithMessage("Name is required")
                 .Length(1, 50).WithMessage("Name cannot exceed 50 characters");
 
             RuleFor(v => v.Description)
-                .NotNull().WithMessage("A description is required")
-                .EmailAddress().WithMessage("Description cannot exceed 150 characters");
+                .NotNull().WithMessage("Description is required")
+                .Length(1, 150).WithMessage("Description cannot exceed 150 characters");
         }
     }
 }
