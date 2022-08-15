@@ -183,7 +183,6 @@ namespace Headway.Repository
 
             if (modules.Any())
             {
-                modules.Insert(0, new Module());
                 return JsonSerializer.Serialize(modules);
             }
             else
@@ -202,7 +201,6 @@ namespace Headway.Repository
 
             if (categories.Any())
             {
-                categories.Insert(0, new Category());
                 return JsonSerializer.Serialize(categories);
             }
             else
