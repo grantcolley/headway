@@ -1,4 +1,5 @@
-﻿using Headway.Core.Attributes;
+﻿using FluentValidation;
+using Headway.Core.Attributes;
 using Headway.Core.Interface;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,16 +19,16 @@ namespace Headway.Core.Model
         public int Order { get; set; }
         public List<Category> Categories { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
-        [StringLength(20, ErrorMessage = "Name must be between 1 and 20 characters")]
+        [Required]
+        [StringLength(20)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Icon is required")]
-        [StringLength(30, ErrorMessage = "Icon must be between 1 and 30 characters")]
+        [Required]
+        [StringLength(30)]
         public string Icon { get; set; }
 
-        [Required(ErrorMessage = "Permission is required")]
-        [StringLength(20, ErrorMessage = "Permission must be between 1 and 20 characters")]
+        [Required]
+        [StringLength(20)]
         public string Permission { get; set; }
 
         public bool IsPermitted(IEnumerable<string> permissions)
@@ -56,6 +57,24 @@ namespace Headway.Core.Model
                 Categories.Clear();
                 return false;
             }
+        }
+    }
+
+    public class ModuleValidator : AbstractValidator<Module>
+    {
+        public ModuleValidator()
+        {
+            RuleFor(v => v.Name)
+                .NotNull().WithMessage("Name is required")
+                .Length(1, 20).WithMessage("Name cannot exceed 20 characters");
+
+            RuleFor(v => v.Icon)
+                .NotNull().WithMessage("Icon is required")
+                .Length(1, 30).WithMessage("Name cannot exceed 30 characters");
+
+            RuleFor(v => v.Permission)
+                .NotNull().WithMessage("Permission is required")
+                .Length(1, 20).WithMessage("Permission cannot exceed 20 characters");
         }
     }
 }
