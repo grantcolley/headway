@@ -345,6 +345,12 @@ Headway documents use [Blazored.FluentValidation](https://github.com/Blazored/Fl
     <EditForm EditContext="CurrentEditContext">
         <FluentValidationValidator />
 ```
+
+> NOTE:
+> [Blazored.FluentValidation](https://github.com/Blazored/FluentValidation) is used for client side validation only while [DataAnnotation](https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions-1/models-data/validation-with-the-data-annotation-validators-cs) and [Fluent API](https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/fluent/types-and-properties) is used for server side validation with Entity Framework.
+> \
+> \
+> For additional reading see [Data Annotations Attributes](https://www.entityframeworktutorial.net/code-first/dataannotation-in-code-first.aspx) and [Fluent API Configurations](https://www.entityframeworktutorial.net/code-first/fluent-api-in-code-first.aspx) in EF 6 and and EF Core.
     
 ## Components
 ### Standard Components
