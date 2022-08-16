@@ -365,9 +365,6 @@ namespace Headway.RemediatR.Repository
         {
             var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
             var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
-            var productTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("ProductType"));
-            var rateTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("RateType"));
-            var repaymentTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("RepaymentType"));
 
             int customerId = 0;
             string surname = string.Empty;
@@ -385,22 +382,7 @@ namespace Headway.RemediatR.Repository
                 surname = surnameClause.Value.ToLowerInvariant();
             }
 
-            if (!string.IsNullOrWhiteSpace(productTypeClause.Value))
-            {
-                productType = Enum.Parse<ProductType>(productTypeClause.Value);
-            }
-
-            if (!string.IsNullOrWhiteSpace(rateTypeClause.Value))
-            {
-                rateType = Enum.Parse<RateType>(rateTypeClause.Value);
-            }
-
-            if (!string.IsNullOrWhiteSpace(repaymentTypeClause.Value))
-            {
-                repaymentType = Enum.Parse<RepaymentType>(repaymentTypeClause.Value);
-            }
-
-            List<Redress> redresses = new();
+            List<RedressCase> redressCases;
 
             // https://stackoverflow.com/questions/17142151/linq-to-sql-multiple-tables-left-outer-join
 
@@ -408,37 +390,50 @@ namespace Headway.RemediatR.Repository
             if (customerId > 0
                 || !string.IsNullOrWhiteSpace(surname))
             {
-                //var redressCases = (from c in applicationDbContext.Customers
-                //                    join p in applicationDbContext.Products
-                //                    on c.CustomerId equals p.CustomerId into CustomerProduct
-                //                    from cp in CustomerProduct
-                //                    join r in applicationDbContext.Redresses
-                //                    on c.CustomerId equals r.cu
-                //                    where c.CustomerId == customerId
-                //                    || (!string.IsNullOrWhiteSpace(c.Surname) && c.Surname.ToLowerInvariant().Contains(surname))
-                //                    select new RedressCase
-                //                    {
-                //                        CustomerName = c.Surname
-                //                    }).ToList();
+                redressCases = (from c in applicationDbContext.Customers
+                                    join p in applicationDbContext.Products
+                                    on c.CustomerId equals p.CustomerId into CustomerProduct
+                                    from cp in CustomerProduct.DefaultIfEmpty()
+                                    join r in applicationDbContext.Redresses
+                                    on new { CustomerId = cp.CustomerId, ProductId = cp.ProductId } equals new { r.CustomerId, r.ProductId } into CustomerProductRedresses
+                                    from cpr in CustomerProductRedresses.DefaultIfEmpty()
+                                    where c.CustomerId == customerId
+                                    || (!string.IsNullOrWhiteSpace(c.Surname) && c.Surname.ToLowerInvariant().Contains(surname))
+                                    select new RedressCase
+                                    {
+                                        RedressId = cpr.RedressId,
+                                        ProgramName = cpr.ProgramName,
+                                        CustomerName = c.Surname,
+                                        ProductName = cp.Name,
+                                        ProductType = cp.ProductType.ToString(),
+                                        RateType = cp.RateType.ToString(),
+                                        RepaymentType = cp.RepaymentType.ToString(),
+
+                                    }).ToList();
+            }
+            else
+            {
+                redressCases = (from c in applicationDbContext.Customers
+                                    join p in applicationDbContext.Products
+                                    on c.CustomerId equals p.CustomerId into CustomerProduct
+                                    from cp in CustomerProduct.DefaultIfEmpty()
+                                    join r in applicationDbContext.Redresses
+                                    on new { CustomerId = cp.CustomerId, ProductId = cp.ProductId } equals new { r.CustomerId, r.ProductId } into CustomerProductRedresses
+                                    from cpr in CustomerProductRedresses.DefaultIfEmpty()
+                                    select new RedressCase
+                                    {
+                                        RedressId = cpr.RedressId,
+                                        ProgramName = cpr.ProgramName,
+                                        CustomerName = c.Surname,
+                                        ProductName = cp.Name,
+                                        ProductType = cp.ProductType.ToString(),
+                                        RateType = cp.RateType.ToString(),
+                                        RepaymentType = cp.RepaymentType.ToString(),
+
+                                    }).ToList();
             }
 
-            redresses = await applicationDbContext.Redresses
-                    .Include(r => r.Customer)
-                    .Include(r => r.Program)
-                    .Include(r => r.Product)
-                    .AsNoTracking()
-                    .ToListAsync()
-                    .ConfigureAwait(false);
-
-            return redresses.Select(r => new RedressCase
-            {
-                RedressId = r.RedressId,
-                ProgramName = r.ProgramName,
-                CustomerName = r.CustomerName,
-                ProductName = r.ProductName,
-                Status = string.Empty
-            })
-                .ToList();
+            return redressCases;
         }
 
         public async Task<Redress> GetRedressAsync(int id)
