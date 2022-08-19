@@ -20,7 +20,6 @@ namespace Headway.SeedData.RemediatR
         private static Dictionary<string, Permission> permissions = new();
         private static Dictionary<string, Role> roles = new();
         private static Dictionary<string, User> users = new();
-        private static Dictionary<string, Program> programs = new();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
@@ -57,6 +56,8 @@ namespace Headway.SeedData.RemediatR
             dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Products, RESEED, 1)");
             dbContext.Database.ExecuteSqlRaw("DELETE FROM Customers");
             dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Customers, RESEED, 1)");
+            dbContext.Database.ExecuteSqlRaw("DELETE FROM Redresses");
+            dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Redresses, RESEED, 1)");
         }
 
         private static void CreateCountries()
@@ -220,6 +221,8 @@ namespace Headway.SeedData.RemediatR
 
         private static void CreatePrograms()
         {
+            Dictionary<string, Program> programs = new();
+
             programs.Add(
                 "IRMS",
                 new Program
