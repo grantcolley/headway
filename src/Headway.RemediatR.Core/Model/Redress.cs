@@ -10,12 +10,10 @@ namespace Headway.RemediatR.Core.Model
     public class Redress
     {
         public int RedressId { get; set; }
-        public int CustomerId { get; set; }
-        public Customer? Customer { get; set; }
         public int ProductId { get; set; }
-        public Product? Product { get; set; }
+        public Product Product { get; set; }
         public int ProgramId { get; set; }
-        public Program? Program { get; set; }
+        public Program Program { get; set; }
         public RefundCalculation? RefundCalculation { get; set; }
         public RefundCalculation? RefundVerification { get; set; }
 
@@ -114,24 +112,27 @@ namespace Headway.RemediatR.Core.Model
         public DateTime? FinalRedressReviewDate { get; set; }
 
         [NotMapped]
-        public string? CustomerName 
+        public int CustomerId { get; set; }
+
+        [NotMapped]
+        public string? CustomerName
         {
             get
             {
-                return Customer != null ? $"{Customer.Title} {Customer.FirstName} {Customer.Surname}" : string.Empty; 
+                return $"{Product.Customer.Fullname}";
             }
         }
 
         [NotMapped]
         public string? ProgramName         
         {
-            get { return Program != null ? Program.Name : string.Empty; } 
+            get { return Program.Name; } 
         }
 
         [NotMapped]
         public string? ProductName 
         {
-            get { return Product != null ? Product.Name : string.Empty; } 
+            get { return Product.Name; } 
         }
     }
 
@@ -139,9 +140,6 @@ namespace Headway.RemediatR.Core.Model
     {
         public RedressValidator()
         {
-            RuleFor(v => v.Customer)
-                .NotNull().WithMessage("Customer is required");
-
             RuleFor(v => v.Program)
                 .NotNull().WithMessage("Program is required");
 
