@@ -4,13 +4,11 @@ using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
 using Headway.Repository;
 using Headway.Repository.Data;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Headway.RemediatR.Repository
@@ -87,7 +85,7 @@ namespace Headway.RemediatR.Repository
                 return await applicationDbContext.Customers
                     .AsNoTracking()
                     .Where(c => !string.IsNullOrWhiteSpace(c.Surname)
-                                    && c.Surname.ToLower().Contains(surname))
+                                && c.Surname.ToLower().Contains(surname))
                     .ToListAsync()
                     .ConfigureAwait(false);
             }
@@ -249,9 +247,9 @@ namespace Headway.RemediatR.Repository
         public async Task<IEnumerable<RedressCase>> GetRedressesAsync()
         {
             var redressCases = await applicationDbContext.Redresses
-                .Include(r => r.Customer)
                 .Include(r => r.Program)
                 .Include(r => r.Product)
+                    .ThenInclude(p => p.Customer)
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -298,9 +296,9 @@ namespace Headway.RemediatR.Repository
                 && string.IsNullOrWhiteSpace(program))
             {
                 redresses = await applicationDbContext.Redresses
-                    .Include(r => r.Customer)
                     .Include(r => r.Program)
                     .Include(r => r.Product)
+                        .ThenInclude(p => p.Customer)
                     .AsNoTracking()
                     .ToListAsync()
                     .ConfigureAwait(false);
@@ -310,15 +308,15 @@ namespace Headway.RemediatR.Repository
                 if (string.IsNullOrWhiteSpace(program))
                 {
                     redresses = await applicationDbContext.Redresses
-                         .Include(r => r.Customer)
-                         .Include(r => r.Program)
-                         .Where(r => r.Customer != null
-                                    && (r.Customer.CustomerId.Equals(customerId)
-                                    || (!string.IsNullOrWhiteSpace(r.Customer.Surname)
-                                    && r.Customer.Surname.ToLowerInvariant().Contains(surname))))
-                         .AsNoTracking()
-                         .ToListAsync()
-                         .ConfigureAwait(false);
+                        .Include(r => r.Program)
+                        .Include(r => r.Product)
+                            .ThenInclude(p => p.Customer)
+                        .Where(r => r.Product.Customer.CustomerId.Equals(customerId)
+                                   || (!string.IsNullOrWhiteSpace(r.Product.Customer.Surname) 
+                                   && r.Product.Customer.Surname.ToLowerInvariant().Contains(surname)))
+                        .AsNoTracking()
+                        .ToListAsync()
+                        .ConfigureAwait(false);
                 }
                 else
                 {
@@ -326,14 +324,13 @@ namespace Headway.RemediatR.Repository
                         || !string.IsNullOrWhiteSpace(surname))
                     {
                         redresses = await applicationDbContext.Redresses
-                             .Include(r => r.Customer)
                              .Include(r => r.Program)
+                             .Include(r => r.Product)
                              .Where(r => r.Program != null
                                         && r.Program.Name == program
-                                        && r.Customer != null
-                                        && (r.Customer.CustomerId.Equals(customerId)
-                                        || (!string.IsNullOrWhiteSpace(r.Customer.Surname)
-                                        && r.Customer.Surname.ToLowerInvariant().Contains(surname))))
+                                        && (r.Product.Customer.CustomerId.Equals(customerId)
+                                        || (!string.IsNullOrWhiteSpace(r.Product.Customer.Surname)
+                                        && r.Product.Customer.Surname.ToLowerInvariant().Contains(surname))))
                              .AsNoTracking()
                              .ToListAsync()
                              .ConfigureAwait(false);
@@ -341,8 +338,8 @@ namespace Headway.RemediatR.Repository
                     else
                     {
                         redresses = await applicationDbContext.Redresses
-                            .Include(r => r.Customer)
                             .Include(r => r.Program)
+                            .Include(r => r.Product)
                             .Where(r => r.Program != null && r.Program.Name == programClause.Value)
                             .AsNoTracking()
                             .ToListAsync()
@@ -363,14 +360,19 @@ namespace Headway.RemediatR.Repository
 
         public async Task<IEnumerable<RedressCase>> SearchNewRedressCasesAsync(SearchCriteria searchCriteria)
         {
+            var productTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("ProductType"));
             var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
             var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
 
             int customerId = 0;
             string surname = string.Empty;
-            ProductType productType;
-            RateType rateType;
-            RepaymentType repaymentType;
+            ProductType productType = ProductType.Unknown;
+
+            if (!string.IsNullOrWhiteSpace(productTypeClause.Value))
+            {
+                //productTypeClause.Value = ((int)Enum.Parse<ProductType>(productTypeClause.Value)).ToString();
+                productType = Enum.Parse<ProductType>(productTypeClause.Value);
+            }
 
             if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
             {
@@ -382,58 +384,73 @@ namespace Headway.RemediatR.Repository
                 surname = surnameClause.Value.ToLowerInvariant();
             }
 
-            List<RedressCase> redressCases;
+            List<Customer> customers;
 
-            // https://stackoverflow.com/questions/17142151/linq-to-sql-multiple-tables-left-outer-join
-
-            // from customers left outer joined to redress and product 
-            if (customerId > 0
-                || !string.IsNullOrWhiteSpace(surname))
+            if (customerId.Equals(0)
+                && string.IsNullOrWhiteSpace(surname)
+                && productType.Equals(ProductType.Unknown))
             {
-                redressCases = (from c in applicationDbContext.Customers
-                                    join p in applicationDbContext.Products
-                                    on c.CustomerId equals p.CustomerId into CustomerProduct
-                                    from cp in CustomerProduct.DefaultIfEmpty()
-                                    join r in applicationDbContext.Redresses
-                                    on new { CustomerId = cp.CustomerId, ProductId = cp.ProductId } equals new { r.CustomerId, r.ProductId } into CustomerProductRedresses
-                                    from cpr in CustomerProductRedresses.DefaultIfEmpty()
-                                    where c.CustomerId == customerId
-                                    || (!string.IsNullOrWhiteSpace(c.Surname) && c.Surname.ToLowerInvariant().Contains(surname))
-                                    select new RedressCase
-                                    {
-                                        RedressId = cpr.RedressId,
-                                        ProgramName = cpr.ProgramName,
-                                        CustomerName = c.Surname,
-                                        ProductName = cp.Name,
-                                        ProductType = cp.ProductType.ToString(),
-                                        RateType = cp.RateType.ToString(),
-                                        RepaymentType = cp.RepaymentType.ToString(),
-
-                                    }).ToList();
+                customers = await applicationDbContext.Customers
+                    .Include(c => c.Products)
+                        .ThenInclude(p => p.Redress)
+                            .ThenInclude(r => r.Program)
+                    .AsNoTracking()
+                    .ToListAsync()
+                    .ConfigureAwait(false);
             }
             else
             {
-                redressCases = (from c in applicationDbContext.Customers
-                                    join p in applicationDbContext.Products
-                                    on c.CustomerId equals p.CustomerId into CustomerProduct
-                                    from cp in CustomerProduct.DefaultIfEmpty()
-                                    join r in applicationDbContext.Redresses
-                                    on new { CustomerId = cp.CustomerId, ProductId = cp.ProductId } equals new { r.CustomerId, r.ProductId } into CustomerProductRedresses
-                                    from cpr in CustomerProductRedresses.DefaultIfEmpty()
-                                    select new RedressCase
-                                    {
-                                        RedressId = cpr.RedressId,
-                                        ProgramName = cpr.ProgramName,
-                                        CustomerName = c.Surname,
-                                        ProductName = cp.Name,
-                                        ProductType = cp.ProductType.ToString(),
-                                        RateType = cp.RateType.ToString(),
-                                        RepaymentType = cp.RepaymentType.ToString(),
-
-                                    }).ToList();
+                if(productType.Equals(ProductType.Unknown))
+                {
+                    customers = await applicationDbContext.Customers
+                        .Include(c => c.Products)
+                            .ThenInclude(p => p.Redress)
+                                .ThenInclude(r => r.Program)
+                        .Where(c => c.CustomerId.Equals(customerId)
+                                    || (!string.IsNullOrWhiteSpace(c.Surname)
+                                    && c.Surname.ToLowerInvariant().Contains(surname)))
+                        .AsNoTracking()
+                        .ToListAsync()
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    customers = await applicationDbContext.Customers
+                        .Include(c => c.Products.Where(p => p.ProductType == productType))
+                            .ThenInclude(p => p.Redress)
+                                .ThenInclude(r => r.Program)
+                        .Where(c => c.CustomerId.Equals(customerId)
+                                    || (!string.IsNullOrWhiteSpace(c.Surname)
+                                    && c.Surname.ToLowerInvariant().Contains(surname)))
+                        .AsNoTracking()
+                        .ToListAsync()
+                        .ConfigureAwait(false);
+                }
             }
 
-            return redressCases;
+            return customers.Select(c => 
+            {
+                var redressCase = new RedressCase
+                {
+                    CustomerName = c.Surname,
+                };
+
+                foreach (var product in c.Products)
+                {
+                    redressCase.ProductName = product.Name;
+                    redressCase.ProductType = product.ProductType.ToString();
+                    redressCase.RateType = product.RateType.ToString();
+                    redressCase.RepaymentType = product.RepaymentType.ToString();
+                    
+                    if(product.Redress != null)
+                    {
+                        redressCase.RedressId = product.Redress.RedressId;
+                        redressCase.ProgramName = product.Redress.ProgramName; 
+                    }
+                }
+
+                return redressCase;
+            });
         }
 
         public async Task<Redress> GetRedressAsync(int id)
