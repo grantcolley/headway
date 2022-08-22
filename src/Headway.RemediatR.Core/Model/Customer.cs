@@ -3,6 +3,7 @@ using Headway.Core.Attributes;
 using Headway.RemediatR.Core.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.RemediatR.Core.Model
 {
@@ -64,6 +65,18 @@ namespace Headway.RemediatR.Core.Model
 
         [StringLength(10)]
         public string? PostCode { get; set; }
+
+        [NotMapped]
+        public string Fullname 
+        { 
+            get
+            {
+                var title = string.IsNullOrWhiteSpace(Title) ? string.Empty : Title + " ";
+                var firstName = string.IsNullOrWhiteSpace(FirstName) ? string.Empty : FirstName + " ";
+                var surname = string.IsNullOrWhiteSpace(Surname) ? string.Empty : Surname;
+                return $"{title}{firstName}{surname}".Trim();
+            }
+        }
     }
 
     public class CustomerValidation : AbstractValidator<Customer>
