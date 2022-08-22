@@ -616,11 +616,20 @@ namespace Headway.SeedData.RemediatR
             {
                 new ConfigSearchItem
                 {
+                    Label = "Product Type",
+                    ParameterName = "ProductType",
+                    Tooltip = "The type of product in scope for redress",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.ENUM_NAMES_OPTION_ITEMS}|Name={Args.TYPE};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core|Name={Args.STYLE};Value=min-width:150px",
+                    Order = 1
+                },
+                new ConfigSearchItem
+                {
                     Label = "Customer Id",
                     ParameterName = "CustomerId",
                     Tooltip = "The customer identifier",
                     Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
-                    Order = 1
+                    Order = 2
                 },
                 new ConfigSearchItem
                 {
@@ -628,7 +637,7 @@ namespace Headway.SeedData.RemediatR
                     ParameterName = "Surname",
                     Tooltip = "The customer surname",
                     Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
-                    Order = 2
+                    Order = 3
                 }
             });
 
