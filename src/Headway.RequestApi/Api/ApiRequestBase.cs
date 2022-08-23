@@ -43,6 +43,10 @@ namespace Headway.RequestApi.Api
                     (await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false),
                         new JsonSerializerOptions(JsonSerializerDefaults.Web)).ConfigureAwait(false);
             }
+            else
+            {
+                var debug = httpResponseMessage.Content.ReadAsStringAsync().Result;
+            }
 
             return response;
         }
