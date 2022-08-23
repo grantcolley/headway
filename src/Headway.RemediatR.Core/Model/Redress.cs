@@ -3,6 +3,7 @@ using Headway.Core.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Headway.RemediatR.Core.Model
 {
@@ -112,9 +113,11 @@ namespace Headway.RemediatR.Core.Model
         public DateTime? FinalRedressReviewDate { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public int CustomerId { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public string? CustomerName
         {
             get
@@ -124,12 +127,14 @@ namespace Headway.RemediatR.Core.Model
         }
 
         [NotMapped]
+        [JsonIgnore]
         public string? ProgramName         
         {
             get { return Program.Name; } 
         }
 
         [NotMapped]
+        [JsonIgnore]
         public string? ProductName 
         {
             get { return Product.Name; } 
