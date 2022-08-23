@@ -12,7 +12,7 @@ namespace Headway.RemediatR.Core.Model
     {
         public int ProductId { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
         public ProductType ProductType { get; set; }
         public RateType RateType { get; set; }
         public RepaymentType RepaymentType { get; set; }

@@ -4,6 +4,7 @@ using Headway.RemediatR.Core.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Headway.RemediatR.Core.Model
 {
@@ -38,7 +39,7 @@ namespace Headway.RemediatR.Core.Model
         public string? Email { get; set; }
 
         [MaxLength(8)]
-        [RegularExpression(@"^(\d){2}-(\d){2}-(\d){2}$")]
+        [RegularExpression(@"^(\d){6}$")]
         public string? SortCode { get; set; }
 
         [MaxLength(8)]
@@ -66,7 +67,9 @@ namespace Headway.RemediatR.Core.Model
         [StringLength(10)]
         public string? PostCode { get; set; }
 
+
         [NotMapped]
+        [JsonIgnore]
         public string Fullname 
         { 
             get
