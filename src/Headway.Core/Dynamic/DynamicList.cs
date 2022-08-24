@@ -15,6 +15,8 @@ namespace Headway.Core.Dynamic
 
         public DynamicList(IEnumerable<T> listItems, Config config)
         {
+            UniqueId = Guid.NewGuid().ToString();
+
             SearchParameters = new Dictionary<string, object>();
             dynamicSearchItems = new List<DynamicSearchItem>();
 
@@ -53,6 +55,8 @@ namespace Headway.Core.Dynamic
 
             dynamicListItems = listItems.Select(i => new DynamicListItem<T>(i)).ToList();
         }
+
+        public string UniqueId { get; private set; }
 
         public DynamicTypeHelper<T> TypeHelper { get; private set; }
 
