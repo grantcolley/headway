@@ -25,23 +25,23 @@ namespace Headway.WebApi.Controllers
             this.remediatRRepository = repository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
-                .ConfigureAwait(false);
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
+        //        .ConfigureAwait(false);
 
-            if (!authorised)
-            {
-                return Unauthorized();
-            }
+        //    if (!authorised)
+        //    {
+        //        return Unauthorized();
+        //    }
 
-            var redresses = await remediatRRepository
-                .GetRedressesAsync()
-                .ConfigureAwait(false);
+        //    var redresses = await remediatRRepository
+        //        .GetRedressesAsync()
+        //        .ConfigureAwait(false);
 
-            return Ok(redresses);
-        }
+        //    return Ok(redresses);
+        //}
 
         [HttpGet("{redressId}")]
         public async Task<IActionResult> Get(int redressId)
@@ -64,7 +64,7 @@ namespace Headway.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Search([FromBody] SearchCriteria searchCriteria)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
                 .ConfigureAwait(false);
 
             if (!authorised)
@@ -72,25 +72,21 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            IEnumerable<RedressCase> redressCases;
-
             switch(searchCriteria.SourceConfig)
             {
                 case RemediatRSearchSource.REDRESSCASES:
-                    redressCases = await remediatRRepository
-                        .GetRedressesCasesAsync(searchCriteria)
+                    var redressCases = await remediatRRepository
+                        .GetRedressCasesAsync(searchCriteria)
                         .ConfigureAwait(false);
-                    break;
+                    return Ok(redressCases);
                 case RemediatRSearchSource.NEW_REDRESS_CASE:
-                    redressCases = await remediatRRepository
+                    var newRedressCases = await remediatRRepository
                         .SearchNewRedressCasesAsync(searchCriteria)
                         .ConfigureAwait(false);
-                    break;
+                    return Ok(newRedressCases);
                 default:
                     throw new NotImplementedException(searchCriteria.SourceConfig);
             }
-
-            return Ok(redressCases);
         }
 
         [HttpPost]
