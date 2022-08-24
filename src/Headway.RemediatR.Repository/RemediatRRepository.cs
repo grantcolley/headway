@@ -421,10 +421,11 @@ namespace Headway.RemediatR.Repository
             }
             else
             {
-                if(productType.Equals(ProductType.Unknown))
+                if(customerId > 0
+                || string.IsNullOrWhiteSpace(surname))
                 {
                     customers = await applicationDbContext.Customers
-                        .Include(c => c.Products)
+                        .Include(c => c.Products.Where(p => p.ProductType == productType))
                             .ThenInclude(p => p.Redress)
                                 .ThenInclude(r => r.Program)
                         .Where(c => c.CustomerId.Equals(customerId)
@@ -437,7 +438,7 @@ namespace Headway.RemediatR.Repository
                 else
                 {
                     customers = await applicationDbContext.Customers
-                        .Include(c => c.Products.Where(p => p.ProductType == productType))
+                        .Include(c => c.Products)
                             .ThenInclude(p => p.Redress)
                                 .ThenInclude(r => r.Program)
                         .Where(c => c.CustomerId.Equals(customerId)
@@ -453,7 +454,7 @@ namespace Headway.RemediatR.Repository
             {
                 var newRedressCase = new NewRedressCase
                 {
-                    CustomerName = c.Surname,
+                    CustomerName = c.Fullname,
                 };
 
                 foreach (var product in c.Products)
