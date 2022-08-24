@@ -123,31 +123,31 @@ namespace Headway.RemediatR.Repository
             return customer;
         }
 
-        public async Task<Customer> UpdateCustomerAsync(Customer addCustomer)
+        public async Task<Customer> UpdateCustomerAsync(Customer updateCustomer)
         {
             var customer = await applicationDbContext.Customers
                 .Include(c => c.Products)
-                .FirstAsync(c => c.CustomerId.Equals(addCustomer.CustomerId))
+                .FirstAsync(c => c.CustomerId.Equals(updateCustomer.CustomerId))
                 .ConfigureAwait(false);
 
-            if (customer.Title != addCustomer.Title) customer.Title = addCustomer.Title;
-            if (customer.FirstName != addCustomer.FirstName) customer.FirstName = addCustomer.FirstName;
-            if (customer.Surname != addCustomer.Surname) customer.Surname = addCustomer.Surname;
-            if (customer.Telephone != addCustomer.Telephone) customer.Telephone = addCustomer.Telephone;
-            if (customer.Email != addCustomer.Email) customer.Email = addCustomer.Email;
-            if (customer.AccountNumber != addCustomer.AccountNumber) customer.AccountNumber = addCustomer.AccountNumber;
-            if (customer.SortCode != addCustomer.SortCode) customer.SortCode = addCustomer.SortCode;
-            if (customer.AccountStatus != addCustomer.AccountStatus) customer.AccountStatus = addCustomer.AccountStatus;
-            if (customer.Address1 != addCustomer.Address1) customer.Address1 = addCustomer.Address1;
-            if (customer.Address2 != addCustomer.Address2) customer.Address2 = addCustomer.Address2;
-            if (customer.Address3 != addCustomer.Address3) customer.Address3 = addCustomer.Address3;
-            if (customer.Address4 != addCustomer.Address4) customer.Address4 = addCustomer.Address4;
-            if (customer.Address5 != addCustomer.Address5) customer.Address5 = addCustomer.Address5;
-            if (customer.Country != addCustomer.Country) customer.Country = addCustomer.Country;
-            if (customer.PostCode != addCustomer.PostCode) customer.PostCode = addCustomer.PostCode;
+            if (customer.Title != updateCustomer.Title) customer.Title = updateCustomer.Title;
+            if (customer.FirstName != updateCustomer.FirstName) customer.FirstName = updateCustomer.FirstName;
+            if (customer.Surname != updateCustomer.Surname) customer.Surname = updateCustomer.Surname;
+            if (customer.Telephone != updateCustomer.Telephone) customer.Telephone = updateCustomer.Telephone;
+            if (customer.Email != updateCustomer.Email) customer.Email = updateCustomer.Email;
+            if (customer.AccountNumber != updateCustomer.AccountNumber) customer.AccountNumber = updateCustomer.AccountNumber;
+            if (customer.SortCode != updateCustomer.SortCode) customer.SortCode = updateCustomer.SortCode;
+            if (customer.AccountStatus != updateCustomer.AccountStatus) customer.AccountStatus = updateCustomer.AccountStatus;
+            if (customer.Address1 != updateCustomer.Address1) customer.Address1 = updateCustomer.Address1;
+            if (customer.Address2 != updateCustomer.Address2) customer.Address2 = updateCustomer.Address2;
+            if (customer.Address3 != updateCustomer.Address3) customer.Address3 = updateCustomer.Address3;
+            if (customer.Address4 != updateCustomer.Address4) customer.Address4 = updateCustomer.Address4;
+            if (customer.Address5 != updateCustomer.Address5) customer.Address5 = updateCustomer.Address5;
+            if (customer.Country != updateCustomer.Country) customer.Country = updateCustomer.Country;
+            if (customer.PostCode != updateCustomer.PostCode) customer.PostCode = updateCustomer.PostCode;
 
             var removeProducts = customer.Products
-                .Where(cp => !addCustomer.Products.Any(acp => acp.ProductId.Equals(cp.ProductId)))
+                .Where(cp => !updateCustomer.Products.Any(acp => acp.ProductId.Equals(cp.ProductId)))
                 .ToList();
 
             foreach (var product in removeProducts)
@@ -155,8 +155,29 @@ namespace Headway.RemediatR.Repository
                 customer.Products.Remove(product);
             }
 
-            var addProducts = addCustomer.Products
-                .Where(acp => !customer.Products.Any(cp => cp.ProductId.Equals(acp.ProductId)))
+            Func<Product, Product, Product> update = (p, up) =>
+            {
+                if (p.Name != up.Name) p.Name = up.Name;
+                if (p.ProductType != up.ProductType) p.ProductType = up.ProductType;
+                if (p.RateType != up.RateType) p.RateType = up.RateType;
+                if (p.RepaymentType != up.RepaymentType) p.RepaymentType = up.RepaymentType;
+                if (p.StartDate != up.StartDate) p.StartDate = up.StartDate;
+                if (p.Duration != up.Duration) p.Duration = up.Duration;
+                if (p.Rate != up.Rate) p.Rate = up.Rate;
+                if (p.Value != up.Value) p.Value = up.Value;
+
+                applicationDbContext.Products.Update(p);
+
+                return p;
+            };
+
+            _ = (from p in customer.Products
+             join up in updateCustomer.Products on p.ProductId equals up.ProductId
+             where !up.ProductId.Equals(0)
+             select update(p, up)).ToList();
+
+            var addProducts = updateCustomer.Products
+                .Where(acp => acp.ProductId.Equals(0))
                 .ToList();
 
             customer.Products.AddRange(addProducts);
