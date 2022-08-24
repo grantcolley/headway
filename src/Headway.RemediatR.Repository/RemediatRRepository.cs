@@ -265,27 +265,27 @@ namespace Headway.RemediatR.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<RedressCase>> GetRedressesAsync()
-        {
-            var redressCases = await applicationDbContext.Redresses
-                .Include(r => r.Program)
-                .Include(r => r.Product)
-                    .ThenInclude(p => p.Customer)
-                .AsNoTracking()
-                .ToListAsync()
-                .ConfigureAwait(false);
+        //public async Task<IEnumerable<RedressCase>> GetRedressesAsync()
+        //{
+        //    var redressCases = await applicationDbContext.Redresses
+        //        .Include(r => r.Program)
+        //        .Include(r => r.Product)
+        //            .ThenInclude(p => p.Customer)
+        //        .AsNoTracking()
+        //        .ToListAsync()
+        //        .ConfigureAwait(false);
 
-            return redressCases.Select(r => new RedressCase
-                {
-                    RedressId = r.RedressId,
-                    CustomerName = r.CustomerName,
-                    ProductName = r.ProductName,
-                    ProgramName = r.ProgramName
-                })
-                .ToList();
-        }
+        //    return redressCases.Select(r => new RedressCase
+        //        {
+        //            RedressId = r.RedressId,
+        //            CustomerName = r.CustomerName,
+        //            ProductName = r.ProductName,
+        //            ProgramName = r.ProgramName
+        //        })
+        //        .ToList();
+        //}
 
-        public async Task<IEnumerable<RedressCase>> GetRedressesCasesAsync(SearchCriteria searchCriteria)
+        public async Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchCriteria searchCriteria)
         {
             var programClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Name"));
             var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
@@ -379,7 +379,7 @@ namespace Headway.RemediatR.Repository
                 .ToList();
         }
 
-        public async Task<IEnumerable<RedressCase>> SearchNewRedressCasesAsync(SearchCriteria searchCriteria)
+        public async Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchCriteria searchCriteria)
         {
             var productTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("ProductType"));
             var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
@@ -451,26 +451,26 @@ namespace Headway.RemediatR.Repository
 
             return customers.Select(c => 
             {
-                var redressCase = new RedressCase
+                var newRedressCase = new NewRedressCase
                 {
                     CustomerName = c.Surname,
                 };
 
                 foreach (var product in c.Products)
                 {
-                    redressCase.ProductName = product.Name;
-                    redressCase.ProductType = product.ProductType.ToString();
-                    redressCase.RateType = product.RateType.ToString();
-                    redressCase.RepaymentType = product.RepaymentType.ToString();
+                    newRedressCase.ProductName = product.Name;
+                    newRedressCase.ProductType = product.ProductType.ToString();
+                    newRedressCase.RateType = product.RateType.ToString();
+                    newRedressCase.RepaymentType = product.RepaymentType.ToString();
                     
                     if(product.Redress != null)
                     {
-                        redressCase.RedressId = product.Redress.RedressId;
-                        redressCase.ProgramName = product.Redress.ProgramName; 
+                        newRedressCase.RedressId = product.Redress.RedressId;
+                        newRedressCase.ProgramName = product.Redress.ProgramName; 
                     }
                 }
 
-                return redressCase;
+                return newRedressCase;
             });
         }
 
