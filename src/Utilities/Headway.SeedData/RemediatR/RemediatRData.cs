@@ -599,7 +599,7 @@ namespace Headway.SeedData.RemediatR
                 Name = RemediatRSearchSource.NEW_REDRESS_CASE,
                 Title = "New Redress Case",
                 Description = "Create a new RemediatR redress case",
-                Model = "Headway.RemediatR.Core.Model.RedressCase, Headway.RemediatR.Core",
+                Model = "Headway.RemediatR.Core.Model.NewRedressCase, Headway.RemediatR.Core",
                 ModelApi = "RemediatRRedress",
                 OrderModelBy = "CustomerName",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
@@ -647,7 +647,7 @@ namespace Headway.SeedData.RemediatR
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerName", Label = "Customer", Order = 2 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramName", Label = "Program", Order = 3 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductName", Label = "Product", Order = 4 });
-            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Product Type", Label = "ProductType", Order = 5 });
+            redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductType", Label = "Product Type", Order = 5 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RateType", Label = "Rate Type", Order = 6 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RepaymentType", Label = "Repayment Type", Order = 7 });
             redressCasesConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Status", Label = "Status", Order = 8 });
