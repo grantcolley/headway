@@ -21,9 +21,9 @@ namespace Headway.RemediatR.Core.Interface
         Task<Program> AddProgramAsync(Program program);
         Task<Program> UpdateProgramAsync(Program program);
         Task<int> DeleteProgramAsync(int id);
-        Task<IEnumerable<RedressCase>> GetRedressesAsync();
-        Task<IEnumerable<RedressCase>> GetRedressesCasesAsync(SearchCriteria searchCriteria);
-        Task<IEnumerable<RedressCase>> SearchNewRedressCasesAsync(SearchCriteria searchCriteria);
+        //Task<IEnumerable<RedressCase>> GetRedressesAsync();
+        Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchCriteria searchCriteria);
+        Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchCriteria searchCriteria);
         Task<Redress> GetRedressAsync(int id);
         Task<Redress> AddRedressAsync(Redress redress);
         Task<Redress> UpdateRedressAsync(Redress redress);
