@@ -9,9 +9,6 @@ namespace Headway.RemediatR.Core.Model
         public string? CustomerName { get; set; }
         public string? ProgramName { get; set; }
         public string? ProductName { get; set; }
-        public string? ProductType { get; set; }
-        public string? RateType { get; set; }
-        public string? RepaymentType { get; set; }
         public string? Status { get; set; }
     }
 }
