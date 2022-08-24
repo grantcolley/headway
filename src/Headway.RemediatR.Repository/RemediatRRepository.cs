@@ -334,7 +334,7 @@ namespace Headway.RemediatR.Repository
                             .ThenInclude(p => p.Customer)
                         .Where(r => r.Product.Customer.CustomerId.Equals(customerId)
                                    || (!string.IsNullOrWhiteSpace(r.Product.Customer.Surname) 
-                                   && r.Product.Customer.Surname.ToLowerInvariant().Contains(surname)))
+                                   && r.Product.Customer.Surname.ToLower().Contains(surname)))
                         .AsNoTracking()
                         .ToListAsync()
                         .ConfigureAwait(false);
@@ -351,7 +351,7 @@ namespace Headway.RemediatR.Repository
                                         && r.Program.Name == program
                                         && (r.Product.Customer.CustomerId.Equals(customerId)
                                         || (!string.IsNullOrWhiteSpace(r.Product.Customer.Surname)
-                                        && r.Product.Customer.Surname.ToLowerInvariant().Contains(surname))))
+                                        && r.Product.Customer.Surname.ToLower().Contains(surname))))
                              .AsNoTracking()
                              .ToListAsync()
                              .ConfigureAwait(false);
@@ -391,7 +391,6 @@ namespace Headway.RemediatR.Repository
 
             if (!string.IsNullOrWhiteSpace(productTypeClause.Value))
             {
-                //productTypeClause.Value = ((int)Enum.Parse<ProductType>(productTypeClause.Value)).ToString();
                 productType = Enum.Parse<ProductType>(productTypeClause.Value);
             }
 
@@ -422,18 +421,35 @@ namespace Headway.RemediatR.Repository
             else
             {
                 if(customerId > 0
-                || string.IsNullOrWhiteSpace(surname))
+                || !string.IsNullOrWhiteSpace(surname))
                 {
-                    customers = await applicationDbContext.Customers
-                        .Include(c => c.Products.Where(p => p.ProductType == productType))
-                            .ThenInclude(p => p.Redress)
-                                .ThenInclude(r => r.Program)
-                        .Where(c => c.CustomerId.Equals(customerId)
-                                    || (!string.IsNullOrWhiteSpace(c.Surname)
-                                    && c.Surname.ToLowerInvariant().Contains(surname)))
-                        .AsNoTracking()
-                        .ToListAsync()
-                        .ConfigureAwait(false);
+                    if(productType.Equals(ProductType.Unknown))
+                    {
+                        customers = await applicationDbContext.Customers
+                            .Include(c => c.Products)
+                                .ThenInclude(p => p.Redress)
+                                    .ThenInclude(r => r.Program)
+                            .Where(c => c.CustomerId.Equals(customerId)
+                                        || (!string.IsNullOrWhiteSpace(c.Surname)
+                                        && c.Surname.ToLower().Contains(surname)))
+                            .AsNoTracking()
+                            .ToListAsync()
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        customers = await applicationDbContext.Customers
+                            .Include(c => c.Products)
+                                .ThenInclude(p => p.Redress)
+                                    .ThenInclude(r => r.Program)
+                            .Where(c => c.Products.Where(p => p.ProductType == productType).ToList().Count > 0
+                                        && (c.CustomerId.Equals(customerId)
+                                        || (!string.IsNullOrWhiteSpace(c.Surname)
+                                        && c.Surname.ToLower().Contains(surname))))
+                            .AsNoTracking()
+                            .ToListAsync()
+                            .ConfigureAwait(false);
+                    }
                 }
                 else
                 {
@@ -441,9 +457,7 @@ namespace Headway.RemediatR.Repository
                         .Include(c => c.Products)
                             .ThenInclude(p => p.Redress)
                                 .ThenInclude(r => r.Program)
-                        .Where(c => c.CustomerId.Equals(customerId)
-                                    || (!string.IsNullOrWhiteSpace(c.Surname)
-                                    && c.Surname.ToLowerInvariant().Contains(surname)))
+                        .Where(c => c.Products.Where(p => p.ProductType == productType).ToList().Count > 0)
                         .AsNoTracking()
                         .ToListAsync()
                         .ConfigureAwait(false);
