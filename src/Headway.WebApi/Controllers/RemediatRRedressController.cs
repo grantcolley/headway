@@ -25,24 +25,6 @@ namespace Headway.WebApi.Controllers
             this.remediatRRepository = repository;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
-        //        .ConfigureAwait(false);
-
-        //    if (!authorised)
-        //    {
-        //        return Unauthorized();
-        //    }
-
-        //    var redresses = await remediatRRepository
-        //        .GetRedressesAsync()
-        //        .ConfigureAwait(false);
-
-        //    return Ok(redresses);
-        //}
-
         [HttpGet("{redressId}")]
         public async Task<IActionResult> Get(int redressId)
         {

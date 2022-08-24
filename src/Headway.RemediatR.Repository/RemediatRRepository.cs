@@ -265,26 +265,6 @@ namespace Headway.RemediatR.Repository
                 .ConfigureAwait(false);
         }
 
-        //public async Task<IEnumerable<RedressCase>> GetRedressesAsync()
-        //{
-        //    var redressCases = await applicationDbContext.Redresses
-        //        .Include(r => r.Program)
-        //        .Include(r => r.Product)
-        //            .ThenInclude(p => p.Customer)
-        //        .AsNoTracking()
-        //        .ToListAsync()
-        //        .ConfigureAwait(false);
-
-        //    return redressCases.Select(r => new RedressCase
-        //        {
-        //            RedressId = r.RedressId,
-        //            CustomerName = r.CustomerName,
-        //            ProductName = r.ProductName,
-        //            ProgramName = r.ProgramName
-        //        })
-        //        .ToList();
-        //}
-
         public async Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchCriteria searchCriteria)
         {
             var programClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Name"));
