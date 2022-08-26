@@ -47,6 +47,7 @@
        * [WebApi](#webapi)
        * [Other Implementation Examples for Identity Providers](#other-implementation-examples-for-identity-providers)
 * [Authorization](#authorization)
+* [Logging](#logging)
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
 * [Navigation Menu](#navigation-menu)
@@ -325,6 +326,8 @@ Headway currently supports authentication from two identity providers **Identity
    - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
 
 ## Authorization
+
+## Logging
 
 ## Page Layout
 ![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
