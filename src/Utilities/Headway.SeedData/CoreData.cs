@@ -55,6 +55,7 @@ namespace Headway.SeedData
 
         private static void TruncateTables()
         {
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE Logs");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
