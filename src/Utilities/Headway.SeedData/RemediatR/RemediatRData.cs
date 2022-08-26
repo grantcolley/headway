@@ -17,9 +17,9 @@ namespace Headway.SeedData.RemediatR
     {
         private static ApplicationDbContext dbContext;
 
-        private static Dictionary<string, Permission> permissions = new();
-        private static Dictionary<string, Role> roles = new();
-        private static Dictionary<string, User> users = new();
+        private readonly static Dictionary<string, Permission> permissions = new();
+        private readonly static Dictionary<string, Role> roles = new();
+        private readonly static Dictionary<string, User> users = new();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {
