@@ -43,15 +43,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     if (builder.Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING).Contains(DataMigrations.SQLITE_DATABASE))
     {
-        options.UseSqlite(builder.Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
-            x => x.MigrationsAssembly(DataMigrations.SQLITE_MIGRATIONS));
-        options.EnableSensitiveDataLogging();
+        options.EnableSensitiveDataLogging()
+                .UseSqlite(builder.Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
+                            x => x.MigrationsAssembly(DataMigrations.SQLITE_MIGRATIONS));
     }
     else
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
-            x => x.MigrationsAssembly(DataMigrations.SQLSERVER_MIGRATIONS));
-        options.EnableSensitiveDataLogging();
+        options.EnableSensitiveDataLogging()
+                .UseSqlServer(builder.Configuration.GetConnectionString(DataMigrations.CONNECTION_STRING),
+                            x => x.MigrationsAssembly(DataMigrations.SQLSERVER_MIGRATIONS));
     }
 });
 
