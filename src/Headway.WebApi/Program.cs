@@ -97,8 +97,6 @@ if (app.Environment.IsDevelopment())
     app.UseSerilogRequestLogging();
 }
 
-app.UseSerilogRequestLogging();
-
 app.UseHttpsRedirection();
 
 app.UseRouting();
