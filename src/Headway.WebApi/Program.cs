@@ -5,6 +5,7 @@ using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Repository;
 using Headway.Repository;
 using Headway.Repository.Data;
+using Headway.SeedData;
 using Headway.SeedData.RemediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -96,6 +98,8 @@ if (app.Environment.IsDevelopment())
     app.UseSerilogRequestLogging();
 }
 
+app.UseSerilogRequestLogging();
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
@@ -125,14 +129,14 @@ if(useSeedData)
 
         if(useDefaultData)
         {
-            Headway.SeedData.CoreData.Initialise(applicationDbContext);
+            CoreData.Initialise(applicationDbContext);
 
             if (userRemediatRData)
             {
                 RemediatRData.Initialise(applicationDbContext);
             }
 
-            Headway.SeedData.DeveloperData.Initialise(applicationDbContext);
+            DeveloperData.Initialise(applicationDbContext);
         }
     }
 }
