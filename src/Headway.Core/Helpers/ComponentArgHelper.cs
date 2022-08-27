@@ -1,7 +1,7 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Args;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Extensions;
-using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -82,7 +82,7 @@ namespace Headway.Core.Helpers
                 var dynamicArg = componentArg as List<DynamicArg>;
                 if (dynamicArg != null)
                 {
-                    var linkedSourceArg = dynamicArg.DynamicArgOrDefault(Args.LINK_SOURCE);
+                    var linkedSourceArg = dynamicArg.DynamicArgOrDefault(Constants.Args.LINK_SOURCE);
                     if (linkedSourceArg != null
                         && linkedSourceArg.Value != null)
                     {
@@ -99,7 +99,7 @@ namespace Headway.Core.Helpers
                 var dynamicArgs = ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
                 dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
 
-                var linkedSourceArg = dynamicArgs.DynamicArgOrDefault(Args.LINK_SOURCE);
+                var linkedSourceArg = dynamicArgs.DynamicArgOrDefault(Constants.Args.LINK_SOURCE);
                 if(linkedSourceArg != null
                     && linkedSourceArg.Value != null)
                 {
@@ -131,7 +131,7 @@ namespace Headway.Core.Helpers
                     var dynamicArg = new DynamicArg { Name = name[1], Value = value[1] };
                     dynamicArgs.Add(dynamicArg);
 
-                    if (dynamicArg.Name.Equals(Args.PROPAGATE_FIELDS))
+                    if (dynamicArg.Name.Equals(Constants.Args.PROPAGATE_FIELDS))
                     {
                         var propagateFields = dynamicArg.Value.ToString().Split(',');
                         foreach(var propagateField in propagateFields)

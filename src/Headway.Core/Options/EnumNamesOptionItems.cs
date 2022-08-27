@@ -1,4 +1,4 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Args;
 using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
@@ -13,7 +13,7 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
-            var typeName = args.ArgValue(Args.TYPE);
+            var typeName = args.ArgValue(Constants.Args.TYPE);
 
             var type = Type.GetType(typeName);
 

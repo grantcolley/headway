@@ -1,5 +1,5 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Model;
+﻿using Headway.Core.Args;
+using Headway.Core.Attributes;
 using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
@@ -44,7 +44,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Search([FromBody] SearchCriteria searchCriteria)
+        public async Task<IActionResult> Search([FromBody] SearchArgs searchArgs)
         {
             var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
                 .ConfigureAwait(false);
@@ -54,20 +54,20 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            switch(searchCriteria.SourceConfig)
+            switch(searchArgs.SourceConfig)
             {
                 case RemediatRSearchSource.REDRESSCASES:
                     var redressCases = await remediatRRepository
-                        .GetRedressCasesAsync(searchCriteria)
+                        .GetRedressCasesAsync(searchArgs)
                         .ConfigureAwait(false);
                     return Ok(redressCases);
                 case RemediatRSearchSource.NEW_REDRESS_CASE:
                     var newRedressCases = await remediatRRepository
-                        .SearchNewRedressCasesAsync(searchCriteria)
+                        .SearchNewRedressCasesAsync(searchArgs)
                         .ConfigureAwait(false);
                     return Ok(newRedressCases);
                 default:
-                    throw new NotImplementedException(searchCriteria.SourceConfig);
+                    throw new NotImplementedException(searchArgs.SourceConfig);
             }
         }
 

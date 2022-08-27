@@ -1,5 +1,5 @@
-﻿using Headway.Core.Interface;
-using Headway.Core.Model;
+﻿using Headway.Core.Args;
+using Headway.Core.Interface;
 using System;
 using System.Collections.Generic;
 

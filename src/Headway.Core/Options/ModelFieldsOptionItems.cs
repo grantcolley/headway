@@ -1,5 +1,5 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Constants;
+﻿using Headway.Core.Args;
+using Headway.Core.Attributes;
 using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
@@ -17,13 +17,13 @@ namespace Headway.Core.Options
         {
             string modelName = null;
 
-            if (args.HasArg(Args.LINK_SOURCE))
+            if (args.HasArg(Constants.Args.LINK_SOURCE))
             {
-                modelName = args.ArgValue(Args.LINK_VALUE);
+                modelName = args.ArgValue(Constants.Args.LINK_VALUE);
             }
             else
             {
-                modelName = args.ArgValue(Args.MODEL);
+                modelName = args.ArgValue(Constants.Args.MODEL);
             }
 
             if(string.IsNullOrWhiteSpace(modelName))

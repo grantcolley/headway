@@ -109,7 +109,7 @@ namespace Headway.RequestApi.Api
                 var uri = $"{dynamicList.Config.ModelApi}/{Controllers.SEARCH_ACTION}";
 
                 using var response = await httpClient
-                    .PostAsJsonAsync(uri, dynamicList.SearchCriteria)
+                    .PostAsJsonAsync(uri, dynamicList.SearchArgs)
                     .ConfigureAwait(false);
                 var responseList = await GetResponseAsync<IEnumerable<T>>(response)
                     .ConfigureAwait(false);

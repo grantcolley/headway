@@ -1,4 +1,4 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Args;
 using Headway.RemediatR.Core.Enums;
 using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
@@ -46,23 +46,23 @@ namespace Headway.RemediatR.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Customer>> GetCustomersAsync(SearchCriteria searchCriteria)
+        public async Task<IEnumerable<Customer>> GetCustomersAsync(SearchArgs searchArgs)
         {
-            var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
-            var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
+            var customerIdArg = searchArgs.Args.First(c => c.ParameterName.Equals("CustomerId"));
+            var surnameArg = searchArgs.Args.First(c => c.ParameterName.Equals("Surname"));
 
             int customerId = 0;
             string surname = string.Empty;
 
 
-            if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
+            if (!string.IsNullOrWhiteSpace(customerIdArg.Value))
             {
-                _ = int.TryParse(customerIdClause.Value, out customerId);
+                _ = int.TryParse(customerIdArg.Value, out customerId);
             }
 
-            if (!string.IsNullOrWhiteSpace(surnameClause.Value))
+            if (!string.IsNullOrWhiteSpace(surnameArg.Value))
             {
-                surname = surnameClause.Value.ToLowerInvariant();
+                surname = surnameArg.Value.ToLowerInvariant();
             }
 
             if (customerId > 0)
@@ -265,29 +265,29 @@ namespace Headway.RemediatR.Repository
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchCriteria searchCriteria)
+        public async Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchArgs searchArgs)
         {
-            var programClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Name"));
-            var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
-            var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
+            var programArg = searchArgs.Args.First(c => c.ParameterName.Equals("Name"));
+            var customerIdArg = searchArgs.Args.First(c => c.ParameterName.Equals("CustomerId"));
+            var surnameArg = searchArgs.Args.First(c => c.ParameterName.Equals("Surname"));
 
             int customerId = 0;
             string surname = string.Empty;
             string program = string.Empty;
 
-            if (!string.IsNullOrWhiteSpace(programClause.Value))
+            if (!string.IsNullOrWhiteSpace(programArg.Value))
             {
-                program = programClause.Value;
+                program = programArg.Value;
             }
 
-            if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
+            if (!string.IsNullOrWhiteSpace(customerIdArg.Value))
             {
-                _ = int.TryParse(customerIdClause.Value, out customerId);
+                _ = int.TryParse(customerIdArg.Value, out customerId);
             }
 
-            if (!string.IsNullOrWhiteSpace(surnameClause.Value))
+            if (!string.IsNullOrWhiteSpace(surnameArg.Value))
             {
-                surname = surnameClause.Value.ToLowerInvariant();
+                surname = surnameArg.Value.ToLowerInvariant();
             }
 
             List<Redress> redresses;
@@ -341,7 +341,7 @@ namespace Headway.RemediatR.Repository
                         redresses = await applicationDbContext.Redresses
                             .Include(r => r.Program)
                             .Include(r => r.Product)
-                            .Where(r => r.Program != null && r.Program.Name == programClause.Value)
+                            .Where(r => r.Program != null && r.Program.Name == programArg.Value)
                             .AsNoTracking()
                             .ToListAsync()
                             .ConfigureAwait(false);
@@ -359,29 +359,29 @@ namespace Headway.RemediatR.Repository
                 .ToList();
         }
 
-        public async Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchCriteria searchCriteria)
+        public async Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchArgs searchArgs)
         {
-            var productTypeClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("ProductType"));
-            var customerIdClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("CustomerId"));
-            var surnameClause = searchCriteria.Clauses.First(c => c.ParameterName.Equals("Surname"));
+            var productTypeArg = searchArgs.Args.First(c => c.ParameterName.Equals("ProductType"));
+            var customerIdArg = searchArgs.Args.First(c => c.ParameterName.Equals("CustomerId"));
+            var surnameArg = searchArgs.Args.First(c => c.ParameterName.Equals("Surname"));
 
             int customerId = 0;
             string surname = string.Empty;
             ProductType productType = ProductType.Unknown;
 
-            if (!string.IsNullOrWhiteSpace(productTypeClause.Value))
+            if (!string.IsNullOrWhiteSpace(productTypeArg.Value))
             {
-                productType = Enum.Parse<ProductType>(productTypeClause.Value);
+                productType = Enum.Parse<ProductType>(productTypeArg.Value);
             }
 
-            if (!string.IsNullOrWhiteSpace(customerIdClause.Value))
+            if (!string.IsNullOrWhiteSpace(customerIdArg.Value))
             {
-                _ = int.TryParse(customerIdClause.Value, out customerId);
+                _ = int.TryParse(customerIdArg.Value, out customerId);
             }
 
-            if (!string.IsNullOrWhiteSpace(surnameClause.Value))
+            if (!string.IsNullOrWhiteSpace(surnameArg.Value))
             {
-                surname = surnameClause.Value.ToLowerInvariant();
+                surname = surnameArg.Value.ToLowerInvariant();
             }
 
             List<Customer> customers;

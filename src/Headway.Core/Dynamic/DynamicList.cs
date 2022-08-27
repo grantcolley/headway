@@ -1,4 +1,5 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Args;
+using Headway.Core.Constants;
 using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
@@ -100,15 +101,15 @@ namespace Headway.Core.Dynamic
             }
         }
 
-        public SearchCriteria SearchCriteria
+        public SearchArgs SearchArgs
         {
             get
             {
-                return new SearchCriteria
+                return new SearchArgs
                 {
                     SourceConfig = Config.Name,
-                    Clauses = dynamicSearchItems.Select(
-                        si => new SearchCriterion
+                    Args = dynamicSearchItems.Select(
+                        si => new SearchArg
                         {
                             Name = si.Label,
                             ParameterName = si.ParameterName,

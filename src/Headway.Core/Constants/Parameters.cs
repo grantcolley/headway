@@ -5,6 +5,7 @@
         public const string COMPONENT_ARGS = "ComponentArgs";
         public const string CONFIG = "Config";
         public const string CONTAINER = "Container";
+        public const string DOCUMENT_ARGS = "DocumentArgs";
         public const string FIELD = "Field";
         public const string ID = "Id";
         public const string SEARCH_COMPONENT_UNIQUE_ID = "SearchComponentUniqueId";

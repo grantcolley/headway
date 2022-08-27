@@ -1,6 +1,6 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Args;
+using Headway.Core.Constants;
 using Headway.Core.Interface;
-using Headway.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

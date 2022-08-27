@@ -1,7 +1,7 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Args;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
-using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -49,7 +49,7 @@ namespace Headway.Core.Extensions
                     var args = dynamicSearchItem.ComponentArgs.ToArgsList();
                     dynamicSearchItem.Parameters.Add(Parameters.COMPONENT_ARGS, args);
 
-                    var linkedSourceArg = args.ArgOrDefault(Args.LINK_SOURCE);
+                    var linkedSourceArg = args.ArgOrDefault(Constants.Args.LINK_SOURCE);
                     if (linkedSourceArg != null
                         && linkedSourceArg.Value != null)
                     {

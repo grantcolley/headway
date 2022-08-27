@@ -56,6 +56,7 @@ namespace Headway.Razor.Controls.Pages
             var genericType = component.MakeGenericType(new[] { type });
             builder.OpenComponent(1, genericType);
             builder.AddAttribute(2, Parameters.CONFIG, config.Name);
+            builder.AddAttribute(2, Parameters.CONFIG, config.Name);
 
             if (Id.HasValue)
             {

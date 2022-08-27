@@ -1,5 +1,5 @@
-﻿using Headway.Core.Interface;
-using Headway.Core.Model;
+﻿using Headway.Core.Args;
+using Headway.Core.Interface;
 using Headway.RemediatR.Core.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ namespace Headway.RemediatR.Core.Interface
         Task<Product> AddCustomerProductAsync(Customer customer, Product product);
         Task<int> DeleteCustomerProductAsync(Customer customer, Product product);
         Task<IEnumerable<Customer>> GetCustomersAsync();
-        Task<IEnumerable<Customer>> GetCustomersAsync(SearchCriteria searchCriteria);
+        Task<IEnumerable<Customer>> GetCustomersAsync(SearchArgs searchArgs);
         Task<Customer> GetCustomerAsync(int id);
         Task<Customer> AddCustomerAsync(Customer customer);
         Task<Customer> UpdateCustomerAsync(Customer customer);
@@ -21,8 +21,8 @@ namespace Headway.RemediatR.Core.Interface
         Task<Program> AddProgramAsync(Program program);
         Task<Program> UpdateProgramAsync(Program program);
         Task<int> DeleteProgramAsync(int id);
-        Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchCriteria searchCriteria);
-        Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchCriteria searchCriteria);
+        Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchArgs searchArgs);
+        Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchArgs searchArgs);
         Task<Redress> GetRedressAsync(int id);
         Task<Redress> AddRedressAsync(Redress redress);
         Task<Redress> UpdateRedressAsync(Redress redress);

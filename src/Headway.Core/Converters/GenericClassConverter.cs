@@ -1,6 +1,5 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Args;
 using Headway.Core.Extensions;
-using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,8 +27,8 @@ namespace Headway.Core.Converters
                 var args = JsonSerializer.Deserialize(value.ToString(), typeof(List<Arg>)) as List<Arg>;
                 if(args != null)
                 {
-                    var typeName = args.ArgValue(Args.TYPE);
-                    var json = args.ArgValue(Args.VALUE);
+                    var typeName = args.ArgValue(Constants.Args.TYPE);
+                    var json = args.ArgValue(Constants.Args.VALUE);
                     var type = Type.GetType(typeName);
                     return JsonSerializer.Deserialize(json, type);
                 }

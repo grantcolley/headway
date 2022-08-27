@@ -1,5 +1,5 @@
-﻿using Headway.Core.Attributes;
-using Headway.Core.Model;
+﻿using Headway.Core.Args;
+using Headway.Core.Attributes;
 using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
@@ -59,7 +59,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Search([FromBody] SearchCriteria searchCriteria)
+        public async Task<IActionResult> Search([FromBody] SearchArgs searchArgs)
         {
             var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.CUSTOMER_READ)
                 .ConfigureAwait(false);
@@ -70,7 +70,7 @@ namespace Headway.WebApi.Controllers
             }
 
             var customers = await remediatRRepository
-                .GetCustomersAsync(searchCriteria)
+                .GetCustomersAsync(searchArgs)
                 .ConfigureAwait(false);
 
             return Ok(customers);
