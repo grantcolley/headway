@@ -43,7 +43,7 @@ namespace Headway.SeedData.RemediatR
             ProductConfig();
             ProductsListDetailConfig();
             RedressCasesConfig();
-            CreateRedressCasesConfig();
+            NewRedressCasesConfig();
             RedressConfig();
         }
 
@@ -592,7 +592,7 @@ namespace Headway.SeedData.RemediatR
             dbContext.SaveChanges();
         }
 
-        private static void CreateRedressCasesConfig()
+        private static void NewRedressCasesConfig()
         {
             var redressCasesConfig = new Config
             {
@@ -664,7 +664,7 @@ namespace Headway.SeedData.RemediatR
                 Description = "Manage a RemediatR redress case",
                 Model = "Headway.RemediatR.Core.Model.Redress, Headway.RemediatR.Core",
                 ModelApi = "RemediatRRedress",
-                CreateLocal = true,
+                CreateLocal = false,
                 Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "RedressCases"
