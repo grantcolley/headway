@@ -2,7 +2,7 @@
 {
     public class DataArg
     {
-        public string Name { get; set; }
+        public string PropertyName { get; set; }
         public object Value { get; set; }
     }
 }
