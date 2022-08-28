@@ -607,7 +607,6 @@ namespace Headway.SeedData.RemediatR
                 SearchComponent = "Headway.Razor.Controls.SearchComponents.StandardSearchComponent, Headway.Razor.Controls",
                 UseSearchComponent = true,
                 NavigatePage = "Page",
-                NavigateProperty = "RedressId",
                 NavigateConfig = "Redress",
                 NavigateResetBreadcrumb = true
             };
