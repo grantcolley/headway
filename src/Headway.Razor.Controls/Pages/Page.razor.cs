@@ -21,6 +21,9 @@ namespace Headway.Razor.Controls.Pages
         [Parameter]
         public int? Id { get; set; }
 
+        [Parameter]
+        public string DataArgs { get; set; }
+
         protected override async Task OnParametersSetAsync()
         {
             if (config == null)
@@ -56,11 +59,15 @@ namespace Headway.Razor.Controls.Pages
             var genericType = component.MakeGenericType(new[] { type });
             builder.OpenComponent(1, genericType);
             builder.AddAttribute(2, Parameters.CONFIG, config.Name);
-            builder.AddAttribute(2, Parameters.CONFIG, config.Name);
 
             if (Id.HasValue)
             {
                 builder.AddAttribute(3, Parameters.ID, Id);
+            }
+
+            if(!string.IsNullOrWhiteSpace(DataArgs))
+            {
+                builder.AddAttribute(4, Parameters.DATA_ARGS, DataArgs);
             }
 
             builder.CloseComponent();
