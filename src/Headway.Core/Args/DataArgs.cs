@@ -6,9 +6,9 @@ namespace Headway.Core.Args
     {
         public DataArgs()
         {
-            Args = new List<Arg>();
+            Args = new List<DataArg>();
         }
 
-        public List<Arg> Args { get; set; }
+        public List<DataArg> Args { get; set; }
     }
 }
