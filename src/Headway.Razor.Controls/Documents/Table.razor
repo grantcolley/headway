@@ -55,7 +55,7 @@ else
                     <MudTd>
                         @if(HasRowButton)
                         {
-                            <ComponentTip Text="Edit"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => RowButtonClick(dynamicList.GetValue(context.Model, dynamicList.Config.NavigateProperty))"/></ComponentTip>                        
+                            <ComponentTip Text="Edit"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => RowButtonClick(context)"/></ComponentTip>                        
                         }
                     </MudTd>
 
