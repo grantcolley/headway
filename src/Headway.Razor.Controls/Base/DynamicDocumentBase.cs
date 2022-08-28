@@ -30,6 +30,9 @@ namespace Headway.Razor.Controls.Base
         [Parameter]
         public int? Id { get; set; }
 
+        [Parameter]
+        public string DataArgs { get; set; }
+
         protected EditContext CurrentEditContext { get; set; }
 
         protected DynamicModel<T> dynamicModel { get; set; }
@@ -69,17 +72,23 @@ namespace Headway.Razor.Controls.Base
         {
             IResponse<DynamicModel<T>> response;
 
-            if (!Id.HasValue
-                || Id.Value.Equals(0))
+            if (Id.HasValue
+                && Id.Value > 0)
             {
                 response = await DynamicApiRequest
-                    .CreateDynamicModelInstanceAsync<T>(Config)
+                    .GetDynamicModelAsync<T>(Id.Value, Config)
+                    .ConfigureAwait(false);
+            }
+            else if (!string.IsNullOrWhiteSpace(DataArgs))
+            {
+                response = await DynamicApiRequest
+                    .CreateDynamicModelInstanceAsync<T>(Config, DataArgs)
                     .ConfigureAwait(false);
             }
             else
             {
                 response = await DynamicApiRequest
-                    .GetDynamicModelAsync<T>(Id.Value, Config)
+                    .CreateDynamicModelInstanceAsync<T>(Config)
                     .ConfigureAwait(false);
             }
 
