@@ -469,6 +469,11 @@ namespace Headway.RemediatR.Repository
             });
         }
 
+        public async Task<Redress> CreateRedressAsync(DataArgs dataArgs)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Redress> GetRedressAsync(int id)
         {
             return await applicationDbContext.Redresses
