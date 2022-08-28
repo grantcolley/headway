@@ -71,6 +71,24 @@ namespace Headway.WebApi.Controllers
             }
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Create([FromBody] DataArgs dataArgs)
+        {
+            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var redressCases = await remediatRRepository
+                .CreateRedressAsync(dataArgs)
+                .ConfigureAwait(false);
+
+            return Ok(redressCases);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Redress redress)
         {
