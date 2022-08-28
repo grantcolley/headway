@@ -119,6 +119,20 @@ namespace Headway.Core.Dynamic
             }
         }
 
+        public DataArgs ToDataArgs(T listItem)
+        {
+            return new DataArgs
+            {
+                SourceConfig = Config.Name,
+                Args = Config.ConfigItems.Select(
+                    ci => new DataArg
+                    {
+                        PropertyName = ci.PropertyName,
+                        Value = TypeHelper.GetValue(listItem, ci.PropertyName)
+                    }).ToList()
+            };
+        }
+
         public object GetValue(T listItem, string field)
         {
             return TypeHelper.GetValue(listItem, field);
