@@ -46,7 +46,11 @@ namespace Headway.Razor.Controls.Base
         {
             isSearchInProgress = true;
 
-            await SearchCallBack?.Click.Invoke();
+            if(SearchCallBack != null
+                && SearchCallBack.Click != null)
+            {
+                await SearchCallBack.Click.Invoke();
+            }
 
             isSearchInProgress = false;
 
