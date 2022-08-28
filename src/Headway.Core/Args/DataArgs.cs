@@ -9,6 +9,7 @@ namespace Headway.Core.Args
             Args = new List<DataArg>();
         }
 
+        public string SourceConfig { get; set; }
         public List<DataArg> Args { get; set; }
     }
 }
