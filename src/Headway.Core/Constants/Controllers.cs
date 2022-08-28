@@ -3,6 +3,7 @@
     public static class Controllers
     {
         public const string CONFIGURATION = "Configuration";
+        public const string CREATE_ACTION = "Create";
         public const string MODULES_CLAIMMODULES = "Modules/ClaimModules";
         public const string OPTIONS = "Options";
         public const string OPTIONS_COMPLEXOPTIONS = "Options/ComplexOptions";
