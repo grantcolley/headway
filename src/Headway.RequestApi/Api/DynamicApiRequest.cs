@@ -1,4 +1,5 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Core.Args;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Headway.RequestApi.Api
@@ -171,6 +173,53 @@ namespace Headway.RequestApi.Api
                 var configApi = $"{responseConfig.Result.ModelApi}/{id}";
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
+                var responseModel = await GetResponseAsync<T>(response)
+                    .ConfigureAwait(false);
+
+                if (responseModel.IsSuccess)
+                {
+                    return new Response<DynamicModel<T>>
+                    {
+                        IsSuccess = responseModel.IsSuccess,
+                        Message = responseModel.Message,
+                        Result = new DynamicModel<T>(responseModel.Result, responseConfig.Result)
+                    };
+                }
+                else
+                {
+                    return new Response<DynamicModel<T>>
+                    {
+                        IsSuccess = responseModel.IsSuccess,
+                        Message = responseModel.Message
+                    };
+                }
+            }
+            else
+            {
+                return new Response<DynamicModel<T>>
+                {
+                    IsSuccess = responseConfig.IsSuccess,
+                    Message = responseConfig.Message
+                };
+            }
+        }
+
+        public async Task<IResponse<DynamicModel<T>>> CreateDynamicModelInstanceAsync<T>(string config, string dataArgs) where T : class, new()
+        {
+            var responseConfig =
+                await GetConfigAsync(config)
+                .ConfigureAwait(false);
+
+            if (responseConfig.IsSuccess)
+            {
+                var uri = $"{responseConfig.Result.ModelApi}/{Controllers.CREATE_ACTION}";
+
+                var args = JsonSerializer.Deserialize<DataArgs>(dataArgs);
+
+                using var response = await httpClient
+                    .PostAsJsonAsync(uri, args)
+                    .ConfigureAwait(false);
+
                 var responseModel = await GetResponseAsync<T>(response)
                     .ConfigureAwait(false);
 
