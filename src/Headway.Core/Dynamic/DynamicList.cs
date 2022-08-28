@@ -111,7 +111,7 @@ namespace Headway.Core.Dynamic
                     Args = dynamicSearchItems.Select(
                         si => new SearchArg
                         {
-                            Name = si.Label,
+                            Label = si.Label,
                             ParameterName = si.ParameterName,
                             Value = si.Value
                         }).ToList()
