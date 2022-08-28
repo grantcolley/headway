@@ -46,9 +46,18 @@ namespace Headway.Razor.Controls.Documents
             NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}");
         }
 
-        protected void RowButtonClick(object id)
+        protected void RowButtonClick(DynamicListItem<T> listItem)
         {
-            NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{id}");
+            if (string.IsNullOrWhiteSpace(dynamicList.Config.NavigateProperty))
+            {
+                var dataArgs = dynamicList.ToDataArgsJson(listItem.Model);
+                NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{dataArgs}");
+            }
+            else
+            {
+                var id = dynamicList.GetValue(listItem.Model, dynamicList.Config.NavigateProperty);
+                NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{id}");
+            }
         }
 
         private bool FilterItem(DynamicListItem<T> item, string filter)
