@@ -6,6 +6,7 @@ using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Headway.Core.Dynamic
 {
@@ -131,6 +132,12 @@ namespace Headway.Core.Dynamic
                         Value = TypeHelper.GetValue(listItem, ci.PropertyName)
                     }).ToList()
             };
+        }
+
+        public string ToDataArgsJson(T listItem)
+        {
+            var dataArgs = ToDataArgs(listItem);
+            return JsonSerializer.Serialize(dataArgs);
         }
 
         public object GetValue(T listItem, string field)
