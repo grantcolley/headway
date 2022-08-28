@@ -1,6 +1,7 @@
 ﻿@using System
 
 @page "/Page/{Config}/{Id:int?}"
+@page "/Page/{Config}/{DataArgs?}"
 @inherits PageBase
 <AuthorizeView>
     <Authorized Context="page">
