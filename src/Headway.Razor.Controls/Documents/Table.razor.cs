@@ -50,8 +50,8 @@ namespace Headway.Razor.Controls.Documents
         {
             if (string.IsNullOrWhiteSpace(dynamicList.Config.NavigateProperty))
             {
-                var dataArgs = dynamicList.ToDataArgsJson(listItem.Model);
-                NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{dataArgs}");
+                var dataArgsJson = dynamicList.ToDataArgsJson(listItem.Model);
+                NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{dataArgsJson}");
             }
             else
             {
