@@ -479,16 +479,14 @@ namespace Headway.RemediatR.Repository
             int redressId = 0;
             int productId = 0;
 
-            if (redressIdArg.Value != null
-                && redressIdArg.Value is int)
+            if (!string.IsNullOrWhiteSpace(redressIdArg.Value))
             {
-                redressId = (int)redressIdArg.Value;
+                _ = int.TryParse(redressIdArg.Value, out redressId);
             }
 
-            if (productIdArg.Value != null
-                && productIdArg.Value is int)
+            if (!string.IsNullOrWhiteSpace(productIdArg.Value))
             {
-                productId = (int)productIdArg.Value;
+                _ = int.TryParse(productIdArg.Value, out productId);
             }
 
             if(redressId > 0)
@@ -499,6 +497,7 @@ namespace Headway.RemediatR.Repository
             else
             {
                 var product = await applicationDbContext.Products
+                    .Include(p => p.Customer)
                     .AsNoTracking()
                     .FirstAsync(p => p.ProductId.Equals(productId))
                     .ConfigureAwait((false));
@@ -510,6 +509,9 @@ namespace Headway.RemediatR.Repository
         public async Task<Redress> GetRedressAsync(int id)
         {
             return await applicationDbContext.Redresses
+                .Include(r => r.Program)
+                .Include(r => r.Product)
+                    .ThenInclude(p => p.Customer)
                 .AsNoTracking()
                 .FirstAsync(r => r.RedressId.Equals(id))
                 .ConfigureAwait(false);
