@@ -122,7 +122,7 @@ namespace Headway.RemediatR.Core.Model
         {
             get
             {
-                return $"{Product.Customer.Fullname}";
+                return $"{Product.Customer?.Fullname}";
             }
         }
 
