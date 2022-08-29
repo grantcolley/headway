@@ -6,8 +6,10 @@ namespace Headway.RemediatR.Core.Model
     public class NewRedressCase
     {
         public int? RedressId { get; set; }
-        public string? CustomerName { get; set; }
         public string? ProgramName { get; set; }
+        public int? CustomerId { get; set; }
+        public string? CustomerName { get; set; }
+        public int? ProductId { get; set; }
         public string? ProductName { get; set; }
         public string? ProductType { get; set; }
         public string? RateType { get; set; }
