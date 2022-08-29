@@ -448,11 +448,13 @@ namespace Headway.RemediatR.Repository
             {
                 var newRedressCase = new NewRedressCase
                 {
-                    CustomerName = c.Fullname,
+                    CustomerId = c.CustomerId,
+                    CustomerName = c.Fullname
                 };
 
                 foreach (var product in c.Products)
                 {
+                    newRedressCase.ProductId = product.ProductId;
                     newRedressCase.ProductName = product.Name;
                     newRedressCase.ProductType = product.ProductType.ToString();
                     newRedressCase.RateType = product.RateType.ToString();
@@ -471,7 +473,38 @@ namespace Headway.RemediatR.Repository
 
         public async Task<Redress> CreateRedressAsync(DataArgs dataArgs)
         {
-            throw new NotImplementedException();
+            var redressIdArg = dataArgs.Args.First(c => c.PropertyName.Equals("RedressId"));
+            var productIdArg = dataArgs.Args.First(c => c.PropertyName.Equals("ProductId"));
+
+            int redressId = 0;
+            int productId = 0;
+
+            if (redressIdArg.Value != null
+                && redressIdArg.Value is int)
+            {
+                redressId = (int)redressIdArg.Value;
+            }
+
+            if (productIdArg.Value != null
+                && productIdArg.Value is int)
+            {
+                productId = (int)productIdArg.Value;
+            }
+
+            if(redressId > 0)
+            {
+                return await (GetRedressAsync(redressId))
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                var product = await applicationDbContext.Products
+                    .AsNoTracking()
+                    .FirstAsync(p => p.ProductId.Equals(productId))
+                    .ConfigureAwait((false));
+
+                return new Redress { Product = product };
+            }
         }
 
         public async Task<Redress> GetRedressAsync(int id)
