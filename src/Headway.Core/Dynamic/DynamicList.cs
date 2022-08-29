@@ -122,16 +122,23 @@ namespace Headway.Core.Dynamic
 
         public DataArgs ToDataArgs(T listItem)
         {
-            return new DataArgs
+            var dataArgs = new DataArgs
             {
-                SourceConfig = Config.Name,
-                Args = Config.ConfigItems.Select(
-                    ci => new DataArg
-                    {
-                        PropertyName = ci.PropertyName,
-                        Value = TypeHelper.GetValue(listItem, ci.PropertyName)
-                    }).ToList()
+                SourceConfig = Config.Name
             };
+
+            foreach(var item in Config.ConfigItems)
+            {
+                var val = TypeHelper.GetValue(listItem, item.PropertyName);
+
+                dataArgs.Args.Add(new DataArg
+                {
+                    PropertyName = item.PropertyName,
+                    Value = val?.ToString()
+                });
+            }
+
+            return dataArgs;
         }
 
         public string ToDataArgsJson(T listItem)
