@@ -26,9 +26,6 @@
 	  <None Update="RemediatR\_countries.csv">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="RemediatR\customers.csv">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	  <None Update="RemediatR\_customers.csv">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
