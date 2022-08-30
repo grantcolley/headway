@@ -400,10 +400,10 @@ namespace Headway.RemediatR.Repository
             }
             else
             {
-                if(customerId > 0
+                if (customerId > 0
                 || !string.IsNullOrWhiteSpace(surname))
                 {
-                    if(productType.Equals(ProductType.Unknown))
+                    if (productType.Equals(ProductType.Unknown))
                     {
                         customers = await applicationDbContext.Customers
                             .Include(c => c.Products)
@@ -444,31 +444,34 @@ namespace Headway.RemediatR.Repository
                 }
             }
 
-            return customers.Select(c => 
-            {
-                var newRedressCase = new NewRedressCase
-                {
-                    CustomerId = c.CustomerId,
-                    CustomerName = c.Fullname
-                };
+            var newRedressCases = new List<NewRedressCase>();
 
+            foreach (var c in customers.OrderBy(c => c.Surname))
+            {
                 foreach (var product in c.Products)
                 {
-                    newRedressCase.ProductId = product.ProductId;
-                    newRedressCase.ProductName = product.Name;
-                    newRedressCase.ProductType = product.ProductType.ToString();
-                    newRedressCase.RateType = product.RateType.ToString();
-                    newRedressCase.RepaymentType = product.RepaymentType.ToString();
-                    
-                    if(product.Redress != null)
+                    var newRedressCase = new NewRedressCase
+                    {
+                        CustomerId = c.CustomerId,
+                        CustomerName = c.Fullname,
+                        ProductId = product.ProductId,
+                        ProductName = product.Name,
+                        ProductType = product.ProductType.ToString(),
+                        RateType = product.RateType.ToString(),
+                        RepaymentType = product.RepaymentType.ToString(),
+                    };
+
+                    if (product.Redress != null)
                     {
                         newRedressCase.RedressId = product.Redress.RedressId;
-                        newRedressCase.ProgramName = product.Redress.ProgramName; 
+                        newRedressCase.ProgramName = product.Redress.ProgramName;
                     }
-                }
 
-                return newRedressCase;
-            });
+                    newRedressCases.Add(newRedressCase);
+                }
+            }
+
+            return newRedressCases;
         }
 
         public async Task<Redress> CreateRedressAsync(DataArgs dataArgs)
