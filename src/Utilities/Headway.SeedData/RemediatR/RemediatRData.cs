@@ -64,7 +64,7 @@ namespace Headway.SeedData.RemediatR
         {
             List<Country> countries = new();
 
-            var lines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "countries.csv"));
+            var lines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "_countries.csv"));
 
             foreach (var line in lines.Skip(1))
             {
@@ -277,11 +277,12 @@ namespace Headway.SeedData.RemediatR
         {
             List<Customer> customers = new();
 
-            var lines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "customers.csv"));
+            var customerLines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "_customers.csv"));
+            var productLines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "_products.csv"));
 
-            foreach (var line in lines.Skip(1))
+            foreach (var customerLine in customerLines.Skip(1))
             {
-                var c = line.Split(',');
+                var c = customerLine.Split(',');
 
                 var customer = new Customer
                 {
@@ -299,23 +300,27 @@ namespace Headway.SeedData.RemediatR
                     AccountStatus = AccountStatus.Active
                 };
 
-                customer.Products.Add(new Product
+                var products = productLines.Where(p => p.StartsWith($"{c[0]} {c[1]} {c[2]}"));
+
+                foreach (var product in products)
                 {
-                    Name = c[11],
-                    ProductType = (ProductType)Enum.Parse(typeof(ProductType),c[12]),
-                    RateType = (RateType)Enum.Parse(typeof(RateType), c[13]),
-                    RepaymentType = (RepaymentType)Enum.Parse(typeof(RepaymentType), c[14]),
-                    Duration = int.Parse(c[15]),
-                    Rate = decimal.Parse(c[16]),
-                    StartDate = DateTime.Parse(c[17]),
-                    Value = decimal.Parse(c[18])
-                });
+                    var p = product.Split(",");
+
+                    customer.Products.Add(new Product
+                    {
+                        Name = p[1],
+                        ProductType = (ProductType)Enum.Parse(typeof(ProductType), p[2]),
+                        RateType = (RateType)Enum.Parse(typeof(RateType), p[3]),
+                        RepaymentType = (RepaymentType)Enum.Parse(typeof(RepaymentType), p[4]),
+                        Duration = int.Parse(p[5]),
+                        Rate = decimal.Parse(p[6]),
+                        StartDate = DateTime.Parse(p[7]),
+                        Value = decimal.Parse(p[8])
+                    });
+                }
 
                 customers.Add(customer);
-            }
 
-            foreach (var customer in customers)
-            {
                 dbContext.Customers.Add(customer);
             }
 
