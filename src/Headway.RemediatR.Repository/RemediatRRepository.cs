@@ -446,7 +446,7 @@ namespace Headway.RemediatR.Repository
 
             var newRedressCases = new List<NewRedressCase>();
 
-            foreach (var c in customers.OrderBy(c => c.Surname))
+            foreach (var c in customers)
             {
                 foreach (var product in c.Products)
                 {
