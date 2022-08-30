@@ -606,7 +606,7 @@ namespace Headway.SeedData.RemediatR
                 Description = "Create a new RemediatR redress case",
                 Model = "Headway.RemediatR.Core.Model.NewRedressCase, Headway.RemediatR.Core",
                 ModelApi = "RemediatRRedress",
-                OrderModelBy = "CustomerName",
+                OrderModelBy = "CustomerId",
                 Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
                 DocumentArgs = $"Name={Css.ROW_BUTTON};Value={Css.BTN_IMAGE_PLUS}",
                 SearchComponent = "Headway.Razor.Controls.SearchComponents.StandardSearchComponent, Headway.Razor.Controls",
