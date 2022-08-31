@@ -565,7 +565,7 @@ namespace Headway.SeedData.RemediatR
                     ParameterName = "Name",
                     Tooltip = "The redress program",
                     Component = "Headway.Razor.Controls.SearchComponents.SearchDropdown, Headway.Razor.Controls",
-                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.Programs}|Name={Args.STYLE};Value=min-width:150px",
+                    ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.PROGRAMS_OPTION_ITEMS}|Name={Args.STYLE};Value=min-width:150px",
                     Order = 1
                 },
                 new ConfigSearchItem
@@ -681,7 +681,12 @@ namespace Headway.SeedData.RemediatR
             var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Redress Details", Order = 1 };
             
             redressConfig.ConfigContainers.Add(redressConfigContainer);
-            
+
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductId", Label = "Product Id", IsIdentity = true, Order = 1, ConfigContainer = redressConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Program", Label = "Program", Order = 3, ConfigContainer = redressConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.PROGRAMS_COMPLEX_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.RemediatR.Core.Model.Program, Headway.RemediatR.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerName", Label = "Customer", IsTitle = true, Order = 4, ConfigContainer = redressConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductName", Label = "Product", IsTitle = false, Order = 5, ConfigContainer = redressConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+
             dbContext.SaveChanges();
         }
     }
