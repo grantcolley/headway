@@ -8,8 +8,6 @@ namespace Headway.RemediatR.Core.Interface
 {
     public interface IRemediatRRepository : IRepository
     {
-        Task<Product> AddCustomerProductAsync(Customer customer, Product product);
-        Task<int> DeleteCustomerProductAsync(Customer customer, Product product);
         Task<IEnumerable<Customer>> GetCustomersAsync();
         Task<IEnumerable<Customer>> GetCustomersAsync(SearchArgs searchArgs);
         Task<Customer> GetCustomerAsync(int id);
