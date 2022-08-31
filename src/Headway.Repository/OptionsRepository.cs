@@ -6,6 +6,7 @@ using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.RemediatR.Core.Constants;
+using Headway.RemediatR.Core.Model;
 using Headway.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -29,12 +30,13 @@ namespace Headway.Repository
             optionItems[Options.CONFIG_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);
             optionItems[Options.PERMISSIONS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetPermissionsOptionItems);
             optionItems[Options.COUNTRY_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetCountryOptionItems);
-            optionItems[RemediatROptions.Programs] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetRemediatRPrograms);
+            optionItems[RemediatROptions.PROGRAMS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetRemediatRPrograms);
 
             complexOptionItems[Options.CONFIG_CONTAINERS] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
             complexOptionItems[Options.MODULES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetModules);
             complexOptionItems[Options.CATEGORIES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetCategories);
             complexOptionItems[Options.COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetDemoModelComplexProperties);
+            complexOptionItems[RemediatROptions.PROGRAMS_COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetRemediatRComplexPrograms);
         }
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
@@ -226,6 +228,24 @@ namespace Headway.Repository
             else
             {
                 return JsonSerializer.Serialize(new List<DemoModelComplexProperty>());
+            }
+        }
+
+        private async Task<string> GetRemediatRComplexPrograms(List<Arg> args)
+        {
+            var remediatRPrograms = await applicationDbContext.Programs
+                .AsNoTracking()
+                .OrderBy(p => p.Name)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            if (remediatRPrograms.Any())
+            {
+                return JsonSerializer.Serialize(remediatRPrograms);
+            }
+            else
+            {
+                return JsonSerializer.Serialize(new List<Program>());
             }
         }
     }
