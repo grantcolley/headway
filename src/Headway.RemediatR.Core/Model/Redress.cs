@@ -114,7 +114,13 @@ namespace Headway.RemediatR.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public int CustomerId { get; set; }
+        public int? CustomerId
+        {
+            get
+            {
+                return Product.Customer?.CustomerId;
+            }
+        }
 
         [NotMapped]
         [JsonIgnore]
