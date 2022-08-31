@@ -678,7 +678,7 @@ namespace Headway.SeedData.RemediatR
 
             dbContext.Configs.Add(redressConfig);
 
-            var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Customer", Order = 1 };
+            var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Redress Details", Order = 1 };
             
             redressConfig.ConfigContainers.Add(redressConfigContainer);
             
