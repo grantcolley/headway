@@ -13,7 +13,9 @@ namespace Headway.Razor.Controls.Documents
     public abstract class TableBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
         protected string headerButtonIcon = string.Empty;
+        protected string headerButtonTooltip = string.Empty;
         protected string rowButtonIcon = string.Empty;
+        protected string rowButtonTooltip = string.Empty;
         protected bool showSearch = false;
 
         protected string filterString;
@@ -30,14 +32,24 @@ namespace Headway.Razor.Controls.Documents
 
             await InitializeDynamicListAsync().ConfigureAwait(false);
 
-            if (args.HasArg(Css.HEADER_BUTTON))
+            if (args.HasArg(Css.HEADER_BTN_IMAGE))
             {
-                headerButtonIcon = args.ArgValue(Css.HEADER_BUTTON);
+                headerButtonIcon = args.ArgValue(Css.HEADER_BTN_IMAGE);
             }
 
-            if (args.HasArg(Css.ROW_BUTTON))
+            if (args.HasArg(Css.HEADER_BTN_TOOLTIP))
             {
-                rowButtonIcon = args.ArgValue(Css.ROW_BUTTON);
+                headerButtonTooltip = args.ArgValue(Css.HEADER_BTN_TOOLTIP);
+            }
+
+            if (args.HasArg(Css.ROW_BTN_IMAGE))
+            {
+                rowButtonIcon = args.ArgValue(Css.ROW_BTN_IMAGE);
+            }
+
+            if (args.HasArg(Css.ROW_BTN_TOOLTIP))
+            {
+                rowButtonTooltip = args.ArgValue(Css.ROW_BTN_TOOLTIP);
             }
         }
 
