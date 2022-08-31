@@ -20,32 +20,6 @@ namespace Headway.RemediatR.Repository
         {
         }
 
-        public async Task<Product> AddCustomerProductAsync(Customer customer, Product product)
-        {
-            await applicationDbContext.Products
-                .AddAsync(product)
-                .ConfigureAwait(false);
-
-            await applicationDbContext
-                .SaveChangesAsync()
-                .ConfigureAwait(false);
-
-            return product;
-        }
-
-        public async Task<int> DeleteCustomerProductAsync(Customer customer, Product product)
-        {
-            var deleteProduct = await applicationDbContext.Products
-                .FirstAsync(p => p.ProductId.Equals(product.ProductId))
-                .ConfigureAwait(false);
-
-            applicationDbContext.Products.Remove(deleteProduct);
-
-            return await applicationDbContext
-                .SaveChangesAsync()
-                .ConfigureAwait(false);
-        }
-
         public async Task<IEnumerable<Customer>> GetCustomersAsync(SearchArgs searchArgs)
         {
             var customerIdArg = searchArgs.Args.First(c => c.ParameterName.Equals("CustomerId"));
@@ -522,13 +496,20 @@ namespace Headway.RemediatR.Repository
 
         public async Task<Redress> AddRedressAsync(Redress redress)
         {
-            await applicationDbContext.Redresses
-                .AddAsync(redress)
-                .ConfigureAwait(false);
+            try
+            {
+                await applicationDbContext.Redresses
+                    .AddAsync(redress)
+                    .ConfigureAwait(false);
 
-            await applicationDbContext
-                .SaveChangesAsync()
-                .ConfigureAwait(false);
+                await applicationDbContext
+                    .SaveChangesAsync()
+                    .ConfigureAwait(false);
+            }
+            catch(Exception ex)
+            {
+
+            }
 
             return redress;
         }
