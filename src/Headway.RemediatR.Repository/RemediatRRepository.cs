@@ -366,8 +366,6 @@ namespace Headway.RemediatR.Repository
             {
                 customers = await applicationDbContext.Customers
                     .Include(c => c.Products)
-                        .ThenInclude(p => p.Redress)
-                            .ThenInclude(r => r.Program)
                     .AsNoTracking()
                     .ToListAsync()
                     .ConfigureAwait(false);
@@ -381,8 +379,6 @@ namespace Headway.RemediatR.Repository
                     {
                         customers = await applicationDbContext.Customers
                             .Include(c => c.Products)
-                                .ThenInclude(p => p.Redress)
-                                    .ThenInclude(r => r.Program)
                             .Where(c => c.CustomerId.Equals(customerId)
                                         || (!string.IsNullOrWhiteSpace(c.Surname)
                                         && c.Surname.ToLower().Contains(surname)))
@@ -394,8 +390,6 @@ namespace Headway.RemediatR.Repository
                     {
                         customers = await applicationDbContext.Customers
                             .Include(c => c.Products)
-                                .ThenInclude(p => p.Redress)
-                                    .ThenInclude(r => r.Program)
                             .Where(c => c.Products.Where(p => p.ProductType == productType).ToList().Count > 0
                                         && (c.CustomerId.Equals(customerId)
                                         || (!string.IsNullOrWhiteSpace(c.Surname)
@@ -409,8 +403,6 @@ namespace Headway.RemediatR.Repository
                 {
                     customers = await applicationDbContext.Customers
                         .Include(c => c.Products)
-                            .ThenInclude(p => p.Redress)
-                                .ThenInclude(r => r.Program)
                         .Where(c => c.Products.Where(p => p.ProductType == productType).ToList().Count > 0)
                         .AsNoTracking()
                         .ToListAsync()
@@ -418,13 +410,22 @@ namespace Headway.RemediatR.Repository
                 }
             }
 
+            var productIds = customers.SelectMany(c => c.Products).Select(p => p.ProductId).ToList();
+
+            var redresses = await applicationDbContext.Redresses
+                .Include(r => r.Program)
+                .Where(r => productIds.Any(p => p.Equals(r.ProductId)))
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+                
             var newRedressCases = new List<NewRedressCase>();
 
             foreach (var c in customers)
             {
                 foreach (var product in c.Products)
                 {
-                    var newRedressCase = new NewRedressCase
+                    newRedressCases.Add(new NewRedressCase
                     {
                         CustomerId = c.CustomerId,
                         CustomerName = c.Fullname,
@@ -433,17 +434,21 @@ namespace Headway.RemediatR.Repository
                         ProductType = product.ProductType.ToString(),
                         RateType = product.RateType.ToString(),
                         RepaymentType = product.RepaymentType.ToString(),
-                    };
-
-                    if (product.Redress != null)
-                    {
-                        newRedressCase.RedressId = product.Redress.RedressId;
-                        newRedressCase.ProgramName = product.Redress.ProgramName;
-                    }
-
-                    newRedressCases.Add(newRedressCase);
+                    });
                 }
             }
+
+            static NewRedressCase f(NewRedressCase rc, Redress r)
+            {
+                rc.RedressId = r.RedressId;
+                rc.ProgramName = r.ProgramName;
+                return rc;
+            }
+
+            _ = (from rc in newRedressCases
+                               join r in redresses on rc.ProductId equals r.ProductId
+                               where rc.ProductId.HasValue
+                               select f(rc, r)).ToList();
 
             return newRedressCases;
         }
@@ -498,8 +503,14 @@ namespace Headway.RemediatR.Repository
         {
             try
             {
+                var newRedress = new Redress 
+                {
+                    Product = redress.Product, 
+                    Program = redress.Program
+                };
+
                 await applicationDbContext.Redresses
-                    .AddAsync(redress)
+                    .AddAsync(newRedress)
                     .ConfigureAwait(false);
 
                 await applicationDbContext
