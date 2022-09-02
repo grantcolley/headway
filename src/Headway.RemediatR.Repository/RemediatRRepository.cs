@@ -501,28 +501,30 @@ namespace Headway.RemediatR.Repository
 
         public async Task<Redress> AddRedressAsync(Redress redress)
         {
-            try
+            var product = await applicationDbContext.Products
+                .Include(p => p.Customer)
+                .FirstAsync(p => p.ProductId.Equals(redress.Product.ProductId))
+                .ConfigureAwait(false);
+
+            var program = await applicationDbContext.Programs
+                .FirstAsync(p => p.ProgramId.Equals(redress.Program.ProgramId))
+                .ConfigureAwait(false);
+
+            var newRedress = new Redress
             {
-                var newRedress = new Redress 
-                {
-                    Product = redress.Product, 
-                    Program = redress.Program
-                };
+                Product = product,
+                Program = program
+            };
 
-                await applicationDbContext.Redresses
-                    .AddAsync(newRedress)
-                    .ConfigureAwait(false);
+            await applicationDbContext.Redresses
+                .AddAsync(newRedress)
+                .ConfigureAwait(false);
 
-                await applicationDbContext
-                    .SaveChangesAsync()
-                    .ConfigureAwait(false);
-            }
-            catch(Exception ex)
-            {
+            await applicationDbContext
+                .SaveChangesAsync()
+                .ConfigureAwait(false);
 
-            }
-
-            return redress;
+            return newRedress;
         }
 
         public async Task<Redress> UpdateRedressAsync(Redress redress)
