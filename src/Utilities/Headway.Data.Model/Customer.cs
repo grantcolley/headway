@@ -18,7 +18,6 @@ namespace Headway.Data.Model
         public Customer()
         {
             this.Products = new HashSet<Product>();
-            this.Redresses = new HashSet<Redress>();
         }
     
         public int CustomerId { get; set; }
@@ -40,7 +39,5 @@ namespace Headway.Data.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Redress> Redresses { get; set; }
     }
 }

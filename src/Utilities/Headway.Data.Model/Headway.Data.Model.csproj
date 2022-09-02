@@ -104,6 +104,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Headway.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs">
+      <DependentUpon>Headway.tt</DependentUpon>
+    </Compile>
     <Compile Include="MenuItem.cs">
       <DependentUpon>Headway.tt</DependentUpon>
     </Compile>

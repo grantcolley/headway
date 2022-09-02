@@ -15,7 +15,6 @@ namespace Headway.Data.Model
     public partial class Redress
     {
         public int RedressId { get; set; }
-        public int CustomerId { get; set; }
         public int ProgramId { get; set; }
         public Nullable<int> RefundCalculationId { get; set; }
         public Nullable<int> RefundVerificationRefundCalculationId { get; set; }
@@ -56,7 +55,6 @@ namespace Headway.Data.Model
         public Nullable<System.DateTime> FinalRedressReviewDate { get; set; }
         public int ProductId { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual Product Product { get; set; }
         public virtual Program Program { get; set; }
         public virtual RefundCalculation RefundCalculation { get; set; }

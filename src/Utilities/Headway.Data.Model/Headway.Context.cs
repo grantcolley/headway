@@ -13,10 +13,10 @@ namespace Headway.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HeadwayEntities1 : DbContext
+    public partial class HeadwayEntities2 : DbContext
     {
-        public HeadwayEntities1()
-            : base("name=HeadwayEntities1")
+        public HeadwayEntities2()
+            : base("name=HeadwayEntities2")
         {
         }
     
@@ -37,6 +37,7 @@ namespace Headway.Data.Model
         public virtual DbSet<DemoModelItem> DemoModelItems { get; set; }
         public virtual DbSet<DemoModel> DemoModels { get; set; }
         public virtual DbSet<DemoModelTreeItem> DemoModelTreeItems { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MenuItem> MenuItems { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }

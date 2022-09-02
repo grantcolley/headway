@@ -164,6 +164,18 @@
           <Property Name="ParentCode" Type="nvarchar" MaxLength="50" />
           <Property Name="DemoModelTreeItemId1" Type="int" />
         </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="MessageTemplate" Type="nvarchar(max)" />
+          <Property Name="Level" Type="nvarchar(max)" />
+          <Property Name="TimeStamp" Type="datetime" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+          <Property Name="Properties" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="MenuItems">
           <Key>
             <PropertyRef Name="MenuItemId" />
@@ -246,7 +258,6 @@
             <PropertyRef Name="RedressId" />
           </Key>
           <Property Name="RedressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="ProgramId" Type="int" Nullable="false" />
           <Property Name="RefundCalculationId" Type="int" />
           <Property Name="RefundVerificationRefundCalculationId" Type="int" />
@@ -538,22 +549,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Redresses_Customers_CustomerId">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1">
+        <Association Name="FK_Redresses_Products_ProductId">
+          <End Role="Products" Type="Self.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Redresses" Type="Self.Redresses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Redresses">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Redresses_Products_ProductId">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Redresses" Type="Self.Redresses" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -643,6 +642,7 @@
           <EntitySet Name="DemoModelItems" EntityType="Self.DemoModelItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DemoModels" EntityType="Self.DemoModels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DemoModelTreeItems" EntityType="Self.DemoModelTreeItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuItems" EntityType="Self.MenuItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PermissionRole" EntityType="Self.PermissionRole" Schema="dbo" store:Type="Tables" />
@@ -718,10 +718,6 @@
           <AssociationSet Name="FK_Products_Customers_CustomerId" Association="Self.FK_Products_Customers_CustomerId">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Redresses_Customers_CustomerId" Association="Self.FK_Redresses_Customers_CustomerId">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Redresses" EntitySet="Redresses" />
           </AssociationSet>
           <AssociationSet Name="FK_Redresses_Products_ProductId" Association="Self.FK_Redresses_Products_ProductId">
             <End Role="Products" EntitySet="Products" />
@@ -880,7 +876,6 @@
           <Property Name="SortCode" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="AccountNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_Customers_CustomerId" FromRole="Customers" ToRole="Products" />
-          <NavigationProperty Name="Redresses" Relationship="Self.FK_Redresses_Customers_CustomerId" FromRole="Customers" ToRole="Redresses" />
         </EntityType>
         <EntityType Name="DemoModelComplexProperty">
           <Key>
@@ -933,6 +928,18 @@
           <NavigationProperty Name="DemoModel" Relationship="Self.FK_DemoModelTreeItems_DemoModels_DemoModelId" FromRole="DemoModelTreeItems" ToRole="DemoModels" />
           <NavigationProperty Name="DemoModelTreeItems1" Relationship="Self.FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1" FromRole="DemoModelTreeItems" ToRole="DemoModelTreeItems1" />
           <NavigationProperty Name="DemoModelTreeItem1" Relationship="Self.FK_DemoModelTreeItems_DemoModelTreeItems_DemoModelTreeItemId1" FromRole="DemoModelTreeItems1" ToRole="DemoModelTreeItems" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MessageTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Level" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Properties" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MenuItem">
           <Key>
@@ -1007,7 +1014,6 @@
             <PropertyRef Name="RedressId" />
           </Key>
           <Property Name="RedressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <Property Name="ProgramId" Type="Int32" Nullable="false" />
           <Property Name="RefundCalculationId" Type="Int32" />
           <Property Name="RefundVerificationRefundCalculationId" Type="Int32" />
@@ -1047,7 +1053,6 @@
           <Property Name="FinalRedressReviewBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FinalRedressReviewDate" Type="DateTime" Precision="7" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Redresses_Customers_CustomerId" FromRole="Redresses" ToRole="Customers" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Redresses_Products_ProductId" FromRole="Redresses" ToRole="Products" />
           <NavigationProperty Name="Program" Relationship="Self.FK_Redresses_Programs_ProgramId" FromRole="Redresses" ToRole="Programs" />
           <NavigationProperty Name="RefundCalculation" Relationship="Self.FK_Redresses_RefundCalculation_RefundCalculationId" FromRole="Redresses" ToRole="RefundCalculation" />
@@ -1194,20 +1199,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Redresses_Customers_CustomerId">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Redresses" Type="Self.Redress" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Redresses">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DemoModels_DemoModelComplexProperties_DropdownComplexId">
           <End Role="DemoModelComplexProperties" Type="Self.DemoModelComplexProperty" Multiplicity="0..1" />
           <End Role="DemoModels" Type="Self.DemoModel" Multiplicity="*" />
@@ -1261,7 +1252,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Redresses_Products_ProductId">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Redresses" Type="Self.Redress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -1322,7 +1315,7 @@
           <End Role="Roles" Type="Self.Role" Multiplicity="*" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="HeadwayEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HeadwayEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="ConfigContainers" EntityType="Self.ConfigContainer" />
@@ -1335,6 +1328,7 @@
           <EntitySet Name="DemoModelItems" EntityType="Self.DemoModelItem" />
           <EntitySet Name="DemoModels" EntityType="Self.DemoModel" />
           <EntitySet Name="DemoModelTreeItems" EntityType="Self.DemoModelTreeItem" />
+          <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="MenuItems" EntityType="Self.MenuItem" />
           <EntitySet Name="Modules" EntityType="Self.Module" />
           <EntitySet Name="Permissions" EntityType="Self.Permission" />
@@ -1375,10 +1369,6 @@
           <AssociationSet Name="FK_Products_Customers_CustomerId" Association="Self.FK_Products_Customers_CustomerId">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Redresses_Customers_CustomerId" Association="Self.FK_Redresses_Customers_CustomerId">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Redresses" EntitySet="Redresses" />
           </AssociationSet>
           <AssociationSet Name="FK_DemoModels_DemoModelComplexProperties_DropdownComplexId" Association="Self.FK_DemoModels_DemoModelComplexProperties_DropdownComplexId">
             <End Role="DemoModelComplexProperties" EntitySet="DemoModelComplexProperties" />
@@ -1430,7 +1420,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HeadwayModelStoreContainer" CdmEntityContainer="HeadwayEntities1">
+        <EntityContainerMapping StorageEntityContainer="HeadwayModelStoreContainer" CdmEntityContainer="HeadwayEntities2">
           <EntitySetMapping Name="C__EFMigrationsHistory">
             <EntityTypeMapping TypeName="HeadwayModel.C__EFMigrationsHistory">
               <MappingFragment StoreEntitySet="__EFMigrationsHistory">
@@ -1602,6 +1592,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="HeadwayModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MessageTemplate" ColumnName="MessageTemplate" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Properties" ColumnName="Properties" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MenuItems">
             <EntityTypeMapping TypeName="HeadwayModel.MenuItem">
               <MappingFragment StoreEntitySet="MenuItems">
@@ -1672,7 +1675,6 @@
             <EntityTypeMapping TypeName="HeadwayModel.Redress">
               <MappingFragment StoreEntitySet="Redresses">
                 <ScalarProperty Name="RedressId" ColumnName="RedressId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
                 <ScalarProperty Name="RefundCalculationId" ColumnName="RefundCalculationId" />
                 <ScalarProperty Name="RefundVerificationRefundCalculationId" ColumnName="RefundVerificationRefundCalculationId" />
