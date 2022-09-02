@@ -217,7 +217,9 @@ Alternatively, modules, categories and menu items can be configured under the Na
 
 #### 3. Configure Model Layout
 - Configure [Programs](https://github.com/grantcolley/headway/blob/109baa38ef67527e5eab7616a1ec1d381be08a74/src/Utilities/Headway.SeedData/RemediatR/RemediatRData.cs#L518-L538) search list
+- Configure [Program](https://github.com/grantcolley/headway/blob/109baa38ef67527e5eab7616a1ec1d381be08a74/src/Utilities/Headway.SeedData/RemediatR/RemediatRData.cs#L357-L390) model
 - Configure [Customers](https://github.com/grantcolley/headway/blob/109baa38ef67527e5eab7616a1ec1d381be08a74/src/Utilities/Headway.SeedData/RemediatR/RemediatRData.cs#L392-L440) search list
+- Configure [Customer](https://github.com/grantcolley/headway/blob/109baa38ef67527e5eab7616a1ec1d381be08a74/src/Utilities/Headway.SeedData/RemediatR/RemediatRData.cs#L442-L484) model
 - Configure [Redress Cases](https://github.com/grantcolley/headway/blob/109baa38ef67527e5eab7616a1ec1d381be08a74/src/Utilities/Headway.SeedData/RemediatR/RemediatRData.cs#L540-L598) search list
 - Configure [New Redress Cases](https://github.com/grantcolley/headway/blob/109baa38ef67527e5eab7616a1ec1d381be08a74/src/Utilities/Headway.SeedData/RemediatR/RemediatRData.cs#L600-L662) search list
 
