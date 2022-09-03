@@ -641,11 +641,19 @@ namespace Headway.SeedData.RemediatR
                 },
                 new ConfigSearchItem
                 {
+                    Label = "Redress Id",
+                    ParameterName = "RedressId",
+                    Tooltip = "The redress identifier",
+                    Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
+                    Order = 2
+                },
+                new ConfigSearchItem
+                {
                     Label = "Customer Id",
                     ParameterName = "CustomerId",
                     Tooltip = "The customer identifier",
                     Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
-                    Order = 2
+                    Order = 3
                 },
                 new ConfigSearchItem
                 {
@@ -653,7 +661,7 @@ namespace Headway.SeedData.RemediatR
                     ParameterName = "Surname",
                     Tooltip = "The customer surname",
                     Component = "Headway.Razor.Controls.SearchComponents.SearchText, Headway.Razor.Controls",
-                    Order = 3
+                    Order = 4
                 }
             });
 
