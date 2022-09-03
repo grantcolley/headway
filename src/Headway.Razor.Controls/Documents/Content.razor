@@ -1,0 +1,16 @@
+﻿@typeparam T where T : class, new()
+@inherits ContentBase<T>
+
+<div class="container container-body float-start">
+	<div class="row">
+		<div class="col-sm">
+            @if(dynamicModel != null)
+            {
+                @foreach(var rootContainer in dynamicModel.RootContainers)
+                {
+                    <DynamicComponent @key="rootContainer.UniqueId" Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
+                }
+            }
+		</div>
+	</div>
+</div>
