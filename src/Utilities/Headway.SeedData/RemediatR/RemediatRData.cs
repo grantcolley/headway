@@ -46,6 +46,7 @@ namespace Headway.SeedData.RemediatR
             NewRedressCasesConfig();
             RedressConfig();
             RedressCustomerConfig();
+            RedressProductConfig();
         }
 
         private static void TruncateTables()
@@ -576,6 +577,37 @@ namespace Headway.SeedData.RemediatR
             dbContext.SaveChanges();
         }
 
+        private static void RedressProductConfig()
+        {
+            var redressProductConfig = new Config
+            {
+                Name = "RedressProduct",
+                Title = "Product",
+                Description = "Redress product sold to the customer",
+                Model = "Headway.RemediatR.Core.Model.Product, Headway.RemediatR.Core",
+                ModelApi = "RemediatRCustomer",
+                Document = "Headway.Razor.Controls.Documents.Content`1, Headway.Razor.Controls"
+            };
+
+            dbContext.Configs.Add(redressProductConfig);
+
+            var redressProductConfigContainer = new ConfigContainer { Name = "Redress Product Div", Code = "REDRESS PRODUCT DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Product", Order = 1 };
+
+            redressProductConfig.ConfigContainers.Add(redressProductConfigContainer);
+
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductId", Label = "Product Id", IsIdentity = true, Order = 1, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Value", Label = "Value", Order = 3, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX};Value=9999999999999.99" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Rate", Label = "Rate", Order = 4, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX_LENGTH};Value=5|Name={Args.MAX};Value=99.99" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Duration", Label = "Duration", Order = 5, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.IntegerNullable, Headway.Razor.Controls", ComponentArgs = $"Name={Args.MIN};Value=3|Name={Args.MAX};Value=360", Tooltip = "Duration must be min 3 and max 360" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StartDate", Label = "Start Date", Order = 6, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductType", Label = "ProductType", Order = 7, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.ProductType, Headway.RemediatR.Core" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RateType", Label = "RateType", Order = 8, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.RateType, Headway.RemediatR.Core" });
+            redressProductConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RepaymentType", Label = "RepaymentType", Order = 9, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownEnum`1, Headway.Razor.Controls|Name={Args.MODEL};Value=Headway.RemediatR.Core.Enums.RepaymentType, Headway.RemediatR.Core" });
+
+            dbContext.SaveChanges();
+        }
+
         private static void RedressCasesConfig()
         {
             var redressCasesConfig = new Config
@@ -719,9 +751,11 @@ namespace Headway.SeedData.RemediatR
 
             var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Redress Details", Order = 1 };
             var redressCustomerConfigContainer = new ConfigContainer { Name = "Redress Customer Tab Div", Code = "REDRESS CUSTOMER TAB DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Customer", Order = 2 };
+            var redressProductConfigContainer = new ConfigContainer { Name = "Redress Product Tab Div", Code = "REDRESS PRODUCT TAB DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Product", Order = 3 };
 
             redressConfig.ConfigContainers.Add(redressConfigContainer);
             redressConfig.ConfigContainers.Add(redressCustomerConfigContainer);
+            redressConfig.ConfigContainers.Add(redressProductConfigContainer);
 
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductId", Label = "Product Id", IsIdentity = true, Order = 1, ConfigContainer = redressConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Program", Label = "Program", Order = 2, ConfigContainer = redressConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.PROGRAMS_COMPLEX_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.RemediatR.Core.Model.Program, Headway.RemediatR.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
@@ -774,6 +808,7 @@ namespace Headway.SeedData.RemediatR
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewDate", Label = "Final Redress Review Date", IsTitle = false, Order = 39, ConfigContainer = redressConfigContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Customer", Label = "Customer", Order = 40, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RedressCustomer" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Product", Label = "Product", Order = 41, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RedressProduct" });
 
             dbContext.SaveChanges();
         }
