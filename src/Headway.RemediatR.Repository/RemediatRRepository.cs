@@ -242,9 +242,11 @@ namespace Headway.RemediatR.Repository
         public async Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchArgs searchArgs)
         {
             var programArg = searchArgs.Args.First(c => c.ParameterName.Equals("Name"));
+            var redressIdArg = searchArgs.Args.First(c => c.ParameterName.Equals("RedressId"));
             var customerIdArg = searchArgs.Args.First(c => c.ParameterName.Equals("CustomerId"));
             var surnameArg = searchArgs.Args.First(c => c.ParameterName.Equals("Surname"));
 
+            int redressId = 0;
             int customerId = 0;
             string surname = string.Empty;
             string program = string.Empty;
@@ -252,6 +254,11 @@ namespace Headway.RemediatR.Repository
             if (!string.IsNullOrWhiteSpace(programArg.Value))
             {
                 program = programArg.Value;
+            }
+
+            if (!string.IsNullOrWhiteSpace(redressIdArg.Value))
+            {
+                _ = int.TryParse(redressIdArg.Value, out redressId);
             }
 
             if (!string.IsNullOrWhiteSpace(customerIdArg.Value))
@@ -266,7 +273,8 @@ namespace Headway.RemediatR.Repository
 
             List<Redress> redresses;
 
-            if (customerId.Equals(0)
+            if (redressId.Equals(0)
+                && customerId.Equals(0)
                 && string.IsNullOrWhiteSpace(surname)
                 && string.IsNullOrWhiteSpace(program))
             {
@@ -280,7 +288,34 @@ namespace Headway.RemediatR.Repository
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(program))
+                if(redressId > 0)
+                {
+                    var redress = await applicationDbContext.Redresses
+                        .Include(r => r.Program)
+                        .Include(r => r.Product)
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(r => r.RedressId.Equals(redressId))
+                        .ConfigureAwait(false);
+
+                    if(redress != null)
+                    {
+                        return new List<RedressCase>(new[]
+                        {
+                            new RedressCase
+                            {
+                                RedressId = redress.RedressId,
+                                ProgramName = redress.ProgramName,
+                                CustomerName = redress.CustomerName,
+                                Status = string.Empty
+                            }
+                        });
+                    }
+                    else
+                    {
+                        return new List<RedressCase>();
+                    }
+                }
+                else if (string.IsNullOrWhiteSpace(program))
                 {
                     redresses = await applicationDbContext.Redresses
                         .Include(r => r.Program)
@@ -373,7 +408,7 @@ namespace Headway.RemediatR.Repository
             else
             {
                 if (customerId > 0
-                || !string.IsNullOrWhiteSpace(surname))
+                    || !string.IsNullOrWhiteSpace(surname))
                 {
                     if (productType.Equals(ProductType.Unknown))
                     {
