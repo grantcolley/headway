@@ -1,0 +1,26 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits CheckboxNullableBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                @Field.Label
+            }
+            else
+            {
+                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">@Field.Label</MudTooltip>    
+            }
+        </div>
+        <div class="col-sm-1">
+            <MudCheckBox T="bool?" @bind-Checked="PropertyValue" />
+        </div>
+        <div class="col-sm-7"></div>
+    </div>
+</div>
