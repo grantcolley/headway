@@ -134,6 +134,16 @@ namespace Headway.RemediatR.Core.Model
 
         [NotMapped]
         [JsonIgnore]
+        public Customer? Customer
+        {
+            get
+            {
+                return Product.Customer;
+            }
+        }
+
+        [NotMapped]
+        [JsonIgnore]
         public string? ProgramName         
         {
             get { return Program.Name; } 
