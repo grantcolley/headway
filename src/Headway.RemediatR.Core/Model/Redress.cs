@@ -156,9 +156,6 @@ namespace Headway.RemediatR.Core.Model
 
             RuleFor(v => v.Product)
                 .NotNull().WithMessage("Product is required");
-
-            //RuleFor(v => v.RefundCalculation).SetValidator(new RefundCalculationValidator());
-            //RuleFor(v => v.RefundVerification).SetValidator(new RefundCalculationValidator());
         }
     }
 }
