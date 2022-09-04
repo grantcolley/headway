@@ -126,6 +126,8 @@ if(useSeedData)
 
         if(useDefaultData)
         {
+            applicationDbContext.SetUser("Headway.SeedData");
+
             CoreData.Initialise(applicationDbContext);
 
             if (userRemediatRData)
