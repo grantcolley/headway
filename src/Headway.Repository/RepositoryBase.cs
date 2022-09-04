@@ -22,6 +22,8 @@ namespace Headway.Repository
 
         public async Task<bool> IsAuthorisedAsync(string claim, string permission)
         {
+            applicationDbContext.SetUser(claim);
+
             return await applicationDbContext.Users.AnyAsync(
                 u => u.Email.Equals(claim)
                 && (u.Permissions.Any(p => p.Name.Equals(permission))
