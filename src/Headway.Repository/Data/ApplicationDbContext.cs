@@ -1,11 +1,17 @@
 ﻿using Headway.Core.Model;
 using Headway.RemediatR.Core.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Headway.Repository.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        private string user;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -32,6 +38,11 @@ namespace Headway.Repository.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Program> Programs { get; set; }
         public DbSet<Redress> Redresses { get; set; }
+
+        public void SetUser(string user)
+        {
+            this.user = user;
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -78,6 +89,43 @@ namespace Headway.Repository.Data
             builder.Entity<Program>()
                 .HasIndex(p => p.Name)
                 .IsUnique();
+        }
+
+        public override int SaveChanges()
+        {
+            UpdateModelBaseFields();
+
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            UpdateModelBaseFields();
+
+            return await base.SaveChangesAsync();
+        }
+
+        public void UpdateModelBaseFields()
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is ModelBase
+                        && (e.State == EntityState.Added
+                        || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                var now = DateTime.Now;
+
+                ((ModelBase)entityEntry.Entity).ModifiedDate = now;
+                ((ModelBase)entityEntry.Entity).ModifiedBy = user ?? null;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((ModelBase)entityEntry.Entity).CreatedDate = now;
+                    ((ModelBase)entityEntry.Entity).CreatedBy = user ?? null;
+                }
+            }
         }
     }
 }
