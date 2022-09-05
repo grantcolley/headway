@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.Repository.Model
 {
-    public class EntityAudit
+    public class Audit
     {
         public int Id { get; set; }
         public string ClrType { get; set; }

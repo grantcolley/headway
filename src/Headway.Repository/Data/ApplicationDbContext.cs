@@ -1,14 +1,13 @@
 ﻿using Headway.Core.Model;
 using Headway.RemediatR.Core.Model;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System;
-using System.Threading.Tasks;
-using System.Threading;
 using Headway.Repository.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Collections;
+using System.Linq;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Headway.Repository.Data
 {
@@ -21,7 +20,7 @@ namespace Headway.Repository.Data
         {
         }
 
-        public DbSet<EntityAudit> EntityAudits { get; set; }
+        public DbSet<Audit> Audits { get; set; }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -97,35 +96,19 @@ namespace Headway.Repository.Data
                 .IsUnique();
         }
 
-        public override int SaveChanges()
-        {
-            UpdateModelBaseFields();
-
-            var entityAudits = OnBeforeSaveChanges();
-
-            var result = base.SaveChanges();
-
-            if (entityAudits.Any())
-            {
-                OnAfterSaveChanges(entityAudits);
-
-                base.SaveChanges();
-            }
-
-            return result;
-        }
-
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            UpdateModelBaseFields();
+            var now = DateTime.Now;
 
-            var entityAudits = OnBeforeSaveChanges();
+            UpdateModelBaseFields(now);
+
+            var audits = OnBeforeSaveChanges(now);
 
             var result = base.SaveChanges(acceptAllChangesOnSuccess);
 
-            if (entityAudits.Any())
+            if (audits.Any())
             {
-                OnAfterSaveChanges(entityAudits);
+                OnAfterSaveChanges(audits);
 
                 base.SaveChanges(acceptAllChangesOnSuccess);
             }
@@ -133,35 +116,19 @@ namespace Headway.Repository.Data
             return result;
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            UpdateModelBaseFields();
-
-            var entityAudits = OnBeforeSaveChanges();
-
-            var result = await base.SaveChangesAsync(cancellationToken);
-
-            if (entityAudits.Any())
-            {
-                OnAfterSaveChanges(entityAudits);
-
-                await base.SaveChangesAsync(cancellationToken);
-            }
-
-            return result;
-        }
-
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            UpdateModelBaseFields();
+            var now = DateTime.Now;
 
-            var entityAudits = OnBeforeSaveChanges();
+            UpdateModelBaseFields(now);
+
+            var audits = OnBeforeSaveChanges(now);
 
             var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 
-            if(entityAudits.Any())
+            if(audits.Any())
             {
-                OnAfterSaveChanges(entityAudits);
+                OnAfterSaveChanges(audits);
 
                 await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
             }
@@ -169,18 +136,16 @@ namespace Headway.Repository.Data
             return result;
         }
 
-        public void UpdateModelBaseFields()
+        public void UpdateModelBaseFields(DateTime now)
         {
             var entries = ChangeTracker
                 .Entries()
                 .Where(e => e.Entity is ModelBase
                         && (e.State == EntityState.Added
-                        || e.State == EntityState.Modified));
+                        || e.State == EntityState.Modified)).ToList();
 
             foreach (var entityEntry in entries)
             {
-                var now = DateTime.Now;
-
                 ((ModelBase)entityEntry.Entity).ModifiedDate = now;
                 ((ModelBase)entityEntry.Entity).ModifiedBy = user ?? null;
 
@@ -192,11 +157,11 @@ namespace Headway.Repository.Data
             }
         }
 
-        private List<EntityAudit> OnBeforeSaveChanges()
+        private List<Audit> OnBeforeSaveChanges(DateTime now)
         {
             ChangeTracker.DetectChanges();
 
-            var entityAudits = new List<EntityAudit>();
+            var audits = new List<Audit>();
 
             foreach (var entry in ChangeTracker.Entries())
             {
@@ -207,23 +172,25 @@ namespace Headway.Repository.Data
                     continue;
                 }
 
-                var entityAudit = new EntityAudit
+                var audit = new Audit
                 {
                     TableName = entry.Metadata.GetTableName(),
                     ClrType = entry.Metadata.ClrType.Name,
-                    Action = entry.State == EntityState.Added ? "ADD" : entry.State == EntityState.Modified ? "UPDATE" : "DELETE"
+                    Action = entry.State == EntityState.Added ? "ADD" : entry.State == EntityState.Modified ? "UPDATE" : "DELETE",
+                    User = user,
+                    DateTime = now
                 };
 
                 foreach (var property in entry.Properties)
                 {
                     if (property.IsTemporary)
                     {
-                        entityAudit.TemporaryProperties.Add(property);
+                        audit.TemporaryProperties.Add(property);
                     }
 
                     if (property.Metadata.IsPrimaryKey())
                     {
-                        entityAudit.EntityId = property.CurrentValue.ToString();
+                        audit.EntityId = property.CurrentValue.ToString();
                     }
 
                     string propertyName = property.Metadata.Name;
@@ -231,65 +198,65 @@ namespace Headway.Repository.Data
                     switch (entry.State)
                     {
                         case EntityState.Added:
-                            entityAudit.NewValuesDictionary[propertyName] = property.CurrentValue;
+                            audit.NewValuesDictionary[propertyName] = property.CurrentValue;
                             break;
 
                         case EntityState.Deleted:
-                            entityAudit.OldValuesDictionary[propertyName] = property.OriginalValue;
+                            audit.OldValuesDictionary[propertyName] = property.OriginalValue;
                             break;
 
                         case EntityState.Modified:
                             if (property.IsModified)
                             {
-                                entityAudit.OldValuesDictionary[propertyName] = property.OriginalValue;
-                                entityAudit.NewValuesDictionary[propertyName] = property.CurrentValue;
+                                audit.OldValuesDictionary[propertyName] = property.OriginalValue;
+                                audit.NewValuesDictionary[propertyName] = property.CurrentValue;
                             }
                             break;
                     }
                 }
 
-                entityAudits.Add(entityAudit);
+                audits.Add(audit);
             }
 
-            foreach(var entityAudit in entityAudits.Where(e => !e.TemporaryProperties.Any()))
+            foreach(var audit in audits.Where(e => !e.TemporaryProperties.Any()))
             {
-                EntityAudits.Add(SerializeValues(entityAudit));
+                Audits.Add(SerializeValues(audit));
             }
 
-            return entityAudits.Where(e => e.TemporaryProperties.Any()).ToList();
+            return audits.Where(e => e.TemporaryProperties.Any()).ToList();
         }
 
-        private void OnAfterSaveChanges(List<EntityAudit> entityAudits)
+        private void OnAfterSaveChanges(List<Audit> audits)
         {
-            foreach (var entityAudit in entityAudits)
+            foreach (var audit in audits)
             {
-                foreach (var prop in entityAudit.TemporaryProperties)
+                foreach (var prop in audit.TemporaryProperties)
                 {
                     if (prop.Metadata.IsPrimaryKey())
                     {
-                        entityAudit.EntityId = prop.CurrentValue.ToString();
+                        audit.EntityId = prop.CurrentValue.ToString();
                     }
 
-                    entityAudit.NewValuesDictionary[prop.Metadata.Name] = prop.CurrentValue;
+                    audit.NewValuesDictionary[prop.Metadata.Name] = prop.CurrentValue;
                 }
 
-                EntityAudits.Add(SerializeValues(entityAudit));
+                Audits.Add(SerializeValues(audit));
             }
         }
 
-        private static EntityAudit SerializeValues(EntityAudit entityAudit)
+        private static Audit SerializeValues(Audit audit)
         {
-            if(entityAudit.OldValuesDictionary.Any())
+            if(audit.OldValuesDictionary.Any())
             {
-                entityAudit.OldValues = JsonSerializer.Serialize(entityAudit.OldValuesDictionary);
+                audit.OldValues = JsonSerializer.Serialize(audit.OldValuesDictionary);
             }
 
-            if (entityAudit.NewValuesDictionary.Any())
+            if (audit.NewValuesDictionary.Any())
             {
-                entityAudit.NewValues = JsonSerializer.Serialize(entityAudit.NewValuesDictionary);
+                audit.NewValues = JsonSerializer.Serialize(audit.NewValuesDictionary);
             }
 
-            return entityAudit;
+            return audit;
         }
     }
 }
