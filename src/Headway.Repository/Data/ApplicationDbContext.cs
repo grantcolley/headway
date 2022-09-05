@@ -2,6 +2,7 @@
 using Headway.RemediatR.Core.Model;
 using Headway.Repository.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,11 +99,7 @@ namespace Headway.Repository.Data
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            var now = DateTime.Now;
-
-            UpdateModelBaseFields(now);
-
-            var audits = OnBeforeSaveChanges(now);
+            var audits = OnBeforeSaveChanges();
 
             var result = base.SaveChanges(acceptAllChangesOnSuccess);
 
@@ -118,11 +115,7 @@ namespace Headway.Repository.Data
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            var now = DateTime.Now;
-
-            UpdateModelBaseFields(now);
-
-            var audits = OnBeforeSaveChanges(now);
+            var audits = OnBeforeSaveChanges();
 
             var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 
@@ -136,28 +129,7 @@ namespace Headway.Repository.Data
             return result;
         }
 
-        public void UpdateModelBaseFields(DateTime now)
-        {
-            var entries = ChangeTracker
-                .Entries()
-                .Where(e => e.Entity is ModelBase
-                        && (e.State == EntityState.Added
-                        || e.State == EntityState.Modified)).ToList();
-
-            foreach (var entityEntry in entries)
-            {
-                ((ModelBase)entityEntry.Entity).ModifiedDate = now;
-                ((ModelBase)entityEntry.Entity).ModifiedBy = user ?? null;
-
-                if (entityEntry.State == EntityState.Added)
-                {
-                    ((ModelBase)entityEntry.Entity).CreatedDate = now;
-                    ((ModelBase)entityEntry.Entity).CreatedBy = user ?? null;
-                }
-            }
-        }
-
-        private List<Audit> OnBeforeSaveChanges(DateTime now)
+        private List<Audit> OnBeforeSaveChanges()
         {
             ChangeTracker.DetectChanges();
 
@@ -170,6 +142,21 @@ namespace Headway.Repository.Data
                     || entry.State == EntityState.Unchanged)
                 {
                     continue;
+                }
+
+                var now = DateTime.Now;
+
+                if (entry.State.Equals(EntityState.Added))
+                {
+                    ((ModelBase)entry.Entity).CreatedDate = now;
+                    ((ModelBase)entry.Entity).CreatedBy = user ?? null;
+                    ((ModelBase)entry.Entity).ModifiedDate = now;
+                    ((ModelBase)entry.Entity).ModifiedBy = user ?? null;
+                }
+                else if (entry.State.Equals(EntityState.Modified))
+                {
+                    ((ModelBase)entry.Entity).ModifiedDate = now;
+                    ((ModelBase)entry.Entity).ModifiedBy = user ?? null;
                 }
 
                 var audit = new Audit
