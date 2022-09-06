@@ -47,7 +47,7 @@
        * [WebApi](#webapi)
        * [Other Implementation Examples for Identity Providers](#other-implementation-examples-for-identity-providers)
 * [Authorization](#authorization)
-* [Track Changes](#track-changes)
+* [Tracking Changes](#tracking-changes)
 * [Logging](#logging)
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
@@ -332,7 +332,7 @@ Headway currently supports authentication from two identity providers **Identity
 
 ## Authorization
 
-## Track Changes
+## Tracking Changes
 When using **Entity Framework Core**, models inheriting from [ModelBase](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ModelBase.cs) will automatically get properties for tracking instance creation and modification. Furthermore, an audit of changes will be logged to the `Audits` table.
 ```C#
     public abstract class ModelBase
