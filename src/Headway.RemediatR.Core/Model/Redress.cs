@@ -16,8 +16,8 @@ namespace Headway.RemediatR.Core.Model
         public Product Product { get; set; }
         public int ProgramId { get; set; }
         public Program Program { get; set; }
-        public RefundCalculation? RefundCalculation { get; set; }
-        public RefundCalculation? RefundVerification { get; set; }
+        public int RefundCalculationId { get; set; }
+        public RefundCalculation RefundCalculation { get; set; }
 
         [MaxLength(50)]
         public string? RedressCaseOwner { get; set; }
@@ -167,6 +167,9 @@ namespace Headway.RemediatR.Core.Model
 
             RuleFor(v => v.Product)
                 .NotNull().WithMessage("Product is required");
+
+            RuleFor(v => v.RefundCalculation)
+                .NotNull().WithMessage("Refund calculation is required");
         }
     }
 }
