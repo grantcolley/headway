@@ -346,6 +346,8 @@ When using Entity Framework Core, models inheriting from [ModelBase](https://git
 To log changes [ApplicationDbContext](https://github.com/grantcolley/headway/blob/bc50a2417f6f72edeae2bbe8c9a83dc3154b4bc9/src/Headway.Repository/Data/ApplicationDbContext.cs#L100) overrides `DbContext.SaveChanges` and gets the changes from `DbContext.ChangeTracker`.
 Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. This is currently set in [RepositoryBase](https://github.com/grantcolley/headway/blob/bc50a2417f6f72edeae2bbe8c9a83dc3154b4bc9/src/Headway.Repository/RepositoryBase.cs#L23-L26) where it is called from [ApiControllerBase](https://github.com/grantcolley/headway/blob/bc50a2417f6f72edeae2bbe8c9a83dc3154b4bc9/src/Headway.WebApi/Controllers/ApiControllerBase.cs#L26-L34) which gets the user claim from to authorizing the user.
 
+![Alt text](/readme-images/Audits.jpg?raw=true "Audit trail of add, update and delete") 
+
 ## Logging
 
 ## Page Layout
