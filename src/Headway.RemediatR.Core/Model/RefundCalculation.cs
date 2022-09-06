@@ -28,5 +28,26 @@ namespace Headway.RemediatR.Core.Model
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? TotalRefundAmount { get; set; }
+
+
+        [MaxLength(50)]
+        public string? VerifiedBy { get; set; }
+
+        public DateTime? VerifiedDate { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? VerifiedBasicRefundAmount { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? VerifiedCompensatoryAmount { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? VerifiedCompensatoryInterestAmount { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? VerifiedTotalCompensatoryAmount { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? VerifiedTotalRefundAmount { get; set; }
     }
 }
