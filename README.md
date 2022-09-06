@@ -349,6 +349,40 @@ Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. Th
 ![Alt text](/readme-images/Audits.jpg?raw=true "Audit trail of add, update and delete") 
 
 ## Logging
+[Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Headway.WebApi.csproj) uses Serilog for logging and is configured to write logs to the Logs table in the database using [Serilog.Sinks.MSSqlServer](https://github.com/serilog-mssql/serilog-sinks-mssqlserver).
+
+> Note: for outputting EF Core SQL to the logs specify the override `"Microsoft.EntityFrameworkCore.Database.Command": "Information"` in the Serilog config.
+
+```C#
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+    }
+  },
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.MSSqlServer" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Error",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          /*"connectionString": "Data Source=..\\..\\db\\Headway.db;",*/
+          "connectionString": "Data Source=(localdb)\\mssqllocaldb;Database=Headway;Integrated Security=true",
+          "tableName": "Logs",
+          "autoCreateSqlTable": true
+        }
+      }
+    ]
+  }
+```
 
 ## Page Layout
 ![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
