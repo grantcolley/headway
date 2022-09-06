@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Headway.Core.Attributes;
+using Headway.Core.Model;
 using Headway.RemediatR.Core.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ using System.Text.Json.Serialization;
 namespace Headway.RemediatR.Core.Model
 {
     [DynamicModel]
-    public class Customer
+    public class Customer : ModelBase
     {
         public Customer()
         {

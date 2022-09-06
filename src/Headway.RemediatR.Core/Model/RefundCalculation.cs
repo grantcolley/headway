@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Headway.Core.Model;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.RemediatR.Core.Model
 {
-    public class RefundCalculation
+    public class RefundCalculation : ModelBase
     {
         public int RefundCalculationId { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Headway.Core.Attributes;
+using Headway.Core.Model;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace Headway.RemediatR.Core.Model
 {
     [DynamicModel]
-    public class Redress
+    public class Redress : ModelBase
     {
         public int RedressId { get; set; }
         public int ProductId { get; set; }
