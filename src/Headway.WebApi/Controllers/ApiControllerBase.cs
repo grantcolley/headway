@@ -27,6 +27,9 @@ namespace Headway.WebApi.Controllers
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Email);
+
+            repository.SetUser(claim.Value);
+
             return claim.Value;
         }
 
