@@ -129,7 +129,7 @@ namespace Headway.RemediatR.Repository
                 customer.Products.Remove(product);
             }
 
-            Func<Product, Product, Product> update = (p, up) =>
+            Product update(Product p, Product up)
             {
                 if (p.Name != up.Name) p.Name = up.Name;
                 if (p.ProductType != up.ProductType) p.ProductType = up.ProductType;
@@ -143,7 +143,7 @@ namespace Headway.RemediatR.Repository
                 applicationDbContext.Products.Update(p);
 
                 return p;
-            };
+            }
 
             _ = (from p in customer.Products
              join up in updateCustomer.Products on p.ProductId equals up.ProductId
@@ -519,7 +519,11 @@ namespace Headway.RemediatR.Repository
                     .FirstAsync(p => p.ProductId.Equals(productId))
                     .ConfigureAwait((false));
 
-                return new Redress { Product = product };
+                return new Redress 
+                { 
+                    Product = product,
+                    RefundCalculation = new RefundCalculation()
+                };
             }
         }
 
@@ -527,6 +531,7 @@ namespace Headway.RemediatR.Repository
         {
             return await applicationDbContext.Redresses
                 .Include(r => r.Program)
+                .Include(r => r.RefundCalculation)
                 .Include(r => r.Product)
                     .ThenInclude(p => p.Customer)
                 .AsNoTracking()
@@ -548,8 +553,13 @@ namespace Headway.RemediatR.Repository
             var newRedress = new Redress
             {
                 Product = product,
-                Program = program
+                Program = program,
+                RefundCalculation = redress.RefundCalculation
             };
+
+            await applicationDbContext.RefundCalculations
+                .AddAsync(newRedress.RefundCalculation)
+                .ConfigureAwait(false);
 
             await applicationDbContext.Redresses
                 .AddAsync(newRedress)
@@ -564,7 +574,56 @@ namespace Headway.RemediatR.Repository
 
         public async Task<Redress> UpdateRedressAsync(Redress redress)
         {
-            applicationDbContext.Redresses.Update(redress);
+            var existing = await applicationDbContext.Redresses
+                .Include(r => r.Program)
+                .Include(r => r.Product)
+                .Include(r => r.RefundCalculation)
+                .FirstOrDefaultAsync(p => p.RedressId.Equals(redress.RedressId));
+
+            if (existing == null)
+            {
+                throw new NullReferenceException(
+                    $"{nameof(redress)} redressId {redress.RedressId} not found.");
+            }
+            else
+            {
+                if (!existing.RefundCalculationId.Equals(redress.RefundCalculationId))
+                {
+                    throw new NotSupportedException(
+                        $"{nameof(redress)} cannot change RefundCalculationId {existing.RefundCalculationId} to RefundCalculationId {redress.RefundCalculationId}.");
+                }
+
+                if (!existing.ProductId.Equals(redress.ProductId))
+                {
+                    throw new NotSupportedException(
+                        $"{nameof(redress)} cannot change ProductId {existing.ProductId} to ProductId {redress.ProductId}.");
+                }
+
+                applicationDbContext
+                    .Entry(existing)
+                    .CurrentValues.SetValues(redress);
+
+                applicationDbContext
+                    .Entry(existing.RefundCalculation)
+                    .CurrentValues.SetValues(redress.RefundCalculation);
+
+                if (!existing.ProgramId.Equals(redress.ProgramId))
+                {
+                    var program = await applicationDbContext.Programs
+                        .FirstOrDefaultAsync(p => p.ProgramId.Equals(redress.ProgramId))
+                        .ConfigureAwait(false);
+
+                    if (program == null)
+                    {
+                        throw new NullReferenceException(
+                            $"{nameof(redress)} ProgramId {redress.ProgramId} not found.");
+                    }
+                    else
+                    {
+                        existing.Program = program;
+                    }
+                }
+            }
 
             await applicationDbContext
                 .SaveChangesAsync()
