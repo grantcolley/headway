@@ -20,10 +20,13 @@ namespace Headway.Repository
             this.logger = logger;
         }
 
+        public void SetUser(string user)
+        {
+            applicationDbContext.SetUser(user);
+        }
+
         public async Task<bool> IsAuthorisedAsync(string claim, string permission)
         {
-            applicationDbContext.SetUser(claim);
-
             return await applicationDbContext.Users.AnyAsync(
                 u => u.Email.Equals(claim)
                 && (u.Permissions.Any(p => p.Name.Equals(permission))
