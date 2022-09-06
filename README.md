@@ -333,6 +333,18 @@ Headway currently supports authentication from two identity providers **Identity
 ## Authorization
 
 ## Track Changes
+When using Entity Framework Core, models inheriting from [ModelBase](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ModelBase.cs) will automatically get properties for tracking instance creation and modification. Furthermore, an audit of changes will be logged to the `Audits` table.
+```C#
+    public abstract class ModelBase
+    {
+        public DateTime? CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public string ModifiedBy { get; set; }
+    }
+```
+To log changes [ApplicationDbContext](https://github.com/grantcolley/headway/blob/bc50a2417f6f72edeae2bbe8c9a83dc3154b4bc9/src/Headway.Repository/Data/ApplicationDbContext.cs#L100) overrides `DbContext.SaveChanges` and gets the changes from `DbContext.ChangeTracker`.
+Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. This is currently set in [RepositoryBase](https://github.com/grantcolley/headway/blob/bc50a2417f6f72edeae2bbe8c9a83dc3154b4bc9/src/Headway.Repository/RepositoryBase.cs#L23-L26) where it is called from [ApiControllerBase](https://github.com/grantcolley/headway/blob/bc50a2417f6f72edeae2bbe8c9a83dc3154b4bc9/src/Headway.WebApi/Controllers/ApiControllerBase.cs#L26-L34) which gets the user claim from to authorizing the user.
 
 ## Logging
 
