@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class Permission
+    public class Permission : ModelBase
     {
         public Permission()
         {

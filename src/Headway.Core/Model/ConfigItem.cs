@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class ConfigItem
+    public class ConfigItem : ModelBase
     {
         public int ConfigItemId { get; set; }
         public int ConfigId { get; set; }

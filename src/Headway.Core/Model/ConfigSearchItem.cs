@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
 {
-    public class ConfigSearchItem
+    public class ConfigSearchItem : ModelBase
     {
         public int ConfigSearchItemId { get; set; }
         public int Order { get; set; }

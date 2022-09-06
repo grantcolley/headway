@@ -8,7 +8,7 @@ using System.Linq;
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class MenuItem : IPermissionable
+    public class MenuItem : ModelBase, IPermissionable
     {
         public int MenuItemId { get; set; }
         public int Order { get; set; }

@@ -8,7 +8,7 @@ using System.Linq;
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class Module : IPermissionable
+    public class Module : ModelBase, IPermissionable
     {
         public Module()
         {

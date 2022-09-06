@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class DemoModelItem
+    public class DemoModelItem : ModelBase
     {
         public int DemoModelItemId { get; set; }
         public int DemoModelId { get; set; }

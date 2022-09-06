@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class DemoModelTreeItem : IComponentTree
+    public class DemoModelTreeItem : ModelBase, IComponentTree
     {
         public DemoModelTreeItem()
         {

@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Headway.Core.Model
 {
     [DynamicModel]
-    public class DemoModel
+    public class DemoModel : ModelBase
     {
         public DemoModel()
         {
