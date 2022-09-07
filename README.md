@@ -351,7 +351,11 @@ Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. Th
 ## Logging
 [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Headway.WebApi.csproj) uses Serilog for logging and is configured to write logs to the Logs table in the database using [Serilog.Sinks.MSSqlServer](https://github.com/serilog-mssql/serilog-sinks-mssqlserver).
 
-> Note: for outputting EF Core SQL to the logs specify the override `"Microsoft.EntityFrameworkCore.Database.Command": "Information"` in the Serilog config.
+[ApiControllerBase](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/ApiControllerBase.cs#L32) pushes the user onto the logging context by calling `LogContext.PushProperty("User", claim.Value);`. For this to work, you must call `loggerConfiguration.Enrich.FromLogContext()` from [Program.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs#L25-L27).
+
+> Note: 
+> \
+> In the Serilog config specify a custom column for the Log table to capture the user. For outputting EF Core SQL to the logs, add the override `"Microsoft.EntityFrameworkCore.Database.Command": "Information"`.
 
 ```C#
   "Logging": {
@@ -377,7 +381,16 @@ Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. Th
           /*"connectionString": "Data Source=..\\..\\db\\Headway.db;",*/
           "connectionString": "Data Source=(localdb)\\mssqllocaldb;Database=Headway;Integrated Security=true",
           "tableName": "Logs",
-          "autoCreateSqlTable": true
+          "autoCreateSqlTable": true,
+          "columnOptionsSection": {
+            "customColumns": [
+              {
+                "ColumnName": "User",
+                "DataType": "nvarchar",
+                "DataLength": 100
+              }
+            ]
+          }
         }
       }
     ]
