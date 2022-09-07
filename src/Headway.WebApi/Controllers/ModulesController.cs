@@ -16,7 +16,7 @@ namespace Headway.WebApi.Controllers
         public ModulesController(
             IModuleRepository moduleRepository,
             ILogger<ModulesController> logger)
-            : base((IRepository)moduleRepository, logger)
+            : base(moduleRepository, logger)
         {
             this.moduleRepository = moduleRepository;
         }
