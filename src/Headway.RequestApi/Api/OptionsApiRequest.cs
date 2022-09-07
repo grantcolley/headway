@@ -60,7 +60,7 @@ namespace Headway.RequestApi.Api
                 };
             }
 
-            var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS, args)
+            using var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS, args)
                 .ConfigureAwait(false);
 
             return await GetResponseAsync<IEnumerable<OptionItem>>(httpResponseMessage)
@@ -71,7 +71,7 @@ namespace Headway.RequestApi.Api
         {
             var args = ComponentArgHelper.GetArgs(dynamicArgs);
 
-            var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS_COMPLEXOPTIONS, args)
+            using var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS_COMPLEXOPTIONS, args)
                 .ConfigureAwait(false);
 
             return await GetResponseAsync<IEnumerable<T>>(httpResponseMessage)
