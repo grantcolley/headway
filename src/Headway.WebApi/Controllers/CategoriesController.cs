@@ -16,7 +16,7 @@ namespace Headway.WebApi.Controllers
         public CategoriesController(
             IModuleRepository moduleRepository,
             ILogger<CategoriesController> logger)
-            : base((IRepository)moduleRepository, logger)
+            : base(moduleRepository, logger)
         {
             this.moduleRepository = moduleRepository;
         }
