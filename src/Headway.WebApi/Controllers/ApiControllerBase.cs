@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Serilog.Context;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -27,6 +28,8 @@ namespace Headway.WebApi.Controllers
         {
             var identity = (ClaimsIdentity)HttpContext.User.Identity;
             var claim = identity.FindFirst(ClaimTypes.Email);
+
+            LogContext.PushProperty("User", claim.Value);
 
             repository.SetUser(claim.Value);
 
