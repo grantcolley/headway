@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Repository
+namespace Headway.Repository.Repositories
 {
     public abstract class RepositoryBase<T> : IRepository
     {

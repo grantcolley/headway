@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Repository
+namespace Headway.Repository.Repositories
 {
     public class ModuleRepository : RepositoryBase<ModuleRepository>, IModuleRepository
     {
@@ -199,7 +199,7 @@ namespace Headway.Repository
                 {
                     throw new ArgumentNullException(nameof(category.Module));
                 }
-                else if(!category.Module.ModuleId.Equals(existing.Module.ModuleId))
+                else if (!category.Module.ModuleId.Equals(existing.Module.ModuleId))
                 {
                     existing.Module = category.Module;
                 }

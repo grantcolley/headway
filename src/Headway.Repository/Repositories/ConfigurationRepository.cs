@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Repository
+namespace Headway.Repository.Repositories
 {
     public class ConfigurationRepository : RepositoryBase<ConfigurationRepository>, IConfigurationRepository
     {
@@ -96,7 +96,7 @@ namespace Headway.Repository
                 .FirstOrDefaultAsync(c => c.ConfigId.Equals(config.ConfigId))
                 .ConfigureAwait(false);
 
-            if(existing == null)
+            if (existing == null)
             {
                 throw new NullReferenceException(
                     $"{nameof(config)} ConfigId {config.ConfigId} not found.");
@@ -124,7 +124,7 @@ namespace Headway.Repository
                             .FirstOrDefault(ci => ci.ConfigItemId.Equals(configItem.ConfigItemId));
                     }
 
-                    if(existingConfigItem == null)
+                    if (existingConfigItem == null)
                     {
                         existing.ConfigItems.Add(configItem);
                     }
@@ -135,8 +135,8 @@ namespace Headway.Repository
                 }
 
                 var removeConfigSearchItems = (from configSearchItem in existing.ConfigSearchItems
-                                         where !config.ConfigSearchItems.Any(i => i.ConfigSearchItemId.Equals(configSearchItem.ConfigSearchItemId))
-                                         select configSearchItem)
+                                               where !config.ConfigSearchItems.Any(i => i.ConfigSearchItemId.Equals(configSearchItem.ConfigSearchItemId))
+                                               select configSearchItem)
                                          .ToList();
 
                 applicationDbContext.RemoveRange(removeConfigSearchItems);
@@ -165,8 +165,8 @@ namespace Headway.Repository
                     GenericTreeHelper.GetFlattenedTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
 
                 var removeConfigContainers = (from configContainer in existing.ConfigContainers
-                                                where !config.ConfigContainers.Any(c => c.Code.Equals(configContainer.Code))
-                                                select configContainer)
+                                              where !config.ConfigContainers.Any(c => c.Code.Equals(configContainer.Code))
+                                              select configContainer)
                                                 .ToList();
 
                 applicationDbContext.RemoveRange(removeConfigContainers);
@@ -175,7 +175,7 @@ namespace Headway.Repository
                 {
                     ConfigContainer existingConfigContainer = null;
 
-                    if(configContainer.ConfigContainerId > 0)
+                    if (configContainer.ConfigContainerId > 0)
                     {
                         existingConfigContainer = existing.ConfigContainers
                             .FirstOrDefault(c => c.ConfigContainerId.Equals(configContainer.ConfigContainerId));

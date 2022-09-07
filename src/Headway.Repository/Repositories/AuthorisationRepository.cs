@@ -9,12 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Repository
+namespace Headway.Repository.Repositories
 {
     public class AuthorisationRepository : RepositoryBase<AuthorisationRepository>, IAuthorisationRepository
     {
         public AuthorisationRepository(ApplicationDbContext applicationDbContext, ILogger<AuthorisationRepository> logger)
-            : base (applicationDbContext, logger)
+            : base(applicationDbContext, logger)
         {
         }
 
@@ -71,7 +71,7 @@ namespace Headway.Repository
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
 
-            if(addUser.Permissions.Any()
+            if (addUser.Permissions.Any()
                 || addUser.Roles.Any())
             {
                 user.Permissions.AddRange(addUser.Permissions);
@@ -115,7 +115,7 @@ namespace Headway.Repository
                 .Where(up => !permissions.Any(p => p.PermissionId.Equals(up.PermissionId)))
                 .ToList();
 
-            foreach(var permission in removePermissions)
+            foreach (var permission in removePermissions)
             {
                 user.Permissions.Remove(permission);
             }
@@ -296,7 +296,7 @@ namespace Headway.Repository
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
 
-            if(permissions.Any())
+            if (permissions.Any())
             {
                 role.Permissions.AddRange(permissions);
 
@@ -395,7 +395,7 @@ namespace Headway.Repository
             var roles = await GetRolesAsync()
                 .ConfigureAwait(false);
 
-            Func<Role, ChecklistItem> createChecklistItem = (Role role) =>
+            Func<Role, ChecklistItem> createChecklistItem = (role) =>
             {
                 var checklistItem = new ChecklistItem
                 {
@@ -414,7 +414,7 @@ namespace Headway.Repository
             };
 
             var roleChecklist = (from r in roles
-                                       select createChecklistItem(r)).ToList();
+                                 select createChecklistItem(r)).ToList();
 
             (from i in roleChecklist
              join r in modelRoles on i.Id equals r.RoleId

@@ -16,7 +16,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Headway.Repository
+namespace Headway.Repository.Repositories
 {
     public class OptionsRepository : RepositoryBase<OptionsRepository>, IOptionsRepository
     {
@@ -70,11 +70,11 @@ namespace Headway.Repository
             List<OptionItem> optionItems = new() { new OptionItem() };
 
             optionItems.AddRange((from c in controllers
-                              select new OptionItem
-                              {
-                                  Id = c.Name.Replace(Options.CONTROLLER, ""),
-                                  Display = c.DisplayName.Replace(Options.CONTROLLER, "")
-                              }).ToList());
+                                  select new OptionItem
+                                  {
+                                      Id = c.Name.Replace(Options.CONTROLLER, ""),
+                                      Display = c.DisplayName.Replace(Options.CONTROLLER, "")
+                                  }).ToList());
 
             return Task.FromResult(optionItems.AsEnumerable());
         }
@@ -129,10 +129,10 @@ namespace Headway.Repository
 
             optionItems.AddRange(countries
                                     .Where(c => !c.Code.Equals("GB"))
-                                    .Select(c => new OptionItem 
+                                    .Select(c => new OptionItem
                                     {
-                                        Id = c.Name, 
-                                        Display = c.Name 
+                                        Id = c.Name,
+                                        Display = c.Name
                                     }).ToList());
 
             return optionItems;

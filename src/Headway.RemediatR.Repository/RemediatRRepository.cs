@@ -2,8 +2,8 @@
 using Headway.RemediatR.Core.Enums;
 using Headway.RemediatR.Core.Interface;
 using Headway.RemediatR.Core.Model;
-using Headway.Repository;
 using Headway.Repository.Data;
+using Headway.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;

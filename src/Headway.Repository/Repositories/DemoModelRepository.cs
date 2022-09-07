@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Repository
+namespace Headway.Repository.Repositories
 {
     public class DemoModelRepository : RepositoryBase<DemoModelRepository>, IDemoModelRepository
     {
@@ -55,7 +55,7 @@ namespace Headway.Repository
 
         public async Task<DemoModel> AddDemoModelAsync(DemoModel demoModel)
         {
-            demoModel.DemoModelTreeItems = 
+            demoModel.DemoModelTreeItems =
                 GenericTreeHelper.GetFlattenedTree<DemoModel, DemoModelTreeItem>(demoModel, genericTreeHelperArgs);
 
             await applicationDbContext.DemoModels
@@ -102,8 +102,8 @@ namespace Headway.Repository
                 }
 
                 var removeDemoModelItems = (from demoModelItem in existing.DemoModelItems
-                                   where !demoModel.DemoModelItems.Any(i => i.DemoModelItemId.Equals(demoModelItem.DemoModelItemId))
-                                   select demoModelItem)
+                                            where !demoModel.DemoModelItems.Any(i => i.DemoModelItemId.Equals(demoModelItem.DemoModelItemId))
+                                            select demoModelItem)
                                   .ToList();
 
                 applicationDbContext.RemoveRange(removeDemoModelItems);
@@ -112,7 +112,7 @@ namespace Headway.Repository
                 {
                     DemoModelItem existingDemoModelItem = null;
 
-                    if(demoModelItem.DemoModelItemId > 0)
+                    if (demoModelItem.DemoModelItemId > 0)
                     {
                         existingDemoModelItem = existing.DemoModelItems
                             .FirstOrDefault(m => m.DemoModelItemId.Equals(demoModelItem.DemoModelItemId));
