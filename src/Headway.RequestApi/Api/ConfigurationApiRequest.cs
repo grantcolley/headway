@@ -31,7 +31,7 @@ namespace Headway.RequestApi.Api
                 return GetResponseResult<Config>(config);
             }
 
-            var httpResponseMessage = await httpClient.GetAsync($"{Controllers.CONFIGURATION}/{name}").ConfigureAwait(false);
+            using var httpResponseMessage = await httpClient.GetAsync($"{Controllers.CONFIGURATION}/{name}").ConfigureAwait(false);
 
             var response = await GetResponseAsync<Config>(httpResponseMessage).ConfigureAwait(false);
 
