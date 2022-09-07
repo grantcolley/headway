@@ -16,7 +16,7 @@ namespace Headway.WebApi.Controllers
         public MenuItemsController(
             IModuleRepository moduleRepository,
             ILogger<MenuItemsController> logger)
-            : base((IRepository)moduleRepository, logger)
+            : base(moduleRepository, logger)
         {
             this.moduleRepository = moduleRepository;
         }
