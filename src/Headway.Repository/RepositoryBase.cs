@@ -14,6 +14,8 @@ namespace Headway.Repository
         protected readonly ILogger<T> logger;
         private bool disposedValue;
 
+        protected string User;
+
         protected RepositoryBase(ApplicationDbContext applicationDbContext, ILogger<T> logger)
         {
             this.applicationDbContext = applicationDbContext;
@@ -22,6 +24,7 @@ namespace Headway.Repository
 
         public void SetUser(string user)
         {
+            User = user;
             applicationDbContext.SetUser(user);
         }
 
