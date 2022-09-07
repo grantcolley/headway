@@ -51,6 +51,7 @@ builder.Services.AddTransient<IShowDialogService, ShowDialogService>();
 builder.Services.AddTransient<ModulesGetRequestHandler>();
 builder.Services.AddTransient<ConfigGetByNameRequestHandler>();
 builder.Services.AddTransient<OptionItemsRequestHandler>();
+builder.Services.AddTransient<LogRequestHandler>();
 
 builder.Services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>
 {
@@ -80,6 +81,13 @@ builder.Services.AddTransient<IOptionsApiRequest, OptionsApiRequest>(sp =>
     var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
     var httpClient = httpClientFactory.CreateClient("webapi");
     return new OptionsApiRequest(httpClient);
+});
+
+builder.Services.AddTransient<ILogApiRequest, LogApiRequest>(sp =>
+{
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("webapi");
+    return new LogApiRequest(httpClient);
 });
 
 builder.Services.AddMediatR(typeof(ModuleApiRequest).Assembly);
