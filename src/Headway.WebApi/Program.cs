@@ -23,7 +23,8 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseSerilog((hostingContext, loggerConfiguration) =>
-                  loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
+                  loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
+                                        .Enrich.FromLogContext());
 
 builder.Services.AddControllers()
     .AddFluentValidation(fv =>
@@ -94,8 +95,9 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Headway.WebApi v1"));
-    app.UseSerilogRequestLogging();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
