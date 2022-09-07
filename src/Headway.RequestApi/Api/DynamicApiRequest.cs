@@ -73,6 +73,7 @@ namespace Headway.RequestApi.Api
                 var configApi = responseConfig.Result.ModelApi;
 
                 using var response = await httpClient.GetAsync(configApi).ConfigureAwait(false);
+
                 var responseList = await GetResponseAsync<IEnumerable<T>>(response)
                     .ConfigureAwait(false);
 
@@ -113,6 +114,7 @@ namespace Headway.RequestApi.Api
                 using var response = await httpClient
                     .PostAsJsonAsync(uri, dynamicList.SearchArgs)
                     .ConfigureAwait(false);
+
                 var responseList = await GetResponseAsync<IEnumerable<T>>(response)
                     .ConfigureAwait(false);
 
@@ -286,7 +288,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
-            var addResponse = await httpClient.PostAsJsonAsync(
+            using var addResponse = await httpClient.PostAsJsonAsync(
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
@@ -307,7 +309,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
-            var updateResponse = await httpClient.PutAsJsonAsync(
+            using var updateResponse = await httpClient.PutAsJsonAsync(
                 dynamicModel.Config.ModelApi, dynamicModel.Model)
                 .ConfigureAwait(false);
 
@@ -329,7 +331,7 @@ namespace Headway.RequestApi.Api
         public async Task<IResponse<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
         {
             var configPath = $"{dynamicModel.Config.ModelApi}/{dynamicModel.Id}";
-            var httpResponseMessage = await httpClient.DeleteAsync(configPath).ConfigureAwait(false);
+            using var httpResponseMessage = await httpClient.DeleteAsync(configPath).ConfigureAwait(false);
             return await GetResponseAsync<int>(httpResponseMessage).ConfigureAwait(false);
         }
     }
