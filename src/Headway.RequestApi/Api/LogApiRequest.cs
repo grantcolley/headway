@@ -10,12 +10,17 @@ namespace Headway.RequestApi.Api
     public class LogApiRequest : ApiRequestBase, ILogApiRequest
     {
         public LogApiRequest(HttpClient httpClient)
-            : base(httpClient, false, null)
+            : this(httpClient, false, null)
         {
         }
 
         public LogApiRequest(HttpClient httpClient, TokenProvider tokenProvider)
-            : base(httpClient, true, tokenProvider)
+            : this(httpClient, true, tokenProvider)
+        {
+        }
+
+        public LogApiRequest(HttpClient httpClient, bool useAccessToken, TokenProvider tokenProvider)
+            : base(httpClient, useAccessToken, tokenProvider)
         {
         }
 
