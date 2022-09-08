@@ -10,6 +10,7 @@ using Headway.SeedData.RemediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Context;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,6 +64,7 @@ builder.Services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
 builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
 builder.Services.AddScoped<IOptionsRepository, OptionsRepository>();
 builder.Services.AddScoped<IDemoModelRepository, DemoModelRepository>();
+builder.Services.AddScoped<ILogRepository, LogRepository>();
 builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();
 
 builder.Services.AddCors(options =>
@@ -97,8 +101,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Headway.WebApi v1"));
 }
 
-app.UseSerilogRequestLogging();
-
 app.UseHttpsRedirection();
 
 app.UseRouting();
@@ -108,6 +110,29 @@ app.UseCors("local");
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSerilogRequestLogging(options =>
+    {
+        options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+        {
+            var identity = (ClaimsIdentity)httpContext.User.Identity;
+            var claim = identity.FindFirst(ClaimTypes.Email);
+            var user = claim.Value;
+            diagnosticContext.Set("User", user);
+        };
+    });
+}
+
+app.Use(async (httpContext, next) =>
+{
+    var identity = (ClaimsIdentity)httpContext.User.Identity;
+    var claim = identity.FindFirst(ClaimTypes.Email);
+    var user = claim.Value;
+    LogContext.PushProperty("User", user);
+    await next.Invoke();
+});
 
 app.UseEndpoints(endpoints =>
 {
