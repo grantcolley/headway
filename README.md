@@ -351,20 +351,9 @@ Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. Th
 ## Logging
 [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Headway.WebApi.csproj) uses Serilog for logging and is configured to write logs to the Logs table in the database using [Serilog.Sinks.MSSqlServer](https://github.com/serilog-mssql/serilog-sinks-mssqlserver).
 
-[ApiControllerBase](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/ApiControllerBase.cs#L32) pushes the user onto the logging context by calling `LogContext.PushProperty("User", claim.Value);`. For this to work, you must call `loggerConfiguration.Enrich.FromLogContext()` from [Program.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs#L25-L27).
-
-> Note: 
-> \
-> In the Serilog config specify a custom column for the Log table to capture the user. For outputting EF Core SQL to the logs, add the override `"Microsoft.EntityFrameworkCore.Database.Command": "Information"`.
+In the Serilog config specify a custom column for the Log table to capture the user. For outputting EF Core SQL to the logs, add the override `"Microsoft.EntityFrameworkCore.Database.Command": "Information"`.
 
 ```C#
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning",
-      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
-    }
-  },
   "Serilog": {
     "Using": [ "Serilog.Sinks.MSSqlServer" ],
     "MinimumLevel": {
@@ -378,7 +367,6 @@ Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. Th
       {
         "Name": "MSSqlServer",
         "Args": {
-          /*"connectionString": "Data Source=..\\..\\db\\Headway.db;",*/
           "connectionString": "Data Source=(localdb)\\mssqllocaldb;Database=Headway;Integrated Security=true",
           "tableName": "Logs",
           "autoCreateSqlTable": true,
@@ -395,6 +383,29 @@ Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. Th
       }
     ]
   }
+```
+
+More details on enriching Serilog log entries with custom properties can be found [here](https://github.com/serilog/serilog/wiki/Enrichment). For this to work must called `loggerConfiguration.Enrich.FromLogContext()` when configuring logging in [Program.cs (https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs#L25-L27). 
+
+```C#
+builder.WebHost.UseSerilog((hostingContext, loggerConfiguration) =>
+                  loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
+                                        .Enrich.FromLogContext());
+```
+
+Middleware is added to [Program.cs](https://github.com/grantcolley/headway/blob/383238b67e29bf5cdcd7426a6d628a6090f2af9a/src/Headway.WebApi/Program.cs#L128-L135) to get the user from the *httpContext* and push it onto the logging context. The middleware must be added **AFTER** `app.UseAuthentication();` so the user claims is available in the *httpContext*.
+
+```C#
+app.UseAuthentication();
+
+app.Use(async (httpContext, next) =>
+{
+    var identity = (ClaimsIdentity)httpContext.User.Identity;
+    var claim = identity.FindFirst(ClaimTypes.Email);
+    var user = claim.Value;
+    LogContext.PushProperty("User", user);
+    await next.Invoke();
+});
 ```
 
 ## Page Layout
