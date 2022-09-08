@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Headway.RequestApi.Api
 {
-    public class OptionsApiRequest : ApiRequestBase, IOptionsApiRequest
+    public class OptionsApiRequest : LogApiRequest, IOptionsApiRequest
     {
         private readonly Dictionary<string, IOptionItems> localOptionItems = new();
 
