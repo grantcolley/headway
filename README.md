@@ -385,7 +385,7 @@ In the Serilog [config](https://github.com/grantcolley/headway/blob/24d7a974fe53
   },
 ```
 
-More details on enriching Serilog log entries with custom properties can be found [here](https://github.com/serilog/serilog/wiki/Enrichment). For Serilog enrichment to work `loggerConfiguration.Enrich.FromLogContext()` is called when configuring logging in [Program.cs](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs#L25-L27).
+More details on enriching Serilog log entries with custom properties can be found [here](https://github.com/serilog/serilog/wiki/Enrichment). For Serilog enrichment to work `loggerConfiguration.Enrich.FromLogContext()` is called when configuring logging in [Program.cs](https://github.com/grantcolley/headway/blob/436d272fd3c51a0d862b5e6d80cf7d1a5fb8c821/src/Headway.WebApi/Program.cs#L28-L30).
 
 ```C#
 builder.WebHost.UseSerilog((hostingContext, loggerConfiguration) =>
