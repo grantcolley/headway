@@ -49,6 +49,8 @@
 * [Authorization](#authorization)
 * [Tracking Changes](#tracking-changes)
 * [Logging](#logging)
+   * [Send logs from the Client](#send-logs-from-the-client)
+   * [Configure Logging](#configure-Logging) 
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
 * [Navigation Menu](#navigation-menu)
@@ -351,6 +353,30 @@ Capturing the `user` is done by calling `ApplicationDbContext.SetUser(user)`. Th
 ## Logging
 [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Headway.WebApi.csproj) uses Serilog for logging and is configured to write logs to the `Log` table in the database using [Serilog.Sinks.MSSqlServer](https://github.com/serilog-mssql/serilog-sinks-mssqlserver).
 
+### Send logs from the Client
+The client can send a log entry request to the [Headway.WebApi](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Controllers/LogController.cs) e.g.: 
+```C#
+            try
+            {
+                var x = 1 / zero;
+            }
+            catch (Exception ex)
+            {
+                var log = new Log { Level = Core.Enums.LogLevel.Error, Message = ex.Message };
+
+                await Mediator.Send(new LogRequest(log))
+                    .ConfigureAwait(false);
+            }
+```
+
+Logging is also available to api request classes inheriting [LogApiRequest](https://github.com/grantcolley/headway/blob/main/src/Headway.RequestApi/Api/LogApiRequest.cs) and can be called as follows:
+```C#
+            var log = new Log { Level = Core.Enums.LogLevel.Information, Message = "Log this entry..." };
+
+            await LogAsync(log).ConfigureAwait(false);
+```
+
+### Configure Logging
 In the Serilog [config](https://github.com/grantcolley/headway/blob/24d7a974fe53b0f0b7f2ccaaf7bf854486e25310/src/Headway.WebApi/appsettings.json#L12-L41) specify a custom column to be added to the `Log` table to capture the user with each entry. To automatically log EF Core SQL queries to the logs, add the override `"Microsoft.EntityFrameworkCore.Database.Command": "Information"`.
 
 ```C#
