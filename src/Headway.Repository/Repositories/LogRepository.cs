@@ -28,15 +28,7 @@ namespace Headway.Repository.Repositories
                     logger.LogWarning(log.Message);
                     break;
                 case Core.Enums.LogLevel.Error:
-                    if(log.Exception != null)
-                    {
-                        logger.LogError(log.Exception, log.Message);
-                    }
-                    else
-                    {
-                        logger.LogError(log.Message);
-                    }
-
+                    logger.LogError(log.Message);
                     break;
             }
         }
