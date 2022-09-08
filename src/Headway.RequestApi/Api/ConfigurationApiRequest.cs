@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Headway.RequestApi.Api
 {
-    public class ConfigurationApiRequest : ApiRequestBase, IConfigurationApiRequest
+    public class ConfigurationApiRequest : LogApiRequest, IConfigurationApiRequest
     {
         private readonly IConfigCache configCache;
 
         public ConfigurationApiRequest(HttpClient httpClient, IConfigCache configCache)
-            : base(httpClient, false)
+            : base(httpClient)
         {
             this.configCache = configCache;
         }
 
         public ConfigurationApiRequest(HttpClient httpClient, TokenProvider tokenProvider, IConfigCache configCache)
-            : base(httpClient, true, tokenProvider)
+            : base(httpClient, tokenProvider)
         {
             this.configCache = configCache;
         }
