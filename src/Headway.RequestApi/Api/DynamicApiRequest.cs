@@ -52,6 +52,8 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<DynamicList<T>>> GetDynamicListAsync<T>(string config) where T : class, new()
         {
+            await LogAsync(new Log { Level = Core.Enums.LogLevel.Information, Message = "Hello World" }).ConfigureAwait(false);
+
             var responseConfig =
                 await GetConfigAsync(config)
                 .ConfigureAwait(false);
