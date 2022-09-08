@@ -25,6 +25,7 @@ namespace Headway.Repository.Repositories
         public void SetUser(string user)
         {
             User = user;
+            
             applicationDbContext.SetUser(user);
         }
 
