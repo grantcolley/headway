@@ -1,191 +1,191 @@
-customername,productname,producttype,repaymenttype,ratetype,duration,rate,startdate,value
-Mr John Adam,Car Loan,Vehicle,Fixed,Repayment,36,2.25,20/05/2021 00:00:00,8000
-Mr John Adam,Buy To Let,Home,Variable,InterestOnly,168,2.75,20/01/2016 00:00:00,600000
-Mr John Adam,Student Loan,Student,Tracker,Repayment,24,2.75,20/04/2022 00:00:00,750
-Mrs Mary Albert,Buy To Let,Home,Variable,InterestOnly,252,1.50,20/08/2013 00:00:00,850000
-Mr William Alexander,Student Loan,Student,Tracker,Repayment,84,2.00,20/12/2020 00:00:00,750
-Mr William Alexander,Car Loan,Vehicle,Fixed,Repayment,36,1.50,20/07/2021 00:00:00,6500
-Ms Anna Anderson,Buy To Let,Home,Variable,InterestOnly,192,2.50,20/09/2016 00:00:00,900000
-Ms Anna Anderson,Car Loan,Vehicle,Fixed,Repayment,36,1.50,20/09/2020 00:00:00,7500
-Ms Anna Anderson,Student Loan,Student,Tracker,Repayment,96,1.75,20/05/2022 00:00:00,750
-Mr James Andrews,Student Loan,Student,Tracker,Repayment,60,1.75,20/01/2021 00:00:00,500
-Mr James Andrews,Buy To Let,Home,Variable,InterestOnly,180,1.50,20/05/2019 00:00:00,350000
-Mr James Andrews,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/01/2021 00:00:00,5500
-Mrs Emma Ashcroft,Student Loan,Student,Tracker,Repayment,108,1.75,20/03/2021 00:00:00,550
-Mr Charles Bailey,Car Loan,Vehicle,Fixed,Repayment,24,1.50,20/11/2020 00:00:00,6500
-Mr Charles Bailey,Buy To Let,Home,Variable,InterestOnly,228,1.50,20/12/2014 00:00:00,900000
-Ms Elizabeth Bainbridge,Student Loan,Student,Tracker,Repayment,96,2.25,20/07/2021 00:00:00,800
-Mr George Bale,Car Loan,Vehicle,Fixed,Repayment,36,1.25,20/01/2021 00:00:00,6000
-Mrs Minnie Ball,Student Loan,Student,Tracker,Repayment,24,1.25,20/10/2020 00:00:00,900
-Mr Frank Barnard,Buy To Let,Home,Variable,InterestOnly,288,1.75,20/10/2014 00:00:00,850000
-Mr Frank Barnard,Student Loan,Student,Tracker,Repayment,84,2.50,20/05/2021 00:00:00,550
-Mr Frank Barnard,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/10/2021 00:00:00,6500
-Ms Margaret Barnes,Student Loan,Student,Tracker,Repayment,84,2.50,20/08/2021 00:00:00,600
-Mr Joseph Barnett,Car Loan,Vehicle,Fixed,Repayment,24,2.25,20/04/2021 00:00:00,9000
-Mr Joseph Barnett,Buy To Let,Home,Variable,InterestOnly,132,2.00,20/04/2019 00:00:00,650000
-Mrs Ida Beattie,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/03/2022 00:00:00,8000
-Mrs Ida Beattie,Buy To Let,Home,Variable,InterestOnly,120,1.75,20/12/2018 00:00:00,400000
-Mrs Ida Beattie,Student Loan,Student,Tracker,Repayment,96,1.75,20/10/2020 00:00:00,350
-Mr Thomas Chance,Student Loan,Student,Tracker,Repayment,24,2.50,20/03/2022 00:00:00,450
-Mr Thomas Chance,Car Loan,Vehicle,Fixed,Repayment,24,1.50,20/02/2021 00:00:00,3500
-Ms Alice Clark,Student Loan,Student,Tracker,Repayment,72,2.50,20/02/2022 00:00:00,750
-Mr Henry Clegg,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/10/2021 00:00:00,4000
-Mr Henry Clegg,Student Loan,Student,Tracker,Repayment,48,1.25,20/03/2021 00:00:00,750
-Mrs Bertha Collins,Student Loan,Student,Tracker,Repayment,48,1.50,20/09/2020 00:00:00,350
-Mrs Bertha Collins,Car Loan,Vehicle,Fixed,Repayment,36,2.25,20/10/2021 00:00:00,8500
-Mrs Bertha Collins,Buy To Let,Home,Variable,InterestOnly,156,2.50,20/07/2018 00:00:00,750000
-Mr Robert Copeland,Buy To Let,Home,Variable,InterestOnly,156,2.50,20/11/2018 00:00:00,600000
-Ms Sarah Cowell,Buy To Let,Home,Variable,InterestOnly,156,2.50,20/01/2013 00:00:00,650000
-Ms Sarah Cowell,Student Loan,Student,Tracker,Repayment,96,2.75,20/09/2021 00:00:00,600
-Mr Edward Crosby,Car Loan,Vehicle,Fixed,Repayment,36,2.00,20/04/2022 00:00:00,4000
-Mrs Annie Cummings,Student Loan,Student,Tracker,Repayment,36,2.75,20/12/2020 00:00:00,400
-Mr Harry Davidson,Car Loan,Vehicle,Fixed,Repayment,36,2.00,20/08/2021 00:00:00,9000
-Mr Harry Davidson,Buy To Let,Home,Variable,InterestOnly,132,2.75,20/07/2013 00:00:00,600000
-Mr Harry Davidson,Student Loan,Student,Tracker,Repayment,48,2.25,20/08/2021 00:00:00,800
-Ms Clara Deeley,Buy To Let,Home,Variable,InterestOnly,132,2.50,20/01/2018 00:00:00,550000
-Ms Clara Deeley,Car Loan,Vehicle,Fixed,Repayment,36,2.25,20/05/2022 00:00:00,9000
-Ms Clara Deeley,Student Loan,Student,Tracker,Repayment,60,2.25,20/12/2020 00:00:00,600
-Mr Walter Dexter,Buy To Let,Home,Variable,InterestOnly,180,1.25,20/04/2016 00:00:00,900000
-Mr Walter Dexter,Student Loan,Student,Tracker,Repayment,24,2.25,20/10/2021 00:00:00,650
-Mr Walter Dexter,Car Loan,Vehicle,Fixed,Repayment,24,2.00,20/08/2021 00:00:00,9000
-Mrs Ella Donaldson,Buy To Let,Home,Variable,InterestOnly,132,1.50,20/05/2017 00:00:00,550000
-Mrs Ella Donaldson,Car Loan,Vehicle,Fixed,Repayment,36,2.00,20/10/2020 00:00:00,7500
-Mr Arthur Easton,Buy To Let,Home,Variable,InterestOnly,132,2.50,20/12/2016 00:00:00,500000
-Mr Arthur Easton,Student Loan,Student,Tracker,Repayment,108,1.50,20/12/2021 00:00:00,400
-Ms Florence Eccles,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/05/2022 00:00:00,8500
-Mr Fred Eddison,Car Loan,Vehicle,Fixed,Repayment,24,1.25,20/11/2021 00:00:00,6500
-Mr Fred Eddison,Buy To Let,Home,Variable,InterestOnly,168,2.50,20/08/2013 00:00:00,400000
-Mrs Cora Edmond,Student Loan,Student,Tracker,Repayment,84,2.25,20/05/2021 00:00:00,650
-Mr Albert Eldridge,Student Loan,Student,Tracker,Repayment,60,2.75,20/10/2020 00:00:00,400
-Ms Martha Elliot,Buy To Let,Home,Variable,InterestOnly,252,1.25,20/11/2018 00:00:00,450000
-Ms Martha Elliot,Student Loan,Student,Tracker,Repayment,96,1.50,20/09/2020 00:00:00,400
-Ms Martha Elliot,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/10/2020 00:00:00,6000
-Mr Samuel Emerson,Student Loan,Student,Tracker,Repayment,48,2.50,20/12/2021 00:00:00,400
-Mr Samuel Emerson,Car Loan,Vehicle,Fixed,Repayment,36,2.75,20/06/2021 00:00:00,5000
-Mrs Laura Fairclough,Car Loan,Vehicle,Fixed,Repayment,24,1.50,20/06/2021 00:00:00,7500
-Mrs Laura Fairclough,Buy To Let,Home,Variable,InterestOnly,204,2.25,20/02/2015 00:00:00,800000
-Mrs Laura Fairclough,Student Loan,Student,Tracker,Repayment,108,2.50,20/10/2020 00:00:00,450
-Mr David Farrow,Car Loan,Vehicle,Fixed,Repayment,24,2.50,20/02/2022 00:00:00,4500
-Ms Nellie Faulkner,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/05/2022 00:00:00,7500
-Ms Nellie Faulkner,Buy To Let,Home,Variable,InterestOnly,168,2.25,20/03/2015 00:00:00,400000
-Ms Nellie Faulkner,Student Loan,Student,Tracker,Repayment,96,2.75,20/03/2022 00:00:00,550
-Mr Louis Fielding,Car Loan,Vehicle,Fixed,Repayment,24,2.75,20/11/2020 00:00:00,8500
-Mrs Grace Fitzpatrick,Car Loan,Vehicle,Fixed,Repayment,24,2.25,20/01/2021 00:00:00,5000
-Mrs Grace Fitzpatrick,Student Loan,Student,Tracker,Repayment,72,2.00,20/08/2021 00:00:00,900
-Mr Joe Forrester,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/08/2021 00:00:00,8500
-Mr Joe Forrester,Buy To Let,Home,Variable,InterestOnly,216,1.75,20/02/2016 00:00:00,850000
-Ms Carrie Frazer,Student Loan,Student,Tracker,Repayment,84,2.75,20/02/2022 00:00:00,850
-Mr Charlie Frederick,Student Loan,Student,Tracker,Repayment,24,1.50,20/04/2021 00:00:00,350
-Mr Charlie Frederick,Buy To Let,Home,Variable,InterestOnly,252,1.75,20/10/2017 00:00:00,900000
-Mrs Maude Garner,Student Loan,Student,Tracker,Repayment,108,2.00,20/09/2021 00:00:00,450
-Mrs Maude Garner,Buy To Let,Home,Variable,InterestOnly,144,2.75,20/12/2016 00:00:00,850000
-Mr Clarence Gemmell,Buy To Let,Home,Variable,InterestOnly,252,2.75,20/11/2012 00:00:00,800000
-Ms Mabel Gillespie,Student Loan,Student,Tracker,Repayment,72,2.75,20/06/2021 00:00:00,800
-Ms Mabel Gillespie,Car Loan,Vehicle,Fixed,Repayment,36,1.75,20/12/2020 00:00:00,5500
-Ms Mabel Gillespie,Buy To Let,Home,Variable,InterestOnly,252,2.75,20/05/2019 00:00:00,550000
-Mr Richard Glass,Buy To Let,Home,Variable,InterestOnly,180,1.25,20/09/2012 00:00:00,900000
-Mrs Bessie Goldberg,Student Loan,Student,Tracker,Repayment,24,2.00,20/10/2020 00:00:00,750
-Mrs Bessie Goldberg,Buy To Let,Home,Variable,InterestOnly,216,2.00,20/10/2014 00:00:00,550000
-Mrs Bessie Goldberg,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/12/2020 00:00:00,7500
-Mr Andrew Graham,Car Loan,Vehicle,Fixed,Repayment,24,2.50,20/09/2020 00:00:00,7500
-Ms Jennie Greenwood,Car Loan,Vehicle,Fixed,Repayment,24,2.00,20/09/2021 00:00:00,3500
-Mr Daniel Hackett,Car Loan,Vehicle,Fixed,Repayment,36,1.75,20/01/2021 00:00:00,6500
-Mrs Gertrude Hamilton,Buy To Let,Home,Variable,InterestOnly,228,1.25,20/07/2013 00:00:00,400000
-Mrs Gertrude Hamilton,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/09/2020 00:00:00,5000
-Mrs Gertrude Hamilton,Student Loan,Student,Tracker,Repayment,24,2.50,20/04/2021 00:00:00,900
-Mr Ernest Hardy,Student Loan,Student,Tracker,Repayment,108,2.50,20/07/2021 00:00:00,850
-Mr Ernest Hardy,Car Loan,Vehicle,Fixed,Repayment,24,2.00,20/03/2022 00:00:00,3500
-Ms Julia Hennessy,Student Loan,Student,Tracker,Repayment,84,2.50,20/04/2021 00:00:00,650
-Ms Julia Hennessy,Car Loan,Vehicle,Fixed,Repayment,36,2.75,20/04/2022 00:00:00,9000
-Ms Julia Hennessy,Buy To Let,Home,Variable,InterestOnly,168,2.75,20/03/2018 00:00:00,650000
-Mr Will Higgs,Car Loan,Vehicle,Fixed,Repayment,24,2.00,20/10/2020 00:00:00,6000
-Mr Will Higgs,Student Loan,Student,Tracker,Repayment,60,2.75,20/10/2021 00:00:00,750
-Mr Will Higgs,Buy To Let,Home,Variable,InterestOnly,204,1.75,20/12/2014 00:00:00,650000
-Mrs Hattie Hodges,Buy To Let,Home,Variable,InterestOnly,240,2.75,20/05/2019 00:00:00,500000
-Mrs Hattie Hodges,Student Loan,Student,Tracker,Repayment,36,2.50,20/02/2022 00:00:00,800
-Mr Jesse Holmes,Buy To Let,Home,Variable,InterestOnly,228,2.75,20/02/2017 00:00:00,750000
-Mr Jesse Holmes,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/02/2022 00:00:00,3500
-Ms Edith Howard,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/12/2020 00:00:00,5000
-Mr Oscar Ingham,Car Loan,Vehicle,Fixed,Repayment,36,2.25,20/09/2020 00:00:00,4000
-Mr Oscar Ingham,Buy To Let,Home,Variable,InterestOnly,132,2.00,20/10/2013 00:00:00,800000
-Mrs Mattie Irwin,Car Loan,Vehicle,Fixed,Repayment,36,1.75,20/05/2022 00:00:00,7500
-Mrs Mattie Irwin,Student Loan,Student,Tracker,Repayment,48,2.75,20/01/2021 00:00:00,650
-Mr Lewis James,Car Loan,Vehicle,Fixed,Repayment,36,2.00,20/03/2021 00:00:00,9000
-Mr Lewis James,Student Loan,Student,Tracker,Repayment,36,1.75,20/10/2020 00:00:00,500
-Mr Lewis James,Buy To Let,Home,Variable,InterestOnly,228,2.25,20/01/2015 00:00:00,750000
-Ms Rose Jennings,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/09/2021 00:00:00,8000
-Mr Peter Johnson,Car Loan,Vehicle,Fixed,Repayment,24,2.50,20/02/2022 00:00:00,7500
-Mr Peter Johnson,Buy To Let,Home,Variable,InterestOnly,216,2.50,20/08/2015 00:00:00,750000
-Mrs Catherine Kane,Car Loan,Vehicle,Fixed,Repayment,36,1.25,20/09/2020 00:00:00,5500
-Mrs Catherine Kane,Student Loan,Student,Tracker,Repayment,84,1.50,20/10/2020 00:00:00,650
-Mrs Catherine Kane,Buy To Let,Home,Variable,InterestOnly,276,2.75,20/10/2016 00:00:00,350000
-Mr Benjamin Keane,Student Loan,Student,Tracker,Repayment,72,1.50,20/08/2021 00:00:00,750
-Ms Lillian Kemp,Car Loan,Vehicle,Fixed,Repayment,36,2.75,20/06/2021 00:00:00,6000
-Ms Lillian Kemp,Buy To Let,Home,Variable,InterestOnly,168,2.00,20/02/2015 00:00:00,750000
-Mr Frederick Lennox,Car Loan,Vehicle,Fixed,Repayment,24,1.25,20/07/2021 00:00:00,6500
-Mrs Ada Linford,Buy To Let,Home,Variable,InterestOnly,168,1.25,20/03/2014 00:00:00,400000
-Mr Willie Marlow,Buy To Let,Home,Variable,InterestOnly,252,1.50,20/04/2015 00:00:00,400000
-Mr Willie Marlow,Car Loan,Vehicle,Fixed,Repayment,36,2.25,20/04/2021 00:00:00,6500
-Ms Lillie Matthews,Car Loan,Vehicle,Fixed,Repayment,24,1.25,20/05/2022 00:00:00,6000
-Ms Lillie Matthews,Buy To Let,Home,Variable,InterestOnly,264,2.00,20/01/2015 00:00:00,600000
-Ms Lillie Matthews,Student Loan,Student,Tracker,Repayment,96,2.25,20/11/2021 00:00:00,450
-Mr Alfred Millett,Student Loan,Student,Tracker,Repayment,72,1.50,20/11/2020 00:00:00,750
-Mrs Helen Milner,Car Loan,Vehicle,Fixed,Repayment,36,2.00,20/07/2021 00:00:00,5500
-Mrs Helen Milner,Buy To Let,Home,Variable,InterestOnly,120,2.25,20/01/2018 00:00:00,550000
-Mr Sam Morrison,Buy To Let,Home,Variable,InterestOnly,120,2.00,20/06/2017 00:00:00,500000
-Mr Sam Morrison,Student Loan,Student,Tracker,Repayment,24,1.25,20/03/2022 00:00:00,800
-Mr Sam Morrison,Car Loan,Vehicle,Fixed,Repayment,24,2.75,20/08/2021 00:00:00,4000
-Ms Jessie Osborne,Student Loan,Student,Tracker,Repayment,60,2.75,20/03/2022 00:00:00,550
-Ms Jessie Osborne,Buy To Let,Home,Variable,InterestOnly,168,2.25,20/07/2018 00:00:00,750000
-Ms Jessie Osborne,Car Loan,Vehicle,Fixed,Repayment,36,1.50,20/05/2022 00:00:00,5000
-Mr Roy Oxley,Buy To Let,Home,Variable,InterestOnly,216,1.50,20/03/2014 00:00:00,600000
-Mr Roy Oxley,Student Loan,Student,Tracker,Repayment,24,2.00,20/11/2021 00:00:00,350
-Mr Roy Oxley,Car Loan,Vehicle,Fixed,Repayment,36,1.25,20/05/2021 00:00:00,8000
-Mrs Louise Parkins,Buy To Let,Home,Variable,InterestOnly,192,2.25,20/09/2014 00:00:00,450000
-Mrs Louise Parkins,Student Loan,Student,Tracker,Repayment,24,1.25,20/05/2021 00:00:00,650
-Mr Herbert Patrick,Buy To Let,Home,Variable,InterestOnly,168,1.75,20/08/2017 00:00:00,800000
-Ms Ethel Pegg,Student Loan,Student,Tracker,Repayment,60,1.75,20/04/2021 00:00:00,750
-Mr Jacob Powell,Student Loan,Student,Tracker,Repayment,84,1.75,20/11/2020 00:00:00,900
-Mr Jacob Powell,Buy To Let,Home,Variable,InterestOnly,168,2.00,20/10/2013 00:00:00,600000
-Mr Jacob Powell,Car Loan,Vehicle,Fixed,Repayment,36,1.50,20/04/2022 00:00:00,8500
-Mrs Lula Redmond,Buy To Let,Home,Variable,InterestOnly,204,2.50,20/12/2012 00:00:00,500000
-Mrs Lula Redmond,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/09/2021 00:00:00,7500
-Mr Tom Rhodes,Student Loan,Student,Tracker,Repayment,48,2.75,20/11/2021 00:00:00,350
-Ms Myrtle Rowlands,Buy To Let,Home,Variable,InterestOnly,276,1.75,20/04/2019 00:00:00,450000
-Mr Carl Sampson,Student Loan,Student,Tracker,Repayment,36,2.00,20/05/2021 00:00:00,500
-Mr Carl Sampson,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/05/2021 00:00:00,5000
-Mrs Eva Seymour,Student Loan,Student,Tracker,Repayment,36,1.50,20/02/2022 00:00:00,500
-Mr Lee Shackleton,Student Loan,Student,Tracker,Repayment,48,2.50,20/04/2021 00:00:00,500
-Ms Frances Shipley,Buy To Let,Home,Variable,InterestOnly,156,2.00,20/02/2013 00:00:00,650000
-Ms Frances Shipley,Student Loan,Student,Tracker,Repayment,60,2.75,20/04/2021 00:00:00,650
-Ms Frances Shipley,Car Loan,Vehicle,Fixed,Repayment,24,2.75,20/02/2021 00:00:00,5500
-Mr Howard Slade,Buy To Let,Home,Variable,InterestOnly,132,2.00,20/02/2013 00:00:00,800000
-Mr Howard Slade,Car Loan,Vehicle,Fixed,Repayment,24,1.25,20/05/2022 00:00:00,8500
-Mr Howard Slade,Student Loan,Student,Tracker,Repayment,84,1.50,20/10/2020 00:00:00,750
-Mrs Lena Southgate,Buy To Let,Home,Variable,InterestOnly,252,2.50,20/06/2016 00:00:00,900000
-Mrs Lena Southgate,Car Loan,Vehicle,Fixed,Repayment,24,1.50,20/10/2021 00:00:00,4500
-Mrs Lena Southgate,Student Loan,Student,Tracker,Repayment,72,2.50,20/02/2021 00:00:00,600
-Mr Martin Taylor,Buy To Let,Home,Variable,InterestOnly,204,2.50,20/11/2016 00:00:00,750000
-Ms Lucy Tindall,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/12/2020 00:00:00,8000
-Ms Lucy Tindall,Buy To Let,Home,Variable,InterestOnly,252,2.00,20/02/2014 00:00:00,800000
-Ms Lucy Tindall,Student Loan,Student,Tracker,Repayment,36,1.75,20/09/2021 00:00:00,800
-Mr Michael Tomkins,Buy To Let,Home,Variable,InterestOnly,132,2.50,20/05/2018 00:00:00,800000
-Mr Michael Tomkins,Student Loan,Student,Tracker,Repayment,84,2.50,20/10/2020 00:00:00,750
-Mr Michael Tomkins,Car Loan,Vehicle,Fixed,Repayment,24,2.75,20/11/2020 00:00:00,3500
-Mrs Edna Tomlinson,Car Loan,Vehicle,Fixed,Repayment,36,2.50,20/12/2020 00:00:00,8500
-Mrs Edna Tomlinson,Student Loan,Student,Tracker,Repayment,96,1.25,20/08/2021 00:00:00,750
-Mr Bert Trafford,Buy To Let,Home,Variable,InterestOnly,276,2.00,20/12/2013 00:00:00,400000
-Mr Bert Trafford,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/10/2020 00:00:00,7500
-Mr Bert Trafford,Student Loan,Student,Tracker,Repayment,48,2.00,20/02/2022 00:00:00,750
-Ms Maggie Tucker,Buy To Let,Home,Variable,InterestOnly,228,1.50,20/12/2012 00:00:00,550000
-Mr Herman Upton,Car Loan,Vehicle,Fixed,Repayment,24,1.75,20/02/2022 00:00:00,6500
-Mrs Pearl Vernon,Student Loan,Student,Tracker,Repayment,84,2.00,20/11/2020 00:00:00,450
-Mrs Pearl Vernon,Buy To Let,Home,Variable,InterestOnly,228,2.50,20/09/2018 00:00:00,750000
-Mr Jim Wainwright,Car Loan,Vehicle,Fixed,Repayment,36,1.75,20/05/2022 00:00:00,4500
-Ms Daisy Walton,Buy To Let,Home,Variable,InterestOnly,288,2.25,20/07/2017 00:00:00,650000
-Mr Eugene Wells,Student Loan,Student,Tracker,Repayment,36,2.00,20/03/2022 00:00:00,850
-Mr Eugene Wells,Car Loan,Vehicle,Fixed,Repayment,36,1.25,20/09/2020 00:00:00,6000
-Mrs Fannie Williams,Student Loan,Student,Tracker,Repayment,24,2.50,20/05/2021 00:00:00,850
-Mrs Fannie Williams,Buy To Let,Home,Variable,InterestOnly,216,2.75,20/09/2012 00:00:00,550000
-Mr Alex Wright,Student Loan,Student,Tracker,Repayment,96,2.50,20/09/2020 00:00:00,500
-Ms Josephine Yates,Student Loan,Student,Tracker,Repayment,72,2.00,20/05/2022 00:00:00,850
+customername,productname,producttype,ratetype,repaymenttype,duration,rate,startdate,value
+Mr John Adam,Car Loan,Vehicle,Fixed,Repayment,36,2.25,2021-05-19T23:00:00.000+0,8000
+Mr John Adam,Buy To Let,Home,Variable,InterestOnly,168,2.75,2016-01-20T00:00:00.000+0,600000
+Mr John Adam,Student Loan,Student,Tracker,Repayment,24,2.75,2022-04-19T23:00:00.000+0,750
+Mrs Mary Albert,Buy To Let,Home,Variable,InterestOnly,252,1.50,2013-08-19T23:00:00.000+0,850000
+Mr William Alexander,Student Loan,Student,Tracker,Repayment,84,2.00,2020-12-20T00:00:00.000+0,750
+Mr William Alexander,Car Loan,Vehicle,Fixed,Repayment,36,1.50,2021-07-19T23:00:00.000+0,6500
+Ms Anna Anderson,Buy To Let,Home,Variable,InterestOnly,192,2.50,2016-09-19T23:00:00.000+0,900000
+Ms Anna Anderson,Car Loan,Vehicle,Fixed,Repayment,36,1.50,2020-09-19T23:00:00.000+0,7500
+Ms Anna Anderson,Student Loan,Student,Tracker,Repayment,96,1.75,2022-05-19T23:00:00.000+0,750
+Mr James Andrews,Student Loan,Student,Tracker,Repayment,60,1.75,2021-01-20T00:00:00.000+0,500
+Mr James Andrews,Buy To Let,Home,Variable,InterestOnly,180,1.50,2019-05-19T23:00:00.000+0,350000
+Mr James Andrews,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2021-01-20T00:00:00.000+0,5500
+Mrs Emma Ashcroft,Student Loan,Student,Tracker,Repayment,108,1.75,2021-03-20T00:00:00.000+0,550
+Mr Charles Bailey,Car Loan,Vehicle,Fixed,Repayment,24,1.50,2020-11-20T00:00:00.000+0,6500
+Mr Charles Bailey,Buy To Let,Home,Variable,InterestOnly,228,1.50,2014-12-20T00:00:00.000+0,900000
+Ms Elizabeth Bainbridge,Student Loan,Student,Tracker,Repayment,96,2.25,2021-07-19T23:00:00.000+0,800
+Mr George Bale,Car Loan,Vehicle,Fixed,Repayment,36,1.25,2021-01-20T00:00:00.000+0,6000
+Mrs Minnie Ball,Student Loan,Student,Tracker,Repayment,24,1.25,2020-10-19T23:00:00.000+0,900
+Mr Frank Barnard,Buy To Let,Home,Variable,InterestOnly,288,1.75,2014-10-19T23:00:00.000+0,850000
+Mr Frank Barnard,Student Loan,Student,Tracker,Repayment,84,2.50,2021-05-19T23:00:00.000+0,550
+Mr Frank Barnard,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2021-10-19T23:00:00.000+0,6500
+Ms Margaret Barnes,Student Loan,Student,Tracker,Repayment,84,2.50,2021-08-19T23:00:00.000+0,600
+Mr Joseph Barnett,Car Loan,Vehicle,Fixed,Repayment,24,2.25,2021-04-19T23:00:00.000+0,9000
+Mr Joseph Barnett,Buy To Let,Home,Variable,InterestOnly,132,2.00,2019-04-19T23:00:00.000+0,650000
+Mrs Ida Beattie,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2022-03-20T00:00:00.000+0,8000
+Mrs Ida Beattie,Buy To Let,Home,Variable,InterestOnly,120,1.75,2018-12-20T00:00:00.000+0,400000
+Mrs Ida Beattie,Student Loan,Student,Tracker,Repayment,96,1.75,2020-10-19T23:00:00.000+0,350
+Mr Thomas Chance,Student Loan,Student,Tracker,Repayment,24,2.50,2022-03-20T00:00:00.000+0,450
+Mr Thomas Chance,Car Loan,Vehicle,Fixed,Repayment,24,1.50,2021-02-20T00:00:00.000+0,3500
+Ms Alice Clark,Student Loan,Student,Tracker,Repayment,72,2.50,2022-02-20T00:00:00.000+0,750
+Mr Henry Clegg,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2021-10-19T23:00:00.000+0,4000
+Mr Henry Clegg,Student Loan,Student,Tracker,Repayment,48,1.25,2021-03-20T00:00:00.000+0,750
+Mrs Bertha Collins,Student Loan,Student,Tracker,Repayment,48,1.50,2020-09-19T23:00:00.000+0,350
+Mrs Bertha Collins,Car Loan,Vehicle,Fixed,Repayment,36,2.25,2021-10-19T23:00:00.000+0,8500
+Mrs Bertha Collins,Buy To Let,Home,Variable,InterestOnly,156,2.50,2018-07-19T23:00:00.000+0,750000
+Mr Robert Copeland,Buy To Let,Home,Variable,InterestOnly,156,2.50,2018-11-20T00:00:00.000+0,600000
+Ms Sarah Cowell,Buy To Let,Home,Variable,InterestOnly,156,2.50,2013-01-20T00:00:00.000+0,650000
+Ms Sarah Cowell,Student Loan,Student,Tracker,Repayment,96,2.75,2021-09-19T23:00:00.000+0,600
+Mr Edward Crosby,Car Loan,Vehicle,Fixed,Repayment,36,2.00,2022-04-19T23:00:00.000+0,4000
+Mrs Annie Cummings,Student Loan,Student,Tracker,Repayment,36,2.75,2020-12-20T00:00:00.000+0,400
+Mr Harry Davidson,Car Loan,Vehicle,Fixed,Repayment,36,2.00,2021-08-19T23:00:00.000+0,9000
+Mr Harry Davidson,Buy To Let,Home,Variable,InterestOnly,132,2.75,2013-07-19T23:00:00.000+0,600000
+Mr Harry Davidson,Student Loan,Student,Tracker,Repayment,48,2.25,2021-08-19T23:00:00.000+0,800
+Ms Clara Deeley,Buy To Let,Home,Variable,InterestOnly,132,2.50,2018-01-20T00:00:00.000+0,550000
+Ms Clara Deeley,Car Loan,Vehicle,Fixed,Repayment,36,2.25,2022-05-19T23:00:00.000+0,9000
+Ms Clara Deeley,Student Loan,Student,Tracker,Repayment,60,2.25,2020-12-20T00:00:00.000+0,600
+Mr Walter Dexter,Buy To Let,Home,Variable,InterestOnly,180,1.25,2016-04-19T23:00:00.000+0,900000
+Mr Walter Dexter,Student Loan,Student,Tracker,Repayment,24,2.25,2021-10-19T23:00:00.000+0,650
+Mr Walter Dexter,Car Loan,Vehicle,Fixed,Repayment,24,2.00,2021-08-19T23:00:00.000+0,9000
+Mrs Ella Donaldson,Buy To Let,Home,Variable,InterestOnly,132,1.50,2017-05-19T23:00:00.000+0,550000
+Mrs Ella Donaldson,Car Loan,Vehicle,Fixed,Repayment,36,2.00,2020-10-19T23:00:00.000+0,7500
+Mr Arthur Easton,Buy To Let,Home,Variable,InterestOnly,132,2.50,2016-12-20T00:00:00.000+0,500000
+Mr Arthur Easton,Student Loan,Student,Tracker,Repayment,108,1.50,2021-12-20T00:00:00.000+0,400
+Ms Florence Eccles,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2022-05-19T23:00:00.000+0,8500
+Mr Fred Eddison,Car Loan,Vehicle,Fixed,Repayment,24,1.25,2021-11-20T00:00:00.000+0,6500
+Mr Fred Eddison,Buy To Let,Home,Variable,InterestOnly,168,2.50,2013-08-19T23:00:00.000+0,400000
+Mrs Cora Edmond,Student Loan,Student,Tracker,Repayment,84,2.25,2021-05-19T23:00:00.000+0,650
+Mr Albert Eldridge,Student Loan,Student,Tracker,Repayment,60,2.75,2020-10-19T23:00:00.000+0,400
+Ms Martha Elliot,Buy To Let,Home,Variable,InterestOnly,252,1.25,2018-11-20T00:00:00.000+0,450000
+Ms Martha Elliot,Student Loan,Student,Tracker,Repayment,96,1.50,2020-09-19T23:00:00.000+0,400
+Ms Martha Elliot,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2020-10-19T23:00:00.000+0,6000
+Mr Samuel Emerson,Student Loan,Student,Tracker,Repayment,48,2.50,2021-12-20T00:00:00.000+0,400
+Mr Samuel Emerson,Car Loan,Vehicle,Fixed,Repayment,36,2.75,2021-06-19T23:00:00.000+0,5000
+Mrs Laura Fairclough,Car Loan,Vehicle,Fixed,Repayment,24,1.50,2021-06-19T23:00:00.000+0,7500
+Mrs Laura Fairclough,Buy To Let,Home,Variable,InterestOnly,204,2.25,2015-02-20T00:00:00.000+0,800000
+Mrs Laura Fairclough,Student Loan,Student,Tracker,Repayment,108,2.50,2020-10-19T23:00:00.000+0,450
+Mr David Farrow,Car Loan,Vehicle,Fixed,Repayment,24,2.50,2022-02-20T00:00:00.000+0,4500
+Ms Nellie Faulkner,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2022-05-19T23:00:00.000+0,7500
+Ms Nellie Faulkner,Buy To Let,Home,Variable,InterestOnly,168,2.25,2015-03-20T00:00:00.000+0,400000
+Ms Nellie Faulkner,Student Loan,Student,Tracker,Repayment,96,2.75,2022-03-20T00:00:00.000+0,550
+Mr Louis Fielding,Car Loan,Vehicle,Fixed,Repayment,24,2.75,2020-11-20T00:00:00.000+0,8500
+Mrs Grace Fitzpatrick,Car Loan,Vehicle,Fixed,Repayment,24,2.25,2021-01-20T00:00:00.000+0,5000
+Mrs Grace Fitzpatrick,Student Loan,Student,Tracker,Repayment,72,2.00,2021-08-19T23:00:00.000+0,900
+Mr Joe Forrester,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2021-08-19T23:00:00.000+0,8500
+Mr Joe Forrester,Buy To Let,Home,Variable,InterestOnly,216,1.75,2016-02-20T00:00:00.000+0,850000
+Ms Carrie Frazer,Student Loan,Student,Tracker,Repayment,84,2.75,2022-02-20T00:00:00.000+0,850
+Mr Charlie Frederick,Student Loan,Student,Tracker,Repayment,24,1.50,2021-04-19T23:00:00.000+0,350
+Mr Charlie Frederick,Buy To Let,Home,Variable,InterestOnly,252,1.75,2017-10-19T23:00:00.000+0,900000
+Mrs Maude Garner,Student Loan,Student,Tracker,Repayment,108,2.00,2021-09-19T23:00:00.000+0,450
+Mrs Maude Garner,Buy To Let,Home,Variable,InterestOnly,144,2.75,2016-12-20T00:00:00.000+0,850000
+Mr Clarence Gemmell,Buy To Let,Home,Variable,InterestOnly,252,2.75,2012-11-20T00:00:00.000+0,800000
+Ms Mabel Gillespie,Student Loan,Student,Tracker,Repayment,72,2.75,2021-06-19T23:00:00.000+0,800
+Ms Mabel Gillespie,Car Loan,Vehicle,Fixed,Repayment,36,1.75,2020-12-20T00:00:00.000+0,5500
+Ms Mabel Gillespie,Buy To Let,Home,Variable,InterestOnly,252,2.75,2019-05-19T23:00:00.000+0,550000
+Mr Richard Glass,Buy To Let,Home,Variable,InterestOnly,180,1.25,2012-09-19T23:00:00.000+0,900000
+Mrs Bessie Goldberg,Student Loan,Student,Tracker,Repayment,24,2.00,2020-10-19T23:00:00.000+0,750
+Mrs Bessie Goldberg,Buy To Let,Home,Variable,InterestOnly,216,2.00,2014-10-19T23:00:00.000+0,550000
+Mrs Bessie Goldberg,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2020-12-20T00:00:00.000+0,7500
+Mr Andrew Graham,Car Loan,Vehicle,Fixed,Repayment,24,2.50,2020-09-19T23:00:00.000+0,7500
+Ms Jennie Greenwood,Car Loan,Vehicle,Fixed,Repayment,24,2.00,2021-09-19T23:00:00.000+0,3500
+Mr Daniel Hackett,Car Loan,Vehicle,Fixed,Repayment,36,1.75,2021-01-20T00:00:00.000+0,6500
+Mrs Gertrude Hamilton,Buy To Let,Home,Variable,InterestOnly,228,1.25,2013-07-19T23:00:00.000+0,400000
+Mrs Gertrude Hamilton,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2020-09-19T23:00:00.000+0,5000
+Mrs Gertrude Hamilton,Student Loan,Student,Tracker,Repayment,24,2.50,2021-04-19T23:00:00.000+0,900
+Mr Ernest Hardy,Student Loan,Student,Tracker,Repayment,108,2.50,2021-07-19T23:00:00.000+0,850
+Mr Ernest Hardy,Car Loan,Vehicle,Fixed,Repayment,24,2.00,2022-03-20T00:00:00.000+0,3500
+Ms Julia Hennessy,Student Loan,Student,Tracker,Repayment,84,2.50,2021-04-19T23:00:00.000+0,650
+Ms Julia Hennessy,Car Loan,Vehicle,Fixed,Repayment,36,2.75,2022-04-19T23:00:00.000+0,9000
+Ms Julia Hennessy,Buy To Let,Home,Variable,InterestOnly,168,2.75,2018-03-20T00:00:00.000+0,650000
+Mr Will Higgs,Car Loan,Vehicle,Fixed,Repayment,24,2.00,2020-10-19T23:00:00.000+0,6000
+Mr Will Higgs,Student Loan,Student,Tracker,Repayment,60,2.75,2021-10-19T23:00:00.000+0,750
+Mr Will Higgs,Buy To Let,Home,Variable,InterestOnly,204,1.75,2014-12-20T00:00:00.000+0,650000
+Mrs Hattie Hodges,Buy To Let,Home,Variable,InterestOnly,240,2.75,2019-05-19T23:00:00.000+0,500000
+Mrs Hattie Hodges,Student Loan,Student,Tracker,Repayment,36,2.50,2022-02-20T00:00:00.000+0,800
+Mr Jesse Holmes,Buy To Let,Home,Variable,InterestOnly,228,2.75,2017-02-20T00:00:00.000+0,750000
+Mr Jesse Holmes,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2022-02-20T00:00:00.000+0,3500
+Ms Edith Howard,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2020-12-20T00:00:00.000+0,5000
+Mr Oscar Ingham,Car Loan,Vehicle,Fixed,Repayment,36,2.25,2020-09-19T23:00:00.000+0,4000
+Mr Oscar Ingham,Buy To Let,Home,Variable,InterestOnly,132,2.00,2013-10-19T23:00:00.000+0,800000
+Mrs Mattie Irwin,Car Loan,Vehicle,Fixed,Repayment,36,1.75,2022-05-19T23:00:00.000+0,7500
+Mrs Mattie Irwin,Student Loan,Student,Tracker,Repayment,48,2.75,2021-01-20T00:00:00.000+0,650
+Mr Lewis James,Car Loan,Vehicle,Fixed,Repayment,36,2.00,2021-03-20T00:00:00.000+0,9000
+Mr Lewis James,Student Loan,Student,Tracker,Repayment,36,1.75,2020-10-19T23:00:00.000+0,500
+Mr Lewis James,Buy To Let,Home,Variable,InterestOnly,228,2.25,2015-01-20T00:00:00.000+0,750000
+Ms Rose Jennings,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2021-09-19T23:00:00.000+0,8000
+Mr Peter Johnson,Car Loan,Vehicle,Fixed,Repayment,24,2.50,2022-02-20T00:00:00.000+0,7500
+Mr Peter Johnson,Buy To Let,Home,Variable,InterestOnly,216,2.50,2015-08-19T23:00:00.000+0,750000
+Mrs Catherine Kane,Car Loan,Vehicle,Fixed,Repayment,36,1.25,2020-09-19T23:00:00.000+0,5500
+Mrs Catherine Kane,Student Loan,Student,Tracker,Repayment,84,1.50,2020-10-19T23:00:00.000+0,650
+Mrs Catherine Kane,Buy To Let,Home,Variable,InterestOnly,276,2.75,2016-10-19T23:00:00.000+0,350000
+Mr Benjamin Keane,Student Loan,Student,Tracker,Repayment,72,1.50,2021-08-19T23:00:00.000+0,750
+Ms Lillian Kemp,Car Loan,Vehicle,Fixed,Repayment,36,2.75,2021-06-19T23:00:00.000+0,6000
+Ms Lillian Kemp,Buy To Let,Home,Variable,InterestOnly,168,2.00,2015-02-20T00:00:00.000+0,750000
+Mr Frederick Lennox,Car Loan,Vehicle,Fixed,Repayment,24,1.25,2021-07-19T23:00:00.000+0,6500
+Mrs Ada Linford,Buy To Let,Home,Variable,InterestOnly,168,1.25,2014-03-20T00:00:00.000+0,400000
+Mr Willie Marlow,Buy To Let,Home,Variable,InterestOnly,252,1.50,2015-04-19T23:00:00.000+0,400000
+Mr Willie Marlow,Car Loan,Vehicle,Fixed,Repayment,36,2.25,2021-04-19T23:00:00.000+0,6500
+Ms Lillie Matthews,Car Loan,Vehicle,Fixed,Repayment,24,1.25,2022-05-19T23:00:00.000+0,6000
+Ms Lillie Matthews,Buy To Let,Home,Variable,InterestOnly,264,2.00,2015-01-20T00:00:00.000+0,600000
+Ms Lillie Matthews,Student Loan,Student,Tracker,Repayment,96,2.25,2021-11-20T00:00:00.000+0,450
+Mr Alfred Millett,Student Loan,Student,Tracker,Repayment,72,1.50,2020-11-20T00:00:00.000+0,750
+Mrs Helen Milner,Car Loan,Vehicle,Fixed,Repayment,36,2.00,2021-07-19T23:00:00.000+0,5500
+Mrs Helen Milner,Buy To Let,Home,Variable,InterestOnly,120,2.25,2018-01-20T00:00:00.000+0,550000
+Mr Sam Morrison,Buy To Let,Home,Variable,InterestOnly,120,2.00,2017-06-19T23:00:00.000+0,500000
+Mr Sam Morrison,Student Loan,Student,Tracker,Repayment,24,1.25,2022-03-20T00:00:00.000+0,800
+Mr Sam Morrison,Car Loan,Vehicle,Fixed,Repayment,24,2.75,2021-08-19T23:00:00.000+0,4000
+Ms Jessie Osborne,Student Loan,Student,Tracker,Repayment,60,2.75,2022-03-20T00:00:00.000+0,550
+Ms Jessie Osborne,Buy To Let,Home,Variable,InterestOnly,168,2.25,2018-07-19T23:00:00.000+0,750000
+Ms Jessie Osborne,Car Loan,Vehicle,Fixed,Repayment,36,1.50,2022-05-19T23:00:00.000+0,5000
+Mr Roy Oxley,Buy To Let,Home,Variable,InterestOnly,216,1.50,2014-03-20T00:00:00.000+0,600000
+Mr Roy Oxley,Student Loan,Student,Tracker,Repayment,24,2.00,2021-11-20T00:00:00.000+0,350
+Mr Roy Oxley,Car Loan,Vehicle,Fixed,Repayment,36,1.25,2021-05-19T23:00:00.000+0,8000
+Mrs Louise Parkins,Buy To Let,Home,Variable,InterestOnly,192,2.25,2014-09-19T23:00:00.000+0,450000
+Mrs Louise Parkins,Student Loan,Student,Tracker,Repayment,24,1.25,2021-05-19T23:00:00.000+0,650
+Mr Herbert Patrick,Buy To Let,Home,Variable,InterestOnly,168,1.75,2017-08-19T23:00:00.000+0,800000
+Ms Ethel Pegg,Student Loan,Student,Tracker,Repayment,60,1.75,2021-04-19T23:00:00.000+0,750
+Mr Jacob Powell,Student Loan,Student,Tracker,Repayment,84,1.75,2020-11-20T00:00:00.000+0,900
+Mr Jacob Powell,Buy To Let,Home,Variable,InterestOnly,168,2.00,2013-10-19T23:00:00.000+0,600000
+Mr Jacob Powell,Car Loan,Vehicle,Fixed,Repayment,36,1.50,2022-04-19T23:00:00.000+0,8500
+Mrs Lula Redmond,Buy To Let,Home,Variable,InterestOnly,204,2.50,2012-12-20T00:00:00.000+0,500000
+Mrs Lula Redmond,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2021-09-19T23:00:00.000+0,7500
+Mr Tom Rhodes,Student Loan,Student,Tracker,Repayment,48,2.75,2021-11-20T00:00:00.000+0,350
+Ms Myrtle Rowlands,Buy To Let,Home,Variable,InterestOnly,276,1.75,2019-04-19T23:00:00.000+0,450000
+Mr Carl Sampson,Student Loan,Student,Tracker,Repayment,36,2.00,2021-05-19T23:00:00.000+0,500
+Mr Carl Sampson,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2021-05-19T23:00:00.000+0,5000
+Mrs Eva Seymour,Student Loan,Student,Tracker,Repayment,36,1.50,2022-02-20T00:00:00.000+0,500
+Mr Lee Shackleton,Student Loan,Student,Tracker,Repayment,48,2.50,2021-04-19T23:00:00.000+0,500
+Ms Frances Shipley,Buy To Let,Home,Variable,InterestOnly,156,2.00,2013-02-20T00:00:00.000+0,650000
+Ms Frances Shipley,Student Loan,Student,Tracker,Repayment,60,2.75,2021-04-19T23:00:00.000+0,650
+Ms Frances Shipley,Car Loan,Vehicle,Fixed,Repayment,24,2.75,2021-02-20T00:00:00.000+0,5500
+Mr Howard Slade,Buy To Let,Home,Variable,InterestOnly,132,2.00,2013-02-20T00:00:00.000+0,800000
+Mr Howard Slade,Car Loan,Vehicle,Fixed,Repayment,24,1.25,2022-05-19T23:00:00.000+0,8500
+Mr Howard Slade,Student Loan,Student,Tracker,Repayment,84,1.50,2020-10-19T23:00:00.000+0,750
+Mrs Lena Southgate,Buy To Let,Home,Variable,InterestOnly,252,2.50,2016-06-19T23:00:00.000+0,900000
+Mrs Lena Southgate,Car Loan,Vehicle,Fixed,Repayment,24,1.50,2021-10-19T23:00:00.000+0,4500
+Mrs Lena Southgate,Student Loan,Student,Tracker,Repayment,72,2.50,2021-02-20T00:00:00.000+0,600
+Mr Martin Taylor,Buy To Let,Home,Variable,InterestOnly,204,2.50,2016-11-20T00:00:00.000+0,750000
+Ms Lucy Tindall,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2020-12-20T00:00:00.000+0,8000
+Ms Lucy Tindall,Buy To Let,Home,Variable,InterestOnly,252,2.00,2014-02-20T00:00:00.000+0,800000
+Ms Lucy Tindall,Student Loan,Student,Tracker,Repayment,36,1.75,2021-09-19T23:00:00.000+0,800
+Mr Michael Tomkins,Buy To Let,Home,Variable,InterestOnly,132,2.50,2018-05-19T23:00:00.000+0,800000
+Mr Michael Tomkins,Student Loan,Student,Tracker,Repayment,84,2.50,2020-10-19T23:00:00.000+0,750
+Mr Michael Tomkins,Car Loan,Vehicle,Fixed,Repayment,24,2.75,2020-11-20T00:00:00.000+0,3500
+Mrs Edna Tomlinson,Car Loan,Vehicle,Fixed,Repayment,36,2.50,2020-12-20T00:00:00.000+0,8500
+Mrs Edna Tomlinson,Student Loan,Student,Tracker,Repayment,96,1.25,2021-08-19T23:00:00.000+0,750
+Mr Bert Trafford,Buy To Let,Home,Variable,InterestOnly,276,2.00,2013-12-20T00:00:00.000+0,400000
+Mr Bert Trafford,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2020-10-19T23:00:00.000+0,7500
+Mr Bert Trafford,Student Loan,Student,Tracker,Repayment,48,2.00,2022-02-20T00:00:00.000+0,750
+Ms Maggie Tucker,Buy To Let,Home,Variable,InterestOnly,228,1.50,2012-12-20T00:00:00.000+0,550000
+Mr Herman Upton,Car Loan,Vehicle,Fixed,Repayment,24,1.75,2022-02-20T00:00:00.000+0,6500
+Mrs Pearl Vernon,Student Loan,Student,Tracker,Repayment,84,2.00,2020-11-20T00:00:00.000+0,450
+Mrs Pearl Vernon,Buy To Let,Home,Variable,InterestOnly,228,2.50,2018-09-19T23:00:00.000+0,750000
+Mr Jim Wainwright,Car Loan,Vehicle,Fixed,Repayment,36,1.75,2022-05-19T23:00:00.000+0,4500
+Ms Daisy Walton,Buy To Let,Home,Variable,InterestOnly,288,2.25,2017-07-19T23:00:00.000+0,650000
+Mr Eugene Wells,Student Loan,Student,Tracker,Repayment,36,2.00,2022-03-20T00:00:00.000+0,850
+Mr Eugene Wells,Car Loan,Vehicle,Fixed,Repayment,36,1.25,2020-09-19T23:00:00.000+0,6000
+Mrs Fannie Williams,Student Loan,Student,Tracker,Repayment,24,2.50,2021-05-19T23:00:00.000+0,850
+Mrs Fannie Williams,Buy To Let,Home,Variable,InterestOnly,216,2.75,2012-09-19T23:00:00.000+0,550000
+Mr Alex Wright,Student Loan,Student,Tracker,Repayment,96,2.50,2020-09-19T23:00:00.000+0,500
+Ms Josephine Yates,Student Loan,Student,Tracker,Repayment,72,2.00,2022-05-19T23:00:00.000+0,850

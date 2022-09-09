@@ -316,7 +316,7 @@ namespace Headway.SeedData.RemediatR
                         RepaymentType = (RepaymentType)Enum.Parse(typeof(RepaymentType), p[4]),
                         Duration = int.Parse(p[5]),
                         Rate = decimal.Parse(p[6]),
-                        StartDate = DateTime.Parse(p[7]),
+                        StartDate = DateTime.ParseExact(p[7], "yyyy-MM-ddTHH:mm:ss.fffz", null),
                         Value = decimal.Parse(p[8])
                     });
                 }
