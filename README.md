@@ -232,11 +232,7 @@ Alternatively, modules, categories and menu items can be configured under the Na
 
 #### 6. Bind Permissions to the Flow
 
-### Optional Extras
-
-#### Capture History
-
-#### Capture an Audit Trail
+## Authentication
 
 ### Token-based Authentication
 Blazor applications use [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://jwt.io/introduction), which is a safe means of representing claims that can be transferred between parties.
