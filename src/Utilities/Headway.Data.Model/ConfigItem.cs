@@ -26,6 +26,10 @@ namespace Headway.Data.Model
         public string Label { get; set; }
         public string Tooltip { get; set; }
         public string Component { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual ConfigContainer ConfigContainer { get; set; }
         public virtual Config Config { get; set; }

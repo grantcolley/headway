@@ -12,17 +12,16 @@ namespace Headway.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class DemoModelItem
+    public partial class Audit
     {
-        public int DemoModelItemId { get; set; }
-        public int DemoModelId { get; set; }
-        public int Order { get; set; }
-        public string Name { get; set; }
-        public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-    
-        public virtual DemoModel DemoModel { get; set; }
+        public int Id { get; set; }
+        public string ClrType { get; set; }
+        public string TableName { get; set; }
+        public string Action { get; set; }
+        public string EntityId { get; set; }
+        public string OldValues { get; set; }
+        public string NewValues { get; set; }
+        public string User { get; set; }
+        public System.DateTime DateTime { get; set; }
     }
 }

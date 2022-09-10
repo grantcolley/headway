@@ -32,6 +32,10 @@ namespace Headway.Data.Model
         public string Text { get; set; }
         public string TextMultiline { get; set; }
         public decimal Decimal { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual DemoModelComplexProperty DemoModelComplexProperty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

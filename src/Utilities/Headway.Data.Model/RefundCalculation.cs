@@ -18,7 +18,6 @@ namespace Headway.Data.Model
         public RefundCalculation()
         {
             this.Redresses = new HashSet<Redress>();
-            this.Redresses1 = new HashSet<Redress>();
         }
     
         public int RefundCalculationId { get; set; }
@@ -29,10 +28,19 @@ namespace Headway.Data.Model
         public Nullable<decimal> TotalRefundAmount { get; set; }
         public Nullable<System.DateTime> CalculatedDate { get; set; }
         public string CalculatedBy { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<decimal> VerifiedBasicRefundAmount { get; set; }
+        public string VerifiedBy { get; set; }
+        public Nullable<decimal> VerifiedCompensatoryAmount { get; set; }
+        public Nullable<decimal> VerifiedCompensatoryInterestAmount { get; set; }
+        public Nullable<System.DateTime> VerifiedDate { get; set; }
+        public Nullable<decimal> VerifiedTotalCompensatoryAmount { get; set; }
+        public Nullable<decimal> VerifiedTotalRefundAmount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Redress> Redresses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Redress> Redresses1 { get; set; }
     }
 }

@@ -27,6 +27,10 @@ namespace Headway.Data.Model
         public string Code { get; set; }
         public string ParentCode { get; set; }
         public Nullable<int> DemoModelTreeItemId1 { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual DemoModel DemoModel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

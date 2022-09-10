@@ -13,10 +13,10 @@ namespace Headway.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HeadwayEntities2 : DbContext
+    public partial class HeadwayEntities3 : DbContext
     {
-        public HeadwayEntities2()
-            : base("name=HeadwayEntities2")
+        public HeadwayEntities3()
+            : base("name=HeadwayEntities3")
         {
         }
     
@@ -26,6 +26,7 @@ namespace Headway.Data.Model
         }
     
         public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
+        public virtual DbSet<Audit> Audits { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<ConfigContainer> ConfigContainers { get; set; }
         public virtual DbSet<ConfigItem> ConfigItems { get; set; }

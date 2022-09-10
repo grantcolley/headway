@@ -21,5 +21,6 @@ namespace Headway.Data.Model
         public Nullable<System.DateTime> TimeStamp { get; set; }
         public string Exception { get; set; }
         public string Properties { get; set; }
+        public string User { get; set; }
     }
 }

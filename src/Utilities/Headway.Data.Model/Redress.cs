@@ -16,8 +16,7 @@ namespace Headway.Data.Model
     {
         public int RedressId { get; set; }
         public int ProgramId { get; set; }
-        public Nullable<int> RefundCalculationId { get; set; }
-        public Nullable<int> RefundVerificationRefundCalculationId { get; set; }
+        public int RefundCalculationId { get; set; }
         public string RedressCaseOwner { get; set; }
         public string RedressCreateBy { get; set; }
         public Nullable<System.DateTime> RedressCreateDate { get; set; }
@@ -54,10 +53,13 @@ namespace Headway.Data.Model
         public string FinalRedressReviewBy { get; set; }
         public Nullable<System.DateTime> FinalRedressReviewDate { get; set; }
         public int ProductId { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual Program Program { get; set; }
         public virtual RefundCalculation RefundCalculation { get; set; }
-        public virtual RefundCalculation RefundCalculation1 { get; set; }
     }
 }

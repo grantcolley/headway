@@ -31,6 +31,10 @@ namespace Headway.Data.Model
         public string ParentCode { get; set; }
         public string Label { get; set; }
         public Nullable<int> ConfigContainerId1 { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConfigContainer> ConfigContainers1 { get; set; }
