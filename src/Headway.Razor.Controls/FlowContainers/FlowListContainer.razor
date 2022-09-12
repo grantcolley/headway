@@ -1,0 +1,29 @@
+﻿@inherits FlowListContainerBase
+
+<div class="container container-body float-start">
+    <div class="row" style="margin-top:20px;margin-bottom:20px">
+        <div class="col">
+            <MudPaper Width="300px">
+                <MudList Clickable="true" SelectedItemChanged="SelectedItemChange">
+                    <MudListSubheader>
+                        @Container.Label
+                    </MudListSubheader>
+
+                    @foreach (var container in Container.DynamicContainers)
+                    {
+                        <CascadingValue Value="this">
+                            <FlowListItemContainer @key=container.ContainerId Container="container" />
+                        </CascadingValue>
+                    }
+
+                </MudList>
+            </MudPaper>
+        </div>
+        <div class="col">
+            @if (activeListItem != null)
+            {
+                <DynamicComponent @key=activeListItem.ContainerId Type="activeListItem.DynamicComponent" Parameters="activeListItem.Parameters" />
+            }
+        </div>
+    </div>
+</div>
