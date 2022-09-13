@@ -1,7 +1,7 @@
 ﻿using Headway.Core.Dynamic;
 using Microsoft.AspNetCore.Components;
 
-namespace Headway.Razor.Controls.FlowContainers
+namespace Headway.Razor.Controls.Flow.Containers
 {
     public class FlowListItemContainerBase : ComponentBase
     {

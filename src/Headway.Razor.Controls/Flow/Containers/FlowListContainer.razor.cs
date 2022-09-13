@@ -4,7 +4,7 @@ using MudBlazor;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Razor.Controls.FlowContainers
+namespace Headway.Razor.Controls.Flow.Containers
 {
     public class FlowListContainerBase : DynamicContainerBase
     {
