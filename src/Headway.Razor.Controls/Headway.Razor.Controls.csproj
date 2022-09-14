@@ -22,6 +22,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
+    <ProjectReference Include="..\Headway.Razor.Theme\Headway.Razor.Theme.csproj" />
     <ProjectReference Include="..\Headway.RequestApi\Headway.RequestApi.csproj" />
   </ItemGroup>
 
