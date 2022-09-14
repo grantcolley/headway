@@ -1,29 +1,25 @@
 ﻿@inherits FlowListContainerBase
 
-<div class="container container-body float-start">
-    <div class="row" style="margin-top:20px;margin-bottom:20px">
-        <div class="col">
-            <MudPaper Width="300px">
-                <MudList Clickable="true" SelectedItemChanged="SelectedItemChange">
-                    <MudListSubheader>
-                        @Container.Label
-                    </MudListSubheader>
+<MudPaper Class="gap-x-4 d-flex flex-row flex-grow-1" Style="background:inherit;margin-top:20px;margin-bottom:20px" Elevation="0">
+    <MudPaper Width="300px">
+        <MudList Clickable="true" Class="flex-auto" SelectedItemChanged="@SelectedItemChange">
+            <MudListSubheader>
+                @Container.Label
+            </MudListSubheader>
 
-                    @foreach (var container in Container.DynamicContainers)
-                    {
-                        <CascadingValue Value="this">
-                            <FlowListItemContainer @key=container.ContainerId Container="container" />
-                        </CascadingValue>
-                    }
-
-                </MudList>
-            </MudPaper>
-        </div>
-        <div class="col">
-            @if (activeListItem != null)
+            @foreach (var container in Container.DynamicContainers)
             {
-                <DynamicComponent @key=activeListItem.ContainerId Type="activeListItem.DynamicComponent" Parameters="activeListItem.Parameters" />
+                <CascadingValue Value="this">
+                    <FlowListItemContainer @key=container.ContainerId Container="container" />
+                </CascadingValue>
             }
-        </div>
-    </div>
-</div>
+
+        </MudList>
+    </MudPaper>
+    <MudPaper Elevation="0" Class="flex-auto" Style="background:inherit;">
+    @if (activeListItem != null)
+    {
+        <DynamicComponent @key=activeListItem.ContainerId Type="activeListItem.DynamicComponent" Parameters="activeListItem.Parameters" />
+    }
+    </MudPaper>
+</MudPaper>
