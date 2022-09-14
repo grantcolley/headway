@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RemediatR.Repositor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.Data.Model", "Utilities\Headway.Data.Model\Headway.Data.Model.csproj", "{D6BE720E-0FF2-4D81-A694-289BE6E25E5B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Theme", "Headway.Razor.Theme\Headway.Razor.Theme.csproj", "{7A6BBE3B-A9B5-4993-9739-26B5F617E7A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{D6BE720E-0FF2-4D81-A694-289BE6E25E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6BE720E-0FF2-4D81-A694-289BE6E25E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6BE720E-0FF2-4D81-A694-289BE6E25E5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A6BBE3B-A9B5-4993-9739-26B5F617E7A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A6BBE3B-A9B5-4993-9739-26B5F617E7A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A6BBE3B-A9B5-4993-9739-26B5F617E7A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A6BBE3B-A9B5-4993-9739-26B5F617E7A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
