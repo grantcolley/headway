@@ -1,10 +1,17 @@
 ﻿@inherits FlowListItemContainerBase
 
-<MudListItem Icon="@Icons.Material.Filled.Inbox" Text="@Container.Label" Value="@Container" InitiallyExpanded="true">
-    <NestedList>
-        @foreach(var container in Container.DynamicContainers)
-        {
-            <FlowListItemContainer @key=container.ContainerId Container="container" />
-        }
-    </NestedList>
-</MudListItem>
+@if (Container.DynamicContainers.Any())
+{
+    <MudListItem Icon="@Icons.Material.Filled.Inbox" Text="@Container.Label" Value="@Container" InitiallyExpanded="true">
+        <NestedList>
+            @foreach (var container in Container.DynamicContainers)
+            {
+                <FlowListItemContainer @key=container.ContainerId Container="container" />
+            }
+        </NestedList>
+    </MudListItem>
+}
+else
+{
+    <MudListItem Icon="@Icons.Material.Filled.Inbox" Text="@Container.Label" Value="@Container"/>
+}
