@@ -19,9 +19,9 @@ namespace Headway.Razor.Controls.Flow.Containers
             SetActiveListItem();
         }
 
-        protected void SelectedItemChange(MudListItem mudListItem)
+        protected void SelectedValueChange(object value)
         {
-            activeListItem = (DynamicContainer)mudListItem.Value;
+            activeListItem = (DynamicContainer)value;
         }
 
         private void SetActiveListItem()
