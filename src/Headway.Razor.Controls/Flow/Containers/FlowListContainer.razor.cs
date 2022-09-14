@@ -10,6 +10,8 @@ namespace Headway.Razor.Controls.Flow.Containers
     {
         protected DynamicContainer activeListItem { get; set; }
 
+        protected MudListItem selectedItem;
+
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync().ConfigureAwait(false);
