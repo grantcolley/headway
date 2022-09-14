@@ -761,6 +761,10 @@ namespace Headway.SeedData.RemediatR
             
             var redressDetailsContainer = new ConfigContainer { Name = "Redress Create Div", Code = "REDRESS CREATE DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Redress Create", Order = 1, ParentCode = "REDRESS DIV" };
             var refundAssessmentContainer = new ConfigContainer { Name = "Refund Assessment Div", Code = "REFUND ASSESSMENT DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Refund Assessment", Order = 2, ParentCode = "REDRESS DIV" };
+
+            var refundCalculationContainer = new ConfigContainer { Name = "Refund Calculation Div", Code = "REFUND CALCULATION DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Refund Calculation", Order = 1, ParentCode = "REFUND ASSESSMENT DIV" };
+            var refundVerificationContainer = new ConfigContainer { Name = "Refund Verification Div", Code = "REFUND VERIFICATION DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Refund Verification", Order = 2, ParentCode = "REFUND ASSESSMENT DIV" };
+
             var refundReviewContainer = new ConfigContainer { Name = "Refund Review Div", Code = "REFUND REVIEW DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Refund Review", Order = 3, ParentCode = "REDRESS DIV" };
             var redressReviewContainer = new ConfigContainer { Name = "Redress Review Div", Code = "REDRESS REVIEW DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Redress Review", Order = 4, ParentCode = "REDRESS DIV" };
 
@@ -772,9 +776,14 @@ namespace Headway.SeedData.RemediatR
             redressConfigContainer.ConfigContainers.Add(refundReviewContainer);
             redressConfigContainer.ConfigContainers.Add(redressReviewContainer);
 
+            refundAssessmentContainer.ConfigContainers.Add(refundCalculationContainer);
+            refundAssessmentContainer.ConfigContainers.Add(refundVerificationContainer);
+
             redressConfig.ConfigContainers.Add(redressConfigContainer);
             redressConfig.ConfigContainers.Add(redressDetailsContainer);
             redressConfig.ConfigContainers.Add(refundAssessmentContainer);
+            redressConfig.ConfigContainers.Add(refundCalculationContainer);
+            redressConfig.ConfigContainers.Add(refundVerificationContainer);
             redressConfig.ConfigContainers.Add(refundReviewContainer);
             redressConfig.ConfigContainers.Add(redressReviewContainer);
             redressConfig.ConfigContainers.Add(redressCustomerConfigContainer);
