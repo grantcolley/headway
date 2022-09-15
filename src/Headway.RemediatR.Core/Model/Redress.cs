@@ -28,6 +28,14 @@ namespace Headway.RemediatR.Core.Model
         public DateTime? RedressCreateDate { get; set; }
 
         [MaxLength(50)]
+        public string? RefundAssessmentStatus { get; set; }
+
+        [MaxLength(50)]
+        public string? RefundAssessmentBy { get; set; }
+
+        public DateTime? RefundAssessmentDate { get; set; }
+
+        [MaxLength(50)]
         public string? RefundReviewStatus { get; set; }
 
         [StringLength(250)]
