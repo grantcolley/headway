@@ -1,4 +1,6 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Core.Constants;
+using Headway.Core.Dynamic;
+using Headway.Core.Helpers;
 using Headway.Razor.Controls.Base;
 using MudBlazor;
 using System.Linq;
@@ -12,8 +14,14 @@ namespace Headway.Razor.Controls.Flow.Containers
 
         protected MudListItem selectedItem;
 
+        protected string label;
+        protected string width;
+
         protected override async Task OnInitializedAsync()
         {
+            label = ComponentArgHelper.GetArgValue(Container.DynamicArgs, FlowConstants.FLOW_LIST_CONTAINER_LABEL);
+            width = ComponentArgHelper.GetArgValue(Container.DynamicArgs, FlowConstants.FLOW_LIST_CONTAINER_WIDTH);
+
             await base.OnInitializedAsync().ConfigureAwait(false);
 
             SetActiveListItem();
