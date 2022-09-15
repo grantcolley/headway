@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Model;
+using Headway.Razor.Controls.Flow;
 using Headway.RemediatR.Core.Constants;
 using Headway.RemediatR.Core.Enums;
 using Headway.RemediatR.Core.Model;
@@ -756,8 +757,8 @@ namespace Headway.SeedData.RemediatR
             };
 
             dbContext.Configs.Add(redressConfig);
-
-            var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Razor.Controls.Flow.Containers.FlowListContainer, Headway.Razor.Controls", Label = "Redress Details", Order = 1 };
+            
+            var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Razor.Controls.Flow.Containers.FlowListContainer, Headway.Razor.Controls", Label = "Redress Details", Order = 1, ComponentArgs = $"Name={FlowConstants.FLOW_LIST_CONTAINER_LABEL};Value=Redress Flow|Name={FlowConstants.FLOW_LIST_CONTAINER_WIDTH};Value=400px" };
             
             var redressDetailsContainer = new ConfigContainer { Name = "Redress Create Div", Code = "REDRESS CREATE DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Redress Create", Order = 1, ParentCode = "REDRESS DIV" };
             var refundAssessmentContainer = new ConfigContainer { Name = "Refund Assessment Div", Code = "REFUND ASSESSMENT DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Refund Assessment", Order = 2, ParentCode = "REDRESS DIV" };
