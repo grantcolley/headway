@@ -48,6 +48,8 @@ namespace Headway.SeedData.RemediatR
             RedressConfig();
             RedressCustomerConfig();
             RedressProductConfig();
+            RefundCalculation();
+            RefundVerification();
         }
 
         private static void TruncateTables()
@@ -820,57 +822,120 @@ namespace Headway.SeedData.RemediatR
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Program", Label = "Program", Order = 2, ConfigContainer = redressDetailsContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={RemediatROptions.PROGRAMS_COMPLEX_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.RemediatR.Core.Model.Program, Headway.RemediatR.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerName", Label = "Customer", IsTitle = true, Order = 3, ConfigContainer = redressDetailsContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductName", Label = "Product", IsTitle = false, Order = 4, ConfigContainer = redressDetailsContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressCaseOwner", Label = "Redress Case Owner", IsTitle = false, Order = 5, ConfigContainer = redressDetailsContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressCaseOwner", Label = "Redress Case Owner", IsTitle = false, Order = 5, ConfigContainer = redressDetailsContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressCreateBy", Label = "Redress Create By", IsTitle = false, Order = 6, ConfigContainer = redressDetailsContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressCreateDate", Label = "Redress Create Date", IsTitle = false, Order = 7, ConfigContainer = redressDetailsContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
             redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundAssessmentStatus", Label = "Refund Review Status", IsTitle = false, Order = 8, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundAssessmentBy", Label = "Refund Review By", IsTitle = false, Order = 10, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundAssessmentDate", Label = "Refund Review Date", IsTitle = false, Order = 11, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundAssessmentBy", Label = "Refund Review By", IsTitle = false, Order = 9, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundAssessmentDate", Label = "Refund Review Date", IsTitle = false, Order = 10, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewStatus", Label = "Refund Review Status", IsTitle = false, Order = 12, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewComment", Label = "Refund Review Comment", IsTitle = false, Order = 13, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewBy", Label = "Refund Review By", IsTitle = false, Order = 14, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewDate", Label = "Refund Review Date", IsTitle = false, Order = 15, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundCalculation", Label = "Refund Calculation", Order = 11, ConfigContainer = refundCalculationContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RefundCalculation" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundCalculation", Label = "Refund Verification", Order = 12, ConfigContainer = refundVerificationContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RefundVerification" });
+
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewStatus", Label = "Refund Review Status", IsTitle = false, Order = 13, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewComment", Label = "Refund Review Comment", IsTitle = false, Order = 14, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewBy", Label = "Refund Review By", IsTitle = false, Order = 15, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundReviewDate", Label = "Refund Review Date", IsTitle = false, Order = 16, ConfigContainer = refundReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
             
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewStatus", Label = "Redress Review Status", IsTitle = false, Order = 16, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewComment", Label = "Redress Review Comment", IsTitle = false, Order = 17, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewBy", Label = "Redress Review By", IsTitle = false, Order = 18, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewDate", Label = "Redress Review Date", IsTitle = false, Order = 19, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewStatus", Label = "Redress Review Status", IsTitle = false, Order = 17, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewComment", Label = "Redress Review Comment", IsTitle = false, Order = 18, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewBy", Label = "Redress Review By", IsTitle = false, Order = 19, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressReviewDate", Label = "Redress Review Date", IsTitle = false, Order = 20, ConfigContainer = redressReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationStatus", Label = "Redress Validation Status", IsTitle = false, Order = 20, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationComment", Label = "Redress Validation Comment", IsTitle = false, Order = 21, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationBy", Label = "Redress Validation By", IsTitle = false, Order = 22, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationDate", Label = "Redress Validation Date", IsTitle = false, Order = 23, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationStatus", Label = "Redress Validation Status", IsTitle = false, Order = 21, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationComment", Label = "Redress Validation Comment", IsTitle = false, Order = 22, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationBy", Label = "Redress Validation By", IsTitle = false, Order = 23, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RedressValidationDate", Label = "Redress Validation Date", IsTitle = false, Order = 24, ConfigContainer = redressValidationContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationGenerationStatus", Label = "Communication Generation Status", IsTitle = false, Order = 24, ConfigContainer = communicationGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationGenerationBy", Label = "Communication Generation By", IsTitle = false, Order = 25, ConfigContainer = communicationGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationGenerationDate", Label = "Communication Generation Date", IsTitle = false, Order = 26, ConfigContainer = communicationGenerationContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationGenerationStatus", Label = "Communication Generation Status", IsTitle = false, Order = 25, ConfigContainer = communicationGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationGenerationBy", Label = "Communication Generation By", IsTitle = false, Order = 26, ConfigContainer = communicationGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationGenerationDate", Label = "Communication Generation Date", IsTitle = false, Order = 27, ConfigContainer = communicationGenerationContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchStatus", Label = "Communication Dispatch Status", IsTitle = false, Order = 27, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchComment", Label = "Communication Dispatch Comment", IsTitle = false, Order = 28, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchBy", Label = "Communication Dispatch By", IsTitle = false, Order = 29, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchDate", Label = "Communication Dispatch Date", IsTitle = false, Order = 30, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchStatus", Label = "Communication Dispatch Status", IsTitle = false, Order = 28, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchComment", Label = "Communication Dispatch Comment", IsTitle = false, Order = 29, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchBy", Label = "Communication Dispatch By", IsTitle = false, Order = 30, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CommunicationDispatchDate", Label = "Communication Dispatch Date", IsTitle = false, Order = 31, ConfigContainer = communicationDispatchContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ResponseRequired", Label = "Response Required", IsTitle = false, Order = 31, ConfigContainer = responseRequiredContainer, Component = "Headway.Razor.Controls.Components.CheckboxNullable, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ResponseReceived", Label = "Response Received", IsTitle = false, Order = 32, ConfigContainer = responseRequiredContainer, Component = "Headway.Razor.Controls.Components.CheckboxNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ResponseRequired", Label = "Response Required", IsTitle = false, Order = 32, ConfigContainer = responseRequiredContainer, Component = "Headway.Razor.Controls.Components.CheckboxNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ResponseReceived", Label = "Response Received", IsTitle = false, Order = 33, ConfigContainer = responseRequiredContainer, Component = "Headway.Razor.Controls.Components.CheckboxNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseStatus", Label = "Awaiting Response Status", IsTitle = false, Order = 33, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseComment", Label = "Awaiting Response Comment", IsTitle = false, Order = 34, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseBy", Label = "Awaiting Response By", IsTitle = false, Order = 35, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseDate", Label = "Awaiting Response Date", IsTitle = false, Order = 36, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseStatus", Label = "Awaiting Response Status", IsTitle = false, Order = 34, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseComment", Label = "Awaiting Response Comment", IsTitle = false, Order = 35, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseBy", Label = "Awaiting Response By", IsTitle = false, Order = 36, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AwaitingResponseDate", Label = "Awaiting Response Date", IsTitle = false, Order = 37, ConfigContainer = awaitingResponseContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PaymentGenerationStatus", Label = "Payment Generation Status", IsTitle = false, Order = 37, ConfigContainer = paymentGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PaymentGenerationBy", Label = "Payment Generation By", IsTitle = false, Order = 38, ConfigContainer = paymentGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PaymentGenerationDate", Label = "Payment Generation Date", IsTitle = false, Order = 39, ConfigContainer = paymentGenerationContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PaymentGenerationStatus", Label = "Payment Generation Status", IsTitle = false, Order = 38, ConfigContainer = paymentGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PaymentGenerationBy", Label = "Payment Generation By", IsTitle = false, Order = 39, ConfigContainer = paymentGenerationContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PaymentGenerationDate", Label = "Payment Generation Date", IsTitle = false, Order = 40, ConfigContainer = paymentGenerationContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewStatus", Label = "Final Redress Review Status", IsTitle = false, Order = 40, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewComment", Label = "Final Redress Review Comment", IsTitle = false, Order = 41, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewBy", Label = "Final Redress Review By", IsTitle = false, Order = 42, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewDate", Label = "Final Redress Review Date", IsTitle = false, Order = 43, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewStatus", Label = "Final Redress Review Status", IsTitle = false, Order = 41, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewComment", Label = "Final Redress Review Comment", IsTitle = false, Order = 42, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewBy", Label = "Final Redress Review By", IsTitle = false, Order = 43, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FinalRedressReviewDate", Label = "Final Redress Review Date", IsTitle = false, Order = 44, ConfigContainer = finalRedressReviewContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Customer", Label = "Customer", Order = 44, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RedressCustomer" });
-            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Product", Label = "Product", Order = 45, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RedressProduct" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Customer", Label = "Customer", Order = 45, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RedressCustomer" });
+            redressConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Product", Label = "Product", Order = 46, ConfigContainer = redressProductConfigContainer, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "RedressProduct" });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void RefundCalculation()
+        {
+            var refundCalculationConfig = new Config
+            {
+                Name = "RefundCalculation",
+                Title = "Refund Calculation",
+                Description = "Manage a RemediatR refund calculation",
+                Model = "Headway.RemediatR.Core.Model.RefundCalculation, Headway.RemediatR.Core",
+                ModelApi = "RemediatRRedress",
+                Document = "Headway.Razor.Controls.Documents.Content`1, Headway.Razor.Controls"
+            };
+
+            dbContext.Configs.Add(refundCalculationConfig);
+
+            var refundCalculationConfigContainer = new ConfigContainer { Name = "Refund Calculation Fields Div", Code = "REFUND CALCULATION FIELD DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Refund Calculation", Order = 1 };
+
+            refundCalculationConfig.ConfigContainers.Add(refundCalculationConfigContainer);
+
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundCalculationId", Label = "Refund Calculation Id", IsIdentity = true, Order = 1, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "BasicRefundAmount", Label = "Basic Refund Amount", Order = 2, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CompensatoryAmount", Label = "Compensatory Amount", IsTitle = true, Order = 3, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CompensatoryInterestAmount", Label = "Compensatory Interest Amount", IsTitle = false, Order = 4, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "TotalCompensatoryAmount", Label = "Total Compensatory Amount", IsTitle = false, Order = 5, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "TotalRefundAmount", Label = "Total Refund Amount", IsTitle = false, Order = 6, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CalculatedBy", Label = "Calculated By", IsTitle = false, Order = 7, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            refundCalculationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CalculatedDate", Label = "Calculated Date", IsTitle = false, Order = 8, ConfigContainer = refundCalculationConfigContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void RefundVerification()
+        {
+            var refundVerificationConfig = new Config
+            {
+                Name = "RefundVerification",
+                Title = "Refund Verification",
+                Description = "Manage a RemediatR refund verification",
+                Model = "Headway.RemediatR.Core.Model.RefundCalculation, Headway.RemediatR.Core",
+                ModelApi = "RemediatRRedress",
+                Document = "Headway.Razor.Controls.Documents.Content`1, Headway.Razor.Controls"
+            };
+
+            dbContext.Configs.Add(refundVerificationConfig);
+
+            var refundVerificationConfigContainer = new ConfigContainer { Name = "Refund Verification Fields Div", Code = "REFUND VERIFICATION FIELD DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Refund Verification", Order = 1 };
+
+            refundVerificationConfig.ConfigContainers.Add(refundVerificationConfigContainer);
+
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RefundCalculationId", Label = "Refund Calculation Id", IsIdentity = true, Order = 1, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "VerifiedBasicRefundAmount", Label = "Verified Basic Refund Amount", Order = 2, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "VerifiedCompensatoryAmount", Label = "Verified Compensatory Amount", IsTitle = true, Order = 3, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "VerifiedCompensatoryInterestAmount", Label = "Verified Compensatory Interest Amount", IsTitle = false, Order = 4, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "VerifiedTotalCompensatoryAmount", Label = "Verified Total Compensatory Amount", IsTitle = false, Order = 5, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "VerifiedTotalRefundAmount", Label = " Total Refund Amount", IsTitle = false, Order = 6, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.DecimalNullable, Headway.Razor.Controls" });
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "VerifiedBy", Label = "Verified By", IsTitle = false, Order = 7, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
+            refundVerificationConfig.ConfigItems.Add(new ConfigItem { PropertyName = "VerifiedDate", Label = "Verified Date", IsTitle = false, Order = 8, ConfigContainer = refundVerificationConfigContainer, Component = "Headway.Razor.Controls.Components.DateNullable, Headway.Razor.Controls" });
 
             dbContext.SaveChanges();
         }
