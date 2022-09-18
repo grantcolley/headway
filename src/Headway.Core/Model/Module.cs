@@ -20,7 +20,7 @@ namespace Headway.Core.Model
         public List<Category> Categories { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Name { get; set; }
 
         [Required]
@@ -28,7 +28,7 @@ namespace Headway.Core.Model
         public string Icon { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Permission { get; set; }
 
         public bool IsPermitted(IEnumerable<string> permissions)
