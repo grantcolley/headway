@@ -236,7 +236,7 @@ Alternatively, modules, categories and menu items can be configured under the Na
 
 ### Token-based Authentication
 Blazor applications use [token-based authentication](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-6.0#token-based-authentication) based on digitally signed [JSON Web Tokens (JWTs)](https://jwt.io/introduction), which is a safe means of representing claims that can be transferred between parties.
-Token-based authentication involves an authorization server issuing an athenticated user with a token containing claims, which can be sent to a resource such as a WebApi, with an extra `authorization` header in the form of a `Bearer` token. This allows the WebApi to validate the claim and provide the user access to the resource.
+Token-based authentication involves an authentication server issuing an athenticated user with a token containing claims, which can be sent to a resource such as a WebApi, with an extra `authorization` header in the form of a `Bearer` token. This allows the WebApi to validate the claim and provide the user access to the resource.
 
 [**Headway.WebApi**](https://github.com/grantcolley/headway/blob/main/src/Headway.WebApi/Program.cs) authentication is configured for the `Bearer` *Authenticate* and *Challenge* scheme. **JwtBearer** middleware is added to validate the token based on the values of the `TokenValidationParameters`, *ValidIssuer* and *ValidAudience*.  
 ```C#
