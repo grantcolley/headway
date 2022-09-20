@@ -179,6 +179,14 @@ namespace Headway.SeedData.RemediatR
 
         private static void AssignUsersRoles()
         {
+            var userRole = dbContext.Roles
+                .FirstOrDefault(r => r.Name.Equals(HeadwayAuthorisation.USER));
+
+            foreach(var user in users.Values)
+            {
+                user.Roles.Add(userRole);
+            }
+
             users["grace"].Roles.Add(roles[RemediatRAuthorisation.REDRESS_CASE_OWNER]);
             users["mel"].Roles.Add(roles[RemediatRAuthorisation.REDRESS_REVIEWER]);
             users["bill"].Roles.Add(roles[RemediatRAuthorisation.REFUND_ASSESSOR]);
