@@ -688,4 +688,4 @@ I [reported a bug in System.Text.Json](https://github.com/dotnet/aspnetcore/issu
 ```
 
 ## Acknowledgements
-- [@VR-Architect](https://github.com/VR-Architect) - UML diagram showing the ClaimModules API
+<!-- - [@VR-Architect](https://github.com/VR-Architect) - UML diagram showing the ClaimModules API -->
