@@ -43,14 +43,14 @@
        * [Blazor Server](#blazor-server)
        * [WebApi](#webapi)
        * [Other Implementation Examples for Identity Providers](#other-implementation-examples-for-identity-providers)
-* [Authorization](#authorization)
 * [Tracking Changes](#tracking-changes)
 * [Logging](#logging)
    * [Send logs from the Client](#send-logs-from-the-client)
    * [Configure Logging](#configure-Logging) 
+* [Authorization](#authorization)
+* [Navigation Menu](#navigation-menu)
 * [Page Layout](#page-layout)
    * [Page Rendering](#page-rendering) 
-* [Navigation Menu](#navigation-menu)
 * [Documents](#documents)
    * [Document](#document)
    * [TabDocument](#tabdocument)
@@ -77,6 +77,7 @@
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
     * [Handle System.Text.Json Circular Reference Errors](#handle-systemtextjson-circular-reference-errors)
     * [Configure ASP.Net Core use Json.Net](#configure-aspnet-core-use-jsonnet)
+* [Acknowledgements](#acknowledgements)
 
 ## The Framework
  * **Headway.BlazorWebassemblyApp** - Blazor WASM running client-side on the browser.
@@ -338,8 +339,6 @@ function (user, context, callback) {
    - For **IdentityServer4** see [blazor-solution-setup](https://github.com/grantcolley/blazor-solution-setup).
    - For **Auth0** see [blazor-auth0](https://github.com/grantcolley/blazor-auth0).
 
-## Authorization
-
 ## Tracking Changes
 When using **Entity Framework Core**, models inheriting from [ModelBase](https://github.com/grantcolley/headway/blob/main/src/Headway.Core/Model/ModelBase.cs) will automatically get properties for tracking instance creation and modification. Furthermore, an audit of changes will be logged to the `Audits` table.
 ```C#
@@ -439,14 +438,17 @@ app.Use(async (httpContext, next) =>
     await next.Invoke();
 });
 ```
+## Authorization
+The following UML diagram shows the ClaimModules API obtaining an authenticated users permissions which restrict the modules, categories and menu items available to the user in the `Navigation Menu`:
+![Alt text](/readme-images/AuthorizationFlow.jpg?raw=true "ClaimModules API") 
+
+## Navigation Menu
 
 ## Page Layout
 ![Alt text](/readme-images/Layout.drawio.png?raw=true "Page Layout")
 
 ### Page Rendering
 ![Alt text](/readme-images/PageRenderHierarchy.drawio.png?raw=true "Page Render Hierarchy")
-
-## Navigation Menu
 
 ## Documents
 ### Document
@@ -685,5 +687,5 @@ I [reported a bug in System.Text.Json](https://github.com/dotnet/aspnetcore/issu
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 ```
 
-
-
+## Acknowledgements
+- [@VR-Architect](https://github.com/VR-Architect) - UML diagram showing the ClaimModules API
