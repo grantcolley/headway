@@ -312,6 +312,19 @@ Headway currently supports authentication from two identity providers **Identity
   },
 ```
 
+> NOTE: if implementing `Auth0` you will need to create a `Auth Pipeline Rule` to return the email and role as a claim.
+```C#
+function (user, context, callback) {
+ 	const accessTokenClaims = context.accessToken || {};
+	const idTokenClaims = context.idToken || {};
+  const assignedRoles = (context.authorization || {}).roles;
+  accessTokenClaims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'] = user.email;
+  accessTokenClaims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] = assignedRoles;
+  idTokenClaims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] = assignedRoles;
+  return callback(null, user, context);
+}
+```
+
 #### Blazor WebAssembly
    - UserAccountFactory converts the RemoteUserAccount into a ClaimPrincipal for the application
    - AuthorizationMessageHandler attaches token to outgoing HttpClient requests 
