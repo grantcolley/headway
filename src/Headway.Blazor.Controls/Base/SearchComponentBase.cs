@@ -54,7 +54,10 @@ namespace Headway.Blazor.Controls.Base
 
             isSearchInProgress = false;
 
-            StateHasChanged();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
 
         protected async Task SearchItemEnter()

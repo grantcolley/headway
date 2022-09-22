@@ -55,14 +55,17 @@ namespace Headway.Blazor.Controls.Components
             await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
-        protected virtual void OnValueChanged(IEnumerable<T> values)
+        protected async virtual void OnValueChanged(IEnumerable<T> values)
         {
             if (Field.HasLinkDependents)
             {
                 StateNotification.NotifyStateHasChanged(Field.ContainerUniqueId);
             }
 
-            StateHasChanged();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
     }
 }

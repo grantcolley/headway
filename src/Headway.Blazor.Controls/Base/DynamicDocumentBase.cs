@@ -128,7 +128,10 @@ namespace Headway.Blazor.Controls.Base
 
             GetResponse(response);
 
-            StateHasChanged();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
 
         protected virtual async Task Submit()

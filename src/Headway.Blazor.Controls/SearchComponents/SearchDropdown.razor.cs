@@ -63,14 +63,17 @@ namespace Headway.Blazor.Controls.SearchComponents
             await base.OnParametersSetAsync().ConfigureAwait(false);
         }
 
-        protected virtual void OnValueChanged(IEnumerable<string> values)
+        protected async virtual void OnValueChanged(IEnumerable<string> values)
         {
             if (SearchItem.HasLinkDependents)
             {
                 StateNotification.NotifyStateHasChanged(SearchItem.SearchComponentUniqueId);
             }
 
-            StateHasChanged();
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
     }
 }
