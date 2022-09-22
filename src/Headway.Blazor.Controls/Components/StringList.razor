@@ -1,16 +1,13 @@
 ﻿@inherits StringListBase
 
+<MudText Typo="Typo.h6" Class="mb-2 pl-4">@Field.Label</MudText>
+
 <MudTable Items="@list" Hover="true" CustomHeader="true" Striped="true"
           Filter="new Func<string,bool>(FilterFunction)">
     <ToolBarContent>
         <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" 
                       AdornmentIcon="@Icons.Material.Filled.FilterAlt" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
-    <HeaderContent>
-        <MudTHeadRow Class="header-centered">
-            <MudTh>@Field.Label</MudTh>
-        </MudTHeadRow>
-    </HeaderContent>
     <RowTemplate>
         <MudTd>
             @context

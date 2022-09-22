@@ -1,16 +1,13 @@
 ﻿@inherits CheckListBase
 
+<MudText Typo="Typo.h6" Class="mb-2 pl-4">@Field.Label</MudText>
+
 <MudTable Items="@checklist" Hover="true" CustomHeader="true"
           Filter="new Func<ChecklistItem,bool>(FilterFunction)">
     <ToolBarContent>
         <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" 
                       AdornmentIcon="@Icons.Material.Filled.FilterAlt" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
-    <HeaderContent>
-        <MudTHeadRow Class="header-centered">
-            <MudTh>@Field.Label</MudTh>
-        </MudTHeadRow>
-    </HeaderContent>
     <RowTemplate>
         <MudTd>
             <MudCheckBox T="bool" Class="mr-2" Checked="@context.IsChecked" CheckedChanged="@(() => OnCheckItem(@context))"/>
