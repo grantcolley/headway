@@ -1,0 +1,50 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Authentication
+@using Headway.App.Blazor.Server.Model
+@namespace Headway.App.Blazor.Server.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+
+    var initialApplicationState = new InitialApplicationState
+    {
+        AccessToken = await HttpContext.GetTokenAsync("access_token").ConfigureAwait(false),
+        RefreshToken = await HttpContext.GetTokenAsync("refresh_token").ConfigureAwait(false),
+        IdToken = await HttpContext.GetTokenAsync("id_token").ConfigureAwait(false)
+    };
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Headway</title>
+        <base href="~/" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/Logo.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/Logo.png">
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+        <link href="css/site.css" rel="stylesheet" />
+        <link href="Headway.App.Blazor.Server.styles.css" rel="stylesheet" />   
+        <Link href="_content/Headway.Blazor.Controls/headway.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <component type="typeof(App)" param-InitialState="initialApplicationState" render-mode="ServerPrerendered" />
+
+        <div id="blazor-error-ui">
+            <environment include="Staging,Production">
+                <MudText Typo="Typo.body1">An error has occurred. This application may no longer respond until reloaded.</MudText>
+            </environment>
+            <environment include="Development">
+                <MudText Typo="Typo.body1">An unhandled exception has occurred. See browser dev tools for details.</MudText>                
+            </environment>
+            <a href="" class="reload">Reload</a>
+            <a class="dismiss">🗙</a>
+        </div>
+
+        <script src="_framework/blazor.server.js"></script>
+        <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    </body>
+</html>

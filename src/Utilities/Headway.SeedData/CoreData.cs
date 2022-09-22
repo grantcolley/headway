@@ -191,7 +191,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
                 OrderModelBy = "Name",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
                 DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "PermissionId",
@@ -218,24 +218,24 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Permission, Headway.Core",
                 ModelApi = "Permissions",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Permissions"
             };
 
             dbContext.Configs.Add(permissionConfig);
 
-            var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", Code = "PERMISSION DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Permission", Order = 1 };
-            var membershipConfigContainer = new ConfigContainer { Name = "Permission Membership Div", Code = "PERMISSION MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var permissionConfigContainer = new ConfigContainer { Name = "Permission Div", Code = "PERMISSION DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Permission", Order = 1 };
+            var membershipConfigContainer = new ConfigContainer { Name = "Permission Membership Div", Code = "PERMISSION MEMBERSHIP DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Membership", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             permissionConfig.ConfigContainers.Add(permissionConfigContainer);
             permissionConfig.ConfigContainers.Add(membershipConfigContainer);
 
-            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 5, ConfigContainer = membershipConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
-            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = membershipConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 5, ConfigContainer = membershipConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = membershipConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
@@ -250,7 +250,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
                 OrderModelBy = "Name",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
                 DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "RoleId",
@@ -277,27 +277,27 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Role, Headway.Core",
                 ModelApi = "Roles",
                 CreateLocal = false,
-                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Roles"
             };
 
             dbContext.Configs.Add(roleConfig);
 
-            var roleConfigContainer = new ConfigContainer { Name = "Role Div", Code = "ROLE DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Role", Order = 1 };
-            var authConfigContainer = new ConfigContainer { Name = "Role Auth Div", Code = "ROLE AUTH DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
-            var memberConfigContainer = new ConfigContainer { Name = "Role Membership Div", Code = "ROLE MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var roleConfigContainer = new ConfigContainer { Name = "Role Div", Code = "ROLE DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Role", Order = 1 };
+            var authConfigContainer = new ConfigContainer { Name = "Role Auth Div", Code = "ROLE AUTH DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var memberConfigContainer = new ConfigContainer { Name = "Role Membership Div", Code = "ROLE MEMBERSHIP DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             roleConfig.ConfigContainers.Add(roleConfigContainer);
             roleConfig.ConfigContainers.Add(authConfigContainer);
             roleConfig.ConfigContainers.Add(memberConfigContainer);
 
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", IsIdentity = true, Order = 1, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = roleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 5, ConfigContainer = memberConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = memberConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", IsIdentity = true, Order = 1, ConfigContainer = roleConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = roleConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = roleConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 5, ConfigContainer = memberConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = memberConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
@@ -312,7 +312,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
                 OrderModelBy = "UserName",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
                 DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "UserId",
@@ -339,28 +339,28 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.User, Headway.Core",
                 ModelApi = "Users",
                 CreateLocal = false,
-                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Users"
             };
 
             dbContext.Configs.Add(userConfig);
 
-            var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "User", Order = 1 };
-            var authConfigContainer = new ConfigContainer { Name = "User Auth Div", Code = "USER AUTH DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
-            var membConfigContainer = new ConfigContainer { Name = "User Membership Div", Code = "USER MEMBERSHIP DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "User", Order = 1 };
+            var authConfigContainer = new ConfigContainer { Name = "User Auth Div", Code = "USER AUTH DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var membConfigContainer = new ConfigContainer { Name = "User Membership Div", Code = "USER MEMBERSHIP DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             userConfig.ConfigContainers.Add(userConfigContainer);
             userConfig.ConfigContainers.Add(authConfigContainer);
             userConfig.ConfigContainers.Add(membConfigContainer);
 
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", IsIdentity = true, Order = 1, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", IsTitle = true, Order = 2, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3, ConfigContainer = userConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleChecklist", Label = "Roles", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = authConfigContainer, Component = "Headway.Razor.Controls.Components.CheckList, Headway.Razor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 6, ConfigContainer = membConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 7, ConfigContainer = membConfigContainer, Component = "Headway.Razor.Controls.Components.StringList, Headway.Razor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", IsIdentity = true, Order = 1, ConfigContainer = userConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", IsTitle = true, Order = 2, ConfigContainer = userConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3, ConfigContainer = userConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleChecklist", Label = "Roles", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 6, ConfigContainer = membConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 7, ConfigContainer = membConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
@@ -375,7 +375,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Module, Headway.Core",
                 ModelApi = "Modules",
                 OrderModelBy = "Name",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
                 DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "ModuleId",
@@ -402,22 +402,22 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Module, Headway.Core",
                 ModelApi = "Modules",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Document`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Modules"
             };
 
             dbContext.Configs.Add(moduleConfig);
 
-            var moduleConfigContainer = new ConfigContainer { Name = "Module Div", Code = "MODULE_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Module", Order = 1 };
+            var moduleConfigContainer = new ConfigContainer { Name = "Module Div", Code = "MODULE_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Module", Order = 1 };
 
             moduleConfig.ConfigContainers.Add(moduleConfigContainer);
 
-            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModuleId", Label = "Module Id", IsIdentity = true, Order = 1, ConfigContainer = moduleConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = moduleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = moduleConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Icon", Label = "Icon", Order = 4, ConfigContainer = moduleConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 5, ConfigContainer = moduleConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
+            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModuleId", Label = "Module Id", IsIdentity = true, Order = 1, ConfigContainer = moduleConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = moduleConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = moduleConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
+            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Icon", Label = "Icon", Order = 4, ConfigContainer = moduleConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            moduleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 5, ConfigContainer = moduleConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
 
             dbContext.SaveChanges();
         }
@@ -432,7 +432,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Category, Headway.Core",
                 ModelApi = "Categories",
                 OrderModelBy = "Name",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
                 DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "CategoryId",
@@ -459,23 +459,23 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Category, Headway.Core",
                 ModelApi = "Categories",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Document`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Categories"
             };
 
             dbContext.Configs.Add(categoryConfig);
 
-            var categoryConfigContainer = new ConfigContainer { Name = "Category Div", Code = "CATEGORY_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Category", Order = 1 };
+            var categoryConfigContainer = new ConfigContainer { Name = "Category Div", Code = "CATEGORY_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Category", Order = 1 };
 
             categoryConfig.ConfigContainers.Add(categoryConfigContainer);
 
-            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CategoryId", Label = "Category Id", IsIdentity = true, Order = 1, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Icon", Label = "Icon", Order = 4, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 5, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
-            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Module", Label = "Module", Order = 6, ConfigContainer = categoryConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.MODULES_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.Module, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
+            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CategoryId", Label = "Category Id", IsIdentity = true, Order = 1, ConfigContainer = categoryConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = categoryConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 3, ConfigContainer = categoryConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
+            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Icon", Label = "Icon", Order = 4, ConfigContainer = categoryConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 5, ConfigContainer = categoryConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
+            categoryConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Module", Label = "Module", Order = 6, ConfigContainer = categoryConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.MODULES_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.Module, Headway.Core|Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownComplex`1, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
@@ -490,7 +490,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.MenuItem, Headway.Core",
                 ModelApi = "MenuItems",
                 OrderModelBy = "Name",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
                 DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "MenuItemId",
@@ -517,25 +517,25 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.MenuItem, Headway.Core",
                 ModelApi = "MenuItems",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.Document`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Document`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "MenuItems"
             };
 
             dbContext.Configs.Add(menuItemConfig);
 
-            var menuItemConfigContainer = new ConfigContainer { Name = "Menu Item Div", Code = "MENUITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Menu Item", Order = 1 };
+            var menuItemConfigContainer = new ConfigContainer { Name = "Menu Item Div", Code = "MENUITEM_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Menu Item", Order = 1 };
 
             menuItemConfig.ConfigContainers.Add(menuItemConfigContainer);
 
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "MenuItemId", Label = "Menu Item Id", IsIdentity = true, Order = 1, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Icon", Label = "Icon", Order = 3, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Config", Label = "Config", Order = 3, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigatePage", Label = "Navigate Page", Order = 3, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(PageOptionItems)}" });
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 4, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 5, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
-            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Category", Label = "Category", Order = 6, ConfigContainer = menuItemConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CATEGORIES_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.Category, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "MenuItemId", Label = "Menu Item Id", IsIdentity = true, Order = 1, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Icon", Label = "Icon", Order = 3, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Config", Label = "Config", Order = 3, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigatePage", Label = "Navigate Page", Order = 3, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(PageOptionItems)}" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 4, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permission", Label = "Permission", Order = 5, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.PERMISSIONS_OPTION_ITEMS}" });
+            menuItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Category", Label = "Category", Order = 6, ConfigContainer = menuItemConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CATEGORIES_OPTION_ITEMS}|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.Category, Headway.Core|Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownComplex`1, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
@@ -550,7 +550,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Config, Headway.Core",
                 ModelApi = "Configuration",
                 OrderModelBy = "Name",
-                Document = "Headway.Razor.Controls.Documents.Table`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
                 DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "ConfigId",
@@ -577,42 +577,42 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Config, Headway.Core",
                 ModelApi = "Configuration",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.TabDocument`1, Headway.Razor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Configs"
             };
 
             dbContext.Configs.Add(configConfig);
 
-            var configConfigContainer1 = new ConfigContainer { Name = "Model Div", Code = "MODEL DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Model", Order = 1 };
-            var configConfigContainer2 = new ConfigContainer { Name = "Fields Div", Code = "FIELDS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Fields", Order = 2 };
-            var configConfigContainer3 = new ConfigContainer { Name = "Search Div", Code = "SEARCH_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Search", Order = 3 };
-            var configConfigContainer4 = new ConfigContainer { Name = "Containers Div", Code = "CONTAINERS_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Containers", Order = 4 };
+            var configConfigContainer1 = new ConfigContainer { Name = "Model Div", Code = "MODEL DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Model", Order = 1 };
+            var configConfigContainer2 = new ConfigContainer { Name = "Fields Div", Code = "FIELDS_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Fields", Order = 2 };
+            var configConfigContainer3 = new ConfigContainer { Name = "Search Div", Code = "SEARCH_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Search", Order = 3 };
+            var configConfigContainer4 = new ConfigContainer { Name = "Containers Div", Code = "CONTAINERS_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Containers", Order = 4 };
 
             configConfig.ConfigContainers.Add(configConfigContainer1);
             configConfig.ConfigContainers.Add(configConfigContainer2);
             configConfig.ConfigContainers.Add(configConfigContainer3);
             configConfig.ConfigContainers.Add(configConfigContainer4);
 
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = true, Order = 1, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", IsTitle = true, Order = 3, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsTitle = false, Order = 4, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Model", Label = "Model", Order = 5, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelOptionItems)}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModelApi", Label = "Model Api", Order = 6, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONTROLLER_OPTION_ITEMS}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CreateLocal", Label = "Create Local", Order = 7, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UseSearchComponent", Label = "UseSearch Component", Order = 8, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "SearchComponent", Label = "Search Component", Order = 9, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(SearchComponentOptionItems)}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OrderModelBy", Label = "Order Model By", Order = 10, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Document", Label = "Document", Order = 11, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(DocumentOptionItems)}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DocumentArgs", Label = "DocumentArgs", Order = 12, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigatePage", Label = "Navigate Page", Order = 13, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(PageOptionItems)}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateResetBreadcrumb", Label = "Navigate Reset Breadcrumb", Order = 14, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateProperty", Label = "Navigate Property", Order = 15, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateConfig", Label = "Navigate Config", Order = 16, ConfigContainer = configConfigContainer1, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", Order = 17, ConfigContainer = configConfigContainer2, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigItemsListDetail|Name={Args.PROPAGATE_FIELDS};Value=Model,ConfigId" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigSearchItems", Label = "Config Search Items", Order = 18, ConfigContainer = configConfigContainer3, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigSearchItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigSearchItemsListDetail" });
-            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Tooltip = "Drag and drop containers into nested hierarchy", Order = 19, ConfigContainer = configConfigContainer4, Component = "Headway.Razor.Controls.Components.GenericField, Headway.Razor.Controls", ConfigName = "ConfigContainer", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Label|Name={Args.LIST_PROPERTY};Value=ConfigContainers" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigId", Label = "Config Id", IsIdentity = true, Order = 1, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", IsTitle = true, Order = 3, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", IsTitle = false, Order = 4, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Model", Label = "Model", Order = 5, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelOptionItems)}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ModelApi", Label = "Model Api", Order = 6, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONTROLLER_OPTION_ITEMS}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CreateLocal", Label = "Create Local", Order = 7, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Checkbox, Headway.Blazor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UseSearchComponent", Label = "UseSearch Component", Order = 8, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Checkbox, Headway.Blazor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "SearchComponent", Label = "Search Component", Order = 9, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(SearchComponentOptionItems)}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "OrderModelBy", Label = "Order Model By", Order = 10, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Document", Label = "Document", Order = 11, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(DocumentOptionItems)}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "DocumentArgs", Label = "DocumentArgs", Order = 12, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.TextMultiline, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigatePage", Label = "Navigate Page", Order = 13, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(PageOptionItems)}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateResetBreadcrumb", Label = "Navigate Reset Breadcrumb", Order = 14, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Checkbox, Headway.Blazor.Controls" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateProperty", Label = "Navigate Property", Order = 15, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "NavigateConfig", Label = "Navigate Config", Order = 16, ConfigContainer = configConfigContainer1, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItems", Label = "Config Items", Order = 17, ConfigContainer = configConfigContainer2, Component = "Headway.Blazor.Controls.Components.GenericField, Headway.Blazor.Controls", ConfigName = "ConfigItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigItemsListDetail|Name={Args.PROPAGATE_FIELDS};Value=Model,ConfigId" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigSearchItems", Label = "Config Search Items", Order = 18, ConfigContainer = configConfigContainer3, Component = "Headway.Blazor.Controls.Components.GenericField, Headway.Blazor.Controls", ConfigName = "ConfigSearchItem", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ConfigSearchItemsListDetail" });
+            configConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainers", Label = "Config Containers", Tooltip = "Drag and drop containers into nested hierarchy", Order = 19, ConfigContainer = configConfigContainer4, Component = "Headway.Blazor.Controls.Components.GenericField, Headway.Blazor.Controls", ConfigName = "ConfigContainer", ComponentArgs = $"Name={Args.UNIQUE_PROPERTY};Value={Args.CODE}|Name={Args.UNIQUE_PARENT_PROPERTY};Value={Args.CODE_PARENT}|Name={Args.LABEL_PROPERTY};Value=Label|Name={Args.LIST_PROPERTY};Value=ConfigContainers" });
 
             dbContext.SaveChanges();
         }
@@ -627,26 +627,26 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.ConfigItem, Headway.Core",
                 ModelApi = "Configuration",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
+                Document = "Headway.Blazor.Controls.Documents.ListDetail`1, Headway.Blazor.Controls"
             };
 
             dbContext.Configs.Add(configItemConfig);
 
-            var configItemConfigContainer = new ConfigContainer { Name = "Config Item Div", Code = "CONFIG_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Config Item", Order = 1 };
+            var configItemConfigContainer = new ConfigContainer { Name = "Config Item Div", Code = "CONFIG_ITEM_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Config Item", Order = 1 };
 
             configItemConfig.ConfigContainers.Add(configItemConfigContainer);
 
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItemId", Label = "Config Item Id", IsIdentity = true, Order = 1, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "PropertyName", Order = 2, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 3, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Tooltip", Label = "Tooltip", Order = 4, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "IsIdentity", Label = "IsIdentity", Order = 5, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "IsTitle", Label = "IsTitle", Order = 6, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Checkbox, Headway.Razor.Controls" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Component", Label = "Component", Order = 8, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ComponentOptionItems)}" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "ComponentArgs", Order = 9, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigName", Label = "Config Name", Order = 10, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
-            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainer", Label = "Container", Order = 11, ConfigContainer = configItemConfigContainer, Component = "Headway.Razor.Controls.Components.GenericDropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_CONTAINERS}|Name={Args.LINK_SOURCE};VALUE=ConfigId|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.ConfigContainer, Headway.Core|Name={Args.COMPONENT};Value=Headway.Razor.Controls.Components.DropdownComplex`1, Headway.Razor.Controls" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigItemId", Label = "Config Item Id", IsIdentity = true, Order = 1, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PropertyName", Label = "PropertyName", Order = 2, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 3, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Tooltip", Label = "Tooltip", Order = 4, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "IsIdentity", Label = "IsIdentity", Order = 5, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Checkbox, Headway.Blazor.Controls" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "IsTitle", Label = "IsTitle", Order = 6, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Checkbox, Headway.Blazor.Controls" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Component", Label = "Component", Order = 8, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ComponentOptionItems)}" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "ComponentArgs", Order = 9, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.TextMultiline, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigName", Label = "Config Name", Order = 10, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_OPTION_ITEMS}" });
+            configItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainer", Label = "Container", Order = 11, ConfigContainer = configItemConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.CONFIG_CONTAINERS}|Name={Args.LINK_SOURCE};VALUE=ConfigId|Name={Options.DISPLAY_FIELD};Value=Name|Name={Args.MODEL};Value=Headway.Core.Model.ConfigContainer, Headway.Core|Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownComplex`1, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
@@ -681,22 +681,22 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.ConfigSearchItem, Headway.Core",
                 ModelApi = "Configuration",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.ListDetail`1, Headway.Razor.Controls"
+                Document = "Headway.Blazor.Controls.Documents.ListDetail`1, Headway.Blazor.Controls"
             };
 
             dbContext.Configs.Add(configSearchItemConfig);
 
-            var configSearchItemConfigContainer = new ConfigContainer { Name = "Config Search Item Div", Code = "CONFIG_SEARCH_ITEM_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Config Search Item", Order = 1 };
+            var configSearchItemConfigContainer = new ConfigContainer { Name = "Config Search Item Div", Code = "CONFIG_SEARCH_ITEM_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Config Search Item", Order = 1 };
 
             configSearchItemConfig.ConfigContainers.Add(configSearchItemConfigContainer);
 
-            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigSearchItemId", Label = "Config Search Item Id", IsIdentity = true, Order = 1, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 2, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ParameterName", Label = "Parameter Name", Order = 3, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Tooltip", Label = "Tooltip", Order = 4, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 5, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Component", Label = "Component", Order = 6, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(SearchItemComponentOptionItems)}" });
-            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 7, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigSearchItemId", Label = "Config Search Item Id", IsIdentity = true, Order = 1, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 2, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ParameterName", Label = "Parameter Name", Order = 3, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Tooltip", Label = "Tooltip", Order = 4, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 5, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Component", Label = "Component", Order = 6, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(SearchItemComponentOptionItems)}" });
+            configSearchItemConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 7, ConfigContainer = configSearchItemConfigContainer, Component = "Headway.Blazor.Controls.Components.TextMultiline, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
 
             dbContext.SaveChanges();
         }
@@ -731,23 +731,23 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.ConfigContainer, Headway.Core",
                 ModelApi = "Configuration",
                 CreateLocal = true,
-                Document = "Headway.Razor.Controls.Documents.TreeDetail`1, Headway.Razor.Controls"
+                Document = "Headway.Blazor.Controls.Documents.TreeDetail`1, Headway.Blazor.Controls"
             };
 
             dbContext.Configs.Add(configContainerConfig);
 
-            var configContainerConfigContainer = new ConfigContainer { Name = "Config Container Div", Code = "CONFIG_CONTAINER_DIV", Container = "Headway.Razor.Controls.Containers.Div, Headway.Razor.Controls", Label = "Config Container", Order = 1 };
+            var configContainerConfigContainer = new ConfigContainer { Name = "Config Container Div", Code = "CONFIG_CONTAINER_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Config Container", Order = 1 };
 
             configContainerConfig.ConfigContainers.Add(configContainerConfigContainer);
 
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainerId", Label = "Config Container Id", IsIdentity = true, Order = 1, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Label, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Code", Label = "Code", IsIdentity = true, Order = 2, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ParentCode", Label = "Parent Code", IsIdentity = true, Order = 3, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 4, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 5, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Text, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 6, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.TextMultiline, Headway.Razor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Integer, Headway.Razor.Controls" });
-            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", Order = 8, ConfigContainer = configContainerConfigContainer, Component = "Headway.Razor.Controls.Components.Dropdown, Headway.Razor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ContainerOptionItems)}" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigContainerId", Label = "Config Container Id", IsIdentity = true, Order = 1, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Code", Label = "Code", IsIdentity = true, Order = 2, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ParentCode", Label = "Parent Code", IsIdentity = true, Order = 3, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 4, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Label", Label = "Label", Order = 5, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 6, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.TextMultiline, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
+            configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", Order = 8, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ContainerOptionItems)}" });
             dbContext.SaveChanges();
         }
     }

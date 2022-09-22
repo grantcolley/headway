@@ -1,0 +1,26 @@
+﻿@if (Messages.Count() > 0)
+{
+    <MudBadge Content="@Messages.Count()" Overlap="true" Class="mx-6 my-4">
+        <MudIconButton Icon=@IconHelper.GetOutlined("Error") Color="Color.Error" OnClick="Click" />
+    </MudBadge>
+}
+
+@code {
+    [Inject]
+    protected IShowDialogService ShowDialogService { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public List<string> Messages { get; set; }
+
+    private async Task Click()
+    {
+        var title = string.IsNullOrWhiteSpace(Title) ? "Validation Errors" : $"{Title} Validation Errors";
+        var message = string.Join("\n", Messages);
+        await ShowDialogService.ShowAsync(
+            title, message, "Ok", false, Color.Error, true)
+            .ConfigureAwait(false);
+    }
+}

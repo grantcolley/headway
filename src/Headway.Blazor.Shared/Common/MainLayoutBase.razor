@@ -1,0 +1,76 @@
+﻿<MudThemeProvider Theme="theme" @bind-IsDarkMode="@isDarkMode"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar Elevation="0">    
+        <MudImage ObjectFit="@ObjectFit.Fill" Height="50" Width="200" Src="/images/Headway.png" Alt="Headway"/>
+        <MudSpacer />
+        @LoginDisplayFragment
+        <MudTooltip Text="@(isDarkMode ? Mode.LIGHT : Mode.DARK)" Color="Color.Inherit">
+            <MudToggleIconButton Toggled="@isDarkMode"
+                                 Icon="@Icons.Material.Filled.DarkMode" 
+                                 Color="Color.Inherit"
+                                 ToggledIcon="@Icons.Material.Filled.WbSunny"
+                                 ToggledColor="Color.Inherit"
+                                 ToggledChanged="ToggledChanged"/>
+        </MudTooltip>
+    </MudAppBar>
+    <AuthorizeView>
+        <Authorized>
+            <MudDrawer @bind-Open="drawerOpen" Elevation="1" ClipMode="DrawerClipMode.Always">
+                <NavMenu />           
+            </MudDrawer>
+        </Authorized>
+    </AuthorizeView>
+    <MudMainContent>
+        <AuthorizeView>
+            <Authorized>
+                <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                    <MudToolBar DisableGutters="true">
+                        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                            <Breadcrumbs/>
+                        <MudSpacer />
+                    </MudToolBar>
+                </MudHidden>
+            </Authorized>
+        </AuthorizeView>
+        <MudContainer MaxWidth="MaxWidth.False">
+            @BodyFragment
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    [Inject]
+    public IAppCache AppCache { get; set; }
+
+    [Parameter]
+    public RenderFragment LoginDisplayFragment { get; set; }
+
+    [Parameter]
+    public RenderFragment BodyFragment { get; set; }
+
+    private HeadwayTheme theme = new();
+    private bool isDarkMode = false;
+
+    private bool drawerOpen = true;
+
+    protected override void OnParametersSet()
+    {
+        isDarkMode = AppCache.Get<bool>(AppCacheKeys.IsDarkMode);
+
+        base.OnParametersSet();
+    }
+
+    private void ToggledChanged(bool val)
+    {
+        isDarkMode = val;
+        AppCache.Set(AppCacheKeys.IsDarkMode, val);
+    }
+
+    private void DrawerToggle()
+    {
+        drawerOpen = !drawerOpen;
+    }
+}

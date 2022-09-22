@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Repository", "Headw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.WebApi", "Headway.WebApi\Headway.WebApi.csproj", "{8CEBE0B0-5543-4D58-ADB5-9944449011FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorWebassemblyApp", "Headway.BlazorWebassemblyApp\Headway.BlazorWebassemblyApp.csproj", "{17F66A51-074F-4549-949D-558159A3350F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.App.Blazor.WebAssembly", "Headway.App.Blazor.WebAssembly\Headway.App.Blazor.WebAssembly.csproj", "{17F66A51-074F-4549-949D-558159A3350F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.BlazorServerApp", "Headway.BlazorServerApp\Headway.BlazorServerApp.csproj", "{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.App.Blazor.Server", "Headway.App.Blazor.Server\Headway.App.Blazor.Server.csproj", "{1A4B8472-4825-4E41-AFB5-DBBCB84F8EEF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{E79B3B54-22DF-4B81-A1CA-F52C2B920D0C}"
 EndProject
@@ -23,9 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.MigrationsSqlite", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.MigrationsSqlServer", "Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj", "{1CDD388A-BCCF-461A-9527-B952592823A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Shared", "Headway.Razor.Shared\Headway.Razor.Shared.csproj", "{E10CDF03-8AC6-455A-8CAA-3C27A4A3C91A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Blazor.Shared", "Headway.Blazor.Shared\Headway.Blazor.Shared.csproj", "{E10CDF03-8AC6-455A-8CAA-3C27A4A3C91A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Controls", "Headway.Razor.Controls\Headway.Razor.Controls.csproj", "{E5504993-547C-4B8B-A208-DB4B9FDEDDBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Blazor.Controls", "Headway.Blazor.Controls\Headway.Blazor.Controls.csproj", "{E5504993-547C-4B8B-A208-DB4B9FDEDDBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RequestApi", "Headway.RequestApi\Headway.RequestApi.csproj", "{B4A2729D-722F-4F68-B95C-D7BDC545ACB6}"
 EndProject
@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.RemediatR.Repositor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headway.Data.Model", "Utilities\Headway.Data.Model\Headway.Data.Model.csproj", "{D6BE720E-0FF2-4D81-A694-289BE6E25E5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Razor.Theme", "Headway.Razor.Theme\Headway.Razor.Theme.csproj", "{7A6BBE3B-A9B5-4993-9739-26B5F617E7A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Blazor.Theme", "Headway.Blazor.Theme\Headway.Blazor.Theme.csproj", "{7A6BBE3B-A9B5-4993-9739-26B5F617E7A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
