@@ -1,11 +1,11 @@
 ﻿using Headway.Core.Args;
 using Headway.Core.Attributes;
-using Headway.RemediatR.Core.Constants;
-using Headway.RemediatR.Core.Interface;
-using Headway.RemediatR.Core.Model;
-using Headway.RemediatR.Repository.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RemediatR.Core.Constants;
+using RemediatR.Core.Interface;
+using RemediatR.Core.Model;
+using RemediatR.Repository.Constants;
 using System;
 using System.Threading.Tasks;
 

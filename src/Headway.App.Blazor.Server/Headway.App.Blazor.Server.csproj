@@ -22,8 +22,8 @@
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
     <ProjectReference Include="..\Headway.Blazor.Controls\Headway.Blazor.Controls.csproj" />
     <ProjectReference Include="..\Headway.Blazor.Shared\Headway.Blazor.Shared.csproj" />
-    <ProjectReference Include="..\Headway.RemediatR.Core\Headway.RemediatR.Core.csproj" />
     <ProjectReference Include="..\Headway.RequestApi\Headway.RequestApi.csproj" />
+    <ProjectReference Include="..\Modules\RemediatR.Core\RemediatR.Core.csproj" />
   </ItemGroup>
 
 </Project>

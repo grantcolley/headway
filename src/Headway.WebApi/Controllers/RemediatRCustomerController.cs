@@ -1,10 +1,10 @@
 ﻿using Headway.Core.Args;
 using Headway.Core.Attributes;
-using Headway.RemediatR.Core.Constants;
-using Headway.RemediatR.Core.Interface;
-using Headway.RemediatR.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RemediatR.Core.Constants;
+using RemediatR.Core.Interface;
+using RemediatR.Core.Model;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers

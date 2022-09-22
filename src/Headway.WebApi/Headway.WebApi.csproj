@@ -27,9 +27,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Headway.Core\Headway.Core.csproj" />
-    <ProjectReference Include="..\Headway.RemediatR.Core\Headway.RemediatR.Core.csproj" />
-    <ProjectReference Include="..\Headway.RemediatR.Repository\Headway.RemediatR.Repository.csproj" />
     <ProjectReference Include="..\Headway.Repository\Headway.Repository.csproj" />
+    <ProjectReference Include="..\Modules\RemediatR.Core\RemediatR.Core.csproj" />
+    <ProjectReference Include="..\Modules\RemediatR.Repository\RemediatR.Repository.csproj" />
     <ProjectReference Include="..\Utilities\Headway.MigrationsSqlite\Headway.MigrationsSqlite.csproj" />
     <ProjectReference Include="..\Utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj" />
     <ProjectReference Include="..\Utilities\Headway.SeedData\Headway.SeedData.csproj" />

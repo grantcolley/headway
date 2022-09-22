@@ -1,8 +1,8 @@
 ﻿using Headway.Core.Model;
-using Headway.RemediatR.Core.Model;
 using Headway.Repository.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using RemediatR.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

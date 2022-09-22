@@ -1,8 +1,6 @@
 using FluentValidation.AspNetCore;
 using Headway.Core.Constants;
 using Headway.Core.Interface;
-using Headway.RemediatR.Core.Interface;
-using Headway.RemediatR.Repository;
 using Headway.Repository.Data;
 using Headway.Repository.Repositories;
 using Headway.SeedData;
@@ -10,13 +8,14 @@ using Headway.SeedData.RemediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RemediatR.Core.Interface;
+using RemediatR.Repository;
 using Serilog;
 using Serilog.Context;
 using System.Reflection;
@@ -32,7 +31,7 @@ builder.WebHost.UseSerilog((hostingContext, loggerConfiguration) =>
 builder.Services.AddControllers()
     .AddFluentValidation(fv =>
         fv.RegisterValidatorsFromAssemblies
-        (new[] { Assembly.Load("Headway.RemediatR.Core") }))
+        (new[] { Assembly.Load("RemediatR.Core") }))
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 

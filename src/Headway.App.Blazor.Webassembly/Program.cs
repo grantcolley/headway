@@ -1,11 +1,10 @@
 using Headway.App.Blazor.WebAssembly;
 using Headway.App.Blazor.WebAssembly.Account;
 using Headway.App.Blazor.WebAssembly.Extensions;
+using Headway.Blazor.Controls.Services;
 using Headway.Core.Cache;
 using Headway.Core.Interface;
 using Headway.Core.Notifications;
-using Headway.Blazor.Controls.Services;
-using Headway.RemediatR.Core.Model;
 using Headway.RequestApi.Api;
 using Headway.RequestApi.Requests;
 using MediatR;
@@ -15,6 +14,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
+using RemediatR.Core.Model;
 using System;
 using System.Net.Http;
 
