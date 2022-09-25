@@ -72,6 +72,9 @@
 * [Configuration](#configuration)
 * [Administration](#administration)
 * [Database](#database)
+* [UML Diagrams](#uml-diagrams)
+	* [Blazor Server OnStart](#blazor-server-onstart)	
+	* [ClaimModules API](#claimmodules-api) 
 * [Notes](#notes)
     * [Adding font awesome](#adding-font-awesome)
     * [EntityFramework Core Migrations](#entityframework-core-migrations)
@@ -572,6 +575,15 @@ Add the connection string to [appsettings.json](https://github.com/grantcolley/h
 Create the database and schema using [EF Core migrations](#entityframework-core-migrations) in [Headway.MigrationsSqlServer](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlServer) or [MigrationsSqlite](https://github.com/grantcolley/headway/tree/main/src/Utilities/Headway.MigrationsSqlite), depending on which database you choose. If you are using Visual Studio in the `Developer PowerShell` navigate to **Headway.WebApi** folder and run the following:
 ![Alt text](/readme-images/EFCoreMigrations.jpg?raw=true "Headway EF Core Migrations") 
 
+## UML Diagrams
+The following incredibly useful UML diagrams have been provided by [@VR-Architect](https://github.com/VR-Architect).
+
+#### Blazor Server OnStart
+![Alt text](/readme-images/BlazorServerOnStart.jpg?raw=true "Blazor Server OnStart") 
+
+#### ClaimModules API 
+![Alt text](/readme-images/AuthorizationFlow.jpg?raw=true "ClaimModules API") 
+	
 ## Notes
 
 ### Adding Font Awesome
@@ -688,4 +700,4 @@ I [reported a bug in System.Text.Json](https://github.com/dotnet/aspnetcore/issu
 ```
 
 ## Acknowledgements
-- [@VR-Architect](https://github.com/VR-Architect) - UML [diagram](#authorization) showing the ClaimModules API
+- [@VR-Architect](https://github.com/VR-Architect) - for providing incredibly useful [UML Diagrams](#uml-diagrams)
