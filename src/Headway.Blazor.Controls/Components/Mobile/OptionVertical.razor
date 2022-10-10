@@ -1,0 +1,39 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits OptionBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+               <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression">
+                    @foreach (var option in options)
+                    {
+                        <div class="option-vertical">
+                            <MudRadio Option="@option.Id">@option.Display</MudRadio>
+                        </div>
+                    }
+               </MudRadioGroup>        
+            }
+            else
+            {
+                <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top">
+                    <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression">
+                        @foreach (var option in options)
+                        {
+                            <div class="option-vertical">
+                                <MudRadio Option="@option.Id">@option.Display</MudRadio>
+                            </div>
+                        }
+                    </MudRadioGroup>
+                </MudTooltip> 
+            }
+        </div>
+        <div class="col-sm-8 option-vertical-container" />
+    </div>
+</div>

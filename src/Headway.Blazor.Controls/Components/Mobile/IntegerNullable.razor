@@ -1,0 +1,27 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits IntegerNullableBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                <MudNumericField @bind-Value="@PropertyValue" MaxLength="@MaxLength" Min="@Min" Max="@Max"
+                             For="FieldExpression" Variant="Variant.Outlined" Label="@Field.Label" />
+            }
+            else
+            {
+                <ComponentTip Text="@Field.Tooltip">
+                    <MudNumericField @bind-Value="@PropertyValue" MaxLength="@MaxLength" Min="@Min" Max="@Max"
+                                 For="FieldExpression" Variant="Variant.Outlined" Label="@Field.Label" />
+                </ComponentTip>    
+            }
+        </div>
+        <div class="col-sm-8" />
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Headway.Blazor.Controls.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@typeparam T where T : class, new()
+@inherits DropdownComplexBase<T>
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                <MudSelect  T="GenericItem<T>" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                           @bind-Value="SelectedItem" SelectedValuesChanged="OnValueChanged" Label="@Field.Label">
+                    @if (optionItems != null)
+                    {
+                        @foreach (var optionItem in optionItems)
+                        {
+                            <MudSelectItem T="GenericItem<T>" Value="@optionItem"/>
+                        }
+                    }
+                </MudSelect>            
+            }
+            else
+            {
+                <ComponentTip Text="@Field.Tooltip">
+                    <MudSelect T="GenericItem<T>" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                           @bind-Value="SelectedItem" SelectedValuesChanged="OnValueChanged" Label="@Field.Label">
+                        @if (optionItems != null)
+                        {
+                            @foreach (var optionItem in optionItems)
+                            {
+                                <MudSelectItem T="GenericItem<T>" Value="@optionItem" />
+                            }
+                        }
+                    </MudSelect>
+                </ComponentTip>    
+            }
+        </div>
+        <div class="col-sm-8" />
+    </div>
+</div>

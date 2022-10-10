@@ -3,7 +3,6 @@ using Headway.Core.Constants;
 using Headway.Core.Helpers;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
-using Headway.Blazor.Controls.Base;
 using Headway.RequestApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -13,7 +12,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Headway.Blazor.Controls.Components
+namespace Headway.Blazor.Controls.Base
 {
     [DynamicComponent]
     public abstract class OptionBase : DynamicComponentBase
@@ -59,7 +58,7 @@ namespace Headway.Blazor.Controls.Components
 
             var arg = ComponentArgHelper.GetArg(ComponentArgs, Options.OPTIONS_CODE);
 
-            if(arg == null)
+            if (arg == null)
             {
                 options = ComponentArgs
                     .Select(a => new OptionItem { Id = a.Name, Display = a.Value.ToString() })
@@ -84,7 +83,7 @@ namespace Headway.Blazor.Controls.Components
                 options = new List<OptionItem>(optionItems);
             }
 
-            await OnInitializedAsync().ConfigureAwait(false);   
+            await OnInitializedAsync().ConfigureAwait(false);
         }
     }
 }
