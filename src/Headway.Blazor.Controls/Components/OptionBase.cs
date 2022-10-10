@@ -13,7 +13,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Headway.Blazor.Controls.Components.Option
+namespace Headway.Blazor.Controls.Components
 {
     [DynamicComponent]
     public abstract class OptionBase : DynamicComponentBase
