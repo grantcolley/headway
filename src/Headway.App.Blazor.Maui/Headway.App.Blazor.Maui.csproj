@@ -50,12 +50,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="appsettings.Development.json" />
       <Content Remove="appsettings.json" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="appsettings.Development.json" />
       <EmbeddedResource Include="appsettings.json" />
     </ItemGroup>
 
