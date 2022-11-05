@@ -1,0 +1,30 @@
+﻿<AuthorizeView>
+    <Authorized>
+        @context.User.Identity.Name
+        <MudTooltip Text="Log out" Color="Color.Inherit">
+            <MudIconButton ButtonType="ButtonType.Button" OnClick="LogOut" Color="Color.Inherit" Icon="@Icons.Material.Filled.Logout" />
+        </MudTooltip>
+    </Authorized>
+    <NotAuthorized>
+        <MudTooltip Text="Log in" Color="Color.Inherit">
+            <MudIconButton ButtonType="ButtonType.Button" OnClick="LogIn" Color="Color.Inherit" Icon="@Icons.Material.Filled.Login" />
+        </MudTooltip>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Inject]
+    public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+    private async Task LogIn(MouseEventArgs args)
+    {
+        await ((CustomAuthenticationStateProvider)AuthenticationStateProvider).LogInAsync();
+        StateHasChanged();
+    }
+
+    private async Task LogOut(MouseEventArgs args)
+    {
+        await ((CustomAuthenticationStateProvider)AuthenticationStateProvider).LogoutAsync();
+        StateHasChanged();
+    }
+}
