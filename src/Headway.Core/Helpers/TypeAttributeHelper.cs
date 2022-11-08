@@ -29,7 +29,6 @@ namespace Headway.Core.Helpers
             var dynamicTypes = new List<DynamicType>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => a.GetName().Name.StartsWith(TypeHelpers.HEADWAY))
                 .ToList();
 
             foreach (var assembly in assemblies)
