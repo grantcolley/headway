@@ -50,7 +50,7 @@ namespace Headway.Core.Flow
 
     public class State<T> : State
     {
-        public State(T context, State state) : base()
+        public State(T context, State state) : this()
         {
             Context = context;
 
@@ -71,7 +71,7 @@ namespace Headway.Core.Flow
             Dependencies.AddRange(state.Dependencies);
         }
 
-        public State()
+        public State() : base()
         {
             Actions = new List<StateAction<T>>();
         }
