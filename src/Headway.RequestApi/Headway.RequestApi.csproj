@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Authors>Grant Colley</Authors>
     <Company>Headway</Company>
     <Copyright>Copyright © 2021 Grant Colley</Copyright>
