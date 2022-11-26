@@ -1,5 +1,5 @@
 ﻿using Headway.Core.Helpers;
-using MudBlazor;
+using static MudBlazor.Icons;
 
 namespace Headway.Blazor.Controls.Helpers
 {
