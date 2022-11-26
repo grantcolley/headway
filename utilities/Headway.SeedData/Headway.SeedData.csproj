@@ -17,10 +17,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Headway.Core\Headway.Core.csproj" />
-		<ProjectReference Include="..\..\Headway.Blazor.Controls\Headway.Blazor.Controls.csproj" />
-		<ProjectReference Include="..\..\Headway.Repository\Headway.Repository.csproj" />
-		<ProjectReference Include="..\..\Modules\RemediatR.Core\RemediatR.Core.csproj" />
+	  <ProjectReference Include="..\..\src\Headway.Blazor.Controls\Headway.Blazor.Controls.csproj" />
+	  <ProjectReference Include="..\..\src\Headway.Core\Headway.Core.csproj" />
+	  <ProjectReference Include="..\..\src\Headway.Repository\Headway.Repository.csproj" />
+	  <ProjectReference Include="..\..\src\Modules\RemediatR.Core\RemediatR.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
