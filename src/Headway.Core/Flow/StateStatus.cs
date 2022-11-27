@@ -2,7 +2,7 @@
 {
     public enum StateStatus
     {
-        Uninitialized = 0,
+        NotStarted = 0,
         InProgress = 1,
         Completed = 2
     }

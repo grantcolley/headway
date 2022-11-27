@@ -7,6 +7,6 @@ namespace Headway.Core.Flow
     {
         public StateActionType StateActionType { get; set; }
 
-        public Func<State, Task>? ActionAsync { get; set; }
+        public Func<State, Task> ActionAsync { get; set; }
     }
 }
