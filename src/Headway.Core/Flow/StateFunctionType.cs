@@ -1,6 +1,6 @@
 ﻿namespace Headway.Core.Flow
 {
-    public enum StateActionType
+    public enum StateFunctionType
     {
         Initialize = 0,
         Complete = 1,

@@ -18,7 +18,14 @@ namespace Headway.Core.Flow
         public string Name { get; set; }
 
         [Required]
+        [StringLength(150)]
+        public string Model { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string Permission { get; set; }
+
+        [StringLength(50)]
+        public string ActiveStateCode { get; set; }
     }
 }
