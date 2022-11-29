@@ -7,14 +7,14 @@
             @if(dynamicModel != null)
             {
                 <MudToolBar DisableGutters="true" Style="border-bottom: 1px solid gray;">
-                    <MudTooltip Text="Clear selection">
+                    <MudTooltip Text="Clear selection" Arrow="true">
                         <MudIconButton ButtonType="ButtonType.Button" Color="Color.Inherit" Icon="@Icons.Material.Filled.Undo" OnClick="NewAsync"/>
                     </MudTooltip>
-                    <MudTooltip Text="Add new or update existing item">
+                    <MudTooltip Text="Add new or update existing item" Arrow="true">
                         <MudIconButton ButtonType="ButtonType.Button" Color="Color.Inherit" Icon="@Icons.Material.Filled.Add" OnClick="() => AddAsync(dynamicModel)"/>
                     </MudTooltip>
                     <MudSpacer />
-                    <MudTooltip Text="Remove from list">
+                    <MudTooltip Text="Remove from list" Arrow="true">
                         <MudIconButton ButtonType="ButtonType.Button" Color="Color.Inherit" Icon="@Icons.Material.Filled.Close" OnClick="() => RemoveAsync(dynamicModel)"/>
                     </MudTooltip>
                 </MudToolBar>

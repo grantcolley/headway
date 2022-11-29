@@ -17,7 +17,7 @@
 }
 else
 {
-    <ComponentTip Text="@SearchItem.Tooltip">
+    <MudTooltip Text="@SearchItem.Tooltip" Arrow="true" Placement="Placement.Top">
         <MudSelect  T="string" @bind-Value="PropertyValue" Label="@SearchItem.Label" 
                     Style="@style" SelectedValuesChanged="OnValueChanged"
                     Variant="Variant.Text" FullWidth=true Margin="Margin.Dense" 
@@ -30,5 +30,5 @@ else
                 }
             }
         </MudSelect>
-    </ComponentTip>
+    </MudTooltip>
 }

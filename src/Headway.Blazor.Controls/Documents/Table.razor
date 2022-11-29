@@ -55,7 +55,9 @@ else
                     <MudTd>
                         @if(HasRowButton)
                         {
-                            <ComponentTip Text="@rowButtonTooltip"><button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => RowButtonClick(context)" /></ComponentTip>
+                            <MudTooltip Text="@rowButtonTooltip" Arrow="true" Placement="Placement.Right">
+                                <button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => RowButtonClick(context)" />
+                            </MudTooltip>
                         }
                     </MudTd>
 

@@ -15,9 +15,9 @@
             }
             else
             {
-                <ComponentTip Text="@Field.Tooltip">
+                <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
                     <MudTextField @bind-Value="@PropertyValue" For="FieldExpression" Variant="Variant.Outlined" Label="@Field.Label" />
-                </ComponentTip>    
+                </MudTooltip>    
             }
         </div>
         <div class="col-sm-8" />

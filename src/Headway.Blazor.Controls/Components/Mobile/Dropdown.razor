@@ -24,7 +24,7 @@
             }
             else
             {
-                <ComponentTip Text="@Field.Tooltip">
+                <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
                     <MudSelect  T="string" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
                                @bind-Value="PropertyValue" For="FieldExpression" SelectedValuesChanged="OnValueChanged" Label="@Field.Label">
                         @if (optionItems != null)
@@ -35,7 +35,7 @@
                             }
                         }
                     </MudSelect>
-                </ComponentTip>    
+                </MudTooltip>    
             }
         </div>
         <div class="col-sm-8" />

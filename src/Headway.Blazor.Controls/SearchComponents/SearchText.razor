@@ -11,12 +11,12 @@
 }
 else
 {
-    <ComponentTip Text="@SearchItem.Tooltip">
+    <MudTooltip Text="@SearchItem.Tooltip" Arrow="true" Placement="Placement.Top">
         <MudTextField @bind-Value="@PropertyValue" 
                     Label="@SearchItem.Label"
                     OnKeyDown="OnKeyDown"
                     Margin="Margin.Dense" 
                     Variant="Variant.Text"
                     Immediate=true/>
-    </ComponentTip>    
+    </MudTooltip>    
 }

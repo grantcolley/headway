@@ -28,9 +28,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemediatR.Repository", "src\Modules\RemediatR.Repository\RemediatR.Repository.csproj", "{E0D591F5-FE67-433F-8846-FA83CAC696F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8D7FC758-758F-4868-81BD-051B7CB3A87E}"
-	ProjectSection(SolutionItems) = preProject
-		tests\Headway.Core.Tests\Headway.Core.Tests.csproj = tests\Headway.Core.Tests\Headway.Core.Tests.csproj
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.App.Blazor.Server", "src\Headway.App.Blazor.Server\Headway.App.Blazor.Server.csproj", "{E6DED3F8-D5D7-4338-8BCA-F89E76FC520B}"
 EndProject
@@ -47,6 +44,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.MigrationsSqlServer", "utilities\Headway.MigrationsSqlServer\Headway.MigrationsSqlServer.csproj", "{4D14EDF7-A884-47AA-89C1-E88574852760}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.SeedData", "utilities\Headway.SeedData\Headway.SeedData.csproj", "{63B12783-26E2-49D2-8AC5-2AF188D00AF5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Headway.Core.Tests", "tests\Headway.Core.Tests\Headway.Core.Tests.csproj", "{AD1F4206-C180-426B-901B-1A505D8E057E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,6 +125,10 @@ Global
 		{63B12783-26E2-49D2-8AC5-2AF188D00AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63B12783-26E2-49D2-8AC5-2AF188D00AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63B12783-26E2-49D2-8AC5-2AF188D00AF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD1F4206-C180-426B-901B-1A505D8E057E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD1F4206-C180-426B-901B-1A505D8E057E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD1F4206-C180-426B-901B-1A505D8E057E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD1F4206-C180-426B-901B-1A505D8E057E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +142,7 @@ Global
 		{4CA508B3-2C65-476D-95EB-C6EFB1E5320E} = {3B365A4B-4A8C-4D1F-AE6E-E8DAA0342EB9}
 		{4D14EDF7-A884-47AA-89C1-E88574852760} = {3B365A4B-4A8C-4D1F-AE6E-E8DAA0342EB9}
 		{63B12783-26E2-49D2-8AC5-2AF188D00AF5} = {3B365A4B-4A8C-4D1F-AE6E-E8DAA0342EB9}
+		{AD1F4206-C180-426B-901B-1A505D8E057E} = {8D7FC758-758F-4868-81BD-051B7CB3A87E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E425CDCE-DCB2-45E6-B010-7B862B9FC224}
