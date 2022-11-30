@@ -62,7 +62,7 @@ namespace Headway.Core.Flow
             return Functions(arg, StateFunctionType.Complete);
         }
 
-        public virtual Task<bool> TryResstAsync(object arg)
+        public virtual Task<bool> TryResestAsync(object arg)
         {
             return Functions(arg, StateFunctionType.Complete);
         }
@@ -81,7 +81,7 @@ namespace Headway.Core.Flow
 
             foreach (var action in actions)
             {
-                var result = await action.FunctionAsync(arg);
+                var result = await action.FunctionAsync(this, arg);
 
                 if(!result)
                 {
