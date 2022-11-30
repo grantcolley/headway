@@ -9,6 +9,6 @@ namespace Headway.Core.Flow
 
         public int Order { get; set; }
 
-        public Func<object, Task<bool>> FunctionAsync { get; set; }
+        public Func<State, object, Task<bool>> FunctionAsync { get; set; }
     }
 }
