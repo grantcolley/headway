@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Headway.Core.Flow
+namespace Headway.Core.Model
 {
     public class StateException : Exception
     {

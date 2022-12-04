@@ -1,4 +1,4 @@
-﻿namespace Headway.Core.Flow
+﻿namespace Headway.Core.Model
 {
     public class FlowContext<T> : Flow
     {

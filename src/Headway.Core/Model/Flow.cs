@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Headway.Core.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Headway.Core.Flow
+namespace Headway.Core.Model
 {
-    public class Flow
+    [DynamicModel]
+    public class Flow : ModelBase
     {
         public Flow()
         {
@@ -11,7 +14,11 @@ namespace Headway.Core.Flow
         }
 
         public int FlowId { get; set; }
+        public int ConfigId { get; set; }
         public List<State> States { get; set; }
+
+        [NotMapped]
+        public Config Config { get; set; }
 
         [Required]
         [StringLength(50)]

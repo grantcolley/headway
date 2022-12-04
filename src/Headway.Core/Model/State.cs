@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Headway.Core.Flow
+namespace Headway.Core.Model
 {
-    public class State
+    [DynamicModel]
+    public class State : ModelBase
     {
         private readonly List<StateFunction> stateFunctions = new();
 
@@ -18,6 +22,7 @@ namespace Headway.Core.Flow
         }
 
         public int Id { get; set; }
+        public int ConfigItemId { get; set; }
         public StateType StateType { get; set; }
         public StateStatus StateStatus { get; set; }
         public Flow Flow { get; set; }
@@ -25,6 +30,9 @@ namespace Headway.Core.Flow
         public List<string> SubStates { get; set; }
         public List<string> Transitions { get; set; }
         public List<string> Dependencies { get; set; }
+
+        [NotMapped]
+        public ConfigItem ConfigItem { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -83,7 +91,7 @@ namespace Headway.Core.Flow
             {
                 var result = await action.FunctionAsync(this, arg);
 
-                if(!result)
+                if (!result)
                 {
                     return false;
                 }
