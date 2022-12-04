@@ -38,6 +38,10 @@ namespace Headway.Repository.Data
         public DbSet<DemoModelTreeItem> DemoModelTreeItems { get; set; }
         public DbSet<DemoModelComplexProperty> DemoModelComplexProperties { get; set; }
 
+        // Flow
+        public DbSet<Flow> Flows { get; set; }
+        public DbSet<State> States { get; set; }
+
         // RemediatR
         public DbSet<Country> Countries { get; set; }
         public DbSet<Customer> Customers { get; set; }
