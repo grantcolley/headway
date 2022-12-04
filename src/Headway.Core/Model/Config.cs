@@ -22,6 +22,7 @@ namespace Headway.Core.Model
         public List<ConfigItem> ConfigItems { get; set; }
         public List<ConfigContainer> ConfigContainers { get; set; }
         public List<ConfigSearchItem> ConfigSearchItems { get; set; }
+        public Flow Flow { get; set; }
 
         [Required]
         [StringLength(50)]
