@@ -1,4 +1,4 @@
-﻿namespace Headway.Core.Flow
+﻿namespace Headway.Core.Enums
 {
     public enum StateStatus
     {
