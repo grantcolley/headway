@@ -1,6 +1,7 @@
 ﻿using System;
+using Headway.Core.Model;
 
-namespace Headway.Core.Model
+namespace Headway.Core.Exceptions
 {
     public class StateException : Exception
     {
