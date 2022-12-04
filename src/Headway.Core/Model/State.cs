@@ -15,10 +15,9 @@ namespace Headway.Core.Model
 
         public State()
         {
-            Fields = new List<string>();
-            SubStates = new List<string>();
-            Transitions = new List<string>();
-            Dependencies = new List<string>();
+            SubStates = new List<State>();
+            Transitions = new List<State>();
+            Dependencies = new List<State>();
         }
 
         public int Id { get; set; }
@@ -26,10 +25,9 @@ namespace Headway.Core.Model
         public StateType StateType { get; set; }
         public StateStatus StateStatus { get; set; }
         public Flow Flow { get; set; }
-        public List<string> Fields { get; set; }
-        public List<string> SubStates { get; set; }
-        public List<string> Transitions { get; set; }
-        public List<string> Dependencies { get; set; }
+        public List<State> SubStates { get; set; }
+        public List<State> Transitions { get; set; }
+        public List<State> Dependencies { get; set; }
 
         [NotMapped]
         public ConfigItem ConfigItem { get; set; }
