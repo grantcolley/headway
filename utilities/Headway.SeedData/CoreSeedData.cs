@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Headway.SeedData
 {
-    public class CoreData
+    public class CoreSeedData
     {
         private static ApplicationDbContext dbContext;
 

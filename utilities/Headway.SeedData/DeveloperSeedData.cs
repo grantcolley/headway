@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Headway.SeedData
 {
-    public class DeveloperData
+    public class DeveloperSeedData
     {
         private static ApplicationDbContext dbContext;
 

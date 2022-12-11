@@ -154,14 +154,14 @@ if(useSeedData)
         {
             applicationDbContext.SetUser("Headway.SeedData");
 
-            CoreData.Initialise(applicationDbContext);
+            CoreSeedData.Initialise(applicationDbContext);
 
             if (userRemediatRData)
             {
-                RemediatRData.Initialise(applicationDbContext);
+                RemediatRSeedData.Initialise(applicationDbContext);
             }
 
-            DeveloperData.Initialise(applicationDbContext);
+            DeveloperSeedData.Initialise(applicationDbContext);
         }
     }
 }
