@@ -164,51 +164,9 @@ namespace Headway.SeedData.RemediatR
 
         private static void CreatePrograms()
         {
-            Dictionary<string, Program> programs = new();
+            var programs = RemediatRData.CreatePrograms();
 
-            programs.Add(
-                "IRMS",
-                new Program
-                {
-                    Name = "IRMS",
-                    Description = "Interest Rate Missold",
-                    Compensation = 400.00m,
-                    CompensatoryInterest = 5.00m,
-                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(300)),
-                    ProductType = ProductType.Vehicle,
-                    RateType = RateType.Fixed,
-                    RepaymentType = RepaymentType.Repayment
-                });
-
-            programs.Add(
-                "BTL-IOC",
-                new Program
-                {
-                    Name = "BTL-RP",
-                    Description = "Buy To Let Mortgage Redemption Penalty",
-                    Compensation = 1500.00m,
-                    CompensatoryInterest = 7.50m,
-                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(200)),
-                    ProductType = ProductType.Home,
-                    RateType = RateType.Variable,
-                    RepaymentType = RepaymentType.InterestOnly
-                });
-
-            programs.Add(
-                "STULIOC",
-                new Program
-                {
-                    Name = "STULIOC",
-                    Description = "Student Loan Introductory Offer Conversion",
-                    Compensation = 275.00m,
-                    CompensatoryInterest = 3.75m,
-                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(450)),
-                    ProductType = ProductType.Student,
-                    RateType = RateType.Tracker,
-                    RepaymentType = RepaymentType.Repayment
-                });
-
-            foreach (var program in programs.Values)
+            foreach (var program in programs)
             {
                 dbContext.Programs.Add(program);
             }
@@ -218,52 +176,10 @@ namespace Headway.SeedData.RemediatR
 
         private static void CreateCustomers()
         {
-            List<Customer> customers = new();
+            var customers = RemediatRData.CreateCustomers();
 
-            var customerLines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "_customers.csv"));
-            var productLines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "_products.csv"));
-
-            foreach (var customerLine in customerLines.Skip(1))
+            foreach (var customer in customers)
             {
-                var c = customerLine.Split(',');
-
-                var customer = new Customer
-                {
-                    Title = c[0],
-                    FirstName = c[1],
-                    Surname = c[2],
-                    Address1 = c[3],
-                    Address2 = c[4],
-                    PostCode = c[5],
-                    Country = c[6],
-                    Telephone = c[7],
-                    Email = c[8],
-                    SortCode = c[9],
-                    AccountNumber = c[10],
-                    AccountStatus = AccountStatus.Active
-                };
-
-                var products = productLines.Where(p => p.StartsWith($"{c[0]} {c[1]} {c[2]}"));
-
-                foreach (var product in products)
-                {
-                    var p = product.Split(",");
-
-                    customer.Products.Add(new Product
-                    {
-                        Name = p[1],
-                        ProductType = (ProductType)Enum.Parse(typeof(ProductType), p[2]),
-                        RateType = (RateType)Enum.Parse(typeof(RateType), p[3]),
-                        RepaymentType = (RepaymentType)Enum.Parse(typeof(RepaymentType), p[4]),
-                        Duration = int.Parse(p[5]),
-                        Rate = decimal.Parse(p[6]),
-                        StartDate = DateTime.ParseExact(p[7], "yyyy-MM-ddTHH:mm:ss.fffz", null),
-                        Value = decimal.Parse(p[8])
-                    });
-                }
-
-                customers.Add(customer);
-
                 dbContext.Customers.Add(customer);
             }
 
