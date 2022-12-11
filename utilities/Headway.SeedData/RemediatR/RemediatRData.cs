@@ -2,6 +2,7 @@
 using Headway.Core.Model;
 using Microsoft.EntityFrameworkCore;
 using RemediatR.Core.Constants;
+using RemediatR.Core.Enums;
 using RemediatR.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -121,6 +122,100 @@ namespace Headway.SeedData.RemediatR
             Users["bill"].Roles.Add(Roles[RemediatRAuthorisation.REFUND_ASSESSOR]);
             Users["will"].Roles.Add(Roles[RemediatRAuthorisation.REFUND_ASSESSOR]);
             Users["mary"].Roles.Add(Roles[RemediatRAuthorisation.REFUND_REVIEWER]);
+        }
+
+        public static List<Program> CreatePrograms()
+        {
+            List<Program> programs = new List<Program>
+            {
+                new Program
+                {
+                    Name = "IRMS",
+                    Description = "Interest Rate Missold",
+                    Compensation = 400.00m,
+                    CompensatoryInterest = 5.00m,
+                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(300)),
+                    ProductType = ProductType.Vehicle,
+                    RateType = RateType.Fixed,
+                    RepaymentType = RepaymentType.Repayment
+                },
+                new Program
+                {
+                    Name = "BTL-RP",
+                    Description = "Buy To Let Mortgage Redemption Penalty",
+                    Compensation = 1500.00m,
+                    CompensatoryInterest = 7.50m,
+                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(200)),
+                    ProductType = ProductType.Home,
+                    RateType = RateType.Variable,
+                    RepaymentType = RepaymentType.InterestOnly
+                },
+                new Program
+                {
+                    Name = "STULIOC",
+                    Description = "Student Loan Introductory Offer Conversion",
+                    Compensation = 275.00m,
+                    CompensatoryInterest = 3.75m,
+                    StartDate = DateTime.Today.Subtract(TimeSpan.FromDays(450)),
+                    ProductType = ProductType.Student,
+                    RateType = RateType.Tracker,
+                    RepaymentType = RepaymentType.Repayment
+                }
+            };
+
+            return programs;
+        }
+
+        public static List<Customer> CreateCustomers()
+        {
+            List<Customer> customers = new();
+
+            var customerLines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "_customers.csv"));
+            var productLines = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RemediatR", "_products.csv"));
+
+            foreach (var customerLine in customerLines.Skip(1))
+            {
+                var c = customerLine.Split(',');
+
+                var customer = new Customer
+                {
+                    Title = c[0],
+                    FirstName = c[1],
+                    Surname = c[2],
+                    Address1 = c[3],
+                    Address2 = c[4],
+                    PostCode = c[5],
+                    Country = c[6],
+                    Telephone = c[7],
+                    Email = c[8],
+                    SortCode = c[9],
+                    AccountNumber = c[10],
+                    AccountStatus = AccountStatus.Active
+                };
+
+                var products = productLines.Where(p => p.StartsWith($"{c[0]} {c[1]} {c[2]}"));
+
+                foreach (var product in products)
+                {
+                    var p = product.Split(",");
+
+                    customer.Products.Add(new Product
+                    {
+                        Name = p[1],
+                        ProductType = (ProductType)Enum.Parse(typeof(ProductType), p[2]),
+                        RateType = (RateType)Enum.Parse(typeof(RateType), p[3]),
+                        RepaymentType = (RepaymentType)Enum.Parse(typeof(RepaymentType), p[4]),
+                        Duration = int.Parse(p[5]),
+                        Rate = decimal.Parse(p[6]),
+                        StartDate = DateTime.ParseExact(p[7], "yyyy-MM-ddTHH:mm:ss.fffz", null),
+                        Value = decimal.Parse(p[8])
+                    });
+                }
+
+                customers.Add(customer);
+            }
+
+            return customers;
         }
     }
 }
