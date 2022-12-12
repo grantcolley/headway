@@ -63,7 +63,7 @@ namespace Headway.SeedData.RemediatR
 
         private static void CreateCountries()
         {
-            var countries = RemediatRData.CountriesGet();
+            var countries = RemediatRData.CountriesCreate();
 
             foreach (var country in countries)
             {
@@ -164,7 +164,7 @@ namespace Headway.SeedData.RemediatR
 
         private static void CreatePrograms()
         {
-            var programs = RemediatRData.CreatePrograms();
+            var programs = RemediatRData.ProgramsCreate();
 
             foreach (var program in programs)
             {
@@ -176,7 +176,7 @@ namespace Headway.SeedData.RemediatR
 
         private static void CreateCustomers()
         {
-            var customers = RemediatRData.CreateCustomers();
+            var customers = RemediatRData.CustomersCreate();
 
             foreach (var customer in customers)
             {
@@ -188,248 +188,63 @@ namespace Headway.SeedData.RemediatR
 
         private static void ProgramsConfig()
         {
-            var programsConfig = new Config
-            {
-                Name = "Programs",
-                Title = "Programs",
-                Description = "List of RemediatR programs",
-                Model = "RemediatR.Core.Model.Program, RemediatR.Core",
-                ModelApi = "RemediatRProgram",
-                OrderModelBy = "Name",
-                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
-                DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
-                NavigatePage = "Page",
-                NavigateProperty = "ProgramId",
-                NavigateConfig = "Program",
-                NavigateResetBreadcrumb = true
-            };
+            var programsConfig = RemediatRData.ProgramsConfigCreate();
 
             dbContext.Configs.Add(programsConfig);
-
-            programsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramId", Label = "Program Id", Order = 1 });
-            programsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
-            programsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3 });
 
             dbContext.SaveChanges();
         }
 
         private static void ProgramConfig()
         {
-            var programConfig = new Config
-            {
-                Name = "Program",
-                Title = "Program",
-                Description = "Create, update or delete a RemediatR program",
-                Model = "RemediatR.Core.Model.Program, RemediatR.Core",
-                ModelApi = "RemediatRProgram",
-                CreateLocal = true,
-                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
-                NavigatePage = "Page",
-                NavigateConfig = "Programs"
-            };
+            var programConfig = RemediatRData.ProgramConfigCreate();
 
             dbContext.Configs.Add(programConfig);
-
-            var programConfigContainer = new ConfigContainer { Name = "Program Div", Code = "PROGRAM DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Program", Order = 1 };
-
-            programConfig.ConfigContainers.Add(programConfigContainer);
-
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProgramId", Label = "Program Id", IsIdentity = true, Order = 1, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Compensation", Label = "Compensation", Order = 4, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.DecimalNullable, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX};Value=9999999999999.99" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CompensatoryInterest", Label = "Compensatory Interest", Order = 5, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.DecimalNullable, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX_LENGTH};Value=5|Name={Args.MAX};Value=99.99" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StartDate", Label = "Start Date", Order = 6, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.DateNullable, Headway.Blazor.Controls" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "EndDate", Label = "End Date", Order = 7, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.DateNullable, Headway.Blazor.Controls" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductType", Label = "ProductType", Order = 8, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.ProductType, RemediatR.Core" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RateType", Label = "RateType", Order = 9, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.RateType, RemediatR.Core" });
-            programConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RepaymentType", Label = "RepaymentType", Order = 10, ConfigContainer = programConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.RepaymentType, RemediatR.Core" });
 
             dbContext.SaveChanges();
         }
 
         private static void CustomersConfig()
         {
-            var customersConfig = new Config
-            {
-                Name = "Customers",
-                Title = "Customers",
-                Description = "List of RemediatR customers",
-                Model = "RemediatR.Core.Model.Customer, RemediatR.Core",
-                ModelApi = "RemediatRCustomer",
-                OrderModelBy = "Surname",
-                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
-                DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
-                SearchComponent = "Headway.Blazor.Controls.SearchComponents.StandardSearchComponent, Headway.Blazor.Controls",
-                UseSearchComponent = true,
-                NavigatePage = "Page",
-                NavigateProperty = "CustomerId",
-                NavigateConfig = "Customer",
-                NavigateResetBreadcrumb = true
-            };
-
-            customersConfig.ConfigSearchItems.AddRange(new List<ConfigSearchItem>
-            {
-                new ConfigSearchItem
-                {
-                    Label = "Customer Id",
-                    ParameterName = "CustomerId",
-                    Tooltip = "The customer identifier",
-                    Component = "Headway.Blazor.Controls.SearchComponents.SearchText, Headway.Blazor.Controls",
-                    Order = 1
-                },
-                new ConfigSearchItem
-                {
-                    Label = "Surname",
-                    ParameterName = "Surname",
-                    Tooltip = "The customer surname",
-                    Component = "Headway.Blazor.Controls.SearchComponents.SearchText, Headway.Blazor.Controls",
-                    Order = 2
-                }
-            });
+            var customersConfig = RemediatRData.CustomersConfigCreate();
 
             dbContext.Configs.Add(customersConfig);
-
-            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerId", Label = "Customer Id", Order = 1 });
-            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", Order = 2 });
-            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FirstName", Label = "First Name", Order = 3 });
-            customersConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Surname", Label = "Surname", Order = 4 });
 
             dbContext.SaveChanges();
         }
 
         private static void CustomerConfig()
         {
-            var customerConfig = new Config
-            {
-                Name = "Customer",
-                Title = "Customer",
-                Description = "Create, update or delete a RemediatR customer",
-                Model = "RemediatR.Core.Model.Customer, RemediatR.Core",
-                ModelApi = "RemediatRCustomer",
-                CreateLocal = true,
-                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
-                NavigatePage = "Page",
-                NavigateConfig = "Customers"
-            };
+            var customerConfig = RemediatRData.CustomerConfigCreate();
 
             dbContext.Configs.Add(customerConfig);
-
-            var customerConfigContainer = new ConfigContainer { Name = "Customer Div", Code = "CUSTOMER DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Customer", Order = 1 };
-            var productsConfigContainer = new ConfigContainer { Name = "Products Div", Code = "PRODUCTS DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Products", Order = 2 };
-
-            customerConfig.ConfigContainers.Add(customerConfigContainer);
-            customerConfig.ConfigContainers.Add(productsConfigContainer);
-
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerId", Label = "Customer Id", IsIdentity = true, Order = 1, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", Order = 2, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.STATIC_OPTION_ITEMS}|Name=Ms;Value=Ms|Name=Mr;Value=Mr|Name=Mrs;Value=Mrs" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FirstName", Label = "FirstName", Order = 3, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Surname", Label = "Surname", IsTitle = true, Order = 4, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AccountStatus", Label = "Account Status", Order = 5, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.AccountStatus, RemediatR.Core" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Telephone", Label = "Telephone", Order = 6, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 7, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "SortCode", Label = "Sort Code", Order = 8, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AccountNumber", Label = "Account Number", Order = 9, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address1", Label = "Address1", Order = 10, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address2", Label = "Address2", Order = 11, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address3", Label = "Address3", Order = 12, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address4", Label = "Address4", Order = 13, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address5", Label = "Address5", Order = 14, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Country", Label = "Country", Order = 15, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.COUNTRY_OPTION_ITEMS}" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PostCode", Label = "PostCode", Order = 16, ConfigContainer = customerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            customerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Products", Label = "Products", Order = 17, ConfigContainer = productsConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericField, Headway.Blazor.Controls", ConfigName = "Product", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=ProductsListDetail" });
 
             dbContext.SaveChanges();
         }
 
         private static void ProductConfig()
         {
-            var productConfig = new Config
-            {
-                Name = "Product",
-                Title = "Product",
-                Description = "Product sold to the customer",
-                Model = "RemediatR.Core.Model.Product, RemediatR.Core",
-                ModelApi = "RemediatRCustomer",
-                CreateLocal = true,
-                Document = "Headway.Blazor.Controls.Documents.ListDetail`1, Headway.Blazor.Controls"
-            };
+            var productConfig = RemediatRData.ProductConfigCreate();
 
             dbContext.Configs.Add(productConfig);
-
-            var productConfigContainer = new ConfigContainer { Name = "Product Div", Code = "PRODUCT DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Product", Order = 1 };
-
-            productConfig.ConfigContainers.Add(productConfigContainer);
-
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductId", Label = "Product Id", IsIdentity = true, Order = 1, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Value", Label = "Value", Order = 3, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.DecimalNullable, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX};Value=9999999999999.99" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Rate", Label = "Rate", Order = 4, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.DecimalNullable, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.FORMAT};Value={Args.FORMAT_F2}|Name={Args.MAX_LENGTH};Value=5|Name={Args.MAX};Value=99.99" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Duration", Label = "Duration", Order = 5, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.IntegerNullable, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.MIN};Value=3|Name={Args.MAX};Value=360", Tooltip = "Duration must be min 3 and max 360" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StartDate", Label = "Start Date", Order = 6, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.DateNullable, Headway.Blazor.Controls" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ProductType", Label = "ProductType", Order = 7, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.ProductType, RemediatR.Core" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RateType", Label = "RateType", Order = 8, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.RateType, RemediatR.Core" });
-            productConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RepaymentType", Label = "RepaymentType", Order = 9, ConfigContainer = productConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.RepaymentType, RemediatR.Core" });
 
             dbContext.SaveChanges();
         }
 
         private static void ProductsListDetailConfig()
         {
-            var productsListDetailConfig = new Config
-            {
-                Name = "ProductsListDetail",
-                Title = "ProductsListDetail",
-                Description = "List of products sold to the customer",
-                Model = "RemediatR.Core.Model.Product, RemediatR.Core",
-                ModelApi = "RemediatRCustomer",
-                OrderModelBy = "StartDate"
-            };
+            var productsListDetailConfig = RemediatRData.ProductsListDetailConfigCreate();
 
             dbContext.Configs.Add(productsListDetailConfig);
-
-            productsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Product Name", Order = 1 });
-            productsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StartDate", Label = "Start Date", Order = 2 });
-            productsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Duration", Label = "Duration", Order = 3 });
-            productsListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Value", Label = "Value", Order = 4 });
 
             dbContext.SaveChanges();
         }
 
         private static void RedressCustomerConfig()
         {
-            var redressCustomerConfig = new Config
-            {
-                Name = "RedressCustomer",
-                Title = "Customer",
-                Description = "RemediatR customer",
-                Model = "RemediatR.Core.Model.Customer, RemediatR.Core",
-                ModelApi = "RemediatRCustomer",
-                Document = "Headway.Blazor.Controls.Documents.Content`1, Headway.Blazor.Controls"
-            };
+            var redressCustomerConfig = RemediatRData.RedressCustomerConfigCreate();
 
             dbContext.Configs.Add(redressCustomerConfig);
-
-            var redressCustomerConfigContainer = new ConfigContainer { Name = "Redress Customer Div", Code = "REDRESS CUSTOMER DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Customer", Order = 1 };
-
-            redressCustomerConfig.ConfigContainers.Add(redressCustomerConfigContainer);
-
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "CustomerId", Label = "Customer Id", IsIdentity = true, Order = 1, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Title", Label = "Title", Order = 2, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.STATIC_OPTION_ITEMS}|Name=Ms;Value=Ms|Name=Mr;Value=Mr|Name=Mrs;Value=Mrs" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FirstName", Label = "FirstName", Order = 3, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Surname", Label = "Surname", IsTitle = true, Order = 4, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AccountStatus", Label = "Account Status", Order = 5, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=RemediatR.Core.Enums.AccountStatus, RemediatR.Core" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Telephone", Label = "Telephone", Order = 6, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 7, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "SortCode", Label = "Sort Code", Order = 8, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "AccountNumber", Label = "Account Number", Order = 9, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address1", Label = "Address1", Order = 10, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address2", Label = "Address2", Order = 11, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address3", Label = "Address3", Order = 12, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address4", Label = "Address4", Order = 13, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Address5", Label = "Address5", Order = 14, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Country", Label = "Country", Order = 15, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={Options.COUNTRY_OPTION_ITEMS}" });
-            redressCustomerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PostCode", Label = "PostCode", Order = 16, ConfigContainer = redressCustomerConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
