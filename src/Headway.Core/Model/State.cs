@@ -21,6 +21,7 @@ namespace Headway.Core.Model
         }
 
         public int Id { get; set; }
+        public int Position { get; set; }
         public int ConfigItemId { get; set; }
         public StateType StateType { get; set; }
         public StateStatus StateStatus { get; set; }
@@ -44,11 +45,15 @@ namespace Headway.Core.Model
         [StringLength(50)]
         public string Parent { get; set; }
 
+        [Required]
+        [StringLength(50)]
+        public string Permission { get; set; }
+
         [StringLength(50)]
         public string Owner { get; set; }
 
         [StringLength(50)]
-        public string Antecedent { get; set; }
+        public string Ascendant { get; set; }
 
         [StringLength(50)]
         public string Descendant { get; set; }
