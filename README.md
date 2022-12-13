@@ -107,10 +107,10 @@ To help get you started the **Headway** *framework* comes with [seed data](https
 The [database and schema](#database) can be created using EntityFramework Migrations.  
 
 ## Building an Example Headway Application
-An example application will be created using **Headway** to demonstrate features built into the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
+An example application will be created using **Headway** to demonstrate features available the **Headway** framework including, configuring dynamically rendered page layout, creating a navigation menu, configuring a workflow, binding page layout to the workflow, securing the application using **OAuth 2.0** authentication and restricting users access and functionality with by assigning roles and permissions.
 
 ### Introduction to RemediatR
-The example application is called **RemediatR**. **RemediatR** will provide a platform to refund (remediate or redress) bank customers that have been wronged in some way e.g. a customer who bought a financial product that does not live up to its commitments. The remediation flow will start with creating the redress case with the relevant data including customer, redress program and product data. The case progresses to refund calculation and verification, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
+The example application is called **RemediatR**. **RemediatR** will provide a platform to refund (remediate or redress) customers that have been wronged in some way e.g. a customer who bought a product that does not live up to it's commitments. The remediation flow will start with creating the redress case with the relevant data including customer, redress program and product data. The case progresses to refund calculation and verification, followed by sending a communication to the customer and finally end with a payment to the customer of the refunded amount.
 
 Different users will be responsible for different stages in the flow. They will be assigned a role to reflect their responsibility. The roles will be as follows:
 -	**Redress Case Owner** – creates, monitors and progresses the redress case from start through to completion 
