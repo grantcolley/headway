@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,9 +31,11 @@ namespace Headway.Core.Model
 
         [Required]
         [StringLength(50)]
-        public string Permission { get; set; }
+        public string Permissions { get; set; }
 
         [StringLength(50)]
         public string ActiveStateCode { get; set; }
+
+        public StateStatus ActiveStateStatus { get; set; }
     }
 }
