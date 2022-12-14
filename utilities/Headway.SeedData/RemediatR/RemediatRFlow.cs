@@ -1,7 +1,5 @@
-﻿using Headway.Core.Enums;
-using Headway.Core.Model;
+﻿using Headway.Core.Model;
 using RemediatR.Core.Constants;
-using RemediatR.Core.Model;
 
 namespace Headway.SeedData.RemediatR
 {
@@ -9,13 +7,6 @@ namespace Headway.SeedData.RemediatR
     {
         public static Flow FlowCreate()
         {
-            var flow = new Flow
-            {
-                Name = "",
-                Model = "RemediatR.Core.Model.Redress, RemediatR.Core", //typeof(Redress).Name,
-                Permissions = ""
-            };
-
             var redressCreate = new State { Name = "Redress Create", Code = "REDRESS_CREATE", Position = 1, Permission = RemediatRAuthorisation.REDRESS_CASE_OWNER };
             var refundAssessment = new State { Name = "Refund Assessment", Code = "REFUND_ASSESSMENT", Position = 10, Permission = RemediatRAuthorisation.REFUND_ASSESSOR };
             var refundCalculation = new State { Name = "Refund Calculation", Code = "REFUND_CALCULATION", Position = 11, Permission = RemediatRAuthorisation.REFUND_ASSESSOR };
@@ -35,6 +26,8 @@ namespace Headway.SeedData.RemediatR
             refundAssessment.SubStates = $"{refundCalculation};{refundVerification}";
             refundAssessment.Transitions = $"{redressCreate};{refundReview}";
 
+            refundCalculation.Transitions = $"{refundVerification}";
+
             refundReview.Transitions = $"{refundAssessment};{redressReview}";
 
             redressReview.Transitions = $"{redressCreate};{redressValidation}";
@@ -52,6 +45,27 @@ namespace Headway.SeedData.RemediatR
             paymentGeneration.Transitions = $"{communicationDispatch};{finalRedressReview}";
 
             finalRedressReview.Transitions = $"{redressReview}";
+
+            var flow = new Flow
+            {
+                Name = "",
+                Model = "RemediatR.Core.Model.Redress, RemediatR.Core", //typeof(Redress).Name,
+                Permissions = ""
+            };
+
+            flow.States.Add(redressCreate);
+            flow.States.Add(refundAssessment);
+            flow.States.Add(refundCalculation);
+            flow.States.Add(refundVerification);
+            flow.States.Add(refundReview);
+            flow.States.Add(redressReview);
+            flow.States.Add(redressValidation);
+            flow.States.Add(communicationGeneration);
+            flow.States.Add(communicationDispatch);
+            flow.States.Add(responseRequired);
+            flow.States.Add(awaitingResponse);
+            flow.States.Add(paymentGeneration);
+            flow.States.Add(finalRedressReview);
 
             return flow;
         }
