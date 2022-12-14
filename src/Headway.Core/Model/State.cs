@@ -63,19 +63,40 @@ namespace Headway.Core.Model
             stateFunctions.Add(stateFunction);
         }
 
-        public virtual Task<bool> TryInitialiseAsync(object arg)
+        public virtual async Task<bool> TryInitialiseAsync(object arg)
         {
-            return Functions(arg, StateFunctionType.Initialize);
+            var result = await Functions(arg, StateFunctionType.Initialize);
+
+            if (result)
+            {
+                StateStatus = StateStatus.InProgress;
+            }
+
+            return result;
         }
 
-        public virtual Task<bool> TryCompleteAsync(object arg)
+        public virtual async Task<bool> TryCompleteAsync(object arg)
         {
-            return Functions(arg, StateFunctionType.Complete);
+            var result = await Functions(arg, StateFunctionType.Complete);
+
+            if (result)
+            {
+                StateStatus = StateStatus.Completed;
+            }
+
+            return result;
         }
 
-        public virtual Task<bool> TryResestAsync(object arg)
+        public virtual async Task<bool> TryResestAsync(object arg)
         {
-            return Functions(arg, StateFunctionType.Complete);
+            var result = await Functions(arg, StateFunctionType.Reset);
+
+            if (result)
+            {
+                StateStatus = StateStatus.NotStarted;
+            }
+
+            return result;
         }
 
         private async Task<bool> Functions(object arg, StateFunctionType stateFunctionType)
