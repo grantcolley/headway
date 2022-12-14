@@ -1,7 +1,6 @@
 ﻿using Headway.Blazor.Controls.Flow;
 using Headway.Core.Constants;
 using Headway.Core.Model;
-using Microsoft.EntityFrameworkCore;
 using RemediatR.Core.Constants;
 using RemediatR.Core.Enums;
 using RemediatR.Core.Model;
