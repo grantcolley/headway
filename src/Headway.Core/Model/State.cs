@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Headway.Core.Model
@@ -15,9 +16,9 @@ namespace Headway.Core.Model
 
         public State()
         {
-            SubStates = new List<State>();
-            Transitions = new List<State>();
-            Dependencies = new List<State>();
+            SubStatesList = new List<State>();
+            TransitionsList = new List<State>();
+            DependenciesList = new List<State>();
         }
 
         public int Id { get; set; }
@@ -26,12 +27,6 @@ namespace Headway.Core.Model
         public StateType StateType { get; set; }
         public StateStatus StateStatus { get; set; }
         public Flow Flow { get; set; }
-        public List<State> SubStates { get; set; }
-        public List<State> Transitions { get; set; }
-        public List<State> Dependencies { get; set; }
-
-        [NotMapped]
-        public ConfigItem ConfigItem { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -58,6 +53,31 @@ namespace Headway.Core.Model
         [StringLength(50)]
         public string Descendant { get; set; }
 
+        [StringLength(250)]
+        public string SubStates { get; set; }
+
+        [StringLength(250)]
+        public string Transitions { get; set; }
+
+        [StringLength(250)]
+        public string Dependencies { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public List<State> SubStatesList { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public List<State> TransitionsList { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public List<State> DependenciesList { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public ConfigItem ConfigItem { get; set; }
+
         public void AddStateFunction(StateFunction stateFunction)
         {
             stateFunctions.Add(stateFunction);
@@ -65,7 +85,19 @@ namespace Headway.Core.Model
 
         public virtual async Task<bool> TryInitialiseAsync(object arg)
         {
-            var result = await Functions(arg, StateFunctionType.Initialize);
+            var result = false;
+
+            var subStatePosition = SubStatesList.Min(s => s.Position);
+            var subState = SubStatesList.First(s => s.Position.Equals(subStatePosition));
+
+            result = await subState.TryInitialiseAsync(arg).ConfigureAwait(false);
+
+            if (!result)
+            {
+                return result;
+            }
+
+            result = await FunctionsAsync(arg, StateFunctionType.Initialize).ConfigureAwait(false);
 
             if (result)
             {
@@ -77,7 +109,7 @@ namespace Headway.Core.Model
 
         public virtual async Task<bool> TryCompleteAsync(object arg)
         {
-            var result = await Functions(arg, StateFunctionType.Complete);
+            var result = await FunctionsAsync(arg, StateFunctionType.Complete).ConfigureAwait(false);
 
             if (result)
             {
@@ -89,7 +121,7 @@ namespace Headway.Core.Model
 
         public virtual async Task<bool> TryResestAsync(object arg)
         {
-            var result = await Functions(arg, StateFunctionType.Reset);
+            var result = await FunctionsAsync(arg, StateFunctionType.Reset).ConfigureAwait(false);
 
             if (result)
             {
@@ -99,7 +131,7 @@ namespace Headway.Core.Model
             return result;
         }
 
-        private async Task<bool> Functions(object arg, StateFunctionType stateFunctionType)
+        private async Task<bool> FunctionsAsync(object arg, StateFunctionType stateFunctionType)
         {
             if (stateFunctions == null)
             {
@@ -113,7 +145,7 @@ namespace Headway.Core.Model
 
             foreach (var action in actions)
             {
-                var result = await action.FunctionAsync(this, arg);
+                var result = await action.FunctionAsync(this, arg).ConfigureAwait(false);
 
                 if (!result)
                 {
