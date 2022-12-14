@@ -13,7 +13,7 @@ namespace Headway.SeedData.RemediatR
             {
                 Name = "",
                 Model = "RemediatR.Core.Model.Redress, RemediatR.Core", //typeof(Redress).Name,
-                Permission = ""
+                Permissions = ""
             };
 
             var redressCreate = new State { Name = "Redress Create", Code = "REDRESS_CREATE", Position = 1, Permission = RemediatRAuthorisation.REDRESS_CASE_OWNER };
@@ -30,40 +30,28 @@ namespace Headway.SeedData.RemediatR
             var paymentGeneration = new State { Name = "Payment Generation", Code = "PAYMENT_GENERATION", Position = 90, Permission = RemediatRAuthorisation.REDRESS_CASE_OWNER };
             var finalRedressReview = new State { Name = "Final Redress Review", Code = "FINAL_REDRESS_REVIEW", Position = 100, Permission = RemediatRAuthorisation.REDRESS_REVIEWER };
 
-            redressCreate.Transitions.Add(refundAssessment);
+            redressCreate.Transitions = $"{refundAssessment}";
 
-            refundAssessment.SubStates.Add(refundCalculation);
-            refundAssessment.SubStates.Add(refundVerification);
-            refundAssessment.Transitions.Add(redressCreate);
-            refundAssessment.Transitions.Add(refundReview);
+            refundAssessment.SubStates = $"{refundCalculation};{refundVerification}";
+            refundAssessment.Transitions = $"{redressCreate};{refundReview}";
 
-            refundReview.Transitions.Add(refundAssessment);
-            refundReview.Transitions.Add(redressReview);
+            refundReview.Transitions = $"{refundAssessment};{redressReview}";
 
-            redressReview.Transitions.Add(redressCreate);
-            redressReview.Transitions.Add(redressValidation);
+            redressReview.Transitions = $"{redressCreate};{redressValidation}";
 
-            redressValidation.Transitions.Add(redressReview);
-            redressValidation.Transitions.Add(communicationGeneration);
-            redressValidation.Transitions.Add(paymentGeneration);
+            redressValidation.Transitions = $"{redressReview};{communicationGeneration};{paymentGeneration}";
 
-            communicationGeneration.Transitions.Add(redressReview);
-            communicationGeneration.Transitions.Add(communicationDispatch);
+            communicationGeneration.Transitions = $"{redressReview};{communicationDispatch}";
 
-            communicationDispatch.Transitions.Add(redressReview);
-            communicationDispatch.Transitions.Add(responseRequired);
+            communicationDispatch.Transitions = $"{redressReview};{responseRequired}";
 
-            responseRequired.Transitions.Add(communicationDispatch);
-            responseRequired.Transitions.Add(awaitingResponse);
-            responseRequired.Transitions.Add(paymentGeneration);
+            responseRequired.Transitions = $"{communicationDispatch};{awaitingResponse};{paymentGeneration}";
 
-            awaitingResponse.Transitions.Add(redressReview);
-            awaitingResponse.Transitions.Add(paymentGeneration);
+            awaitingResponse.Transitions = $"{redressReview};{paymentGeneration}";
 
-            paymentGeneration.Transitions.Add(communicationDispatch);
-            paymentGeneration.Transitions.Add(finalRedressReview);
+            paymentGeneration.Transitions = $"{communicationDispatch};{finalRedressReview}";
 
-            finalRedressReview.Transitions.Add(redressReview);
+            finalRedressReview.Transitions = $"{redressReview}";
 
             return flow;
         }
