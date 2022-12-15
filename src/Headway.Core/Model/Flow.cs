@@ -3,6 +3,8 @@ using Headway.Core.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
@@ -33,9 +35,17 @@ namespace Headway.Core.Model
         [StringLength(50)]
         public string Permissions { get; set; }
 
-        [StringLength(50)]
-        public string ActiveStateCode { get; set; }
+        [NotMapped]
+        [JsonIgnore]
+        public State ActiveState { get; private set; }
 
-        public StateStatus ActiveStateStatus { get; set; }
+        public void SetActiveState(string activeStateCode, StateStatus activeStateStatus)
+        {
+            if(States.Any())
+            {
+                ActiveState = States.FirstOrDefault(s => s.Code.Equals(activeStateCode));
+                ActiveState.StateStatus = activeStateStatus;
+            }
+        }
     }
 }
