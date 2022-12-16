@@ -12,13 +12,13 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class State : ModelBase
     {
-        private readonly List<StateFunction> stateFunctions = new();
+        private readonly List<StateAction> stateActions = new();
 
         public State()
         {
-            SubStatesList = new List<State>();
-            TransitionsList = new List<State>();
-            DependenciesList = new List<State>();
+            SubStates = new List<State>();
+            Transitions = new List<State>();
+            Dependencies = new List<State>();
         }
 
         public int Id { get; set; }
@@ -42,109 +42,114 @@ namespace Headway.Core.Model
 
         [Required]
         [StringLength(50)]
-        public string Permission { get; set; }
+        public string Permissions { get; set; }
 
         [StringLength(250)]
-        public string SubStates { get; set; }
+        public string SubStateCodes { get; set; }
 
         [StringLength(250)]
-        public string Transitions { get; set; }
+        public string TransitionStateCodes { get; set; }
 
         [StringLength(250)]
-        public string Dependencies { get; set; }
-
-        [NotMapped]
-        [JsonIgnore]
-        public List<State> SubStatesList { get; set; }
-
-        [NotMapped]
-        [JsonIgnore]
-        public List<State> TransitionsList { get; set; }
-
-        [NotMapped]
-        [JsonIgnore]
-        public List<State> DependenciesList { get; set; }
+        public string DependencyStateCodes { get; set; }
 
         [NotMapped]
         [JsonIgnore]
         public ConfigItem ConfigItem { get; set; }
 
-        public void AddStateFunction(StateFunction stateFunction)
+        [NotMapped]
+        [JsonIgnore]
+        public List<string> PermissionsList
         {
-            stateFunctions.Add(stateFunction);
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Permissions))
+                {
+                    return new List<string>();
+                }
+
+                return Permissions.Split(';').ToList();
+            }
         }
 
-        public virtual async Task<bool> TryInitialiseAsync(object arg)
+        [NotMapped]
+        [JsonIgnore]
+        public List<string> SubStateCodesList
         {
-            var result = false;
-
-            var subStatePosition = SubStatesList.Min(s => s.Position);
-            var subState = SubStatesList.First(s => s.Position.Equals(subStatePosition));
-
-            result = await subState.TryInitialiseAsync(arg).ConfigureAwait(false);
-
-            if (!result)
+            get
             {
-                return result;
+                if(string.IsNullOrWhiteSpace(SubStateCodes))
+                {
+                    return new List<string>();
+                }
+
+                return SubStateCodes.Split(';').ToList();
             }
-
-            result = await FunctionsAsync(arg, StateFunctionType.Initialize).ConfigureAwait(false);
-
-            if (result)
-            {
-                StateStatus = StateStatus.InProgress;
-            }
-
-            return result;
         }
 
-        public virtual async Task<bool> TryCompleteAsync(object arg)
+        [NotMapped]
+        [JsonIgnore]
+        public List<string> TransitionStateCodesList
         {
-            var result = await FunctionsAsync(arg, StateFunctionType.Complete).ConfigureAwait(false);
-
-            if (result)
+            get
             {
-                StateStatus = StateStatus.Completed;
-            }
+                if(string.IsNullOrWhiteSpace(TransitionStateCodes))
+                {
+                    return new List<string>();
+                }
 
-            return result;
+                return TransitionStateCodes.Split(';').ToList();
+}
         }
 
-        public virtual async Task<bool> TryResestAsync(object arg)
+        [NotMapped]
+        [JsonIgnore]
+        public List<string> DependencyStateCodesList
         {
-            var result = await FunctionsAsync(arg, StateFunctionType.Reset).ConfigureAwait(false);
-
-            if (result)
+            get
             {
-                StateStatus = StateStatus.NotStarted;
-            }
+                if (string.IsNullOrWhiteSpace(DependencyStateCodes))
+                {
+                    return new List<string>();
+                }
 
-            return result;
+                return TransitionStateCodes.Split(';').ToList();
+            }
         }
 
-        private async Task<bool> FunctionsAsync(object arg, StateFunctionType stateFunctionType)
+        [NotMapped]
+        [JsonIgnore]
+        public List<State> SubStates { get;}
+
+        [NotMapped]
+        [JsonIgnore]
+        public List<State> Transitions { get; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public List<State> Dependencies { get; }
+
+        public void AddStateActions(StateAction stateAction)
         {
-            if (stateFunctions == null)
+            stateActions.Add(stateAction);
+        }
+
+        public async Task ExecuteActionsAsync(object arg, StateActionType stateFunctionType)
+        {
+            if (stateActions == null)
             {
-                return true;
+                return;
             }
 
-            var actions = stateFunctions
-                .Where(a => a.StateFunctionType.Equals(stateFunctionType))
+            var actions = stateActions
+                .Where(a => a.StateActionType.Equals(stateFunctionType))
                 .OrderBy(a => a.Order)
                 .ToList();
 
             foreach (var action in actions)
             {
-                var result = await action.FunctionAsync(this, arg).ConfigureAwait(false);
-
-                if (!result)
-                {
-                    return false;
-                }
+                await action.ActionAsync(this, arg).ConfigureAwait(false);
             }
-
-            return true;
         }
     }
 }
