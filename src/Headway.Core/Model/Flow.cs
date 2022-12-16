@@ -39,7 +39,7 @@ namespace Headway.Core.Model
         [JsonIgnore]
         public State ActiveState { get; private set; }
 
-        public void SetActiveState(string activeStateCode, StateStatus activeStateStatus)
+        public void SetActiveState(string activeStateCode = "", StateStatus activeStateStatus = StateStatus.NotStarted)
         {
             if(States.Any())
             {
