@@ -38,7 +38,7 @@ namespace Headway.Core.Model
 
         [Required]
         [StringLength(50)]
-        public string Parent { get; set; }
+        public string ParentStateCode { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -56,6 +56,10 @@ namespace Headway.Core.Model
         [NotMapped]
         [JsonIgnore]
         public ConfigItem ConfigItem { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public State ParentState { get; set; }
 
         [NotMapped]
         [JsonIgnore]
@@ -119,7 +123,7 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public List<State> SubStates { get;}
+        public List<State> SubStates { get; }
 
         [NotMapped]
         [JsonIgnore]
