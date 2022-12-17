@@ -21,30 +21,30 @@ namespace Headway.SeedData.RemediatR
             var paymentGeneration = new State { Name = "Payment Generation", Code = "PAYMENT_GENERATION", Position = 90, Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
             var finalRedressReview = new State { Name = "Final Redress Review", Code = "FINAL_REDRESS_REVIEW", Position = 100, Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
 
-            redressCreate.TransitionStateCodes = $"{refundAssessment}";
+            redressCreate.TransitionStateCodes = $"{refundAssessment.Code}";
 
-            refundAssessment.SubStateCodes = $"{refundCalculation};{refundVerification}";
-            refundAssessment.TransitionStateCodes = $"{redressCreate};{refundReview}";
+            refundAssessment.SubStateCodes = $"{refundCalculation.Code};{refundVerification.Code}";
+            refundAssessment.TransitionStateCodes = $"{redressCreate.Code};{refundReview.Code}";
 
-            refundCalculation.TransitionStateCodes = $"{refundVerification}";
+            refundCalculation.TransitionStateCodes = $"{refundVerification.Code}";
 
-            refundReview.TransitionStateCodes = $"{refundAssessment};{redressReview}";
+            refundReview.TransitionStateCodes = $"{refundAssessment.Code};{redressReview.Code}";
 
-            redressReview.TransitionStateCodes = $"{redressCreate};{redressValidation}";
+            redressReview.TransitionStateCodes = $"{redressCreate.Code};{redressValidation.Code}";
 
-            redressValidation.TransitionStateCodes = $"{redressReview};{communicationGeneration};{paymentGeneration}";
+            redressValidation.TransitionStateCodes = $"{redressReview.Code};{communicationGeneration.Code};{paymentGeneration.Code}";
 
-            communicationGeneration.TransitionStateCodes = $"{redressReview};{communicationDispatch}";
+            communicationGeneration.TransitionStateCodes = $"{redressReview.Code};{communicationDispatch.Code}";
 
-            communicationDispatch.TransitionStateCodes = $"{redressReview};{responseRequired}";
+            communicationDispatch.TransitionStateCodes = $"{redressReview.Code};{responseRequired.Code}";
 
-            responseRequired.TransitionStateCodes = $"{communicationDispatch};{awaitingResponse};{paymentGeneration}";
+            responseRequired.TransitionStateCodes = $"{communicationDispatch.Code};{awaitingResponse.Code};{paymentGeneration.Code}";
 
-            awaitingResponse.TransitionStateCodes = $"{redressReview};{paymentGeneration}";
+            awaitingResponse.TransitionStateCodes = $"{redressReview.Code};{paymentGeneration.Code}";
 
-            paymentGeneration.TransitionStateCodes = $"{communicationDispatch};{finalRedressReview}";
+            paymentGeneration.TransitionStateCodes = $"{communicationDispatch.Code};{finalRedressReview.Code}";
 
-            finalRedressReview.TransitionStateCodes = $"{redressReview}";
+            finalRedressReview.TransitionStateCodes = $"{redressReview.Code}";
 
             var flow = new Flow
             {
