@@ -13,6 +13,7 @@ namespace Headway.Core.Model
     public class Flow : ModelBase
     {
         private bool configured;
+        private State rootState;
 
         public Flow()
         {
@@ -46,7 +47,19 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public State RootState { get; private set; }
+        public State RootState
+        {
+            get
+            {
+                if(rootState == null)
+                {
+                    var rootStatePoition = States.Min(s => s.Position);
+                    rootState = States.First(s => s.Position.Equals(rootStatePoition));
+                }
+
+                return rootState;
+            }
+        }
 
         public void SetActiveState(string activeStateCode = "", StateStatus activeStateStatus = StateStatus.NotStarted)
         {
@@ -70,9 +83,6 @@ namespace Headway.Core.Model
         private void Configure()
         {
             var states = States.ToDictionary(s => s.Code, s => s);
-
-            var rootStatePoition = States.Min(s => s.Position);
-            RootState = States.First(s => s.Position.Equals(rootStatePoition));
 
             foreach (var state in states)
             {
