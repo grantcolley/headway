@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -18,7 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Headway.Core\Headway.Core.csproj" />
     <ProjectReference Include="..\..\src\Modules\RemediatR.Core\RemediatR.Core.csproj" />
-    <ProjectReference Include="..\..\src\Modules\RemediatR.Repository\RemediatR.Repository.csproj" />
+    <ProjectReference Include="..\..\utilities\Headway.SeedData\Headway.SeedData.csproj" />
   </ItemGroup>
 
 </Project>
