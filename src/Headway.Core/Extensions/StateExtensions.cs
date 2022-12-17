@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Enums;
 using Headway.Core.Model;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,6 +33,18 @@ namespace Headway.Core.Extensions
             await state.ExecuteActionsAsync(arg, StateActionType.Reset).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.NotStarted;
+        }
+
+        public static List<State> GetStates(this Dictionary<string, State> dictionary, List<string> stateCodes)
+        {
+            var states = new List<State>();
+
+            foreach (var stateCode in stateCodes)
+            {
+                states.Add(dictionary[stateCode]);
+            }
+
+            return states;
         }
     }
 }
