@@ -5,7 +5,9 @@ namespace Headway.Core.Model
 {
     public abstract class FlowHistory : ModelBase
     {
+        public int FlowHistoryId { get; set; }
         public StateStatus StateStatus { get; set; }
+        public Flow Flow { get; set; }
 
         [StringLength(50)]
         public string StateCode { get; set; }
