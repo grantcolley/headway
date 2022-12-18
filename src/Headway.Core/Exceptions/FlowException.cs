@@ -3,9 +3,9 @@ using Headway.Core.Model;
 
 namespace Headway.Core.Exceptions
 {
-    public class StateException : Exception
+    public class FlowException : Exception
     {
-        public StateException(State state, string message = "", Exception innerException = null)
+        public FlowException(State state, string message = "", Exception innerException = null)
             : base(message, innerException)
         {
             State = state;
