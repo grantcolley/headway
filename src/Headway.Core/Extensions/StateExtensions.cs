@@ -10,15 +10,20 @@ namespace Headway.Core.Extensions
     {
         public static async Task InitialiseAsync(this State state, object arg)
         {
-            var subStatePosition = state.SubStates.Min(s => s.Position);
-
-            var subState = state.SubStates.First(s => s.Position.Equals(subStatePosition));
+            var subState = state.SubStates.MinPosition();
 
             await subState.InitialiseAsync(arg).ConfigureAwait(false);
 
             await state.ExecuteActionsAsync(arg, StateActionType.Initialize).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.InProgress;
+        }
+
+        public static State MinPosition(this List<State> states) 
+        {
+            var minPosition = states.Min(s => s.Position);
+
+            return states.First(s => s.Position.Equals(minPosition));
         }
 
         public static async Task CompleteAsync(this State state, object arg)
