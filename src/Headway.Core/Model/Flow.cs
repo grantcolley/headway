@@ -53,8 +53,7 @@ namespace Headway.Core.Model
             {
                 if(rootState == null)
                 {
-                    var rootStatePoition = States.Min(s => s.Position);
-                    rootState = States.First(s => s.Position.Equals(rootStatePoition));
+                    rootState = States.MinPosition();
                 }
 
                 return rootState;
@@ -93,7 +92,6 @@ namespace Headway.Core.Model
 
                 state.Value.SubStates.AddRange(states.GetStates(state.Value.SubStateCodesList));
                 state.Value.Transitions.AddRange(states.GetStates(state.Value.TransitionStateCodesList));
-                state.Value.Dependencies.AddRange(states.GetStates(state.Value.DependencyStateCodesList));
             }
 
             configured = true;

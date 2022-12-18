@@ -18,7 +18,6 @@ namespace Headway.Core.Model
         {
             SubStates = new List<State>();
             Transitions = new List<State>();
-            Dependencies = new List<State>();
         }
 
         public int Id { get; set; }
@@ -49,9 +48,6 @@ namespace Headway.Core.Model
 
         [StringLength(250)]
         public string TransitionStateCodes { get; set; }
-
-        [StringLength(250)]
-        public string DependencyStateCodes { get; set; }
 
         [NotMapped]
         [JsonIgnore]
@@ -97,22 +93,7 @@ namespace Headway.Core.Model
         {
             get
             {
-                if(string.IsNullOrWhiteSpace(TransitionStateCodes))
-                {
-                    return new List<string>();
-                }
-
-                return TransitionStateCodes.Split(';').ToList();
-}
-        }
-
-        [NotMapped]
-        [JsonIgnore]
-        public List<string> DependencyStateCodesList
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(DependencyStateCodes))
+                if (string.IsNullOrWhiteSpace(TransitionStateCodes))
                 {
                     return new List<string>();
                 }
@@ -128,10 +109,6 @@ namespace Headway.Core.Model
         [NotMapped]
         [JsonIgnore]
         public List<State> Transitions { get; }
-
-        [NotMapped]
-        [JsonIgnore]
-        public List<State> Dependencies { get; }
 
         public void AddStateActions(StateAction stateAction)
         {
