@@ -12,12 +12,12 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class Flow : ModelBase
     {
-        private bool configured;
         private State rootState;
 
         public Flow()
         {
             States = new List<State>();
+            History = new List<FlowHistory>();
         }
 
         public int FlowId { get; set; }
@@ -47,54 +47,66 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
+        public Dictionary<string, State> StateDictionary { get; private set; }
+
+        [NotMapped]
+        [JsonIgnore]
         public State RootState
         {
             get
             {
-                if(rootState == null)
+                if (rootState == null)
                 {
-                    rootState = States.MinPosition();
+                    rootState = States.FirstState();
                 }
 
                 return rootState;
             }
         }
 
-        public void SetActiveState(string activeStateCode = "", StateStatus activeStateStatus = StateStatus.NotStarted)
+        public void ReplayHistory()
         {
-            if (!configured)
+            StateDictionary = States.ToDictionary(s => s.StateCode, s => s);
+
+            foreach (var state in StateDictionary)
             {
-                Configure();
+                state.Value.StateStatus = default;
+                state.Value.Owner = default;
+
+                if (!string.IsNullOrWhiteSpace(state.Value.ParentStateCode))
+                {
+                    state.Value.ParentState = StateDictionary[state.Value.ParentStateCode];
+                }
+
+                state.Value.SubStates.Clear();
+                state.Value.SubStates.AddRange(StateDictionary.GetStates(state.Value.SubStateCodesList));
+
+                state.Value.Transitions.Clear();
+                state.Value.Transitions.AddRange(StateDictionary.GetStates(state.Value.TransitionStateCodesList));
             }
 
-            if (string.IsNullOrWhiteSpace(activeStateCode))
+            if (History.Any())
             {
-                ActiveState = RootState;
+                var lastIndex = History.Count - 1;
+
+                for (int i = 0; i < lastIndex - 1; i++)
+                {
+                    var history = History[i];
+
+                    var state = StateDictionary[history.StateCode];
+                    state.StateStatus = history.StateStatus;
+                    state.Owner = history.Owner;
+
+                    if (i.Equals(lastIndex))
+                    {
+                        ActiveState = state;
+                    }
+                }
             }
             else
             {
-                ActiveState = States.FirstOrDefault(s => s.Code.Equals(activeStateCode));
+                ActiveState = RootState;
             }
-
-            ActiveState.StateStatus = activeStateStatus;
-        }
-
-        private void Configure()
-        {
-            var states = States.ToDictionary(s => s.Code, s => s);
-
-            foreach (var state in states)
-            {
-                if(!string.IsNullOrWhiteSpace(state.Value.ParentStateCode))
-                {
-                    state.Value.ParentState = states[state.Value.ParentStateCode];
-                }
-
-                state.Value.SubStates.AddRange(states.GetStates(state.Value.SubStateCodesList));
-                state.Value.Transitions.AddRange(states.GetStates(state.Value.TransitionStateCodesList));
-            }
-
-            configured = true;
         }
     }
 }
