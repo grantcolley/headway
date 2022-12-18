@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Headway.Core.Model
 {
-    public abstract class FlowHistory : ModelBase
+    public class FlowHistory : ModelBase
     {
         public int FlowHistoryId { get; set; }
         public StateStatus StateStatus { get; set; }
@@ -20,5 +20,8 @@ namespace Headway.Core.Model
 
         [StringLength(50)]
         public string Descendant { get; set; }
+
+        [StringLength(250)]
+        public string Comment { get; set; }
     }
 }
