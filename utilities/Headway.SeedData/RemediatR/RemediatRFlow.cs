@@ -26,7 +26,10 @@ namespace Headway.SeedData.RemediatR
             refundAssessment.SubStateCodes = $"{refundCalculation.Code};{refundVerification.Code}";
             refundAssessment.TransitionStateCodes = $"{redressCreate.Code};{refundReview.Code}";
 
+            refundCalculation.ParentStateCode = $"{refundAssessment.Code}";
             refundCalculation.TransitionStateCodes = $"{refundVerification.Code}";
+
+            refundVerification.ParentStateCode = $"{refundAssessment.Code}";
 
             refundReview.TransitionStateCodes = $"{refundAssessment.Code};{redressReview.Code}";
 
