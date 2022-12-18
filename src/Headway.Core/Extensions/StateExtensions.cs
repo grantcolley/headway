@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Enums;
+using Headway.Core.Exceptions;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Headway.Core.Extensions
     {
         public static async Task InitialiseAsync(this State state, object arg)
         {
-            var subState = state.SubStates.MinPosition();
+            var subState = state.SubStates.FirstState();
 
             await subState.InitialiseAsync(arg).ConfigureAwait(false);
 
@@ -19,18 +20,52 @@ namespace Headway.Core.Extensions
             state.StateStatus = StateStatus.InProgress;
         }
 
-        public static State MinPosition(this List<State> states) 
+        public static State FirstState(this List<State> states) 
         {
-            var minPosition = states.Min(s => s.Position);
+            var firstPosition = states.Min(s => s.Position);
 
-            return states.First(s => s.Position.Equals(minPosition));
+            return states.First(s => s.Position.Equals(firstPosition));
         }
 
-        public static async Task CompleteAsync(this State state, object arg)
+        public static async Task CompleteAsync(this State state, object arg, string transitionStateCode = "")
         {
+            var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
+
+            if(uncompletedSubStates.Any())
+            {
+                var uncompletedSubStateDescriptions = uncompletedSubStates.Select(s => $"{s.StateCode}={s.StateStatus}");
+                var joinedDescriptions = string.Join(",", uncompletedSubStateDescriptions);
+                throw new FlowException(state, $"{state.StateCode} not all states have completed {joinedDescriptions}");
+            }
+
+            State transitionState = null;
+
+            if (string.IsNullOrWhiteSpace(transitionStateCode))
+            {
+                transitionState = state.Transitions.FirstOrDefault();
+            }
+            else
+            {
+                transitionState = state.Transitions.FirstOrDefault(s => s.StateCode.Equals(transitionStateCode));
+
+                if (transitionState == null)
+                {
+                    throw new FlowException(state, $"{state.StateCode} transition doesn't exist {transitionStateCode}");
+                }
+            }
+
             await state.ExecuteActionsAsync(arg, StateActionType.Complete).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.Completed;
+
+            if(transitionState != null)
+            {
+                await transitionState.InitialiseAsync(arg).ConfigureAwait(false);
+            }
+            else
+            {
+                await state.ParentState.CompleteAsync(arg).ConfigureAwait(false); ;
+            }
         }
 
         public static async Task ResestAsync(this State state, object arg)
