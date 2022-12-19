@@ -10,6 +10,6 @@ namespace Headway.Core.Model
 
         public int Order { get; set; }
 
-        public Func<State, object, Task> ActionAsync { get; set; }
+        public Func<State, Task> ActionAsync { get; set; }
     }
 }
