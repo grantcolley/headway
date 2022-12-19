@@ -55,6 +55,10 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
+        public object Context { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
         public State ParentState { get; set; }
 
         [NotMapped]
@@ -119,7 +123,7 @@ namespace Headway.Core.Model
             stateActions.Add(stateAction);
         }
 
-        public async Task ExecuteActionsAsync(object arg, StateActionType stateFunctionType)
+        public async Task ExecuteActionsAsync(StateActionType stateFunctionType)
         {
             if (stateActions == null)
             {
@@ -133,7 +137,7 @@ namespace Headway.Core.Model
 
             foreach (var action in actions)
             {
-                await action.ActionAsync(this, arg).ConfigureAwait(false);
+                await action.ActionAsync(this).ConfigureAwait(false);
             }
         }
     }
