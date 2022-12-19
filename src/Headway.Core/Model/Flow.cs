@@ -51,6 +51,10 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
+        public object Context { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
         public State RootState
         {
             get
@@ -72,6 +76,11 @@ namespace Headway.Core.Model
             {
                 state.Value.StateStatus = default;
                 state.Value.Owner = default;
+
+                if (state.Value.Owner != null)
+                {
+                    state.Value.Context = Context;
+                }
 
                 if (!string.IsNullOrWhiteSpace(state.Value.ParentStateCode))
                 {
