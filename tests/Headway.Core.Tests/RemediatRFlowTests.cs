@@ -1,3 +1,4 @@
+using Headway.Core.Extensions;
 using Headway.SeedData.RemediatR;
 
 namespace Headway.Core.Tests
@@ -44,16 +45,21 @@ namespace Headway.Core.Tests
             Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW"))));
         }
 
-        public void State_Complete_Transition_ParentState()
+        [TestMethod]
+        public async Task State_Complete_Transition_ParentState()
         {
             // Arrange
+            var flow = RemediatRFlow.FlowCreate();
+            flow.ReplayHistory();
 
             // Act
+            await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT");
 
             //Assert
 
         }
 
+        [TestMethod]
         public void State_Complete_Last_SubState()
         {
             // Arrange
