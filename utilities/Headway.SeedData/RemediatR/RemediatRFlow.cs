@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Model;
 using RemediatR.Core.Constants;
+using RemediatR.Core.Model;
 
 namespace Headway.SeedData.RemediatR
 {
@@ -53,7 +54,8 @@ namespace Headway.SeedData.RemediatR
             {
                 Name = "RemediatR",
                 Model = "RemediatR.Core.Model.Redress, RemediatR.Core", //typeof(Redress).Name,
-                Permissions = $"{RemediatRAuthorisation.REDRESS_READ}"
+                Permissions = $"{RemediatRAuthorisation.REDRESS_READ}",
+                Context = new Redress()
             };
 
             flow.States.Add(redressCreate);
@@ -69,6 +71,11 @@ namespace Headway.SeedData.RemediatR
             flow.States.Add(awaitingResponse);
             flow.States.Add(paymentGeneration);
             flow.States.Add(finalRedressReview);
+
+            foreach(var state in flow.States)
+            {
+                state.Context = flow.Context;
+            }
 
             return flow;
         }
