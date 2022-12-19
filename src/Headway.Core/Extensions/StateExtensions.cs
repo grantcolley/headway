@@ -9,13 +9,13 @@ namespace Headway.Core.Extensions
 {
     public static class StateExtensions
     {
-        public static async Task InitialiseAsync(this State state, object arg)
+        public static async Task InitialiseAsync(this State state)
         {
             var subState = state.SubStates.FirstState();
 
-            await subState.InitialiseAsync(arg).ConfigureAwait(false);
+            await subState.InitialiseAsync().ConfigureAwait(false);
 
-            await state.ExecuteActionsAsync(arg, StateActionType.Initialize).ConfigureAwait(false);
+            await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.InProgress;
         }
@@ -27,7 +27,7 @@ namespace Headway.Core.Extensions
             return states.First(s => s.Position.Equals(firstPosition));
         }
 
-        public static async Task CompleteAsync(this State state, object arg, string transitionStateCode = "")
+        public static async Task CompleteAsync(this State state, string transitionStateCode = "")
         {
             var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
 
@@ -54,23 +54,23 @@ namespace Headway.Core.Extensions
                 }
             }
 
-            await state.ExecuteActionsAsync(arg, StateActionType.Complete).ConfigureAwait(false);
+            await state.ExecuteActionsAsync(StateActionType.Complete).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.Completed;
 
             if(transitionState != null)
             {
-                await transitionState.InitialiseAsync(arg).ConfigureAwait(false);
+                await transitionState.InitialiseAsync().ConfigureAwait(false);
             }
             else
             {
-                await state.ParentState.CompleteAsync(arg).ConfigureAwait(false); ;
+                await state.ParentState.CompleteAsync().ConfigureAwait(false); ;
             }
         }
 
-        public static async Task ResestAsync(this State state, object arg)
+        public static async Task ResestAsync(this State state)
         {
-            await state.ExecuteActionsAsync(arg, StateActionType.Reset).ConfigureAwait(false);
+            await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.NotStarted;
         }
