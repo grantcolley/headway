@@ -1,3 +1,4 @@
+using Headway.Core.Enums;
 using Headway.Core.Extensions;
 using Headway.SeedData.RemediatR;
 
@@ -46,7 +47,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Complete_Transition_ParentState()
+        public async Task State_Complete_Transition_REDRESS_CREATE_to_REFUND_ASSESSMENT()
         {
             // Arrange
             var flow = RemediatRFlow.FlowCreate();
@@ -56,7 +57,10 @@ namespace Headway.Core.Tests
             await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT");
 
             //Assert
-            Assert.AreEqual(flow.ActiveState, flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")));
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE")).StateStatus, StateStatus.Completed);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).StateStatus, StateStatus.InProgress);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus, StateStatus.InProgress);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")), flow.ActiveState);
         }
 
         [TestMethod]
