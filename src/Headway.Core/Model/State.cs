@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -120,6 +121,11 @@ namespace Headway.Core.Model
 
         public void AddStateActions(StateAction stateAction)
         {
+            if(stateAction == null)
+            {
+                throw new ArgumentNullException(nameof(stateAction));
+            }
+
             stateActions.Add(stateAction);
         }
 
