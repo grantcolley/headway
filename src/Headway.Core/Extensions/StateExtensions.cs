@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Enums;
 using Headway.Core.Exceptions;
 using Headway.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,13 +12,21 @@ namespace Headway.Core.Extensions
     {
         public static async Task InitialiseAsync(this State state)
         {
-            var subState = state.SubStates.FirstState();
+            if(state.SubStates.Any()) 
+            {
+                var subState = state.SubStates.FirstState();
 
-            await subState.InitialiseAsync().ConfigureAwait(false);
+                await subState.InitialiseAsync().ConfigureAwait(false);
+            }
 
             await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.InProgress;
+
+            if(!state.SubStates.Any())
+            {
+                state.Flow.ActiveState = state;
+            }
         }
 
         public static State FirstState(this List<State> states) 
@@ -77,6 +86,11 @@ namespace Headway.Core.Extensions
 
         public static List<State> GetStates(this Dictionary<string, State> dictionary, List<string> stateCodes)
         {
+            if(stateCodes == null)
+            {
+                throw new ArgumentNullException(nameof(stateCodes));
+            }
+
             var states = new List<State>();
 
             foreach (var stateCode in stateCodes)
