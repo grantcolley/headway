@@ -43,7 +43,7 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public State ActiveState { get; private set; }
+        public State ActiveState { get; set; }
 
         [NotMapped]
         [JsonIgnore]
@@ -76,8 +76,9 @@ namespace Headway.Core.Model
             {
                 state.Value.StateStatus = default;
                 state.Value.Owner = default;
+                state.Value.Flow = this;
 
-                if (state.Value.Owner != null)
+                if (state.Value.Context != null)
                 {
                     state.Value.Context = Context;
                 }
