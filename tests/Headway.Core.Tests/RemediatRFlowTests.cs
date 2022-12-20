@@ -56,7 +56,7 @@ namespace Headway.Core.Tests
             await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT");
 
             //Assert
-
+            Assert.AreEqual(flow.ActiveState, flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")));
         }
 
         [TestMethod]
