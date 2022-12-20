@@ -8,19 +8,19 @@ namespace Headway.SeedData.RemediatR
     {
         public static Flow FlowCreate()
         {
-            var redressCreate = new State { Name = "Redress Create", StateCode = "REDRESS_CREATE", Position = 1, Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var refundAssessment = new State { Name = "Refund Assessment", StateCode = "REFUND_ASSESSMENT", Position = 10, Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
-            var refundCalculation = new State { Name = "Refund Calculation", StateCode = "REFUND_CALCULATION", Position = 11, Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
-            var refundVerification = new State { Name = "Refund Verification", StateCode = "REFUND_VERIFICATION", Position = 12, Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
-            var refundReview = new State { Name = "Refund Review", StateCode = "REFUND_REVIEW", Position = 20, Permissions = RemediatRAuthorisation.REFUND_REVIEWER };
-            var redressReview = new State { Name = "Redress Review", StateCode = "REDRESS_REVIEW", Position = 30, Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
-            var redressValidation = new State { Name = "Redress Validation", StateCode = "REDRESS_VALIDATE", Position = 40, Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
-            var communicationGeneration = new State { Name = "Communication Generation", StateCode = "COMMUNICATION_GENERATION", Position = 50, Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
-            var communicationDispatch = new State { Name = "Communication Dispatch", StateCode = "COMMUNICATION_DISPATCH", Position = 60, Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var responseRequired = new State { Name = "Response Required", StateCode = "RESPONSE_REQUIRED", Position = 70, Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var awaitingResponse = new State { Name = "Awaiting Response", StateCode = "AWAITING_RESPONSE", Position = 80, Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var paymentGeneration = new State { Name = "Payment Generation", StateCode = "PAYMENT_GENERATION", Position = 90, Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var finalRedressReview = new State { Name = "Final Redress Review", StateCode = "FINAL_REDRESS_REVIEW", Position = 100, Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
+            var redressCreate = new State { Position = 1, Name = "Redress Create", StateCode = "REDRESS_CREATE", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
+            var refundAssessment = new State { Position = 10, Name = "Refund Assessment", StateCode = "REFUND_ASSESSMENT", Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
+            var refundCalculation = new State { Position = 11, Name = "Refund Calculation", StateCode = "REFUND_CALCULATION", Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
+            var refundVerification = new State { Position = 12, Name = "Refund Verification", StateCode = "REFUND_VERIFICATION", Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
+            var refundReview = new State { Position = 20, Name = "Refund Review", StateCode = "REFUND_REVIEW", Permissions = RemediatRAuthorisation.REFUND_REVIEWER };
+            var redressReview = new State { Position = 30, Name = "Redress Review", StateCode = "REDRESS_REVIEW", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
+            var redressValidation = new State { Position = 40, Name = "Redress Validation", StateCode = "REDRESS_VALIDATE", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
+            var communicationGeneration = new State { Position = 50, Name = "Communication Generation", StateCode = "COMMUNICATION_GENERATION", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
+            var communicationDispatch = new State { Position = 60, Name = "Communication Dispatch", StateCode = "COMMUNICATION_DISPATCH", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
+            var responseRequired = new State { Position = 70, Name = "Response Required", StateCode = "RESPONSE_REQUIRED", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
+            var awaitingResponse = new State { Position = 80, Name = "Awaiting Response", StateCode = "AWAITING_RESPONSE", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
+            var paymentGeneration = new State { Position = 90, Name = "Payment Generation", StateCode = "PAYMENT_GENERATION", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
+            var finalRedressReview = new State { Position = 100, Name = "Final Redress Review", StateCode = "FINAL_REDRESS_REVIEW", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
 
             redressCreate.TransitionStateCodes = $"{refundAssessment.StateCode}";
 
