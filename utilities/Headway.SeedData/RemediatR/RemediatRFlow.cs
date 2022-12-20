@@ -74,6 +74,7 @@ namespace Headway.SeedData.RemediatR
 
             foreach(var state in flow.States)
             {
+                state.Flow = flow;
                 state.Context = flow.Context;
             }
 
