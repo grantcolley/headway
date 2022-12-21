@@ -11,7 +11,7 @@ namespace Headway.Core.Tests
         public void Flow_RootState()
         {
             // Arrange
-            var flow = RemediatRFlow.FlowCreate();
+            var flow = RemediatRFlow.CreateRemediatRFlow();
 
             // Act
             var rootState = flow.RootState;
@@ -21,46 +21,21 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public void Flow_ReplayHistory_NoHistory()
-        {
-            // Arrange
-            var flow = RemediatRFlow.FlowCreate();
-            var rootState = flow.RootState;
-
-            // Act
-            flow.ReplayHistory();
-
-            // Assert active state
-            Assert.AreEqual(flow.RootState, rootState);
-            Assert.AreEqual(flow.ActiveState, rootState);
-
-            // Assert sample of parent and substates
-            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")), flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).ParentState);
-            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")), flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).ParentState);
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).SubStates.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).SubStates.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION"))));
-
-            // Assert sample of transition states
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW"))));
-        }
-
-        [TestMethod]
         public async Task State_Complete_Transition_REDRESS_CREATE_to_REFUND_ASSESSMENT()
         {
             // Arrange
-            var flow = RemediatRFlow.FlowCreate();
+            var flow = RemediatRFlow.CreateRemediatRFlow();
             flow.ReplayHistory();
 
             // Act
-            await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT");
+            await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT").ConfigureAwait(false);
 
             //Assert
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE")).StateStatus, StateStatus.Completed);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).StateStatus, StateStatus.InProgress);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus, StateStatus.InProgress);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")), flow.ActiveState);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus, StateStatus.NotStarted);
         }
 
         [TestMethod]
