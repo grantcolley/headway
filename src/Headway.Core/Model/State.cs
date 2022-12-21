@@ -13,12 +13,11 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class State : ModelBase
     {
-        private readonly List<StateAction> stateActions = new();
-
         public State()
         {
             SubStates = new List<State>();
             Transitions = new List<State>();
+            StateActions = new List<StateAction>();
         }
 
         public int Id { get; set; }
@@ -68,6 +67,18 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
+        public List<State> SubStates { get; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public List<State> Transitions { get; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public List<StateAction> StateActions { get; }
+
+        [NotMapped]
+        [JsonIgnore]
         public List<string> PermissionsList
         {
             get
@@ -111,39 +122,21 @@ namespace Headway.Core.Model
             }
         }
 
-        [NotMapped]
-        [JsonIgnore]
-        public List<State> SubStates { get; }
-
-        [NotMapped]
-        [JsonIgnore]
-        public List<State> Transitions { get; }
-
-        public void AddStateActions(StateAction stateAction)
-        {
-            if(stateAction == null)
-            {
-                throw new ArgumentNullException(nameof(stateAction));
-            }
-
-            stateActions.Add(stateAction);
-        }
-
         public async Task ExecuteActionsAsync(StateActionType stateFunctionType)
         {
-            if (stateActions == null)
+            if (StateActions == null)
             {
                 return;
             }
 
-            var actions = stateActions
+            var actions = StateActions
                 .Where(a => a.StateActionType.Equals(stateFunctionType))
                 .OrderBy(a => a.Order)
                 .ToList();
 
             foreach (var action in actions)
             {
-                await action.ActionAsync(this).ConfigureAwait(false);
+                await action.ActionAsync(this, action.StateActionType, action.Order).ConfigureAwait(false);
             }
         }
     }
