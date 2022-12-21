@@ -6,7 +6,7 @@ namespace Headway.SeedData.RemediatR
 {
     public class RemediatRFlow
     {
-        public static Flow FlowCreate()
+        public static Flow CreateRemediatRFlow()
         {
             var redressCreate = new State { Position = 1, Name = "Redress Create", StateCode = "REDRESS_CREATE", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
             var refundAssessment = new State { Position = 10, Name = "Refund Assessment", StateCode = "REFUND_ASSESSMENT", Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
