@@ -3,7 +3,6 @@ using Headway.Core.Extensions;
 using Headway.Core.Model;
 using Headway.Core.Tests.Helpers;
 using Headway.SeedData.RemediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Headway.Core.Tests
 {
@@ -43,13 +42,13 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public void Flow_ReplayHistory_No_History()
+        public void Flow_Bootstrap_No_History()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
             // Act
-            flow.ReplayHistory();
+            flow.Bootstrap();
 
             // Assert active state
             Assert.AreEqual(flow.RootState, flow.States.FirstState());
@@ -68,7 +67,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public void Flow_ReplayHistory_With_History()
+        public void Flow_Bootstrap_With_History()
         {
             // Arrange
 
@@ -83,7 +82,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ReplayHistory();
+            flow.Bootstrap();
 
             // Act
             await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
@@ -98,7 +97,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ReplayHistory();
+            flow.Bootstrap();
 
             // Act
             await flow.States.Find(s => s.StateCode.Equals("REFUND_ASSESSMENT")).InitialiseAsync().ConfigureAwait(false);
@@ -115,26 +114,10 @@ namespace Headway.Core.Tests
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
+            
+            flow.ActionSetupClass = "Headway.Core.Tests.Helpers.FlowStateActionHelper, Headway.Core.Tests";
 
-            flow.ReplayHistory();
-
-            static Task action(State state, StateActionType stateActionType, int order)
-            {
-                if(state.Context == null)
-                {
-                    state.Context = $"{order} {stateActionType} {state.StateCode}";
-                }
-                else
-                {
-                    state.Context += $"; {order} {stateActionType} {state.StateCode}";
-                }
-
-                return Task.CompletedTask;
-            }
-
-            flow.ActiveState.Context = null;
-            flow.ActiveState.StateActions.Add(new StateAction { Order = 2, StateActionType = StateActionType.Initialize, ActionAsync = action });
-            flow.ActiveState.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Initialize, ActionAsync = action });
+            flow.Bootstrap();
 
             // Act
             await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
@@ -153,7 +136,7 @@ namespace Headway.Core.Tests
 
             flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
 
-            flow.ReplayHistory();
+            flow.Bootstrap();
 
             // Act
             await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
@@ -172,7 +155,7 @@ namespace Headway.Core.Tests
 
             flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
 
-            flow.ReplayHistory();
+            flow.Bootstrap();
 
             // Act
             await flow.ActiveState.CompleteAsync(flow.States[1].StateCode).ConfigureAwait(false);
@@ -189,7 +172,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ReplayHistory();
+            flow.Bootstrap();
 
             // Act
             await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT").ConfigureAwait(false);
