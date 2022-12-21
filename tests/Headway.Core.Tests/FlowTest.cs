@@ -3,6 +3,7 @@ using Headway.Core.Extensions;
 using Headway.Core.Model;
 using Headway.Core.Tests.Helpers;
 using Headway.SeedData.RemediatR;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Headway.Core.Tests
 {
@@ -117,19 +118,38 @@ namespace Headway.Core.Tests
 
             flow.ReplayHistory();
 
+            static Task action(State state, StateActionType stateActionType, int order)
+            {
+                if(state.Context == null)
+                {
+                    state.Context = $"{order} {stateActionType} {state.StateCode}";
+                }
+                else
+                {
+                    state.Context += $"; {order} {stateActionType} {state.StateCode}";
+                }
+
+                return Task.CompletedTask;
+            }
+
+            flow.ActiveState.Context = null;
+            flow.ActiveState.StateActions.Add(new StateAction { Order = 2, StateActionType = StateActionType.Initialize, ActionAsync = action });
+            flow.ActiveState.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Initialize, ActionAsync = action });
+
             // Act
-            await flow.States[0].InitialiseAsync().ConfigureAwait(false);
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             // Assert
             Assert.AreEqual(flow.ActiveState, flow.States.FirstState());
             Assert.AreEqual(flow.ActiveState.StateStatus, StateStatus.InProgress);
+            Assert.AreEqual(flow.ActiveState.Context, $"1 Initialize {flow.ActiveState.StateCode}; 2 Initialize {flow.ActiveState.StateCode}");
         }
 
         [TestMethod]
         public async Task State_Transition_Default()
         {
             // Arrange
-            var flow = FlowTestData.CreateFlow(2);
+            var flow = FlowTestHelper.CreateFlow(2);
 
             flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
 
@@ -148,7 +168,7 @@ namespace Headway.Core.Tests
         public async Task State_Transition_To_StateCode()
         {
             // Arrange
-            var flow = FlowTestData.CreateFlow(2);
+            var flow = FlowTestHelper.CreateFlow(2);
 
             flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
 
@@ -161,6 +181,25 @@ namespace Headway.Core.Tests
             Assert.AreEqual(flow.States[0].StateStatus, StateStatus.Completed);
             Assert.AreEqual(flow.States[1].StateStatus, StateStatus.InProgress);
             Assert.AreEqual(flow.States[1], flow.ActiveState);
+        }
+
+        [TestMethod]
+        public async Task State_Transition_To_ParentState()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.ReplayHistory();
+
+            // Act
+            await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT").ConfigureAwait(false);
+
+            // Assert
+            Assert.AreEqual(flow.States.FirstState().StateStatus, StateStatus.Completed);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).StateStatus, StateStatus.InProgress);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus, StateStatus.InProgress);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")), flow.ActiveState);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus, StateStatus.NotStarted);
         }
     }
 }
