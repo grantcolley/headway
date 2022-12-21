@@ -12,6 +12,11 @@ namespace Headway.Core.Extensions
     {
         public static async Task InitialiseAsync(this State state)
         {
+            if(state.StateStatus.Equals(StateStatus.InProgress)) 
+            {
+                return;
+            }
+
             if(state.SubStates.Any()) 
             {
                 var subState = state.SubStates.FirstState();
@@ -25,12 +30,20 @@ namespace Headway.Core.Extensions
 
             if(!state.SubStates.Any())
             {
-                state.Flow.ActiveState = state;
+                if(state.Flow.ActiveState != state)
+                {
+                    state.Flow.ActiveState = state;
+                }
             }
         }
 
         public static async Task CompleteAsync(this State state, string transitionStateCode = "")
         {
+            if (state.StateStatus.Equals(StateStatus.Completed))
+            {
+                return;
+            }
+
             var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
 
             if(uncompletedSubStates.Any())
@@ -72,6 +85,11 @@ namespace Headway.Core.Extensions
 
         public static async Task ResestAsync(this State state)
         {
+            if (state.StateStatus.Equals(StateStatus.NotStarted))
+            {
+                return;
+            }
+
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.NotStarted;
