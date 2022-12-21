@@ -1,10 +1,13 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Enums;
 using Headway.Core.Extensions;
+using Headway.Core.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
@@ -33,6 +36,10 @@ namespace Headway.Core.Model
         [Required]
         [StringLength(150)]
         public string Model { get; set; }
+
+        [Required]
+        [StringLength(150)]
+        public string ActionSetupClass { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -68,7 +75,7 @@ namespace Headway.Core.Model
             }
         }
 
-        public void ReplayHistory()
+        public void Bootstrap()
         {
             StateDictionary = States.ToDictionary(s => s.StateCode, s => s);
 
@@ -93,6 +100,22 @@ namespace Headway.Core.Model
 
                 state.Value.Transitions.Clear();
                 state.Value.Transitions.AddRange(StateDictionary.GetStates(state.Value.TransitionStateCodesList));
+            }
+
+            if (!string.IsNullOrWhiteSpace(ActionSetupClass))
+            {
+                var type = Type.GetType(ActionSetupClass);
+
+                if(type == null)
+                {
+                    throw new ArgumentNullException(nameof(ActionSetupClass));
+                }
+
+                var instance = (IFlowStateActions)Activator.CreateInstance(type);
+
+                var method = type.GetMethod("SetupActions");
+
+                method.Invoke(instance, new object[] { StateDictionary });
             }
 
             if (History.Any())
