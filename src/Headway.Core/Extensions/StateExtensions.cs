@@ -29,13 +29,6 @@ namespace Headway.Core.Extensions
             }
         }
 
-        public static State FirstState(this List<State> states) 
-        {
-            var firstPosition = states.Min(s => s.Position);
-
-            return states.First(s => s.Position.Equals(firstPosition));
-        }
-
         public static async Task CompleteAsync(this State state, string transitionStateCode = "")
         {
             var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
@@ -82,6 +75,13 @@ namespace Headway.Core.Extensions
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.NotStarted;
+        }
+
+        public static State FirstState(this List<State> states)
+        {
+            var firstPosition = states.Min(s => s.Position);
+
+            return states.First(s => s.Position.Equals(firstPosition));
         }
 
         public static List<State> GetStates(this Dictionary<string, State> dictionary, List<string> stateCodes)
