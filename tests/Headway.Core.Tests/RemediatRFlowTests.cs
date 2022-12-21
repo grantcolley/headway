@@ -25,7 +25,7 @@ namespace Headway.Core.Tests
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
-            flow.ReplayHistory();
+            flow.Bootstrap();
 
             // Act
             await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT").ConfigureAwait(false);
