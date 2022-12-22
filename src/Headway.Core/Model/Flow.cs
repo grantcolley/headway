@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
@@ -102,21 +101,7 @@ namespace Headway.Core.Model
                 state.Value.Transitions.AddRange(StateDictionary.GetStates(state.Value.TransitionStateCodesList));
             }
 
-            if (!string.IsNullOrWhiteSpace(ActionSetupClass))
-            {
-                var type = Type.GetType(ActionSetupClass);
-
-                if(type == null)
-                {
-                    throw new ArgumentNullException(nameof(ActionSetupClass));
-                }
-
-                var instance = (IFlowStateActions)Activator.CreateInstance(type);
-
-                var method = type.GetMethod("SetupActions");
-
-                method.Invoke(instance, new object[] { StateDictionary });
-            }
+            this.SetupFlowActions();
 
             if (History.Any())
             {
