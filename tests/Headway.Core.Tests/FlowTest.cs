@@ -38,7 +38,7 @@ namespace Headway.Core.Tests
             var rootState = flow.RootState;
 
             // Assert
-            Assert.AreEqual(flow.States.FirstState(), rootState);
+            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE")), rootState);
         }
 
         [TestMethod]
@@ -107,6 +107,35 @@ namespace Headway.Core.Tests
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus, StateStatus.InProgress);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")), flow.ActiveState);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus, StateStatus.NotStarted);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public async Task State_Initialise_State_Already_InProgress()
+        {
+            // Arrange
+            var flow = FlowTestHelper.CreateFlow(2);
+
+            flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
+
+            flow.ActionSetupClass = "Headway.Core.Tests.Helpers.FlowStateActionHelper, Headway.Core.Tests";
+
+            flow.Bootstrap();
+
+            flow.States[1].StateStatus = StateStatus.InProgress;
+
+            try
+            {
+                // Act
+                await flow.States[1].InitialiseAsync().ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Assert
+                Assert.AreEqual(ex.Message, $"Can't initialize {flow.States[1].StateStatus} because it's already {StateStatus.InProgress}");
+
+                throw;
+            }
         }
 
         [TestMethod]
