@@ -5,7 +5,7 @@ using Headway.Core.Model;
 
 namespace Headway.Core.Tests.Helpers
 {
-    public class FlowStateActionHelper : IFlowStateActions
+    public class FlowStateActionHelper : ISetupFlowActions
     {
         public void SetupActions(Dictionary<string, State> stateDictionary)
         {
