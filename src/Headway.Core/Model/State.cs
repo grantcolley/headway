@@ -125,23 +125,5 @@ namespace Headway.Core.Model
                 return TransitionStateCodes.Split(';').ToList();
             }
         }
-
-        public async Task ExecuteActionsAsync(StateActionType stateFunctionType)
-        {
-            if (StateActions == null)
-            {
-                return;
-            }
-
-            var actions = StateActions
-                .Where(a => a.StateActionType.Equals(stateFunctionType))
-                .OrderBy(a => a.Order)
-                .ToList();
-
-            foreach (var action in actions)
-            {
-                await action.ActionAsync(this, action.StateActionType, action.Order).ConfigureAwait(false);
-            }
-        }
     }
 }
