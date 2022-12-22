@@ -18,6 +18,8 @@ namespace Headway.Core.Extensions
                 throw new InvalidOperationException($"Can't initialize {state.StateStatus} because it's already {StateStatus.InProgress}");
             }
 
+            state.SetupStateActions();
+
             await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
             if (state.SubStates.Any()) 
@@ -96,6 +98,24 @@ namespace Headway.Core.Extensions
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.NotStarted;
+        }
+
+        public static async Task ExecuteActionsAsync(this State state, StateActionType stateFunctionType)
+        {
+            if (state.StateActions == null)
+            {
+                return;
+            }
+
+            var actions = state.StateActions
+                .Where(a => a.StateActionType.Equals(stateFunctionType))
+                .OrderBy(a => a.Order)
+                .ToList();
+
+            foreach (var action in actions)
+            {
+                await action.ActionAsync(state, action.StateActionType, action.Order).ConfigureAwait(false);
+            }
         }
 
         public static State FirstState(this List<State> states)
