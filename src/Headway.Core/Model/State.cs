@@ -36,6 +36,10 @@ namespace Headway.Core.Model
         public string StateCode { get; set; }
 
         [Required]
+        [StringLength(150)]
+        public string ActionSetupClass { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string ParentStateCode { get; set; }
 
