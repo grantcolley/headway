@@ -139,7 +139,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Initialise_State_Has_Actions()
+        public async Task State_Initialise_State_Has_FlowStateActions()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
@@ -155,6 +155,48 @@ namespace Headway.Core.Tests
             Assert.AreEqual(flow.ActiveState, flow.States.FirstState());
             Assert.AreEqual(flow.ActiveState.StateStatus, StateStatus.InProgress);
             Assert.AreEqual(flow.ActiveState.Context, $"1 Initialize {flow.ActiveState.StateCode}; 2 Initialize {flow.ActiveState.StateCode}");
+        }
+
+        [TestMethod]
+        public async Task State_Initialise_State_Has_StateActions()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap();
+
+            flow.ActiveState.ActionSetupClass = "Headway.Core.Tests.Helpers.StateActionHelper, Headway.Core.Tests";
+
+            // Act
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+
+            // Assert
+            Assert.AreEqual(flow.ActiveState, flow.States.FirstState());
+            Assert.AreEqual(flow.ActiveState.StateStatus, StateStatus.InProgress);
+            Assert.AreEqual(flow.ActiveState.Context, $"3 Initialize {flow.ActiveState.StateCode}; 4 Initialize {flow.ActiveState.StateCode}");
+        }
+
+        [TestMethod]
+        public async Task State_Initialise_State_Has_FlowStateActions_And_StateActions()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.ActionSetupClass = "Headway.Core.Tests.Helpers.FlowStateActionHelper, Headway.Core.Tests";
+
+            flow.Bootstrap();
+
+            flow.ActiveState.ActionSetupClass = "Headway.Core.Tests.Helpers.StateActionHelper, Headway.Core.Tests";
+
+            var activeStateContext = $"1 Initialize {flow.ActiveState.StateCode}; 2 Initialize {flow.ActiveState.StateCode}; 3 Initialize {flow.ActiveState.StateCode}; 4 Initialize {flow.ActiveState.StateCode}";
+
+            // Act
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+
+            // Assert
+            Assert.AreEqual(flow.ActiveState, flow.States.FirstState());
+            Assert.AreEqual(flow.ActiveState.StateStatus, StateStatus.InProgress);
+            Assert.AreEqual(flow.ActiveState.Context, activeStateContext);
         }
 
         [TestMethod]
