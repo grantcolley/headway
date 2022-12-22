@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Enums;
 using Headway.Core.Exceptions;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,17 @@ namespace Headway.Core.Extensions
         {
             if(state.StateStatus.Equals(StateStatus.InProgress)) 
             {
-                return;
+                throw new InvalidOperationException($"Can't initialize {state.StateStatus} because it's already {StateStatus.InProgress}");
             }
 
-            if(state.SubStates.Any()) 
+            await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
+
+            if (state.SubStates.Any()) 
             {
                 var subState = state.SubStates.FirstState();
 
                 await subState.InitialiseAsync().ConfigureAwait(false);
             }
-
-            await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.InProgress;
 
@@ -68,6 +69,8 @@ namespace Headway.Core.Extensions
                     throw new FlowException(state, $"{state.StateCode} transition doesn't exist {transitionStateCode}");
                 }
             }
+
+            state.SetupStateActions();
 
             await state.ExecuteActionsAsync(StateActionType.Complete).ConfigureAwait(false);
 
@@ -117,6 +120,44 @@ namespace Headway.Core.Extensions
             }
 
             return states;
+        }
+
+        public static void SetupFlowActions(this Flow flow)
+        {
+            if (!string.IsNullOrWhiteSpace(flow.ActionSetupClass))
+            {
+                var type = Type.GetType(flow.ActionSetupClass);
+
+                if (type == null)
+                {
+                    throw new ArgumentNullException(nameof(flow.ActionSetupClass));
+                }
+
+                var instance = (ISetupFlowActions)Activator.CreateInstance(type);
+
+                var method = type.GetMethod("SetupActions");
+
+                method.Invoke(instance, new object[] { flow.StateDictionary });
+            }
+        }
+
+        public static void SetupStateActions(this State state)
+        {
+            if (!string.IsNullOrWhiteSpace(state.ActionSetupClass))
+            {
+                var type = Type.GetType(state.ActionSetupClass);
+
+                if (type == null)
+                {
+                    throw new ArgumentNullException(nameof(state.ActionSetupClass));
+                }
+
+                var instance = (ISetupStateActions)Activator.CreateInstance(type);
+
+                var method = type.GetMethod("SetupActions");
+
+                method.Invoke(instance, new object[] { state });
+            }
         }
     }
 }
