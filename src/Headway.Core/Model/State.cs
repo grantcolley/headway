@@ -63,6 +63,10 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
+        public bool ActionsConfigured { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
         public State ParentState { get; set; }
 
         [NotMapped]
