@@ -132,7 +132,7 @@ namespace Headway.Core.Tests
             catch (InvalidOperationException ex)
             {
                 // Assert
-                Assert.AreEqual(ex.Message, $"Can't initialize {flow.States[1].StateStatus} because it's already {StateStatus.InProgress}");
+                Assert.AreEqual(ex.Message, $"Can't initialize {flow.States[1].StateStatus} because it's already {StateStatus.InProgress}.");
 
                 throw;
             }
