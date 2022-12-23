@@ -49,6 +49,14 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
+        public bool Bootstrapped { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public bool ActionsConfigured { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
         public State ActiveState { get; set; }
 
         [NotMapped]
@@ -76,6 +84,11 @@ namespace Headway.Core.Model
 
         public void Bootstrap()
         {
+            if(Bootstrapped)
+            {
+                throw new InvalidOperationException();
+            }
+
             StateDictionary = States.ToDictionary(s => s.StateCode, s => s);
 
             foreach (var state in StateDictionary)
@@ -101,7 +114,7 @@ namespace Headway.Core.Model
                 state.Value.Transitions.AddRange(StateDictionary.GetStates(state.Value.TransitionStateCodesList));
             }
 
-            this.SetupFlowActions();
+            this.ConfigureFlowActions();
 
             if (History.Any())
             {
@@ -125,6 +138,8 @@ namespace Headway.Core.Model
             {
                 ActiveState = RootState;
             }
+
+            Bootstrapped = true;
         }
     }
 }
