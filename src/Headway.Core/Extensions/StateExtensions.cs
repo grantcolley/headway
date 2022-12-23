@@ -1,5 +1,4 @@
-﻿using FluentValidation.Validators;
-using Headway.Core.Enums;
+﻿using Headway.Core.Enums;
 using Headway.Core.Exceptions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
@@ -12,6 +11,11 @@ namespace Headway.Core.Extensions
 {
     public static class StateExtensions
     {
+        private static readonly IDictionary<string, StateActionConfiguration> stateActionConfigurationCache = new Dictionary<string, StateActionConfiguration>();
+        private static readonly IDictionary<string, FlowActionConfiguration> flowActionConfigurationCache = new Dictionary<string, FlowActionConfiguration>();
+        private static object stateActionConfigurationCacheLock = new object();
+        private static object flowActionConfigurationCacheLock = new object();
+
         public static async Task InitialiseAsync(this State state)
         {
             if(state.StateStatus.Equals(StateStatus.InProgress)) 
@@ -153,18 +157,42 @@ namespace Headway.Core.Extensions
 
             if (!string.IsNullOrWhiteSpace(flow.ActionSetupClass))
             {
-                var type = Type.GetType(flow.ActionSetupClass);
+                FlowActionConfiguration actionConfiguration = null;
 
-                if (type == null)
+                lock (flowActionConfigurationCacheLock)
                 {
-                    throw new ArgumentNullException(nameof(flow.ActionSetupClass));
+                    if (flowActionConfigurationCache.TryGetValue(
+                        flow.ActionSetupClass, out FlowActionConfiguration flowActionConfiguration))
+                    {
+                        actionConfiguration = flowActionConfiguration;
+                    }
+                    else
+                    {
+                        var type = Type.GetType(flow.ActionSetupClass);
+
+                        if (type == null)
+                        {
+                            throw new ArgumentNullException(nameof(flow.ActionSetupClass));
+                        }
+
+                        var instance = (IConfigureFlowActions)Activator.CreateInstance(type);
+
+                        var methodInfo = type.GetMethod("ConfigureActions");
+
+                        flowActionConfiguration = new FlowActionConfiguration
+                        {
+                            Instance = instance,
+                            MethodInfo = methodInfo
+                        };
+
+                        flowActionConfigurationCache.Add(flow.ActionSetupClass, flowActionConfiguration);
+
+                        actionConfiguration = flowActionConfiguration;
+                    }
                 }
 
-                var instance = (ISetupFlowActions)Activator.CreateInstance(type);
-
-                var method = type.GetMethod("SetupActions");
-
-                method.Invoke(instance, new object[] { flow.StateDictionary });
+                _ = actionConfiguration.MethodInfo.Invoke(
+                        actionConfiguration.Instance, new object[] { flow.StateDictionary });
 
                 flow.ActionsConfigured = true;
             }
@@ -179,18 +207,42 @@ namespace Headway.Core.Extensions
 
             if (!string.IsNullOrWhiteSpace(state.ActionSetupClass))
             {
-                var type = Type.GetType(state.ActionSetupClass);
+                StateActionConfiguration actionConfiguration = null;
 
-                if (type == null)
+                lock (stateActionConfigurationCacheLock)
                 {
-                    throw new ArgumentNullException(nameof(state.ActionSetupClass));
+                    if (stateActionConfigurationCache.TryGetValue(
+                        state.ActionSetupClass, out StateActionConfiguration stateActionConfiguration))
+                    {
+                        actionConfiguration = stateActionConfiguration;
+                    }
+                    else
+                    {
+                        var type = Type.GetType(state.ActionSetupClass);
+
+                        if (type == null)
+                        {
+                            throw new ArgumentNullException(nameof(state.ActionSetupClass));
+                        }
+
+                        var instance = (IConfigureStateActions)Activator.CreateInstance(type);
+
+                        var methodInfo = type.GetMethod("ConfigureActions");
+
+                        stateActionConfiguration = new StateActionConfiguration
+                        {
+                            Instance = instance,
+                            MethodInfo = methodInfo
+                        };
+
+                        stateActionConfigurationCache.Add(state.ActionSetupClass, stateActionConfiguration);
+
+                        actionConfiguration = stateActionConfiguration;
+                    }
                 }
 
-                var instance = (ISetupStateActions)Activator.CreateInstance(type);
-
-                var method = type.GetMethod("SetupActions");
-
-                method.Invoke(instance, new object[] { state });
+                _ = actionConfiguration.MethodInfo.Invoke(
+                    actionConfiguration.Instance, new object[] { state });
 
                 state.ActionsConfigured = true;
             }
