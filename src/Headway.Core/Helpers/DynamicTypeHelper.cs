@@ -107,22 +107,17 @@ namespace Headway.Core.Helpers
         /// <returns>An instance of a <see cref="DynamicTypeHelper"/> for the specified type.</returns>
         public static DynamicTypeHelper<T> Get<T>() where T : class, new()
         {
-            var t = typeof(T);
-
-            if (cache.ContainsKey(t))
-            {
-                return (DynamicTypeHelper<T>)cache[t];
-            }
-
-            var propertyInfos = PropertyInfoHelper.GetPropertyInfos(t);
-            var typeHelper = CreateTypeHelper<T>(propertyInfos);
-
             lock (cacheLock)
             {
-                if (cache.ContainsKey(t))
+                var t = typeof(T);
+
+                if (cache.TryGetValue(t, out object result))
                 {
-                    return (DynamicTypeHelper<T>)cache[t];
+                    return (DynamicTypeHelper<T>)result;
                 }
+
+                var propertyInfos = PropertyInfoHelper.GetPropertyInfos(t);
+                var typeHelper = CreateTypeHelper<T>(propertyInfos);
 
                 cache.Add(t, typeHelper);
                 return typeHelper;
