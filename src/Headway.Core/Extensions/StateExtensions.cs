@@ -12,9 +12,7 @@ namespace Headway.Core.Extensions
     public static class StateExtensions
     {
         private static readonly IDictionary<string, StateActionConfiguration> stateActionConfigurationCache = new Dictionary<string, StateActionConfiguration>();
-        private static readonly IDictionary<string, FlowActionConfiguration> flowActionConfigurationCache = new Dictionary<string, FlowActionConfiguration>();
         private static object stateActionConfigurationCacheLock = new object();
-        private static object flowActionConfigurationCacheLock = new object();
 
         public static async Task InitialiseAsync(this State state)
         {
@@ -129,73 +127,6 @@ namespace Headway.Core.Extensions
             var firstPosition = states.Min(s => s.Position);
 
             return states.First(s => s.Position.Equals(firstPosition));
-        }
-
-        public static List<State> GetStates(this Dictionary<string, State> dictionary, List<string> stateCodes)
-        {
-            if(stateCodes == null)
-            {
-                throw new ArgumentNullException(nameof(stateCodes));
-            }
-
-            var states = new List<State>();
-
-            foreach (var stateCode in stateCodes)
-            {
-                states.Add(dictionary[stateCode]);
-            }
-
-            return states;
-        }
-
-        public static void ConfigureFlowActions(this Flow flow)
-        {
-            if (flow.ActionsConfigured)
-            {
-                throw new InvalidOperationException($"{flow.Name} has already had actions configured.");
-            }
-
-            if (!string.IsNullOrWhiteSpace(flow.ActionSetupClass))
-            {
-                FlowActionConfiguration actionConfiguration = null;
-
-                lock (flowActionConfigurationCacheLock)
-                {
-                    if (flowActionConfigurationCache.TryGetValue(
-                        flow.ActionSetupClass, out FlowActionConfiguration flowActionConfiguration))
-                    {
-                        actionConfiguration = flowActionConfiguration;
-                    }
-                    else
-                    {
-                        var type = Type.GetType(flow.ActionSetupClass);
-
-                        if (type == null)
-                        {
-                            throw new ArgumentNullException(nameof(flow.ActionSetupClass));
-                        }
-
-                        var instance = (IConfigureFlowActions)Activator.CreateInstance(type);
-
-                        var methodInfo = type.GetMethod("ConfigureActions");
-
-                        flowActionConfiguration = new FlowActionConfiguration
-                        {
-                            Instance = instance,
-                            MethodInfo = methodInfo
-                        };
-
-                        flowActionConfigurationCache.Add(flow.ActionSetupClass, flowActionConfiguration);
-
-                        actionConfiguration = flowActionConfiguration;
-                    }
-                }
-
-                _ = actionConfiguration.MethodInfo.Invoke(
-                        actionConfiguration.Instance, new object[] { flow.StateDictionary });
-
-                flow.ActionsConfigured = true;
-            }
         }
 
         public static void ConfigureStateActions(this State state)
