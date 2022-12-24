@@ -1,7 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Enums;
 using Headway.Core.Extensions;
-using Headway.Core.Interface;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -61,7 +60,7 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public Dictionary<string, State> StateDictionary { get; private set; }
+        public Dictionary<string, State> StateDictionary { get; set; }
 
         [NotMapped]
         [JsonIgnore]
@@ -80,66 +79,6 @@ namespace Headway.Core.Model
 
                 return rootState;
             }
-        }
-
-        public void Bootstrap()
-        {
-            if(Bootstrapped)
-            {
-                throw new InvalidOperationException();
-            }
-
-            StateDictionary = States.ToDictionary(s => s.StateCode, s => s);
-
-            foreach (var state in StateDictionary)
-            {
-                state.Value.StateStatus = default;
-                state.Value.Owner = default;
-                state.Value.Flow = this;
-
-                if (state.Value.Context != null)
-                {
-                    state.Value.Context = Context;
-                }
-
-                if (!string.IsNullOrWhiteSpace(state.Value.ParentStateCode))
-                {
-                    state.Value.ParentState = StateDictionary[state.Value.ParentStateCode];
-                }
-
-                state.Value.SubStates.Clear();
-                state.Value.SubStates.AddRange(StateDictionary.GetStates(state.Value.SubStateCodesList));
-
-                state.Value.Transitions.Clear();
-                state.Value.Transitions.AddRange(StateDictionary.GetStates(state.Value.TransitionStateCodesList));
-            }
-
-            this.ConfigureFlowActions();
-
-            if (History.Any())
-            {
-                var lastIndex = History.Count - 1;
-
-                for (int i = 0; i < lastIndex - 1; i++)
-                {
-                    var history = History[i];
-
-                    var state = StateDictionary[history.StateCode];
-                    state.StateStatus = history.StateStatus;
-                    state.Owner = history.Owner;
-
-                    if (i.Equals(lastIndex))
-                    {
-                        ActiveState = state;
-                    }
-                }
-            }
-            else
-            {
-                ActiveState = RootState;
-            }
-
-            Bootstrapped = true;
         }
     }
 }
