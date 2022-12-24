@@ -424,6 +424,36 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
+        public async Task Auto_Type_Route_To_Last_State()
+        {
+            // Arrange
+            var flow = FlowHelper.CreateFlow(4);
+
+            flow.States[1].StateType = StateType.Auto;
+
+            flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
+            flow.States[1].TransitionStateCodes = $"{flow.States[2].StateCode};{flow.States[3].StateCode}";
+
+            flow.Bootstrap();
+
+            flow.States[1].ConfigureStateClass = "Headway.Core.Tests.Helpers.StateRoutingHelper, Headway.Core.Tests";
+
+            await flow.ActiveState.InitialiseAsync();
+
+            // Act
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+
+            //Assert
+            Assert.AreEqual(StateStatus.Completed, flow.States[0].StateStatus);
+            Assert.AreEqual(StateStatus.Completed, flow.States[1].StateStatus);
+            Assert.AreEqual(StateStatus.NotStarted, flow.States[2].StateStatus);
+            Assert.AreEqual(StateStatus.InProgress, flow.States[3].StateStatus);
+            Assert.AreEqual(flow.States[3], flow.ActiveState);
+            Assert.AreEqual($"Route {flow.States[1].StateCode} to {flow.ActiveState.StateCode}", flow.States[1].Context);
+            Assert.AreEqual($"Routed from {flow.States[1].StateCode}", flow.ActiveState.Context);
+        }
+
+        [TestMethod]
         public void Test_The_Heck_Out_Of_Something()
         {
             // Arrange
