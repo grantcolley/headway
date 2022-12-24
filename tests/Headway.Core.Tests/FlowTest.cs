@@ -185,7 +185,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Initialise_State_Has_FlowStateActions()
+        public async Task State_Initialise_State_Has_Actions_Configure_At_Bootstrap()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
@@ -204,7 +204,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Initialise_State_Has_StateActions()
+        public async Task State_Initialise_State_Has_Actions_Configure_At_State_Initialise()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
@@ -223,7 +223,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Initialise_State_Has_FlowStateActions_And_StateActions()
+        public async Task State_Initialise_State_Has_Actions_Configure_At_Bootstrap_And_State_Initialise()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
@@ -233,6 +233,29 @@ namespace Headway.Core.Tests
             flow.Bootstrap();
 
             flow.ActiveState.ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+
+            var activeStateContext = $"1 Initialize {flow.ActiveState.StateCode}; 2 Initialize {flow.ActiveState.StateCode}; 3 Initialize {flow.ActiveState.StateCode}; 4 Initialize {flow.ActiveState.StateCode}";
+
+            // Act
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+
+            // Assert
+            Assert.AreEqual(flow.States.FirstState(), flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(activeStateContext, flow.ActiveState.Context);
+        }
+
+        [TestMethod]
+        public async Task State_Initialise_State_Has_Actions_Configure_All_At_Bootstrap()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.ConfigureStatesDuringBootstrap = true;
+            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
+            flow.States.FirstState().ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+
+            flow.Bootstrap();
 
             var activeStateContext = $"1 Initialize {flow.ActiveState.StateCode}; 2 Initialize {flow.ActiveState.StateCode}; 3 Initialize {flow.ActiveState.StateCode}; 4 Initialize {flow.ActiveState.StateCode}";
 
