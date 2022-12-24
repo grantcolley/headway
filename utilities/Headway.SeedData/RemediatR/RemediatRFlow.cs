@@ -25,14 +25,14 @@ namespace Headway.SeedData.RemediatR
             redressCreate.TransitionStateCodes = $"{refundAssessment.StateCode}";
 
             refundAssessment.SubStateCodes = $"{refundCalculation.StateCode};{refundVerification.StateCode}";
-            refundAssessment.TransitionStateCodes = $"{redressCreate.StateCode};{refundReview.StateCode}";
+            refundAssessment.TransitionStateCodes = $"{refundReview.StateCode}";
 
             refundCalculation.ParentStateCode = $"{refundAssessment.StateCode}";
             refundCalculation.TransitionStateCodes = $"{refundVerification.StateCode}";
 
             refundVerification.ParentStateCode = $"{refundAssessment.StateCode}";
 
-            refundReview.TransitionStateCodes = $"{refundAssessment.StateCode};{redressReview.StateCode}";
+            refundReview.TransitionStateCodes = $"{redressReview.StateCode};{refundAssessment.StateCode};{redressCreate.StateCode}";
 
             redressReview.TransitionStateCodes = $"{redressCreate.StateCode};{redressValidation.StateCode}";
 
