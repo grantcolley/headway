@@ -20,30 +20,38 @@ namespace Headway.Core.Extensions
 
             flow.StateDictionary = flow.States.ToDictionary(s => s.StateCode, s => s);
 
-            foreach (var state in flow.StateDictionary)
+            foreach (var state in flow.States)
             {
-                state.Value.StateStatus = default;
-                state.Value.Owner = default;
-                state.Value.Flow = flow;
+                state.StateStatus = default;
+                state.Owner = default;
+                state.Flow = flow;
 
-                if (state.Value.Context != null)
+                if (state.Context != null)
                 {
-                    state.Value.Context = flow.Context;
+                    state.Context = flow.Context;
                 }
 
-                if (!string.IsNullOrWhiteSpace(state.Value.ParentStateCode))
+                if (!string.IsNullOrWhiteSpace(state.ParentStateCode))
                 {
-                    state.Value.ParentState = flow.StateDictionary[state.Value.ParentStateCode];
+                    state.ParentState = flow.StateDictionary[state.ParentStateCode];
                 }
 
-                state.Value.SubStates.Clear();
-                state.Value.SubStates.AddRange(flow.ToStateList(state.Value.SubStateCodesList));
+                state.SubStates.Clear();
+                state.SubStates.AddRange(flow.ToStateList(state.SubStateCodesList));
 
-                state.Value.Transitions.Clear();
-                state.Value.Transitions.AddRange(flow.ToStateList(state.Value.TransitionStateCodesList));
+                state.Transitions.Clear();
+                state.Transitions.AddRange(flow.ToStateList(state.TransitionStateCodesList));
             }
 
             flow.Configure();
+
+            if(flow.ConfigureStatesDuringBootstrap)
+            {
+                foreach(var state in flow.States)
+                {
+                    state.Configure();
+                }
+            }
 
             if (flow.History.Any())
             {
