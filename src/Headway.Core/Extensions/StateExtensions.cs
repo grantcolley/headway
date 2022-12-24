@@ -39,6 +39,11 @@ namespace Headway.Core.Extensions
                     state.Flow.ActiveState = state;
                 }
             }
+
+            if(state.StateType.Equals(StateType.Auto))
+            {
+                await state.CompleteAsync().ConfigureAwait(false);
+            }
         }
 
         public static async Task CompleteAsync(this State state, string transitionStateCode = "")
@@ -62,6 +67,14 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't complete {state.StateCode} because sub states not yet {StateStatus.Completed} : {joinedDescriptions}.");
             }
 
+            if (!string.IsNullOrWhiteSpace(transitionStateCode)
+                && !state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
+            {
+                throw new StateException(state, $"Can't complete {state.StateCode} because doesn't support transitioning to {transitionStateCode}.");
+            }
+
+            await state.ExecuteActionsAsync(StateActionType.Complete).ConfigureAwait(false);
+
             State transitionState = null;
 
             if (string.IsNullOrWhiteSpace(transitionStateCode))
@@ -77,8 +90,6 @@ namespace Headway.Core.Extensions
                     throw new StateException(state, $"Can't complete {state.StateCode} because doesn't support transitioning to {transitionStateCode}.");
                 }
             }
-
-            await state.ExecuteActionsAsync(StateActionType.Complete).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.Completed;
 
