@@ -4,9 +4,9 @@ using Headway.Core.Model;
 
 namespace Headway.Core.Tests.Helpers
 {
-    public class StateActionHelper : IConfigureStateActions
+    public class StateHelper : IConfigureState
     {
-        public void ConfigureActions(State state)
+        public void Configure(State state)
         {
             state.Context = null;
             state.StateActions.Add(new StateAction { Order = 4, StateActionType = StateActionType.Initialize, ActionAsync = StateAction });

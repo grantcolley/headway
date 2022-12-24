@@ -5,11 +5,23 @@ using Headway.Core.Model;
 
 namespace Headway.Core.Tests.Helpers
 {
-    public class FlowStateActionHelper : IConfigureFlowActions
+    public class FlowHelper : IConfigureFlow
     {
-        public void ConfigureActions(Dictionary<string, State> stateDictionary)
+        public static Flow CreateFlow(int numberOfStates)
         {
-            var states = stateDictionary.Values.ToList();
+            var flow = new Flow { Name = "Test Flow" };
+
+            for (int i = 1; i < numberOfStates + 1; i++)
+            {
+                flow.States.Add(new State { Position = i * 10, StateCode = $"State {i}", Flow = flow });
+            }
+
+            return flow;
+        }
+
+        public void Configure(Flow flow)
+        {
+            var states = flow.StateDictionary.Values.ToList();
             var state = states.FirstState();
 
             state.Context = null;

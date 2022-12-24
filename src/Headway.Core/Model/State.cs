@@ -37,7 +37,7 @@ namespace Headway.Core.Model
 
         [Required]
         [StringLength(150)]
-        public string ActionSetupClass { get; set; }
+        public string ConfigureStateClass { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -63,7 +63,7 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public bool ActionsConfigured { get; set; }
+        public bool Configured { get; set; }
 
         [NotMapped]
         [JsonIgnore]

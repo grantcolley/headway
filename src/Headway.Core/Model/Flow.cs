@@ -1,11 +1,9 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Enums;
 using Headway.Core.Extensions;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
@@ -24,6 +22,7 @@ namespace Headway.Core.Model
         public int FlowId { get; set; }
         public int ConfigId { get; set; }
         public FlowStatus FlowStatus { get; set; }
+        public bool ConfigureStatesDuringBootstrap { get; set; }
         public List<State> States { get; set; }
         public List<FlowHistory> History { get; set; }
 
@@ -37,7 +36,7 @@ namespace Headway.Core.Model
 
         [Required]
         [StringLength(150)]
-        public string ActionSetupClass { get; set; }
+        public string ConfigureFlowClass { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -52,7 +51,7 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public bool ActionsConfigured { get; set; }
+        public bool Configured { get; set; }
 
         [NotMapped]
         [JsonIgnore]

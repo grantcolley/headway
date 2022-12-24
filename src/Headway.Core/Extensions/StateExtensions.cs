@@ -11,8 +11,8 @@ namespace Headway.Core.Extensions
 {
     public static class StateExtensions
     {
-        private static readonly IDictionary<string, StateActionConfiguration> stateActionConfigurationCache = new Dictionary<string, StateActionConfiguration>();
-        private static object stateActionConfigurationCacheLock = new object();
+        private static readonly IDictionary<string, StateConfiguration> stateConfigurationCache = new Dictionary<string, StateConfiguration>();
+        private static object stateConfigurationCacheLock = new object();
 
         public static async Task InitialiseAsync(this State state)
         {
@@ -106,9 +106,9 @@ namespace Headway.Core.Extensions
                 return;
             }
 
-            if (!state.ActionsConfigured)
+            if (!state.Configured)
             {
-                state.ConfigureStateActions();
+                state.Configure();
             }
 
             var actions = state.StateActions
@@ -129,53 +129,50 @@ namespace Headway.Core.Extensions
             return states.First(s => s.Position.Equals(firstPosition));
         }
 
-        public static void ConfigureStateActions(this State state)
+        public static void Configure(this State state)
         {
-            if(state.ActionsConfigured)
+            if(state.Configured)
             {
-                throw new InvalidOperationException($"{state.StateCode} has already had actions configured.");
+                throw new InvalidOperationException($"{state.StateCode} has already been configured.");
             }
 
-            if (!string.IsNullOrWhiteSpace(state.ActionSetupClass))
+            if (!string.IsNullOrWhiteSpace(state.ConfigureStateClass))
             {
-                StateActionConfiguration actionConfiguration = null;
+                StateConfiguration stateConfiguration = null;
 
-                lock (stateActionConfigurationCacheLock)
+                lock (stateConfigurationCacheLock)
                 {
-                    if (stateActionConfigurationCache.TryGetValue(
-                        state.ActionSetupClass, out StateActionConfiguration stateActionConfiguration))
+                    if (stateConfigurationCache.TryGetValue(
+                        state.ConfigureStateClass, out StateConfiguration existingStateConfiguration))
                     {
-                        actionConfiguration = stateActionConfiguration;
+                        stateConfiguration = existingStateConfiguration;
                     }
                     else
                     {
-                        var type = Type.GetType(state.ActionSetupClass);
+                        var type = Type.GetType(state.ConfigureStateClass);
 
                         if (type == null)
                         {
-                            throw new ArgumentNullException(nameof(state.ActionSetupClass));
+                            throw new ArgumentNullException(nameof(state.ConfigureStateClass));
                         }
 
-                        var instance = (IConfigureStateActions)Activator.CreateInstance(type);
+                        var instance = (IConfigureState)Activator.CreateInstance(type);
 
-                        var methodInfo = type.GetMethod("ConfigureActions");
+                        var methodInfo = type.GetMethod("Configure");
 
-                        stateActionConfiguration = new StateActionConfiguration
+                        stateConfiguration = new StateConfiguration
                         {
                             Instance = instance,
                             MethodInfo = methodInfo
                         };
 
-                        stateActionConfigurationCache.Add(state.ActionSetupClass, stateActionConfiguration);
-
-                        actionConfiguration = stateActionConfiguration;
+                        stateConfigurationCache.Add(state.ConfigureStateClass, stateConfiguration);
                     }
                 }
 
-                _ = actionConfiguration.MethodInfo.Invoke(
-                    actionConfiguration.Instance, new object[] { state });
+                stateConfiguration.Configure(state);
 
-                state.ActionsConfigured = true;
+                state.Configured = true;
             }
         }
     }
