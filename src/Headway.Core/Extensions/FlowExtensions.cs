@@ -112,12 +112,12 @@ namespace Headway.Core.Extensions
 
                         if (type == null)
                         {
-                            throw new ArgumentNullException(nameof(flow.ConfigureFlowClass));
+                            throw new ArgumentNullException($"{nameof(type)} for {flow.ConfigureFlowClass}");
                         }
 
                         var instance = (IConfigureFlow)Activator.CreateInstance(type);
 
-                        var methodInfo = type.GetMethod("ConfigureActions");
+                        var methodInfo = type.GetMethod("Configure");
 
                         flowConfiguration = new FlowConfiguration
                         {
