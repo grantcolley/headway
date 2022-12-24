@@ -9,6 +9,8 @@ namespace Headway.Core.Tests.Helpers
         public void Configure(State state)
         {
             state.Context = null;
+            state.StateActions.Add(new StateAction { Order = 2, StateActionType = StateActionType.Complete, ActionAsync = StateAction });
+            state.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Complete, ActionAsync = StateAction });
             state.StateActions.Add(new StateAction { Order = 4, StateActionType = StateActionType.Initialize, ActionAsync = StateAction });
             state.StateActions.Add(new StateAction { Order = 3, StateActionType = StateActionType.Initialize, ActionAsync = StateAction });
         }
