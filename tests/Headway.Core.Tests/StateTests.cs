@@ -399,6 +399,31 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
+        public async Task Auto_Type_Pass_Straight_Through()
+        {
+            // Arrange
+            var flow = FlowHelper.CreateFlow(3);
+
+            flow.States[1].StateType = StateType.Auto;
+
+            flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
+            flow.States[1].TransitionStateCodes = $"{flow.States[2].StateCode}";
+
+            flow.Bootstrap();
+
+            await flow.ActiveState.InitialiseAsync();
+
+            // Act
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+
+            //Assert
+            Assert.AreEqual(StateStatus.Completed, flow.States[0].StateStatus);
+            Assert.AreEqual(StateStatus.Completed, flow.States[1].StateStatus);
+            Assert.AreEqual(StateStatus.InProgress, flow.States[2].StateStatus);
+            Assert.AreEqual(flow.States[2], flow.ActiveState);
+        }
+
+        [TestMethod]
         public void Test_The_Heck_Out_Of_Something()
         {
             // Arrange
