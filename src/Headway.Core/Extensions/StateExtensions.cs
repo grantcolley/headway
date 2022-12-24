@@ -48,6 +48,11 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't complete {state.StateCode} because it's already {StateStatus.Completed}.");
             }
 
+            if (state.StateStatus.Equals(StateStatus.NotStarted))
+            {
+                throw new StateException(state, $"Can't complete {state.StateCode} because it's still {StateStatus.NotStarted}.");
+            }
+
             var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
 
             if(uncompletedSubStates.Any())
@@ -83,7 +88,7 @@ namespace Headway.Core.Extensions
             }
             else
             {
-                await state.ParentState.CompleteAsync().ConfigureAwait(false); ;
+                await state.ParentState.CompleteAsync().ConfigureAwait(false);
             }
         }
 
