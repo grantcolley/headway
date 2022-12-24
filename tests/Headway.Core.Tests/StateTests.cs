@@ -376,7 +376,30 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public void Complete_Last_SubState()
+        public async Task Complete_State_Has_Actions()
+        {
+            // Arrange
+            var flow = FlowHelper.CreateFlow(2);
+
+            flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
+
+            flow.Bootstrap();
+
+            flow.ActiveState.StateStatus = StateStatus.InProgress;
+            flow.ActiveState.ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+
+            // Act
+            await flow.ActiveState.CompleteAsync(flow.States[1].StateCode).ConfigureAwait(false);
+
+            // Assert
+            Assert.AreEqual($"1 Complete {flow.States[0].StateCode}; 2 Complete {flow.States[0].StateCode}", flow.States[0].Context);
+            Assert.AreEqual(StateStatus.Completed, flow.States[0].StateStatus);
+            Assert.AreEqual(StateStatus.InProgress, flow.States[1].StateStatus);
+            Assert.AreEqual(flow.States[1], flow.ActiveState);
+        }
+
+        [TestMethod]
+        public void Test_The_Heck_Out_Of_Something()
         {
             // Arrange
 
