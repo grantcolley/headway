@@ -1,4 +1,5 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Enums;
+using Headway.Core.Model;
 using RemediatR.Core.Constants;
 using RemediatR.Core.Model;
 
@@ -8,46 +9,72 @@ namespace Headway.SeedData.RemediatR
     {
         public static Flow CreateRemediatRFlow()
         {
-            var redressCreate = new State { Position = 1, Name = "Redress Create", StateCode = "REDRESS_CREATE", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var refundAssessment = new State { Position = 10, Name = "Refund Assessment", StateCode = "REFUND_ASSESSMENT", Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
-            var refundCalculation = new State { Position = 11, Name = "Refund Calculation", StateCode = "REFUND_CALCULATION", Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
-            var refundVerification = new State { Position = 12, Name = "Refund Verification", StateCode = "REFUND_VERIFICATION", Permissions = RemediatRAuthorisation.REFUND_ASSESSOR };
-            var refundReview = new State { Position = 20, Name = "Refund Review", StateCode = "REFUND_REVIEW", Permissions = RemediatRAuthorisation.REFUND_REVIEWER };
-            var redressReview = new State { Position = 30, Name = "Redress Review", StateCode = "REDRESS_REVIEW", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
-            var redressValidation = new State { Position = 40, Name = "Redress Validation", StateCode = "REDRESS_VALIDATE", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
-            var communicationGeneration = new State { Position = 50, Name = "Communication Generation", StateCode = "COMMUNICATION_GENERATION", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
-            var communicationDispatch = new State { Position = 60, Name = "Communication Dispatch", StateCode = "COMMUNICATION_DISPATCH", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var responseRequired = new State { Position = 70, Name = "Response Required", StateCode = "RESPONSE_REQUIRED", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var awaitingResponse = new State { Position = 80, Name = "Awaiting Response", StateCode = "AWAITING_RESPONSE", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var paymentGeneration = new State { Position = 90, Name = "Payment Generation", StateCode = "PAYMENT_GENERATION", Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER };
-            var finalRedressReview = new State { Position = 100, Name = "Final Redress Review", StateCode = "FINAL_REDRESS_REVIEW", Permissions = RemediatRAuthorisation.REDRESS_REVIEWER };
+            var redressCreate = new State { Position = 1, Name = "Redress Create", StateCode = "REDRESS_CREATE" };
+            var refundAssessment = new State { Position = 10, Name = "Refund Assessment", StateCode = "REFUND_ASSESSMENT" };
+            var refundCalculation = new State { Position = 11, Name = "Refund Calculation", StateCode = "REFUND_CALCULATION" };
+            var refundVerification = new State { Position = 12, Name = "Refund Verification", StateCode = "REFUND_VERIFICATION" };
+            var refundReview = new State { Position = 20, Name = "Refund Review", StateCode = "REFUND_REVIEW" };
+            var redressReview = new State { Position = 30, Name = "Redress Review", StateCode = "REDRESS_REVIEW" };
+            var redressValidation = new State { Position = 40, Name = "Redress Validation", StateCode = "REDRESS_VALIDATE" };
+            var communicationGeneration = new State { Position = 50, Name = "Communication Generation", StateCode = "COMMUNICATION_GENERATION" };
+            var communicationDispatch = new State { Position = 60, Name = "Communication Dispatch", StateCode = "COMMUNICATION_DISPATCH" };
+            var responseRequired = new State { Position = 70, Name = "Response Required", StateCode = "RESPONSE_REQUIRED" };
+            var awaitingResponse = new State { Position = 80, Name = "Awaiting Response", StateCode = "AWAITING_RESPONSE" };
+            var paymentGeneration = new State { Position = 90, Name = "Payment Generation", StateCode = "PAYMENT_GENERATION" };
+            var finalRedressReview = new State { Position = 100, Name = "Final Redress Review", StateCode = "FINAL_REDRESS_REVIEW" };
 
+            redressCreate.StateType = StateType.Standard;
+            redressCreate.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             redressCreate.TransitionStateCodes = $"{refundAssessment.StateCode}";
 
+            refundAssessment.StateType= StateType.Standard;
+            refundAssessment.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
             refundAssessment.SubStateCodes = $"{refundCalculation.StateCode};{refundVerification.StateCode}";
             refundAssessment.TransitionStateCodes = $"{refundReview.StateCode}";
 
+            refundCalculation.StateType = StateType.Standard;
+            refundCalculation.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
             refundCalculation.ParentStateCode = $"{refundAssessment.StateCode}";
             refundCalculation.TransitionStateCodes = $"{refundVerification.StateCode}";
 
+            refundVerification.StateType = StateType.Standard;
+            refundVerification.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
             refundVerification.ParentStateCode = $"{refundAssessment.StateCode}";
 
+            refundReview.StateType = StateType.Standard;
+            refundReview.Permissions = RemediatRAuthorisation.REFUND_REVIEWER;
             refundReview.TransitionStateCodes = $"{redressReview.StateCode};{refundAssessment.StateCode};{redressCreate.StateCode}";
 
+            redressReview.StateType = StateType.Standard;
+            redressReview.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
             redressReview.TransitionStateCodes = $"{redressCreate.StateCode};{redressValidation.StateCode}";
 
+            redressValidation.StateType = StateType.Standard;
+            redressValidation.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
             redressValidation.TransitionStateCodes = $"{redressReview.StateCode};{communicationGeneration.StateCode};{paymentGeneration.StateCode}";
 
+            communicationGeneration.StateType = StateType.Standard;
+            communicationGeneration.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
             communicationGeneration.TransitionStateCodes = $"{redressReview.StateCode};{communicationDispatch.StateCode}";
 
+            communicationDispatch.StateType = StateType.Standard;
+            communicationDispatch.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             communicationDispatch.TransitionStateCodes = $"{redressReview.StateCode};{responseRequired.StateCode}";
 
+            responseRequired.StateType = StateType.Auto;
+            responseRequired.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             responseRequired.TransitionStateCodes = $"{communicationDispatch.StateCode};{awaitingResponse.StateCode};{paymentGeneration.StateCode}";
 
+            awaitingResponse.StateType = StateType.Standard;
+            awaitingResponse.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             awaitingResponse.TransitionStateCodes = $"{redressReview.StateCode};{paymentGeneration.StateCode}";
 
+            paymentGeneration.StateType = StateType.Standard;
+            paymentGeneration.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             paymentGeneration.TransitionStateCodes = $"{communicationDispatch.StateCode};{finalRedressReview.StateCode}";
 
+            finalRedressReview.StateType = StateType.Standard;
+            finalRedressReview.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
             finalRedressReview.TransitionStateCodes = $"{redressReview.StateCode}";
 
             var flow = new Flow
