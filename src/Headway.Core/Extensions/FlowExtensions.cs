@@ -1,4 +1,5 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Exceptions;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Headway.Core.Extensions
         {
             if (flow.Bootstrapped)
             {
-                throw new InvalidOperationException($"{flow.Name} already {nameof(flow.Bootstrapped)}.");
+                throw new FlowException(flow, $"{flow.Name} already {nameof(flow.Bootstrapped)}.");
             }
 
             flow.StateDictionary = flow.States.ToDictionary(s => s.StateCode, s => s);
@@ -83,7 +84,7 @@ namespace Headway.Core.Extensions
         {
             if (stateCodes == null)
             {
-                throw new ArgumentNullException(nameof(stateCodes));
+                throw new FlowException(flow, nameof(stateCodes));
             }
 
             var states = new List<State>();
@@ -100,7 +101,7 @@ namespace Headway.Core.Extensions
         {
             if (flow.Configured)
             {
-                throw new InvalidOperationException($"{flow.Name} has already been configured.");
+                throw new FlowException(flow, $"{flow.Name} has already been configured.");
             }
 
             if (!string.IsNullOrWhiteSpace(flow.ConfigureFlowClass))
@@ -120,7 +121,7 @@ namespace Headway.Core.Extensions
 
                         if (type == null)
                         {
-                            throw new ArgumentNullException($"{nameof(type)} for {flow.ConfigureFlowClass}");
+                            throw new FlowException(flow, $"Can't resolve {flow.ConfigureFlowClass}");
                         }
 
                         var instance = (IConfigureFlow)Activator.CreateInstance(type);

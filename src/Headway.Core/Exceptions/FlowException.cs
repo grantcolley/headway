@@ -5,12 +5,12 @@ namespace Headway.Core.Exceptions
 {
     public class FlowException : Exception
     {
-        public FlowException(State state, string message = "", Exception innerException = null)
+        public FlowException(Flow flow, string message = "", Exception innerException = null)
             : base(message, innerException)
         {
-            State = state;
+            Flow = flow;
         }
 
-        public State State { get; private set; }
+        public Flow Flow { get; private set; }
     }
 }

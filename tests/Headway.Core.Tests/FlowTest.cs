@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Enums;
+using Headway.Core.Exceptions;
 using Headway.Core.Extensions;
 using Headway.Core.Model;
 using Headway.Core.Tests.Helpers;
@@ -42,7 +43,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(FlowException))]
         public void Flow_Bootstrap_Already_Bootstrapped()
         {
             // Arrange
@@ -65,7 +66,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(FlowException))]
         public void Flow_Bootstrap_ConfigureFlowClass_Invalid()
         {
             // Arrange
@@ -156,7 +157,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(StateException))]
         public async Task State_Initialise_State_Already_InProgress()
         {
             // Arrange
@@ -269,7 +270,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Transition_Default()
+        public async Task State_Complete_With_Transition_Default()
         {
             // Arrange
             var flow = FlowHelper.CreateFlow(2);
@@ -288,7 +289,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Transition_To_StateCode()
+        public async Task State_Complete_With_Transition_To_StateCode()
         {
             // Arrange
             var flow = FlowHelper.CreateFlow(2);
@@ -307,7 +308,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task State_Transition_To_ParentState()
+        public async Task State_Complete_With_Transition_To_State_Has_Substates()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
@@ -323,6 +324,76 @@ namespace Headway.Core.Tests
             Assert.AreEqual(StateStatus.InProgress, flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus);
             Assert.AreEqual(StateStatus.NotStarted, flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")), flow.ActiveState);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateException))]
+        public async Task State_Complete_Already_Completed()
+        {
+            // Arrange
+            var flow = FlowHelper.CreateFlow(2);
+
+            flow.Bootstrap();
+
+            flow.ActiveState.StateStatus = StateStatus.Completed;
+
+            try
+            {
+                // Act
+                await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Assert
+                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it's already {StateStatus.Completed}.", ex.Message);
+
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateException))]
+        public async Task State_Complete_SubState_Not_Completed()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap();
+
+            flow.ActiveState = flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"));
+            flow.ActiveState.StateStatus = StateStatus.InProgress;
+            
+            var rc = flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION"));
+            rc.StateStatus = StateStatus.InProgress;
+            
+            var rv = flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION"));
+            rv.StateStatus = StateStatus.NotStarted;
+
+            var joinedDescriptions = $"{rc.StateCode}={rc.StateStatus},{rv.StateCode}={rv.StateStatus}";
+
+            try
+            {
+                // Act
+                await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Assert
+                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because sub states not yet {StateStatus.Completed} : {joinedDescriptions}.", ex.Message);
+
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void State_Complete_Last_SubState()
+        {
+            // Arrange
+
+            // Act
+
+            //Assert
+
         }
     }
 }

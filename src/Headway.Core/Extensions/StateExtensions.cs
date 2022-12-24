@@ -18,7 +18,7 @@ namespace Headway.Core.Extensions
         {
             if(state.StateStatus.Equals(StateStatus.InProgress)) 
             {
-                throw new InvalidOperationException($"Can't initialize {state.StateStatus} because it's already {StateStatus.InProgress}.");
+                throw new StateException(state, $"Can't initialize {state.StateStatus} because it's already {StateStatus.InProgress}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
@@ -45,7 +45,7 @@ namespace Headway.Core.Extensions
         {
             if (state.StateStatus.Equals(StateStatus.Completed))
             {
-                throw new InvalidOperationException($"Can't complete {state.StateStatus} because it's already {StateStatus.Completed}.");
+                throw new StateException(state, $"Can't complete {state.StateCode} because it's already {StateStatus.Completed}.");
             }
 
             var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
@@ -54,7 +54,7 @@ namespace Headway.Core.Extensions
             {
                 var uncompletedSubStateDescriptions = uncompletedSubStates.Select(s => $"{s.StateCode}={s.StateStatus}");
                 var joinedDescriptions = string.Join(",", uncompletedSubStateDescriptions);
-                throw new FlowException(state, $"Can't complete {state.StateCode} because sub states not yet {StateStatus.Completed} : {joinedDescriptions}.");
+                throw new StateException(state, $"Can't complete {state.StateCode} because sub states not yet {StateStatus.Completed} : {joinedDescriptions}.");
             }
 
             State transitionState = null;
@@ -69,7 +69,7 @@ namespace Headway.Core.Extensions
 
                 if (transitionState == null)
                 {
-                    throw new FlowException(state, $"Can't complete {state.StateCode} because doesn't support transitioning to {transitionStateCode}.");
+                    throw new StateException(state, $"Can't complete {state.StateCode} because doesn't support transitioning to {transitionStateCode}.");
                 }
             }
 
@@ -91,7 +91,7 @@ namespace Headway.Core.Extensions
         {
             if (state.StateStatus.Equals(StateStatus.NotStarted))
             {
-                throw new InvalidOperationException($"Can't reset {state.StateStatus} because it's {StateStatus.NotStarted}.");
+                throw new StateException(state, $"Can't reset {state.StateStatus} because it's {StateStatus.NotStarted}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
@@ -133,7 +133,7 @@ namespace Headway.Core.Extensions
         {
             if(state.Configured)
             {
-                throw new InvalidOperationException($"{state.StateCode} has already been configured.");
+                throw new StateException(state, $"{state.StateCode} has already been configured.");
             }
 
             if (!string.IsNullOrWhiteSpace(state.ConfigureStateClass))
@@ -153,7 +153,7 @@ namespace Headway.Core.Extensions
 
                         if (type == null)
                         {
-                            throw new ArgumentNullException(nameof(state.ConfigureStateClass));
+                            throw new StateException(state, $"Can't resolve {state.ConfigureStateClass}");
                         }
 
                         var instance = (IConfigureState)Activator.CreateInstance(type);
