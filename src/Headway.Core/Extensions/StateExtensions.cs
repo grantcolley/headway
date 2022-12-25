@@ -116,10 +116,29 @@ namespace Headway.Core.Extensions
             state.StateStatus = default;
             state.Owner = default;
 
-            if (!string.IsNullOrWhiteSpace(transitionStateCode)
-                && !state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
+            if (!string.IsNullOrWhiteSpace(transitionStateCode))
             {
-                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
+                if (!state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
+                {
+                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
+                }
+
+                var resetState = state.Transitions.First(s => s.StateCode.Equals(transitionStateCode));
+
+                if(resetState.Position > state.Position)
+                {
+                    throw new StateException(state, $"Can't reset to {resetState.StateCode} (position {resetState.Position}) because it is positioned after {state.StateCode} (position {state.Position}).");
+                }
+
+                var resetStates = state.Flow.States.Where(
+                    s => s.Position >= resetState.Position && s.Position < state.Position).ToList();
+
+                foreach (var rs in resetStates.OrderByDescending(s => s.Position))
+                {
+                    await rs.ResestAsync().ConfigureAwait(false);
+                }
+
+                await resetState.InitialiseAsync().ConfigureAwait(false);
             }
         }
 
