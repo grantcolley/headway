@@ -70,7 +70,7 @@ namespace Headway.Core.Extensions
             if (!string.IsNullOrWhiteSpace(transitionStateCode)
                 && !state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
             {
-                throw new StateException(state, $"Can't complete {state.StateCode} because doesn't support transitioning to {transitionStateCode}.");
+                throw new StateException(state, $"Can't complete {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Complete).ConfigureAwait(false);
@@ -87,7 +87,7 @@ namespace Headway.Core.Extensions
 
                 if (transitionState == null)
                 {
-                    throw new StateException(state, $"Can't complete {state.StateCode} because doesn't support transitioning to {transitionStateCode}.");
+                    throw new StateException(state, $"Can't complete {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
                 }
             }
 
@@ -103,16 +103,24 @@ namespace Headway.Core.Extensions
             }
         }
 
-        public static async Task ResestAsync(this State state)
+        public static async Task ResestAsync(this State state, string transitionStateCode = "")
         {
-            if (state.StateStatus.Equals(StateStatus.NotStarted))
+            if (!string.IsNullOrWhiteSpace(transitionStateCode)
+                && !state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
             {
-                throw new StateException(state, $"Can't reset {state.StateStatus} because it's {StateStatus.NotStarted}.");
+                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
 
-            state.StateStatus = StateStatus.NotStarted;
+            state.StateStatus = default;
+            state.Owner = default;
+
+            if (!string.IsNullOrWhiteSpace(transitionStateCode)
+                && !state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
+            {
+                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
+            }
         }
 
         public static async Task ExecuteActionsAsync(this State state, StateActionType stateFunctionType)
