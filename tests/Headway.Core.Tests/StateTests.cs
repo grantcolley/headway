@@ -424,7 +424,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task Auto_Type_Route_To_Last_State()
+        public async Task Auto_Type_Runtime_ReRoute_To_Last_State()
         {
             // Arrange
             var flow = FlowHelper.CreateFlow(4);
