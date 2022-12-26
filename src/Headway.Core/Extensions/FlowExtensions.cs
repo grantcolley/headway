@@ -144,5 +144,19 @@ namespace Headway.Core.Extensions
                 flow.Configured = true;
             }
         }
+
+        public static void RecordHistory(this List<FlowHistory> history, State state)
+        {
+            history.Add(new FlowHistory
+            {
+                Flow = state.Flow,
+                StateCode = state.StateCode,
+                StateStatus = state.StateStatus,
+                Owner = state.Owner,
+                Ascendant = null,
+                Descendant = null,
+                Comment = string.Empty
+            });
+        }
     }
 }
