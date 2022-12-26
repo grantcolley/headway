@@ -145,10 +145,26 @@ namespace Headway.Core.Extensions
             }
         }
 
-        public static void RecordHistory(this List<FlowHistory> history, State state)
+        public static void RecordInitialise(this List<FlowHistory> history, State state)
+        {
+            history.RecordHistory(state, "Initialize");
+        }
+
+        public static void RecordCompleted(this List<FlowHistory> history, State state)
+        {
+            history.RecordHistory(state, "Completed");
+        }
+
+        public static void RecordReset(this List<FlowHistory> history, State state)
+        {
+            history.RecordHistory(state, "Reset");
+        }
+
+        public static void RecordHistory(this List<FlowHistory> history, State state, string eventname)
         {
             history.Add(new FlowHistory
             {
+                Event = eventname,
                 Flow = state.Flow,
                 StateCode = state.StateCode,
                 StateStatus = state.StateStatus,
