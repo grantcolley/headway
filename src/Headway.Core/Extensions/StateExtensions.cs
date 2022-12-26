@@ -32,6 +32,8 @@ namespace Headway.Core.Extensions
 
             state.StateStatus = StateStatus.InProgress;
 
+            state.Flow.History.RecordHistory(state);
+
             if(!state.SubStates.Any())
             {
                 if(state.Flow.ActiveState != state)
@@ -93,7 +95,9 @@ namespace Headway.Core.Extensions
 
             state.StateStatus = StateStatus.Completed;
 
-            if(transitionState != null)
+            state.Flow.History.RecordHistory(state);
+
+            if (transitionState != null)
             {
                 await transitionState.InitialiseAsync().ConfigureAwait(false);
             }
