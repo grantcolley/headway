@@ -13,6 +13,9 @@ namespace Headway.Core.Model
         public string StateCode { get; set; }
 
         [StringLength(50)]
+        public string Event { get; set; }
+
+        [StringLength(50)]
         public string Owner { get; set; }
 
         [StringLength(50)]
