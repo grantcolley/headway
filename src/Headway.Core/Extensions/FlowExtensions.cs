@@ -25,7 +25,7 @@ namespace Headway.Core.Extensions
             {
                 state.StateStatus = default;
                 state.Owner = default;
-                state.Comments = default;
+                state.Comment = default;
 
                 state.Flow = flow;
 
@@ -48,9 +48,9 @@ namespace Headway.Core.Extensions
 
             flow.Configure();
 
-            if(flow.ConfigureStatesDuringBootstrap)
+            if (flow.ConfigureStatesDuringBootstrap)
             {
-                foreach(var state in flow.States)
+                foreach (var state in flow.States)
                 {
                     state.Configure();
                 }
@@ -58,21 +58,12 @@ namespace Headway.Core.Extensions
 
             if (flow.History.Any())
             {
-                var lastIndex = flow.History.Count - 1;
-
-                for (int i = 0; i < lastIndex - 1; i++)
-                {
-                    var history = flow.History[i];
-
-                    var state = flow.StateDictionary[history.StateCode];
-                    state.StateStatus = history.StateStatus;
-                    state.Owner = history.Owner;
-
-                    if (i.Equals(lastIndex))
-                    {
-                        flow.ActiveState = state;
-                    }
-                }
+                var lastHistory = flow.History.Last();
+                var lastState = flow.StateDictionary[lastHistory.StateCode];
+                lastState.StateStatus = lastHistory.StateStatus;
+                lastState.Owner = lastHistory.Owner;
+                lastState.Comment = lastHistory.Comment;
+                flow.ActiveState = lastState;
             }
             else
             {
