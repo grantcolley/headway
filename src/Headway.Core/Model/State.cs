@@ -36,10 +36,6 @@ namespace Headway.Core.Model
         public string StateCode { get; set; }
 
         [Required]
-        [StringLength(150)]
-        public string ConfigureStateClass { get; set; }
-
-        [Required]
         [StringLength(50)]
         public string ParentStateCode { get; set; }
 
@@ -52,6 +48,9 @@ namespace Headway.Core.Model
 
         [StringLength(250)]
         public string TransitionStateCodes { get; set; }
+
+        [StringLength(150)]
+        public string ConfigureStateClass { get; set; }
 
         [NotMapped]
         [JsonIgnore]
@@ -72,6 +71,10 @@ namespace Headway.Core.Model
         [NotMapped]
         [JsonIgnore]
         public string Owner { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public string Comments { get; set; }
 
         [NotMapped]
         [JsonIgnore]
