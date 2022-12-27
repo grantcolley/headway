@@ -107,12 +107,13 @@ namespace Headway.Core.Extensions
             }
         }
 
-        public static async Task ResestAsync(this State state, string transitionStateCode = "")
+        public static async Task ResetAsync(this State state, string resetStateCode = "")
         {
-            if (!string.IsNullOrWhiteSpace(transitionStateCode)
-                && !state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
+            if (!string.IsNullOrWhiteSpace(resetStateCode)
+                && !state.Transitions.Any(s => s.StateCode.Equals(resetStateCode))
+                && !state.Flow.History.Any(h => h.StateCode.Equals(resetStateCode)))
             {
-                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
+                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support resetting back to {resetStateCode}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
@@ -120,26 +121,29 @@ namespace Headway.Core.Extensions
             state.StateStatus = default;
             state.Owner = default;
 
-            if (!string.IsNullOrWhiteSpace(transitionStateCode))
+            if (!string.IsNullOrWhiteSpace(resetStateCode))
             {
-                if (!state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
+                if (!state.Transitions.Any(s => s.StateCode.Equals(resetStateCode))
+                    && !state.Flow.History.Any(h => h.StateCode.Equals(resetStateCode)))
                 {
-                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
+                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support resetting back to {resetStateCode}.");
                 }
 
-                var resetState = state.Transitions.First(s => s.StateCode.Equals(transitionStateCode));
+                var resetState = state.Transitions.First(s => s.StateCode.Equals(resetStateCode));
 
                 if(resetState.Position > state.Position)
                 {
                     throw new StateException(state, $"Can't reset to {resetState.StateCode} (position {resetState.Position}) because it is positioned after {state.StateCode} (position {state.Position}).");
                 }
 
-                var resetStates = state.Flow.States.Where(
-                    s => s.Position >= resetState.Position && s.Position < state.Position).ToList();
+                var stateHistory = state.Flow.History;
+                var stateDictionary = state.Flow.StateDictionary;
+                var historyIndex = state.Flow.History.Count - 1;
 
-                foreach (var rs in resetStates.OrderByDescending(s => s.Position))
+                for (int i = historyIndex; i >= 0; i--)
                 {
-                    await rs.ResestAsync().ConfigureAwait(false);
+                    var rs = stateDictionary[stateHistory[i].StateCode];
+                    await rs.ResetAsync().ConfigureAwait(false);
                 }
 
                 await resetState.InitialiseAsync().ConfigureAwait(false);
