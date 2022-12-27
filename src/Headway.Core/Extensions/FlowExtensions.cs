@@ -25,6 +25,7 @@ namespace Headway.Core.Extensions
             {
                 state.StateStatus = default;
                 state.Owner = default;
+                state.Comments = default;
 
                 state.Flow = flow;
 
