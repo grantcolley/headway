@@ -72,7 +72,7 @@ namespace Headway.Core.Model
 
         [NotMapped]
         [JsonIgnore]
-        public string Comments { get; set; }
+        public string Comment { get; set; }
 
         [NotMapped]
         [JsonIgnore]
