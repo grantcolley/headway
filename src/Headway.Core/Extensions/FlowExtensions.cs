@@ -10,7 +10,7 @@ namespace Headway.Core.Extensions
     public static class FlowExtensions
     {
         private static readonly IDictionary<string, FlowConfiguration> flowConfigurationCache = new Dictionary<string, FlowConfiguration>();
-        private static object flowConfigurationCacheLock = new object();
+        private static readonly object flowConfigurationCacheLock = new();
 
         public static void Bootstrap(this Flow flow)
         {
@@ -161,8 +161,6 @@ namespace Headway.Core.Extensions
                 StateCode = state.StateCode,
                 StateStatus = state.StateStatus,
                 Owner = state.Owner,
-                Ascendant = null,
-                Descendant = null,
                 Comment = string.Empty
             });
         }
