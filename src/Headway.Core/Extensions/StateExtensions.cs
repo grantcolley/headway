@@ -23,18 +23,18 @@ namespace Headway.Core.Extensions
 
             await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
-            if (state.SubStates.Any()) 
+            state.StateStatus = StateStatus.InProgress;
+
+            state.Flow.History.RecordInitialise(state);
+
+            if (state.SubStates.Any())
             {
                 var subState = state.SubStates.FirstState();
 
                 await subState.InitialiseAsync().ConfigureAwait(false);
             }
 
-            state.StateStatus = StateStatus.InProgress;
-
-            state.Flow.History.RecordInitialise(state);
-
-            if(!state.SubStates.Any())
+            if (!state.SubStates.Any())
             {
                 if(state.Flow.ActiveState != state)
                 {
@@ -116,10 +116,11 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support resetting back to {resetStateCode}.");
             }
 
-            await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
-
             state.StateStatus = default;
+            state.Comment = default;
             state.Owner = default;
+
+            await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
 
             if (!string.IsNullOrWhiteSpace(resetStateCode))
             {
