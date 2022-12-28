@@ -8,7 +8,7 @@ namespace Headway.Core.Tests.Helpers
     {
         public void Configure(State state)
         {
-            state.Context = null;
+            state.Comment = default;
             state.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Complete, ActionAsync = StateAction });
         }
 
@@ -18,8 +18,8 @@ namespace Headway.Core.Tests.Helpers
             var lastState = state.Flow.States.Single(s => s.Position.Equals(lastStatePosition));
             state.Transitions.Clear();
             state.Transitions.Add(lastState);
-            state.Context = $"Route {state.StateCode} to {lastState.StateCode}";
-            lastState.Context = $"Routed from {state.StateCode}";
+            state.Comment = $"Route {state.StateCode} to {lastState.StateCode}";
+            lastState.Comment = $"Routed from {state.StateCode}";
             return Task.CompletedTask;
         }
     }
