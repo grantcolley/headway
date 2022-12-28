@@ -18,12 +18,6 @@ namespace Headway.Core.Model
         [StringLength(50)]
         public string Owner { get; set; }
 
-        [StringLength(50)]
-        public string Ascendant { get; set; }
-
-        [StringLength(50)]
-        public string Descendant { get; set; }
-
         [StringLength(250)]
         public string Comment { get; set; }
     }
