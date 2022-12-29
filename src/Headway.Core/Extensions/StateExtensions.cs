@@ -5,6 +5,7 @@ using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 
 namespace Headway.Core.Extensions
@@ -109,6 +110,12 @@ namespace Headway.Core.Extensions
 
         public static async Task ResetAsync(this State state, string resetStateCode = "")
         {
+            if(string.IsNullOrWhiteSpace(resetStateCode)
+                && state.StateStatus.Equals(StateStatus.NotStarted))
+            {
+                throw new StateException(state, $"Can't reset {state.StateCode} because it is {StateStatus.NotStarted}.");
+            }
+
             if (!string.IsNullOrWhiteSpace(resetStateCode)
                 && !state.Transitions.Any(s => s.StateCode.Equals(resetStateCode))
                 && !state.Flow.History.Any(h => h.StateCode.Equals(resetStateCode)))
@@ -116,11 +123,14 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support resetting back to {resetStateCode}.");
             }
 
-            state.StateStatus = default;
-            state.Comment = default;
-            state.Owner = default;
-
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
+
+            state.StateStatus = default;
+
+            state.Flow.History.RecordReset(state);
+
+            state.Owner = default;
+            state.Comment = default;
 
             if (!string.IsNullOrWhiteSpace(resetStateCode))
             {
@@ -137,17 +147,28 @@ namespace Headway.Core.Extensions
                     throw new StateException(state, $"Can't reset to {resetState.StateCode} (position {resetState.Position}) because it is positioned after {state.StateCode} (position {state.Position}).");
                 }
 
-                var stateHistory = state.Flow.History;
+                var distinctStateHistory = state.Flow.History.Select(h => h.StateCode).Distinct().ToArray();
                 var stateDictionary = state.Flow.StateDictionary;
-                var historyIndex = state.Flow.History.Count - 1;
+                var distinctHistoryIndex = distinctStateHistory.Count() - 1;
 
-                for (int i = historyIndex; i >= 0; i--)
+                for (int i = distinctHistoryIndex; i >= 0; i--)
                 {
-                    var rs = stateDictionary[stateHistory[i].StateCode];
-                    await rs.ResetAsync().ConfigureAwait(false);
-                }
+                    var rs = stateDictionary[distinctStateHistory[i]];
 
-                await resetState.InitialiseAsync().ConfigureAwait(false);
+                    if (distinctHistoryIndex.Equals(i)
+                        && rs.StateCode.Equals(state.StateCode))
+                    {
+                        continue;
+                    }
+
+                    await rs.ResetAsync().ConfigureAwait(false);
+
+                    if (rs.Equals(resetState))
+                    {
+                        state.Flow.ActiveState = resetState;
+                        break;
+                    }
+                }
             }
         }
 
