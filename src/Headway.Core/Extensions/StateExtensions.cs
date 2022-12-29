@@ -75,7 +75,7 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't complete {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
             }
 
-            await state.ExecuteActionsAsync(StateActionType.Complete).ConfigureAwait(false);
+            await state.ExecuteActionsAsync(StateActionType.Completed).ConfigureAwait(false);
 
             State transitionState = null;
 
