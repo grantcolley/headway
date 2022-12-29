@@ -392,7 +392,7 @@ namespace Headway.Core.Tests
             await flow.ActiveState.CompleteAsync(flow.States[1].StateCode).ConfigureAwait(false);
 
             // Assert
-            Assert.AreEqual($"1 Complete {flow.States[0].StateCode}; 2 Complete {flow.States[0].StateCode}", flow.States[0].Comment);
+            Assert.AreEqual($"1 Completed {flow.States[0].StateCode}; 2 Completed {flow.States[0].StateCode}", flow.States[0].Comment);
             Assert.AreEqual(StateStatus.Completed, flow.States[0].StateStatus);
             Assert.AreEqual(StateStatus.InProgress, flow.States[1].StateStatus);
             Assert.AreEqual(flow.States[1], flow.ActiveState);
@@ -454,10 +454,12 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task History_Record_Transitions()
+        public async Task History_State_Has_Actions_Record_Transitions()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -472,44 +474,62 @@ namespace Headway.Core.Tests
 
             Assert.AreEqual("Initialize", flow.History[0].Event);
             Assert.AreEqual(flow.States[0].StateCode, flow.History[0].StateCode);
+            Assert.AreEqual(flow.States[0].Owner, flow.History[0].Owner);
+            Assert.AreEqual($"{flow.History[0].Event} {flow.States[0].StateCode}", flow.History[0].Comment);
             Assert.AreEqual(StateStatus.InProgress, flow.History[0].StateStatus);
 
             Assert.AreEqual(StateStatus.Completed, flow.States[0].StateStatus);
             Assert.AreEqual("Completed", flow.History[1].Event);
             Assert.AreEqual(flow.States[0].StateCode, flow.History[1].StateCode);
             Assert.AreEqual(flow.States[0].StateStatus, flow.History[1].StateStatus);
+            Assert.AreEqual(flow.States[0].Owner, flow.History[1].Owner);
+            Assert.AreEqual($"{flow.History[1].Event} {flow.States[0].StateCode}", flow.History[1].Comment);
 
             Assert.AreEqual("Initialize", flow.History[2].Event);
             Assert.AreEqual(flow.States[1].StateCode, flow.History[2].StateCode);
+            Assert.AreEqual(flow.States[1].Owner, flow.History[2].Owner);
+            Assert.AreEqual($"{flow.History[2].Event} {flow.States[1].StateCode}", flow.History[2].Comment);
             Assert.AreEqual(StateStatus.InProgress, flow.History[2].StateStatus);
 
             Assert.AreEqual("Initialize", flow.History[3].Event);
             Assert.AreEqual(flow.States[2].StateCode, flow.History[3].StateCode);
+            Assert.AreEqual(flow.States[2].Owner, flow.History[3].Owner);
+            Assert.AreEqual($"{flow.History[3].Event} {flow.States[2].StateCode}", flow.History[3].Comment);
             Assert.AreEqual(StateStatus.InProgress, flow.History[3].StateStatus);
 
             Assert.AreEqual(StateStatus.Completed, flow.States[2].StateStatus);
             Assert.AreEqual("Completed", flow.History[4].Event);
             Assert.AreEqual(flow.States[2].StateCode, flow.History[4].StateCode);
             Assert.AreEqual(flow.States[2].StateStatus, flow.History[4].StateStatus);
+            Assert.AreEqual(flow.States[2].Owner, flow.History[4].Owner);
+            Assert.AreEqual($"{flow.History[4].Event} {flow.States[2].StateCode}", flow.History[4].Comment);
 
             Assert.AreEqual("Initialize", flow.History[5].Event);
             Assert.AreEqual(flow.States[3].StateCode, flow.History[5].StateCode);
+            Assert.AreEqual(flow.States[3].Owner, flow.History[5].Owner);
+            Assert.AreEqual($"{flow.History[5].Event} {flow.States[3].StateCode}", flow.History[5].Comment);
             Assert.AreEqual(StateStatus.InProgress, flow.History[5].StateStatus);
 
             Assert.AreEqual(StateStatus.Completed, flow.States[3].StateStatus);
             Assert.AreEqual("Completed", flow.History[6].Event);
             Assert.AreEqual(flow.States[3].StateCode, flow.History[6].StateCode);
             Assert.AreEqual(flow.States[3].StateStatus, flow.History[6].StateStatus);
+            Assert.AreEqual(flow.States[3].Owner, flow.History[6].Owner);
+            Assert.AreEqual($"{flow.History[6].Event} {flow.States[3].StateCode}", flow.History[6].Comment);
 
             Assert.AreEqual(StateStatus.Completed, flow.States[1].StateStatus);
             Assert.AreEqual("Completed", flow.History[7].Event);
             Assert.AreEqual(flow.States[1].StateCode, flow.History[7].StateCode);
             Assert.AreEqual(flow.States[1].StateStatus, flow.History[7].StateStatus);
+            Assert.AreEqual(flow.States[1].Owner, flow.History[7].Owner);
+            Assert.AreEqual($"{flow.History[7].Event} {flow.States[1].StateCode}", flow.History[7].Comment);
 
             Assert.AreEqual(StateStatus.InProgress, flow.States[4].StateStatus);
             Assert.AreEqual("Initialize", flow.History[8].Event);
             Assert.AreEqual(flow.States[4].StateCode, flow.History[8].StateCode);
             Assert.AreEqual(flow.States[4].StateStatus, flow.History[8].StateStatus);
+            Assert.AreEqual(flow.States[4].Owner, flow.History[8].Owner);
+            Assert.AreEqual($"{flow.History[8].Event} {flow.States[4].StateCode}", flow.History[8].Comment);
 
             Assert.AreEqual(flow.ActiveState, flow.States[4]);
         }
@@ -577,6 +597,26 @@ namespace Headway.Core.Tests
 
                 throw;
             }
+        }
+
+        [TestMethod]
+        public async Task Reset_Transition_Back_To_Root()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap();
+
+            flow.ActiveState.StateStatus = StateStatus.InProgress;
+            flow.ActiveState.Comment = "Hello World!";
+            flow.ActiveState.Owner = "state owner";
+
+            // Act
+
+
+            //Assert
+
+
         }
 
         [TestMethod]
