@@ -161,7 +161,7 @@ namespace Headway.Core.Extensions
                 StateCode = state.StateCode,
                 StateStatus = state.StateStatus,
                 Owner = state.Owner,
-                Comment = string.Empty
+                Comment = state.Comment
             });
         }
     }
