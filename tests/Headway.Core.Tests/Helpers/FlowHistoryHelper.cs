@@ -1,5 +1,4 @@
 ﻿using Headway.Core.Enums;
-using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 
@@ -20,15 +19,8 @@ namespace Headway.Core.Tests.Helpers
 
         private Task StateAction(State state, StateActionType stateActionType, int order)
         {
-            switch (stateActionType)
-            {
-                case StateActionType.Initialize:
-                case StateActionType.Completed:
-                    state.Owner = Environment.UserName;
-                    state.Comment = $"{stateActionType} {state.StateCode}";
-                    break;
-            }
-
+            state.Owner = Environment.UserName;
+            state.Comment = $"{stateActionType} {state.StateCode}";
             return Task.CompletedTask;
         }
     }
