@@ -21,8 +21,7 @@ namespace Headway.Core.Tests.Helpers
 
         public void Configure(Flow flow)
         {
-            var states = flow.StateDictionary.Values.ToList();
-            var state = states.FirstState();
+            var state = flow.States.FirstState();
 
             state.Comment = default;
             state.StateActions.Add(new StateAction { Order = 2, StateActionType = StateActionType.Initialize, ActionAsync = StateAction });
