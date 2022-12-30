@@ -89,8 +89,8 @@ namespace Headway.Core.Tests
             // Assert sample of transition states
             Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"))));
             Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"))));
+            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Regressions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE"))));
+            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Regressions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"))));
             Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_REVIEW"))));
         }
 
