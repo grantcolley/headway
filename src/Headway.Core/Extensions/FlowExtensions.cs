@@ -44,6 +44,9 @@ namespace Headway.Core.Extensions
 
                 state.Transitions.Clear();
                 state.Transitions.AddRange(flow.ToStateList(state.TransitionStateCodesList));
+
+                state.Regressions.Clear();
+                state.Regressions.AddRange(flow.ToStateList(state.RegressionStateCodesList));
             }
 
             flow.Configure();
