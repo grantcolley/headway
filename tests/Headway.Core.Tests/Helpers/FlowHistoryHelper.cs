@@ -21,6 +21,23 @@ namespace Headway.Core.Tests.Helpers
         {
             state.Owner = Environment.UserName;
             state.Comment = $"{stateActionType} {state.StateCode}";
+
+            if(stateActionType.Equals(StateActionType.Completed))
+            {
+                if(state.StateCode.Equals("REDRESS_VALIDATION"))
+                {
+                    state.TransitionStateCode = "PAYMENT_GENERATION";
+                }
+            }
+
+            if(stateActionType.Equals(StateActionType.Reset))
+            {
+                if(state.StateCode.Equals("PAYMENT_GENERATION"))
+                {
+                    state.RegressionStateCode = "REDRESS_REVIEW";
+                }
+            }
+
             return Task.CompletedTask;
         }
     }
