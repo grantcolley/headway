@@ -315,6 +315,32 @@ namespace Headway.Core.Tests
 
         [TestMethod]
         [ExpectedException(typeof(StateException))]
+        public async Task Complete_Invalid_Transition_StateCode()
+        {
+            // Arrange
+            var flow = FlowHelper.CreateFlow(2);
+
+            flow.Bootstrap();
+
+            flow.ActiveState.StateStatus = StateStatus.InProgress;
+            flow.ActiveState.TransitionStateCode = "ABC";
+
+            try
+            {
+                // Act
+                await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            }
+            catch (StateException ex)
+            {
+                // Assert
+                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it doesn't support transitioning to {flow.ActiveState.TransitionStateCode}.", ex.Message);
+
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateException))]
         public async Task Complete_SubState_Not_Completed()
         {
             // Arrange
@@ -535,7 +561,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task Reset_To_Root_State_Assert_History()
+        public async Task Regression_To_Root_State_Assert_History()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
@@ -646,6 +672,136 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
+        public async Task Regression_To_Previous_State_Assert_History()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
+
+            flow.Bootstrap();
+
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+
+            Assert.AreEqual(flow.ActiveState, flow.States[11]);
+
+            // Act
+            await flow.ActiveState.ResetAsync().ConfigureAwait(false);
+
+            var x = string.Join(Environment.NewLine, flow.History.Select(s => s.Comment));
+
+            //Assert
+            Assert.AreEqual(18, flow.History.Count);
+
+            Assert.AreEqual("Initialize", flow.History[0].Event);
+            Assert.AreEqual(flow.States[0].StateCode, flow.History[0].StateCode);
+            Assert.AreEqual($"{flow.History[0].Event} {flow.States[0].StateCode}", flow.History[0].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[0].StateStatus);
+
+            Assert.AreEqual("Completed", flow.History[1].Event);
+            Assert.AreEqual(flow.States[0].StateCode, flow.History[1].StateCode);
+            Assert.AreEqual($"{flow.History[1].Event} {flow.States[0].StateCode}", flow.History[1].Comment);
+            Assert.AreEqual(StateStatus.Completed, flow.History[1].StateStatus);
+
+            Assert.AreEqual("Initialize", flow.History[2].Event);
+            Assert.AreEqual(flow.States[1].StateCode, flow.History[2].StateCode);
+            Assert.AreEqual($"{flow.History[2].Event} {flow.States[1].StateCode}", flow.History[2].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[2].StateStatus);
+
+            Assert.AreEqual("Initialize", flow.History[3].Event);
+            Assert.AreEqual(flow.States[2].StateCode, flow.History[3].StateCode);
+            Assert.AreEqual($"{flow.History[3].Event} {flow.States[2].StateCode}", flow.History[3].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[3].StateStatus);
+
+            Assert.AreEqual("Completed", flow.History[4].Event);
+            Assert.AreEqual(flow.States[2].StateCode, flow.History[4].StateCode);
+            Assert.AreEqual($"{flow.History[4].Event} {flow.States[2].StateCode}", flow.History[4].Comment);
+            Assert.AreEqual(StateStatus.Completed, flow.History[4].StateStatus);
+
+            Assert.AreEqual("Initialize", flow.History[5].Event);
+            Assert.AreEqual(flow.States[3].StateCode, flow.History[5].StateCode);
+            Assert.AreEqual($"{flow.History[5].Event} {flow.States[3].StateCode}", flow.History[5].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[5].StateStatus);
+
+            Assert.AreEqual("Completed", flow.History[6].Event);
+            Assert.AreEqual(flow.States[3].StateCode, flow.History[6].StateCode);
+            Assert.AreEqual($"{flow.History[6].Event} {flow.States[3].StateCode}", flow.History[6].Comment);
+            Assert.AreEqual(StateStatus.Completed, flow.History[6].StateStatus);
+
+            Assert.AreEqual("Completed", flow.History[7].Event);
+            Assert.AreEqual(flow.States[1].StateCode, flow.History[7].StateCode);
+            Assert.AreEqual($"{flow.History[7].Event} {flow.States[1].StateCode}", flow.History[7].Comment);
+            Assert.AreEqual(StateStatus.Completed, flow.History[7].StateStatus);
+
+            Assert.AreEqual("Initialize", flow.History[8].Event);
+            Assert.AreEqual(flow.States[4].StateCode, flow.History[8].StateCode);
+            Assert.AreEqual($"{flow.History[8].Event} {flow.States[4].StateCode}", flow.History[8].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[8].StateStatus);
+
+            Assert.AreEqual("Completed", flow.History[9].Event);
+            Assert.AreEqual(flow.States[4].StateCode, flow.History[9].StateCode);
+            Assert.AreEqual($"{flow.History[9].Event} {flow.States[4].StateCode}", flow.History[9].Comment);
+            Assert.AreEqual(StateStatus.Completed, flow.History[9].StateStatus);
+
+            Assert.AreEqual("Initialize", flow.History[10].Event);
+            Assert.AreEqual(flow.States[5].StateCode, flow.History[10].StateCode);
+            Assert.AreEqual($"{flow.History[10].Event} {flow.States[5].StateCode}", flow.History[10].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[10].StateStatus);
+
+            Assert.AreEqual("Completed", flow.History[11].Event);
+            Assert.AreEqual(flow.States[5].StateCode, flow.History[11].StateCode);
+            Assert.AreEqual($"{flow.History[11].Event} {flow.States[5].StateCode}", flow.History[11].Comment);
+            Assert.AreEqual(StateStatus.Completed, flow.History[11].StateStatus);
+
+            Assert.AreEqual("Initialize", flow.History[12].Event);
+            Assert.AreEqual(flow.States[6].StateCode, flow.History[12].StateCode);
+            Assert.AreEqual($"{flow.History[12].Event} {flow.States[6].StateCode}", flow.History[12].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[12].StateStatus);
+
+            Assert.AreEqual("Completed", flow.History[13].Event);
+            Assert.AreEqual(flow.States[6].StateCode, flow.History[13].StateCode);
+            Assert.AreEqual($"{flow.History[13].Event} {flow.States[6].StateCode}", flow.History[13].Comment);
+            Assert.AreEqual(StateStatus.Completed, flow.History[13].StateStatus);
+
+
+            Assert.AreEqual("Initialize", flow.History[14].Event);
+            Assert.AreEqual(flow.States[11].StateCode, flow.History[14].StateCode);
+            Assert.AreEqual($"{flow.History[14].Event} {flow.States[11].StateCode}", flow.History[14].Comment);
+            Assert.AreEqual(StateStatus.InProgress, flow.History[14].StateStatus);
+
+            Assert.AreEqual("Reset", flow.History[15].Event);
+            Assert.AreEqual(Environment.UserName, flow.History[15].Owner);
+            Assert.AreEqual($"{flow.History[15].Event} {flow.States[11].StateCode}", flow.History[15].Comment);
+            Assert.IsNull(flow.States[11].Owner);
+            Assert.IsNull(flow.States[11].Comment);
+            Assert.AreEqual(flow.States[11].StateStatus, flow.History[15].StateStatus);
+            Assert.AreEqual(StateStatus.NotStarted, flow.States[11].StateStatus);
+
+            Assert.AreEqual("Reset", flow.History[16].Event);
+            Assert.AreEqual(Environment.UserName, flow.History[16].Owner);
+            Assert.AreEqual($"{flow.History[16].Event} {flow.States[6].StateCode}", flow.History[16].Comment);
+            Assert.IsNull(flow.States[6].Owner);
+            Assert.IsNull(flow.States[6].Comment);
+            Assert.AreEqual(flow.States[6].StateStatus, flow.History[16].StateStatus);
+            Assert.AreEqual(StateStatus.NotStarted, flow.States[6].StateStatus);
+
+            Assert.AreEqual("Reset", flow.History[17].Event);
+            Assert.AreEqual(Environment.UserName, flow.History[17].Owner);
+            Assert.AreEqual($"{flow.History[17].Event} {flow.States[5].StateCode}", flow.History[17].Comment);
+            Assert.IsNull(flow.States[5].Owner);
+            Assert.IsNull(flow.States[5].Comment);
+            Assert.AreEqual(flow.States[5].StateStatus, flow.History[17].StateStatus);
+            Assert.AreEqual(StateStatus.NotStarted, flow.States[5].StateStatus);
+
+            Assert.AreEqual(flow.ActiveState, flow.States[5]);
+        }
+
+        [TestMethod]
         public async Task Reset_No_Transition()
         {
             // Arrange
@@ -707,7 +863,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't reset {flow.ActiveState.StateCode} because it doesn't support resetting back to {resetStateCode}.", ex.Message);
+                Assert.AreEqual($"Can't reset {flow.ActiveState.StateCode} because it doesn't support regressing back to {resetStateCode}.", ex.Message);
 
                 throw;
             }
