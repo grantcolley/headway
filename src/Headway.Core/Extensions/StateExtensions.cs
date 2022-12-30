@@ -5,7 +5,6 @@ using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 
 namespace Headway.Core.Extensions
@@ -70,23 +69,28 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't complete {state.StateCode} because sub states not yet {StateStatus.Completed} : {joinedDescriptions}.");
             }
 
-            if (!string.IsNullOrWhiteSpace(transitionStateCode)
-                && !state.Transitions.Any(s => s.StateCode.Equals(transitionStateCode)))
+            if (!string.IsNullOrWhiteSpace(transitionStateCode))
             {
-                throw new StateException(state, $"Can't complete {state.StateCode} because it doesn't support transitioning to {transitionStateCode}.");
+                state.TransitionStateCode = transitionStateCode;
+            }
+
+            if (!string.IsNullOrWhiteSpace(state.TransitionStateCode)
+                && !state.Transitions.Any(s => s.StateCode.Equals(state.TransitionStateCode)))
+            {
+                throw new StateException(state, $"Can't complete {state.StateCode} because it doesn't support transitioning to {state.TransitionStateCode}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Completed).ConfigureAwait(false);
 
             State transitionState = null;
 
-            if (string.IsNullOrWhiteSpace(transitionStateCode))
+            if (string.IsNullOrWhiteSpace(state.TransitionStateCode))
             {
                 transitionState = state.Transitions.FirstOrDefault();
             }
             else
             {
-                transitionState = state.Transitions.FirstOrDefault(s => s.StateCode.Equals(transitionStateCode));
+                transitionState = state.Transitions.FirstOrDefault(s => s.StateCode.Equals(state.TransitionStateCode));
 
                 if (transitionState == null)
                 {
@@ -116,11 +120,16 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't reset {state.StateCode} because it is {StateStatus.NotStarted}.");
             }
 
-            if (!string.IsNullOrWhiteSpace(resetStateCode)
-                && !state.Transitions.Any(s => s.StateCode.Equals(resetStateCode))
-                && !state.Flow.History.Any(h => h.StateCode.Equals(resetStateCode)))
+            if (!string.IsNullOrWhiteSpace(resetStateCode))
             {
-                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support resetting back to {resetStateCode}.");
+                state.RegressionStateCode = resetStateCode;
+            }
+
+            if (!string.IsNullOrWhiteSpace(state.RegressionStateCode)
+                && !state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
+                && !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
+            {
+                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {resetStateCode}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
@@ -132,19 +141,19 @@ namespace Headway.Core.Extensions
             state.Owner = default;
             state.Comment = default;
 
-            if (!string.IsNullOrWhiteSpace(resetStateCode))
+            if (!string.IsNullOrWhiteSpace(state.RegressionStateCode))
             {
-                if (!state.Transitions.Any(s => s.StateCode.Equals(resetStateCode))
-                    && !state.Flow.History.Any(h => h.StateCode.Equals(resetStateCode)))
+                if (!state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
+                    && !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
                 {
-                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support resetting back to {resetStateCode}.");
+                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {resetStateCode}.");
                 }
 
-                var resetState = state.Transitions.First(s => s.StateCode.Equals(resetStateCode));
+                var regressionState = state.Regressions.First(s => s.StateCode.Equals(state.RegressionStateCode));
 
-                if(resetState.Position > state.Position)
+                if(regressionState.Position > state.Position)
                 {
-                    throw new StateException(state, $"Can't reset to {resetState.StateCode} (position {resetState.Position}) because it is positioned after {state.StateCode} (position {state.Position}).");
+                    throw new StateException(state, $"Can't regress to {regressionState.StateCode} (position {regressionState.Position}) because it is positioned after {state.StateCode} (position {state.Position}).");
                 }
 
                 var distinctStateHistory = state.Flow.History.Select(h => h.StateCode).Distinct().ToArray();
@@ -163,9 +172,9 @@ namespace Headway.Core.Extensions
 
                     await rs.ResetAsync().ConfigureAwait(false);
 
-                    if (rs.Equals(resetState))
+                    if (rs.Equals(regressionState))
                     {
-                        state.Flow.ActiveState = resetState;
+                        state.Flow.ActiveState = regressionState;
                         break;
                     }
                 }
