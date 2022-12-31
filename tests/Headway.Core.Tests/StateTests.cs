@@ -71,7 +71,7 @@ namespace Headway.Core.Tests
 
             flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
 
-            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
+            flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -97,7 +97,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
+            flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -160,7 +160,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
+            flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -184,7 +184,7 @@ namespace Headway.Core.Tests
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
             flow.ConfigureStatesDuringBootstrap = true;
-            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
+            flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
             flow.States.FirstState().ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
@@ -485,7 +485,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
+            flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -566,7 +566,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
+            flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -677,7 +677,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
-            flow.ConfigureFlowClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
+            flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHistoryHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -692,8 +692,6 @@ namespace Headway.Core.Tests
 
             // Act
             await flow.ActiveState.ResetAsync().ConfigureAwait(false);
-
-            var x = string.Join(Environment.NewLine, flow.History.Select(s => s.Comment));
 
             //Assert
             Assert.AreEqual(18, flow.History.Count);
