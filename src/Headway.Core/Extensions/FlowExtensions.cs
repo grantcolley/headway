@@ -95,29 +95,29 @@ namespace Headway.Core.Extensions
 
         public static void Configure(this Flow flow)
         {
-            if (flow.Configured)
+            if (flow.ActionsConfigured)
             {
                 throw new FlowException(flow, $"{flow.Name} has already been configured.");
             }
 
-            if (!string.IsNullOrWhiteSpace(flow.ConfigureFlowClass))
+            if (!string.IsNullOrWhiteSpace(flow.ActionConfigurationClass))
             {
                 FlowConfiguration flowConfiguration = null;
 
                 lock (flowConfigurationCacheLock)
                 {
                     if (flowConfigurationCache.TryGetValue(
-                        flow.ConfigureFlowClass, out FlowConfiguration existingFlowConfiguration))
+                        flow.ActionConfigurationClass, out FlowConfiguration existingFlowConfiguration))
                     {
                         flowConfiguration = existingFlowConfiguration;
                     }
                     else
                     {
-                        var type = Type.GetType(flow.ConfigureFlowClass);
+                        var type = Type.GetType(flow.ActionConfigurationClass);
 
                         if (type == null)
                         {
-                            throw new FlowException(flow, $"Can't resolve {flow.ConfigureFlowClass}");
+                            throw new FlowException(flow, $"Can't resolve {flow.ActionConfigurationClass}");
                         }
 
                         var instance = (IConfigureFlow)Activator.CreateInstance(type);
@@ -130,13 +130,13 @@ namespace Headway.Core.Extensions
                             MethodInfo = methodInfo
                         };
 
-                        flowConfigurationCache.Add(flow.ConfigureFlowClass, flowConfiguration);
+                        flowConfigurationCache.Add(flow.ActionConfigurationClass, flowConfiguration);
                     }
                 }
 
                 flowConfiguration.Configure(flow);
 
-                flow.Configured = true;
+                flow.ActionsConfigured = true;
             }
         }
 
