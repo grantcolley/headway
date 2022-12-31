@@ -51,7 +51,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = FlowHelper.CreateFlow(2);
 
-            flow.ConfigureFlowClass = "Invalid ConfigureFlowClass";
+            flow.ActionConfigurationClass = "Invalid ConfigureFlowClass";
 
             try
             {
@@ -61,7 +61,7 @@ namespace Headway.Core.Tests
             catch (FlowException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't resolve {flow.ConfigureFlowClass}", ex.Message);
+                Assert.AreEqual($"Can't resolve {flow.ActionConfigurationClass}", ex.Message);
 
                 throw;
             }
@@ -92,16 +92,6 @@ namespace Headway.Core.Tests
             Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Regressions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE"))));
             Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Regressions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"))));
             Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_REVIEW"))));
-        }
-
-        [TestMethod]
-        public void Bootstrap_With_History()
-        {
-            // Arrange
-
-            // Act
-
-            // Assert
         }
     }
 }
