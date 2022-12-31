@@ -112,24 +112,24 @@ namespace Headway.Core.Extensions
             }
         }
 
-        public static async Task ResetAsync(this State state, string resetStateCode = "")
+        public static async Task ResetAsync(this State state, string regressStateCode = "")
         {
-            if(string.IsNullOrWhiteSpace(resetStateCode)
+            if(string.IsNullOrWhiteSpace(regressStateCode)
                 && state.StateStatus.Equals(StateStatus.NotStarted))
             {
                 throw new StateException(state, $"Can't reset {state.StateCode} because it is {StateStatus.NotStarted}.");
             }
 
-            if (!string.IsNullOrWhiteSpace(resetStateCode))
+            if (!string.IsNullOrWhiteSpace(regressStateCode))
             {
-                state.RegressionStateCode = resetStateCode;
+                state.RegressionStateCode = regressStateCode;
             }
 
             if (!string.IsNullOrWhiteSpace(state.RegressionStateCode)
                 && !state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
                 && !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
             {
-                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {resetStateCode}.");
+                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {regressStateCode}.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
@@ -146,7 +146,7 @@ namespace Headway.Core.Extensions
                 if (!state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
                     && !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
                 {
-                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {resetStateCode}.");
+                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {regressStateCode}.");
                 }
 
                 var regressionState = state.Regressions.First(s => s.StateCode.Equals(state.RegressionStateCode));
