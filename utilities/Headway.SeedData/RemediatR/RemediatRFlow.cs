@@ -88,7 +88,6 @@ namespace Headway.SeedData.RemediatR
             var flow = new Flow
             {
                 Name = "RemediatR",
-                Model = "RemediatR.Core.Model.Redress, RemediatR.Core", //typeof(Redress).Name,
                 Permissions = $"{RemediatRAuthorisation.REDRESS_READ}",
                 Context = new Redress()
             };
