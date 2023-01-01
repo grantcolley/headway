@@ -119,7 +119,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.ActiveState.ConfigureStateClass = "Invalid ConfigureStateClass";
+            flow.ActiveState.ActionConfigurationClass = "Invalid ConfigureStateClass";
 
             try
             {
@@ -129,7 +129,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't resolve {flow.ActiveState.ConfigureStateClass}", ex.Message);
+                Assert.AreEqual($"Can't resolve {flow.ActiveState.ActionConfigurationClass}", ex.Message);
 
                 throw;
             }
@@ -143,7 +143,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.ActiveState.ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+            flow.ActiveState.ActionConfigurationClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
 
             // Act
             await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
@@ -164,7 +164,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.ActiveState.ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+            flow.ActiveState.ActionConfigurationClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
 
             var activeStateComment = $"1 Initialize {flow.ActiveState.StateCode}; 2 Initialize {flow.ActiveState.StateCode}; 3 Initialize {flow.ActiveState.StateCode}; 4 Initialize {flow.ActiveState.StateCode}";
 
@@ -185,7 +185,7 @@ namespace Headway.Core.Tests
 
             flow.ConfigureStatesDuringBootstrap = true;
             flow.ActionConfigurationClass = "Headway.Core.Tests.Helpers.FlowHelper, Headway.Core.Tests";
-            flow.States.FirstState().ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+            flow.States.FirstState().ActionConfigurationClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
@@ -412,7 +412,7 @@ namespace Headway.Core.Tests
             flow.Bootstrap();
 
             flow.ActiveState.StateStatus = StateStatus.InProgress;
-            flow.ActiveState.ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+            flow.ActiveState.ActionConfigurationClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
 
             // Act
             await flow.ActiveState.CompleteAsync(flow.States[1].StateCode).ConfigureAwait(false);
@@ -425,7 +425,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task Auto_Type_Pass_Straight_Through()
+        public async Task Auto_Type_StateAutoActionResult_AutoComplete()
         {
             // Arrange
             var flow = FlowHelper.CreateFlow(3);
@@ -450,6 +450,35 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
+        public async Task Auto_Type_StateAutoActionResult_AutoRegress()
+        {
+            // Arrange
+            var flow = FlowHelper.CreateFlow(3);
+
+            flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
+
+            flow.States[1].StateType = StateType.Auto;
+            flow.States[1].RegressionStateCodes = flow.States[0].StateCode;
+            flow.States[1].TransitionStateCodes = $"{flow.States[2].StateCode}";
+
+            flow.Bootstrap();
+
+            await flow.ActiveState.InitialiseAsync();
+
+            flow.States[1].AutoActionResult = StateAutoActionResult.AutoRegress;
+            flow.States[1].RegressionStateCode = flow.States[0].StateCode;
+
+            // Act
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+
+            //Assert
+            Assert.AreEqual(StateStatus.NotStarted, flow.States[0].StateStatus);
+            Assert.AreEqual(StateStatus.NotStarted, flow.States[1].StateStatus);
+            Assert.AreEqual(StateStatus.NotStarted, flow.States[2].StateStatus);
+            Assert.AreEqual(flow.States[0], flow.ActiveState);
+        }
+
+        [TestMethod]
         public async Task Auto_Type_Runtime_ReRoute_To_Last_State()
         {
             // Arrange
@@ -462,7 +491,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.States[1].ConfigureStateClass = "Headway.Core.Tests.Helpers.StateRoutingHelper, Headway.Core.Tests";
+            flow.States[1].ActionConfigurationClass = "Headway.Core.Tests.Helpers.StateRoutingHelper, Headway.Core.Tests";
 
             await flow.ActiveState.InitialiseAsync();
 
@@ -828,7 +857,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.ActiveState.ConfigureStateClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+            flow.ActiveState.ActionConfigurationClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
 
             await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
