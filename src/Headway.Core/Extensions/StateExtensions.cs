@@ -44,7 +44,14 @@ namespace Headway.Core.Extensions
 
             if(state.StateType.Equals(StateType.Auto))
             {
-                await state.CompleteAsync().ConfigureAwait(false);
+                if (state.AutoActionResult.Equals(StateAutoActionResult.AutoComplete))
+                {
+                    await state.CompleteAsync().ConfigureAwait(false);
+                }
+                else if (state.AutoActionResult.Equals(StateAutoActionResult.AutoRegress))
+                {
+                    await state.ResetAsync().ConfigureAwait(false);
+                }
             }
         }
 
@@ -218,24 +225,24 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{state.StateCode} has already been configured.");
             }
 
-            if (!string.IsNullOrWhiteSpace(state.ConfigureStateClass))
+            if (!string.IsNullOrWhiteSpace(state.ActionConfigurationClass))
             {
                 StateConfiguration stateConfiguration = null;
 
                 lock (stateConfigurationCacheLock)
                 {
                     if (stateConfigurationCache.TryGetValue(
-                        state.ConfigureStateClass, out StateConfiguration existingStateConfiguration))
+                        state.ActionConfigurationClass, out StateConfiguration existingStateConfiguration))
                     {
                         stateConfiguration = existingStateConfiguration;
                     }
                     else
                     {
-                        var type = Type.GetType(state.ConfigureStateClass);
+                        var type = Type.GetType(state.ActionConfigurationClass);
 
                         if (type == null)
                         {
-                            throw new StateException(state, $"Can't resolve {state.ConfigureStateClass}");
+                            throw new StateException(state, $"Can't resolve {state.ActionConfigurationClass}");
                         }
 
                         var instance = (IConfigureState)Activator.CreateInstance(type);
@@ -248,7 +255,7 @@ namespace Headway.Core.Extensions
                             MethodInfo = methodInfo
                         };
 
-                        stateConfigurationCache.Add(state.ConfigureStateClass, stateConfiguration);
+                        stateConfigurationCache.Add(state.ActionConfigurationClass, stateConfiguration);
                     }
                 }
 
