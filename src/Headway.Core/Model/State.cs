@@ -19,9 +19,39 @@ namespace Headway.Core.Model
             StateActions = new List<StateAction>();
         }
 
-        public int Id { get; set; }
+        /// <summary>
+        /// The state identity number.
+        /// </summary>
+        public int StateId { get; set; }
+
+        /// <summary>
+        /// The position of the state in the flow sequence.
+        /// The state with the minimum position value 
+        /// is the flow's root state, which is the
+        /// entry point to the flow.
+        /// A state can only transition to another state that has 
+        /// a greater position than itself in the flow sequence.
+        /// A state can only regress to another state that has a 
+        /// lower position than itself in the flow sequence.
+        /// </summary>
         public int Position { get; set; }
-        public int ConfigItemId { get; set; }
+
+        /// <summary>
+        /// The type of the state.
+        ///     Standard - after the state has been initialised control is returned to the calling code.
+        ///                e.g. once the state has been initialised, control is passed back to a user 
+        ///                     or calling code which will be responsible for completing the stete.
+        ///                     Example usage is a state requiring a user to make a routing decision 
+        ///                     after performing some user interaction like data input or data review.
+        ///                     
+        ///     Auto - after the state has been initialised it automatically completes or regresses itself.
+        ///            e.g. during state initialisation an initialisation action can make a runtime 
+        ///                 decision to either automatically complete the state andspecify the state it 
+        ///                 must transition to, or to automatically regress to a specified state.
+        ///                 Example usage is a state that must make a routing decision based on set 
+        ///                 criteria using data available at runtime.
+        ///     
+        /// </summary>
         public StateType StateType { get; set; }
         public StateStatus StateStatus { get; set; }
         public Flow Flow { get; set; }
@@ -52,12 +82,15 @@ namespace Headway.Core.Model
         public string RegressionStateCodes { get; set; }
 
         [StringLength(150)]
-        public string ConfigureStateClass { get; set; }
+        public string ActionConfigurationClass { get; set; }
 
-        [NotMapped]
-        [JsonIgnore]
-        public ConfigItem ConfigItem { get; set; }
 
+        /// <summary>
+        /// The context associated with the state.
+        /// If the context is null at the time of 
+        /// the flow bootstrap routine then the state 
+        /// will be assigned the flow context. 
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public object Context { get; set; }
@@ -65,6 +98,10 @@ namespace Headway.Core.Model
         [NotMapped]
         [JsonIgnore]
         public bool Configured { get; set; }
+
+        [NotMapped]
+        [JsonIgnore]
+        public StateAutoActionResult AutoActionResult { get; set; }
 
         [NotMapped]
         [JsonIgnore]
