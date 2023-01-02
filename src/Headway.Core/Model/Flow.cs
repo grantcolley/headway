@@ -45,20 +45,12 @@ namespace Headway.Core.Model
         public List<FlowHistory> History { get; set; }
 
         /// <summary>
-        /// The name of the flow.
-        /// </summary>
-        [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
-
-        /// <summary>
         /// The class dynamically loaded during the flow bootstrap 
         /// routine for configuring state actions to be invoked at 
         /// runtime. This class can contain actions to be applied 
         /// to all states or individual ones. 
         /// The pattern expected is '{type full name}, {assembly name}'.
         /// </summary>
-        [Required]
         [StringLength(150)]
         public string ActionConfigurationClass { get; set; }
 
@@ -66,9 +58,15 @@ namespace Headway.Core.Model
         /// Comma seperated list of permissions to give 
         /// read / write access to all states in the flow.
         /// </summary>
-        [Required]
         [StringLength(50)]
         public string Permissions { get; set; }
+
+        /// <summary>
+        /// The name of the flow.
+        /// </summary>
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
 
         /// <summary>
         /// The instance of the config associated with the flow.
