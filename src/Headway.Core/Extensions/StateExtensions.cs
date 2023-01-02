@@ -195,7 +195,7 @@ namespace Headway.Core.Extensions
                 return;
             }
 
-            if (!state.Configured)
+            if (!state.ActionsConfigured)
             {
                 state.Configure();
             }
@@ -220,7 +220,7 @@ namespace Headway.Core.Extensions
 
         public static void Configure(this State state)
         {
-            if(state.Configured)
+            if(state.ActionsConfigured)
             {
                 throw new StateException(state, $"{state.StateCode} has already been configured.");
             }
@@ -261,7 +261,7 @@ namespace Headway.Core.Extensions
 
                 stateConfiguration.Configure(state);
 
-                state.Configured = true;
+                state.ActionsConfigured = true;
             }
         }
     }
