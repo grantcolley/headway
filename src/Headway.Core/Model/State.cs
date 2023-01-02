@@ -37,7 +37,7 @@ namespace Headway.Core.Model
         public int Position { get; set; }
 
         /// <summary>
-        /// The type of the state.
+        /// The type of the state:
         ///     Standard - after the state has been initialised control is returned to the calling code.
         ///                e.g. once the state has been initialised, control is passed back to a user 
         ///                     or calling code which will be responsible for completing the stete.
@@ -53,37 +53,98 @@ namespace Headway.Core.Model
         ///     
         /// </summary>
         public StateType StateType { get; set; }
+
+        /// <summary>
+        /// Status of the state:
+        ///     - NotStarted
+        ///     - InProgress
+        ///     - Completed
+        /// </summary>
         public StateStatus StateStatus { get; set; }
+
+        /// <summary>
+        /// The flow associated with the state.
+        /// </summary>
         public Flow Flow { get; set; }
 
+        /// <summary>
+        /// Name of the state.
+        /// </summary>
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
 
+        /// <summary>
+        /// The state code.
+        /// </summary>
         [Required]
         [StringLength(50)]
         public string StateCode { get; set; }
 
+        /// <summary>
+        /// The state code of the parent associated with the state.
+        /// Only applicable if the state is a sub state of another.
+        /// </summary>
         [Required]
         [StringLength(50)]
         public string ParentStateCode { get; set; }
 
+        /// <summary>
+        /// The semi-colon separated list of permissions associated with the state.
+        /// </summary>
         [Required]
         [StringLength(50)]
         public string Permissions { get; set; }
 
+        /// <summary>
+        /// A semi-colon separated list of sub state codes. 
+        /// Only applicable if the state is a parent of one 
+        /// or more sub states.
+        /// </summary>
         [StringLength(250)]
         public string SubStateCodes { get; set; }
 
+        /// <summary>
+        /// A semi-colon separated list of state codes that can be 
+        /// transitioned to when the state is completed.
+        /// To transition from one state to another, call 
+        /// CompleteAsync passing in transitionStateCode.
+        /// If transitionStateCode is null, it will transition 
+        /// to the first state code in TransitionStateCodes. 
+        /// If TransitionStateCodes is null i.e. it has nowhere
+        /// to transition to, then:
+        ///  - if the state has a parent it will attempt 
+        ///    to complete the parent
+        ///  - if the state has no parent it is assumed 
+        ///    the end of the flow has been reached and 
+        ///    the flow is therefore completed.
+        ///    
+        /// See <see cref="State.Position"/> for positioning 
+        /// rules applicable to transitioning.
+        /// </summary>
         [StringLength(250)]
         public string TransitionStateCodes { get; set; }
 
+        /// <summary>
+        /// A semi-colon separated list of state codes that can be
+        /// regressed to. To rgress from one state to another,  
+        /// call ResetAsync passing in regressionStateCode. 
+        /// If regressionStateCode is null, it will simply 
+        /// reset the state. 
+        /// 
+        /// See <see cref="State.Position"/>
+        /// for positioning rules applicable to regressing.
+        /// </summary>
         [StringLength(250)]
         public string RegressionStateCodes { get; set; }
 
+        /// <summary>
+        /// The class dynamically loaded during the state initialising 
+        /// routine for configuring state actions to be invoked at runtime.
+        /// The pattern expected is '{type full name}, {assembly name}'.
+        /// </summary>
         [StringLength(150)]
         public string ActionConfigurationClass { get; set; }
-
 
         /// <summary>
         /// The context associated with the state.
@@ -95,50 +156,111 @@ namespace Headway.Core.Model
         [JsonIgnore]
         public object Context { get; set; }
 
+        /// <summary>
+        /// A flag indicating whether actions have been 
+        /// configured during the state initialising routine.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
-        public bool Configured { get; set; }
+        public bool ActionsConfigured { get; set; }
 
+        /// <summary>
+        /// A flag indicating whether an auto state 
+        /// must auto transition or auto regress
+        /// once the initialisation routine is complete.
+        /// This is only applicable when <see cref="State.StateType"/> 
+        /// is <see cref="StateType.Auto"/>.
+        /// The StateAutoActionResult can be set at 
+        /// runtime in initialisation actions during the
+        /// state's initialisation routine.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public StateAutoActionResult AutoActionResult { get; set; }
 
+        /// <summary>
+        /// The parant of a state. Only 
+        /// applicable to sub states.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public State ParentState { get; set; }
 
+        /// <summary>
+        /// The state owner recorded in the state history.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public string Owner { get; set; }
 
+        /// <summary>
+        /// Comments associated with the state 
+        /// recorded in the state history.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public string Comment { get; set; }
 
+        /// <summary>
+        /// The state to transition to when the current 
+        /// state is completed. This can be set by user
+        /// interaction or dynamically at runtime inside 
+        /// an action triggered during state initialisation 
+        /// or state completion.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public string TransitionStateCode { get; set; }
 
+        /// <summary>
+        /// The state to regress to when the current 
+        /// state is regressed. This can be set by user
+        /// interaction or dynamically at runtime inside 
+        /// an action triggered during state initialisation 
+        /// or state completion.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public string RegressionStateCode { get; set; }
 
+        /// <summary>
+        /// Sub states of a parent state. 
+        /// Only applicable to parent states
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<State> SubStates { get; }
 
+        /// <summary>
+        /// Gets a list of transition states.
+        /// based on <see cref="State.TransitionStateCodes"/>
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<State> Transitions { get; }
 
+        /// <summary>
+        /// Gets a list of regression states.
+        /// based on <see cref="State.RegressionStateCodes"/>
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<State> Regressions { get; }
 
+        /// <summary>
+        /// C# actions associated wih the state to be executed
+        /// during initialisation or completion routines.
+        /// State actions are located in classes specified in 
+        /// <see cref="State.ActionConfigurationClass"/> or 
+        /// <see cref="Flow.ActionConfigurationClass"/>.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<StateAction> StateActions { get; }
 
+        /// <summary>
+        /// Splits the semi-colon separated <see cref="State.Permissions"/>.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<string> PermissionsList
@@ -154,6 +276,9 @@ namespace Headway.Core.Model
             }
         }
 
+        /// <summary>
+        /// Splits the semi-colon separated <see cref="State.SubStateCodes"/>.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<string> SubStateCodesList
@@ -169,6 +294,9 @@ namespace Headway.Core.Model
             }
         }
 
+        /// <summary>
+        /// Splits the semi-colon separated <see cref="State.TransitionStateCodes"/>.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<string> TransitionStateCodesList
@@ -184,6 +312,9 @@ namespace Headway.Core.Model
             }
         }
 
+        /// <summary>
+        /// Splits the semi-colon separated <see cref="State.RegressionStateCodes"/>.
+        /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<string> RegressionStateCodesList
