@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Attributes;
+using Headway.Core.Enums;
 using Headway.Core.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,7 @@ namespace Headway.Core.Model
     public class Flow : ModelBase
     {
         private State rootState;
+        private State finalState;
 
         public Flow()
         {
@@ -27,6 +29,14 @@ namespace Headway.Core.Model
         /// Config Id for the <see cref="Config"/> associated with the flow.
         /// </summary>
         public int ConfigId { get; set; }
+
+        /// <summary>
+        /// Status of the flow:
+        ///     - NotStarted
+        ///     - InProgress
+        ///     - Completed
+        /// </summary>
+        public FlowStatus FlowStatus { get; set; }
 
         /// <summary>
         /// A flag indicating wether to configure all the 
@@ -129,6 +139,25 @@ namespace Headway.Core.Model
                 }
 
                 return rootState;
+            }
+        }
+
+        /// <summary>
+        /// The final state is the state with the minimum 
+        /// state position value.
+        /// </summary>
+        [NotMapped]
+        [JsonIgnore]
+        public State FinalState
+        {
+            get
+            {
+                if (finalState == null)
+                {
+                    finalState = States.LastState();
+                }
+
+                return finalState;
             }
         }
     }
