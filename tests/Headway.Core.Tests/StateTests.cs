@@ -918,16 +918,5 @@ namespace Headway.Core.Tests
                 throw;
             }
         }
-
-        [TestMethod]
-        public void Test_The_Heck_Out_Of_Something()
-        {
-            // Arrange
-
-            // Act
-
-            //Assert
-
-        }
     }
 }
