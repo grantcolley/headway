@@ -25,6 +25,11 @@ namespace Headway.Core.Extensions
 
             state.StateStatus = StateStatus.InProgress;
 
+            if (state.Equals(state.Flow.RootState))
+            {
+                state.Flow.FlowStatus = FlowStatus.InProgress;
+            }
+
             state.Flow.History.RecordInitialise(state);
 
             if (state.SubStates.Any())
@@ -117,6 +122,11 @@ namespace Headway.Core.Extensions
             {
                 await state.ParentState.CompleteAsync().ConfigureAwait(false);
             }
+
+            if (state.Equals(state.Flow.FinalState))
+            {
+                state.Flow.FlowStatus = FlowStatus.Completed;
+            }
         }
 
         public static async Task ResetAsync(this State state, string regressStateCode = "")
@@ -182,6 +192,16 @@ namespace Headway.Core.Extensions
                     if (rs.Equals(regressionState))
                     {
                         state.Flow.ActiveState = regressionState;
+
+                        if (state.Flow.ActiveState.Equals(state.Flow.RootState))
+                        {
+                            state.Flow.FlowStatus = FlowStatus.NotStarted;
+                        }
+                        else
+                        {
+                            state.Flow.FlowStatus = FlowStatus.InProgress;
+                        }
+
                         break;
                     }
                 }
@@ -216,6 +236,13 @@ namespace Headway.Core.Extensions
             var firstPosition = states.Min(s => s.Position);
 
             return states.First(s => s.Position.Equals(firstPosition));
+        }
+
+        public static State LastState(this List<State> states)
+        {
+            var lastPosition = states.Max(s => s.Position);
+
+            return states.First(s => s.Position.Equals(lastPosition));
         }
 
         public static void Configure(this State state)
