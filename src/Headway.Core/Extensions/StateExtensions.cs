@@ -120,7 +120,10 @@ namespace Headway.Core.Extensions
             }
             else
             {
-                await state.ParentState.CompleteAsync().ConfigureAwait(false);
+                if (state.ParentState != null)
+                {
+                    await state.ParentState.CompleteAsync().ConfigureAwait(false);
+                }
             }
 
             if (state.Equals(state.Flow.FinalState))
