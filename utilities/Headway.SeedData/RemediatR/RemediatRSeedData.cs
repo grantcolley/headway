@@ -40,6 +40,8 @@ namespace Headway.SeedData.RemediatR
             RedressProductConfig();
             RefundCalculation();
             RefundVerification();
+
+            RemediatRFlow();
         }
 
         private static void TruncateTables()
@@ -293,6 +295,17 @@ namespace Headway.SeedData.RemediatR
             var refundVerificationConfig = RemediatRData.RefundVerificationCreate();
 
             dbContext.Configs.Add(refundVerificationConfig);
+
+            dbContext.SaveChanges();
+        }
+
+        private static void RemediatRFlow()
+        {
+            var remediatRFlow = RemediatR.RemediatRFlow.CreateRemediatRFlow();
+
+            remediatRFlow.ConfigId = RemediatRData.RedressConfig.ConfigId;
+
+            dbContext.Flows.Add(remediatRFlow);
 
             dbContext.SaveChanges();
         }
