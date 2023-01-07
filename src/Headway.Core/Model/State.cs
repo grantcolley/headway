@@ -85,14 +85,12 @@ namespace Headway.Core.Model
         /// The state code of the parent associated with the state.
         /// Only applicable if the state is a sub state of another.
         /// </summary>
-        [Required]
         [StringLength(50)]
         public string ParentStateCode { get; set; }
 
         /// <summary>
         /// The semi-colon separated list of permissions associated with the state.
         /// </summary>
-        [Required]
         [StringLength(50)]
         public string Permissions { get; set; }
 
