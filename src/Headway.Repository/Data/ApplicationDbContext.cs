@@ -40,6 +40,7 @@ namespace Headway.Repository.Data
 
         // Flow
         public DbSet<Flow> Flows { get; set; }
+        public DbSet<FlowHistory> FlowHistory { get; set; }
         public DbSet<State> States { get; set; }
 
         // RemediatR
@@ -99,6 +100,14 @@ namespace Headway.Repository.Data
 
             builder.Entity<Program>()
                 .HasIndex(p => p.Name)
+                .IsUnique();
+
+            builder.Entity<Flow>()
+                .HasIndex(f => f.Name)
+                .IsUnique();
+
+            builder.Entity<State>()
+                .HasIndex(s => s.StateCode)
                 .IsUnique();
         }
 
