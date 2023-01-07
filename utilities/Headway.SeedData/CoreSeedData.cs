@@ -60,6 +60,9 @@ namespace Headway.SeedData
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE RoleUser");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionUser");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE PermissionRole");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("TRUNCATE TABLE States");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Flows");
+            ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Flows, RESEED, 1)");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Users");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DBCC CHECKIDENT (Users, RESEED, 1)");
             ((DbContext)dbContext).Database.ExecuteSqlRaw("DELETE FROM Roles");
