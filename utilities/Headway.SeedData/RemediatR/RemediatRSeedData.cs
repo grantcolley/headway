@@ -27,6 +27,8 @@ namespace Headway.SeedData.RemediatR
             CreatePrograms();
             CreateCustomers();
 
+            RemediatRFlow();
+
             ProgramsConfig();
             ProgramConfig();
             CustomersConfig();
@@ -39,9 +41,7 @@ namespace Headway.SeedData.RemediatR
             RedressCustomerConfig();
             RedressProductConfig();
             RefundCalculation();
-            RefundVerification();
-
-            RemediatRFlow();
+            RefundVerification();            
         }
 
         private static void TruncateTables()
@@ -276,6 +276,8 @@ namespace Headway.SeedData.RemediatR
         {
             var redressConfig = RemediatRData.RedressConfigCreate();
 
+            redressConfig.Flow = RemediatR.RemediatRFlow.ResressFlow;
+
             dbContext.Configs.Add(redressConfig);
             
             dbContext.SaveChanges();
@@ -302,8 +304,6 @@ namespace Headway.SeedData.RemediatR
         private static void RemediatRFlow()
         {
             var remediatRFlow = RemediatR.RemediatRFlow.CreateRemediatRFlow();
-
-            remediatRFlow.ConfigId = RemediatRData.RedressConfig.ConfigId;
 
             dbContext.Flows.Add(remediatRFlow);
 

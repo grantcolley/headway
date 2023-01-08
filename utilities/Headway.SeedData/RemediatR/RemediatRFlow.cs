@@ -7,6 +7,8 @@ namespace Headway.SeedData.RemediatR
 {
     public class RemediatRFlow
     {
+        public static Flow ResressFlow {get;set;}
+
         public static Flow CreateRemediatRFlow()
         {
             var redressCreate = new State { Position = 1, Name = "Redress Create", StateCode = "REDRESS_CREATE" };
@@ -85,34 +87,34 @@ namespace Headway.SeedData.RemediatR
             finalRedressReview.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
             finalRedressReview.RegressionStateCodes = $"{redressReview.StateCode}";
 
-            var flow = new Flow
+            ResressFlow = new Flow
             {
                 Name = "RemediatR",
                 Permissions = $"{RemediatRAuthorisation.REDRESS_READ}",
                 Context = new Redress()
             };
 
-            flow.States.Add(redressCreate);
-            flow.States.Add(refundAssessment);
-            flow.States.Add(refundCalculation);
-            flow.States.Add(refundVerification);
-            flow.States.Add(refundReview);
-            flow.States.Add(redressReview);
-            flow.States.Add(redressValidation);
-            flow.States.Add(communicationGeneration);
-            flow.States.Add(communicationDispatch);
-            flow.States.Add(responseRequired);
-            flow.States.Add(awaitingResponse);
-            flow.States.Add(paymentGeneration);
-            flow.States.Add(finalRedressReview);
+            ResressFlow.States.Add(redressCreate);
+            ResressFlow.States.Add(refundAssessment);
+            ResressFlow.States.Add(refundCalculation);
+            ResressFlow.States.Add(refundVerification);
+            ResressFlow.States.Add(refundReview);
+            ResressFlow.States.Add(redressReview);
+            ResressFlow.States.Add(redressValidation);
+            ResressFlow.States.Add(communicationGeneration);
+            ResressFlow.States.Add(communicationDispatch);
+            ResressFlow.States.Add(responseRequired);
+            ResressFlow.States.Add(awaitingResponse);
+            ResressFlow.States.Add(paymentGeneration);
+            ResressFlow.States.Add(finalRedressReview);
 
-            foreach(var state in flow.States)
+            foreach(var state in ResressFlow.States)
             {
-                state.Flow = flow;
-                state.Context = flow.Context;
+                state.Flow = ResressFlow;
+                state.Context = ResressFlow.Context;
             }
 
-            return flow;
+            return ResressFlow;
         }
     }
 }

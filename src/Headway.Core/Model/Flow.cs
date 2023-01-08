@@ -26,11 +26,6 @@ namespace Headway.Core.Model
         public int FlowId { get; set; }
 
         /// <summary>
-        /// Config Id for the <see cref="Config"/> associated with the flow.
-        /// </summary>
-        public int ConfigId { get; set; }
-
-        /// <summary>
         /// Status of the flow:
         ///     - NotStarted
         ///     - InProgress
