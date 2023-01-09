@@ -16,6 +16,7 @@ namespace Headway.Core.Model
         }
 
         public int ConfigId { get; set; }
+        public int FlowId { get; set; }
         public bool NavigateResetBreadcrumb { get; set; }
         public bool CreateLocal { get; set; }
         public bool UseSearchComponent { get; set; }
