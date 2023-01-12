@@ -42,6 +42,7 @@ namespace Headway.Repository.Repositories
         {
             var config = await applicationDbContext.Configs
                 .AsNoTracking()
+                .Include(c => c.Flow)
                 .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigSearchItems)
                 .Include(c => c.ConfigItems)
@@ -58,6 +59,7 @@ namespace Headway.Repository.Repositories
         {
             var config = await applicationDbContext.Configs
                 .AsNoTracking()
+                .Include(c => c.Flow)
                 .Include(c => c.ConfigContainers)
                 .Include(c => c.ConfigSearchItems)
                 .Include(c => c.ConfigItems)
@@ -72,6 +74,12 @@ namespace Headway.Repository.Repositories
 
         public async Task<Config> AddConfigAsync(Config config)
         {
+            var flow = await applicationDbContext.Flows
+                .FirstAsync(f => f.FlowId.Equals(config.Flow.FlowId))
+                .ConfigureAwait(false);
+
+            config.Flow = flow;
+
             config.ConfigContainers = GenericTreeHelper.GetFlattenedTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
 
             await applicationDbContext.Configs
@@ -103,9 +111,31 @@ namespace Headway.Repository.Repositories
             }
             else
             {
+                if (config.Flow == null
+                    && config.FlowId.HasValue)
+                {
+                    config.FlowId = null;
+                }
+                else if (config.Flow != null
+                    && config.FlowId.HasValue
+                    && config.FlowId != config.Flow.FlowId)
+                {
+                    config.FlowId = config.Flow.FlowId;
+                }
+
                 applicationDbContext
                     .Entry(existing)
                     .CurrentValues.SetValues(config);
+
+                if (!existing.FlowId.Equals(config.FlowId))
+                {
+                    var flow = await applicationDbContext.Flows
+                            .FirstAsync(f => f.FlowId.Equals(config.FlowId))
+                            .ConfigureAwait(false);
+
+                    existing.FlowId = flow.FlowId;
+                    existing.Flow = flow;
+                }
 
                 var removeConfigItems = (from configItem in existing.ConfigItems
                                          where !config.ConfigItems.Any(i => i.ConfigItemId.Equals(configItem.ConfigItemId))
