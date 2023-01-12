@@ -36,6 +36,7 @@ namespace Headway.Repository.Repositories
             complexOptionItems[Options.MODULES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetModules);
             complexOptionItems[Options.CATEGORIES_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetCategories);
             complexOptionItems[Options.COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetDemoModelComplexProperties);
+            complexOptionItems[Options.FLOWS_COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetComplexFlows);
             complexOptionItems[RemediatROptions.PROGRAMS_COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetRemediatRComplexPrograms);
         }
 
@@ -209,6 +210,24 @@ namespace Headway.Repository.Repositories
             else
             {
                 return JsonSerializer.Serialize(new List<Category>());
+            }
+        }
+
+        private async Task<string> GetComplexFlows(List<Arg> args)
+        {
+            var flows = await applicationDbContext.Flows
+                .AsNoTracking()
+                .OrderBy(f => f.Name)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            if (flows.Any())
+            {
+                return JsonSerializer.Serialize(flows);
+            }
+            else
+            {
+                return JsonSerializer.Serialize(new List<Flow>());
             }
         }
 
