@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Headway.MigrationsSqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230109175830_Headway_Create")]
+    [Migration("20230112191048_Headway_Create")]
     partial class HeadwayCreate
     {
         /// <inheritdoc />
