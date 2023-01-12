@@ -4,6 +4,7 @@ using Headway.Core.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
@@ -11,8 +12,8 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class Flow : ModelBase
     {
-        private State rootState;
-        private State finalState;
+        private State rootState = default;
+        private State finalState = default;
 
         public Flow()
         {
@@ -74,12 +75,6 @@ namespace Headway.Core.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// The instance of the config associated with the flow.
-        /// </summary>
-        [NotMapped]
-        public Config Config { get; set; }
-
-        /// <summary>
         /// A flag indicating whether the flow bootstrap 
         /// routine has been completed.
         /// </summary>
@@ -128,7 +123,8 @@ namespace Headway.Core.Model
         {
             get
             {
-                if (rootState == null)
+                if (rootState == null
+                    && States.Any())
                 {
                     rootState = States.FirstState();
                 }
@@ -147,7 +143,8 @@ namespace Headway.Core.Model
         {
             get
             {
-                if (finalState == null)
+                if (finalState == null
+                    && States.Any())
                 {
                     finalState = States.LastState();
                 }
