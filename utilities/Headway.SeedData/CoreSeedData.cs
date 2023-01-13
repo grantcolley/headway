@@ -52,6 +52,9 @@ namespace Headway.SeedData
             ConfigSearchItemConfig();
             ConfigSearchItemsListDetailConfig();
             ConfigContainerConfig();
+
+            FlowsConfig();
+            FlowConfig();
         }
 
         private static void TruncateTables()
@@ -142,14 +145,16 @@ namespace Headway.SeedData
             var authorisationCatgory = new Category { Name = "Authorisation", Icon = "AdminPanelSettings", Order = 1, Permission = HeadwayAuthorisation.ADMIN };
             var navigationCatgory = new Category { Name = "Navigation", Icon = "Explore", Order = 2, Permission = HeadwayAuthorisation.ADMIN };
             var configurationCategory = new Category { Name = "Configuration", Icon = "AppSettingsAlt", Order = 3, Permission = HeadwayAuthorisation.ADMIN };
-            var developerToolsCategory = new Category { Name = "Developer Tools", Icon = "Build", Order = 4, Permission = HeadwayAuthorisation.DEVELOPER };
+            var flowsCategory = new Category { Name = "Flows", Icon = "AltRoute", Order = 4, Permission = HeadwayAuthorisation.ADMIN };
+            var developerToolsCategory = new Category { Name = "Developer Tools", Icon = "Build", Order = 5, Permission = HeadwayAuthorisation.DEVELOPER };
 
             dbContext.Categories.Add(authorisationCatgory);
             dbContext.Categories.Add(configurationCategory);
+            dbContext.Categories.Add(flowsCategory);
             dbContext.Categories.Add(developerToolsCategory);
 
             var usersMenuItem = new MenuItem { Name = "Users", Icon = "SupervisedUserCircle", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Users" };
-            var rolesMenuItem = new MenuItem { Name = "Roles", Icon = "LockOutlined", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Roles" };
+            var rolesMenuItem = new MenuItem { Name = "Roles", Icon = "Lock", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.ADMIN, Config = "Roles" };
             var permissionsMenuItem = new MenuItem { Name = "Permissions", Icon = "Key", NavigatePage = "Page", Order = 3, Permission = HeadwayAuthorisation.ADMIN, Config = "Permissions" };
 
             var modulesMenuItem = new MenuItem { Name = "Modules", Icon = "AutoAwesomeMosaic", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Modules" };
@@ -157,7 +162,8 @@ namespace Headway.SeedData
             var menuItemsMenuItem = new MenuItem { Name = "MenuItems", Icon = "Article", NavigatePage = "Page", Order = 3, Permission = HeadwayAuthorisation.ADMIN, Config = "MenuItems" };
 
             var configureMenuItem = new MenuItem { Name = "Configure", Icon = "Settings", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Configs" };
-            var demoMenuItem = new MenuItem { Name = "Demo", Icon = "InfoOutlined", NavigatePage = "Page", Order = 2, Permission = HeadwayAuthorisation.DEVELOPER, Config = "DemoModels" };
+            var flowMenuItem = new MenuItem { Name = "Flows", Icon = "LinearScale", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.ADMIN, Config = "Flows" };            
+            var demoMenuItem = new MenuItem { Name = "Demo", Icon = "Info", NavigatePage = "Page", Order = 1, Permission = HeadwayAuthorisation.DEVELOPER, Config = "DemoModels" };
 
             dbContext.MenuItems.Add(usersMenuItem);
             dbContext.MenuItems.Add(rolesMenuItem);
@@ -166,6 +172,7 @@ namespace Headway.SeedData
             dbContext.MenuItems.Add(categoriesMenuItem);
             dbContext.MenuItems.Add(menuItemsMenuItem);
             dbContext.MenuItems.Add(configureMenuItem);
+            dbContext.MenuItems.Add(flowMenuItem);
             dbContext.MenuItems.Add(demoMenuItem);
 
             authorisationCatgory.MenuItems.Add(usersMenuItem);
@@ -175,11 +182,13 @@ namespace Headway.SeedData
             navigationCatgory.MenuItems.Add(categoriesMenuItem);
             navigationCatgory.MenuItems.Add(menuItemsMenuItem);
             configurationCategory.MenuItems.Add(configureMenuItem);
+            flowsCategory.MenuItems.Add(flowMenuItem);
             developerToolsCategory.MenuItems.Add(demoMenuItem);
 
             administration.Categories.Add(authorisationCatgory);
             administration.Categories.Add(navigationCatgory);
             administration.Categories.Add(configurationCategory);
+            administration.Categories.Add(flowsCategory);
             administration.Categories.Add(developerToolsCategory);
 
             dbContext.SaveChanges();
@@ -755,6 +764,59 @@ namespace Headway.SeedData
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ComponentArgs", Label = "Component Args", Order = 6, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.TextMultiline, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.TEXT_MULTILINE_ROWS};Value=3" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Order", Label = "Order", Order = 7, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
             configContainerConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Container", Label = "Container", Order = 8, ConfigContainer = configContainerConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ContainerOptionItems)}" });
+            dbContext.SaveChanges();
+        }
+
+        private static void FlowsConfig()
+        {
+            var flowsConfig = new Config
+            {
+                Name = "Flows",
+                Title = "Flows",
+                Description = "List of Flows",
+                Model = "Headway.Core.Model.Flow, Headway.Core",
+                ModelApi = "Flow",
+                OrderModelBy = "Name",
+                Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
+                DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
+                NavigatePage = "Page",
+                NavigateProperty = "FlowId",
+                NavigateConfig = "Flow",
+                NavigateResetBreadcrumb = true
+            };
+
+            dbContext.Configs.Add(flowsConfig);
+
+            flowsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FlowId", Label = "Flow Id", Order = 1 });
+            flowsConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2 });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void FlowConfig()
+        {
+            var flowConfig = new Config
+            {
+                Name = "Flow",
+                Title = "Flow",
+                Description = "Create, update or delete a Flow",
+                Model = "Headway.Core.Model.Flow, Headway.Core",
+                ModelApi = "Flow",
+                CreateLocal = true,
+                Document = "Headway.Blazor.Controls.Documents.Document`1, Headway.Blazor.Controls",
+                NavigatePage = "Page",
+                NavigateConfig = "Flows"
+            };
+
+            dbContext.Configs.Add(flowConfig);
+
+            var flowConfigContainer = new ConfigContainer { Name = "Flow Div", Code = "FLOW_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Flow", Order = 1 };
+
+            flowConfig.ConfigContainers.Add(flowConfigContainer);
+
+            flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FlowId", Label = "Flow Id", IsIdentity = true, Order = 1, ConfigContainer = flowConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = flowConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+
             dbContext.SaveChanges();
         }
     }
