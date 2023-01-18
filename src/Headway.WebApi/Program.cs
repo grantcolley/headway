@@ -61,6 +61,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
 builder.Services.AddScoped<IAuthorisationRepository, AuthorisationRepository>();
 builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+builder.Services.AddScoped<IFlowRepository, FlowRepository>();
 builder.Services.AddScoped<IOptionsRepository, OptionsRepository>();
 builder.Services.AddScoped<IDemoModelRepository, DemoModelRepository>();
 builder.Services.AddScoped<ILogRepository, LogRepository>();
