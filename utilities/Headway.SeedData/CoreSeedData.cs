@@ -803,7 +803,7 @@ namespace Headway.SeedData
                 Model = "Headway.Core.Model.Flow, Headway.Core",
                 ModelApi = "Flow",
                 CreateLocal = true,
-                Document = "Headway.Blazor.Controls.Documents.Document`1, Headway.Blazor.Controls",
+                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "Flows"
             };
@@ -811,11 +811,19 @@ namespace Headway.SeedData
             dbContext.Configs.Add(flowConfig);
 
             var flowConfigContainer = new ConfigContainer { Name = "Flow Div", Code = "FLOW_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Flow", Order = 1 };
+            var flowAuthConfigContainer = new ConfigContainer { Name = "Flow Auth Div", Code = "FLOW_AUTH_DIV", ParentCode = "FLOW_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Flow", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var statesContainer = new ConfigContainer { Name = "States Div", Code = "STATES_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "States", Order = 3 };
 
             flowConfig.ConfigContainers.Add(flowConfigContainer);
+            flowConfig.ConfigContainers.Add(flowAuthConfigContainer);
+            flowConfig.ConfigContainers.Add(statesContainer);
 
             flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "FlowId", Label = "Flow Id", IsIdentity = true, Order = 1, ConfigContainer = flowConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
             flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = flowConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ActionConfigurationClass", Label = "Action Configuration Class", Order = 3, ConfigContainer = flowConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigureStatesDuringBootstrap", Label = "Configure States During Bootstrap", Order = 4, ConfigContainer = flowConfigContainer, Component = "Headway.Blazor.Controls.Components.Checkbox, Headway.Blazor.Controls" });
+            flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = flowAuthConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
+            flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Assigned Permissions", Order = 6, ConfigContainer = flowAuthConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
 
             dbContext.SaveChanges();
         }
