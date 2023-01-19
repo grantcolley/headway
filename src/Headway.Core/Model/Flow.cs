@@ -114,6 +114,35 @@ namespace Headway.Core.Model
         public object Context { get; set; }
 
         /// <summary>
+        /// A full list of permissible permissions where those assigned to the 
+        /// <see cref="Flow"/> have been checked. For display in the UI only.
+        /// </summary>
+        [NotMapped]
+        public List<ChecklistItem> PermissionChecklist { get; set; }
+
+        /// <summary>
+        /// A list of permissions assigned to the <see cref="Flow"/>.
+        /// For display in the UI only.
+        /// </summary>
+        [NotMapped]
+        [JsonIgnore]
+        public List<string> PermissionList
+        {
+            get
+            {
+                if (PermissionChecklist == null)
+                {
+                    return new List<string>();
+                }
+
+                return PermissionChecklist
+                    .Where(p => p.IsChecked)
+                    .Select(r => r.Name)
+                    .ToList();
+            }
+        }
+
+        /// <summary>
         /// The root state is the state with the minimum 
         /// state position value.
         /// </summary>
