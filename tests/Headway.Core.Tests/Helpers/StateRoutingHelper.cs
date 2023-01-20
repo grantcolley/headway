@@ -1,9 +1,11 @@
-﻿using Headway.Core.Enums;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Enums;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 
 namespace Headway.Core.Tests.Helpers
 {
+    [StateConfiguration]
     public class StateRoutingHelper : IConfigureState
     {
         public void Configure(State state)
