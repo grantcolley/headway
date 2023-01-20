@@ -1,10 +1,12 @@
-﻿using Headway.Core.Enums;
+﻿using Headway.Core.Attributes;
+using Headway.Core.Enums;
 using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 
 namespace Headway.Core.Tests.Helpers
 {
+    [FlowConfiguration]
     public class FlowHelper : IConfigureFlow
     {
         public static Flow CreateFlow(int numberOfStates)
