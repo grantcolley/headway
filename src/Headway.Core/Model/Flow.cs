@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
+    [Flow]
     [DynamicModel]
     public class Flow : ModelBase
     {
