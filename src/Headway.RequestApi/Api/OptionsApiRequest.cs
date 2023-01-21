@@ -39,6 +39,8 @@ namespace Headway.RequestApi.Api
             localOptionItems.Add(typeof(ContainerOptionItems).Name, new ContainerOptionItems());
             localOptionItems.Add(typeof(StaticOptionItems).Name, new StaticOptionItems());
             localOptionItems.Add(typeof(EnumNamesOptionItems).Name, new EnumNamesOptionItems());
+            localOptionItems.Add(typeof(FlowConfigurationOptionItems).Name, new FlowConfigurationOptionItems());
+            localOptionItems.Add(typeof(StateConfigurationOptionItems).Name, new StateConfigurationOptionItems());
         }
 
         public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
