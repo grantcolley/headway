@@ -52,7 +52,7 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = FlowHelper.CreateFlow(2);
 
-            flow.ActionConfigurationClass = "Invalid ConfigureFlowClass";
+            flow.FlowConfigurationClass = "Invalid ConfigureFlowClass";
 
             try
             {
@@ -62,7 +62,7 @@ namespace Headway.Core.Tests
             catch (FlowException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't resolve {flow.ActionConfigurationClass}", ex.Message);
+                Assert.AreEqual($"Can't resolve {flow.FlowConfigurationClass}", ex.Message);
 
                 throw;
             }
