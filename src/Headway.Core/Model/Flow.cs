@@ -59,7 +59,7 @@ namespace Headway.Core.Model
         /// The pattern expected is '{type full name}, {assembly name}'.
         /// </summary>
         [StringLength(150)]
-        public string ActionConfigurationClass { get; set; }
+        public string FlowConfigurationClass { get; set; }
 
         /// <summary>
         /// Comma seperated list of permissions to give 
