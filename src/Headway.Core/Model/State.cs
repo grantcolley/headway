@@ -142,7 +142,7 @@ namespace Headway.Core.Model
         /// The pattern expected is '{type full name}, {assembly name}'.
         /// </summary>
         [StringLength(150)]
-        public string ActionConfigurationClass { get; set; }
+        public string StateConfigurationClass { get; set; }
 
         /// <summary>
         /// The context associated with the state.
@@ -249,8 +249,8 @@ namespace Headway.Core.Model
         /// C# actions associated wih the state to be executed
         /// during initialisation or completion routines.
         /// State actions are located in classes specified in 
-        /// <see cref="State.ActionConfigurationClass"/> or 
-        /// <see cref="Flow.ActionConfigurationClass"/>.
+        /// <see cref="State.StateConfigurationClass"/> or 
+        /// <see cref="Flow.FlowConfigurationClass"/>.
         /// </summary>
         [NotMapped]
         [JsonIgnore]
