@@ -100,24 +100,24 @@ namespace Headway.Core.Extensions
                 throw new FlowException(flow, $"{flow.Name} has already been configured.");
             }
 
-            if (!string.IsNullOrWhiteSpace(flow.ActionConfigurationClass))
+            if (!string.IsNullOrWhiteSpace(flow.FlowConfigurationClass))
             {
                 FlowConfiguration flowConfiguration = null;
 
                 lock (flowConfigurationCacheLock)
                 {
                     if (flowConfigurationCache.TryGetValue(
-                        flow.ActionConfigurationClass, out FlowConfiguration existingFlowConfiguration))
+                        flow.FlowConfigurationClass, out FlowConfiguration existingFlowConfiguration))
                     {
                         flowConfiguration = existingFlowConfiguration;
                     }
                     else
                     {
-                        var type = Type.GetType(flow.ActionConfigurationClass);
+                        var type = Type.GetType(flow.FlowConfigurationClass);
 
                         if (type == null)
                         {
-                            throw new FlowException(flow, $"Can't resolve {flow.ActionConfigurationClass}");
+                            throw new FlowException(flow, $"Can't resolve {flow.FlowConfigurationClass}");
                         }
 
                         var instance = (IConfigureFlow)Activator.CreateInstance(type);
@@ -130,7 +130,7 @@ namespace Headway.Core.Extensions
                             MethodInfo = methodInfo
                         };
 
-                        flowConfigurationCache.Add(flow.ActionConfigurationClass, flowConfiguration);
+                        flowConfigurationCache.Add(flow.FlowConfigurationClass, flowConfiguration);
                     }
                 }
 
