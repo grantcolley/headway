@@ -91,6 +91,8 @@ namespace Headway.SeedData.RemediatR
             {
                 Name = "RemediatR",
                 Permissions = $"{RemediatRAuthorisation.REDRESS_READ}",
+                FlowConfigurationClass = "RemediatR.Core.Flow.RedressFlowConfiguration, RemediatR.Core",
+                ConfigureStatesDuringBootstrap = true,
                 Context = new Redress()
             };
 
