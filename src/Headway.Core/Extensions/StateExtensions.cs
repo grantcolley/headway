@@ -255,24 +255,24 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{state.StateCode} has already been configured.");
             }
 
-            if (!string.IsNullOrWhiteSpace(state.ActionConfigurationClass))
+            if (!string.IsNullOrWhiteSpace(state.StateConfigurationClass))
             {
                 StateConfiguration stateConfiguration = null;
 
                 lock (stateConfigurationCacheLock)
                 {
                     if (stateConfigurationCache.TryGetValue(
-                        state.ActionConfigurationClass, out StateConfiguration existingStateConfiguration))
+                        state.StateConfigurationClass, out StateConfiguration existingStateConfiguration))
                     {
                         stateConfiguration = existingStateConfiguration;
                     }
                     else
                     {
-                        var type = Type.GetType(state.ActionConfigurationClass);
+                        var type = Type.GetType(state.StateConfigurationClass);
 
                         if (type == null)
                         {
-                            throw new StateException(state, $"Can't resolve {state.ActionConfigurationClass}");
+                            throw new StateException(state, $"Can't resolve {state.StateConfigurationClass}");
                         }
 
                         var instance = (IConfigureState)Activator.CreateInstance(type);
@@ -285,7 +285,7 @@ namespace Headway.Core.Extensions
                             MethodInfo = methodInfo
                         };
 
-                        stateConfigurationCache.Add(state.ActionConfigurationClass, stateConfiguration);
+                        stateConfigurationCache.Add(state.StateConfigurationClass, stateConfiguration);
                     }
                 }
 
