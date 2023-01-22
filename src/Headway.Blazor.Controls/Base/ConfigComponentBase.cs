@@ -1,6 +1,5 @@
-﻿using Headway.Core.Model;
-using Headway.RequestApi.Requests;
-using MediatR;
+﻿using Headway.Core.Interface;
+using Headway.Core.Model;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -10,7 +9,7 @@ namespace Headway.Blazor.Controls.Base
     public abstract class ConfigComponentBase : HeadwayComponentBase
     {
         [Inject]
-        public IMediator Mediator { get; set; }
+        public IConfigurationApiRequest ConfigurationApiRequest { get; set; }
 
         protected Config config;
 
@@ -18,8 +17,8 @@ namespace Headway.Blazor.Controls.Base
         {
             try
             {
-                var response = await Mediator.Send(new ConfigGetByNameRequest(configName)).ConfigureAwait(false);
-                config = GetResponse(response.Config);
+                var response = await ConfigurationApiRequest.GetConfigAsync(configName).ConfigureAwait(false);
+                config = GetResponse(response);
             }
             catch (Exception ex)
             {
