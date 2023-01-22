@@ -92,7 +92,6 @@ builder.Services.AddSingleton<IStateNotification, StateNotification>();
 builder.Services.AddTransient<IShowDialogService, ShowDialogService>();
 builder.Services.AddTransient<ModulesGetRequestHandler>();
 builder.Services.AddTransient<ConfigGetByNameRequestHandler>();
-builder.Services.AddTransient<OptionItemsRequestHandler>();
 builder.Services.AddTransient<LogRequestHandler>();
 
 builder.Services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>

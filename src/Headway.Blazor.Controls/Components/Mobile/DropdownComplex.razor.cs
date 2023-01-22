@@ -20,7 +20,7 @@ namespace Headway.Blazor.Controls.Components.Mobile
         public IStateNotification StateNotification { get; set; }
 
         [Inject]
-        public IOptionsApiRequest OptionsService { get; set; }
+        public IOptionsApiRequest OptionsApiRequest { get; set; }
 
         protected IEnumerable<GenericItem<T>> optionItems;
 
@@ -50,7 +50,7 @@ namespace Headway.Blazor.Controls.Components.Mobile
 
             var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
 
-            var result = await OptionsService.GetOptionItemsAsync<T>(ComponentArgs).ConfigureAwait(false);
+            var result = await OptionsApiRequest.GetOptionItemsAsync<T>(ComponentArgs).ConfigureAwait(false);
 
             var items = GetResponse(result);
 
