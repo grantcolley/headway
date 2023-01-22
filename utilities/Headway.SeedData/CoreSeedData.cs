@@ -55,6 +55,8 @@ namespace Headway.SeedData
 
             FlowsConfig();
             FlowConfig();
+            StateConfig();
+            StatesListDetailConfig();
         }
 
         private static void TruncateTables()
@@ -822,6 +824,61 @@ namespace Headway.SeedData
             flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ConfigureStatesDuringBootstrap", Label = "Configure States During Bootstrap", Order = 4, ConfigContainer = flowConfigContainer, Component = "Headway.Blazor.Controls.Components.Checkbox, Headway.Blazor.Controls" });
             flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = flowAuthConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
             flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Assigned Permissions", Order = 6, ConfigContainer = flowAuthConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
+            flowConfig.ConfigItems.Add(new ConfigItem { PropertyName = "States", Label = "States", Order = 7, ConfigContainer = statesContainer, Component = "Headway.Blazor.Controls.Components.GenericField, Headway.Blazor.Controls", ConfigName = "State", ComponentArgs = $"Name={Args.LIST_CONFIG};Value=StatesListDetail" });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void StateConfig()
+        {
+            var stateConfig = new Config
+            {
+                Name = "State",
+                Title = "State",
+                Description = "A state represents a step in a flow.",
+                Model = "Headway.Core.Model.State, Headway.Core",
+                ModelApi = "Flow",
+                CreateLocal = true,
+                Document = "Headway.Blazor.Controls.Documents.ListDetail`1, Headway.Blazor.Controls"
+            };
+
+            dbContext.Configs.Add(stateConfig);
+
+            var stateConfigContainer = new ConfigContainer { Name = "State Div", Code = "STATE_DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "State", Order = 1 };
+
+            stateConfig.ConfigContainers.Add(stateConfigContainer);
+
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StateId", Label = "State Id", IsIdentity = true, Order = 1, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 2, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StateCode", Label = "State Code", Order = 3, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ParentStateCode", Label = "Parent State Code", Order = 4, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StateType", Label = "State Type", Order = 5, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.GenericDropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.COMPONENT};Value=Headway.Blazor.Controls.Components.DropdownEnum`1, Headway.Blazor.Controls|Name={Args.MODEL};Value=Headway.Core.Enums.StateType, Headway.Core" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Position", Label = "Position", Order = 6, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Integer, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "SubStateCodes", Label = "Sub State Codes", Order = 7, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "TransitionStateCodes", Label = "Transition State Codes", Order = 8, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RegressionStateCodes", Label = "Regression State Codes", Order = 9, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StateConfigurationClass", Label = "State Configuration Class", Order = 10, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Permissions", Label = "Permissions", Order = 11, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+
+            dbContext.SaveChanges();
+        }
+
+        private static void StatesListDetailConfig()
+        {
+            var statesListDetailConfig = new Config
+            {
+                Name = "StatesListDetail",
+                Title = "StatesListDetail",
+                Description = "List of states in the flow.",
+                Model = "Headway.Core.Model.State, Headway.Core",
+                ModelApi = "Flow",
+                OrderModelBy = "Position"
+            };
+
+            dbContext.Configs.Add(statesListDetailConfig);
+
+            statesListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", Order = 1 });
+            statesListDetailConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Position", Label = "Position", Order = 2 });
 
             dbContext.SaveChanges();
         }
