@@ -48,7 +48,6 @@ builder.Services.AddSingleton<IAppCache, AppCache>();
 builder.Services.AddSingleton<IConfigCache, ConfigCache>();
 builder.Services.AddSingleton<IStateNotification, StateNotification>();
 builder.Services.AddTransient<IShowDialogService, ShowDialogService>();
-builder.Services.AddTransient<ModulesGetRequestHandler>();
 builder.Services.AddTransient<ConfigGetByNameRequestHandler>();
 builder.Services.AddTransient<LogRequestHandler>();
 

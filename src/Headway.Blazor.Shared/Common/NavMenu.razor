@@ -10,7 +10,7 @@
     public IAppCache AppCache { get; set; }
 
     [Inject]
-    public IMediator Mediator { get; set; }
+    public IModuleApiRequest ModuleApiRequest { get; set; }
 
     [Inject]
     AuthenticationStateProvider AuthenticationStateProvider { get; set; }
@@ -26,8 +26,7 @@
         {
             if (user.HasClaim(c => c.Value.Equals(Claims.HEADWAY_USER)))
             {
-                var response = await Mediator.Send(new ModulesGetRequest()).ConfigureAwait(false);
-                modules = response.Modules;
+                modules = await ModuleApiRequest.GetModulesAsync().ConfigureAwait(false);
             }
         }
 
