@@ -7,10 +7,7 @@ using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
 using Headway.RequestApi.Api;
-using Headway.RequestApi.Requests;
-using MediatR;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Controls.Hosting;
@@ -35,7 +32,6 @@ namespace Headway.App.Blazor.Maui
                 });
 
             builder.Services.AddMauiBlazorWebView();
-            builder.Services.AddMediatR(typeof(ModuleApiRequest).Assembly);
             builder.Services.AddMudServices();
 
             string appSettings = string.Empty;
@@ -97,10 +93,6 @@ namespace Headway.App.Blazor.Maui
             builder.Services.AddSingleton<IConfigCache, ConfigCache>();
             builder.Services.AddSingleton<IStateNotification, StateNotification>();
             builder.Services.AddTransient<IShowDialogService, ShowDialogService>();
-            builder.Services.AddTransient<ModulesGetRequestHandler>();
-            builder.Services.AddTransient<ConfigGetByNameRequestHandler>();
-            builder.Services.AddTransient<OptionItemsRequestHandler>();
-            builder.Services.AddTransient<LogRequestHandler>();
 
             builder.Services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>
             {
