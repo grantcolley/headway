@@ -1,11 +1,10 @@
-﻿using Headway.Core.Attributes;
+﻿using Headway.Blazor.Controls.Base;
+using Headway.Core.Attributes;
 using Headway.Core.Constants;
 using Headway.Core.Extensions;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
-using Headway.Blazor.Controls.Base;
-using Headway.RequestApi.Requests;
-using MediatR;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace Headway.Blazor.Controls.SearchComponents
         public IStateNotification StateNotification { get; set; }
 
         [Inject]
-        public IMediator Mediator { get; set; }
+        public IOptionsApiRequest OptionsApiRequest { get; set; }
 
         protected IEnumerable<OptionItem> optionItems;
 
@@ -42,9 +41,9 @@ namespace Headway.Blazor.Controls.SearchComponents
         {
             LinkFieldCheck();
 
-            var result = await Mediator.Send(new SearchOptionItemsRequest(ComponentArgs)).ConfigureAwait(false);
+            var result = await OptionsApiRequest.GetOptionItemsAsync(ComponentArgs).ConfigureAwait(false);
 
-            optionItems = GetResponse(result.OptionItems);
+            optionItems = GetResponse(result);
 
             OptionItem selectedItem = null;
 
