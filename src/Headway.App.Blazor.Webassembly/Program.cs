@@ -6,8 +6,6 @@ using Headway.Core.Cache;
 using Headway.Core.Interface;
 using Headway.Core.Notifications;
 using Headway.RequestApi.Api;
-using Headway.RequestApi.Requests;
-using MediatR;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -48,8 +46,6 @@ builder.Services.AddSingleton<IAppCache, AppCache>();
 builder.Services.AddSingleton<IConfigCache, ConfigCache>();
 builder.Services.AddSingleton<IStateNotification, StateNotification>();
 builder.Services.AddTransient<IShowDialogService, ShowDialogService>();
-builder.Services.AddTransient<ConfigGetByNameRequestHandler>();
-builder.Services.AddTransient<LogRequestHandler>();
 
 builder.Services.AddTransient<IModuleApiRequest, ModuleApiRequest>(sp =>
 {
@@ -88,7 +84,6 @@ builder.Services.AddTransient<ILogApiRequest, LogApiRequest>(sp =>
     return new LogApiRequest(httpClient);
 });
 
-builder.Services.AddMediatR(typeof(ModuleApiRequest).Assembly);
 builder.Services.AddMudServices();
 
 builder.Services.UseAdditionalAssemblies(new[] { typeof(Redress).Assembly });
