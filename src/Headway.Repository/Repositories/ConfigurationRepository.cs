@@ -74,11 +74,14 @@ namespace Headway.Repository.Repositories
 
         public async Task<Config> AddConfigAsync(Config config)
         {
-            var flow = await applicationDbContext.Flows
-                .FirstAsync(f => f.FlowId.Equals(config.Flow.FlowId))
-                .ConfigureAwait(false);
+            if (config.Flow != null)
+            {
+                var flow = await applicationDbContext.Flows
+                    .FirstAsync(f => f.FlowId.Equals(config.Flow.FlowId))
+                    .ConfigureAwait(false);
 
-            config.Flow = flow;
+                config.Flow = flow;
+            }
 
             config.ConfigContainers = GenericTreeHelper.GetFlattenedTree<Config, ConfigContainer>(config, genericTreeHelperArgs);
 
@@ -111,31 +114,24 @@ namespace Headway.Repository.Repositories
             }
             else
             {
-                if (config.Flow == null
-                    && config.FlowId.HasValue)
+                if (config.Flow == null)
                 {
-                    config.FlowId = null;
+                    existing.FlowId = null;
+                    existing.Flow = null;
                 }
-                else if (config.Flow != null
-                    && config.FlowId.HasValue
-                    && config.FlowId != config.Flow.FlowId)
-                {
-                    config.FlowId = config.Flow.FlowId;
-                }
-
-                applicationDbContext
-                    .Entry(existing)
-                    .CurrentValues.SetValues(config);
-
-                if (!existing.FlowId.Equals(config.FlowId))
+                else if (config.Flow != null)
                 {
                     var flow = await applicationDbContext.Flows
-                            .FirstAsync(f => f.FlowId.Equals(config.FlowId))
+                            .FirstAsync(f => f.FlowId.Equals(config.Flow.FlowId))
                             .ConfigureAwait(false);
 
                     existing.FlowId = flow.FlowId;
                     existing.Flow = flow;
                 }
+
+                applicationDbContext
+                    .Entry(existing)
+                    .CurrentValues.SetValues(config);
 
                 var removeConfigItems = (from configItem in existing.ConfigItems
                                          where !config.ConfigItems.Any(i => i.ConfigItemId.Equals(configItem.ConfigItemId))
