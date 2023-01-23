@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Repository.Repositories
@@ -65,6 +66,33 @@ namespace Headway.Repository.Repositories
                 applicationDbContext
                     .Entry(existing)
                     .CurrentValues.SetValues(flow);
+            }
+
+            var removeStates = (from state in existing.States
+                                     where !flow.States.Any(s => s.StateId.Equals(state.StateId))
+                                     select state)
+                                     .ToList();
+
+            applicationDbContext.RemoveRange(removeStates);
+
+            foreach (var state in flow.States)
+            {
+                State existingState = null;
+
+                if (state.StateId > 0)
+                {
+                    existingState = existing.States
+                        .FirstOrDefault(s => s.StateId.Equals(state.StateId));
+                }
+
+                if (existingState == null)
+                {
+                    existing.States.Add(state);
+                }
+                else
+                {
+                    applicationDbContext.Entry(existingState).CurrentValues.SetValues(state);
+                }
             }
 
             await applicationDbContext
