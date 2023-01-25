@@ -4,6 +4,7 @@ using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Headway.Core.Extensions
 {
@@ -11,6 +12,13 @@ namespace Headway.Core.Extensions
     {
         private static readonly IDictionary<string, FlowConfiguration> flowConfigurationCache = new Dictionary<string, FlowConfiguration>();
         private static readonly object flowConfigurationCacheLock = new();
+
+        public static void Bootstrap(this Flow flow, List<FlowHistory> history)
+        {
+            flow.History.Clear();
+            flow.History.AddRange(history);
+            flow.Bootstrap();
+        }
 
         public static void Bootstrap(this Flow flow)
         {
