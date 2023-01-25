@@ -80,6 +80,7 @@ namespace Headway.Repository.Repositories
                     .FirstAsync(f => f.FlowId.Equals(config.Flow.FlowId))
                     .ConfigureAwait(false);
 
+                config.FlowId = flow.FlowId;
                 config.Flow = flow;
             }
 
@@ -101,6 +102,7 @@ namespace Headway.Repository.Repositories
         public async Task<Config> UpdateConfigAsync(Config config)
         {
             var existing = await applicationDbContext.Configs
+                .Include(c => c.Flow)
                 .Include(c => c.ConfigItems)
                 .Include(c => c.ConfigSearchItems)
                 .Include(c => c.ConfigContainers)
@@ -125,8 +127,7 @@ namespace Headway.Repository.Repositories
                             .FirstAsync(f => f.FlowId.Equals(config.Flow.FlowId))
                             .ConfigureAwait(false);
 
-                    existing.FlowId = flow.FlowId;
-                    existing.Flow = flow;
+                    config.FlowId = flow.FlowId;
                 }
 
                 applicationDbContext
