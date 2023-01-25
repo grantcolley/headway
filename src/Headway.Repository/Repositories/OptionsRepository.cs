@@ -223,6 +223,7 @@ namespace Headway.Repository.Repositories
 
             if (flows.Any())
             {
+                flows.Insert(0, new Flow());
                 return JsonSerializer.Serialize(flows);
             }
             else
