@@ -21,4 +21,10 @@
     <ProjectReference Include="..\..\utilities\Headway.SeedData\Headway.SeedData.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
