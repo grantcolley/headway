@@ -3,6 +3,7 @@ using Headway.Core.Exceptions;
 using Headway.Core.Extensions;
 using Headway.Core.Tests.Helpers;
 using Headway.SeedData.RemediatR;
+using System.Text.Json;
 
 namespace Headway.Core.Tests
 {
@@ -113,7 +114,7 @@ namespace Headway.Core.Tests
         {
             // Arrange
             var flow = FlowHelper.CreateFlow(2);
-            
+
             flow.Bootstrap();
 
             // Act
@@ -168,7 +169,7 @@ namespace Headway.Core.Tests
             Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
 
             // Act
-            await flow.FinalState.ResetAsync(flow.States[1].StateCode); 
+            await flow.FinalState.ResetAsync(flow.States[1].StateCode);
 
             //Assert
             Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
@@ -203,6 +204,34 @@ namespace Headway.Core.Tests
             //Assert
             Assert.AreEqual(FlowStatus.NotStarted, flow.FlowStatus);
             Assert.AreEqual(flow.RootState, flow.ActiveState);
+        }
+
+        [TestMethod]
+        public async Task Flow_History_REDRESS_CREATE_TO_FINAL_REDRESS_REVIEW()
+        {
+            // Arrange
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+            var expectedResults = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
+
+            // Act
+            flow.Bootstrap();
+            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync();
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var actualResults = JsonSerializer.Serialize(flow.History, options);
+
+            // Assert
+            Assert.AreEqual(expectedResults, actualResults);
         }
     }
 }
