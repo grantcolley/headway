@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
@@ -7,6 +8,8 @@ namespace Headway.Core.Model
     {
         public int FlowHistoryId { get; set; }
         public StateStatus StateStatus { get; set; }
+
+        [JsonIgnore]
         public Flow Flow { get; set; }
 
         [StringLength(50)]
