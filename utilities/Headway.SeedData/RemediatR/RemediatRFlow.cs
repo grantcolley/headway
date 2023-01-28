@@ -90,6 +90,7 @@ namespace Headway.SeedData.RemediatR
             ResressFlow = new Flow
             {
                 Name = "RemediatR",
+                FlowCode = "REMEDIATR",
                 Permissions = $"{RemediatRAuthorisation.REDRESS_READ}",
                 FlowConfigurationClass = "RemediatR.Core.Flow.RedressFlowConfiguration, RemediatR.Core",
                 ConfigureStatesDuringBootstrap = true,
