@@ -2,6 +2,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
     "Event": "Initialize",
     "Owner": null,
@@ -14,6 +15,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
     "Event": "Completed",
     "Owner": null,
@@ -26,6 +28,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
     "Event": "Initialize",
     "Owner": null,
@@ -38,6 +41,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
     "Event": "Initialize",
     "Owner": null,
@@ -50,6 +54,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
     "Event": "Completed",
     "Owner": null,
@@ -62,6 +67,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
     "Event": "Initialize",
     "Owner": null,
@@ -74,6 +80,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
     "Event": "Completed",
     "Owner": null,
@@ -86,6 +93,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
     "Event": "Completed",
     "Owner": null,
@@ -98,6 +106,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",
     "Event": "Initialize",
     "Owner": null,
@@ -110,6 +119,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",
     "Event": "Completed",
     "Owner": null,
@@ -122,6 +132,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_REVIEW",
     "Event": "Initialize",
     "Owner": null,
@@ -134,6 +145,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_REVIEW",
     "Event": "Completed",
     "Owner": null,
@@ -146,6 +158,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_VALIDATION",
     "Event": "Initialize",
     "Owner": null,
@@ -158,6 +171,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_VALIDATION",
     "Event": "Completed",
     "Owner": null,
@@ -170,6 +184,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_GENERATION",
     "Event": "Initialize",
     "Owner": null,
@@ -182,6 +197,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_GENERATION",
     "Event": "Completed",
     "Owner": null,
@@ -194,6 +210,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_DISPATCH",
     "Event": "Initialize",
     "Owner": null,
@@ -206,6 +223,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_DISPATCH",
     "Event": "Completed",
     "Owner": null,
@@ -218,6 +236,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "RESPONSE_REQUIRED",
     "Event": "Initialize",
     "Owner": null,
@@ -230,6 +249,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "RESPONSE_REQUIRED",
     "Event": "Completed",
     "Owner": null,
@@ -242,6 +262,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "AWAITING_RESPONSE",
     "Event": "Initialize",
     "Owner": null,
@@ -254,6 +275,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "AWAITING_RESPONSE",
     "Event": "Completed",
     "Owner": null,
@@ -266,6 +288,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "PAYMENT_GENERATION",
     "Event": "Initialize",
     "Owner": null,
@@ -278,6 +301,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "PAYMENT_GENERATION",
     "Event": "Completed",
     "Owner": null,
@@ -290,6 +314,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "FINAL_REDRESS_REVIEW",
     "Event": "Initialize",
     "Owner": null,
@@ -302,6 +327,7 @@
   {
     "FlowHistoryId": 0,
     "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
     "StateCode": "FINAL_REDRESS_REVIEW",
     "Event": "Completed",
     "Owner": null,
