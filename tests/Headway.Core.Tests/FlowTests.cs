@@ -264,6 +264,7 @@ namespace Headway.Core.Tests
             for (int i = 0; i < flow.History.Count; i++)
             {
                 Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
+                Assert.AreEqual(expectedHistory[i].FlowCode, flow.History[i].FlowCode);
                 Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
                 Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
             }
