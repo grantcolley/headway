@@ -168,6 +168,7 @@ namespace Headway.Core.Extensions
             {
                 Event = eventname,
                 Flow = state.Flow,
+                FlowCode = state.Flow.FlowCode,
                 StateCode = state.StateCode,
                 StateStatus = state.StateStatus,
                 Owner = state.Owner,
