@@ -76,6 +76,13 @@ namespace Headway.Core.Model
         public string Name { get; set; }
 
         /// <summary>
+        /// The code of the flow.
+        /// </summary>
+        [Required]
+        [StringLength(50)]
+        public string FlowCode { get; set; }
+
+        /// <summary>
         /// A flag indicating whether the flow bootstrap 
         /// routine has been completed.
         /// </summary>
