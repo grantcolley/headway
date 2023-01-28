@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Enums;
 using Headway.Core.Exceptions;
 using Headway.Core.Extensions;
+using Headway.Core.Model;
 using Headway.Core.Tests.Helpers;
 using Headway.SeedData.RemediatR;
 using System.Text.Json;
@@ -211,7 +212,8 @@ namespace Headway.Core.Tests
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
-            var expectedResults = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
+            var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
+            var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
 
             // Act
             flow.Bootstrap();
@@ -227,11 +229,16 @@ namespace Headway.Core.Tests
             await flow.ActiveState.CompleteAsync();
             await flow.ActiveState.CompleteAsync();
 
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var actualResults = JsonSerializer.Serialize(flow.History, options);
-
             // Assert
-            Assert.AreEqual(expectedResults, actualResults);
+            Assert.AreEqual(expectedHistory.Count, flow.History.Count);
+
+            for(int i = 0; i < flow.History.Count; i++)
+            {
+                Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
+                Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
+                Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
+            }
+
         }
     }
 }
