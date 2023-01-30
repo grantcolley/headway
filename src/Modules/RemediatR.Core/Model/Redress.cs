@@ -2,6 +2,7 @@
 using Headway.Core.Attributes;
 using Headway.Core.Model;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -11,6 +12,11 @@ namespace RemediatR.Core.Model
     [DynamicModel]
     public class Redress : ModelBase
     {
+        public Redress() 
+        {
+            RedressFlowHistory = new List<RedressFlowHistory>();
+        }
+
         public int RedressId { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
@@ -18,6 +24,7 @@ namespace RemediatR.Core.Model
         public Program Program { get; set; }
         public int RefundCalculationId { get; set; }
         public RefundCalculation RefundCalculation { get; set; }
+        public List<RedressFlowHistory> RedressFlowHistory { get; set; }
 
         [MaxLength(50)]
         public string? RedressCaseOwner { get; set; }
