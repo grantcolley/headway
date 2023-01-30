@@ -40,7 +40,6 @@ namespace Headway.Repository.Data
 
         // Flow
         public DbSet<Flow> Flows { get; set; }
-        public DbSet<FlowHistory> FlowHistory { get; set; }
         public DbSet<State> States { get; set; }
 
         // RemediatR
@@ -49,6 +48,7 @@ namespace Headway.Repository.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Program> Programs { get; set; }
         public DbSet<Redress> Redresses { get; set; }
+        public DbSet<RedressFlowHistory> RedressFlowHistory { get; set; }
         public DbSet<RefundCalculation> RefundCalculations { get; set; }
 
         public void SetUser(string user)
