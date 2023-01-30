@@ -47,11 +47,6 @@ namespace Headway.Core.Model
         public List<State> States { get; set; }
 
         /// <summary>
-        /// A record of states transitioning through the flow.  
-        /// </summary>
-        public List<FlowHistory> History { get; set; }
-
-        /// <summary>
         /// The class dynamically loaded during the flow bootstrap 
         /// routine for configuring state actions to be invoked at 
         /// runtime. This class can contain actions to be applied 
@@ -81,6 +76,12 @@ namespace Headway.Core.Model
         [Required]
         [StringLength(50)]
         public string FlowCode { get; set; }
+
+        /// <summary>
+        /// A record of states transitioning through the flow.  
+        /// </summary>
+        [NotMapped]
+        public List<FlowHistory> History { get; set; }
 
         /// <summary>
         /// A flag indicating whether the flow bootstrap 
