@@ -1,18 +1,12 @@
 ﻿using Headway.Core.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
     public class FlowHistory : ModelBase
     {
-        public int FlowHistoryId { get; set; }
-
         [Required]
         public StateStatus StateStatus { get; set; }
-
-        [JsonIgnore]
-        public Flow Flow { get; set; }
 
         [Required]
         [StringLength(50)]
