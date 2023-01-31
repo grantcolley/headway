@@ -30,6 +30,7 @@ namespace Headway.Repository.Repositories
             optionItems[Options.CONFIG_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetConfigOptionItems);
             optionItems[Options.PERMISSIONS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetPermissionsOptionItems);
             optionItems[Options.COUNTRY_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetCountryOptionItems);
+            optionItems[Options.AUTHORIZED_USERS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetAuthorisedUsers);
             optionItems[RemediatROptions.PROGRAMS_OPTION_ITEMS] = new Func<List<Arg>, Task<IEnumerable<OptionItem>>>(GetRemediatRPrograms);
 
             complexOptionItems[Options.CONFIG_CONTAINERS] = new Func<List<Arg>, Task<string>>(GetConfigContainers);
@@ -150,6 +151,40 @@ namespace Headway.Repository.Repositories
             List<OptionItem> optionItems = new() { new OptionItem() };
 
             optionItems.AddRange(configs.Select(p => new OptionItem { Id = p.Name, Display = p.Name }).ToList());
+
+            return optionItems;
+        }
+
+        private async Task<IEnumerable<OptionItem>> GetAuthorisedUsers(List<Arg> args)
+        {
+            List<User> users = new List<User>();
+
+            var level = args.ArgValue(Args.AUTHORIZED_LEVEL);
+            var value = args.ArgValue(Args.VALUE);
+
+            if (level != null)
+            {
+                if (level.Equals(Args.AUTHORIZED_ROLE))
+                {
+                    users.AddRange(await applicationDbContext.Users
+                        .Where(u => u.Roles.Any(r => r.Name.Equals(value)))
+                        .ToListAsync());
+                }
+                else if (level.Equals(Args.AUTHORIZED_PERMISSION))
+                {
+                    users.AddRange(await applicationDbContext.Users
+                        .Where(u => u.Permissions.Any(p => p.Name.Equals(value))
+                            || u.Roles.SelectMany(r => r.Permissions).Any(p => p.Name.Equals(value)))
+                        .ToListAsync());
+                }
+            }
+
+            List<OptionItem> optionItems = new() { new OptionItem() };
+
+            if (users.Any())
+            {
+                optionItems.AddRange(users.Select(u => new OptionItem { Id = u.Email, Display = u.Email }).ToList());
+            }
 
             return optionItems;
         }
