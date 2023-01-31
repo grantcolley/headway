@@ -16,5 +16,6 @@
         public const string STATIC_OPTION_ITEMS = "StaticOptionItems";
         public const string COMPLEX_OPTION_ITEMS = "ComplexOptionItems";
         public const string FLOWS_COMPLEX_OPTION_ITEMS = "Flows";
+        public const string AUTHORIZED_USERS = "AuthorizedUsers";
     }
 }
