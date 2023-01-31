@@ -27,5 +27,9 @@
         public const string UNIQUE_PROPERTY = "UniqueProperty";
         public const string UNIQUE_PARENT_PROPERTY = "ParentUniqueProperty";
         public const string VALUE = "Value";
+        public const string AUTHORIZED_LEVEL = "AuthorizedLevel";
+        public const string AUTHORIZED_ROLE = "AuthorizedRole";
+        public const string AUTHORIZED_PERMISSION = "AuthorizedPermission";
+
     }
 }
