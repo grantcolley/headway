@@ -554,7 +554,8 @@ namespace RemediatR.Repository
             {
                 Product = product,
                 Program = program,
-                RefundCalculation = redress.RefundCalculation
+                RefundCalculation = redress.RefundCalculation,
+                RedressCaseOwner = redress.RedressCaseOwner,
             };
 
             await applicationDbContext.RefundCalculations
