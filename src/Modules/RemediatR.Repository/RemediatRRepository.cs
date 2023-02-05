@@ -519,10 +519,16 @@ namespace RemediatR.Repository
                     .FirstAsync(p => p.ProductId.Equals(productId))
                     .ConfigureAwait((false));
 
-                return new Redress 
-                { 
+                var flow = await applicationDbContext.Flows
+                    .Include(f => f.States)
+                    .FirstAsync(f => f.FlowCode.Equals("REMEDIATR"))
+                    .ConfigureAwait(false);
+
+                return new Redress
+                {
                     Product = product,
-                    RefundCalculation = new RefundCalculation()
+                    RefundCalculation = new RefundCalculation(),
+                    RedressFlowContext = new RedressFlowContext { Flow = flow }
                 };
             }
         }
@@ -534,6 +540,10 @@ namespace RemediatR.Repository
                 .Include(r => r.RefundCalculation)
                 .Include(r => r.Product)
                     .ThenInclude(p => p.Customer)
+                .Include(rc => rc.RedressFlowContext)
+                    .ThenInclude(f => f.Flow)
+                .Include(rc => rc.RedressFlowContext)
+                    .ThenInclude(f => f.RedressFlowHistory)
                 .AsNoTracking()
                 .FirstAsync(r => r.RedressId.Equals(id))
                 .ConfigureAwait(false);
