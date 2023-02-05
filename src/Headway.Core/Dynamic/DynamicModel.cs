@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Constants;
 using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,14 @@ namespace Headway.Core.Dynamic
 
             SetStaticFields();
 
+            BootstrapFlow();
+
             BuildDynamicComponents();
         }
 
         public T Model { get; private set; }
         public Config Config { get; private set; }
+        public IFlowContext FlowContext { get; private set; }
         public DynamicTypeHelper<T> Helper { get; private set; }
         public List<DynamicContainer> RootContainers { get; set; }
         public List<DynamicField> DynamicFields { get; private set; }
@@ -95,6 +99,17 @@ namespace Headway.Core.Dynamic
                 {
                     Title = property.GetValue(Model)?.ToString();
                 }
+            }
+        }
+
+        private void BootstrapFlow()
+        {
+            var flowContextPropertyInfo = Helper.SupportedProperties
+                .FirstOrDefault(p => typeof(IFlowContext).IsAssignableFrom(p.PropertyType));
+            
+            if(flowContextPropertyInfo != null) 
+            {
+                FlowContext = (IFlowContext)flowContextPropertyInfo.GetValue(Model);
             }
         }
 
