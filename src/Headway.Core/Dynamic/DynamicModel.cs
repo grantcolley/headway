@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Constants;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
@@ -110,6 +111,8 @@ namespace Headway.Core.Dynamic
             if(flowContextPropertyInfo != null) 
             {
                 FlowContext = (IFlowContext)flowContextPropertyInfo.GetValue(Model);
+
+                FlowContext.Flow.Bootstrap(FlowContext.GetFlowHistory());
             }
         }
 
