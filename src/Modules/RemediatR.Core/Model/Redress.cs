@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Headway.Core.Attributes;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -173,7 +174,12 @@ namespace RemediatR.Core.Model
         public RedressValidator()
         {
             RuleFor(v => v.Program)
-                .NotNull().WithMessage("Program is required");
+                .NotNull()
+                .WithMessage("Program is required")
+                .When(v => v.RedressFlowContext != null
+                && v.RedressFlowContext.Flow != null
+                && v.RedressFlowContext.Flow.ActiveState != null
+                && v.RedressFlowContext.Flow.ActiveState.StateCode.Equals("REDRESS_CREATE"));
 
             RuleFor(v => v.Product)
                 .NotNull().WithMessage("Product is required");
