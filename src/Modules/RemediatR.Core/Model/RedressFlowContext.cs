@@ -1,5 +1,7 @@
 ﻿using Headway.Core.Interface;
+using Headway.Core.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RemediatR.Core.Model
 {
@@ -16,5 +18,10 @@ namespace RemediatR.Core.Model
         public int RedressId { get; set; }
         public Redress Redress { get; set; }
         public List<RedressFlowHistory> RedressFlowHistory { get; set; }
+
+        public List<FlowHistory> GetFlowHistory()
+        {
+            return RedressFlowHistory.ToList<FlowHistory>();
+        }
     }
 }
