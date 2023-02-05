@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Model;
+using System.Collections.Generic;
 
 namespace Headway.Core.Interface
 {
@@ -6,5 +7,6 @@ namespace Headway.Core.Interface
     {
         int FlowId { get; set; }
         Flow Flow { get; set; }
+        List<FlowHistory> GetFlowHistory();
     }
 }
