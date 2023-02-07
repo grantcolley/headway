@@ -178,7 +178,8 @@ namespace Headway.Core.Dynamic
                 Label = configContainer.Label,
                 Code = configContainer.Code,
                 ParentCode = configContainer.ParentCode,
-                ComponentArgs = configContainer.ComponentArgs
+                ComponentArgs = configContainer.ComponentArgs,
+                FlowArgs = configContainer.FlowArgs,
             };
 
             ComponentArgHelper.AddDynamicArgs(dynamicContainer, dynamicFields);
