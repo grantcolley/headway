@@ -40,6 +40,9 @@ namespace Headway.Core.Model
 
         [StringLength(350)]
         public string ComponentArgs { get; set; }
+
+        [StringLength(350)]
+        public string FlowArgs { get; set; }
     }
 
     public class ConfigContainerValidator : AbstractValidator<ConfigContainer>
@@ -66,6 +69,9 @@ namespace Headway.Core.Model
 
             RuleFor(v => v.ComponentArgs)
                 .Length(1, 350).WithMessage("Component Args cannot exceed 350 characters");
+
+            RuleFor(v => v.FlowArgs)
+                .Length(1, 350).WithMessage("Flow Args cannot exceed 350 characters");
         }
     }
 }
