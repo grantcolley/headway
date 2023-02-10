@@ -300,7 +300,7 @@ namespace Headway.SeedData
             dbContext.Configs.Add(roleConfig);
 
             var roleConfigContainer = new ConfigContainer { Name = "Role Div", Code = "ROLE DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Role", Order = 1 };
-            var authConfigContainer = new ConfigContainer { Name = "Role Auth Div", Code = "ROLE AUTH DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var authConfigContainer = new ConfigContainer { Name = "Role Auth Div", Code = "ROLE AUTH DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Authorisation", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
             var memberConfigContainer = new ConfigContainer { Name = "Role Membership Div", Code = "ROLE MEMBERSHIP DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             roleConfig.ConfigContainers.Add(roleConfigContainer);
@@ -362,7 +362,7 @@ namespace Headway.SeedData
             dbContext.Configs.Add(userConfig);
 
             var userConfigContainer = new ConfigContainer { Name = "User Div", Code = "USER DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "User", Order = 1 };
-            var authConfigContainer = new ConfigContainer { Name = "User Auth Div", Code = "USER AUTH DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Authentication", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
+            var authConfigContainer = new ConfigContainer { Name = "User Auth Div", Code = "USER AUTH DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Authorisation", Order = 2, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
             var membConfigContainer = new ConfigContainer { Name = "User Membership Div", Code = "USER MEMBERSHIP DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Membership", Order = 3, ComponentArgs = "Name=LayoutHorizontal;Value=True" };
 
             userConfig.ConfigContainers.Add(userConfigContainer);
