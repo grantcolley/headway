@@ -23,7 +23,14 @@ namespace Headway.Core.Extensions
 
             await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
-            state.StateStatus = StateStatus.InProgress;
+            if (state.IsOwnerRestricted)
+            {
+                state.StateStatus = StateStatus.Active;
+            }
+            else
+            {
+                state.StateStatus = StateStatus.InProgress;
+            }
 
             if (state.Equals(state.Flow.RootState))
             {
