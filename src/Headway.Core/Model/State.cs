@@ -57,10 +57,21 @@ namespace Headway.Core.Model
         /// <summary>
         /// Status of the state:
         ///     - NotStarted
+        ///     - Active
         ///     - InProgress
         ///     - Completed
         /// </summary>
         public StateStatus StateStatus { get; set; }
+
+        /// <summary>
+        /// A flag indicating whether the state can only be modified by it's owner.
+        /// If set to true, when initialised the state Status is set to Active until 
+        /// a user with write permission takes ownership of the stat, automatically 
+        /// setting it to InProgress. 
+        /// If set to false, when initialised the state Status is set to InProgress 
+        /// and can be modfied by any user with write access.
+        /// </summary>
+        public bool IsOwnerRestricted { get; set; }
 
         /// <summary>
         /// The flow associated with the state.
