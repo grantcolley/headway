@@ -119,7 +119,7 @@ namespace Headway.Core.Tests
             flow.Bootstrap();
 
             // Act
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             //Assert
             Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
@@ -135,12 +135,12 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
             // Act
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
             //Assert
             Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
@@ -159,13 +159,13 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
             Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
 
@@ -189,13 +189,13 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
             Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
 
@@ -217,17 +217,17 @@ namespace Headway.Core.Tests
 
             // Act
             flow.Bootstrap();
-            await flow.ActiveState.InitialiseAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
             // Assert
             Assert.AreEqual(expectedHistory.Count, flow.History.Count);
