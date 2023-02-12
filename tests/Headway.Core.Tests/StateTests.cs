@@ -210,7 +210,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             // Act
             await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
@@ -231,7 +231,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             // Act
             await flow.ActiveState.CompleteAsync(flow.States[1].StateCode).ConfigureAwait(false);
@@ -250,7 +250,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             // Act
             await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT").ConfigureAwait(false);
@@ -437,7 +437,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             // Act
             await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
@@ -463,7 +463,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             flow.States[1].AutoActionResult = StateAutoActionResult.AutoRegress;
             flow.States[1].RegressionStateCode = flow.States[0].StateCode;
@@ -493,7 +493,7 @@ namespace Headway.Core.Tests
 
             flow.States[1].StateConfigurationClass = "Headway.Core.Tests.Helpers.StateRoutingHelper, Headway.Core.Tests";
 
-            await flow.ActiveState.InitialiseAsync();
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
 
             // Act
             await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
