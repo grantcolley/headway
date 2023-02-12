@@ -3,7 +3,8 @@
     public enum StateStatus
     {
         NotStarted = 0,
-        InProgress = 1,
-        Completed = 2
+        Active = 1,
+        InProgress = 2,
+        Completed = 3
     }
 }
