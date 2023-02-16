@@ -1,7 +1,6 @@
 ﻿[
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
     "Event": "Initialize",
@@ -13,8 +12,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
     "Event": "Completed",
@@ -26,8 +24,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
     "Event": "Initialize",
@@ -39,8 +36,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
     "Event": "Initialize",
@@ -52,8 +48,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
     "Event": "Completed",
@@ -65,8 +60,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
     "Event": "Initialize",
@@ -78,8 +72,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
     "Event": "Completed",
@@ -91,8 +84,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
     "Event": "Completed",
@@ -104,8 +96,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",
     "Event": "Initialize",
@@ -117,8 +108,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",
     "Event": "Completed",
@@ -130,8 +120,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_REVIEW",
     "Event": "Initialize",
@@ -143,8 +132,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_REVIEW",
     "Event": "Completed",
@@ -156,8 +144,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_VALIDATION",
     "Event": "Initialize",
@@ -169,8 +156,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_VALIDATION",
     "Event": "Completed",
@@ -182,8 +168,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_GENERATION",
     "Event": "Initialize",
@@ -195,8 +180,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_GENERATION",
     "Event": "Completed",
@@ -208,8 +192,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_DISPATCH",
     "Event": "Initialize",
@@ -221,8 +204,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_DISPATCH",
     "Event": "Completed",
@@ -234,8 +216,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "RESPONSE_REQUIRED",
     "Event": "Initialize",
@@ -247,8 +228,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "RESPONSE_REQUIRED",
     "Event": "Completed",
@@ -260,8 +240,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "AWAITING_RESPONSE",
     "Event": "Initialize",
@@ -273,8 +252,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "AWAITING_RESPONSE",
     "Event": "Completed",
@@ -286,8 +264,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "PAYMENT_GENERATION",
     "Event": "Initialize",
@@ -299,8 +276,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "PAYMENT_GENERATION",
     "Event": "Completed",
@@ -312,8 +288,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 1,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "FINAL_REDRESS_REVIEW",
     "Event": "Initialize",
@@ -325,8 +300,7 @@
     "ModifiedBy": null
   },
   {
-    "FlowHistoryId": 0,
-    "StateStatus": 2,
+    "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "FINAL_REDRESS_REVIEW",
     "Event": "Completed",
