@@ -58,7 +58,7 @@ namespace Headway.Core.Tests
             // Assert
             Assert.AreEqual(StateStatus.InProgress, flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).StateStatus);
             Assert.AreEqual(StateStatus.InProgress, flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")), flow.ActiveState);
         }
 
@@ -259,7 +259,7 @@ namespace Headway.Core.Tests
             Assert.AreEqual(StateStatus.Completed, flow.States.FirstState().StateStatus);
             Assert.AreEqual(StateStatus.InProgress, flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).StateStatus);
             Assert.AreEqual(StateStatus.InProgress, flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")), flow.ActiveState);
         }
 
@@ -297,7 +297,7 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.ActiveState.StateStatus = StateStatus.NotStarted;
+            flow.ActiveState.StateStatus = StateStatus.Uninitialized;
 
             try
             {
@@ -307,7 +307,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it's still {StateStatus.NotStarted}.", ex.Message);
+                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it's still {StateStatus.Uninitialized}.", ex.Message);
 
                 throw;
             }
@@ -355,7 +355,7 @@ namespace Headway.Core.Tests
             rc.StateStatus = StateStatus.InProgress;
 
             var rv = flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION"));
-            rv.StateStatus = StateStatus.NotStarted;
+            rv.StateStatus = StateStatus.Uninitialized;
 
             var joinedDescriptions = $"{rc.StateCode}={rc.StateStatus},{rv.StateCode}={rv.StateStatus}";
 
@@ -472,9 +472,9 @@ namespace Headway.Core.Tests
             await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
             //Assert
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[0].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[1].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[2].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[0].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[1].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[2].StateStatus);
             Assert.AreEqual(flow.States[0], flow.ActiveState);
         }
 
@@ -501,7 +501,7 @@ namespace Headway.Core.Tests
             //Assert
             Assert.AreEqual(StateStatus.Completed, flow.States[0].StateStatus);
             Assert.AreEqual(StateStatus.Completed, flow.States[1].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[2].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[2].StateStatus);
             Assert.AreEqual(StateStatus.InProgress, flow.States[3].StateStatus);
             Assert.AreEqual(flow.States[3], flow.ActiveState);
             Assert.AreEqual($"Route {flow.States[1].StateCode} to {flow.ActiveState.StateCode}", flow.States[1].Comment);
@@ -663,7 +663,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[4].Owner);
             Assert.IsNull(flow.States[4].Comment);
             Assert.AreEqual(flow.States[4].StateStatus, flow.History[9].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[4].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[4].StateStatus);
 
             Assert.AreEqual("Reset", flow.History[10].Event);
             Assert.AreEqual(Environment.UserName, flow.History[10].Owner);
@@ -671,7 +671,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[3].Owner);
             Assert.IsNull(flow.States[3].Comment);
             Assert.AreEqual(flow.States[3].StateStatus, flow.History[10].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[3].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[3].StateStatus);
 
             Assert.AreEqual("Reset", flow.History[11].Event);
             Assert.AreEqual(Environment.UserName, flow.History[11].Owner);
@@ -679,7 +679,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[2].Owner);
             Assert.IsNull(flow.States[2].Comment);
             Assert.AreEqual(flow.States[2].StateStatus, flow.History[11].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[2].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[2].StateStatus);
 
             Assert.AreEqual("Reset", flow.History[12].Event);
             Assert.AreEqual(Environment.UserName, flow.History[12].Owner);
@@ -687,7 +687,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[1].Owner);
             Assert.IsNull(flow.States[1].Comment);
             Assert.AreEqual(flow.States[1].StateStatus, flow.History[12].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[1].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[1].StateStatus);
 
             Assert.AreEqual("Reset", flow.History[13].Event);
             Assert.AreEqual(Environment.UserName, flow.History[13].Owner);
@@ -695,7 +695,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[0].Owner);
             Assert.IsNull(flow.States[0].Comment);
             Assert.AreEqual(flow.States[0].StateStatus, flow.History[13].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[0].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[0].StateStatus);
 
             Assert.AreEqual(flow.ActiveState, flow.RootState);
         }
@@ -807,7 +807,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[11].Owner);
             Assert.IsNull(flow.States[11].Comment);
             Assert.AreEqual(flow.States[11].StateStatus, flow.History[15].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[11].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[11].StateStatus);
 
             Assert.AreEqual("Reset", flow.History[16].Event);
             Assert.AreEqual(Environment.UserName, flow.History[16].Owner);
@@ -815,7 +815,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[6].Owner);
             Assert.IsNull(flow.States[6].Comment);
             Assert.AreEqual(flow.States[6].StateStatus, flow.History[16].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[6].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[6].StateStatus);
 
             Assert.AreEqual("Reset", flow.History[17].Event);
             Assert.AreEqual(Environment.UserName, flow.History[17].Owner);
@@ -823,7 +823,7 @@ namespace Headway.Core.Tests
             Assert.IsNull(flow.States[5].Owner);
             Assert.IsNull(flow.States[5].Comment);
             Assert.AreEqual(flow.States[5].StateStatus, flow.History[17].StateStatus);
-            Assert.AreEqual(StateStatus.NotStarted, flow.States[5].StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.States[5].StateStatus);
 
             Assert.AreEqual(flow.ActiveState, flow.States[5]);
         }
@@ -844,7 +844,7 @@ namespace Headway.Core.Tests
             await flow.ActiveState.ResetAsync().ConfigureAwait(false);
 
             //Assert
-            Assert.AreEqual(StateStatus.NotStarted, flow.ActiveState.StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.ActiveState.StateStatus);
             Assert.IsNull(flow.ActiveState.Comment);
             Assert.IsNull(flow.ActiveState.Owner);
         }
@@ -865,7 +865,7 @@ namespace Headway.Core.Tests
             await flow.ActiveState.ResetAsync().ConfigureAwait(false);
 
             // Assert
-            Assert.AreEqual(StateStatus.NotStarted, flow.ActiveState.StateStatus);
+            Assert.AreEqual(StateStatus.Uninitialized, flow.ActiveState.StateStatus);
             Assert.IsNull(flow.ActiveState.Owner);
             Assert.IsNull(flow.ActiveState.Comment);
             Assert.AreEqual($"3 Initialize {flow.ActiveState.StateCode}; 4 Initialize {flow.ActiveState.StateCode}; 5 Reset {flow.ActiveState.StateCode}; 6 Reset {flow.ActiveState.StateCode}", flow.History.Last().Comment);
@@ -913,7 +913,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't reset {flow.ActiveState.StateCode} because it is {StateStatus.NotStarted}.", ex.Message);
+                Assert.AreEqual($"Can't reset {flow.ActiveState.StateCode} because it is {StateStatus.Uninitialized}.", ex.Message);
 
                 throw;
             }
