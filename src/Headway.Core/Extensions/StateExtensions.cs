@@ -16,7 +16,8 @@ namespace Headway.Core.Extensions
 
         public static async Task InitialiseAsync(this State state)
         {
-            if(state.StateStatus.Equals(StateStatus.InProgress)) 
+            if(state.StateStatus.Equals(StateStatus.InProgress)
+                || state.StateStatus.Equals(StateStatus.NotStarted)) 
             {
                 throw new StateException(state, $"Can't initialize {state.StateStatus} because it's already {StateStatus.InProgress}.");
             }
@@ -25,7 +26,7 @@ namespace Headway.Core.Extensions
 
             if (state.IsOwnerRestricted)
             {
-                state.StateStatus = StateStatus.Active;
+                state.StateStatus = StateStatus.NotStarted;
             }
             else
             {
@@ -69,14 +70,11 @@ namespace Headway.Core.Extensions
 
         public static async Task CompleteAsync(this State state, string transitionStateCode = "")
         {
-            if (state.StateStatus.Equals(StateStatus.Completed))
+            if (state.StateStatus.Equals(StateStatus.Completed)
+                || state.StateStatus.Equals(StateStatus.NotStarted)
+                || state.StateStatus.Equals(StateStatus.Uninitialized))
             {
-                throw new StateException(state, $"Can't complete {state.StateCode} because it's already {StateStatus.Completed}.");
-            }
-
-            if (state.StateStatus.Equals(StateStatus.NotStarted))
-            {
-                throw new StateException(state, $"Can't complete {state.StateCode} because it's still {StateStatus.NotStarted}.");
+                throw new StateException(state, $"Can't complete {state.StateCode} because it's already {state.StateStatus}.");
             }
 
             var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
@@ -142,9 +140,9 @@ namespace Headway.Core.Extensions
         public static async Task ResetAsync(this State state, string regressStateCode = "")
         {
             if(string.IsNullOrWhiteSpace(regressStateCode)
-                && state.StateStatus.Equals(StateStatus.NotStarted))
+                && state.StateStatus.Equals(StateStatus.Uninitialized))
             {
-                throw new StateException(state, $"Can't reset {state.StateCode} because it is {StateStatus.NotStarted}.");
+                throw new StateException(state, $"Can't reset {state.StateCode} because it is {StateStatus.Uninitialized}.");
             }
 
             if (!string.IsNullOrWhiteSpace(regressStateCode))
