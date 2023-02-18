@@ -28,8 +28,9 @@ namespace Headway.SeedData.RemediatR
             redressCreate.StateType = StateType.Standard;
             redressCreate.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             redressCreate.TransitionStateCodes = $"{refundAssessment.StateCode}";
+            redressCreate.IsOwnerRestricted = true;
 
-            refundAssessment.StateType= StateType.Standard;
+            refundAssessment.StateType= StateType.Parent;
             refundAssessment.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
             refundAssessment.SubStateCodes = $"{refundCalculation.StateCode};{refundVerification.StateCode}";
             refundAssessment.TransitionStateCodes = $"{refundReview.StateCode}";
@@ -38,20 +39,24 @@ namespace Headway.SeedData.RemediatR
             refundCalculation.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
             refundCalculation.ParentStateCode = $"{refundAssessment.StateCode}";
             refundCalculation.TransitionStateCodes = $"{refundVerification.StateCode}";
+            refundCalculation.IsOwnerRestricted = true;
 
             refundVerification.StateType = StateType.Standard;
             refundVerification.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
             refundVerification.ParentStateCode = $"{refundAssessment.StateCode}";
+            refundVerification.IsOwnerRestricted = true;
 
             refundReview.StateType = StateType.Standard;
             refundReview.Permissions = RemediatRAuthorisation.REFUND_REVIEWER;
             refundReview.TransitionStateCodes = $"{redressReview.StateCode}";
             refundReview.RegressionStateCodes = $"{refundAssessment.StateCode};{redressCreate.StateCode}";
+            refundReview.IsOwnerRestricted = true;
 
             redressReview.StateType = StateType.Standard;
             redressReview.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
             redressReview.TransitionStateCodes = $"{redressValidation.StateCode}";
             redressReview.RegressionStateCodes = $"{redressCreate.StateCode}";
+            redressReview.IsOwnerRestricted = true;
 
             redressValidation.StateType = StateType.Auto;
             redressValidation.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
@@ -67,6 +72,7 @@ namespace Headway.SeedData.RemediatR
             communicationDispatch.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             communicationDispatch.TransitionStateCodes = $"{responseRequired.StateCode}";
             communicationDispatch.RegressionStateCodes = $"{redressReview.StateCode}";
+            communicationDispatch.IsOwnerRestricted = true;
 
             responseRequired.StateType = StateType.Auto;
             responseRequired.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
@@ -77,6 +83,7 @@ namespace Headway.SeedData.RemediatR
             awaitingResponse.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
             awaitingResponse.TransitionStateCodes = $"{paymentGeneration.StateCode}";
             awaitingResponse.RegressionStateCodes = $"{redressReview.StateCode}";
+            awaitingResponse.IsOwnerRestricted = true;
 
             paymentGeneration.StateType = StateType.Standard;
             paymentGeneration.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
@@ -86,6 +93,7 @@ namespace Headway.SeedData.RemediatR
             finalRedressReview.StateType = StateType.Standard;
             finalRedressReview.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
             finalRedressReview.RegressionStateCodes = $"{redressReview.StateCode}";
+            finalRedressReview.IsOwnerRestricted = true;
 
             ResressFlow = new Flow
             {
