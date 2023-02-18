@@ -3,6 +3,7 @@
     public enum StateType
     {
         Standard = 0,
-        Auto = 1
+        Parent = 1,
+        Auto = 2
     }
 }
