@@ -152,6 +152,11 @@ namespace Headway.Core.Extensions
             history.RecordHistory(state, "Initialize");
         }
 
+        public static void RecordStart(this List<FlowHistory> history, State state)
+        {
+            history.RecordHistory(state, "Start");
+        }
+
         public static void RecordCompleted(this List<FlowHistory> history, State state)
         {
             history.RecordHistory(state, "Completed");
