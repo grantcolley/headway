@@ -16,46 +16,77 @@ namespace Headway.Core.Extensions
 
         public static async Task InitialiseAsync(this State state)
         {
-            if(state.StateStatus.Equals(StateStatus.InProgress)
-                || state.StateStatus.Equals(StateStatus.NotStarted)) 
+            if(state.StateStatus.Equals(StateStatus.NotStarted)
+                || state.StateStatus.Equals(StateStatus.InProgress)) 
             {
-                throw new StateException(state, $"Can't initialize {state.StateStatus} because it's already {StateStatus.InProgress}.");
+                throw new StateException(state, $"Can't initialize {state.StateCode} because it's already {state.StateStatus}.");
+            }
+
+            if (state.IsOwnerRestricted
+                && string.IsNullOrWhiteSpace(state.Owner))
+            {
+                if (state.Equals(state.Flow.RootState)
+                    && !state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
+                {
+                    state.Flow.FlowStatus = FlowStatus.InProgress;
+                }
+
+                state.StateStatus = StateStatus.NotStarted;
+
+                state.Flow.History.RecordInitialise(state);
+            }
+            else
+            {
+                await state.StartAsync().ConfigureAwait(false);
+            }
+        }
+
+        public static async Task StartAsync(this State state)
+        {
+            if (state.StateStatus.Equals(StateStatus.InProgress))
+            {
+                throw new StateException(state, $"Can't initialize {state.StateCode} because it's already {state.StateStatus}.");
+            }
+
+            if (state.StateType.Equals(StateType.Parent)
+                && !state.SubStates.Any())
+            {
+                throw new StateException(state, $"{state.StateCode} is configured as a {StateType.Parent} but has no sub states.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
-            if (state.IsOwnerRestricted)
+            if(state.IsOwnerRestricted
+                && string.IsNullOrWhiteSpace(state.Owner))
             {
-                state.StateStatus = StateStatus.NotStarted;
-            }
-            else
-            {
-                state.StateStatus = StateStatus.InProgress;
+                throw new StateException(state, $"Can't start owner restricted state {state.StateCode} without an owner.");
             }
 
-            if (state.Equals(state.Flow.RootState))
+            state.StateStatus = StateStatus.InProgress;
+
+            if (state.Equals(state.Flow.RootState)
+                && !state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
             {
                 state.Flow.FlowStatus = FlowStatus.InProgress;
             }
 
-            state.Flow.History.RecordInitialise(state);
+            state.Flow.History.RecordStart(state);
 
-            if (state.SubStates.Any())
+            if (state.StateType.Equals(StateType.Parent))
             {
                 var subState = state.SubStates.FirstState();
 
                 await subState.InitialiseAsync().ConfigureAwait(false);
             }
-
-            if (!state.SubStates.Any())
+            else
             {
-                if(state.Flow.ActiveState != state)
+                if (state.Flow.ActiveState != state)
                 {
                     state.Flow.ActiveState = state;
                 }
             }
 
-            if(state.StateType.Equals(StateType.Auto))
+            if (state.StateType.Equals(StateType.Auto))
             {
                 if (state.AutoActionResult.Equals(StateAutoActionResult.AutoComplete))
                 {
