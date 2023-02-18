@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt">
+    <None Update="Data\RemediatR_FlowHistory_Start_To_End.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
