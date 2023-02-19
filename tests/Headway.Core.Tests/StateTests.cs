@@ -85,7 +85,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't initialize {flow.States[1].StateStatus} because it's already {StateStatus.InProgress}.", ex.Message);
+                Assert.AreEqual($"Can't initialize {flow.States[1].StateCode} because it's {StateStatus.InProgress}.", ex.Message);
 
                 throw;
             }
@@ -282,7 +282,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it's already {StateStatus.Completed}.", ex.Message);
+                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it's {StateStatus.Completed}.", ex.Message);
 
                 throw;
             }
@@ -307,7 +307,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it's still {StateStatus.Uninitialized}.", ex.Message);
+                Assert.AreEqual($"Can't complete {flow.ActiveState.StateCode} because it's {StateStatus.Uninitialized}.", ex.Message);
 
                 throw;
             }
@@ -379,26 +379,22 @@ namespace Headway.Core.Tests
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
 
+            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
+
             flow.Bootstrap();
 
-            var ra = flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"));
-            ra.StateStatus = StateStatus.InProgress;
-
-            var rv = flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION"));
-            rv.StateStatus = StateStatus.Completed;
-
-            flow.ActiveState = flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION"));
-            flow.ActiveState.StateStatus = StateStatus.InProgress;
-
             // Act
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
             await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
             // Assert
             Assert.AreEqual(StateStatus.Completed, flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).StateStatus);
             Assert.AreEqual(StateStatus.Completed, flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).StateStatus);
             Assert.AreEqual(StateStatus.Completed, flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).StateStatus);
-            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
             Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")), flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
         }
 
         [TestMethod]
