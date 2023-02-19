@@ -16,26 +16,31 @@ namespace Headway.Core.Extensions
 
         public static async Task InitialiseAsync(this State state)
         {
-            if(state.StateStatus.Equals(StateStatus.NotStarted)
+            if(state.StateStatus.Equals(StateStatus.Initialized)
                 || state.StateStatus.Equals(StateStatus.InProgress)) 
             {
-                throw new StateException(state, $"Can't initialize {state.StateCode} because it's already {state.StateStatus}.");
+                throw new StateException(state, $"Can't initialize {state.StateCode} because it's {state.StateStatus}.");
+            }
+
+            await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
+
+            state.StateStatus = StateStatus.Initialized;
+
+            state.Flow.History.RecordInitialise(state);
+
+            if (state.Flow.ActiveState != state)
+            {
+                state.Flow.ActiveState = state;
+            }
+
+            if (state.Equals(state.Flow.RootState)
+                && !state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
+            {
+                state.Flow.FlowStatus = FlowStatus.InProgress;
             }
 
             if (state.IsOwnerRestricted
-                && string.IsNullOrWhiteSpace(state.Owner))
-            {
-                if (state.Equals(state.Flow.RootState)
-                    && !state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
-                {
-                    state.Flow.FlowStatus = FlowStatus.InProgress;
-                }
-
-                state.StateStatus = StateStatus.NotStarted;
-
-                state.Flow.History.RecordInitialise(state);
-            }
-            else
+                && !string.IsNullOrWhiteSpace(state.Owner))
             {
                 await state.StartAsync().ConfigureAwait(false);
             }
@@ -43,9 +48,16 @@ namespace Headway.Core.Extensions
 
         public static async Task StartAsync(this State state)
         {
-            if (state.StateStatus.Equals(StateStatus.InProgress))
+            if (!state.Flow.ActiveState.Equals(state))
             {
-                throw new StateException(state, $"Can't initialize {state.StateCode} because it's already {state.StateStatus}.");
+                throw new StateException(state, $"Can't start {state.StateCode} because it's not the active state in {state.Flow.Name}.");
+            }
+
+            if(state.StateStatus.Equals(StateStatus.Uninitialized)
+                || state.StateStatus.Equals(StateStatus.InProgress)
+                || state.StateStatus.Equals(StateStatus.Completed))
+            {
+                throw new StateException(state, $"Can't start {state.StateCode} because it's {state.StateStatus}.");
             }
 
             if (state.StateType.Equals(StateType.Parent)
@@ -54,7 +66,7 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{state.StateCode} is configured as a {StateType.Parent} but has no sub states.");
             }
 
-            await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
+            await state.ExecuteActionsAsync(StateActionType.Start).ConfigureAwait(false);
 
             if(state.IsOwnerRestricted
                 && string.IsNullOrWhiteSpace(state.Owner))
@@ -64,12 +76,6 @@ namespace Headway.Core.Extensions
 
             state.StateStatus = StateStatus.InProgress;
 
-            if (state.Equals(state.Flow.RootState)
-                && !state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
-            {
-                state.Flow.FlowStatus = FlowStatus.InProgress;
-            }
-
             state.Flow.History.RecordStart(state);
 
             if (state.StateType.Equals(StateType.Parent))
@@ -77,13 +83,6 @@ namespace Headway.Core.Extensions
                 var subState = state.SubStates.FirstState();
 
                 await subState.InitialiseAsync().ConfigureAwait(false);
-            }
-            else
-            {
-                if (state.Flow.ActiveState != state)
-                {
-                    state.Flow.ActiveState = state;
-                }
             }
 
             if (state.StateType.Equals(StateType.Auto))
@@ -102,10 +101,10 @@ namespace Headway.Core.Extensions
         public static async Task CompleteAsync(this State state, string transitionStateCode = "")
         {
             if (state.StateStatus.Equals(StateStatus.Completed)
-                || state.StateStatus.Equals(StateStatus.NotStarted)
+                || state.StateStatus.Equals(StateStatus.Initialized)
                 || state.StateStatus.Equals(StateStatus.Uninitialized))
             {
-                throw new StateException(state, $"Can't complete {state.StateCode} because it's already {state.StateStatus}.");
+                throw new StateException(state, $"Can't complete {state.StateCode} because it's {state.StateStatus}.");
             }
 
             var uncompletedSubStates = state.SubStates.Where(s => s.StateStatus != StateStatus.Completed).ToList();
@@ -128,7 +127,7 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't complete {state.StateCode} because it doesn't support transitioning to {state.TransitionStateCode}.");
             }
 
-            await state.ExecuteActionsAsync(StateActionType.Completed).ConfigureAwait(false);
+            await state.ExecuteActionsAsync(StateActionType.Complete).ConfigureAwait(false);
 
             State transitionState = null;
 
@@ -148,7 +147,7 @@ namespace Headway.Core.Extensions
 
             state.StateStatus = StateStatus.Completed;
 
-            state.Flow.History.RecordCompleted(state);
+            state.Flow.History.RecordComplete(state);
 
             if (transitionState != null)
             {
