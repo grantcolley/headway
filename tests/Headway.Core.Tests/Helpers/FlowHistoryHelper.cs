@@ -13,8 +13,8 @@ namespace Headway.Core.Tests.Helpers
             foreach(var state in flow.States)
             {
                 state.Comment = default;
-                state.StateActions.Add(new StateAction { StateActionType = StateActionType.Initialize, ActionAsync = StateAction });
-                state.StateActions.Add(new StateAction { StateActionType = StateActionType.Completed, ActionAsync = StateAction });
+                state.StateActions.Add(new StateAction { StateActionType = StateActionType.Start, ActionAsync = StateAction });
+                state.StateActions.Add(new StateAction { StateActionType = StateActionType.Complete, ActionAsync = StateAction });
                 state.StateActions.Add(new StateAction { StateActionType = StateActionType.Reset, ActionAsync = StateAction });
             }
         }
@@ -24,7 +24,7 @@ namespace Headway.Core.Tests.Helpers
             state.Owner = Environment.UserName;
             state.Comment = $"{stateActionType} {state.StateCode}";
 
-            if(stateActionType.Equals(StateActionType.Completed))
+            if(stateActionType.Equals(StateActionType.Complete))
             {
                 if(state.StateCode.Equals("REDRESS_VALIDATION"))
                 {
