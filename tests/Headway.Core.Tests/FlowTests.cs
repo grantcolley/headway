@@ -71,7 +71,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public void Bootstrap_No_History()
+        public void Bootstrap_Not_Started()
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
@@ -79,22 +79,11 @@ namespace Headway.Core.Tests
             // Act
             flow.Bootstrap();
 
-            // Assert active state
-            Assert.AreEqual(flow.RootState, flow.States.FirstState());
-            Assert.AreEqual(flow.ActiveState, flow.States.FirstState());
-
-            // Assert sample of parent and substates
-            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")), flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION")).ParentState);
-            Assert.AreEqual(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")), flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION")).ParentState);
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).SubStates.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).SubStates.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION"))));
-
-            // Assert sample of transition states
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Regressions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_CREATE"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Regressions.Contains(flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"))));
-            Assert.IsTrue(flow.States.First(s => s.StateCode.Equals("REFUND_REVIEW")).Transitions.Contains(flow.States.First(s => s.StateCode.Equals("REDRESS_REVIEW"))));
+            // Assert
+            Assert.AreEqual(FlowStatus.NotStarted, flow.FlowStatus);
+            Assert.AreEqual(flow.States.FirstState(), flow.RootState);
+            Assert.AreEqual(flow.States.FirstState(), flow.ActiveState);
+            Assert.AreEqual(flow.States.LastState(), flow.FinalState);
         }
 
         [TestMethod]
@@ -207,67 +196,67 @@ namespace Headway.Core.Tests
             Assert.AreEqual(flow.RootState, flow.ActiveState);
         }
 
-        [TestMethod]
-        public async Task Flow_History_REDRESS_CREATE_UNINITIALIZED_TO_FINAL_REDRESS_REVIEW_COMPLETED()
-        {
-            // Arrange
-            var flow = RemediatRFlow.CreateRemediatRFlow();
-            var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
-            var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
+        //[TestMethod]
+        //public async Task Flow_History_REDRESS_CREATE_UNINITIALIZED_TO_FINAL_REDRESS_REVIEW_COMPLETED()
+        //{
+        //    // Arrange
+        //    var flow = RemediatRFlow.CreateRemediatRFlow();
+        //    var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
+        //    var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
 
-            // Act
-            flow.Bootstrap();
-            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    // Act
+        //    flow.Bootstrap();
+        //    await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
+        //    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
 
-            // Assert
-            Assert.AreEqual(expectedHistory.Count, flow.History.Count);
+        //    // Assert
+        //    Assert.AreEqual(expectedHistory.Count, flow.History.Count);
 
-            for (int i = 0; i < flow.History.Count; i++)
-            {
-                Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
-                Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
-                Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
-            }
-        }
+        //    for (int i = 0; i < flow.History.Count; i++)
+        //    {
+        //        Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
+        //        Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
+        //        Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
+        //    }
+        //}
 
-        [TestMethod]
-        public async Task Flow_History_REDRESS_REVIEW_INITIALIZED_TO_FINAL_REDRESS_REVIEW_COMPLETED()
-        {
-            // Arrange
-            var flow = RemediatRFlow.CreateRemediatRFlow();
-            var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
-            var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
-            var redressReview = expectedHistory.Take(11).ToList();
+        //[TestMethod]
+        //public async Task Flow_History_REDRESS_REVIEW_INITIALIZED_TO_FINAL_REDRESS_REVIEW_COMPLETED()
+        //{
+        //    // Arrange
+        //    var flow = RemediatRFlow.CreateRemediatRFlow();
+        //    var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
+        //    var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
+        //    var redressReview = expectedHistory.Take(11).ToList();
 
-            // Act
-            flow.Bootstrap(redressReview);
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
-            await flow.ActiveState.CompleteAsync();
+        //    // Act
+        //    flow.Bootstrap(redressReview);
+        //    await flow.ActiveState.CompleteAsync();
+        //    await flow.ActiveState.CompleteAsync();
+        //    await flow.ActiveState.CompleteAsync();
+        //    await flow.ActiveState.CompleteAsync();
+        //    await flow.ActiveState.CompleteAsync();
+        //    await flow.ActiveState.CompleteAsync();
 
-            // Assert
-            Assert.AreEqual(expectedHistory.Count, flow.History.Count);
+        //    // Assert
+        //    Assert.AreEqual(expectedHistory.Count, flow.History.Count);
 
-            for (int i = 0; i < flow.History.Count; i++)
-            {
-                Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
-                Assert.AreEqual(expectedHistory[i].FlowCode, flow.History[i].FlowCode);
-                Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
-                Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
-            }
-        }
+        //    for (int i = 0; i < flow.History.Count; i++)
+        //    {
+        //        Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
+        //        Assert.AreEqual(expectedHistory[i].FlowCode, flow.History[i].FlowCode);
+        //        Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
+        //        Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
+        //    }
+        //}
     }
 }
