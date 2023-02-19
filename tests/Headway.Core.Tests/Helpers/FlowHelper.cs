@@ -26,8 +26,8 @@ namespace Headway.Core.Tests.Helpers
             var state = flow.States.FirstState();
 
             state.Comment = default;
-            state.StateActions.Add(new StateAction { Order = 2, StateActionType = StateActionType.Initialize, ActionAsync = StateAction });
-            state.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Initialize, ActionAsync = StateAction });
+            state.StateActions.Add(new StateAction { Order = 2, StateActionType = StateActionType.Start, ActionAsync = StateAction });
+            state.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Start, ActionAsync = StateAction });
         }
 
         private Task StateAction(State state, StateActionType stateActionType, int order)
