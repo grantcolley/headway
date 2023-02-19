@@ -11,7 +11,7 @@ namespace Headway.Core.Tests.Helpers
         public void Configure(State state)
         {
             state.Comment = default;
-            state.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Completed, ActionAsync = StateAction });
+            state.StateActions.Add(new StateAction { Order = 1, StateActionType = StateActionType.Complete, ActionAsync = StateAction });
         }
 
         private Task StateAction(State state, StateActionType stateActionType, int order)
