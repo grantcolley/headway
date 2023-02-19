@@ -3,7 +3,8 @@
     public enum StateActionType
     {
         Initialize = 0,
-        Completed = 1,
-        Reset = 2
+        Start = 1,
+        Complete = 2,
+        Reset = 3
     }
 }
