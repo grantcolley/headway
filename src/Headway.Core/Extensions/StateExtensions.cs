@@ -22,6 +22,12 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't initialize {state.StateCode} because it's {state.StateStatus}.");
             }
 
+            if (state.StateType.Equals(StateType.Parent)
+                && !state.SubStates.Any())
+            {
+                throw new StateException(state, $"{state.StateCode} is configured as a {StateType.Parent} but has no sub states.");
+            }
+
             await state.ExecuteActionsAsync(StateActionType.Initialize).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.Initialized;
@@ -39,8 +45,9 @@ namespace Headway.Core.Extensions
                 state.Flow.FlowStatus = FlowStatus.InProgress;
             }
 
-            if (state.IsOwnerRestricted
-                && !string.IsNullOrWhiteSpace(state.Owner))
+            if (!state.IsOwnerRestricted
+                || (state.IsOwnerRestricted
+                && !string.IsNullOrWhiteSpace(state.Owner)))
             {
                 await state.StartAsync().ConfigureAwait(false);
             }
@@ -58,12 +65,6 @@ namespace Headway.Core.Extensions
                 || state.StateStatus.Equals(StateStatus.Completed))
             {
                 throw new StateException(state, $"Can't start {state.StateCode} because it's {state.StateStatus}.");
-            }
-
-            if (state.StateType.Equals(StateType.Parent)
-                && !state.SubStates.Any())
-            {
-                throw new StateException(state, $"{state.StateCode} is configured as a {StateType.Parent} but has no sub states.");
             }
 
             await state.ExecuteActionsAsync(StateActionType.Start).ConfigureAwait(false);
@@ -84,8 +85,7 @@ namespace Headway.Core.Extensions
 
                 await subState.InitialiseAsync().ConfigureAwait(false);
             }
-
-            if (state.StateType.Equals(StateType.Auto))
+            else if (state.StateType.Equals(StateType.Auto))
             {
                 if (state.AutoActionResult.Equals(StateAutoActionResult.AutoComplete))
                 {
