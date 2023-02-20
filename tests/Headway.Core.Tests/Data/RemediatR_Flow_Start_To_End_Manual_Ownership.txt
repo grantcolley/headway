@@ -1,6 +1,6 @@
 ﻿[
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
     "Event": "Initialize",
@@ -12,11 +12,11 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 3,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
-    "Event": "Completed",
-    "Owner": null,
+    "Event": "Start",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
@@ -24,7 +24,19 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 3,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_CREATE",
+    "Event": "Complete",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
     "Event": "Initialize",
@@ -38,6 +50,18 @@
   {
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_ASSESSMENT",
+    "Event": "Start",
+    "Owner": null,
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
     "Event": "Initialize",
     "Owner": null,
@@ -48,10 +72,34 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_CALCULATION",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
-    "Event": "Completed",
+    "Event": "Complete",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_VERIFICATION",
+    "Event": "Initialize",
     "Owner": null,
     "Comment": null,
     "CreatedDate": null,
@@ -63,8 +111,8 @@
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
-    "Event": "Initialize",
-    "Owner": null,
+    "Event": "Start",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
@@ -75,8 +123,8 @@
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
-    "Event": "Completed",
-    "Owner": null,
+    "Event": "Complete",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
@@ -87,7 +135,7 @@
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
-    "Event": "Completed",
+    "Event": "Complete",
     "Owner": null,
     "Comment": null,
     "CreatedDate": null,
@@ -96,7 +144,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",
     "Event": "Initialize",
@@ -108,11 +156,23 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_REVIEW",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",
-    "Event": "Completed",
-    "Owner": null,
+    "Event": "Complete",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
@@ -120,7 +180,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_REVIEW",
     "Event": "Initialize",
@@ -132,11 +192,23 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_REVIEW",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_REVIEW",
-    "Event": "Completed",
-    "Owner": null,
+    "Event": "Complete",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
@@ -144,7 +216,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_VALIDATION",
     "Event": "Initialize",
@@ -156,10 +228,22 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_VALIDATION",
+    "Event": "Start",
+    "Owner": null,
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_VALIDATION",
-    "Event": "Completed",
+    "Event": "Complete",
     "Owner": null,
     "Comment": null,
     "CreatedDate": null,
@@ -168,7 +252,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_GENERATION",
     "Event": "Initialize",
@@ -180,10 +264,22 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "COMMUNICATION_GENERATION",
+    "Event": "Start",
+    "Owner": null,
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_GENERATION",
-    "Event": "Completed",
+    "Event": "Complete",
     "Owner": null,
     "Comment": null,
     "CreatedDate": null,
@@ -192,7 +288,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_DISPATCH",
     "Event": "Initialize",
@@ -204,11 +300,23 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "COMMUNICATION_DISPATCH",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "COMMUNICATION_DISPATCH",
-    "Event": "Completed",
-    "Owner": null,
+    "Event": "Complete",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
@@ -216,7 +324,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "RESPONSE_REQUIRED",
     "Event": "Initialize",
@@ -228,10 +336,22 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "RESPONSE_REQUIRED",
+    "Event": "Start",
+    "Owner": null,
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "RESPONSE_REQUIRED",
-    "Event": "Completed",
+    "Event": "Complete",
     "Owner": null,
     "Comment": null,
     "CreatedDate": null,
@@ -240,7 +360,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "AWAITING_RESPONSE",
     "Event": "Initialize",
@@ -252,11 +372,23 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "AWAITING_RESPONSE",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "AWAITING_RESPONSE",
-    "Event": "Completed",
-    "Owner": null,
+    "Event": "Complete",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
@@ -264,7 +396,7 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "PAYMENT_GENERATION",
     "Event": "Initialize",
@@ -276,10 +408,10 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 3,
+    "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "PAYMENT_GENERATION",
-    "Event": "Completed",
+    "Event": "Start",
     "Owner": null,
     "Comment": null,
     "CreatedDate": null,
@@ -288,7 +420,19 @@
     "ModifiedBy": null
   },
   {
-    "StateStatus": 2,
+    "StateStatus": 3,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "PAYMENT_GENERATION",
+    "Event": "Complete",
+    "Owner": null,
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "FINAL_REDRESS_REVIEW",
     "Event": "Initialize",
@@ -300,11 +444,23 @@
     "ModifiedBy": null
   },
   {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "FINAL_REDRESS_REVIEW",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "FINAL_REDRESS_REVIEW",
-    "Event": "Completed",
-    "Owner": null,
+    "Event": "Complete",
+    "Owner": "grant",
     "Comment": null,
     "CreatedDate": null,
     "CreatedBy": null,
