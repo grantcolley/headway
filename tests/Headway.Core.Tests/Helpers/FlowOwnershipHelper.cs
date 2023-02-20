@@ -19,8 +19,18 @@ namespace Headway.Core.Tests.Helpers
 
         private Task SetOwnership(State state, StateActionType stateActionType, int order)
         {
-            state.Owner = Environment.UserName;
-            state.Comment = $"{state.StateCode} {stateActionType} by {state.Owner}";
+            if(state.StateType.Equals(StateType.Standard))
+            {
+                state.Owner = Environment.UserName;
+                state.Comment = $"{state.StateType} {state.StateCode} {stateActionType} by {state.Owner}";
+            }
+            else if (state.StateType.Equals(StateType.Auto)
+                || state.StateType.Equals(StateType.Parent))
+            {
+                state.Owner = "system_account";
+                state.Comment = $"{state.StateType} {state.StateCode} {stateActionType} by {state.Owner}";
+            }
+
             return Task.CompletedTask;
         }
     }
