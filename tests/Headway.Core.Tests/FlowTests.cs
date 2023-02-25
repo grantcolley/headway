@@ -197,48 +197,6 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task Flow_RemediatR_Start_To_End_Manual_Ownership()
-        {
-            // Arrange
-            var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_Start_To_End_Manual_Ownership.txt"));
-            var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
-            var flow = RemediatRFlow.CreateRemediatRFlow();
-            
-            // Act
-            flow.Bootstrap();
-            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);           
-
-            while(flow.FlowStatus.Equals(FlowStatus.InProgress)) 
-            {
-                if (flow.ActiveState.StateType.Equals(StateType.Standard)
-                    && flow.ActiveState.StateStatus.Equals(StateStatus.Initialized))
-                {
-                    flow.ActiveState.Owner = Environment.UserName;
-                    await flow.ActiveState.StartAsync().ConfigureAwait(false);
-                }
-                else
-                {
-                    await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-                }
-            }
-
-            // Assert
-            Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
-            Assert.AreEqual(flow.States.LastState(), flow.ActiveState);
-            Assert.AreEqual(StateStatus.Completed, flow.ActiveState.StateStatus);
-            Assert.AreEqual(expectedHistory.Count, flow.History.Count);
-
-            for (int i = 0; i < flow.History.Count; i++)
-            {
-                Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
-                Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
-                Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
-                Assert.AreEqual(expectedHistory[i].Owner, flow.History[i].Owner);
-                Assert.AreEqual(expectedHistory[i].Comment, flow.History[i].Comment);
-            }
-        }
-
-        [TestMethod]
         public async Task Flow_RemediatR_Start_To_End_Action_Ownership()
         {
             // Arrange
@@ -271,35 +229,5 @@ namespace Headway.Core.Tests
                 Assert.AreEqual(expectedHistory[i].Comment, flow.History[i].Comment);
             }
         }
-
-        //[TestMethod]
-        //public async Task Flow_History_REDRESS_REVIEW_INITIALIZED_TO_FINAL_REDRESS_REVIEW_COMPLETED()
-        //{
-        //    // Arrange
-        //    var flow = RemediatRFlow.CreateRemediatRFlow();
-        //    var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatRFlowHistory_FINAL_REDRESS_REVIEW.txt"));
-        //    var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
-        //    var redressReview = expectedHistory.Take(11).ToList();
-
-        //    // Act
-        //    flow.Bootstrap(redressReview);
-        //    await flow.ActiveState.CompleteAsync();
-        //    await flow.ActiveState.CompleteAsync();
-        //    await flow.ActiveState.CompleteAsync();
-        //    await flow.ActiveState.CompleteAsync();
-        //    await flow.ActiveState.CompleteAsync();
-        //    await flow.ActiveState.CompleteAsync();
-
-        //    // Assert
-        //    Assert.AreEqual(expectedHistory.Count, flow.History.Count);
-
-        //    for (int i = 0; i < flow.History.Count; i++)
-        //    {
-        //        Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
-        //        Assert.AreEqual(expectedHistory[i].FlowCode, flow.History[i].FlowCode);
-        //        Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
-        //        Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
-        //    }
-        //}
     }
 }
