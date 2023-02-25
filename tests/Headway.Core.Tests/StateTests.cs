@@ -247,11 +247,12 @@ namespace Headway.Core.Tests
         {
             // Arrange
             var flow = RemediatRFlow.CreateRemediatRFlow();
+            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
 
             flow.Bootstrap();
 
             await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
-
+            
             // Act
             await flow.ActiveState.CompleteAsync("REFUND_ASSESSMENT").ConfigureAwait(false);
 
@@ -408,13 +409,13 @@ namespace Headway.Core.Tests
             flow.Bootstrap();
 
             flow.ActiveState.StateStatus = StateStatus.InProgress;
-            flow.ActiveState.StateConfigurationClass = "Headway.Core.Tests.Helpers.StateHelper, Headway.Core.Tests";
+            flow.ActiveState.StateConfigurationClass = "Headway.Core.Tests.Helpers.StateActionHelper, Headway.Core.Tests";
 
             // Act
             await flow.ActiveState.CompleteAsync(flow.States[1].StateCode).ConfigureAwait(false);
 
             // Assert
-            Assert.AreEqual($"1 Completed {flow.States[0].StateCode}; 2 Completed {flow.States[0].StateCode}", flow.States[0].Comment);
+            Assert.AreEqual($"1 Complete {flow.States[0].StateCode}; 2 Complete {flow.States[0].StateCode}", flow.States[0].Comment);
             Assert.AreEqual(StateStatus.Completed, flow.States[0].StateStatus);
             Assert.AreEqual(StateStatus.InProgress, flow.States[1].StateStatus);
             Assert.AreEqual(flow.States[1], flow.ActiveState);
