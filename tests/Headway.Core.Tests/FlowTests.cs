@@ -192,15 +192,16 @@ namespace Headway.Core.Tests
             await flow.FinalState.ResetAsync(flow.States[0].StateCode);
 
             //Assert
-            Assert.AreEqual(FlowStatus.NotStarted, flow.FlowStatus);
+            Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
             Assert.AreEqual(flow.RootState, flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
         }
 
         [TestMethod]
         public async Task Flow_RemediatR_Start_To_End_Action_Ownership()
         {
             // Arrange
-            var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_Start_To_End_Action_Ownership.txt"));
+            var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt"));
             var expectedHistory = JsonSerializer.Deserialize<List<FlowHistory>>(json);
             var flow = RemediatRFlow.CreateRemediatRFlow();
             flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
