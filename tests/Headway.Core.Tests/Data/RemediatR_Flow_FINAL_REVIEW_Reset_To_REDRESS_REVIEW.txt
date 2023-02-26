@@ -1,0 +1,122 @@
+﻿[
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "FINAL_REDRESS_REVIEW",
+    "Event": "Reset",
+    "Owner": "grant",
+    "Comment": "Standard FINAL_REDRESS_REVIEW Reset by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "PAYMENT_GENERATION",
+    "Event": "Reset",
+    "Owner": "grant",
+    "Comment": "Standard PAYMENT_GENERATION Reset by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "AWAITING_RESPONSE",
+    "Event": "Reset",
+    "Owner": "grant",
+    "Comment": "Standard AWAITING_RESPONSE Reset by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "RESPONSE_REQUIRED",
+    "Event": "Reset",
+    "Owner": "system_account",
+    "Comment": "Auto RESPONSE_REQUIRED Reset by system_account",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "COMMUNICATION_DISPATCH",
+    "Event": "Reset",
+    "Owner": "grant",
+    "Comment": "Standard COMMUNICATION_DISPATCH Reset by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "COMMUNICATION_GENERATION",
+    "Event": "Reset",
+    "Owner": "grant",
+    "Comment": "Standard COMMUNICATION_GENERATION Reset by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_VALIDATION",
+    "Event": "Reset",
+    "Owner": "system_account",
+    "Comment": "Auto REDRESS_VALIDATION Reset by system_account",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 0,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_REVIEW",
+    "Event": "Reset",
+    "Owner": "grant",
+    "Comment": "Standard REDRESS_REVIEW Reset by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_REVIEW",
+    "Event": "Initialize",
+    "Owner": "grant",
+    "Comment": "Standard REDRESS_REVIEW Initialize by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_REVIEW",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": "Standard REDRESS_REVIEW Start by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  }
+]
