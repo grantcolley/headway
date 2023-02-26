@@ -181,8 +181,8 @@ namespace Headway.Core.Extensions
             }
 
             if (!string.IsNullOrWhiteSpace(state.RegressionStateCode)
-                && !state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
-                && !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
+                && (!state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
+                || !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode))))
             {
                 throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {regressStateCode}.");
             }
@@ -199,7 +199,7 @@ namespace Headway.Core.Extensions
             if (!string.IsNullOrWhiteSpace(state.RegressionStateCode))
             {
                 if (!state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
-                    && !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
+                    || !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
                 {
                     throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {regressStateCode}.");
                 }
@@ -231,11 +231,9 @@ namespace Headway.Core.Extensions
                     {
                         state.Flow.ActiveState = regressionState;
 
-                        if (state.Flow.ActiveState.Equals(state.Flow.RootState))
-                        {
-                            state.Flow.FlowStatus = FlowStatus.NotStarted;
-                        }
-                        else
+                        await state.Flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+
+                        if(!state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
                         {
                             state.Flow.FlowStatus = FlowStatus.InProgress;
                         }
