@@ -22,7 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\RemediatR_Flow_Start_To_End_Action_Ownership.txt">
+    <None Update="Data\RemediatR_Flow_FINAL_REVIEW_Reset_To_REDRESS_REVIEW.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
