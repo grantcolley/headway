@@ -67,13 +67,13 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't start {state.StateCode} because it's {state.StateStatus}.");
             }
 
-            await state.ExecuteActionsAsync(StateActionType.Start).ConfigureAwait(false);
-
             if(state.IsOwnerRestricted
                 && string.IsNullOrWhiteSpace(state.Owner))
             {
                 throw new StateException(state, $"Can't start owner restricted state {state.StateCode} without an owner.");
             }
+
+            await state.ExecuteActionsAsync(StateActionType.Start).ConfigureAwait(false);
 
             state.StateStatus = StateStatus.InProgress;
 
