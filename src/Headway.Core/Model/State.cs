@@ -11,6 +11,11 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class State : ModelBase
     {
+        private List<string> permissionsList;
+        private List<string> subStateCodesList;
+        private List<string> transitionStateCodesList;
+        private List<string> regressionStateCodesList;
+
         public State()
         {
             SubStates = new List<State>();
@@ -20,7 +25,7 @@ namespace Headway.Core.Model
         }
 
         /// <summary>
-        /// The state identity number.
+        /// The state identity.
         /// </summary>
         public int StateId { get; set; }
 
@@ -38,38 +43,50 @@ namespace Headway.Core.Model
 
         /// <summary>
         /// The type of the state:
-        ///     Standard - after the state has been initialised control is returned to the calling code.
-        ///                e.g. once the state has been initialised, control is passed back to a user 
-        ///                     or calling code which will be responsible for completing the stete.
+        ///     Standard - standard states require interaction from an external source.
+        ///                e.g. a user interactive state is a standard state. Once it has been initialised 
+        ///                     and set to InProgress user interaction is required to complete it.
         ///                     Example usage is a state requiring a user to make a routing decision 
         ///                     after performing some user interaction like data input or data review.
         ///                     
+        ///     Parent - after a parent state has been initialised it initialises it's first sub state. The 
+        ///                 parent state remains InProgress until all sub stateshave been completed. The  
+        ///                 last sub state will complete without transitioning, and instead will call on the parent
+        ///                 state to complete itself and the parent state transitions to another state. 
+        ///                 Example usage is a state that contains it's own sub workflow (sub states),
+        ///                 that must be completed before it, the parent, can itself be completed. 
+        ///                 Parent states are not user interactive. 
+        ///                      
         ///     Auto - after the state has been initialised it automatically completes or regresses itself.
         ///            e.g. during state initialisation an initialisation action can make a runtime 
-        ///                 decision to either automatically complete the state andspecify the state it 
-        ///                 must transition to, or to automatically regress to a specified state.
+        ///                 decision to either automatically complete the state, including determine which  
+        ///                 state it must transition to, or to which state it must regress to.
         ///                 Example usage is a state that must make a routing decision based on set 
-        ///                 criteria using data available at runtime.
-        ///     
+        ///                 criteria using data available at runtime.  
         /// </summary>
         public StateType StateType { get; set; }
 
         /// <summary>
         /// Status of the state:
-        ///     - NotStarted
-        ///     - Active
+        ///     - Uninitialized
+        ///     - Initialized
         ///     - InProgress
         ///     - Completed
         /// </summary>
         public StateStatus StateStatus { get; set; }
 
         /// <summary>
-        /// A flag indicating whether the state can only be modified by it's owner.
-        /// If set to true, when initialised the state Status is set to Active until 
-        /// a user with write permission takes ownership of the stat, automatically 
-        /// setting it to InProgress. 
-        /// If set to false, when initialised the state Status is set to InProgress 
-        /// and can be modfied by any user with write access.
+        /// A flag indicating whether the state can only be started once an
+        /// owner has been allocated to it.
+        /// 
+        /// If set to true, at the end of the state's initialisation routine, 
+        /// if the state has an owner then the state will automatically run its   
+        /// start routine, which will set to InProgress.
+        /// 
+        /// If set to false, at the end of the state's initialisation routine,
+        /// if the state doesn't have an owner, the state will remain Initialized.
+        /// An external source will need to assign the state an owner then call it's
+        /// start routine, which will set to InProgress.
         /// </summary>
         public bool IsOwnerRestricted { get; set; }
 
@@ -126,7 +143,7 @@ namespace Headway.Core.Model
         ///    to complete the parent
         ///  - if the state has no parent it is assumed 
         ///    the end of the flow has been reached and 
-        ///    the flow is therefore completed.
+        ///    it will attempt to complete the flow.
         ///    
         /// See <see cref="State.Position"/> for positioning 
         /// rules applicable to transitioning.
@@ -136,7 +153,7 @@ namespace Headway.Core.Model
 
         /// <summary>
         /// A semi-colon separated list of state codes that can be
-        /// regressed to. To rgress from one state to another,  
+        /// regressed to. To regress from one state to another,  
         /// call ResetAsync passing in regressionStateCode. 
         /// If regressionStateCode is null, it will simply 
         /// reset the state. 
@@ -159,7 +176,7 @@ namespace Headway.Core.Model
         /// The context associated with the state.
         /// If the context is null at the time of 
         /// the flow bootstrap routine then the state 
-        /// will be assigned the flow context. 
+        /// will inherit the context of the flow. 
         /// </summary>
         [NotMapped]
         [JsonIgnore]
@@ -175,11 +192,11 @@ namespace Headway.Core.Model
 
         /// <summary>
         /// A flag indicating whether an auto state 
-        /// must auto transition or auto regress
+        /// must auto transition or auto regress,
         /// once the initialisation routine is complete.
         /// This is only applicable when <see cref="State.StateType"/> 
         /// is <see cref="StateType.Auto"/>.
-        /// The StateAutoActionResult can be set at 
+        /// The <see cref="StateAutoActionResult"/> can be set at 
         /// runtime in initialisation actions during the
         /// state's initialisation routine.
         /// </summary>
@@ -196,7 +213,8 @@ namespace Headway.Core.Model
         public State ParentState { get; set; }
 
         /// <summary>
-        /// The state owner recorded in the state history.
+        /// The owner assigned to the state and 
+        /// recorded in the state history.
         /// </summary>
         [NotMapped]
         [JsonIgnore]
@@ -233,32 +251,37 @@ namespace Headway.Core.Model
         public string RegressionStateCode { get; set; }
 
         /// <summary>
-        /// Sub states of a parent state. 
-        /// Only applicable to parent states
+        /// Sub states of a parent state forming a self contained 
+        /// sub workflow. Only applicable to parent states
         /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<State> SubStates { get; }
 
         /// <summary>
-        /// Gets a list of transition states.
-        /// based on <see cref="State.TransitionStateCodes"/>
+        /// Gets a list of transition states based on.
+        /// <see cref="State.TransitionStateCodes"/>
         /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<State> Transitions { get; }
 
         /// <summary>
-        /// Gets a list of regression states.
-        /// based on <see cref="State.RegressionStateCodes"/>
+        /// Gets a list of regression states based on
+        /// <see cref="State.RegressionStateCodes"/>
         /// </summary>
         [NotMapped]
         [JsonIgnore]
         public List<State> Regressions { get; }
 
         /// <summary>
-        /// C# actions associated wih the state to be executed
-        /// during initialisation or completion routines.
+        /// C# actions associated wih the state. 
+        /// Actions are executed during the following routines:
+        ///  - Initialize
+        ///  - Start
+        ///  - Complete
+        ///  - Reset
+        ///  
         /// State actions are located in classes specified in 
         /// <see cref="State.StateConfigurationClass"/> or 
         /// <see cref="Flow.FlowConfigurationClass"/>.
@@ -276,12 +299,21 @@ namespace Headway.Core.Model
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(Permissions))
+                if(permissionsList != null)
                 {
-                    return new List<string>();
+                    return permissionsList;
                 }
 
-                return Permissions.Split(';').ToList();
+                if (string.IsNullOrWhiteSpace(Permissions))
+                {
+                    permissionsList = new List<string>();
+                }
+                else
+                {
+                    permissionsList = Permissions.Split(';').ToList();
+                }
+
+                return permissionsList;
             }
         }
 
@@ -294,12 +326,21 @@ namespace Headway.Core.Model
         {
             get
             {
-                if(string.IsNullOrWhiteSpace(SubStateCodes))
+                if(subStateCodesList != null)
                 {
-                    return new List<string>();
+                    return subStateCodesList; 
                 }
 
-                return SubStateCodes.Split(';').ToList();
+                if(string.IsNullOrWhiteSpace(SubStateCodes))
+                {
+                    subStateCodesList = new List<string>();
+                }
+                else
+                {
+                    subStateCodesList = SubStateCodes.Split(';').ToList();
+                }
+
+                return subStateCodesList;
             }
         }
 
@@ -312,12 +353,21 @@ namespace Headway.Core.Model
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(TransitionStateCodes))
+                if(transitionStateCodesList != null)
                 {
-                    return new List<string>();
+                    return transitionStateCodesList;
                 }
 
-                return TransitionStateCodes.Split(';').ToList();
+                if (string.IsNullOrWhiteSpace(TransitionStateCodes))
+                {
+                    transitionStateCodesList = new List<string>();
+                }
+                else
+                {
+                    transitionStateCodesList = TransitionStateCodes.Split(';').ToList();
+                }
+
+                return transitionStateCodesList;
             }
         }
 
@@ -330,12 +380,21 @@ namespace Headway.Core.Model
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(RegressionStateCodes))
+                if(regressionStateCodesList != null)
                 {
-                    return new List<string>();
+                    return regressionStateCodesList;
                 }
 
-                return RegressionStateCodes.Split(';').ToList();
+                if (string.IsNullOrWhiteSpace(RegressionStateCodes))
+                {
+                    regressionStateCodesList = new List<string>();
+                }
+                else 
+                {
+                    regressionStateCodesList = RegressionStateCodes.Split(';').ToList();
+                }
+
+                return regressionStateCodesList;
             }
         }
     }
