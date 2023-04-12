@@ -1,4 +1,5 @@
-﻿using Headway.Core.Exceptions;
+﻿using Headway.Core.Constants;
+using Headway.Core.Exceptions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using System;
@@ -149,22 +150,22 @@ namespace Headway.Core.Extensions
 
         public static void RecordInitialise(this List<FlowHistory> history, State state)
         {
-            history.RecordHistory(state, "Initialize");
+            history.RecordHistory(state, FlowHistoryEvents.INITIALIZE);
         }
 
         public static void RecordStart(this List<FlowHistory> history, State state)
         {
-            history.RecordHistory(state, "Start");
+            history.RecordHistory(state, FlowHistoryEvents.START);
         }
 
         public static void RecordComplete(this List<FlowHistory> history, State state)
         {
-            history.RecordHistory(state, "Complete");
+            history.RecordHistory(state, FlowHistoryEvents.COMPLETE);
         }
 
         public static void RecordReset(this List<FlowHistory> history, State state)
         {
-            history.RecordHistory(state, "Reset");
+            history.RecordHistory(state, FlowHistoryEvents.RESET);
         }
 
         public static void RecordHistory(this List<FlowHistory> history, State state, string eventname)
