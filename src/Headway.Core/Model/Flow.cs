@@ -23,7 +23,7 @@ namespace Headway.Core.Model
         }
 
         /// <summary>
-        /// The flow identity number.
+        /// The flow identity.
         /// </summary>
         public int FlowId { get; set; }
 
@@ -172,7 +172,7 @@ namespace Headway.Core.Model
         }
 
         /// <summary>
-        /// The final state is the state with the minimum 
+        /// The final state is the state with the maximum 
         /// state position value.
         /// </summary>
         [NotMapped]
