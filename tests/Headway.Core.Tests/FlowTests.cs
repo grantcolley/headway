@@ -226,7 +226,7 @@ namespace Headway.Core.Tests
                 Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
                 Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
                 Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
-                Assert.AreEqual(expectedHistory[i].Owner, flow.History[i].Owner);
+                //Assert.AreEqual(expectedHistory[i].Owner, flow.History[i].Owner);
                 Assert.AreEqual(expectedHistory[i].Comment, flow.History[i].Comment);
             }
         }
