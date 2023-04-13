@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace Headway.Core.Extensions
 {
+    /// <summary>
+    /// <see cref="FlowExtensions"/> contains extension methods for a <see cref="Flow"/>. 
+    /// </summary>
     public static class FlowExtensions
     {
         private static readonly IDictionary<string, FlowConfiguration> flowConfigurationCache = new Dictionary<string, FlowConfiguration>();
