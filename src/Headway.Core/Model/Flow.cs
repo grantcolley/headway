@@ -9,6 +9,9 @@ using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
+    /// <summary>
+    /// <see cref="Flow"/> models a sequence of steps in a workflow.
+    /// </summary>
     [Flow]
     [DynamicModel]
     public class Flow : ModelBase
