@@ -8,6 +8,9 @@ using System.Text.Json.Serialization;
 
 namespace Headway.Core.Model
 {
+    /// <summary>
+    /// <see cref="State"/> models a step within a <see cref="Flow"/>.
+    /// </summary>
     [DynamicModel]
     public class State : ModelBase
     {
