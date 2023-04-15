@@ -331,6 +331,12 @@ namespace Headway.Core.Extensions
             }
         }
 
+        /// <summary>
+        /// Executes <see cref="State"/> actions sequentially in the specified order.
+        /// </summary>
+        /// <param name="state">The <see cref="State"/>.</param>
+        /// <param name="stateFunctionType">The <see cref="StateActionType"/>.</param>
+        /// <returns>A task.</returns>
         public static async Task ExecuteActionsAsync(this State state, StateActionType stateFunctionType)
         {
             if (state.StateActions == null)
@@ -354,6 +360,11 @@ namespace Headway.Core.Extensions
             }
         }
 
+        /// <summary>
+        /// Gets the <see cref="State"/> with the minimum position.
+        /// </summary>
+        /// <param name="states">A list of <see cref="State"/>'s</param>
+        /// <returns>The <see cref="State"/> with the minimum position</returns>
         public static State FirstState(this List<State> states)
         {
             var firstPosition = states.Min(s => s.Position);
@@ -361,6 +372,11 @@ namespace Headway.Core.Extensions
             return states.First(s => s.Position.Equals(firstPosition));
         }
 
+        /// <summary>
+        /// Gets the <see cref="State"/> with the maximum position.
+        /// </summary>
+        /// <param name="states">A list of <see cref="State"/>'s</param>
+        /// <returns>The <see cref="State"/> with the maximum position</returns>
         public static State LastState(this List<State> states)
         {
             var lastPosition = states.Max(s => s.Position);
@@ -368,6 +384,18 @@ namespace Headway.Core.Extensions
             return states.First(s => s.Position.Equals(lastPosition));
         }
 
+        /// <summary>
+        /// Creates an instance of the <see cref="State.StateConfigurationClass"/>
+        /// which implements <see cref="IConfigureState"/> and caches it.
+        /// The <see cref="State.ActionsConfigured"/> field is set to true.
+        /// 
+        /// <see cref="StateException"/> thrown when:
+        ///     - <see cref="State.ActionsConfigured"/> is already true
+        ///     - <see cref="State.StateConfigurationClass"/> cannot be resolved.
+        ///         
+        /// </summary>
+        /// <param name="state">The <see cref="State"/>.</param>
+        /// <exception cref="StateException"></exception>
         public static void Configure(this State state)
         {
             if(state.ActionsConfigured)
