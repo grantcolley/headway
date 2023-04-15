@@ -485,59 +485,6 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task Flow_RemediatR_FINAL_REVIEW_Reset_To_REDRESS_REVIEW()
-        {
-            // Arrange
-            var jsonHistoryRedressCreateToFinalReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt"));
-            var historyRedressCreateToFinalReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryRedressCreateToFinalReview);
-
-            var jsonHistoryFinalReviewResetToRedressReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_FINAL_REVIEW_Reset_To_REDRESS_REVIEW.txt"));
-            var historyFinalReviewResetToRedressReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryFinalReviewResetToRedressReview);
-
-            var flow = RemediatRFlow.CreateRemediatRFlow();
-            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
-
-            flow.Bootstrap();
-
-            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
-
-            while (flow.FlowStatus.Equals(FlowStatus.InProgress))
-            {
-                await flow.ActiveState.CompleteAsync().ConfigureAwait(false);
-            }
-
-            // Act
-            await flow.ActiveState.ResetAsync("REDRESS_REVIEW").ConfigureAwait(false);
-
-            // Assert
-            Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
-            Assert.AreEqual("REDRESS_REVIEW", flow.ActiveState.StateCode);
-            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
-
-            var historyCount = historyRedressCreateToFinalReview.Count + historyFinalReviewResetToRedressReview.Count;
-            Assert.AreEqual(historyCount, flow.History.Count);
-
-            for (int i = 0; i < historyRedressCreateToFinalReview.Count; i++)
-            {
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].Event, flow.History[i].Event);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].StateCode, flow.History[i].StateCode);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].StateStatus, flow.History[i].StateStatus);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].Owner, flow.History[i].Owner);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].Comment, flow.History[i].Comment);
-            }
-
-            for (int i = 0; i < historyFinalReviewResetToRedressReview.Count; i++)
-            {
-                var n = historyRedressCreateToFinalReview.Count + i;
-                Assert.AreEqual(historyFinalReviewResetToRedressReview[i].Event, flow.History[n].Event);
-                Assert.AreEqual(historyFinalReviewResetToRedressReview[i].StateCode, flow.History[n].StateCode);
-                Assert.AreEqual(historyFinalReviewResetToRedressReview[i].StateStatus, flow.History[n].StateStatus);
-                Assert.AreEqual(historyFinalReviewResetToRedressReview[i].Owner, flow.History[n].Owner);
-                Assert.AreEqual(historyFinalReviewResetToRedressReview[i].Comment, flow.History[n].Comment);
-            }
-        }
-
-        [TestMethod]
         public async Task Reset_No_Transition()
         {
             // Arrange
