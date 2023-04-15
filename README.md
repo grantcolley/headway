@@ -644,17 +644,17 @@ In the Developer PowerShell window navigate to the Headway.WebApi project and ma
 Add a new migration:
 \
 \
-` dotnet ef migrations add UpdateHeadway --project ..\\Utilities\\Headway.MigrationsSqlServer`
+` dotnet ef migrations add UpdateHeadway --project ..\..\Utilities\Headway.MigrationsSqlServer`
 
 Update the database with the latest migrations. It will also create the database if it hasn't already been created:
 \
 \
-`dotnet ef database update --project ..\\Utilities\\Headway.MigrationsSqlServer`
+`dotnet ef database update --project ..\..\Utilities\Headway.MigrationsSqlServer`
 
 Remove the latest migration:
 \
 \
-` dotnet ef migrations remove --project ..\\Utilities\\Headway.MigrationsSqlServer`
+` dotnet ef migrations remove --project ..\..\Utilities\Headway.MigrationsSqlServer`
 
 **Supporting notes:**
  * Create migrations from the repository library and output them to a separate migrations projects 
