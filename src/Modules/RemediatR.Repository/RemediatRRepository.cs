@@ -28,7 +28,6 @@ namespace RemediatR.Repository
             int customerId = 0;
             string surname = string.Empty;
 
-
             if (!string.IsNullOrWhiteSpace(customerIdArg.Value))
             {
                 _ = int.TryParse(customerIdArg.Value, out customerId);
