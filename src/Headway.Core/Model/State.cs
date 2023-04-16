@@ -96,6 +96,7 @@ namespace Headway.Core.Model
         /// <summary>
         /// The flow associated with the state.
         /// </summary>
+        [JsonIgnore]
         public Flow Flow { get; set; }
 
         /// <summary>
