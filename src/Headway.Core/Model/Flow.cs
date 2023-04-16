@@ -23,6 +23,7 @@ namespace Headway.Core.Model
         {
             States = new List<State>();
             History = new List<FlowHistory>();
+            PermissionChecklist = new List<ChecklistItem>();
         }
 
         /// <summary>
