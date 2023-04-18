@@ -21,11 +21,11 @@ namespace Headway.Core.Extensions
         /// </summary>
         /// <param name="flow">The <see cref="Flow"/></param>
         /// <param name="history">The <see cref="List{FlowHistory}"/>.</param>
-        public static void Bootstrap(this Flow flow, List<FlowHistory> history)
+        public static void Bootstrap(this Flow flow, List<FlowHistory> history, bool isClientSide = false)
         {
             flow.History.Clear();
             flow.History.AddRange(history);
-            flow.Bootstrap();
+            flow.Bootstrap(isClientSide);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Headway.Core.Extensions
         /// </summary>
         /// <param name="flow">The <see cref="Flow"/></param>
         /// <exception cref="FlowException"></exception>
-        public static void Bootstrap(this Flow flow)
+        public static void Bootstrap(this Flow flow, bool isClientSide = false)
         {
             if (flow.Bootstrapped)
             {
@@ -58,41 +58,44 @@ namespace Headway.Core.Extensions
 
             flow.StateDictionary = flow.States.ToDictionary(s => s.StateCode, s => s);
 
-            foreach (var state in flow.States)
-            {
-                state.StateStatus = default;
-                state.Owner = default;
-                state.Comment = default;
-
-                state.Flow = flow;
-
-                if (state.Context != null)
-                {
-                    state.Context = flow.Context;
-                }
-
-                if (!string.IsNullOrWhiteSpace(state.ParentStateCode))
-                {
-                    state.ParentState = flow.StateDictionary[state.ParentStateCode];
-                }
-
-                state.SubStates.Clear();
-                state.SubStates.AddRange(flow.ToStateList(state.SubStateCodesList));
-
-                state.Transitions.Clear();
-                state.Transitions.AddRange(flow.ToStateList(state.TransitionStateCodesList));
-
-                state.Regressions.Clear();
-                state.Regressions.AddRange(flow.ToStateList(state.RegressionStateCodesList));
-            }
-
-            flow.Configure();
-
-            if (flow.ConfigureStatesDuringBootstrap)
+            if (!isClientSide)
             {
                 foreach (var state in flow.States)
                 {
-                    state.Configure();
+                    state.StateStatus = default;
+                    state.Owner = default;
+                    state.Comment = default;
+
+                    state.Flow = flow;
+
+                    if (state.Context != null)
+                    {
+                        state.Context = flow.Context;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(state.ParentStateCode))
+                    {
+                        state.ParentState = flow.StateDictionary[state.ParentStateCode];
+                    }
+
+                    state.SubStates.Clear();
+                    state.SubStates.AddRange(flow.ToStateList(state.SubStateCodesList));
+
+                    state.Transitions.Clear();
+                    state.Transitions.AddRange(flow.ToStateList(state.TransitionStateCodesList));
+
+                    state.Regressions.Clear();
+                    state.Regressions.AddRange(flow.ToStateList(state.RegressionStateCodesList));
+                }
+
+                flow.Configure();
+
+                if (flow.ConfigureStatesDuringBootstrap)
+                {
+                    foreach (var state in flow.States)
+                    {
+                        state.Configure();
+                    }
                 }
             }
 
@@ -108,6 +111,18 @@ namespace Headway.Core.Extensions
             else
             {
                 flow.ActiveState = flow.RootState;
+            }
+
+            if(isClientSide)
+            {
+                flow.ActiveState.SubStates.Clear();
+                flow.ActiveState.SubStates.AddRange(flow.ToStateList(flow.ActiveState.SubStateCodesList));
+
+                flow.ActiveState.Transitions.Clear();
+                flow.ActiveState.Transitions.AddRange(flow.ToStateList(flow.ActiveState.TransitionStateCodesList));
+
+                flow.ActiveState.Regressions.Clear();
+                flow.ActiveState.Regressions.AddRange(flow.ToStateList(flow.ActiveState.RegressionStateCodesList));
             }
 
             flow.Bootstrapped = true;
