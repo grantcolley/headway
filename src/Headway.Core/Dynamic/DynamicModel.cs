@@ -112,7 +112,7 @@ namespace Headway.Core.Dynamic
             {
                 FlowContext = (IFlowContext)flowContextPropertyInfo.GetValue(Model);
 
-                FlowContext.Flow.Bootstrap(FlowContext.GetFlowHistory());
+                FlowContext.Flow.Bootstrap(FlowContext.GetFlowHistory(), true);
             }
         }
 
