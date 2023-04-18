@@ -527,7 +527,7 @@ namespace RemediatR.Repository
                 {
                     Product = product,
                     RefundCalculation = new RefundCalculation(),
-                    RedressFlowContext = new RedressFlowContext { Flow = flow }
+                    RedressFlowContext = new RedressFlowContext { FlowId = flow.FlowId, Flow = flow }
                 };
             }
         }
@@ -559,16 +559,28 @@ namespace RemediatR.Repository
                 .FirstAsync(p => p.ProgramId.Equals(redress.Program.ProgramId))
                 .ConfigureAwait(false);
 
+            var flow = await applicationDbContext.Flows
+                .FirstAsync(f => f.FlowId.Equals(redress.RedressFlowContext.FlowId))
+                .ConfigureAwait(false);
+
+            redress.RedressFlowContext.FlowId = flow.FlowId;
+            redress.RedressFlowContext.Flow = flow;
+
             var newRedress = new Redress
             {
                 Product = product,
                 Program = program,
                 RefundCalculation = redress.RefundCalculation,
                 RedressCaseOwner = redress.RedressCaseOwner,
+                RedressFlowContext = redress.RedressFlowContext
             };
 
             await applicationDbContext.RefundCalculations
                 .AddAsync(newRedress.RefundCalculation)
+                .ConfigureAwait(false);
+
+            await applicationDbContext.RedressFlowContexts
+                .AddAsync(newRedress.RedressFlowContext)
                 .ConfigureAwait(false);
 
             await applicationDbContext.Redresses
