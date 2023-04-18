@@ -53,8 +53,14 @@ namespace Headway.SeedData.RemediatR
             dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Products, RESEED, 1)");
             dbContext.Database.ExecuteSqlRaw("DELETE FROM Customers");
             dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Customers, RESEED, 1)");
+            dbContext.Database.ExecuteSqlRaw("DELETE FROM RefundCalculations");
+            dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (RefundCalculations, RESEED, 1)");
             dbContext.Database.ExecuteSqlRaw("DELETE FROM Redresses");
             dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (Redresses, RESEED, 1)");
+            dbContext.Database.ExecuteSqlRaw("DELETE FROM RedressFlowHistory");
+            dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (RedressFlowHistory, RESEED, 1)");
+            dbContext.Database.ExecuteSqlRaw("DELETE FROM RedressFlowContexts");
+            dbContext.Database.ExecuteSqlRaw("DBCC CHECKIDENT (RedressFlowContexts, RESEED, 1)");
         }
 
         private static void CreateCountries()
