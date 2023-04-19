@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+@typeparam T where T : class, new()
+@inherits FlowTabDocumentBase<T>
+
+@if (dynamicModel == null)
+{
+    <Loading Message="Loading..."/>
+}
+else
+{
+    @if(@Alert == null)
+    {
+        <EditForm EditContext="CurrentEditContext">
+            <FluentValidationValidator />
+            <MudToolBar DisableGutters="true">
+                @if (isSaveInProgress)
+                {
+                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                }
+                else if (!isDeleteInProgress)
+                {
+                    <MudTooltip Text="Save" Arrow="true">
+                        <MudIconButton ButtonType="ButtonType.Button" OnClick="@Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
+                    </MudTooltip>
+                }
+
+                <MudText Typo="Typo.h6">@dynamicModel.Title @dynamicModel.Id</MudText>
+
+                <ValidationBadge Title="@dynamicModel.Title" Messages="@messages" />
+
+                <MudSpacer />
+
+                @if (isDeleteInProgress)
+                {
+                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                }
+                else if (!isSaveInProgress)
+                {
+                    <MudTooltip Text="Delete" Arrow="true">
+                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="Delete" />
+                    </MudTooltip>
+                }
+            </MudToolBar>
+            <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true">
+                @foreach (var page in dynamicModel.RootContainers)
+                {
+                    <MudTabPanel Text="@(page.Label)" OnClick=@(() => SetActivePage(page))/>
+                }
+            </MudTabs>
+            @if(activePage != null)
+            {
+                <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+            }
+        </EditForm>
+    }
+    else
+    {
+        <Alert AlertType="@Alert.AlertType" Title="@Alert.Title" Message="@Alert.Message" />
+    }
+}
