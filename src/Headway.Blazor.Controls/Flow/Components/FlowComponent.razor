@@ -1,3 +1,20 @@
 ﻿@inherits FlowComponentBase
 
-<h3>FlowComponent</h3>
+<MudPaper Class="d-flex flex-row gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
+    <MudSelect T="string"
+               @bind-Value="ActionText"
+               Label="@FlowConstants.FLOW_ACTION"
+               SelectedValuesChanged="OnActionChanged"
+               Variant="Variant.Text" 
+               FullWidth=true
+               AnchorOrigin="Origin.BottomCenter"
+               MultiSelection="false">
+        <MudSelectItem T="string" Value="@FlowConstants.FLOW_ACTION_PROCEED">@FlowConstants.FLOW_ACTION_PROCEED</MudSelectItem>
+        <MudSelectItem T="string" Value="@FlowConstants.FLOW_ACTION_REGRESS">@FlowConstants.FLOW_ACTION_REGRESS</MudSelectItem>
+    </MudSelect>
+    <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text"></MudTextField>
+    @*<MudSpacer />*@
+    <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
+                         Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Success" Title="Ownership"
+                         ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Error" ToggledTitle="On" />
+</MudPaper>
