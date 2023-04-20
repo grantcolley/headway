@@ -20,6 +20,8 @@
     @if (activeListItem != null)
     {
         <DynamicComponent @key=activeListItem.ContainerId Type="activeListItem.DynamicComponent" Parameters="activeListItem.Parameters" />
+
+        <FlowComponent />
     }
     </MudPaper>
 </MudPaper>
