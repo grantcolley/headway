@@ -89,7 +89,7 @@ namespace Headway.SeedData
                 ModelApi = "DemoModel",
                 OrderModelBy = "DemoModelId",
                 Document = "Headway.Blazor.Controls.Documents.Table`1, Headway.Blazor.Controls",
-                DocumentArgs = $"Name={Css.HEADER_BTN_IMAGE};Value={Css.BTN_IMAGE_PLUS}|Name={Css.HEADER_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_CREATE}|Name={Css.ROW_BTN_IMAGE};Value={Css.BTN_IMAGE_EDIT}|Name={Css.ROW_BTN_TOOLTIP};Value={Css.BTN_TOOLTIP_EDIT}",
+                DocumentArgs = $"Name={Buttons.HEADER_BTN_IMAGE};Value={Buttons.BTN_ICON_ADD}|Name={Buttons.HEADER_BTN_TOOLTIP};Value={Buttons.BTN_TOOLTIP_CREATE}|Name={Buttons.ROW_BTN_IMAGE};Value={Buttons.BTN_ICON_EDIT_NOTE}|Name={Buttons.ROW_BTN_TOOLTIP};Value={Buttons.BTN_TOOLTIP_EDIT}",
                 NavigatePage = "Page",
                 NavigateProperty = "DemoModelId",
                 NavigateConfig = "DemoModel",
