@@ -10,8 +10,7 @@
     </ToolBarContent>
     <RowTemplate>
         <MudTd>
-            <MudCheckBox T="bool" Class="mr-2" Checked="@context.IsChecked" CheckedChanged="@(() => OnCheckItem(@context))"/>
-            @context.Name
+            <MudCheckBox T="bool" Class="mr-2" Checked="@context.IsChecked" CheckedChanged="@(() => OnCheckItem(@context))" Label="@context.Name" />
         </MudTd> 
     </RowTemplate>
     <PagerContent>
