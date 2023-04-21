@@ -32,24 +32,24 @@ namespace Headway.Blazor.Controls.Documents
 
             await InitializeDynamicListAsync().ConfigureAwait(false);
 
-            if (args.HasArg(Css.HEADER_BTN_IMAGE))
+            if (args.HasArg(Buttons.HEADER_BTN_IMAGE))
             {
-                headerButtonIcon = args.ArgValue(Css.HEADER_BTN_IMAGE);
+                headerButtonIcon = args.ArgValue(Buttons.HEADER_BTN_IMAGE);
             }
 
-            if (args.HasArg(Css.HEADER_BTN_TOOLTIP))
+            if (args.HasArg(Buttons.HEADER_BTN_TOOLTIP))
             {
-                headerButtonTooltip = args.ArgValue(Css.HEADER_BTN_TOOLTIP);
+                headerButtonTooltip = args.ArgValue(Buttons.HEADER_BTN_TOOLTIP);
             }
 
-            if (args.HasArg(Css.ROW_BTN_IMAGE))
+            if (args.HasArg(Buttons.ROW_BTN_IMAGE))
             {
-                rowButtonIcon = args.ArgValue(Css.ROW_BTN_IMAGE);
+                rowButtonIcon = args.ArgValue(Buttons.ROW_BTN_IMAGE);
             }
 
-            if (args.HasArg(Css.ROW_BTN_TOOLTIP))
+            if (args.HasArg(Buttons.ROW_BTN_TOOLTIP))
             {
-                rowButtonTooltip = args.ArgValue(Css.ROW_BTN_TOOLTIP);
+                rowButtonTooltip = args.ArgValue(Buttons.ROW_BTN_TOOLTIP);
             }
         }
 

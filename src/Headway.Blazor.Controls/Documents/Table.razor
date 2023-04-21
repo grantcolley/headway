@@ -40,7 +40,7 @@ else
                         @if(HasHeaderButton)
                         {
                             <MudTooltip Text="@headerButtonTooltip" Arrow="true" Placement="Placement.Right">
-                                <button type="button" class=@($"btn btn-small borderless btn-outline-primary {headerButtonIcon}") @onclick="() => HeaderButtonClick()"/>
+                                <MudIconButton ButtonType=ButtonType.Button Icon="@IconHelper.GetFilled(headerButtonIcon)" Color="Color.Default" Size="Size.Small" OnClick="HeaderButtonClick" />
                             </MudTooltip>                
                         }
                     </MudTh>
@@ -56,7 +56,7 @@ else
                         @if(HasRowButton)
                         {
                             <MudTooltip Text="@rowButtonTooltip" Arrow="true" Placement="Placement.Right">
-                                <button type="button" class=@($"btn btn-small borderless btn-outline-primary {rowButtonIcon}") @onclick="() => RowButtonClick(context)" />
+                                <MudIconButton ButtonType=ButtonType.Button Icon="@IconHelper.GetFilled(rowButtonIcon)" Color="Color.Default" Size="Size.Small" @onclick="() => RowButtonClick(context)" />
                             </MudTooltip>
                         }
                     </MudTd>
