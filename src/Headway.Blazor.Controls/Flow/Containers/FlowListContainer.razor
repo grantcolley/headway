@@ -19,9 +19,9 @@
     <MudPaper Elevation="0" Class="flex-auto" Style="background:inherit;">
     @if (activeListItem != null)
     {
-        <DynamicComponent @key=activeListItem.ContainerId Type="activeListItem.DynamicComponent" Parameters="activeListItem.Parameters" />
-
         <FlowComponent />
+
+        <DynamicComponent @key=activeListItem.ContainerId Type="activeListItem.DynamicComponent" Parameters="activeListItem.Parameters" />
     }
     </MudPaper>
 </MudPaper>
