@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
+    <Authors>Grant Colley</Authors>
+	<Company>Headway</Company>
+	<Copyright>Copyright © 2021 Grant Colley</Copyright>	  
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
