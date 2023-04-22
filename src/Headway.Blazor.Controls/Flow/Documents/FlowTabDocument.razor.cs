@@ -3,6 +3,9 @@ using Headway.Core.Dynamic;
 using Headway.Blazor.Controls.Base;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using System;
+using Headway.Core.Constants;
 
 namespace Headway.Blazor.Controls.Flow.Documents
 {
@@ -35,18 +38,28 @@ namespace Headway.Blazor.Controls.Flow.Documents
             activePage = page;
         }
 
+        protected RenderFragment RenderFlowListItemContainer() => builder =>
+        {
+            var type = DynamicModel.Model.GetType();
+            var genericType = activePage.DynamicComponent.MakeGenericType(new[] { type });
+            builder.OpenComponent(1, genericType);
+            builder.AddAttribute(2, "Container", activePage);
+            builder.AddAttribute(3, "FlowTabDocument", (FlowTabDocumentBase<T>)this);
+            builder.CloseComponent();
+        };
+
         private void SetActivePage()
         {
-            if(dynamicModel != null)
+            if(DynamicModel != null)
             {
                 if (activePage != null)
                 {
-                    activePage = dynamicModel.RootContainers.FirstOrDefault(c => c.ContainerId.Equals(activePage.ContainerId));
+                    activePage = DynamicModel.RootContainers.FirstOrDefault(c => c.ContainerId.Equals(activePage.ContainerId));
                 }
 
                 if (activePage == null)
                 {
-                    activePage = dynamicModel.RootContainers.First();
+                    activePage = DynamicModel.RootContainers.First();
                 }
             }
         }
