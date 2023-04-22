@@ -1,4 +1,5 @@
-﻿@inherits FlowComponentBase
+﻿@typeparam T where T : class, new()
+@inherits FlowComponentBase<T>
 
 <MudPaper Class="d-flex flex-row gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
     <MudSelect T="string"
@@ -11,7 +12,9 @@
         <MudSelectItem T="string" Value="@FlowConstants.FLOW_ACTION_REGRESS">@FlowConstants.FLOW_ACTION_REGRESS</MudSelectItem>
     </MudSelect>
     <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text"></MudTextField>
-    <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
-                         Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default" Title="Take Ownership"
-                         ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" ToggledTitle="Relinquish Ownership" />
+    <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
+        <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
+                             Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default" Title="Take Ownership"
+                             ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" ToggledTitle="Relinquish Ownership" />
+    </MudTooltip>
 </MudPaper>
