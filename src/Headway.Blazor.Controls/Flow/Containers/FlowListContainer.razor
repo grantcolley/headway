@@ -1,4 +1,5 @@
-﻿@inherits FlowListContainerBase
+﻿@typeparam T where T : class, new()
+@inherits FlowListContainerBase<T>
 
 <MudPaper Class="gap-x-4 d-flex flex-row flex-grow-1" Style="background:inherit;margin-top:20px;margin-bottom:20px" Elevation="0">
     <MudPaper Width="@width">
@@ -19,7 +20,7 @@
     <MudPaper Elevation="0" Class="flex-auto" Style="background:inherit;">
     @if (activeListItem != null)
     {
-        <FlowComponent />
+        @RenderFlowComponent()
 
         <DynamicComponent @key=activeListItem.ContainerId Type="activeListItem.DynamicComponent" Parameters="activeListItem.Parameters" />
     }
