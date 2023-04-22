@@ -1,14 +1,20 @@
-﻿using Headway.Core.Dynamic;
+﻿using Headway.Blazor.Controls.Base;
+using Headway.Blazor.Controls.Flow.Components;
+using Headway.Blazor.Controls.Flow.Documents;
+using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
-using Headway.Blazor.Controls.Base;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Headway.Blazor.Controls.Flow.Containers
 {
-    public class FlowListContainerBase : DynamicContainerBase
+    public class FlowListContainerBase<T> : DynamicContainerBase where T : class, new()
     {
+        [Parameter]
+        public FlowTabDocumentBase<T> FlowTabDocument { get; set; }
+
         protected DynamicContainer activeListItem { get; set; }
 
         protected MudListItem selectedItem;
@@ -25,6 +31,14 @@ namespace Headway.Blazor.Controls.Flow.Containers
 
             SetActiveListItem();
         }
+
+        protected RenderFragment RenderFlowComponent() => builder =>
+        {
+            var genericType = typeof(FlowComponent<T>);
+            builder.OpenComponent(1, genericType);
+            builder.AddAttribute(2, "FlowTabDocument", (FlowTabDocumentBase<T>)FlowTabDocument);
+            builder.CloseComponent();
+        };
 
         protected void SelectedValueChange(object value)
         {
