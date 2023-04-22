@@ -620,12 +620,12 @@ namespace Headway.SeedData.RemediatR
                 Model = "RemediatR.Core.Model.Redress, RemediatR.Core",
                 ModelApi = "RemediatRRedress",
                 CreateLocal = false,
-                Document = "Headway.Blazor.Controls.Documents.TabDocument`1, Headway.Blazor.Controls",
+                Document = "Headway.Blazor.Controls.Flow.Documents.FlowTabDocument`1, Headway.Blazor.Controls",
                 NavigatePage = "Page",
                 NavigateConfig = "RedressCases"
             };
 
-            var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Blazor.Controls.Flow.Containers.FlowListContainer, Headway.Blazor.Controls", Label = "Redress Details", Order = 1, ComponentArgs = $"Name={FlowConstants.FLOW_LIST_CONTAINER_LABEL};Value=Redress Flow|Name={FlowConstants.FLOW_LIST_CONTAINER_WIDTH};Value=400px" };
+            var redressConfigContainer = new ConfigContainer { Name = "Redress Div", Code = "REDRESS DIV", Container = "Headway.Blazor.Controls.Flow.Containers.FlowListContainer`1, Headway.Blazor.Controls", Label = "Redress Details", Order = 1, ComponentArgs = $"Name={FlowConstants.FLOW_LIST_CONTAINER_LABEL};Value=Redress Flow|Name={FlowConstants.FLOW_LIST_CONTAINER_WIDTH};Value=400px" };
 
             var redressDetailsContainer = new ConfigContainer { Name = "Redress Create Div", Code = "REDRESS CREATE DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Redress Create", Order = 1, ParentCode = "REDRESS DIV" };
             var refundAssessmentContainer = new ConfigContainer { Name = "Refund Assessment Div", Code = "REFUND ASSESSMENT DIV", Container = "Headway.Blazor.Controls.Containers.Div, Headway.Blazor.Controls", Label = "Refund Assessment", Order = 2, ParentCode = "REDRESS DIV" };
