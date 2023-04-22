@@ -3,7 +3,7 @@
 @typeparam T where T : class, new()
 @inherits DocumentBase<T>
 
-@if (dynamicModel == null)
+@if (DynamicModel == null)
 {
     <Loading Message="Loading..."/>
 }
@@ -11,7 +11,7 @@ else
 {
     @if(@Alert == null)
     {
-        <EditForm Model="@dynamicModel.Model" OnValidSubmit="@Submit">
+        <EditForm Model="@DynamicModel.Model" OnValidSubmit="@Submit">
             <FluentValidationValidator/>
             <MudToolBar DisableGutters="true" Style="border-bottom: 1px solid gray;">
                 @if (isSaveInProgress)
@@ -25,9 +25,9 @@ else
                     </MudTooltip>
                 }
 
-                <MudText Typo="Typo.h6">@dynamicModel.Title</MudText>
+                <MudText Typo="Typo.h6">@DynamicModel.Title</MudText>
 
-                <ValidationBadge Title="@dynamicModel.Title" Messages="@messages" />
+                <ValidationBadge Title="@DynamicModel.Title" Messages="@messages" />
 
                 <MudSpacer />
 
@@ -43,7 +43,7 @@ else
                 }
             </MudToolBar>
             <MudPaper>
-                @foreach(var rootContainer in dynamicModel.RootContainers)
+                @foreach(var rootContainer in DynamicModel.RootContainers)
                 {
                     <DynamicComponent @key=rootContainer.ContainerId Type="rootContainer.DynamicComponent" Parameters="rootContainer.Parameters" />   
                 }

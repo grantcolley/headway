@@ -3,27 +3,27 @@
 @typeparam T where T : class, new()
 @inherits TableBase<T>
 
-@if (dynamicList == null)
+@if (DynamicList == null)
 {
     <Loading Message="Loading..."/>
 }
 else
 {
-    <MudText Typo="Typo.h6" Class="mb-2 pl-4">@dynamicList.Title</MudText>
+    <MudText Typo="Typo.h6" Class="mb-2 pl-4">@DynamicList.Title</MudText>
 
     <MudGrid>
 
-        @if(dynamicList.DynamicSearchComponent != null)
+        @if(DynamicList.DynamicSearchComponent != null)
         {
             <MudItem xs="12">
                 <CascadingValue Value="searchCallback">
-                    <DynamicComponent @key="dynamicList.SearchComponentUniqueId" Type="dynamicList.DynamicSearchComponent" Parameters="dynamicList.SearchParameters" />
+                    <DynamicComponent @key="DynamicList.SearchComponentUniqueId" Type="DynamicList.DynamicSearchComponent" Parameters="DynamicList.SearchParameters" />
                 </CascadingValue>
             </MudItem>
         }
 
         <MudItem xs="12">
-            <MudTable Items="@dynamicList.DynamicListItems" 
+            <MudTable Items="@DynamicList.DynamicListItems" 
                       Hover="true" Dense="true" Striped="true" Breakpoint="Breakpoint.Sm"
                       Filter="new Func<DynamicListItem<T>,bool>(FilterFunction)">
                 <ToolBarContent>
@@ -31,7 +31,7 @@ else
                 </ToolBarContent>
                 <HeaderContent>
 
-                    @foreach(var column in dynamicList.ConfigItems)
+                    @foreach(var column in DynamicList.ConfigItems)
                     {
                         <MudTh>@column.Label</MudTh>
                     }
@@ -47,9 +47,9 @@ else
                 </HeaderContent>
                 <RowTemplate>
 
-                    @foreach(var column in dynamicList.ConfigItems)
+                    @foreach(var column in DynamicList.ConfigItems)
                     {
-                        <MudTd DataLabel="@column.Label">@dynamicList.GetValue(@context.Model, column.PropertyName)</MudTd>                            
+                        <MudTd DataLabel="@column.Label">@DynamicList.GetValue(@context.Model, column.PropertyName)</MudTd>                            
                     }
             
                     <MudTd>

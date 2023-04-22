@@ -55,20 +55,20 @@ namespace Headway.Blazor.Controls.Documents
 
         protected void HeaderButtonClick()
         {
-            NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}");
+            NavigationManager.NavigateTo($"{DynamicList.Config.NavigatePage}/{DynamicList.Config.NavigateConfig}");
         }
 
         protected void RowButtonClick(DynamicListItem<T> listItem)
         {
-            if (string.IsNullOrWhiteSpace(dynamicList.Config.NavigateProperty))
+            if (string.IsNullOrWhiteSpace(DynamicList.Config.NavigateProperty))
             {
-                var dataArgsJson = dynamicList.ToDataArgsJson(listItem.Model);
-                NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{dataArgsJson}");
+                var dataArgsJson = DynamicList.ToDataArgsJson(listItem.Model);
+                NavigationManager.NavigateTo($"{DynamicList.Config.NavigatePage}/{DynamicList.Config.NavigateConfig}/{dataArgsJson}");
             }
             else
             {
-                var id = dynamicList.GetValue(listItem.Model, dynamicList.Config.NavigateProperty);
-                NavigationManager.NavigateTo($"{dynamicList.Config.NavigatePage}/{dynamicList.Config.NavigateConfig}/{id}");
+                var id = DynamicList.GetValue(listItem.Model, DynamicList.Config.NavigateProperty);
+                NavigationManager.NavigateTo($"{DynamicList.Config.NavigatePage}/{DynamicList.Config.NavigateConfig}/{id}");
             }
         }
 
@@ -79,9 +79,9 @@ namespace Headway.Blazor.Controls.Documents
                 return true;
             }
 
-            foreach(var column in dynamicList.ConfigItems)
+            foreach(var column in DynamicList.ConfigItems)
             {
-                var value = dynamicList.GetValue(item.Model, column.PropertyName);
+                var value = DynamicList.GetValue(item.Model, column.PropertyName);
 
                 if(value != null
                     && value.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase))

@@ -33,11 +33,11 @@ namespace Headway.Blazor.Controls.Base
         [Parameter]
         public string DataArgs { get; set; }
 
-        protected EditContext CurrentEditContext { get; set; }
+        public EditContext CurrentEditContext { get; set; }
 
-        protected DynamicModel<T> dynamicModel { get; set; }
+        public DynamicModel<T> DynamicModel { get; set; }
 
-        protected DynamicList<T> dynamicList;
+        public DynamicList<T> DynamicList;
 
         protected List<Arg> args = new();
 
@@ -92,11 +92,11 @@ namespace Headway.Blazor.Controls.Base
                     .ConfigureAwait(false);
             }
 
-            dynamicModel = GetResponse(response);
+            DynamicModel = GetResponse(response);
 
-            ExtractArgs(dynamicModel.Config);
+            ExtractArgs(DynamicModel.Config);
 
-            CurrentEditContext = new EditContext(dynamicModel.Model);
+            CurrentEditContext = new EditContext(DynamicModel.Model);
             CurrentEditContext.OnValidationStateChanged += CurrentEditContextOnValidationStateChanged;
         }
 
@@ -106,9 +106,9 @@ namespace Headway.Blazor.Controls.Base
                 await DynamicApiRequest.GetDynamicListAsync<T>(Config)
                 .ConfigureAwait(false);
 
-            dynamicList = GetResponse(result);
+            DynamicList = GetResponse(result);
 
-            ExtractArgs(dynamicList.Config);
+            ExtractArgs(DynamicList.Config);
         }
 
         protected void ExtractArgs(Config config)
@@ -123,7 +123,7 @@ namespace Headway.Blazor.Controls.Base
         protected virtual async Task Search()
         {
             var response = await DynamicApiRequest
-                      .SearchDynamicListAsync<T>(dynamicList)
+                      .SearchDynamicListAsync<T>(DynamicList)
                       .ConfigureAwait(false);
 
             GetResponse(response);
@@ -143,16 +143,16 @@ namespace Headway.Blazor.Controls.Base
             {
                 IResponse<DynamicModel<T>> response;
 
-                if (dynamicModel.Id.Equals(0))
+                if (DynamicModel.Id.Equals(0))
                 {
                     response = await DynamicApiRequest
-                        .AddDynamicModelAsync<T>(dynamicModel)
+                        .AddDynamicModelAsync<T>(DynamicModel)
                         .ConfigureAwait(false);
                 }
                 else
                 {
                     response = await DynamicApiRequest
-                        .UpdateDynamicModelAsync<T>(dynamicModel)
+                        .UpdateDynamicModelAsync<T>(DynamicModel)
                         .ConfigureAwait(false);
                 }
 
@@ -179,7 +179,7 @@ namespace Headway.Blazor.Controls.Base
 
         protected virtual async Task Delete()
         {
-            if (dynamicModel.Id.Equals(0))
+            if (DynamicModel.Id.Equals(0))
             {
                 await ShowDialogService.ShowAsync(
                     "Delete", $"Cannot delete an object with Id equal to 0",
@@ -189,7 +189,7 @@ namespace Headway.Blazor.Controls.Base
             }
 
             var deleteResult = await ShowDialogService.ShowAsync(
-                "Delete", $"Do you really want to delete {dynamicModel.Title}",
+                "Delete", $"Do you really want to delete {DynamicModel.Title}",
                 "Delete", true, Color.Warning, false)
                 .ConfigureAwait(false);
 
@@ -201,7 +201,7 @@ namespace Headway.Blazor.Controls.Base
             isDeleteInProgress = true;
 
             var response = await DynamicApiRequest
-                .DeleteDynamicModelAsync(dynamicModel)
+                .DeleteDynamicModelAsync(DynamicModel)
                 .ConfigureAwait(false);
 
             var result = GetResponse(response);
@@ -214,7 +214,7 @@ namespace Headway.Blazor.Controls.Base
             Alert = new Alert
             {
                 AlertType = Alerts.INFO,
-                Title = dynamicModel.Title,
+                Title = DynamicModel.Title,
                 Message = $"has been deleted."
             };
 
@@ -234,8 +234,8 @@ namespace Headway.Blazor.Controls.Base
                 }
 
                 CurrentEditContext = null;
-                dynamicModel = null;
-                dynamicList = null;
+                DynamicModel = null;
+                DynamicList = null;
                 messages = null;
 
                 disposedValue = true;
