@@ -3,7 +3,7 @@
 @typeparam T where T : class, new()
 @inherits FlowTabDocumentBase<T>
 
-@if (dynamicModel == null)
+@if (DynamicModel == null)
 {
     <Loading Message="Loading..."/>
 }
@@ -25,9 +25,9 @@ else
                     </MudTooltip>
                 }
 
-                <MudText Typo="Typo.h6">@dynamicModel.Title @dynamicModel.Id</MudText>
+                <MudText Typo="Typo.h6">@DynamicModel.Title @DynamicModel.Id</MudText>
 
-                <ValidationBadge Title="@dynamicModel.Title" Messages="@messages" />
+                <ValidationBadge Title="@DynamicModel.Title" Messages="@messages" />
 
                 <MudSpacer />
 
@@ -43,14 +43,21 @@ else
                 }
             </MudToolBar>
             <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true">
-                @foreach (var page in dynamicModel.RootContainers)
+                @foreach (var page in DynamicModel.RootContainers)
                 {
                     <MudTabPanel Text="@(page.Label)" OnClick=@(() => SetActivePage(page))/>
                 }
             </MudTabs>
             @if(activePage != null)
             {
-                <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+                if (activePage.DynamicComponent.IsGenericType)
+                {
+                    @RenderFlowListItemContainer()
+                }
+                else
+                {
+                    <DynamicComponent @key=activePage.ContainerId Type="activePage.DynamicComponent" Parameters="activePage.Parameters" />
+                }
             }
         </EditForm>
     }
