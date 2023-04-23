@@ -1,5 +1,6 @@
 ﻿using Headway.Blazor.Controls.Flow.Documents;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using Headway.Core.Notifications;
 using Microsoft.AspNetCore.Components;
@@ -14,8 +15,9 @@ namespace Headway.Blazor.Controls.Flow.Components
     {
         private bool ownerAssigned;
         private DynamicModel<T> dynamicModel;
-        private IFlowContext flowContext;
-
+        protected Core.Model.Flow flow;
+        protected Core.Model.State activeState;
+        
         [Parameter]
         public FlowTabDocumentBase<T> FlowTabDocument { get; set; }
 
@@ -44,8 +46,15 @@ namespace Headway.Blazor.Controls.Flow.Components
             ActionText = FlowConstants.FLOW_ACTION_PROCEED;
 
             dynamicModel = FlowTabDocument.DynamicModel;
-            flowContext = dynamicModel.FlowContext;
-            OwnerAssigned = true;
+            flow = dynamicModel.FlowContext.Flow;
+            activeState = flow.ActiveState;
+
+            if (!flow.Bootstrapped)
+            {
+                flow.Bootstrap(dynamicModel.FlowContext.GetFlowHistory(), true);
+            }
+
+            OwnerAssigned = !string.IsNullOrWhiteSpace(activeState.Owner);
         }
 
         protected virtual void OnActionChanged(IEnumerable<string> values)
