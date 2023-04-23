@@ -11,10 +11,26 @@
         <MudSelectItem T="string" Value="@FlowConstants.FLOW_ACTION_PROCEED">@FlowConstants.FLOW_ACTION_PROCEED</MudSelectItem>
         <MudSelectItem T="string" Value="@FlowConstants.FLOW_ACTION_REGRESS">@FlowConstants.FLOW_ACTION_REGRESS</MudSelectItem>
     </MudSelect>
+
+    @if(ActionText == FlowConstants.FLOW_ACTION_PROCEED)
+    {
+        foreach(var transition in activeState.Transitions)
+        {
+            <MudButton Variant="Variant.Text" Color="Color.Default" Size="Size.Small">@transition.Name</MudButton>
+        }
+    }
+    else
+    {
+        foreach (var regression in activeState.Regressions)
+        {
+            <MudButton Variant="Variant.Text" Color="Color.Error" Size="Size.Small">@regression.Name</MudButton>
+        }
+    }
+
     <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text"></MudTextField>
     <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
         <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
-                             Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default" Title="Take Ownership"
-                             ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" ToggledTitle="Relinquish Ownership" />
+                             Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
+                             ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" />
     </MudTooltip>
 </MudPaper>
