@@ -2,35 +2,41 @@
 @inherits FlowComponentBase<T>
 
 <MudPaper Class="d-flex flex-row gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
+    <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
+        <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
+                             Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
+                             ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" />
+    </MudTooltip>
     <MudSelect T="string"
                @bind-Value="ActionText"
                SelectedValuesChanged="OnActionChanged"
                Variant="Variant.Text" 
                AnchorOrigin="Origin.BottomCenter"
                MultiSelection="false">
-        <MudSelectItem T="string" Value="@FlowConstants.FLOW_ACTION_PROCEED">@FlowConstants.FLOW_ACTION_PROCEED</MudSelectItem>
-        <MudSelectItem T="string" Value="@FlowConstants.FLOW_ACTION_REGRESS">@FlowConstants.FLOW_ACTION_REGRESS</MudSelectItem>
+        @if (ActionTextItems != null)
+        {
+            @foreach (var actionTextItem in ActionTextItems)
+            {
+                <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
+            }
+        }
     </MudSelect>
-
-    @if(ActionText == FlowConstants.FLOW_ACTION_PROCEED)
-    {
-        foreach(var transition in activeState.Transitions)
+    <MudSelect T="string"
+               @bind-Value="ActionTarget"
+               SelectedValuesChanged="OnActionTargetChanged"
+               Variant="Variant.Text"
+               AnchorOrigin="Origin.BottomCenter"
+               MultiSelection="false">
+        @if (ActionTargetItems != null)
         {
-            <MudButton Variant="Variant.Text" Color="Color.Default" Size="Size.Small">@transition.Name</MudButton>
+            @foreach (var actionTargetItem in ActionTargetItems)
+            {
+                <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
+            }
         }
-    }
-    else
-    {
-        foreach (var regression in activeState.Regressions)
-        {
-            <MudButton Variant="Variant.Text" Color="Color.Error" Size="Size.Small">@regression.Name</MudButton>
-        }
-    }
-
+    </MudSelect>
     <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text"></MudTextField>
-    <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
-        <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
-                             Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
-                             ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" />
+    <MudTooltip Text="@ActionText" Arrow="true">
+        <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" />
     </MudTooltip>
 </MudPaper>
