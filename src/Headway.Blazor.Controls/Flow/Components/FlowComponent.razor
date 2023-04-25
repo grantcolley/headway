@@ -7,33 +7,38 @@
                              Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
                              ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" />
     </MudTooltip>
-    <MudSelect T="string"
-               @bind-Value="ActionText"
-               SelectedValuesChanged="OnActionChanged"
-               Variant="Variant.Text" 
-               MultiSelection="false">
-        @if (ActionTextItems != null)
-        {
-            @foreach (var actionTextItem in ActionTextItems)
-            {
-                <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
-            }
-        }
-    </MudSelect>
-    <MudSelect T="string"
-               @bind-Value="ActionTarget"
-               SelectedValuesChanged="OnActionTargetChanged"
-               Variant="Variant.Text"
-               MultiSelection="false">
-        @if (ActionTargetItems != null)
-        {
-            @foreach (var actionTargetItem in ActionTargetItems)
-            {
-                <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
-            }
-        }
-    </MudSelect>
-    <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text"></MudTextField>
+    @if (ActionTextItems != null)
+    {
+        <MudTooltip Text="@FlowConstants.FLOW_STATE_ACTION" Arrow="true">
+            <MudSelect T="string" Class="align-self-center"
+                       @bind-Value="ActionText"
+                       SelectedValuesChanged="OnActionChanged"
+                       Variant="Variant.Text"
+                       FullWidth=true
+                       MultiSelection="false">
+                @foreach (var actionTextItem in ActionTextItems)
+                {
+                    <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
+                }
+            </MudSelect>
+        </MudTooltip>
+    }
+    @if (ActionTargetItems != null)
+    {
+        <MudSelect T="string" Class="align-self-center"
+                   @bind-Value="ActionTarget"
+                   SelectedValuesChanged="OnActionTargetChanged"
+                   Variant="Variant.Text"
+                   FullWidth=true
+                   MultiSelection="false">
+                @foreach (var actionTargetItem in ActionTargetItems)
+                {
+                    <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
+                }
+        </MudSelect>
+    }
+    <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center"></MudTextField>
+    <MudSpacer />
     <MudTooltip Text="@ActionText" Arrow="true">
         <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" />
     </MudTooltip>
