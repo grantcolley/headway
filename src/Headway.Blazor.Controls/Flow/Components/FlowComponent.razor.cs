@@ -36,9 +36,9 @@ namespace Headway.Blazor.Controls.Flow.Components
                 if (ownerAssigned != value)
                 {
                     ownerAssigned = value;
-
-                    OwnerAssignedTooltip = ownerAssigned ? "Relinquish Ownership" : "Take Ownership";
                 }
+
+                OwnerAssignedTooltip = ownerAssigned ? "Relinquish Ownership" : "Take Ownership";
             }
         }
 
