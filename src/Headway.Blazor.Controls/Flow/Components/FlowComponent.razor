@@ -1,7 +1,7 @@
 ﻿@typeparam T where T : class, new()
 @inherits FlowComponentBase<T>
 
-<MudPaper Class="d-flex flex-row gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
+<MudPaper Class="d-flex flex-row align-center gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
     <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
         <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
                              Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
@@ -11,7 +11,6 @@
                @bind-Value="ActionText"
                SelectedValuesChanged="OnActionChanged"
                Variant="Variant.Text" 
-               AnchorOrigin="Origin.BottomCenter"
                MultiSelection="false">
         @if (ActionTextItems != null)
         {
@@ -25,7 +24,6 @@
                @bind-Value="ActionTarget"
                SelectedValuesChanged="OnActionTargetChanged"
                Variant="Variant.Text"
-               AnchorOrigin="Origin.BottomCenter"
                MultiSelection="false">
         @if (ActionTargetItems != null)
         {
