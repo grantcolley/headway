@@ -17,55 +17,61 @@
         </MudTooltip>
     }
 
-    @if (ActionTextItems != null)
+    @if (OwnerAssigned)
     {
-        <MudTooltip Text="@FlowConstants.FLOW_STATE_ACTION" Arrow="true">
-            <MudSelect T="string" Class="align-self-center"
+        @if (ActionTextItems != null)
+        {
+            <MudTooltip Text="@FlowConstants.FLOW_STATE_ACTION" Arrow="true">
+                <MudSelect T="string" Class="align-self-center"
                        @bind-Value="ActionText"
                        SelectedValuesChanged="OnActionChanged"
                        Variant="Variant.Text"
                        FullWidth=true
                        Margin="Margin.Dense"
                        MultiSelection="false">
-                @foreach (var actionTextItem in ActionTextItems)
-                {
-                    <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
-                }
-            </MudSelect>
-        </MudTooltip>
-    }
+                    @foreach (var actionTextItem in ActionTextItems)
+                    {
+                        <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudTooltip>
+        }
 
-    @if (ActionTargetItems != null)
-    {
-        <MudTooltip Text="@FlowConstants.FLOW_TARGET_STATE" Arrow="true">
-            <MudSelect T="string" Class="align-self-center"
+        @if (ActionTargetItems != null)
+        {
+            <MudTooltip Text="@FlowConstants.FLOW_TARGET_STATE" Arrow="true">
+                <MudSelect T="string" Class="align-self-center"
                        @bind-Value="ActionTarget"
                        SelectedValuesChanged="OnActionTargetChanged"
                        Variant="Variant.Text"
                        FullWidth=true 
                        Margin="Margin.Dense"
                        MultiSelection="false">
-                @foreach (var actionTargetItem in ActionTargetItems)
-                {
-                    <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
-                }
-            </MudSelect>
-        </MudTooltip>
+                    @foreach (var actionTargetItem in ActionTargetItems)
+                    {
+                        <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudTooltip>
+        }
+        
+        <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center" Margin="Margin.Dense"></MudTextField>
     }
-
-    <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center" Margin="Margin.Dense"></MudTextField>
 
     <MudSpacer />
 
-    @if (isExecuting)
+    @if (OwnerAssigned)
     {
-        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-    }
-    else
-    {
-        <MudTooltip Text="@FlowConstants.FLOW_ACTION_EXECUTE" Arrow="true">
-            <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" OnClick="OnExecutingClick" />
-        </MudTooltip>
+        @if (isExecuting)
+        {
+            <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+        }
+        else
+        {
+            <MudTooltip Text="@FlowConstants.FLOW_ACTION_EXECUTE" Arrow="true">
+                <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" OnClick="OnExecutingClick" />
+            </MudTooltip>
+        }
     }
 
 </MudPaper>
