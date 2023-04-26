@@ -17,7 +17,9 @@
     }
     else
     {
-        <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Search" OnClick="OnClick" Class="align-center"></MudIconButton>        
+        <MudTooltip Text="@SearchConstants.SEARCH" Arrow="true">
+            <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Search" OnClick="OnClick" Class="align-center"></MudIconButton>
+        </MudTooltip>
     }
 
 </MudPaper>
