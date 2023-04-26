@@ -1,10 +1,7 @@
 ﻿using Headway.Blazor.Controls.Flow.Documents;
 using Headway.Core.Dynamic;
 using Headway.Core.Extensions;
-using Headway.Core.Interface;
-using Headway.Core.Notifications;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +24,8 @@ namespace Headway.Blazor.Controls.Flow.Components
         protected List<string> ActionTextItems { get; set; }
         protected List<string> ActionTargetItems { get; set; }
         protected string OwnerAssignedTooltip { get; set; }
+        protected bool isOwnerAssigning { get; set; }
+        protected bool isExecuting { get; set; }
 
         protected bool OwnerAssigned
         {
@@ -105,6 +104,32 @@ namespace Headway.Blazor.Controls.Flow.Components
             //{
             //    StateHasChanged();
             //});
+        }
+
+        protected async Task OnOwnerAssignedChangedAsync(bool toggled)
+        {
+            isOwnerAssigning = true;
+
+            // assign / unassign here....
+            OwnerAssigned = !OwnerAssigned;
+            await Task.Delay(1000);
+
+            isOwnerAssigning = false;
+        }
+
+        protected async Task OnExecutingClick()
+        {
+            isExecuting = true;
+
+            // executing here....
+            await Task.Delay(1000);
+
+            isExecuting = false;
+
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
 
         private void SetActiveTargetItems()
