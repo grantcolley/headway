@@ -15,6 +15,7 @@
                        SelectedValuesChanged="OnActionChanged"
                        Variant="Variant.Text"
                        FullWidth=true
+                       Margin="Margin.Dense"
                        MultiSelection="false">
                 @foreach (var actionTextItem in ActionTextItems)
                 {
@@ -25,21 +26,24 @@
     }
     @if (ActionTargetItems != null)
     {
-        <MudSelect T="string" Class="align-self-center"
-                   @bind-Value="ActionTarget"
-                   SelectedValuesChanged="OnActionTargetChanged"
-                   Variant="Variant.Text"
-                   FullWidth=true
-                   MultiSelection="false">
+        <MudTooltip Text="@FlowConstants.FLOW_TARGET_STATE" Arrow="true">
+            <MudSelect T="string" Class="align-self-center"
+                       @bind-Value="ActionTarget"
+                       SelectedValuesChanged="OnActionTargetChanged"
+                       Variant="Variant.Text"
+                       FullWidth=true 
+                       Margin="Margin.Dense"
+                       MultiSelection="false">
                 @foreach (var actionTargetItem in ActionTargetItems)
                 {
                     <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
                 }
-        </MudSelect>
+            </MudSelect>
+        </MudTooltip>
     }
     <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center"></MudTextField>
     <MudSpacer />
-    <MudTooltip Text="@ActionText" Arrow="true">
+    <MudTooltip Text="@FlowConstants.FLOW_ACTION_EXECUTE" Arrow="true">
         <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" />
     </MudTooltip>
 </MudPaper>
