@@ -111,8 +111,8 @@ namespace Headway.Blazor.Controls.Flow.Components
             isOwnerAssigning = true;
 
             // assign / unassign here....
-            OwnerAssigned = !OwnerAssigned;
             await Task.Delay(1000);
+            OwnerAssigned = !OwnerAssigned;
 
             isOwnerAssigning = false;
         }
