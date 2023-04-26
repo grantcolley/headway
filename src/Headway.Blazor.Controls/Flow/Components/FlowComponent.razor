@@ -2,11 +2,21 @@
 @inherits FlowComponentBase<T>
 
 <MudPaper Class="d-flex flex-row align-center gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
-    <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
-        <MudToggleIconButton @bind-Toggled="@OwnerAssigned"
+
+    @if (isOwnerAssigning)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
+            <MudToggleIconButton Toggled="@OwnerAssigned"
                              Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
-                             ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default" />
-    </MudTooltip>
+                             ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default"
+                             ToggledChanged="OnOwnerAssignedChangedAsync" />
+        </MudTooltip>
+    }
+
     @if (ActionTextItems != null)
     {
         <MudTooltip Text="@FlowConstants.FLOW_STATE_ACTION" Arrow="true">
@@ -24,6 +34,7 @@
             </MudSelect>
         </MudTooltip>
     }
+
     @if (ActionTargetItems != null)
     {
         <MudTooltip Text="@FlowConstants.FLOW_TARGET_STATE" Arrow="true">
@@ -41,9 +52,20 @@
             </MudSelect>
         </MudTooltip>
     }
+
     <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center" Margin="Margin.Dense"></MudTextField>
+
     <MudSpacer />
-    <MudTooltip Text="@FlowConstants.FLOW_ACTION_EXECUTE" Arrow="true">
-        <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" />
-    </MudTooltip>
+
+    @if (isExecuting)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudTooltip Text="@FlowConstants.FLOW_ACTION_EXECUTE" Arrow="true">
+            <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" OnClick="OnExecutingClick" />
+        </MudTooltip>
+    }
+
 </MudPaper>
