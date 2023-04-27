@@ -55,13 +55,9 @@ namespace Headway.Core.Extensions
 
             state.Flow.History.RecordInitialise(state);
 
-            if (state.Flow.ActiveState != state)
-            {
-                state.Flow.ActiveState = state;
-            }
+            state.Flow.ActiveState = state;
 
-            if (state.Equals(state.Flow.RootState)
-                && !state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
+            if (!state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
             {
                 state.Flow.FlowStatus = FlowStatus.InProgress;
             }
@@ -316,14 +312,7 @@ namespace Headway.Core.Extensions
 
                     if (rs.Equals(regressionState))
                     {
-                        state.Flow.ActiveState = regressionState;
-
-                        await state.Flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
-
-                        if(!state.Flow.FlowStatus.Equals(FlowStatus.InProgress))
-                        {
-                            state.Flow.FlowStatus = FlowStatus.InProgress;
-                        }
+                        await rs.InitialiseAsync().ConfigureAwait(false);
 
                         break;
                     }
