@@ -9,5 +9,7 @@
         public const string FLOW_ACTION_EXECUTE = "Execute";
         public const string FLOW_ACTION_PROCEED = "Proceed";
         public const string FLOW_ACTION_REGRESS = "Regress";
+        public const string FLOW_STATE_TAKE_OWNERSHIP = "Take Ownership";
+        public const string FLOW_STATE_RELINQUISH_OWNERSHIP = "Relinquish Ownership";
     }
 }
