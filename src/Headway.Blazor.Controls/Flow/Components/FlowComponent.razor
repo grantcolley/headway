@@ -3,33 +3,33 @@
 
 <MudPaper Class="d-flex flex-row align-center gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
 
-    @if (isOwnerAssigning)
+    @if (FlowComponentContext.IsOwnerAssigning)
     {
         <MudProgressCircular Color="Color.Default" Indeterminate="true" />
     }
     else
     {
-        <MudTooltip Text="@OwnerAssignedTooltip" Arrow="true">
-            <MudToggleIconButton Toggled="@OwnerAssigned"
+        <MudTooltip Text="@FlowComponentContext.OwnerAssignedTooltip" Arrow="true">
+            <MudToggleIconButton Toggled="@FlowComponentContext.OwnerAssigned"
                              Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
                              ToggledIcon="@Icons.Material.Filled.PersonOff" ToggledColor="@Color.Default"
                              ToggledChanged="OnOwnerAssignedChangedAsync" />
         </MudTooltip>
     }
 
-    @if (OwnerAssigned)
+    @if (FlowComponentContext.OwnerAssigned)
     {
-        @if (ActionTextItems != null)
+        @if (FlowComponentContext.ActionTextItems != null)
         {
             <MudTooltip Text="@FlowConstants.FLOW_STATE_ACTION" Arrow="true">
                 <MudSelect T="string" Class="align-self-center"
-                       @bind-Value="ActionText"
+                       @bind-Value="FlowComponentContext.ActionText"
                        SelectedValuesChanged="OnActionChanged"
                        Variant="Variant.Text"
                        FullWidth=true
                        Margin="Margin.Dense"
                        MultiSelection="false">
-                    @foreach (var actionTextItem in ActionTextItems)
+                    @foreach (var actionTextItem in FlowComponentContext.ActionTextItems)
                     {
                         <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
                     }
@@ -37,17 +37,17 @@
             </MudTooltip>
         }
 
-        @if (ActionTargetItems != null)
+        @if (FlowComponentContext.ActionTargetItems != null)
         {
             <MudTooltip Text="@FlowConstants.FLOW_TARGET_STATE" Arrow="true">
                 <MudSelect T="string" Class="align-self-center"
-                       @bind-Value="ActionTarget"
+                       @bind-Value="FlowComponentContext.ActionTarget"
                        SelectedValuesChanged="OnActionTargetChanged"
                        Variant="Variant.Text"
                        FullWidth=true 
                        Margin="Margin.Dense"
                        MultiSelection="false">
-                    @foreach (var actionTargetItem in ActionTargetItems)
+                    @foreach (var actionTargetItem in FlowComponentContext.ActionTargetItems)
                     {
                         <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
                     }
@@ -55,14 +55,14 @@
             </MudTooltip>
         }
         
-        <MudTextField @bind-Value="Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center" Margin="Margin.Dense"></MudTextField>
+        <MudTextField @bind-Value="FlowComponentContext.Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center" Margin="Margin.Dense"></MudTextField>
     }
 
     <MudSpacer />
 
-    @if (OwnerAssigned)
+    @if (FlowComponentContext.OwnerAssigned)
     {
-        @if (isExecuting)
+        @if (FlowComponentContext.IsExecuting)
         {
             <MudProgressCircular Color="Color.Default" Indeterminate="true" />
         }
