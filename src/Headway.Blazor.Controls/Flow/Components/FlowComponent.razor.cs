@@ -10,7 +10,6 @@ namespace Headway.Blazor.Controls.Flow.Components
 {
     public class FlowComponentBase<T> : ComponentBase where T : class, new()
     {
-        private bool ownerAssigned;
         private DynamicModel<T> dynamicModel;
         protected Core.Model.Flow flow;
         protected Core.Model.State activeState;
@@ -18,33 +17,11 @@ namespace Headway.Blazor.Controls.Flow.Components
         [Parameter]
         public FlowTabDocumentBase<T> FlowTabDocument { get; set; }
 
-        protected string Comment { get; set; }
-        protected string ActionText { get; set; }
-        protected string ActionTarget { get; set; }
-        protected List<string> ActionTextItems { get; set; }
-        protected List<string> ActionTargetItems { get; set; }
-        protected string OwnerAssignedTooltip { get; set; }
-        protected bool isOwnerAssigning { get; set; }
-        protected bool isExecuting { get; set; }
-
-        protected bool OwnerAssigned
-        {
-            get { return ownerAssigned; }
-            set
-            {
-                if (ownerAssigned != value)
-                {
-                    ownerAssigned = value;
-                }
-
-                OwnerAssignedTooltip = ownerAssigned ? "Relinquish Ownership" : "Take Ownership";
-            }
-        }
+        protected FlowComponentContext FlowComponentContext { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            ActionTextItems = new List<string>();
-            ActionTargetItems = new List<string>();
+            FlowComponentContext = new FlowComponentContext();
 
             await base.OnInitializedAsync().ConfigureAwait(false);
 
@@ -59,19 +36,19 @@ namespace Headway.Blazor.Controls.Flow.Components
 
             if (activeState.Transitions.Any())
             {
-                ActionTextItems.Add(FlowConstants.FLOW_ACTION_PROCEED);
+                FlowComponentContext.ActionTextItems.Add(FlowConstants.FLOW_ACTION_PROCEED);
             }
 
             if (activeState.Regressions.Any())
             {
-                ActionTextItems.Add(FlowConstants.FLOW_ACTION_REGRESS);
+                FlowComponentContext.ActionTextItems.Add(FlowConstants.FLOW_ACTION_REGRESS);
             }
 
-            ActionText = ActionTextItems.FirstOrDefault();
+            FlowComponentContext.ActionText = FlowComponentContext.ActionTextItems.FirstOrDefault();
 
             SetActiveTargetItems();
 
-            OwnerAssigned = !string.IsNullOrWhiteSpace(activeState.Owner);
+            FlowComponentContext.Owner = activeState.Owner;
         }
 
         protected virtual void OnActionChanged(IEnumerable<string> values)
@@ -80,9 +57,9 @@ namespace Headway.Blazor.Controls.Flow.Components
                 && values.Count().Equals(1))
             {
                 var selected = values.Single();
-                if (ActionText != selected)
+                if (FlowComponentContext.ActionText != selected)
                 {
-                    ActionText = selected;
+                    FlowComponentContext.ActionText = selected;
                 }
             }
 
@@ -97,7 +74,7 @@ namespace Headway.Blazor.Controls.Flow.Components
             if (values != null
                 && values.Count().Equals(1))
             {
-                ActionTarget = values.Single();
+                FlowComponentContext.ActionTarget = values.Single();
             }
 
             //await InvokeAsync(() =>
@@ -108,23 +85,23 @@ namespace Headway.Blazor.Controls.Flow.Components
 
         protected async Task OnOwnerAssignedChangedAsync(bool toggled)
         {
-            isOwnerAssigning = true;
+            FlowComponentContext.IsOwnerAssigning = true;
 
             // assign / unassign here....
             await Task.Delay(1000);
-            OwnerAssigned = !OwnerAssigned;
+            FlowComponentContext.Owner = string.IsNullOrEmpty(FlowComponentContext.Owner) ? "Test123" : null;                ;
 
-            isOwnerAssigning = false;
+            FlowComponentContext.IsOwnerAssigning = false;
         }
 
         protected async Task OnExecutingClick()
         {
-            isExecuting = true;
+            FlowComponentContext.IsExecuting = true;
 
             // executing here....
             await Task.Delay(1000);
 
-            isExecuting = false;
+            FlowComponentContext.IsExecuting = false;
 
             await InvokeAsync(() =>
             {
@@ -134,23 +111,23 @@ namespace Headway.Blazor.Controls.Flow.Components
 
         private void SetActiveTargetItems()
         {
-            if (string.IsNullOrWhiteSpace(ActionText))
+            if (string.IsNullOrWhiteSpace(FlowComponentContext.ActionText))
             {
                 return;
             }
 
-            ActionTargetItems.Clear();
+            FlowComponentContext.ActionTargetItems.Clear();
 
-            if (ActionText == FlowConstants.FLOW_ACTION_PROCEED)
+            if (FlowComponentContext.ActionText == FlowConstants.FLOW_ACTION_PROCEED)
             {
-                ActionTargetItems.AddRange(activeState.Transitions.Select(t => t.Name));
+                FlowComponentContext.ActionTargetItems.AddRange(activeState.Transitions.Select(t => t.Name));
             }
-            else if (ActionText == FlowConstants.FLOW_ACTION_REGRESS)
+            else if (FlowComponentContext.ActionText == FlowConstants.FLOW_ACTION_REGRESS)
             {
-                ActionTargetItems.AddRange(activeState.Regressions.Select(r => r.Name));
+                FlowComponentContext.ActionTargetItems.AddRange(activeState.Regressions.Select(r => r.Name));
             }
 
-            ActionTarget = ActionTargetItems.FirstOrDefault();
+            FlowComponentContext.ActionTarget = FlowComponentContext.ActionTargetItems.FirstOrDefault();
         }
     }
 }
