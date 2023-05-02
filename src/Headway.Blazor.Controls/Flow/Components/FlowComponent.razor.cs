@@ -98,8 +98,12 @@ namespace Headway.Blazor.Controls.Flow.Components
         {
             FlowComponentContext.IsExecuting = true;
 
-            // executing here....
-            await Task.Delay(1000);
+            if (FlowTabDocument?.CurrentEditContext != null
+                && FlowTabDocument.CurrentEditContext.Validate())
+            {
+                // executing here....
+                await Task.Delay(1000);
+            }
 
             FlowComponentContext.IsExecuting = false;
 
