@@ -1,6 +1,5 @@
 ﻿using Headway.Blazor.Controls.Flow.Documents;
 using Headway.Core.Dynamic;
-using Headway.Core.Extensions;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +10,6 @@ namespace Headway.Blazor.Controls.Flow.Components
     public class FlowComponentBase<T> : ComponentBase where T : class, new()
     {
         private DynamicModel<T> dynamicModel;
-        protected Core.Model.Flow flow;
-        protected Core.Model.State activeState;
 
         [Parameter]
         public FlowTabDocumentBase<T> FlowTabDocument { get; set; }
@@ -21,34 +18,10 @@ namespace Headway.Blazor.Controls.Flow.Components
 
         protected override async Task OnInitializedAsync()
         {
-            FlowComponentContext = new FlowComponentContext();
-
             await base.OnInitializedAsync().ConfigureAwait(false);
 
             dynamicModel = FlowTabDocument.DynamicModel;
-            flow = dynamicModel.FlowContext.Flow;
-            activeState = flow.ActiveState;
-
-            if (!flow.Bootstrapped)
-            {
-                flow.Bootstrap(dynamicModel.FlowContext.GetFlowHistory(), true);
-            }
-
-            if (activeState.Transitions.Any())
-            {
-                FlowComponentContext.ActionTextItems.Add(FlowConstants.FLOW_ACTION_PROCEED);
-            }
-
-            if (activeState.Regressions.Any())
-            {
-                FlowComponentContext.ActionTextItems.Add(FlowConstants.FLOW_ACTION_REGRESS);
-            }
-
-            FlowComponentContext.ActionText = FlowComponentContext.ActionTextItems.FirstOrDefault();
-
-            SetActiveTargetItems();
-
-            FlowComponentContext.Owner = activeState.Owner;
+            FlowComponentContext = dynamicModel.FlowContext.GetFlowComponentContext();
         }
 
         protected virtual void OnActionChanged(IEnumerable<string> values)
@@ -111,27 +84,6 @@ namespace Headway.Blazor.Controls.Flow.Components
             {
                 StateHasChanged();
             });
-        }
-
-        private void SetActiveTargetItems()
-        {
-            if (string.IsNullOrWhiteSpace(FlowComponentContext.ActionText))
-            {
-                return;
-            }
-
-            FlowComponentContext.ActionTargetItems.Clear();
-
-            if (FlowComponentContext.ActionText == FlowConstants.FLOW_ACTION_PROCEED)
-            {
-                FlowComponentContext.ActionTargetItems.AddRange(activeState.Transitions.Select(t => t.Name));
-            }
-            else if (FlowComponentContext.ActionText == FlowConstants.FLOW_ACTION_REGRESS)
-            {
-                FlowComponentContext.ActionTargetItems.AddRange(activeState.Regressions.Select(r => r.Name));
-            }
-
-            FlowComponentContext.ActionTarget = FlowComponentContext.ActionTargetItems.FirstOrDefault();
         }
     }
 }
