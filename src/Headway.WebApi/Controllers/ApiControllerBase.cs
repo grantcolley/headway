@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Interface;
+using Headway.Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,15 @@ namespace Headway.WebApi.Controllers
 
             return await repository
                 .IsAuthorisedAsync(claim, permission)
+                .ConfigureAwait(false);
+        }
+
+        protected async Task<User> GetAuthorisedUserAsync(string permission)
+        {
+            var claim = GetUserClaim();
+
+            return await repository
+                .GetAuthorisedUserAsync(claim, permission)
                 .ConfigureAwait(false);
         }
     }
