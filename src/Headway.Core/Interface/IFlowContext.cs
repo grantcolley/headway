@@ -7,6 +7,7 @@ namespace Headway.Core.Interface
     {
         int FlowId { get; set; }
         Flow Flow { get; set; }
+        User CurrentUser { get; set; }
         List<FlowHistory> GetFlowHistory();
     }
 }
