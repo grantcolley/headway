@@ -16,6 +16,7 @@ namespace RemediatR.Core.Model
         public int FlowId { get; set; }
         public Headway.Core.Model.Flow Flow { get; set; }
         public int RedressId { get; set; }
+        public User CurrentUser { get; set; }
         public List<RedressFlowHistory> RedressFlowHistory { get; set; }
 
         public List<FlowHistory> GetFlowHistory()
