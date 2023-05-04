@@ -27,16 +27,16 @@ namespace Headway.WebApi.Controllers
         [HttpGet("{redressId}")]
         public async Task<IActionResult> Get(int redressId)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_READ)
+            var authorisedUser = await GetAuthorisedUserAsync(RemediatRAuthorisation.REDRESS_READ)
                 .ConfigureAwait(false);
 
-            if (!authorised)
+            if (authorisedUser == null)
             {
                 return Unauthorized();
             }
 
             var redress = await remediatRRepository
-                .GetRedressAsync(redressId)
+                .GetRedressAsync(redressId, authorisedUser)
                 .ConfigureAwait(false);
 
             return Ok(redress);
@@ -53,7 +53,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            switch(searchArgs.SourceConfig)
+            switch (searchArgs.SourceConfig)
             {
                 case RemediatRSearchSource.REDRESSCASES:
                     var redressCases = await remediatRRepository
@@ -73,16 +73,16 @@ namespace Headway.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Create([FromBody] DataArgs dataArgs)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
+            var authorisedUser = await GetAuthorisedUserAsync(RemediatRAuthorisation.REDRESS_WRITE)
                 .ConfigureAwait(false);
 
-            if (!authorised)
+            if (authorisedUser == null)
             {
                 return Unauthorized();
             }
 
             var redressCases = await remediatRRepository
-                .CreateRedressAsync(dataArgs)
+                .CreateRedressAsync(dataArgs, authorisedUser)
                 .ConfigureAwait(false);
 
             return Ok(redressCases);
@@ -91,16 +91,16 @@ namespace Headway.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Redress redress)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
+            var authorisedUser = await GetAuthorisedUserAsync(RemediatRAuthorisation.REDRESS_WRITE)
                 .ConfigureAwait(false);
 
-            if (!authorised)
+            if (authorisedUser == null)
             {
                 return Unauthorized();
             }
 
             var savedRedress = await remediatRRepository
-                .AddRedressAsync(redress)
+                .AddRedressAsync(redress, authorisedUser)
                 .ConfigureAwait(false);
 
             return Ok(savedRedress);
@@ -109,16 +109,16 @@ namespace Headway.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] Redress redress)
         {
-            var authorised = await IsAuthorisedAsync(RemediatRAuthorisation.REDRESS_WRITE)
+            var authorisedUser = await GetAuthorisedUserAsync(RemediatRAuthorisation.REDRESS_WRITE)
                 .ConfigureAwait(false);
 
-            if (!authorised)
+            if (authorisedUser == null)
             {
                 return Unauthorized();
             }
 
             var savedRedress = await remediatRRepository
-                .UpdateRedressAsync(redress)
+                .UpdateRedressAsync(redress, authorisedUser)
                 .ConfigureAwait(false);
 
             return Ok(savedRedress);
