@@ -2,6 +2,9 @@
 {
     public static class Buttons
     {
+        public const string NAVIGATION_MENU_TOOLTIP_SHOW = "Show navigation panel";
+        public const string NAVIGATION_MENU_TOOLTIP_HIDE = "Hide navigation panel";
+
         public const string HEADER_BTN_IMAGE = "HeaderButtonImage";
         public const string ROW_BTN_IMAGE = "RowButtonImage";
 
