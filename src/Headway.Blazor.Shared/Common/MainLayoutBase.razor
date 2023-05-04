@@ -28,8 +28,10 @@
             <Authorized>
                 <MudHidden Breakpoint="Breakpoint.SmAndDown">
                     <MudToolBar DisableGutters="true">
-                        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
-                            <Breadcrumbs/>
+                        <MudTooltip Text="@(drawerOpen ? Buttons.NAVIGATION_MENU_TOOLTIP_HIDE : Buttons.NAVIGATION_MENU_TOOLTIP_SHOW)">
+                            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                        </MudTooltip>
+                        <Breadcrumbs/>
                         <MudSpacer />
                     </MudToolBar>
                 </MudHidden>
