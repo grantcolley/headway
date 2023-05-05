@@ -40,12 +40,6 @@ namespace Headway.Core.Model
         public FlowStatus FlowStatus { get; set; }
 
         /// <summary>
-        /// A flag indicating wether to configure all the 
-        /// flow states during the flow bootstrap routine.
-        /// </summary>
-        public bool ConfigureStatesDuringBootstrap { get; set; }
-
-        /// <summary>
         /// The states associated with the flow.
         /// </summary>
         public List<State> States { get; set; }
