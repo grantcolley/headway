@@ -66,11 +66,6 @@ namespace Headway.Blazor.Controls.Flow.Components
 
         private void InitializeContext()
         {
-            if (!FlowContext.Flow.Bootstrapped)
-            {
-                FlowContext.Flow.Bootstrap(FlowContext.GetFlowHistory(), true);
-            }
-
             ActiveState = FlowContext.Flow.ActiveState;
 
             Owner = ActiveState.Owner;
