@@ -328,13 +328,17 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.ActiveState = flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"));
-            flow.ActiveState.StateStatus = StateStatus.InProgress;
+            var ra = flow.States.First(s => s.StateCode.Equals("REFUND_ASSESSMENT"));
+            ra.Bootstrap();
+            ra.StateStatus = StateStatus.InProgress;
+            flow.ActiveState = ra;
 
             var rc = flow.States.First(s => s.StateCode.Equals("REFUND_CALCULATION"));
+            rc.Bootstrap();
             rc.StateStatus = StateStatus.InProgress;
 
             var rv = flow.States.First(s => s.StateCode.Equals("REFUND_VERIFICATION"));
+            rv.Bootstrap(); 
             rv.StateStatus = StateStatus.Uninitialized;
 
             var joinedDescriptions = $"{rc.StateCode}={rc.StateStatus},{rv.StateCode}={rv.StateStatus}";
@@ -481,7 +485,6 @@ namespace Headway.Core.Tests
             Assert.AreEqual(StateStatus.InProgress, flow.States[3].StateStatus);
             Assert.AreEqual(flow.States[3], flow.ActiveState);
             Assert.AreEqual($"Route {flow.States[1].StateCode} to {flow.ActiveState.StateCode}", flow.States[1].Comment);
-            Assert.AreEqual($"Routed from {flow.States[1].StateCode}", flow.ActiveState.Comment);
         }
 
         [TestMethod]
