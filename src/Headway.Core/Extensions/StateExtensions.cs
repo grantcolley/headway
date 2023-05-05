@@ -18,6 +18,40 @@ namespace Headway.Core.Extensions
         private static object stateConfigurationCacheLock = new object();
 
         /// <summary>
+        /// Set <see cref="State"/> defaults e.g. <see cref="State.StateStatus"/>, <see cref="State.Owner"/>  and <see cref="State.Comment"/>.
+        /// Assign the <see cref="Flow.Context"/> to the <see cref="State.Context"/> and set the <see cref="State.ParentState"/> if applicable.
+        /// Populate the <see cref="State.SubStates"/>, <see cref="State.Transitions"/> and <see cref="State.Regressions"/>.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns>The bootstrapped <see cref="State"/>.</returns>
+        public static State Bootstrap(this State state)
+        {
+            state.StateStatus = default;
+            state.Owner = default;
+            state.Comment = default;
+
+            state.Context = state.Flow.Context;
+
+            if (!string.IsNullOrWhiteSpace(state.ParentStateCode))
+            {
+                state.ParentState = state.Flow.StateDictionary[state.ParentStateCode];
+            }
+
+            state.SubStates.Clear();
+            state.SubStates.AddRange(state.Flow.ToStateList(state.SubStateCodesList));
+
+            state.Transitions.Clear();
+            state.Transitions.AddRange(state.Flow.ToStateList(state.TransitionStateCodesList));
+
+            state.Regressions.Clear();
+            state.Regressions.AddRange(state.Flow.ToStateList(state.RegressionStateCodesList));
+
+            state.Bootstrapped = true;
+
+            return state;
+        }
+
+        /// <summary>
         /// Initialization routine for a <see cref="State"/>.
         /// 
         /// Sequence:   Execute any initialisation state actions
@@ -42,6 +76,8 @@ namespace Headway.Core.Extensions
             {
                 throw new StateException(state, $"Can't initialize {state.StateCode} because it's {state.StateStatus}.");
             }
+
+            _ = state.Bootstrap();
 
             if (state.StateType.Equals(StateType.Parent)
                 && !state.SubStates.Any())
