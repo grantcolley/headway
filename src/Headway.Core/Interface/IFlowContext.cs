@@ -1,5 +1,6 @@
 ﻿using Headway.Core.Model;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Headway.Core.Interface
 {
@@ -7,7 +8,9 @@ namespace Headway.Core.Interface
     {
         int FlowId { get; set; }
         Flow Flow { get; set; }
-        User CurrentUser { get; set; }
         List<FlowHistory> GetFlowHistory();
+
+        [NotMapped]
+        User CurrentUser { get; set; }
     }
 }
