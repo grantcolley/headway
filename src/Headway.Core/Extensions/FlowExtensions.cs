@@ -56,18 +56,17 @@ namespace Headway.Core.Extensions
                 throw new FlowException(flow, $"{flow.Name} already {nameof(flow.Bootstrapped)}.");
             }
 
+            foreach (var state in flow.States)
+            {
+                state.Flow = flow;
+            }
+
             flow.StateDictionary = flow.States.ToDictionary(s => s.StateCode, s => s);
 
             if (!isClientSide)
             {
-                foreach (var state in flow.States)
-                {
-                    state.Flow = flow;
-                }
-
                 flow.Configure();
             }
-
 
             var lastHistory = flow.History.LastOrDefault();
 
