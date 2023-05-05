@@ -62,47 +62,18 @@ namespace Headway.Core.Extensions
             {
                 foreach (var state in flow.States)
                 {
-                    state.StateStatus = default;
-                    state.Owner = default;
-                    state.Comment = default;
-
                     state.Flow = flow;
-
-                    if (state.Context != null)
-                    {
-                        state.Context = flow.Context;
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(state.ParentStateCode))
-                    {
-                        state.ParentState = flow.StateDictionary[state.ParentStateCode];
-                    }
-
-                    state.SubStates.Clear();
-                    state.SubStates.AddRange(flow.ToStateList(state.SubStateCodesList));
-
-                    state.Transitions.Clear();
-                    state.Transitions.AddRange(flow.ToStateList(state.TransitionStateCodesList));
-
-                    state.Regressions.Clear();
-                    state.Regressions.AddRange(flow.ToStateList(state.RegressionStateCodesList));
                 }
 
                 flow.Configure();
-
-                if (flow.ConfigureStatesDuringBootstrap)
-                {
-                    foreach (var state in flow.States)
-                    {
-                        state.Configure();
-                    }
-                }
             }
 
-            if (flow.History.Any())
+
+            var lastHistory = flow.History.LastOrDefault();
+
+            if (lastHistory != null)
             {
-                var lastHistory = flow.History.Last();
-                var lastState = flow.StateDictionary[lastHistory.StateCode];
+                var lastState = flow.StateDictionary[lastHistory.StateCode].Bootstrap();
                 lastState.StateStatus = lastHistory.StateStatus;
                 lastState.Owner = lastHistory.Owner;
                 lastState.Comment = lastHistory.Comment;
@@ -110,19 +81,7 @@ namespace Headway.Core.Extensions
             }
             else
             {
-                flow.ActiveState = flow.RootState;
-            }
-
-            if(isClientSide)
-            {
-                flow.ActiveState.SubStates.Clear();
-                flow.ActiveState.SubStates.AddRange(flow.ToStateList(flow.ActiveState.SubStateCodesList));
-
-                flow.ActiveState.Transitions.Clear();
-                flow.ActiveState.Transitions.AddRange(flow.ToStateList(flow.ActiveState.TransitionStateCodesList));
-
-                flow.ActiveState.Regressions.Clear();
-                flow.ActiveState.Regressions.AddRange(flow.ToStateList(flow.ActiveState.RegressionStateCodesList));
+                flow.ActiveState = flow.RootState.Bootstrap();
             }
 
             flow.Bootstrapped = true;
