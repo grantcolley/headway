@@ -45,6 +45,9 @@ namespace Headway.Repository.Repositories
         {
             var user = await applicationDbContext.Users
                 .AsNoTracking()
+                .Include(u => u.Permissions)
+                .Include(u => u.Roles)
+                .ThenInclude(r => r.Permissions)
                 .FirstOrDefaultAsync(
                 u => u.Email.Equals(claim)
                 && (u.Permissions.Any(p => p.Name.Equals(permission))
