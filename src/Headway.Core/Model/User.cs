@@ -11,6 +11,8 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class User : ModelBase
     {
+        private List<string> userPermissions;
+
         public User()
         {
             Roles = new List<Role>();
@@ -81,6 +83,24 @@ namespace Headway.Core.Model
                     .Union(rolePermissions)
                     .OrderBy(p => p)
                     .ToList();
+            }
+        }
+
+        public List<string> UserPermissions
+        {
+            get
+            {
+                if(userPermissions != null)
+                {
+                    return userPermissions;
+                }
+
+                userPermissions = Permissions
+                    .Select(p => p.Name)
+                    .Union(Roles.SelectMany(r => r.Permissions.Select(rp => rp.Name)))
+                    .ToList();
+
+                return userPermissions;
             }
         }
     }
