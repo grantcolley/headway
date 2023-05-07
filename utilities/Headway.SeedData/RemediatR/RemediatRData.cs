@@ -43,32 +43,21 @@ namespace Headway.SeedData.RemediatR
 
         public static void PermissionsCreate()
         {
-            Permissions.Add(RemediatRAuthorisation.CUSTOMER_READ, new Permission { Name = RemediatRAuthorisation.CUSTOMER_READ, Description = "RemediatR Customer Read" });
-            Permissions.Add(RemediatRAuthorisation.CUSTOMER_WRITE, new Permission { Name = RemediatRAuthorisation.CUSTOMER_WRITE, Description = "RemediatR Customer Write" });
-
-            Permissions.Add(RemediatRAuthorisation.REDRESS_READ, new Permission { Name = RemediatRAuthorisation.REDRESS_READ, Description = "RemediatR Redress Read" });
-            Permissions.Add(RemediatRAuthorisation.REDRESS_WRITE, new Permission { Name = RemediatRAuthorisation.REDRESS_WRITE, Description = "RemediatR Redress Write" });
-            Permissions.Add(RemediatRAuthorisation.REDRESS_TRANSITION, new Permission { Name = RemediatRAuthorisation.REDRESS_TRANSITION, Description = "RemediatR Redress Transition" });
-            Permissions.Add(RemediatRAuthorisation.COMMUNICATION_DISPATCH_TRANSITION, new Permission { Name = RemediatRAuthorisation.COMMUNICATION_DISPATCH_TRANSITION, Description = "RemediatR Communication Dispatch Transition" });
-            Permissions.Add(RemediatRAuthorisation.AWAITING_REPONSE_TRANSITION, new Permission { Name = RemediatRAuthorisation.AWAITING_REPONSE_TRANSITION, Description = "RemediatR Awaiting Response Transition" });
-
-            Permissions.Add(RemediatRAuthorisation.REDRESS_REVIEW_TRANSITION, new Permission { Name = RemediatRAuthorisation.REDRESS_REVIEW_TRANSITION, Description = "RemediatR Redress Refund Review Transition" });
-            Permissions.Add(RemediatRAuthorisation.REDRESS_COMPLETE, new Permission { Name = RemediatRAuthorisation.REDRESS_COMPLETE, Description = "RemediatR Redress Complete" });
-
-            Permissions.Add(RemediatRAuthorisation.REFUND_READ, new Permission { Name = RemediatRAuthorisation.REFUND_READ, Description = "RemediatR Refund Read" });
-            Permissions.Add(RemediatRAuthorisation.REFUND_WRITE, new Permission { Name = RemediatRAuthorisation.REFUND_WRITE, Description = "RemediatR Refund Write" });
-            Permissions.Add(RemediatRAuthorisation.REFUND_CACULATION_COMPLETE, new Permission { Name = RemediatRAuthorisation.REFUND_CACULATION_COMPLETE, Description = "RemediatR Refund Calculation Complete" });
-            Permissions.Add(RemediatRAuthorisation.REFUND_VERIFICATION_COMPLETE, new Permission { Name = RemediatRAuthorisation.REFUND_VERIFICATION_COMPLETE, Description = "RemediatR Refund Varification Complete" });
-
-            Permissions.Add(RemediatRAuthorisation.REFUND_REVIEW_TRANSITION, new Permission { Name = RemediatRAuthorisation.REFUND_REVIEW_TRANSITION, Description = "RemediatR Refund Review Transition" });
+            Permissions.Add(RemediatRAuthorisation.CUSTOMER_READ, new Permission { Name = RemediatRAuthorisation.CUSTOMER_READ, Description = $"RemediatR {RemediatRAuthorisation.CUSTOMER_READ}" });
+            Permissions.Add(RemediatRAuthorisation.CUSTOMER_WRITE, new Permission { Name = RemediatRAuthorisation.CUSTOMER_WRITE, Description = $"RemediatR {RemediatRAuthorisation.CUSTOMER_WRITE}" });
+            Permissions.Add(RemediatRAuthorisation.REDRESS_READ, new Permission { Name = RemediatRAuthorisation.REDRESS_READ, Description = $"RemediatR {RemediatRAuthorisation.REDRESS_READ}" });
+            Permissions.Add(RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE, new Permission { Name = RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE, Description = $"RemediatR {RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE}" });
+            Permissions.Add(RemediatRAuthorisation.REDRESS_REVIEWER_WRITE, new Permission { Name = RemediatRAuthorisation.REDRESS_REVIEWER_WRITE, Description = $"RemediatR {RemediatRAuthorisation.REDRESS_REVIEWER_WRITE}" });
+            Permissions.Add(RemediatRAuthorisation.REFUND_ASSESSOR_WRITE, new Permission { Name = RemediatRAuthorisation.REFUND_ASSESSOR_WRITE, Description = $"RemediatR {RemediatRAuthorisation.REFUND_ASSESSOR_WRITE}" });
+            Permissions.Add(RemediatRAuthorisation.REFUND_REVIEWER_WRITE, new Permission { Name = RemediatRAuthorisation.REFUND_REVIEWER_WRITE, Description = $"RemediatR {RemediatRAuthorisation.REFUND_REVIEWER_WRITE}" });
         }
 
         public static void RolesCreate()
         {
-            Roles.Add(RemediatRAuthorisation.REDRESS_CASE_OWNER, new Role { Name = RemediatRAuthorisation.REDRESS_CASE_OWNER, Description = "RemediatR Redress Case Owner" });
-            Roles.Add(RemediatRAuthorisation.REDRESS_REVIEWER, new Role { Name = RemediatRAuthorisation.REDRESS_REVIEWER, Description = "RemediatR Redress Reviewer" });
-            Roles.Add(RemediatRAuthorisation.REFUND_ASSESSOR, new Role { Name = RemediatRAuthorisation.REFUND_ASSESSOR, Description = "RemediatR Refund Assessor" });
-            Roles.Add(RemediatRAuthorisation.REFUND_REVIEWER, new Role { Name = RemediatRAuthorisation.REFUND_REVIEWER, Description = "RemediatR Refund Reviewer" });
+            Roles.Add(RemediatRAuthorisation.REDRESS_CASE_OWNER, new Role { Name = RemediatRAuthorisation.REDRESS_CASE_OWNER, Description = $"RemediatR {RemediatRAuthorisation.REDRESS_CASE_OWNER}" });
+            Roles.Add(RemediatRAuthorisation.REDRESS_REVIEWER, new Role { Name = RemediatRAuthorisation.REDRESS_REVIEWER, Description = $"RemediatR {RemediatRAuthorisation.REDRESS_REVIEWER}" });
+            Roles.Add(RemediatRAuthorisation.REFUND_ASSESSOR, new Role { Name = RemediatRAuthorisation.REFUND_ASSESSOR, Description = $"RemediatR {RemediatRAuthorisation.REFUND_ASSESSOR}" });
+            Roles.Add(RemediatRAuthorisation.REFUND_REVIEWER, new Role { Name = RemediatRAuthorisation.REFUND_REVIEWER, Description = $"RemediatR {RemediatRAuthorisation.REFUND_REVIEWER}" });
         }
 
         public static void RolesAssignPermissions()
@@ -76,27 +65,20 @@ namespace Headway.SeedData.RemediatR
             Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.CUSTOMER_READ]);
             Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.CUSTOMER_WRITE]);
             Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_READ]);
-            Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_WRITE]);
-            Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_TRANSITION]);
-            Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_READ]);
-            Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.COMMUNICATION_DISPATCH_TRANSITION]);
-            Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.AWAITING_REPONSE_TRANSITION]);
+            Roles[RemediatRAuthorisation.REDRESS_CASE_OWNER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE]);
 
             Roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.CUSTOMER_READ]);
+            Roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.CUSTOMER_WRITE]);
             Roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_READ]);
-            Roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_READ]);
-            Roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_REVIEW_TRANSITION]);
-            Roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_COMPLETE]);
+            Roles[RemediatRAuthorisation.REDRESS_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_REVIEWER_WRITE]);
 
-            Roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_READ]);
-            Roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_WRITE]);
+            Roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(Permissions[RemediatRAuthorisation.CUSTOMER_READ]);
             Roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_READ]);
-            Roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_CACULATION_COMPLETE]);
-            Roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_VERIFICATION_COMPLETE]);
+            Roles[RemediatRAuthorisation.REFUND_ASSESSOR].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_ASSESSOR_WRITE]);
 
-            Roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_READ]);
+            Roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.CUSTOMER_READ]);
             Roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REDRESS_READ]);
-            Roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_REVIEW_TRANSITION]);
+            Roles[RemediatRAuthorisation.REFUND_REVIEWER].Permissions.Add(Permissions[RemediatRAuthorisation.REFUND_REVIEWER_WRITE]);
         }
 
         public static void UsersCreate()
