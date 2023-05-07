@@ -14,7 +14,6 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class State : ModelBase
     {
-        private List<string> permissionsList;
         private List<string> subStateCodesList;
         private List<string> transitionStateCodesList;
         private List<string> regressionStateCodesList;
@@ -121,10 +120,16 @@ namespace Headway.Core.Model
         public string ParentStateCode { get; set; }
 
         /// <summary>
-        /// The semi-colon separated list of permissions associated with the state.
+        /// The write permission.
         /// </summary>
         [StringLength(50)]
-        public string Permissions { get; set; }
+        public string WritePermission { get; set; }
+
+        /// <summary>
+        /// The read permission.
+        /// </summary>
+        [StringLength(50)]
+        public string ReadPermission { get; set; }
 
         /// <summary>
         /// A semi-colon separated list of sub state codes. 
@@ -301,33 +306,6 @@ namespace Headway.Core.Model
         [NotMapped]
         [JsonIgnore]
         public List<StateAction> StateActions { get; }
-
-        /// <summary>
-        /// Splits the semi-colon separated <see cref="State.Permissions"/>.
-        /// </summary>
-        [NotMapped]
-        [JsonIgnore]
-        public List<string> PermissionsList
-        {
-            get
-            {
-                if(permissionsList != null)
-                {
-                    return permissionsList;
-                }
-
-                if (string.IsNullOrWhiteSpace(Permissions))
-                {
-                    permissionsList = new List<string>();
-                }
-                else
-                {
-                    permissionsList = Permissions.Split(';').ToList();
-                }
-
-                return permissionsList;
-            }
-        }
 
         /// <summary>
         /// Splits the semi-colon separated <see cref="State.SubStateCodes"/>.
