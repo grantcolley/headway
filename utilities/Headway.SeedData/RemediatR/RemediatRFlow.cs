@@ -26,72 +26,85 @@ namespace Headway.SeedData.RemediatR
             var finalRedressReview = new State { Position = 100, Name = "Final Redress Review", StateCode = "FINAL_REDRESS_REVIEW" };
 
             redressCreate.StateType = StateType.Standard;
-            redressCreate.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
+            redressCreate.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            redressCreate.WritePermission = RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE;
             redressCreate.TransitionStateCodes = $"{refundAssessment.StateCode}";
             redressCreate.IsOwnerRestricted = true;
 
             refundAssessment.StateType= StateType.Parent;
-            refundAssessment.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
+            refundAssessment.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            refundAssessment.WritePermission = RemediatRAuthorisation.REFUND_ASSESSOR_WRITE;
             refundAssessment.SubStateCodes = $"{refundCalculation.StateCode};{refundVerification.StateCode}";
             refundAssessment.TransitionStateCodes = $"{refundReview.StateCode}";
 
             refundCalculation.StateType = StateType.Standard;
-            refundCalculation.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
+            refundCalculation.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            refundCalculation.WritePermission = RemediatRAuthorisation.REFUND_ASSESSOR_WRITE;
             refundCalculation.ParentStateCode = $"{refundAssessment.StateCode}";
             refundCalculation.TransitionStateCodes = $"{refundVerification.StateCode}";
             refundCalculation.IsOwnerRestricted = true;
 
             refundVerification.StateType = StateType.Standard;
-            refundVerification.Permissions = RemediatRAuthorisation.REFUND_ASSESSOR;
+            refundVerification.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            refundVerification.WritePermission = RemediatRAuthorisation.REFUND_ASSESSOR_WRITE;
             refundVerification.ParentStateCode = $"{refundAssessment.StateCode}";
             refundVerification.IsOwnerRestricted = true;
 
             refundReview.StateType = StateType.Standard;
-            refundReview.Permissions = RemediatRAuthorisation.REFUND_REVIEWER;
+            refundReview.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            refundReview.WritePermission = RemediatRAuthorisation.REFUND_ASSESSOR_WRITE;
             refundReview.TransitionStateCodes = $"{redressReview.StateCode}";
             refundReview.RegressionStateCodes = $"{refundAssessment.StateCode};{redressCreate.StateCode}";
             refundReview.IsOwnerRestricted = true;
 
             redressReview.StateType = StateType.Standard;
-            redressReview.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
+            redressReview.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            redressReview.WritePermission = RemediatRAuthorisation.REDRESS_REVIEWER_WRITE;
             redressReview.TransitionStateCodes = $"{redressValidation.StateCode}";
             redressReview.RegressionStateCodes = $"{redressCreate.StateCode}";
             redressReview.IsOwnerRestricted = true;
 
             redressValidation.StateType = StateType.Auto;
-            redressValidation.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
+            redressValidation.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            redressValidation.WritePermission = RemediatRAuthorisation.REDRESS_REVIEWER_WRITE;
             redressValidation.TransitionStateCodes = $"{communicationGeneration.StateCode};{paymentGeneration.StateCode}";
             redressValidation.RegressionStateCodes = $"{redressReview.StateCode}";
 
             communicationGeneration.StateType = StateType.Standard;
-            communicationGeneration.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
+            communicationGeneration.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            communicationGeneration.WritePermission = RemediatRAuthorisation.REDRESS_REVIEWER_WRITE;
             communicationGeneration.TransitionStateCodes = $"{communicationDispatch.StateCode}";
             communicationGeneration.RegressionStateCodes = $"{redressReview.StateCode}";
 
             communicationDispatch.StateType = StateType.Standard;
-            communicationDispatch.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
+            communicationDispatch.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            communicationDispatch.WritePermission = RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE;
             communicationDispatch.TransitionStateCodes = $"{responseRequired.StateCode}";
             communicationDispatch.RegressionStateCodes = $"{redressReview.StateCode}";
             communicationDispatch.IsOwnerRestricted = true;
 
             responseRequired.StateType = StateType.Auto;
-            responseRequired.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
+            responseRequired.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            responseRequired.WritePermission = RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE;
             responseRequired.TransitionStateCodes = $"{awaitingResponse.StateCode};{paymentGeneration.StateCode}";
             responseRequired.RegressionStateCodes = $"{communicationDispatch.StateCode}";
 
             awaitingResponse.StateType = StateType.Standard;
-            awaitingResponse.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
+            awaitingResponse.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            awaitingResponse.WritePermission = RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE;
             awaitingResponse.TransitionStateCodes = $"{paymentGeneration.StateCode}";
             awaitingResponse.RegressionStateCodes = $"{redressReview.StateCode}";
             awaitingResponse.IsOwnerRestricted = true;
 
             paymentGeneration.StateType = StateType.Standard;
-            paymentGeneration.Permissions = RemediatRAuthorisation.REDRESS_CASE_OWNER;
+            paymentGeneration.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            paymentGeneration.WritePermission = RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE;
             paymentGeneration.TransitionStateCodes = $"{finalRedressReview.StateCode}";
             paymentGeneration.RegressionStateCodes = $"{communicationDispatch.StateCode};{redressReview.StateCode}";
 
             finalRedressReview.StateType = StateType.Standard;
-            finalRedressReview.Permissions = RemediatRAuthorisation.REDRESS_REVIEWER;
+            finalRedressReview.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
+            finalRedressReview.WritePermission = RemediatRAuthorisation.REDRESS_REVIEWER_WRITE;
             finalRedressReview.RegressionStateCodes = $"{redressReview.StateCode}";
             finalRedressReview.IsOwnerRestricted = true;
 
