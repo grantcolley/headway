@@ -44,23 +44,6 @@ namespace Headway.Core.Model
         public List<State> States { get; set; }
 
         /// <summary>
-        /// The class dynamically loaded during the flow bootstrap 
-        /// routine for configuring state actions to be invoked at 
-        /// runtime. This class can contain actions to be applied 
-        /// to all states or individual ones. 
-        /// The pattern expected is '{type full name}, {assembly name}'.
-        /// </summary>
-        [StringLength(150)]
-        public string FlowConfigurationClass { get; set; }
-
-        /// <summary>
-        /// Comma seperated list of permissions to give 
-        /// read / write access to all states in the flow.
-        /// </summary>
-        [StringLength(50)]
-        public string Permissions { get; set; }
-
-        /// <summary>
         /// The name of the flow.
         /// </summary>
         [Required]
@@ -73,6 +56,22 @@ namespace Headway.Core.Model
         [Required]
         [StringLength(50)]
         public string FlowCode { get; set; }
+
+        /// <summary>
+        /// The class dynamically loaded during the flow bootstrap 
+        /// routine for configuring state actions to be invoked at 
+        /// runtime. This class can contain actions to be applied 
+        /// to all states or individual ones. 
+        /// The pattern expected is '{type full name}, {assembly name}'.
+        /// </summary>
+        [StringLength(150)]
+        public string FlowConfigurationClass { get; set; }
+
+        /// <summary>
+        /// Permission for accessing the <see cref="Flow"/>.
+        /// </summary>
+        [StringLength(50)]
+        public string Permission { get; set; }
 
         /// <summary>
         /// A record of states transitioning through the flow.  
