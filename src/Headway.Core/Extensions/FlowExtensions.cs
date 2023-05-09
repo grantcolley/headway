@@ -39,7 +39,6 @@ namespace Headway.Core.Extensions
         ///                 - set the <see cref="State.ParentState"/> if applicable
         ///                 - if applicable set the substates, transition states and regression states
         ///                 - configure <see cref="Flow"/> actions
-        ///                 - if <see cref="Flow.ConfigureStatesDuringBootstrap"/> is true configure all <see cref="State"/> actions.
         ///                 - if the <see cref="Flow"/> has history set the <see cref="State"/> in the last history event as the <see cref="Flow.ActiveState"/> 
         ///                 - else if there is no <see cref="Flow"/> history set the <see cref="Flow.RootState"/> as the <see cref="Flow.ActiveState"/>
         ///                 - set <see cref="Flow.Bootstrapped"/> to true.
