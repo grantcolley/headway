@@ -182,8 +182,7 @@ namespace Headway.Core.Model
         public string StateConfigurationClass { get; set; }
 
         /// <summary>
-        /// A flag indicating whether the flow bootstrap 
-        /// routine has been completed.
+        /// A flag indicating whether the state bootstrap routine has been completed.
         /// </summary>
         [NotMapped]
         [JsonIgnore]
@@ -191,8 +190,7 @@ namespace Headway.Core.Model
 
         /// <summary>
         /// The context associated with the state.
-        /// If the context is null at the time of 
-        /// the flow bootstrap routine then the state 
+        /// If the context is null the state 
         /// will inherit the context of the flow. 
         /// </summary>
         [NotMapped]
