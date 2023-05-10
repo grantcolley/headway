@@ -11,19 +11,19 @@ namespace Headway.SeedData.RemediatR
 
         public static Flow CreateRemediatRFlow()
         {
-            var redressCreate = new State { Position = 1, Name = "Redress Create", StateCode = "REDRESS_CREATE" };
-            var refundAssessment = new State { Position = 10, Name = "Refund Assessment", StateCode = "REFUND_ASSESSMENT" };
-            var refundCalculation = new State { Position = 11, Name = "Refund Calculation", StateCode = "REFUND_CALCULATION" };
-            var refundVerification = new State { Position = 12, Name = "Refund Verification", StateCode = "REFUND_VERIFICATION" };
-            var refundReview = new State { Position = 20, Name = "Refund Review", StateCode = "REFUND_REVIEW" };
-            var redressReview = new State { Position = 30, Name = "Redress Review", StateCode = "REDRESS_REVIEW" };
-            var redressValidation = new State { Position = 40, Name = "Redress Validation", StateCode = "REDRESS_VALIDATION" };
-            var communicationGeneration = new State { Position = 50, Name = "Communication Generation", StateCode = "COMMUNICATION_GENERATION" };
-            var communicationDispatch = new State { Position = 60, Name = "Communication Dispatch", StateCode = "COMMUNICATION_DISPATCH" };
-            var responseRequired = new State { Position = 70, Name = "Response Required", StateCode = "RESPONSE_REQUIRED" };
-            var awaitingResponse = new State { Position = 80, Name = "Awaiting Response", StateCode = "AWAITING_RESPONSE" };
-            var paymentGeneration = new State { Position = 90, Name = "Payment Generation", StateCode = "PAYMENT_GENERATION" };
-            var finalRedressReview = new State { Position = 100, Name = "Final Redress Review", StateCode = "FINAL_REDRESS_REVIEW" };
+            var redressCreate = new State { Position = 1, Name = RemediatRFlowCodes.REDRESS_CREATE, StateCode = RemediatRFlowCodes.REDRESS_CREATE_CODE };
+            var refundAssessment = new State { Position = 10, Name = RemediatRFlowCodes.REFUND_ASSESSMENT, StateCode = RemediatRFlowCodes.REFUND_ASSESSMENT_CODE };
+            var refundCalculation = new State { Position = 11, Name = RemediatRFlowCodes.REFUND_CALCULATION, StateCode = RemediatRFlowCodes.REFUND_CALCULATION_CODE };
+            var refundVerification = new State { Position = 12, Name = RemediatRFlowCodes.REFUND_VERIFICATION, StateCode = RemediatRFlowCodes.REFUND_VERIFICATION_CODE };
+            var refundReview = new State { Position = 20, Name = RemediatRFlowCodes.REFUND_REVIEW, StateCode = RemediatRFlowCodes.REFUND_REVIEW_CODE };
+            var redressReview = new State { Position = 30, Name = RemediatRFlowCodes.REDRESS_REVIEW, StateCode = RemediatRFlowCodes.REDRESS_REVIEW_CODE };
+            var redressValidation = new State { Position = 40, Name = RemediatRFlowCodes.REDRESS_VALIDATION, StateCode = RemediatRFlowCodes.REDRESS_VALIDATION_CODE };
+            var communicationGeneration = new State { Position = 50, Name = RemediatRFlowCodes.COMMUNICATION_GENERATION, StateCode = RemediatRFlowCodes.COMMUNICATION_GENERATION_CODE };
+            var communicationDispatch = new State { Position = 60, Name = RemediatRFlowCodes.COMMUNICATION_DISPATCH, StateCode = RemediatRFlowCodes.COMMUNICATION_DISPATCH_CODE };
+            var responseRequired = new State { Position = 70, Name = RemediatRFlowCodes.RESPONSE_REQUIRED, StateCode = RemediatRFlowCodes.RESPONSE_REQUIRED_CODE };
+            var awaitingResponse = new State { Position = 80, Name = RemediatRFlowCodes.AWAITING_RESPONSE, StateCode = RemediatRFlowCodes.AWAITING_RESPONSE_CODE };
+            var paymentGeneration = new State { Position = 90, Name = RemediatRFlowCodes.PAYMENT_GENERATION, StateCode = RemediatRFlowCodes.PAYMENT_GENERATION_CODE };
+            var finalRedressReview = new State { Position = 100, Name = RemediatRFlowCodes.FINAL_REDRESS_REVIEW, StateCode = RemediatRFlowCodes.FINAL_REDRESS_REVIEW_CODE };
 
             redressCreate.StateType = StateType.Standard;
             redressCreate.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
@@ -110,8 +110,8 @@ namespace Headway.SeedData.RemediatR
 
             ResressFlow = new Flow
             {
-                Name = "RemediatR",
-                FlowCode = "REMEDIATR",
+                Name = RemediatRFlowCodes.REMEDIATR,
+                FlowCode = RemediatRFlowCodes.REMEDIATR_CODE,
                 Permission = $"{RemediatRAuthorisation.REDRESS_READ}",
                 FlowConfigurationClass = "RemediatR.Core.Flow.RedressFlowConfiguration, RemediatR.Core",
                 Context = new Redress()
