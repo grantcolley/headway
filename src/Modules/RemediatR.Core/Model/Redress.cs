@@ -2,6 +2,7 @@
 using Headway.Core.Attributes;
 using Headway.Core.Interface;
 using Headway.Core.Model;
+using RemediatR.Core.Constants;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -179,7 +180,7 @@ namespace RemediatR.Core.Model
                 .When(v => v.RedressFlowContext != null
                 && v.RedressFlowContext.Flow != null
                 && v.RedressFlowContext.Flow.ActiveState != null
-                && v.RedressFlowContext.Flow.ActiveState.StateCode.Equals("REDRESS_CREATE"));
+                && v.RedressFlowContext.Flow.ActiveState.StateCode.Equals(RemediatRFlowCodes.REDRESS_CREATE_CODE));
 
             RuleFor(v => v.Product)
                 .NotNull().WithMessage("Product is required");
