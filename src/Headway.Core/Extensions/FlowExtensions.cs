@@ -113,58 +113,6 @@ namespace Headway.Core.Extensions
             return states;
         }
 
-        public static List<State> ReplayHistory(this Flow flow)
-        {
-            if (!flow.Bootstrapped)
-            {
-                throw new FlowException(flow, $"{flow.Name} must be {flow.Bootstrapped} to replay history.");
-            }
-
-            Stack<State> stateStack = new Stack<State>();
-
-            foreach(var history in flow.History)
-            {
-                var state = flow.StateDictionary[history.StateCode];
-
-                switch(history.Event)
-                {
-                    case FlowHistoryEvents.INITIALIZE:
-                        if(stateStack.Any())
-                        {
-                            var peekState = stateStack.Peek();
-                            if (!peekState.StateCode.Equals(state.StateCode)
-                                && peekState.Position > state.Position)
-                            {
-                                stateStack.Push(state);
-                            }
-
-                            break;
-                        }
-
-                        stateStack.Push(state);
-                        break;
-
-                    case FlowHistoryEvents.RESET:
-                        if (stateStack.Any())
-                        {
-                            var peekState = stateStack.Peek();
-                            if (peekState.StateCode.Equals(state.StateCode))
-                            {
-                                stateStack.Pop();
-                                break;
-                            }
-
-                            throw new FlowException(flow, $"{flow.Name} {FlowHistoryEvents.RESET} replay history sequence error.");
-                        }
-
-                        break;
-                };
-            }
-
-            return stateStack.ToList();
-        }
-
-
         /// <summary>
         /// Creates an instance of the <see cref="Flow.FlowConfigurationClass"/>
         /// which implements <see cref="IConfigureFlow"/> and caches it.
