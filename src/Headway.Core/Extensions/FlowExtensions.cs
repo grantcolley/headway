@@ -67,7 +67,8 @@ namespace Headway.Core.Extensions
                 flow.Configure();
             }
 
-            var lastHistory = flow.History.LastOrDefault();
+            var historyReplay = flow.History.ReplayHistory();
+            var lastHistory = historyReplay.LastOrDefault();
 
             if (lastHistory != null)
             {
