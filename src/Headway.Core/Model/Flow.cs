@@ -23,6 +23,8 @@ namespace Headway.Core.Model
         {
             States = new List<State>();
             History = new List<FlowHistory>();
+            ReplayHistory = new List<FlowHistory>();
+            StateDictionary = new Dictionary<string, State>();
         }
 
         /// <summary>
@@ -80,6 +82,20 @@ namespace Headway.Core.Model
         public List<FlowHistory> History { get; set; }
 
         /// <summary>
+        /// A a replay of states transitioned through the flow. Excludes state resets.
+        /// </summary>
+        [NotMapped]
+        [JsonIgnore]
+        public List<FlowHistory> ReplayHistory { get; set; }
+
+        /// <summary>
+        /// A dictionary of states where the key is the StateCode.
+        /// </summary>
+        [NotMapped]
+        [JsonIgnore]
+        public Dictionary<string, State> StateDictionary { get; set; }
+
+        /// <summary>
         /// A flag indicating whether the flow bootstrap 
         /// routine has been completed.
         /// </summary>
@@ -103,13 +119,6 @@ namespace Headway.Core.Model
         [NotMapped]
         [JsonIgnore]
         public State ActiveState { get; set; }
-
-        /// <summary>
-        /// A dictionary of states where the key is the StateCode.
-        /// </summary>
-        [NotMapped]
-        [JsonIgnore]
-        public Dictionary<string, State> StateDictionary { get; set; }
 
         /// <summary>
         /// The context associated with the flow.
