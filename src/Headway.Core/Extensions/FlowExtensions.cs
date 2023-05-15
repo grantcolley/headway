@@ -58,17 +58,17 @@ namespace Headway.Core.Extensions
             foreach (var state in flow.States)
             {
                 state.Flow = flow;
+                flow.StateDictionary.Add(state.StateCode, state);
             }
-
-            flow.StateDictionary = flow.States.ToDictionary(s => s.StateCode, s => s);
 
             if (!isClientSide)
             {
                 flow.Configure();
             }
 
-            var historyReplay = flow.History.ReplayHistory();
-            var lastHistory = historyReplay.LastOrDefault();
+            flow.ReplayHistory();
+
+            var lastHistory = flow.ReplayHistory.LastOrDefault();
 
             if (lastHistory != null)
             {
@@ -170,6 +170,71 @@ namespace Headway.Core.Extensions
                 flowConfiguration.Configure(flow);
 
                 flow.ActionsConfigured = true;
+            }
+        }
+
+        /// <summary>
+        /// Replays the <see cref="Flow"/>'s history. 
+        /// </summary>
+        /// <param name="flow">The <see cref="Flow"/></param>
+        /// <exception cref="FlowHistoryException"></exception>
+        public static void ReplayHistory(this Flow flow)
+        {
+            flow.ReplayHistory.Clear();
+
+            foreach (var flowHistory in flow.History)
+            {
+                switch (flowHistory.Event)
+                {
+                    case FlowHistoryEvents.INITIALIZE:
+                    case FlowHistoryEvents.START:
+                    case FlowHistoryEvents.COMPLETE:
+                        if(!flow.ReplayHistory.Any())
+                        {
+                            flow.ReplayHistory.Add(flowHistory);
+                            continue;
+                        }
+
+                        var lastHistory = flow.ReplayHistory.Last();
+
+                        if (lastHistory.StateCode.Equals(flowHistory.StateCode))
+                        {
+                            _ = flow.ReplayHistory.Remove(lastHistory);
+                            flow.ReplayHistory.Add(flowHistory);
+                        }
+                        else
+                        {
+                            var state = flow.StateDictionary[lastHistory.StateCode];
+
+                            if(!string.IsNullOrEmpty(state.ParentStateCode)
+                                && lastHistory.StateCode.Equals(state.ParentStateCode))
+                            {
+                                var parentHistory = flow.ReplayHistory.First(h => h.StateCode.Equals(flowHistory.StateCode));
+                                flow.ReplayHistory[flow.ReplayHistory.IndexOf(parentHistory)] = flowHistory;
+                            }
+                            else
+                            {
+                                flow.ReplayHistory.Add(flowHistory);
+                            }
+                        }
+
+                        break;
+
+                    case FlowHistoryEvents.RESET:
+                        var lastResetHistory = flow.ReplayHistory.LastOrDefault();
+
+                        if (lastResetHistory != null)
+                        {
+                            if (lastResetHistory.StateCode.Equals(flowHistory.StateCode))
+                            {
+                                throw new FlowHistoryException(flowHistory, $"Expecting {flowHistory.StateCode} but found {lastResetHistory.StateCode}.");
+                            }
+                        }
+
+                        _ = flow.ReplayHistory.Remove(lastResetHistory);
+
+                        break;
+                };
             }
         }
     }
