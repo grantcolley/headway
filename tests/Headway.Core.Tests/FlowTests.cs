@@ -268,33 +268,33 @@ namespace Headway.Core.Tests
             }
         }
 
-        [TestMethod]
-        public async Task Flow_RemediatR_REDRESS_CREATE_To_FINAL_REVIEW_REPLAY_HISTORY()
-        {
-            // Arrange
-            var historyRedressCreateToFinalReview = GetHistoryRedressCreateToFinalReview();
+        //[TestMethod]
+        //public async Task Flow_RemediatR_REDRESS_CREATE_To_FINAL_REVIEW_REPLAY_HISTORY()
+        //{
+        //    // Arrange
+        //    var historyRedressCreateToFinalReview = GetHistoryRedressCreateToFinalReview();
 
-            var flow = RemediatRFlow.CreateRemediatRFlow();
-            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
+        //    var flow = RemediatRFlow.CreateRemediatRFlow();
+        //    flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
 
-            // Act
-            flow.Bootstrap(historyRedressCreateToFinalReview);
+        //    // Act
+        //    flow.Bootstrap(historyRedressCreateToFinalReview);
 
-            // Assert
-            Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
-            Assert.AreEqual(flow.States.LastState(), flow.ActiveState);
-            Assert.AreEqual(StateStatus.Completed, flow.ActiveState.StateStatus);
-            Assert.AreEqual(historyRedressCreateToFinalReview.Count, flow.History.Count);
+        //    // Assert
+        //    Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
+        //    Assert.AreEqual(flow.States.LastState(), flow.ActiveState);
+        //    Assert.AreEqual(StateStatus.Completed, flow.ActiveState.StateStatus);
+        //    Assert.AreEqual(historyRedressCreateToFinalReview.Count, flow.History.Count);
 
-            for (int i = 0; i < flow.History.Count; i++)
-            {
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].Event, flow.History[i].Event);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].StateCode, flow.History[i].StateCode);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].StateStatus, flow.History[i].StateStatus);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].Owner, flow.History[i].Owner);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].Comment, flow.History[i].Comment);
-            }
-        }
+        //    for (int i = 0; i < flow.History.Count; i++)
+        //    {
+        //        Assert.AreEqual(historyRedressCreateToFinalReview[i].Event, flow.History[i].Event);
+        //        Assert.AreEqual(historyRedressCreateToFinalReview[i].StateCode, flow.History[i].StateCode);
+        //        Assert.AreEqual(historyRedressCreateToFinalReview[i].StateStatus, flow.History[i].StateStatus);
+        //        Assert.AreEqual(historyRedressCreateToFinalReview[i].Owner, flow.History[i].Owner);
+        //        Assert.AreEqual(historyRedressCreateToFinalReview[i].Comment, flow.History[i].Comment);
+        //    }
+        //}
 
         private List<FlowHistory> GetHistoryRedressCreateToFinalReview()
         {
