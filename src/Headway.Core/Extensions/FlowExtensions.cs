@@ -72,7 +72,8 @@ namespace Headway.Core.Extensions
 
             if (lastHistory != null)
             {
-                var lastState = flow.StateDictionary[lastHistory.StateCode].Bootstrap();
+                var lastState = flow.StateDictionary[lastHistory.StateCode];
+                lastState.Bootstrap();
                 lastState.StateStatus = lastHistory.StateStatus;
                 lastState.Owner = lastHistory.Owner;
                 lastState.Comment = lastHistory.Comment;
@@ -80,7 +81,8 @@ namespace Headway.Core.Extensions
             }
             else
             {
-                flow.ActiveState = flow.RootState.Bootstrap();
+                flow.ActiveState = flow.RootState;
+                flow.ActiveState.Bootstrap();
             }
 
             flow.Bootstrapped = true;
@@ -200,20 +202,30 @@ namespace Headway.Core.Extensions
                             continue;
                         }
 
-                        var lastHistory = flow.ReplayHistory.Last();
+                        var lastReplay = flow.ReplayHistory.Last();
 
-                        if (lastHistory.StateCode.Equals(flowHistory.StateCode))
+                        if (lastReplay.StateCode.Equals(flowHistory.StateCode))
                         {
-                            _ = flow.ReplayHistory.Remove(lastHistory);
+                            _ = flow.ReplayHistory.Remove(lastReplay);
                             flow.ReplayHistory.Add(flowHistory);
                         }
                         else
                         {
-                            var state = flow.StateDictionary[lastHistory.StateCode];
+                            var flowHistoryState = flow.StateDictionary[flowHistory.StateCode];
 
-                            if(!string.IsNullOrEmpty(state.ParentStateCode)
-                                && lastHistory.StateCode.Equals(state.ParentStateCode))
+                            if(!string.IsNullOrEmpty(flowHistoryState.SubStateCodes)
+                                && flowHistoryState.SubStateCodes.Contains(lastReplay.StateCode)
+                                && flowHistory.Event.Equals(FlowHistoryEvents.COMPLETE)
+                                && lastReplay.Event.Equals(FlowHistoryEvents.COMPLETE))
                             {
+                                var lastReplayState = flow.StateDictionary[lastReplay.StateCode];
+
+                                if (!string.IsNullOrEmpty(lastReplayState.TransitionStateCodes))
+                                {
+                                    throw new FlowHistoryException(flowHistory, 
+                                        $"Expecting final sub task {lastReplayState.StateCode} to complete parent {flowHistoryState.StateCode} but it has transition states {lastReplayState.TransitionStateCodes}.");
+                                }
+
                                 var parentHistory = flow.ReplayHistory.First(h => h.StateCode.Equals(flowHistory.StateCode));
                                 flow.ReplayHistory[flow.ReplayHistory.IndexOf(parentHistory)] = flowHistory;
                             }
