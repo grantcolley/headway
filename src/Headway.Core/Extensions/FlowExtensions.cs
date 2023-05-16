@@ -180,6 +180,11 @@ namespace Headway.Core.Extensions
         /// <exception cref="FlowHistoryException"></exception>
         public static void ReplayHistory(this Flow flow)
         {
+            if(!flow.StateDictionary.Any())
+            {
+                throw new FlowException(flow, $"{flow.Name} {nameof(flow.StateDictionary)} is empty. Bootstrap {flow.Name} to populate the {nameof(flow.StateDictionary)}.");
+            }
+
             flow.ReplayHistory.Clear();
 
             foreach (var flowHistory in flow.History)
@@ -221,17 +226,35 @@ namespace Headway.Core.Extensions
                         break;
 
                     case FlowHistoryEvents.RESET:
-                        var lastResetHistory = flow.ReplayHistory.LastOrDefault();
+                        var lastResetHistory = flow.ReplayHistory.Last();
 
-                        if (lastResetHistory != null)
+                        if (lastResetHistory.StateCode.Equals(flowHistory.StateCode))
                         {
-                            if (lastResetHistory.StateCode.Equals(flowHistory.StateCode))
-                            {
-                                throw new FlowHistoryException(flowHistory, $"Expecting {flowHistory.StateCode} but found {lastResetHistory.StateCode}.");
-                            }
+                            _ = flow.ReplayHistory.Remove(lastResetHistory);
                         }
+                        else
+                        {
+                            while(flow.ReplayHistory.Any())
+                            {
+                                var subTaskResetHistory = flow.ReplayHistory.Last();
 
-                        _ = flow.ReplayHistory.Remove(lastResetHistory);
+                                var subTask = flow.StateDictionary[subTaskResetHistory.StateCode];
+
+                                if (!string.IsNullOrEmpty(subTask.ParentStateCode)
+                                    && lastResetHistory.StateCode.Equals(subTask.ParentStateCode))
+                                {
+                                    _ = flow.ReplayHistory.Remove(lastResetHistory);
+                                }
+                                else
+                                {
+                                    throw new FlowHistoryException(flowHistory, $"Expecting sub task parent to be {lastResetHistory.StateCode} but found {flowHistory.StateCode}.");
+                                }
+
+                                break;
+                            }
+
+                            throw new FlowHistoryException(flowHistory, $"{flowHistory.StateCode} not found.");
+                        }
 
                         break;
                 };
