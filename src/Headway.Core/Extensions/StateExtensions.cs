@@ -23,8 +23,7 @@ namespace Headway.Core.Extensions
         /// Populate the <see cref="State.SubStates"/>, <see cref="State.Transitions"/> and <see cref="State.Regressions"/>.
         /// </summary>
         /// <param name="state"></param>
-        /// <returns>The bootstrapped <see cref="State"/>.</returns>
-        public static State Bootstrap(this State state)
+        public static void Bootstrap(this State state)
         {
             state.StateStatus = default;
             state.Owner = default;
@@ -47,8 +46,6 @@ namespace Headway.Core.Extensions
             state.Regressions.AddRange(state.Flow.ToStateList(state.RegressionStateCodesList));
 
             state.Bootstrapped = true;
-
-            return state;
         }
 
         /// <summary>
@@ -77,7 +74,7 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"Can't initialize {state.StateCode} because it's {state.StateStatus}.");
             }
 
-            _ = state.Bootstrap();
+            state.Bootstrap();
 
             if (state.StateType.Equals(StateType.Parent)
                 && !state.SubStates.Any())
