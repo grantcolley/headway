@@ -66,9 +66,7 @@ namespace Headway.Core.Extensions
                 flow.Configure();
             }
 
-            flow.ReplayHistory();
-
-            var lastHistory = flow.ReplayHistory.LastOrDefault();
+            var lastHistory = flow.ReplayHistory();
 
             if (lastHistory != null)
             {
@@ -179,8 +177,14 @@ namespace Headway.Core.Extensions
         /// Replays the <see cref="Flow"/>'s history. 
         /// </summary>
         /// <param name="flow">The <see cref="Flow"/></param>
-        /// <exception cref="FlowHistoryException"></exception>
-        public static void ReplayHistory(this Flow flow)
+        /// <returns>
+        /// The <see cref="FlowHistory"/> representing the current active <see cref="State"/>  
+        /// in the <see cref="Flow"/> or the final <see cref="State"/> if the <see cref="Flow"/>  
+        /// is completed. If the <see cref="Flow"/> has not started returns null.
+        /// </returns>
+        /// <exception cref="FlowException">Thrown if the <see cref="Flow"/> has not been bootstrapped.</exception>
+        /// <exception cref="FlowHistoryException">Thrown if the <see cref="FlowHistory"/> sequence is inconsistent with expectations.</exception>
+        public static FlowHistory ReplayHistory(this Flow flow)
         {
             if(!flow.StateDictionary.Any())
             {
@@ -223,7 +227,7 @@ namespace Headway.Core.Extensions
                                 if (!string.IsNullOrEmpty(lastReplayState.TransitionStateCodes))
                                 {
                                     throw new FlowHistoryException(flowHistory, 
-                                        $"Expecting final sub task {lastReplayState.StateCode} to complete parent {flowHistoryState.StateCode} but it has transition states {lastReplayState.TransitionStateCodes}.");
+                                        $"Expecting {lastReplayState.StateCode} to complete parent {flowHistoryState.StateCode} but it has transition states {lastReplayState.TransitionStateCodes}.");
                                 }
 
                                 var parentHistory = flow.ReplayHistory.First(h => h.StateCode.Equals(flowHistory.StateCode));
@@ -271,6 +275,25 @@ namespace Headway.Core.Extensions
                         break;
                 };
             }
+
+            var lastHistory = flow.ReplayHistory.LastOrDefault();
+
+            if (lastHistory == null)
+            {
+                flow.FlowStatus = Enums.FlowStatus.NotStarted;
+            }
+            else
+            {
+                if(lastHistory.StateCode.Equals(flow.FinalState.StateCode)
+                    && lastHistory.Event.Equals(FlowHistoryEvents.COMPLETE))
+                {
+                    flow.FlowStatus = Enums.FlowStatus.Completed;
+                }
+
+                flow.FlowStatus = Enums.FlowStatus.InProgress;
+            }
+
+            return lastHistory;
         }
     }
 }
