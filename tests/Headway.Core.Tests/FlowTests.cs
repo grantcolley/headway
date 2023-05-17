@@ -5,6 +5,7 @@ using Headway.Core.Extensions;
 using Headway.Core.Model;
 using Headway.Core.Tests.Helpers;
 using Headway.SeedData.RemediatR;
+using RemediatR.Core.Constants;
 using RemediatR.Core.Flow;
 using System.Text.Json;
 
@@ -285,14 +286,58 @@ namespace Headway.Core.Tests
             // Assert
             Assert.AreEqual(flow.FinalState, flow.ActiveState);
             Assert.AreEqual(StateStatus.Completed, flow.ActiveState.StateStatus);
+            Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
 
             var lastIndex = flow.History.Count - 1;
+
+            var lastHistory = flow.ReplayHistory.Last();
+
+            Assert.AreEqual(lastHistory.FlowCode, flow.History[lastIndex].FlowCode);
+            Assert.AreEqual(lastHistory.StateCode, flow.History[lastIndex].StateCode);
+            Assert.AreEqual(lastHistory.StateStatus, flow.History[lastIndex].StateStatus);
+            Assert.AreEqual(lastHistory.Owner, flow.History[lastIndex].Owner);
 
             Assert.AreEqual(flow.FinalState.Flow.FlowCode, flow.History[lastIndex].FlowCode);
             Assert.AreEqual(flow.FinalState.StateCode, flow.History[lastIndex].StateCode);
             Assert.AreEqual(flow.FinalState.StateStatus, flow.History[lastIndex].StateStatus);
             Assert.AreEqual(flow.FinalState.Owner, flow.History[lastIndex].Owner);
             Assert.AreEqual(FlowHistoryEvents.COMPLETE, flow.History[lastIndex].Event);
+        }
+
+        [TestMethod]
+        public void Flow_RemediatR_REDRESS_CREATE_To_FINAL_REVIEW_To_REDRESS_REVIEW_REPLAY_HISTORY()
+        {
+            // Arrange
+            var history = GetHistoryRedressCreateToFinalReview();
+            history.AddRange(GetHistoryFinalReviewResetToRedressReview());
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
+
+            // Act
+            flow.Bootstrap(history);
+
+            // Assert
+
+            var redressReview = flow.StateDictionary[RemediatRFlowCodes.REDRESS_REVIEW_CODE];
+
+            Assert.AreEqual(redressReview, flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
+
+            var lastIndex = flow.History.Count - 1;
+            var lastHistory = flow.ReplayHistory.Last();
+
+            Assert.AreEqual(lastHistory.FlowCode, flow.History[lastIndex].FlowCode);
+            Assert.AreEqual(lastHistory.StateCode, flow.History[lastIndex].StateCode);
+            Assert.AreEqual(lastHistory.StateStatus, flow.History[lastIndex].StateStatus);
+            Assert.AreEqual(lastHistory.Owner, flow.History[lastIndex].Owner);
+
+            Assert.AreEqual(redressReview.Flow.FlowCode, flow.History[lastIndex].FlowCode);
+            Assert.AreEqual(redressReview.StateCode, flow.History[lastIndex].StateCode);
+            Assert.AreEqual(redressReview.StateStatus, flow.History[lastIndex].StateStatus);
+            Assert.AreEqual(redressReview.Owner, flow.History[lastIndex].Owner);
+            Assert.AreEqual(FlowHistoryEvents.START, flow.History[lastIndex].Event);
         }
 
         private List<FlowHistory> GetHistoryRedressCreateToFinalReview()
