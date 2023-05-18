@@ -495,7 +495,8 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
-            flow.ActiveState.StateStatus = StateStatus.InProgress;
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+
             flow.ActiveState.Comment = "Hello World!";
             flow.ActiveState.Owner = "state owner";
 
@@ -517,6 +518,8 @@ namespace Headway.Core.Tests
 
             flow.Bootstrap();
 
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+
             var resetStateCode = "ABC";
 
             try
@@ -527,7 +530,7 @@ namespace Headway.Core.Tests
             catch (StateException ex)
             {
                 // Assert
-                Assert.AreEqual($"Can't reset {flow.ActiveState.StateCode} because it doesn't support regressing back to {resetStateCode}.", ex.Message);
+                Assert.AreEqual($"Can't reset {flow.ActiveState.StateCode} because it doesn't support resetting back to {resetStateCode}.", ex.Message);
 
                 throw;
             }
