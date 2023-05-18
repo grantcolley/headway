@@ -28,6 +28,9 @@
     <None Update="Data\RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
