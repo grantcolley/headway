@@ -6,7 +6,6 @@ using Headway.Core.Model;
 using Headway.Core.Tests.Helpers;
 using Headway.SeedData.RemediatR;
 using RemediatR.Core.Constants;
-using RemediatR.Core.Flow;
 using System.Text.Json;
 
 namespace Headway.Core.Tests
@@ -340,6 +339,43 @@ namespace Headway.Core.Tests
             Assert.AreEqual(FlowHistoryEvents.START, flow.History[lastIndex].Event);
         }
 
+        [TestMethod]
+        public async Task Flow_RemediatR_Regress_REFUND_REVIEW_Back_To_REFUND_ASSESSMENT()
+        {
+            // Arrange
+            var history = GetHistoryRedressCreateToRefundReview();
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
+            
+            flow.Bootstrap(history);
+
+            // Act
+            await flow.ActiveState.ResetAsync(RemediatRFlowCodes.REFUND_ASSESSMENT).ConfigureAwait(false);
+
+            // Assert
+            var refundAssessment = flow.StateDictionary[RemediatRFlowCodes.REFUND_ASSESSMENT_CODE];
+            var refundCalculation = flow.StateDictionary[RemediatRFlowCodes.REFUND_CALCULATION_CODE];
+
+            Assert.AreEqual(refundCalculation, flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
+
+            //var lastIndex = flow.History.Count - 1;
+            //var lastHistory = flow.ReplayHistory.Last();
+
+            //Assert.AreEqual(lastHistory.FlowCode, flow.History[lastIndex].FlowCode);
+            //Assert.AreEqual(lastHistory.StateCode, flow.History[lastIndex].StateCode);
+            //Assert.AreEqual(lastHistory.StateStatus, flow.History[lastIndex].StateStatus);
+            //Assert.AreEqual(lastHistory.Owner, flow.History[lastIndex].Owner);
+
+            //Assert.AreEqual(redressReview.Flow.FlowCode, flow.History[lastIndex].FlowCode);
+            //Assert.AreEqual(redressReview.StateCode, flow.History[lastIndex].StateCode);
+            //Assert.AreEqual(redressReview.StateStatus, flow.History[lastIndex].StateStatus);
+            //Assert.AreEqual(redressReview.Owner, flow.History[lastIndex].Owner);
+            //Assert.AreEqual(FlowHistoryEvents.START, flow.History[lastIndex].Event);
+        }
+
         private List<FlowHistory> GetHistoryRedressCreateToFinalReview()
         {
             var jsonHistoryRedressCreateToFinalReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt"));
@@ -357,6 +393,25 @@ namespace Headway.Core.Tests
             }
 
             return historyRedressCreateToFinalReview;
+        }
+
+        private List<FlowHistory> GetHistoryRedressCreateToRefundReview()
+        {
+            var jsonHistoryRedressCreateToRefundReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW.txt"));
+            var historyRedressCreateToRefundReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryRedressCreateToRefundReview);
+            foreach (var history in historyRedressCreateToRefundReview)
+            {
+                if (history.Owner == "dummy_account")
+                {
+                    history.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(history.Comment))
+                    {
+                        history.Comment = history.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+
+            return historyRedressCreateToRefundReview;
         }
 
         private List<FlowHistory> GetHistoryFinalReviewResetToRedressReview()
