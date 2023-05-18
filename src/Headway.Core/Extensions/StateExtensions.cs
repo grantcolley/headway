@@ -275,14 +275,20 @@ namespace Headway.Core.Extensions
         ///                 <see cref="Flow.FlowStatus"/> is set to <see cref="FlowStatus.InProgress"/>.
         ///             
         /// <see cref="StateException"/> thrown when:
-        ///             - the state is not the <see cref="regressStateCode"/> is null and the state status is <see cref="StateStatus.Uninitialized"/>. 
-        ///             - if it tries to regress to a state that is not in its configured list of regression states or in the <see cref="Flow.History"/>.
+        ///             - the <see cref="regressStateCode"/> is null and the state status is <see cref="StateStatus.Uninitialized"/>. 
+        ///             - if it tries to regress to a state that is not in its configured list of regression states or in the <see cref="Flow.ReplayHistory"/>.
         ///             - if the <see cref="State.Position"/> of the regression state is greater than that of the <see cref="State"/>. 
         /// </summary>
         /// <param name="state">The state to reset.</param>
         /// <param name="regressStateCode">Optional state code of the state to regress to.</param>
         /// <returns>A Task.</returns>
-        /// <exception cref="StateException"></exception>
+        /// <exception cref="StateException">
+        /// Thrown if
+        /// - the state to be reset is <see cref="StateStatus.Uninitialized"/>
+        /// - there is no <see cref="Flow.ReplayHistory"/>.
+        /// - the regressStateCode is not in the <see cref="State.Regressions"/>.
+        /// - the target <see cref="State.Position"/> is greater then the <see cref="State.Position"/> being reset from.
+        /// </exception>
         public static async Task ResetAsync(this State state, string regressStateCode = "")
         {
             if(string.IsNullOrWhiteSpace(regressStateCode)
@@ -296,59 +302,50 @@ namespace Headway.Core.Extensions
                 state.RegressionStateCode = regressStateCode;
             }
 
-            if (!string.IsNullOrWhiteSpace(state.RegressionStateCode)
-                && (!state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
-                || !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode))))
+            state.Flow.ReplayFlowHistory();
+
+            if (!state.Flow.ReplayHistory.Any())
             {
-                throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {regressStateCode}.");
+                throw new StateException(state, "Can't reset as there is no flow history.");
             }
-
-            await state.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
-
-            state.StateStatus = default;
-
-            state.Flow.History.RecordReset(state);
-
-            state.Owner = default;
-            state.Comment = default;
 
             if (!string.IsNullOrWhiteSpace(state.RegressionStateCode))
             {
                 if (!state.Regressions.Any(s => s.StateCode.Equals(state.RegressionStateCode))
-                    || !state.Flow.History.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
+                    || !state.Flow.ReplayHistory.Any(h => h.StateCode.Equals(state.RegressionStateCode)))
                 {
-                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support regressing back to {regressStateCode}.");
+                    throw new StateException(state, $"Can't reset {state.StateCode} because it doesn't support resetting back to {regressStateCode}.");
                 }
 
                 var regressionState = state.Regressions.First(s => s.StateCode.Equals(state.RegressionStateCode));
 
-                if(regressionState.Position > state.Position)
+                if (regressionState.Position > state.Position)
                 {
                     throw new StateException(state, $"Can't regress to {regressionState.StateCode} (position {regressionState.Position}) because it is positioned after {state.StateCode} (position {state.Position}).");
                 }
+            }
 
-                var distinctStateHistory = state.Flow.History.Select(h => h.StateCode).Distinct().ToArray();
-                var stateDictionary = state.Flow.StateDictionary;
-                var distinctHistoryIndex = distinctStateHistory.Count() - 1;
+            var reverseHistoryIndex = state.Flow.ReplayHistory.Count - 1;
 
-                for (int i = distinctHistoryIndex; i >= 0; i--)
+            for (int i = reverseHistoryIndex; i >= 0; i--)
+            {
+                var rs = state.Flow.StateDictionary[state.Flow.ReplayHistory[i].StateCode];
+
+                await rs.ExecuteActionsAsync(StateActionType.Reset).ConfigureAwait(false);
+
+                rs.StateStatus = default;
+
+                rs.Flow.History.RecordReset(rs);
+
+                rs.Owner = default;
+                rs.Comment = default;
+
+                if (!string.IsNullOrEmpty(state.RegressionStateCode)
+                    && rs.StateCode.Equals(state.RegressionStateCode))
                 {
-                    var rs = stateDictionary[distinctStateHistory[i]];
+                    await rs.InitialiseAsync().ConfigureAwait(false);
 
-                    if (distinctHistoryIndex.Equals(i)
-                        && rs.StateCode.Equals(state.StateCode))
-                    {
-                        continue;
-                    }
-
-                    await rs.ResetAsync().ConfigureAwait(false);
-
-                    if (rs.Equals(regressionState))
-                    {
-                        await rs.InitialiseAsync().ConfigureAwait(false);
-
-                        break;
-                    }
+                    break;
                 }
             }
         }
