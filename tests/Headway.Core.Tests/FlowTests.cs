@@ -351,7 +351,7 @@ namespace Headway.Core.Tests
             flow.Bootstrap(history);
 
             // Act
-            await flow.ActiveState.ResetAsync(RemediatRFlowCodes.REFUND_ASSESSMENT).ConfigureAwait(false);
+            await flow.ActiveState.ResetAsync(RemediatRFlowCodes.REFUND_ASSESSMENT_CODE).ConfigureAwait(false);
 
             // Assert
             var refundAssessment = flow.StateDictionary[RemediatRFlowCodes.REFUND_ASSESSMENT_CODE];
