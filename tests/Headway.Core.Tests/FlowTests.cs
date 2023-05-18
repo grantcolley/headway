@@ -359,21 +359,8 @@ namespace Headway.Core.Tests
 
             Assert.AreEqual(refundCalculation, flow.ActiveState);
             Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(StateStatus.InProgress, refundAssessment.StateStatus);
             Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
-
-            //var lastIndex = flow.History.Count - 1;
-            //var lastHistory = flow.ReplayHistory.Last();
-
-            //Assert.AreEqual(lastHistory.FlowCode, flow.History[lastIndex].FlowCode);
-            //Assert.AreEqual(lastHistory.StateCode, flow.History[lastIndex].StateCode);
-            //Assert.AreEqual(lastHistory.StateStatus, flow.History[lastIndex].StateStatus);
-            //Assert.AreEqual(lastHistory.Owner, flow.History[lastIndex].Owner);
-
-            //Assert.AreEqual(redressReview.Flow.FlowCode, flow.History[lastIndex].FlowCode);
-            //Assert.AreEqual(redressReview.StateCode, flow.History[lastIndex].StateCode);
-            //Assert.AreEqual(redressReview.StateStatus, flow.History[lastIndex].StateStatus);
-            //Assert.AreEqual(redressReview.Owner, flow.History[lastIndex].Owner);
-            //Assert.AreEqual(FlowHistoryEvents.START, flow.History[lastIndex].Event);
         }
 
         private List<FlowHistory> GetHistoryRedressCreateToFinalReview()
