@@ -66,7 +66,7 @@ namespace Headway.Core.Extensions
                 flow.Configure();
             }
 
-            var lastHistory = flow.ReplayHistory();
+            var lastHistory = flow.ReplayFlowHistory();
 
             if (lastHistory != null)
             {
@@ -184,7 +184,7 @@ namespace Headway.Core.Extensions
         /// </returns>
         /// <exception cref="FlowException">Thrown if the <see cref="Flow"/> has not been bootstrapped.</exception>
         /// <exception cref="FlowHistoryException">Thrown if the <see cref="FlowHistory"/> sequence is inconsistent with expectations.</exception>
-        public static FlowHistory ReplayHistory(this Flow flow)
+        public static FlowHistory ReplayFlowHistory(this Flow flow)
         {
             if(!flow.StateDictionary.Any())
             {
