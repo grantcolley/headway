@@ -1,0 +1,38 @@
+﻿[
+  {
+    "StateStatus": 3,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_CREATE",
+    "Event": "Complete",
+    "Owner": "grant",
+    "Comment": "Standard REDRESS_CREATE Complete by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_ASSESSMENT",
+    "Event": "Start",
+    "Owner": "system_account",
+    "Comment": "Parent REFUND_ASSESSMENT Start by system_account",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_CALCULATION",
+    "Event": "Start",
+    "Owner": "grant",
+    "Comment": "Standard REFUND_CALCULATION Start by grant",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  }
+]
