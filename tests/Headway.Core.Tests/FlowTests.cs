@@ -340,7 +340,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public async Task Flow_RemediatR_Regress_REFUND_REVIEW_Back_To_REFUND_ASSESSMENT()
+        public async Task Flow_RemediatR_Regress_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT()
         {
             // Arrange
             var history = GetHistoryRedressCreateToRefundReview();
@@ -356,11 +356,96 @@ namespace Headway.Core.Tests
             // Assert
             var refundAssessment = flow.StateDictionary[RemediatRFlowCodes.REFUND_ASSESSMENT_CODE];
             var refundCalculation = flow.StateDictionary[RemediatRFlowCodes.REFUND_CALCULATION_CODE];
+            var expectedHistory = GetHistoryRedressCreateToRefundReviewResetToRefundAssessment();
+            var expectedReplayHistory = GetHistoryRedressCreateToRefundReviewResetToRefundAssessmentReplay();
 
             Assert.AreEqual(refundCalculation, flow.ActiveState);
             Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
             Assert.AreEqual(StateStatus.InProgress, refundAssessment.StateStatus);
             Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
+
+            for (int i = 0; i < expectedHistory.Count; i++)
+            {
+                Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
+                Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
+                Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
+                Assert.AreEqual(expectedHistory[i].Owner, flow.History[i].Owner);
+                Assert.AreEqual(expectedHistory[i].Comment, flow.History[i].Comment);
+            }
+
+            for (int i = 0; i < expectedReplayHistory.Count; i++)
+            {
+                Assert.AreEqual(expectedReplayHistory[i].Event, flow.ReplayHistory[i].Event);
+                Assert.AreEqual(expectedReplayHistory[i].StateCode, flow.ReplayHistory[i].StateCode);
+                Assert.AreEqual(expectedReplayHistory[i].StateStatus, flow.ReplayHistory[i].StateStatus);
+                Assert.AreEqual(expectedReplayHistory[i].Owner, flow.ReplayHistory[i].Owner);
+                Assert.AreEqual(expectedReplayHistory[i].Comment, flow.ReplayHistory[i].Comment);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateException))]
+        public async Task Flow_RemediatR_Expected_Exception_Regress_REFUND_REVIEW_Reset_To_REFUND_VERIFICATION()
+        {
+            // Arrange
+            var history = GetHistoryRedressCreateToRefundReview();
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
+
+            var refundReview = flow.States.Single(s => s.StateCode.Equals(RemediatRFlowCodes.REFUND_REVIEW_CODE));
+
+            refundReview.RegressionStateCodes = refundReview.RegressionStateCodes + ";" + RemediatRFlowCodes.REFUND_VERIFICATION_CODE;
+
+            flow.Bootstrap(history);
+
+            try
+            {
+                // Act
+                await flow.ActiveState.ResetAsync(RemediatRFlowCodes.REFUND_VERIFICATION_CODE).ConfigureAwait(false);
+            }
+            catch (StateException ex)
+            {
+                // Assert
+                Assert.AreEqual($"Can't regress to sub state {RemediatRFlowCodes.REFUND_VERIFICATION_CODE} of {RemediatRFlowCodes.REFUND_ASSESSMENT_CODE} because it doesn't share the same parent as {refundReview.StateCode}.", ex.Message);
+
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public async Task Flow_RemediatR_Regress_REFUND_REVIEW_Reset_To_REDRESS_CREATE()
+        {
+            // Arrange
+            var history = GetHistoryRedressCreateToRefundReview();
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+            flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
+
+            flow.Bootstrap(history);
+
+            // Act
+            await flow.ActiveState.ResetAsync(RemediatRFlowCodes.REDRESS_CREATE_CODE).ConfigureAwait(false);
+
+            // Assert
+            var redressCreate = flow.StateDictionary[RemediatRFlowCodes.REDRESS_CREATE_CODE];
+            var expectedHistory = GetHistoryRedressCreateToRefundReviewResetToRedressCreate();
+
+            Assert.AreEqual(redressCreate, flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
+            Assert.AreEqual(1, flow.ReplayHistory.Count);
+            Assert.AreEqual(flow.History.Last(), flow.ReplayHistory.Single());
+            Assert.AreEqual(expectedHistory.Count, flow.History.Count);
+
+            for (int i = 0; i < expectedHistory.Count; i++)
+            {
+                Assert.AreEqual(expectedHistory[i].Event, flow.History[i].Event);
+                Assert.AreEqual(expectedHistory[i].StateCode, flow.History[i].StateCode);
+                Assert.AreEqual(expectedHistory[i].StateStatus, flow.History[i].StateStatus);
+                Assert.AreEqual(expectedHistory[i].Owner, flow.History[i].Owner);
+                Assert.AreEqual(expectedHistory[i].Comment, flow.History[i].Comment);
+            }
         }
 
         private List<FlowHistory> GetHistoryRedressCreateToFinalReview()
@@ -418,6 +503,63 @@ namespace Headway.Core.Tests
             }
 
             return historyFinalReviewResetToRedressReview;
+        }
+
+        private List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRedressCreate()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REFUND_REVIEW_Reset_To_REDRESS_CREATE.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+
+            return history;
+        }
+
+        private List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRefundAssessment()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+
+            return history;
+        }
+
+        private List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRefundAssessmentReplay()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT_Replay.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+
+            return history;
         }
     }
 }
