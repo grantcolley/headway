@@ -319,6 +319,18 @@ namespace Headway.Core.Extensions
 
                 var regressionState = state.Regressions.First(s => s.StateCode.Equals(state.RegressionStateCode));
 
+                if (!string.IsNullOrEmpty(regressionState.ParentStateCode))
+                {
+                    if (string.IsNullOrEmpty(state.ParentStateCode))
+                    {
+                        throw new StateException(state, $"Can't regress to sub state {regressionState.StateCode} of {regressionState.ParentStateCode} because it doesn't share the same parent as {state.StateCode}.");
+                    }
+                    else if (!state.ParentStateCode.Equals(regressionState.ParentStateCode))
+                    {
+                        throw new StateException(state, $"Can't regress to sub state {regressionState.StateCode} of {regressionState.ParentStateCode} because it doesn't share the same parent as {state.StateCode} which is {state.ParentStateCode}.");
+                    }
+                }
+
                 if (regressionState.Position > state.Position)
                 {
                     throw new StateException(state, $"Can't regress to {regressionState.StateCode} (position {regressionState.Position}) because it is positioned after {state.StateCode} (position {state.Position}).");
@@ -348,6 +360,8 @@ namespace Headway.Core.Extensions
                     break;
                 }
             }
+
+            state.Flow.ReplayFlowHistory();
         }
 
         /// <summary>
