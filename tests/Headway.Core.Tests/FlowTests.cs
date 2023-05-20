@@ -275,6 +275,7 @@ namespace Headway.Core.Tests
         {
             // Arrange
             var history = GetHistoryRedressCreateToFinalReview();
+            var expectedReplayHistory = GetHistoryRedressCreateToFinalReviewReplay();
 
             var flow = RemediatRFlow.CreateRemediatRFlow();
             flow.FlowConfigurationClass = "Headway.Core.Tests.Helpers.FlowOwnershipHelper, Headway.Core.Tests";
@@ -301,6 +302,15 @@ namespace Headway.Core.Tests
             Assert.AreEqual(flow.FinalState.StateStatus, flow.History[lastIndex].StateStatus);
             Assert.AreEqual(flow.FinalState.Owner, flow.History[lastIndex].Owner);
             Assert.AreEqual(FlowHistoryEvents.COMPLETE, flow.History[lastIndex].Event);
+
+            for (int i = 0; i < expectedReplayHistory.Count; i++)
+            {
+                Assert.AreEqual(expectedReplayHistory[i].Event, flow.ReplayHistory[i].Event);
+                Assert.AreEqual(expectedReplayHistory[i].StateCode, flow.ReplayHistory[i].StateCode);
+                Assert.AreEqual(expectedReplayHistory[i].StateStatus, flow.ReplayHistory[i].StateStatus);
+                Assert.AreEqual(expectedReplayHistory[i].Owner, flow.ReplayHistory[i].Owner);
+                Assert.AreEqual(expectedReplayHistory[i].Comment, flow.ReplayHistory[i].Comment);
+            }
         }
 
         [TestMethod]
@@ -546,6 +556,25 @@ namespace Headway.Core.Tests
         private List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRefundAssessmentReplay()
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT_Replay.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+
+            return history;
+        }
+
+        private List<FlowHistory> GetHistoryRedressCreateToFinalReviewReplay()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW_Replay.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
             foreach (var h in history)
             {
