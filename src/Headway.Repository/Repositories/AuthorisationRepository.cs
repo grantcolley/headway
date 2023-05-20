@@ -383,9 +383,9 @@ namespace Headway.Repository.Repositories
                                            Description = p.Description
                                        }).ToList();
 
-            (from i in permissionChecklist
-             join p in modelPermissions on i.Id equals p.PermissionId
-             select i.IsChecked = true).ToList();
+            _ = (from i in permissionChecklist
+                 join p in modelPermissions on i.Id equals p.PermissionId
+                 select i.IsChecked = true).ToList();
 
             return permissionChecklist;
         }
@@ -416,9 +416,9 @@ namespace Headway.Repository.Repositories
             var roleChecklist = (from r in roles
                                  select createChecklistItem(r)).ToList();
 
-            (from i in roleChecklist
-             join r in modelRoles on i.Id equals r.RoleId
-             select i.IsChecked = true).ToList();
+            _ = (from i in roleChecklist
+                 join r in modelRoles on i.Id equals r.RoleId
+                 select i.IsChecked = true).ToList();
 
             return roleChecklist;
         }
