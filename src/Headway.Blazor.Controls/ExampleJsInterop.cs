@@ -33,6 +33,7 @@ namespace Headway.Blazor.Controls
             {
                 var module = await moduleTask.Value;
                 await module.DisposeAsync();
+                GC.SuppressFinalize(this);
             }
         }
     }
