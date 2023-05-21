@@ -28,12 +28,12 @@ namespace Headway.Blazor.Controls.Components
             return base.OnParametersSetAsync();
         }
 
-        protected void OnCheckItem(ChecklistItem item)
+        protected static void OnCheckItem(ChecklistItem item)
         {
             item.IsChecked = !item.IsChecked;
         }
 
-        private bool FilterItem(ChecklistItem item, string filter)
+        private static bool FilterItem(ChecklistItem item, string filter)
         {
             if (string.IsNullOrWhiteSpace(filter))
             {

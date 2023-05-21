@@ -27,7 +27,7 @@ namespace Headway.Blazor.Controls.Components
             return base.OnParametersSetAsync();
         }
 
-        private bool FilterItem(string item, string filter)
+        private static bool FilterItem(string item, string filter)
         {
             if (string.IsNullOrWhiteSpace(filter))
             {

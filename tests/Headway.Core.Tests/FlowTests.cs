@@ -458,7 +458,7 @@ namespace Headway.Core.Tests
             }
         }
 
-        private List<FlowHistory> GetHistoryRedressCreateToFinalReview()
+        private static List<FlowHistory> GetHistoryRedressCreateToFinalReview()
         {
             var jsonHistoryRedressCreateToFinalReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt"));
             var historyRedressCreateToFinalReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryRedressCreateToFinalReview);
@@ -477,7 +477,7 @@ namespace Headway.Core.Tests
             return historyRedressCreateToFinalReview;
         }
 
-        private List<FlowHistory> GetHistoryRedressCreateToRefundReview()
+        private static List<FlowHistory> GetHistoryRedressCreateToRefundReview()
         {
             var jsonHistoryRedressCreateToRefundReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW.txt"));
             var historyRedressCreateToRefundReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryRedressCreateToRefundReview);
@@ -496,7 +496,7 @@ namespace Headway.Core.Tests
             return historyRedressCreateToRefundReview;
         }
 
-        private List<FlowHistory> GetHistoryFinalReviewResetToRedressReview()
+        private static List<FlowHistory> GetHistoryFinalReviewResetToRedressReview()
         {
             var jsonHistoryFinalReviewResetToRedressReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_FINAL_REVIEW_Reset_To_REDRESS_REVIEW.txt"));
             var historyFinalReviewResetToRedressReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryFinalReviewResetToRedressReview);
@@ -515,7 +515,7 @@ namespace Headway.Core.Tests
             return historyFinalReviewResetToRedressReview;
         }
 
-        private List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRedressCreate()
+        private static List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRedressCreate()
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REFUND_REVIEW_Reset_To_REDRESS_CREATE.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
@@ -534,7 +534,7 @@ namespace Headway.Core.Tests
             return history;
         }
 
-        private List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRefundAssessment()
+        private static List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRefundAssessment()
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
@@ -553,7 +553,7 @@ namespace Headway.Core.Tests
             return history;
         }
 
-        private List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRefundAssessmentReplay()
+        private static List<FlowHistory> GetHistoryRedressCreateToRefundReviewResetToRefundAssessmentReplay()
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT_Replay.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
@@ -572,7 +572,7 @@ namespace Headway.Core.Tests
             return history;
         }
 
-        private List<FlowHistory> GetHistoryRedressCreateToFinalReviewReplay()
+        private static List<FlowHistory> GetHistoryRedressCreateToFinalReviewReplay()
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW_Replay.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
