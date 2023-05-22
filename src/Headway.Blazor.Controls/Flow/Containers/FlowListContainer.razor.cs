@@ -1,8 +1,10 @@
 ﻿using Headway.Blazor.Controls.Base;
 using Headway.Blazor.Controls.Flow.Components;
 using Headway.Blazor.Controls.Flow.Documents;
+using Headway.Core.Constants;
 using Headway.Core.Dynamic;
 using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System.Linq;
@@ -14,6 +16,8 @@ namespace Headway.Blazor.Controls.Flow.Containers
     {
         [Parameter]
         public FlowTabDocumentBase<T> FlowTabDocument { get; set; }
+
+        protected IFlowContext flowContext { get; set; }
 
         protected DynamicContainer activeListItem { get; set; }
 
@@ -29,6 +33,8 @@ namespace Headway.Blazor.Controls.Flow.Containers
 
             await base.OnInitializedAsync().ConfigureAwait(false);
 
+            flowContext = FlowTabDocument?.DynamicModel?.FlowContext;
+
             SetActiveListItem();
         }
 
@@ -39,6 +45,20 @@ namespace Headway.Blazor.Controls.Flow.Containers
             builder.AddAttribute(2, "FlowTabDocument", (FlowTabDocumentBase<T>)FlowTabDocument);
             builder.CloseComponent();
         };
+
+        protected bool ShowContainer(DynamicContainer dynamicContainer)
+        {
+            var flowStateCode = ComponentArgHelper.GetArgValue(dynamicContainer.DynamicArgs, FlowConstants.FLOW_STATE_CODE);
+
+            if(flowContext.Flow.ActiveState.StateCode.Equals(flowStateCode))
+            {
+                return true;
+            }
+
+            var replayHistory = flowContext.Flow.ReplayHistory.SingleOrDefault(h => h.StateCode.Equals(flowStateCode));
+
+            return replayHistory == null ? false : true;
+        }
 
         protected void SelectedValueChange(object value)
         {
