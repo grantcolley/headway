@@ -65,6 +65,7 @@ namespace Headway.SeedData.RemediatR
             redressReview.IsOwnerRestricted = true;
 
             redressValidation.StateType = StateType.Auto;
+            redressValidation.AutoActionResult = StateAutoActionResult.AutoComplete;
             redressValidation.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
             redressValidation.WritePermission = RemediatRAuthorisation.REDRESS_REVIEWER_WRITE;
             redressValidation.TransitionStateCodes = $"{communicationGeneration.StateCode};{paymentGeneration.StateCode}";
@@ -84,6 +85,7 @@ namespace Headway.SeedData.RemediatR
             communicationDispatch.IsOwnerRestricted = true;
 
             responseRequired.StateType = StateType.Auto;
+            responseRequired.AutoActionResult = StateAutoActionResult.AutoComplete;
             responseRequired.ReadPermission = RemediatRAuthorisation.REDRESS_READ;
             responseRequired.WritePermission = RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE;
             responseRequired.TransitionStateCodes = $"{awaitingResponse.StateCode};{paymentGeneration.StateCode}";
