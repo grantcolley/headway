@@ -116,6 +116,7 @@ namespace Headway.Core.Extensions
         ///             - the state is not the <see cref="Flow.ActiveState"/> of if the state status.
         ///             - the state is not <see cref="StateStatus.Initialized"/>. 
         ///             - if <see cref="State.IsOwnerRestricted"/> is true and an owner has not been assigned (only checked after executing start actions).
+        ///             - the <see cref="State"/> is <see cref="StateType.Auto"/> but it's <see cref="State.AutoActionResult"/> = <see cref="StateAutoActionResult.Unknown"/>.
         /// </summary>
         /// <param name="state">The state to start.</param>
         /// <returns>A Task.</returns>
@@ -135,6 +136,12 @@ namespace Headway.Core.Extensions
             }
 
             await state.ExecuteActionsAsync(StateActionType.Start).ConfigureAwait(false);
+
+            if (state.StateType.Equals(StateType.Auto)
+                && state.AutoActionResult.Equals(StateAutoActionResult.Unknown))
+            {
+                throw new StateException(state, $"{state.StateCode} is a Auto state but it's AutoActionResult is Unknown.");
+            }
 
             if (state.IsOwnerRestricted
                 && string.IsNullOrWhiteSpace(state.Owner))
