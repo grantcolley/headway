@@ -2,6 +2,7 @@
 {
     public enum StateAutoActionResult
     {
+        Unknown,
         AutoComplete,
         AutoRegress
     }
