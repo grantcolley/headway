@@ -411,6 +411,7 @@ namespace Headway.Core.Tests
             var flow = FlowHelper.CreateFlow(3);
 
             flow.States[1].StateType = StateType.Auto;
+            flow.States[1].AutoActionResult = StateAutoActionResult.AutoComplete;
 
             flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
             flow.States[1].TransitionStateCodes = $"{flow.States[2].StateCode}";
@@ -465,6 +466,7 @@ namespace Headway.Core.Tests
             var flow = FlowHelper.CreateFlow(4);
 
             flow.States[1].StateType = StateType.Auto;
+            flow.States[1].AutoActionResult = StateAutoActionResult.AutoComplete;
 
             flow.States[0].TransitionStateCodes = $"{flow.States[1].StateCode}";
             flow.States[1].TransitionStateCodes = $"{flow.States[2].StateCode};{flow.States[3].StateCode}";
