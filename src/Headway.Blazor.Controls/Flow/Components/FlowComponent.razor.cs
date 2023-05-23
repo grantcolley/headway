@@ -60,11 +60,18 @@ namespace Headway.Blazor.Controls.Flow.Components
         {
             FlowComponentContext.IsOwnerAssigning = true;
 
-            // assign / unassign here....
-            await Task.Delay(1000);
-            FlowComponentContext.Owner = string.IsNullOrEmpty(FlowComponentContext.Owner) ? "Test123" : null;                ;
+            if (FlowTabDocument?.CurrentEditContext != null)
+            {
+                // assign / unassign here....
+                await Task.Delay(1000);
+            }
 
             FlowComponentContext.IsOwnerAssigning = false;
+
+            //await InvokeAsync(() =>
+            //{
+            //    StateHasChanged();
+            //});
         }
 
         protected async Task OnExecutingClick()
@@ -80,10 +87,10 @@ namespace Headway.Blazor.Controls.Flow.Components
 
             FlowComponentContext.IsExecuting = false;
 
-            await InvokeAsync(() =>
-            {
-                StateHasChanged();
-            });
+            //await InvokeAsync(() =>
+            //{
+            //    StateHasChanged();
+            //});
         }
     }
 }
