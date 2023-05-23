@@ -1,4 +1,4 @@
-﻿using Headway.Core.Extensions;
+﻿using Headway.Core.Enums;
 using Headway.Core.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,6 +97,33 @@ namespace Headway.Blazor.Controls.Flow.Components
             }
 
             ActionTarget = ActionTargetItems.FirstOrDefault();
+
+            CanEdit = GetCanEdit();
+            CanExecute = GetCanExecute();
+            CanManageOwnership = GetCanManageOwnership();
+        }
+
+        private bool GetCanExecute()
+        {
+            return GetCanEdit();
+        }
+
+        private bool GetCanEdit()
+        {
+            // 1. Container is for ActiveState
+            // 2. ActiveState.StateStatus.Equals(StateStatus.InProgress)
+            // 3. User has state write permission
+            // 4. If ownership is required:
+            //      - state has owner
+            //      - user is 
+            return ActiveState.StateStatus.Equals(StateStatus.InProgress);
+        }
+
+        private bool GetCanManageOwnership()
+        {
+            // 1. Container is for ActiveState
+            // 2. User has state write permission
+            return ActiveState.IsOwnerRestricted;
         }
     }
 }
