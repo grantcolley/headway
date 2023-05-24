@@ -1,16 +1,14 @@
-﻿using Headway.Core.Attributes;
+﻿using Headway.Blazor.Controls.Base;
+using Headway.Core.Attributes;
 using Headway.Core.Dynamic;
-using Headway.Blazor.Controls.Base;
+using Microsoft.AspNetCore.Components;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using System;
-using Headway.Core.Constants;
 
 namespace Headway.Blazor.Controls.Flow.Documents
 {
     [DynamicDocument]
-    public abstract class FlowTabDocumentBase<T> : DynamicDocumentBase<T> where T : class, new()
+    public abstract class FlowTabDocumentBase<T> : FlowDocumentBase<T> where T : class, new()
     {
         protected DynamicContainer activePage { get; set; }
 
