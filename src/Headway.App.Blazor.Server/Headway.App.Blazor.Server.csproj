@@ -10,10 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.0.4" />
-    <PackageReference Include="IdentityModel" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.0" />
-    <PackageReference Include="MudBlazor" Version="6.1.2" />
+    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.2.0" />
+    <PackageReference Include="IdentityModel" Version="6.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.5" />
+    <PackageReference Include="MudBlazor" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>
