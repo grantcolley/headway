@@ -37,12 +37,12 @@ namespace Headway.Blazor.Controls.Base
         {
             await base.OnInitializedAsync().ConfigureAwait(false);
 
-            searchItemCallback.OnKeyDown = SearchItemEnter;
+            searchItemCallback.OnKeyDown = SearchItemEnterAsync;
 
             StateNotification.Register(SearchComponentUniqueId, StateHasChanged);
         }
 
-        protected async Task OnClick()
+        protected async Task OnClickAsync()
         {
             isSearchInProgress = true;
 
@@ -60,9 +60,9 @@ namespace Headway.Blazor.Controls.Base
             });
         }
 
-        protected async Task SearchItemEnter()
+        protected async Task SearchItemEnterAsync()
         {
-            await OnClick();
+            await OnClickAsync();
         }
     }
 }

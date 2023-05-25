@@ -13,7 +13,7 @@ namespace Headway.Blazor.Controls.Base
 
         protected Config config;
 
-        protected async Task GetConfig(string configName)
+        protected async Task GetConfigAsync(string configName)
         {
             try
             {

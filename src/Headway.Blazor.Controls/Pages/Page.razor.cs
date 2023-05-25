@@ -28,13 +28,13 @@ namespace Headway.Blazor.Controls.Pages
         {
             if (config == null)
             {
-                await GetConfig(Config).ConfigureAwait(false);
+                await GetConfigAsync(Config).ConfigureAwait(false);
             }
             else if (!config.Name.Equals(Config))
             {
                 config = null;
 
-                await GetConfig(Config).ConfigureAwait(false);
+                await GetConfigAsync(Config).ConfigureAwait(false);
             }
 
             await base.OnParametersSetAsync().ConfigureAwait(false);

@@ -71,7 +71,7 @@ namespace Headway.Blazor.Controls.Components.GenericTree
 
         protected async Task SelectAsync()
         {
-            await TreeView.SelectActiveNode(Node).ConfigureAwait(false);
+            await TreeView.SelectActiveNodeAsync(Node).ConfigureAwait(false);
         }
 
         private bool IsDecendent(Node<T> node)

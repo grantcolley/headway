@@ -74,7 +74,7 @@ namespace Headway.Blazor.Controls.Flow.Components
             //});
         }
 
-        protected async Task OnExecutingClick()
+        protected async Task OnExecutingClickAsync()
         {
             FlowComponentContext.IsExecuting = true;
 

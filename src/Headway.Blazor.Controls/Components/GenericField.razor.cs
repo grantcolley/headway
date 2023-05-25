@@ -23,7 +23,7 @@ namespace Headway.Blazor.Controls.Components
         {
             await base.OnInitializedAsync().ConfigureAwait(false);
 
-            await GetConfig(Field.ConfigName).ConfigureAwait(false);
+            await GetConfigAsync(Field.ConfigName).ConfigureAwait(false);
         }
 
         protected RenderFragment RenderView() => builder =>

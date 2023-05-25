@@ -86,7 +86,7 @@ namespace Headway.Blazor.Controls.Components.GenericTree
             }
         }
 
-        public async Task SelectActiveNode(Node<T> node)
+        public async Task SelectActiveNodeAsync(Node<T> node)
         {
             await OnSelectActiveNode.InvokeAsync(node.Model);
         }

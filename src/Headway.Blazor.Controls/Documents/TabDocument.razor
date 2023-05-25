@@ -21,7 +21,7 @@ else
                 else if (!isDeleteInProgress)
                 {
                     <MudTooltip Text="Save" Arrow="true">
-                        <MudIconButton ButtonType="ButtonType.Button" OnClick="@Submit" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
+                        <MudIconButton ButtonType="ButtonType.Button" OnClick="@SubmitAsync" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
                     </MudTooltip>
                 }
 
@@ -38,7 +38,7 @@ else
                 else if (!isSaveInProgress)
                 {
                     <MudTooltip Text="Delete" Arrow="true">
-                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="Delete" />
+                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="DeleteAsync" />
                     </MudTooltip>
                 }
             </MudToolBar>

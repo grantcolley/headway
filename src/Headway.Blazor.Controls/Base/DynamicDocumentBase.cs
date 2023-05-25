@@ -63,7 +63,7 @@ namespace Headway.Blazor.Controls.Base
 
         protected override Task OnInitializedAsync()
         {
-            searchCallback.Click = Search;
+            searchCallback.Click = SearchAsync;
 
             return base.OnInitializedAsync();
         }
@@ -120,7 +120,7 @@ namespace Headway.Blazor.Controls.Base
             }
         }
 
-        protected virtual async Task Search()
+        protected virtual async Task SearchAsync()
         {
             var response = await DynamicApiRequest
                       .SearchDynamicListAsync<T>(DynamicList)
@@ -134,7 +134,7 @@ namespace Headway.Blazor.Controls.Base
             });
         }
 
-        protected virtual async Task Submit()
+        protected virtual async Task SubmitAsync()
         {
             isSaveInProgress = true;
 
@@ -177,7 +177,7 @@ namespace Headway.Blazor.Controls.Base
             }
         }
 
-        protected virtual async Task Delete()
+        protected virtual async Task DeleteAsync()
         {
             if (DynamicModel.Id.Equals(0))
             {

@@ -11,7 +11,7 @@ else
 {
     @if(@Alert == null)
     {
-        <EditForm Model="@DynamicModel.Model" OnValidSubmit="@Submit">
+        <EditForm Model="@DynamicModel.Model" OnValidSubmit="@SubmitAsync">
             <FluentValidationValidator/>
             <MudToolBar DisableGutters="true" Style="border-bottom: 1px solid gray;">
                 @if (isSaveInProgress)
@@ -38,7 +38,7 @@ else
                 else if (!isSaveInProgress)
                 {
                     <MudTooltip Text="Delete" Arrow="true">
-                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="Delete" />
+                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="DeleteAsync" />
                     </MudTooltip>
                 }
             </MudToolBar>
