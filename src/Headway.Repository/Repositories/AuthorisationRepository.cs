@@ -223,7 +223,19 @@ namespace Headway.Repository.Repositories
 
         public async Task<Permission> UpdatePermissionAsync(Permission permission)
         {
-            applicationDbContext.Permissions.Update(permission);
+            var existing = await applicationDbContext.Permissions
+                .FirstOrDefaultAsync(p => p.PermissionId.Equals(permission.PermissionId))
+                .ConfigureAwait(false);
+
+            if (existing == null)
+            {
+                throw new NullReferenceException(
+                    $"{nameof(permission)} PermissionId {permission.PermissionId} not found.");
+            }
+
+            applicationDbContext
+                .Entry(existing)
+                .CurrentValues.SetValues(permission);
 
             await applicationDbContext
                 .SaveChangesAsync()
