@@ -33,7 +33,10 @@ builder.Services.AddControllers()
         fv.RegisterValidatorsFromAssemblies
         (new[] { Assembly.Load("RemediatR.Core") }))
     .AddJsonOptions(options =>
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.IgnoreReadOnlyFields = true;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 
