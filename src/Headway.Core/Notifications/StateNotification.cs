@@ -37,15 +37,8 @@ namespace Headway.Core.Notifications
 
         public void Deregister(string target)
         {
-            if (actions.ContainsKey(target))
-            {
-                actions.Remove(target);
-            }
-
-            if (functions.ContainsKey(target))
-            {
-                functions.Remove(target);
-            }
+            actions.Remove(target);
+            functions.Remove(target);
         }
 
         public void NotifyStateHasChanged(string target)
