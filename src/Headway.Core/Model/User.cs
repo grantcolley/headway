@@ -85,24 +85,6 @@ namespace Headway.Core.Model
                     .ToList();
             }
         }
-
-        public List<string> UserPermissions
-        {
-            get
-            {
-                if(userPermissions != null)
-                {
-                    return userPermissions;
-                }
-
-                userPermissions = Permissions
-                    .Select(p => p.Name)
-                    .Union(Roles.SelectMany(r => r.Permissions.Select(rp => rp.Name)))
-                    .ToList();
-
-                return userPermissions;
-            }
-        }
     }
 
     public class UserValidator : AbstractValidator<User>
