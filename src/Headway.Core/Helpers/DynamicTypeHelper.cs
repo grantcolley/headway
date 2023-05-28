@@ -62,13 +62,13 @@ namespace Headway.Core.Helpers
         /// <param name="value">The value to set.</param>
         public void SetValue(T target, string fieldName, object value)
         {
-            if (setters.ContainsKey(fieldName))
+            if (!setters.ContainsKey(fieldName))
             {
-                setters[fieldName](target, value);
-                return;
+                throw new KeyNotFoundException(fieldName + " not supported.");
             }
 
-            throw new ArgumentOutOfRangeException(fieldName + " not supported.");
+            setters[fieldName](target, value);
+            return;
         }
 
         /// <summary>
@@ -79,12 +79,12 @@ namespace Headway.Core.Helpers
         /// <returns>The value of the property.</returns>
         public object GetValue(T target, string fieldName)
         {
-            if (getters.ContainsKey(fieldName))
+            if (!getters.ContainsKey(fieldName))
             {
-                return getters[fieldName](target);
+                throw new KeyNotFoundException(fieldName + " not supported.");
             }
 
-            throw new ArgumentOutOfRangeException(fieldName + " not supported.");
+            return getters[fieldName](target);
         }
     }
 
