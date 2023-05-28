@@ -191,7 +191,9 @@ namespace IdentityServerHost.Quickstart.UI
             return vm;
         }
 
+#pragma warning disable CA1822 // Mark members as static
         private ScopeViewModel CreateScopeViewModel(IdentityResource identity, bool check)
+#pragma warning restore CA1822 // Mark members as static
         {
             return new ScopeViewModel
             {
@@ -217,7 +219,9 @@ namespace IdentityServerHost.Quickstart.UI
                 Checked = check || apiScope.Required
             };
         }
+#pragma warning disable CA1822 // Mark members as static
         private ScopeViewModel GetOfflineAccessScope(bool check)
+#pragma warning restore CA1822 // Mark members as static
         {
             return new ScopeViewModel
             {

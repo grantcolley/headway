@@ -236,7 +236,9 @@ namespace IdentityServerHost.Quickstart.UI
 
         // if the external login is OIDC-based, there are certain things we need to preserve to make logout work
         // this will be different for WS-Fed, SAML2p or other protocols
+#pragma warning disable CA1822 // Mark members as static
         private void ProcessLoginCallback(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
+#pragma warning restore CA1822 // Mark members as static
         {
             // if the external system sent a session id claim, copy it over
             // so we can use it for single sign-out
