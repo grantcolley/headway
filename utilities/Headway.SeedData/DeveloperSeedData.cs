@@ -11,7 +11,7 @@ namespace Headway.SeedData
         private static ApplicationDbContext dbContext;
 
         private static Role developerRole;
-        private static Dictionary<string, User> developers = new Dictionary<string, User>();
+        private static Dictionary<string, User> developers = new();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {

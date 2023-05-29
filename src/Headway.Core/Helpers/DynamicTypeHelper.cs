@@ -97,7 +97,7 @@ namespace Headway.Core.Helpers
 
         private static int counter;
 
-        private static object cacheLock = new object();
+        private static object cacheLock = new();
 
         /// <summary>
         /// Gets an instance of a <see cref="DynamicTypeHelper"/> for the specified type.

@@ -12,9 +12,9 @@ namespace Headway.SeedData
     {
         private static ApplicationDbContext dbContext;
 
-        private static Dictionary<string, Permission> permissions = new Dictionary<string, Permission>();
-        private static Dictionary<string, Role> roles = new Dictionary<string, Role>();
-        private static Dictionary<string, User> users = new Dictionary<string, User>();
+        private static Dictionary<string, Permission> permissions = new();
+        private static Dictionary<string, Role> roles = new();
+        private static Dictionary<string, User> users = new();
 
         public static void Initialise(ApplicationDbContext applicationDbContext)
         {

@@ -14,7 +14,7 @@ namespace Headway.Blazor.Controls.Components
 
         protected bool FilterFunction(ChecklistItem item) => FilterItem(item, filterString);
 
-        protected List<ChecklistItem> checklist = new List<ChecklistItem>();
+        protected List<ChecklistItem> checklist = new();
 
         protected override Task OnParametersSetAsync()
         {

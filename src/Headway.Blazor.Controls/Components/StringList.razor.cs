@@ -13,7 +13,7 @@ namespace Headway.Blazor.Controls.Components
 
         protected bool FilterFunction(string item) => FilterItem(item, filterString);
 
-        protected List<string> list = new List<string>();
+        protected List<string> list = new();
 
         protected override Task OnParametersSetAsync()
         {
