@@ -456,13 +456,7 @@ namespace Headway.Core.Extensions
                     }
                     else
                     {
-                        var type = Type.GetType(state.StateConfigurationClass);
-
-                        if (type == null)
-                        {
-                            throw new StateException(state, $"Can't resolve {state.StateConfigurationClass}");
-                        }
-
+                        var type = Type.GetType(state.StateConfigurationClass) ?? throw new StateException(state, $"Can't resolve {state.StateConfigurationClass}");
                         var instance = (IConfigureState)Activator.CreateInstance(type);
 
                         var methodInfo = type.GetMethod("Configure");
