@@ -19,7 +19,7 @@ namespace Headway.Core.Cache
                 }
                 else
                 {
-                    return default(T);
+                    return default;
                 }
             }
         }
