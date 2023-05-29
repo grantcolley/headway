@@ -193,7 +193,7 @@ namespace Headway.Blazor.Controls.Base
                 "Delete", true, Color.Warning, false)
                 .ConfigureAwait(false);
 
-            if (deleteResult.Canceled)
+            if (deleteResult.Cancelled)
             {
                 return;
             }
