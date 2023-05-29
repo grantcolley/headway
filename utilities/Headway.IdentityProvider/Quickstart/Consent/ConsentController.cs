@@ -170,7 +170,9 @@ namespace IdentityServerHost.Quickstart.UI
             }
             else
             {
+#pragma warning disable CA2253 // Named placeholders should not be numeric values
                 _logger.LogError("No consent request matching request: {0}", returnUrl);
+#pragma warning restore CA2253 // Named placeholders should not be numeric values
             }
 
             return null;
