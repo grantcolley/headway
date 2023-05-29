@@ -197,7 +197,7 @@ namespace Headway.Repository.Repositories
                 if (category.Module == null
                     || category.Module.ModuleId.Equals(0))
                 {
-                    throw new ArgumentNullException(nameof(category.Module));
+                    throw new NullReferenceException(nameof(category.Module));
                 }
                 else if (!category.Module.ModuleId.Equals(existing.Module.ModuleId))
                 {
