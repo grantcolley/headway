@@ -324,6 +324,7 @@ namespace IdentityServerHost.Quickstart.UI
                     var providerSupportsSignout = await HttpContext.GetSchemeSupportsSignOutAsync(idp);
                     if (providerSupportsSignout)
                     {
+#pragma warning disable IDE0074 // Use compound assignment
                         if (vm.LogoutId == null)
                         {
                             // if there's no current logout context, we need to create one
@@ -331,6 +332,7 @@ namespace IdentityServerHost.Quickstart.UI
                             // before we signout and redirect away to the external IdP for signout
                             vm.LogoutId = await _interaction.CreateLogoutContextAsync();
                         }
+#pragma warning restore IDE0074 // Use compound assignment
 
                         vm.ExternalAuthenticationScheme = idp;
                     }
