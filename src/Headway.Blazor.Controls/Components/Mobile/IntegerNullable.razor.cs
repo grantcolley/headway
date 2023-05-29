@@ -42,7 +42,7 @@ namespace Headway.Blazor.Controls.Components.Mobile
             return base.OnInitializedAsync();
         }
 
-        public int MaxLength { get { return maxLength.HasValue ? maxLength.Value : int.MaxValue; } }
+        public int MaxLength { get { return maxLength ?? int.MaxValue; } }
         public int Max { get { return max ?? int.MaxValue; } }
         public int Min { get { return min ?? int.MinValue; } }
 
