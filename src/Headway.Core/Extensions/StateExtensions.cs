@@ -15,7 +15,7 @@ namespace Headway.Core.Extensions
     public static class StateExtensions
     {
         private static readonly IDictionary<string, StateConfiguration> stateConfigurationCache = new Dictionary<string, StateConfiguration>();
-        private static object stateConfigurationCacheLock = new();
+        private static readonly object stateConfigurationCacheLock = new();
 
         /// <summary>
         /// Set <see cref="State"/> defaults e.g. <see cref="State.StateStatus"/>, <see cref="State.Owner"/>  and <see cref="State.Comment"/>.

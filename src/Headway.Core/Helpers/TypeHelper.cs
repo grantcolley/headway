@@ -6,7 +6,7 @@ namespace Headway.Core.Helpers
 {
     public static class TypeHelper<T>
     {
-        private static Func<T> creator =
+        private static readonly Func<T> creator =
             Expression.Lambda<Func<T>>(Expression.New(typeof(T).GetConstructor(Type.EmptyTypes)))
             .Compile();
 
