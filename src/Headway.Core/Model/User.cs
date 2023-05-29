@@ -11,8 +11,6 @@ namespace Headway.Core.Model
     [DynamicModel]
     public class User : ModelBase
     {
-        private List<string> userPermissions;
-
         public User()
         {
             Roles = new List<Role>();
