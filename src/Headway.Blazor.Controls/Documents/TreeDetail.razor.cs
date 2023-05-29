@@ -54,10 +54,7 @@ namespace Headway.Blazor.Controls.Documents
 
         protected async Task RemoveAsync(DynamicModel<T> model)
         {
-            if (treeView != null)
-            {
-                treeView.Remove(model.Model);
-            }
+            treeView?.Remove(model.Model);
 
             await ResetDynamicModelAsync().ConfigureAwait(false);
         }
