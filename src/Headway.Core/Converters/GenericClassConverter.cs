@@ -24,8 +24,7 @@ namespace Headway.Core.Converters
         {
             if (value is string)
             {
-                var args = JsonSerializer.Deserialize(value.ToString(), typeof(List<Arg>)) as List<Arg>;
-                if(args != null)
+                if (JsonSerializer.Deserialize(value.ToString(), typeof(List<Arg>)) is List<Arg> args)
                 {
                     var typeName = args.ArgValue(Constants.Args.TYPE);
                     var json = args.ArgValue(Constants.Args.VALUE);

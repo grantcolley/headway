@@ -79,8 +79,7 @@ namespace Headway.Core.Helpers
             foreach (var dynamicField in dynamicFields)
             {
                 var componentArg = dynamicField.Parameters.FirstOrDefault(a => a.Key.Equals(Parameters.COMPONENT_ARGS)).Value;
-                var dynamicArg = componentArg as List<DynamicArg>;
-                if (dynamicArg != null)
+                if (componentArg is List<DynamicArg> dynamicArg)
                 {
                     var linkedSourceArg = dynamicArg.DynamicArgOrDefault(Constants.Args.LINK_SOURCE);
                     if (linkedSourceArg != null
