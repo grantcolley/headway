@@ -4,7 +4,7 @@
     {
         public static string GetOutlined(string name)
         {
-            var fieldInfo = typeof(MudBlazor.Icons.Outlined).GetField(name);
+            var fieldInfo = typeof(MudBlazor.Icons.Material.Outlined).GetField(name);
 
             if (fieldInfo == null)
             {
@@ -16,7 +16,7 @@
 
         public static string GetFilled(string name)
         {
-            var fieldInfo = typeof(MudBlazor.Icons.Filled).GetField(name);
+            var fieldInfo = typeof(MudBlazor.Icons.Material.Filled).GetField(name);
 
             if (fieldInfo == null)
             {
