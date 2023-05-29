@@ -15,13 +15,13 @@ namespace RemediatR.Core.Model
     {
         public int RedressId { get; set; }
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
         public int ProgramId { get; set; }
-        public Program Program { get; set; }
+        public Program? Program { get; set; }
         public int RefundCalculationId { get; set; }
-        public RefundCalculation RefundCalculation { get; set; }
+        public RefundCalculation? RefundCalculation { get; set; }
         public int RefressFlowContextId { get; set; }
-        public RedressFlowContext RedressFlowContext { get; set; }
+        public RedressFlowContext? RedressFlowContext { get; set; }
 
         [MaxLength(50)]
         public string? RedressCaseOwner { get; set; }
