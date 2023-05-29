@@ -50,7 +50,7 @@ namespace Headway.Blazor.Controls.Components
             return base.OnInitializedAsync();
         }
 
-        public int MaxLength { get { return maxLength.HasValue ? maxLength.Value : int.MaxValue; } }
+        public int MaxLength { get { return maxLength ?? int.MaxValue; } }
         public decimal Max { get { return max ?? decimal.MaxValue; } }
         public decimal Min { get { return min ?? decimal.MinValue; } }
 
