@@ -17,10 +17,12 @@ namespace Headway.Blazor.Controls.Services
             string title, string message, string buttonText, 
             bool closeButton, Color color, bool scrollable)
         {
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", message);
-            parameters.Add("ButtonText", buttonText);
-            parameters.Add("Color", color);
+            var parameters = new DialogParameters
+            {
+                { "ContentText", message },
+                { "ButtonText", buttonText },
+                { "Color", color }
+            };
 
             var options = new DialogOptions() 
             {
