@@ -308,7 +308,7 @@ namespace Headway.Repository.Repositories
                 if (menuItem.Category == null
                     || menuItem.Category.CategoryId.Equals(0))
                 {
-                    throw new ArgumentNullException(nameof(menuItem.Category));
+                    throw new NullReferenceException(nameof(menuItem.Category));
                 }
                 else if (!menuItem.Category.CategoryId.Equals(existing.Category.CategoryId))
                 {
