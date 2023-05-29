@@ -44,10 +44,7 @@ namespace Headway.Blazor.Controls.Documents
                     activePage = DynamicModel.RootContainers.FirstOrDefault(c => c.ContainerId.Equals(activePage.ContainerId));
                 }
 
-                if (activePage == null)
-                {
-                    activePage = DynamicModel.RootContainers.First();
-                }
+                activePage ??= DynamicModel.RootContainers.First();
             }
         }
     }

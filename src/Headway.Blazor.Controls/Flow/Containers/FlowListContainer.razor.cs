@@ -74,10 +74,7 @@ namespace Headway.Blazor.Controls.Flow.Containers
                     activeListItem = Container.DynamicContainers.FirstOrDefault(c => c.ContainerId.Equals(activeListItem.ContainerId));
                 }
 
-                if (activeListItem == null)
-                {
-                    activeListItem = Container.DynamicContainers.First();
-                }
+                activeListItem ??= Container.DynamicContainers.First();
             }
         }
     }

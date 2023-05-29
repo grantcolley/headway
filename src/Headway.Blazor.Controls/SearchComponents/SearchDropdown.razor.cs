@@ -52,10 +52,7 @@ namespace Headway.Blazor.Controls.SearchComponents
                 selectedItem = optionItems.FirstOrDefault(o => o.Id != null && o.Id.Equals(SearchItem.Value));
             }
 
-            if (selectedItem == null)
-            {
-                selectedItem = optionItems.First();
-            }
+            selectedItem ??= optionItems.First();
 
             PropertyValue = selectedItem.Id;
 

@@ -94,10 +94,7 @@ namespace Headway.Blazor.Controls.Components
                 }
             }
 
-            if(selectedItem == null)
-            {
-                selectedItem = optionItems.First();
-            }
+            selectedItem ??= optionItems.First();
 
             PropertyValue = selectedItem.Id;
 
