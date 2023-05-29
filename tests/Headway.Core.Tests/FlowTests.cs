@@ -462,6 +462,7 @@ namespace Headway.Core.Tests
         {
             var jsonHistoryRedressCreateToFinalReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt"));
             var historyRedressCreateToFinalReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryRedressCreateToFinalReview);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var history in historyRedressCreateToFinalReview)
             {
                 if (history.Owner == "dummy_account")
@@ -473,6 +474,7 @@ namespace Headway.Core.Tests
                     }
                 }
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return historyRedressCreateToFinalReview;
         }
@@ -481,6 +483,7 @@ namespace Headway.Core.Tests
         {
             var jsonHistoryRedressCreateToRefundReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW.txt"));
             var historyRedressCreateToRefundReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryRedressCreateToRefundReview);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var history in historyRedressCreateToRefundReview)
             {
                 if (history.Owner == "dummy_account")
@@ -492,6 +495,7 @@ namespace Headway.Core.Tests
                     }
                 }
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return historyRedressCreateToRefundReview;
         }
@@ -500,6 +504,7 @@ namespace Headway.Core.Tests
         {
             var jsonHistoryFinalReviewResetToRedressReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_FINAL_REVIEW_Reset_To_REDRESS_REVIEW.txt"));
             var historyFinalReviewResetToRedressReview = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistoryFinalReviewResetToRedressReview);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var history in historyFinalReviewResetToRedressReview)
             {
                 if (history.Owner == "dummy_account")
@@ -511,6 +516,7 @@ namespace Headway.Core.Tests
                     }
                 }
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return historyFinalReviewResetToRedressReview;
         }
@@ -519,6 +525,7 @@ namespace Headway.Core.Tests
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REFUND_REVIEW_Reset_To_REDRESS_CREATE.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var h in history)
             {
                 if (h.Owner == "dummy_account")
@@ -530,6 +537,7 @@ namespace Headway.Core.Tests
                     }
                 }
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return history;
         }
@@ -538,6 +546,7 @@ namespace Headway.Core.Tests
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var h in history)
             {
                 if (h.Owner == "dummy_account")
@@ -549,6 +558,7 @@ namespace Headway.Core.Tests
                     }
                 }
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return history;
         }
@@ -557,6 +567,7 @@ namespace Headway.Core.Tests
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_REFUND_REVIEW_Reset_To_REFUND_ASSESSMENT_Replay.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var h in history)
             {
                 if (h.Owner == "dummy_account")
@@ -568,6 +579,7 @@ namespace Headway.Core.Tests
                     }
                 }
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return history;
         }
@@ -576,6 +588,7 @@ namespace Headway.Core.Tests
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW_Replay.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var h in history)
             {
                 if (h.Owner == "dummy_account")
@@ -587,6 +600,7 @@ namespace Headway.Core.Tests
                     }
                 }
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return history;
         }
