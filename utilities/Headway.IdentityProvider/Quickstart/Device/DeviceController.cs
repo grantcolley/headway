@@ -26,7 +26,9 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IDeviceFlowInteractionService _interaction;
         private readonly IEventService _events;
         private readonly IOptions<IdentityServerOptions> _options;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly ILogger<DeviceController> _logger;
+#pragma warning restore IDE0052 // Remove unread private members
 
         public DeviceController(
             IDeviceFlowInteractionService interaction,
