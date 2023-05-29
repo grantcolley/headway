@@ -109,7 +109,7 @@ namespace Headway.SeedData.RemediatR
 
         public static List<Program> ProgramsCreate()
         {
-            List<Program> programs = new List<Program>
+            List<Program> programs = new()
             {
                 new Program
                 {
