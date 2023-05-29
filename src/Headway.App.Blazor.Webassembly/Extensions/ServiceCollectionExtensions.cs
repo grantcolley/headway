@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -15,6 +16,11 @@ namespace Headway.App.Blazor.WebAssembly.Extensions
         /// <returns>The services collection.</returns>
         public static IServiceCollection UseAdditionalAssemblies(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
+            if (assemblies is null)
+            {
+                throw new ArgumentNullException(nameof(assemblies));
+            }
+
             // Intentionally returns services without actually doing anything.
             return services;
         }

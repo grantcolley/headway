@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -15,6 +16,11 @@ namespace Headway.App.Blazor.Server.Extensions
         /// <returns>The application builder.</returns>
         public static IApplicationBuilder UseAdditionalAssemblies(this IApplicationBuilder app, IEnumerable<Assembly> assemblies)
         {
+            if (assemblies is null)
+            {
+                throw new ArgumentNullException(nameof(assemblies));
+            }
+
             // Intentionally returns app without actually doing anything.
             return app;
         }
