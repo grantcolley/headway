@@ -22,10 +22,10 @@ namespace RemediatR.Core.Interface
         Task<int> DeleteProgramAsync(int id);
         Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchArgs searchArgs);
         Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchArgs searchArgs);
-        Task<Redress> CreateRedressAsync(DataArgs dataArgs, User user);
-        Task<Redress> GetRedressAsync(int id, User user);
-        Task<Redress> AddRedressAsync(Redress redress, User user);
-        Task<Redress> UpdateRedressAsync(Redress redress, User user);
+        Task<Redress> CreateRedressAsync(DataArgs dataArgs);
+        Task<Redress> GetRedressAsync(int id);
+        Task<Redress> AddRedressAsync(Redress redress);
+        Task<Redress> UpdateRedressAsync(Redress redress);
         Task<int> DeleteRedressAsync(int id);
     }
 }
