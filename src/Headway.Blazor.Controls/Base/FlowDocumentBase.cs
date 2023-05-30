@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using System.Threading.Tasks;
 
@@ -12,7 +13,10 @@ namespace Headway.Blazor.Controls.Base
 
             await InitializeDynamicModelAsync().ConfigureAwait(false);
 
-            // Check user has flow permission
+            if(!DynamicModel.FlowContext.Authorisation.IsUserAuthorised(DynamicModel.FlowContext.Flow.Permission))
+            {
+                RaiseAuthorisationAlert(DynamicModel.FlowContext.Flow.Name);
+            }
         }
 
         protected virtual async Task FlowExecuteAsync()
