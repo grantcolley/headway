@@ -41,20 +41,19 @@ namespace Headway.Repository.Repositories
                 .ConfigureAwait(false);
         }
 
-        public async Task<User> GetAuthorisedUserAsync(string claim, string permission)
+        public async Task<Authorisation> GetAuthorisationAsync(string claim)
         {
             var user = await applicationDbContext.Users
                 .AsNoTracking()
                 .Include(u => u.Permissions)
                 .Include(u => u.Roles)
                 .ThenInclude(r => r.Permissions)
-                .FirstOrDefaultAsync(
-                u => u.Email.Equals(claim)
-                && (u.Permissions.Any(p => p.Name.Equals(permission))
-                || u.Roles.SelectMany(r => r.Permissions).Any(p => p.Name.Equals(permission))))
+                .FirstOrDefaultAsync(u => u.Email.Equals(claim))
                 .ConfigureAwait(false);
 
-            return user;
+            var permissionSet = user.GetUserPermissionSet();
+
+            return new Authorisation { User = claim, Permissions = permissionSet };
         }
 
         protected virtual void Dispose(bool disposing)
