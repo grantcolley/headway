@@ -44,14 +44,5 @@ namespace Headway.WebApi.Controllers
                 .IsAuthorisedAsync(claim, permission)
                 .ConfigureAwait(false);
         }
-
-        protected async Task<User> GetAuthorisedUserAsync(string permission)
-        {
-            var claim = GetUserClaim();
-
-            return await repository
-                .GetAuthorisedUserAsync(claim, permission)
-                .ConfigureAwait(false);
-        }
     }
 }
