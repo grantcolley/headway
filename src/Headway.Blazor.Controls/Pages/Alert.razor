@@ -2,9 +2,9 @@
 
 @if (string.IsNullOrWhiteSpace(Title))
 {
-    <MudAlert Severity="@severity"><b>@Title</b>&nbsp;@Message</MudAlert>
+    <MudAlert Severity="@severity">@Message</MudAlert>
 }
 else
 {
-    <MudAlert Severity="@severity">@Message</MudAlert>
+    <MudAlert Severity="@severity"><b>@Title</b>&nbsp;@Message</MudAlert>
 }
