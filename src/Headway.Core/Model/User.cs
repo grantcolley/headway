@@ -83,6 +83,14 @@ namespace Headway.Core.Model
                     .ToList();
             }
         }
+
+        public List<string> GetUserPermissionSet()
+        {
+            return Permissions
+                    .Select(p => p.Name)
+                    .Union(Roles.SelectMany(r => r.Permissions.Select(rp => rp.Name)))
+                    .ToList();
+        }
     }
 
     public class UserValidator : AbstractValidator<User>
