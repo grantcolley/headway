@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace RemediatR.Core.Model
@@ -16,8 +17,10 @@ namespace RemediatR.Core.Model
         public int FlowId { get; set; }
         public Headway.Core.Model.Flow Flow { get; set; }
         public int RedressId { get; set; }
-        public User CurrentUser { get; set; }
         public List<RedressFlowHistory> RedressFlowHistory { get; set; }
+
+        [NotMapped]
+        public Authorisation Authorisation { get; set; }
 
         public List<FlowHistory> GetFlowHistory()
         {
