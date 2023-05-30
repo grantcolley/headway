@@ -16,8 +16,6 @@ namespace Headway.Blazor.Controls.Flow.Documents
         {
             await base.OnInitializedAsync().ConfigureAwait(false);
 
-            await InitializeDynamicModelAsync().ConfigureAwait(false);
-
             SetActivePage();
         }
 
