@@ -6,6 +6,15 @@ namespace Headway.Blazor.Controls.Base
 {
     public class FlowDocumentBase<T> : DynamicDocumentBase<T> where T : class, new ()
     {
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            await InitializeDynamicModelAsync().ConfigureAwait(false);
+
+            // Check user has flow permission
+        }
+
         protected virtual async Task FlowExecuteAsync()
         {
             isSaveInProgress = true;
