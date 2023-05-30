@@ -34,5 +34,17 @@ namespace Headway.Blazor.Controls.Base
 
             NavigationManager.NavigateTo(alert.Page);
         }
+
+        protected void RaiseAuthorisationAlert(string message)
+        {
+            var alert = new Alert
+            {
+                AlertType = Alerts.ERROR,
+                Title = "Access Denied",                
+                Message = message
+            };
+
+            NavigationManager.NavigateTo(alert.Page);
+        }
     }
 }
