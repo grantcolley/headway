@@ -488,7 +488,7 @@ namespace RemediatR.Repository
             return newRedressCases;
         }
 
-        public async Task<Redress> CreateRedressAsync(DataArgs dataArgs, User user)
+        public async Task<Redress> CreateRedressAsync(DataArgs dataArgs)
         {
             var redressIdArg = dataArgs.Args.First(c => c.PropertyName.Equals("RedressId"));
             var productIdArg = dataArgs.Args.First(c => c.PropertyName.Equals("ProductId"));
@@ -508,7 +508,7 @@ namespace RemediatR.Repository
 
             if(redressId > 0)
             {
-                return await (GetRedressAsync(redressId, user))
+                return await GetRedressAsync(redressId)
                     .ConfigureAwait(false);
             }
             else
@@ -524,16 +524,24 @@ namespace RemediatR.Repository
                     .FirstAsync(f => f.FlowCode.Equals("REMEDIATR"))
                     .ConfigureAwait(false);
 
+                var authorisation = await GetAuthorisationAsync(User)
+                    .ConfigureAwait(false);
+
                 return new Redress
                 {
                     Product = product,                    
                     RefundCalculation = new RefundCalculation(),
-                    RedressFlowContext = new RedressFlowContext { FlowId = flow.FlowId, Flow = flow, CurrentUser = user }
+                    RedressFlowContext = new RedressFlowContext
+                    {
+                        FlowId = flow.FlowId,
+                        Flow = flow,
+                        Authorisation = authorisation
+                    }
                 };
             }
         }
 
-        public async Task<Redress> GetRedressAsync(int id, User user)
+        public async Task<Redress> GetRedressAsync(int id)
         {
             var redress = await applicationDbContext.Redresses
                 .Include(r => r.Program)
@@ -550,13 +558,16 @@ namespace RemediatR.Repository
 
             if(redress.RedressFlowContext != null)
             {
-                redress.RedressFlowContext.CurrentUser = user;
+                var authorisation = await GetAuthorisationAsync(User)
+                    .ConfigureAwait(false);
+
+                redress.RedressFlowContext.Authorisation = authorisation;
             }
 
             return redress;
         }
 
-        public async Task<Redress> AddRedressAsync(Redress redress, User user)
+        public async Task<Redress> AddRedressAsync(Redress redress)
         {
             var product = await applicationDbContext.Products
                 .Include(p => p.Customer)
@@ -571,9 +582,11 @@ namespace RemediatR.Repository
                 .FirstAsync(f => f.FlowId.Equals(redress.RedressFlowContext.FlowId))
                 .ConfigureAwait(false);
 
+            var authorisation = await GetAuthorisationAsync(User).ConfigureAwait(false);
+
             redress.RedressFlowContext.FlowId = flow.FlowId;
             redress.RedressFlowContext.Flow = flow;
-            redress.RedressFlowContext.CurrentUser = user;
+            redress.RedressFlowContext.Authorisation = authorisation;
 
             var newRedress = new Redress
             {
@@ -603,7 +616,7 @@ namespace RemediatR.Repository
             return newRedress;
         }
 
-        public async Task<Redress> UpdateRedressAsync(Redress redress, User user)
+        public async Task<Redress> UpdateRedressAsync(Redress redress)
         {
             var existing = await applicationDbContext.Redresses
                 .Include(r => r.Program)
