@@ -1,0 +1,27 @@
+﻿@inherits FlowDivBase
+
+<div class="container container-body float-start">
+    <div class="row" style="margin-top:20px;margin-bottom:20px">
+        @if(LayoutHorizontal)
+        {
+            foreach(var dynamicField in Container.DynamicFields)
+            {
+                <FlowDivCol Field=dynamicField />
+            }
+        }
+        else
+        {
+            foreach(var dynamicField in Container.DynamicFields)
+            {
+                <DynamicComponent @key=dynamicField.PropertyName Type="dynamicField.DynamicComponent" Parameters="dynamicField.Parameters" />
+            }
+        }
+    </div>
+
+    <div class="row" style="margin-top:20px;margin-bottom:20px">
+        @foreach(var container in Container.DynamicContainers)
+        {
+            <DynamicComponent @key=container.ContainerId Type="container.DynamicComponent" Parameters="container.Parameters" />   
+        }
+    </div>
+</div>
