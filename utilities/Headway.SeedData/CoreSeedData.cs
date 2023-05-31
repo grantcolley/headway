@@ -1,4 +1,5 @@
-﻿using Headway.Core.Constants;
+﻿using Headway.Blazor.Controls.Components;
+using Headway.Core.Constants;
 using Headway.Core.Model;
 using Headway.Core.Options;
 using Headway.Repository.Data;
@@ -859,6 +860,8 @@ namespace Headway.SeedData
             stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "TransitionStateCodes", Label = "Transition State Codes", Order = 11, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
             stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RegressionStateCodes", Label = "Regression State Codes", Order = 12, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
             stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StateConfigurationClass", Label = "State Configuration Class", Order = 13, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ContextFullName", Label = "Context Full Name", Order = 14, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelOptionItems)}" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ContextProperties", Label = "Context Properties", Order = 15, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckListToText, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
 
             dbContext.SaveChanges();
         }
