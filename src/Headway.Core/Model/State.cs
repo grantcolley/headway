@@ -182,6 +182,18 @@ namespace Headway.Core.Model
         public string StateConfigurationClass { get; set; }
 
         /// <summary>
+        /// The class the context resolves to.
+        /// </summary>
+        [StringLength(150)]
+        public string ContextFullName { get; set; }
+
+        /// <summary>
+        /// The properties of the class the context resolves to that the state consumes.
+        /// </summary>
+        [MaxLength]
+        public string ContextProperties { get; set; }
+
+        /// <summary>
         /// A flag indicating whether the state bootstrap routine has been completed.
         /// </summary>
         [NotMapped]
