@@ -1,15 +1,15 @@
-﻿using Headway.Core.Attributes;
+﻿using Headway.Blazor.Controls.Base;
+using Headway.Core.Attributes;
+using Headway.Core.Constants;
+using Headway.Core.Helpers;
+using Headway.Core.Interface;
 using Headway.Core.Model;
-using Headway.Blazor.Controls.Base;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Headway.Core.Interface;
-using Microsoft.AspNetCore.Components;
-using Headway.Core.Args;
-using Headway.Core.Helpers;
-using Headway.Core.Constants;
-using MudBlazor;
 
 namespace Headway.Blazor.Controls.Components
 {
@@ -52,9 +52,20 @@ namespace Headway.Blazor.Controls.Components
             await base.OnParametersSetAsync();
         }
 
-        protected static void OnCheckItem(OptionCheckItem item)
+        protected void OnCheckItem(OptionCheckItem item)
         {
             item.IsChecked = !item.IsChecked;
+
+            var values = string.Join(",", checklist.Where(o => o.IsChecked).Select(o => o.Display));
+
+            if (string.IsNullOrWhiteSpace(values))
+            {
+                Field.PropertyInfo.SetValue(Field.Model, null);
+            }
+            else
+            {
+                Field.PropertyInfo.SetValue(Field.Model, values);
+            }
         }
 
         private static bool FilterItem(OptionCheckItem item, string filter)
