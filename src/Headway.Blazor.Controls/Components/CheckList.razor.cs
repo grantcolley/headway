@@ -4,12 +4,17 @@ using Headway.Blazor.Controls.Base;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MudBlazor;
+using Headway.Core.Constants;
+using Headway.Core.Helpers;
 
 namespace Headway.Blazor.Controls.Components
 {
     [DynamicComponent]
     public abstract class CheckListBase : DynamicComponentBase
     {
+        protected Typo LabelTypo = Typo.inherit;
+
         protected string filterString;
 
         protected bool FilterFunction(ChecklistItem item) => FilterItem(item, filterString);
@@ -18,6 +23,13 @@ namespace Headway.Blazor.Controls.Components
 
         protected override Task OnParametersSetAsync()
         {
+            var argLabelTypo = ComponentArgHelper.GetArg(ComponentArgs, Args.LABEL_TYPO);
+
+            if (argLabelTypo != null)
+            {
+                LabelTypo = (Typo)Enum.Parse(typeof(Typo), argLabelTypo.Value);
+            }
+
             var list = (List<ChecklistItem>)Field.PropertyInfo.GetValue(Field.Model, null);
 
             if (list != null)

@@ -1,6 +1,15 @@
 ﻿@inherits StringListBase
 
-<MudText Typo="Typo.h6" Class="mb-2 pl-4">@Field.Label</MudText>
+@if (string.IsNullOrWhiteSpace(Field.Tooltip))
+{
+    <MudText Typo="LabelTypo" Class="mb-2 pl-4">@Field.Label</MudText>
+}
+else
+{
+    <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
+        <MudText Typo="LabelTypo" Class="mb-2 pl-4">@Field.Label</MudText>
+    </MudTooltip>
+}
 
 <MudTable Items="@list" Hover="true" CustomHeader="true" Striped="true"
           Filter="new Func<string,bool>(FilterFunction)">
