@@ -1,16 +1,25 @@
 ﻿@inherits CheckListToTextBase
 
-<MudText Typo="Typo.h6" Class="mb-2 pl-4">@Field.Label</MudText>
+@if (string.IsNullOrWhiteSpace(Field.Tooltip))
+{
+    <MudText Typo="LabelTypo" Class="mb-2 pl-4">@Field.Label</MudText>
+}
+else
+{
+    <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
+        <MudText Typo="LabelTypo" Class="mb-2 pl-4">@Field.Label</MudText>
+    </MudTooltip>
+}
 
 <MudTable Items="@checklist" Hover="true" CustomHeader="true"
-          Filter="new Func<ChecklistItem,bool>(FilterFunction)">
+          Filter="new Func<OptionCheckItem,bool>(FilterFunction)">
     <ToolBarContent>
         <MudTextField @bind-Value="filterString" Placeholder="Filter" Adornment="Adornment.Start" 
                       AdornmentIcon="@Icons.Material.Filled.FilterAlt" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <RowTemplate>
         <MudTd>
-            <MudCheckBox T="bool" Class="mr-2" Checked="@context.IsChecked" CheckedChanged="@(() => OnCheckItem(@context))" Label="@context.Name" />
+            <MudCheckBox T="bool" Class="mr-2" Checked="@context.IsChecked" CheckedChanged="@(() => OnCheckItem(@context))" Label="@context.Display" />
         </MudTd> 
     </RowTemplate>
     <PagerContent>

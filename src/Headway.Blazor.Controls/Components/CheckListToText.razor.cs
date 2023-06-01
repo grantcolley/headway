@@ -4,21 +4,43 @@ using Headway.Blazor.Controls.Base;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Headway.Core.Interface;
+using Microsoft.AspNetCore.Components;
+using Headway.Core.Args;
+using Headway.Core.Helpers;
+using Headway.Core.Constants;
+using MudBlazor;
 
 namespace Headway.Blazor.Controls.Components
 {
     [DynamicComponent]
     public abstract class CheckListToTextBase : DynamicComponentBase
     {
+        [Inject]
+        public IOptionsApiRequest OptionsApiRequest { get; set; }
+
+        protected Typo LabelTypo = Typo.inherit;
+
         protected string filterString;
 
-        protected bool FilterFunction(ChecklistItem item) => FilterItem(item, filterString);
+        protected bool FilterFunction(OptionCheckItem item) => FilterItem(item, filterString);
 
-        protected List<ChecklistItem> checklist = new();
+        protected List<OptionCheckItem> checklist = new();
 
-        protected override Task OnParametersSetAsync()
+        protected override async Task OnParametersSetAsync()
         {
             LinkFieldCheck();
+
+            var argLabelTypo = ComponentArgHelper.GetArg(ComponentArgs, Args.LABEL_TYPO);
+
+            if(argLabelTypo != null) 
+            {
+                LabelTypo = (Typo)Enum.Parse(typeof(Typo), argLabelTypo.Value);
+            }
+
+            var result = await OptionsApiRequest.GetOptionCheckItemsAsync(ComponentArgs).ConfigureAwait(false);
+
+            checklist = new List<OptionCheckItem>(GetResponse(result));
 
             var propertyValue = (string)Field.PropertyInfo.GetValue(Field.Model, null);
 
@@ -27,29 +49,29 @@ namespace Headway.Blazor.Controls.Components
                 var elements = propertyValue.Split(',');
             }
 
-            return base.OnParametersSetAsync();
+            await base.OnParametersSetAsync();
         }
 
-        protected static void OnCheckItem(ChecklistItem item)
+        protected static void OnCheckItem(OptionCheckItem item)
         {
             item.IsChecked = !item.IsChecked;
         }
 
-        private static bool FilterItem(ChecklistItem item, string filter)
+        private static bool FilterItem(OptionCheckItem item, string filter)
         {
             if (string.IsNullOrWhiteSpace(filter))
             {
                 return true;
             }
 
-            if (item.Name != null
-                && item.Name.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase))
+            if (item.Id != null
+                && item.Id.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
 
-            if (item.Description != null
-                && item.Description.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase))
+            if (item.Display != null
+                && item.Display.ToString().Contains(filter, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
