@@ -46,7 +46,20 @@ namespace Headway.Blazor.Controls.Components
 
             if (!string.IsNullOrWhiteSpace(propertyValue))
             {
+                static OptionCheckItem CheckItem(OptionCheckItem o)
+                {
+                    o.IsChecked = true;
+                    return o;
+                }
+
                 var elements = propertyValue.Split(',');
+
+                foreach( var element in elements)
+                {
+                    _ = (from c in checklist
+                            join e in elements on c.Id equals e
+                            select CheckItem(c)).ToList();
+                }
             }
 
             await base.OnParametersSetAsync();
