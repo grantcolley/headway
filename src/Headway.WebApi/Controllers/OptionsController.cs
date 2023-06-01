@@ -55,5 +55,23 @@ namespace Headway.WebApi.Controllers
 
             return Ok(options);
         }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CheckOptions([FromBody] List<Arg> args)
+        {
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.USER)
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var options = await optionsRepository
+                .GetOptionCheckItemsAsync(args)
+                .ConfigureAwait(false);
+
+            return Ok(options);
+        }
     }
 }

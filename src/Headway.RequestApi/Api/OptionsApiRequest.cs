@@ -15,6 +15,7 @@ namespace Headway.RequestApi.Api
     public class OptionsApiRequest : LogApiRequest, IOptionsApiRequest
     {
         private readonly Dictionary<string, IOptionItems> localOptionItems = new();
+        private readonly Dictionary<string, IOptionCheckItems> localOptionCheckItems = new();
 
         public OptionsApiRequest(HttpClient httpClient)
             : this(httpClient, false, null)
@@ -41,6 +42,34 @@ namespace Headway.RequestApi.Api
             localOptionItems.Add(typeof(EnumNamesOptionItems).Name, new EnumNamesOptionItems());
             localOptionItems.Add(typeof(FlowConfigurationOptionItems).Name, new FlowConfigurationOptionItems());
             localOptionItems.Add(typeof(StateConfigurationOptionItems).Name, new StateConfigurationOptionItems());
+
+            localOptionCheckItems.Add(typeof(ModelFieldsOptionCheckItems).Name, new ModelFieldsOptionCheckItems());
+        }
+
+        public async Task<IResponse<IEnumerable<OptionCheckItem>>> GetOptionCheckItemsAsync(List<DynamicArg> dynamicArgs)
+        {
+            var args = ComponentArgHelper.GetArgs(dynamicArgs);
+            return await GetOptionCheckItemsAsync(args);
+        }
+
+        public async Task<IResponse<IEnumerable<OptionCheckItem>>> GetOptionCheckItemsAsync(List<Arg> args)
+        {
+            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+
+            if (localOptionCheckItems.ContainsKey(optionsCode))
+            {
+                return new Response<IEnumerable<OptionCheckItem>>
+                {
+                    IsSuccess = true,
+                    Result = await localOptionCheckItems[optionsCode].GetOptionCheckItemsAsync(args)
+                };
+            }
+
+            using var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS_CHECKOPTIONS, args)
+                .ConfigureAwait(false);
+
+            return await GetResponseAsync<IEnumerable<OptionCheckItem>>(httpResponseMessage)
+                .ConfigureAwait(false);
         }
 
         public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)

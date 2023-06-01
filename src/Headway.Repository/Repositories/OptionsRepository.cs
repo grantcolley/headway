@@ -20,6 +20,7 @@ namespace Headway.Repository.Repositories
 {
     public class OptionsRepository : RepositoryBase<OptionsRepository>, IOptionsRepository
     {
+        private readonly Dictionary<string, Func<List<Arg>, Task<IEnumerable<OptionCheckItem>>>> checklistItems = new();
         private readonly Dictionary<string, Func<List<Arg>, Task<IEnumerable<OptionItem>>>> optionItems = new();
         private readonly Dictionary<string, Func<List<Arg>, Task<string>>> complexOptionItems = new();
 
@@ -39,6 +40,18 @@ namespace Headway.Repository.Repositories
             complexOptionItems[Options.COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetDemoModelComplexProperties);
             complexOptionItems[Options.FLOWS_COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetComplexFlows);
             complexOptionItems[RemediatROptions.PROGRAMS_COMPLEX_OPTION_ITEMS] = new Func<List<Arg>, Task<string>>(GetRemediatRComplexPrograms);
+        }
+
+        public async Task<IEnumerable<OptionCheckItem>> GetOptionCheckItemsAsync(List<Arg> args)
+        {
+            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+
+            if (optionItems.ContainsKey(optionsCode))
+            {
+                return await checklistItems[optionsCode].Invoke(args).ConfigureAwait(false);
+            }
+
+            throw new NotImplementedException(optionsCode);
         }
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
