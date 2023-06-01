@@ -250,8 +250,8 @@ namespace Headway.SeedData
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionId", Label = "Permission Id", IsIdentity = true, Order = 1, ConfigContainer = permissionConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = permissionConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
             permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = permissionConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 5, ConfigContainer = membershipConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
-            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = membershipConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 5, ConfigContainer = membershipConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
+            permissionConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = membershipConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
 
             dbContext.SaveChanges();
         }
@@ -311,9 +311,9 @@ namespace Headway.SeedData
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleId", Label = "Role Id", IsIdentity = true, Order = 1, ConfigContainer = roleConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Name", Label = "Name", IsTitle = true, Order = 2, ConfigContainer = roleConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
             roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Description", Label = "Description", Order = 3, ConfigContainer = roleConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 5, ConfigContainer = memberConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
-            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = memberConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 5, ConfigContainer = memberConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
+            roleConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserList", Label = "Users", Order = 6, ConfigContainer = memberConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
 
             dbContext.SaveChanges();
         }
@@ -373,10 +373,10 @@ namespace Headway.SeedData
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserId", Label = "User Id", IsIdentity = true, Order = 1, ConfigContainer = userConfigContainer, Component = "Headway.Blazor.Controls.Components.Label, Headway.Blazor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "UserName", Label = "User Name", IsTitle = true, Order = 2, ConfigContainer = userConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
             userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "Email", Label = "Email", Order = 3, ConfigContainer = userConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleChecklist", Label = "Roles", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 6, ConfigContainer = membConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
-            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 7, ConfigContainer = membConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleChecklist", Label = "Roles", Order = 4, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionChecklist", Label = "Permissions", Order = 5, ConfigContainer = authConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RoleList", Label = "Roles", Order = 6, ConfigContainer = membConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
+            userConfig.ConfigItems.Add(new ConfigItem { PropertyName = "PermissionList", Label = "Permissions", Order = 7, ConfigContainer = membConfigContainer, Component = "Headway.Blazor.Controls.Components.StringList, Headway.Blazor.Controls", ComponentArgs = $"Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
 
             dbContext.SaveChanges();
         }
@@ -861,7 +861,7 @@ namespace Headway.SeedData
             stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "RegressionStateCodes", Label = "Regression State Codes", Order = 12, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
             stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "StateConfigurationClass", Label = "State Configuration Class", Order = 13, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Text, Headway.Blazor.Controls" });
             stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ContextFullName", Label = "Context Full Name", Order = 14, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.Dropdown, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelOptionItems)}" });
-            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ContextProperties", Label = "Context Properties", Order = 15, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckListToText, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionItems)}|Name={Args.LINK_SOURCE};Value=Model" });
+            stateConfig.ConfigItems.Add(new ConfigItem { PropertyName = "ContextProperties", Label = "Context Properties", Order = 15, ConfigContainer = stateConfigContainer, Component = "Headway.Blazor.Controls.Components.CheckListToText, Headway.Blazor.Controls", ComponentArgs = $"Name={Options.OPTIONS_CODE};Value={nameof(ModelFieldsOptionCheckItems)}|Name={Args.LINK_SOURCE};Value=ContextFullName|Name={Args.LABEL_TYPO};Value={Args.LABEL_TYPO_BODY1}" });
 
             dbContext.SaveChanges();
         }
