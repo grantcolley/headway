@@ -15,6 +15,7 @@ namespace Headway.RequestApi.Api
     public class OptionsApiRequest : LogApiRequest, IOptionsApiRequest
     {
         private readonly Dictionary<string, IOptionItems> localOptionItems = new();
+        private readonly Dictionary<string, IOptionTextItems> localOptionTextItems = new();
         private readonly Dictionary<string, IOptionCheckItems> localOptionCheckItems = new();
 
         public OptionsApiRequest(HttpClient httpClient)
@@ -44,6 +45,34 @@ namespace Headway.RequestApi.Api
             localOptionItems.Add(typeof(StateConfigurationOptionItems).Name, new StateConfigurationOptionItems());
 
             localOptionCheckItems.Add(typeof(ModelFieldsOptionCheckItems).Name, new ModelFieldsOptionCheckItems());
+
+            localOptionTextItems.Add(typeof(ModelFieldsOptionTextItems).Name, new ModelFieldsOptionTextItems());
+        }
+
+        public async Task<IResponse<IEnumerable<string>>> GetOptionTextItemsAsync(List<DynamicArg> dynamicArgs)
+        {
+            var args = ComponentArgHelper.GetArgs(dynamicArgs);
+            return await GetOptionTextItemsAsync(args);
+        }
+
+        public async Task<IResponse<IEnumerable<string>>> GetOptionTextItemsAsync(List<Arg> args)
+        {
+            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+
+            if (localOptionTextItems.ContainsKey(optionsCode))
+            {
+                return new Response<IEnumerable<string>>
+                {
+                    IsSuccess = true,
+                    Result = await localOptionTextItems[optionsCode].GetOptionTextItemsAsync(args)
+                };
+            }
+
+            using var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS_TEXTOPTIONS, args)
+                .ConfigureAwait(false);
+
+            return await GetResponseAsync<IEnumerable<string>>(httpResponseMessage)
+                .ConfigureAwait(false);
         }
 
         public async Task<IResponse<IEnumerable<OptionCheckItem>>> GetOptionCheckItemsAsync(List<DynamicArg> dynamicArgs)
