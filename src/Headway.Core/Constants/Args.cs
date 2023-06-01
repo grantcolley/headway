@@ -22,9 +22,9 @@
         public const string PROPAGATE_FIELDS = "PropagateFields";
         public const string STYLE = "Style";
         public const string LABEL_TYPO = "LabelTypo";
-        public const string LABEL_TYPO_H6 = "h6";
         public const string LABEL_TYPO_BODY1 = "body1";
         public const string LABEL_TYPO_BODY2 = "body2";
+        public const string LABEL_TYPO_H6 = "h6";
         public const string TEXT_MULTILINE_ROWS = "Rows";
         public const string TRUE = "true";
         public const string TYPE = "Type";
