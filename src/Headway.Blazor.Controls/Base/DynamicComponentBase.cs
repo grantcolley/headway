@@ -35,7 +35,7 @@ namespace Headway.Blazor.Controls.Base
             {
                 var value = Field.LinkValue;
 
-                var linkValueArg = ComponentArgs.DynamicArgOrDefault(Args.LINK_VALUE);
+                var linkValueArg = ComponentArgs.GetDynamicArgOrDefault(Args.LINK_VALUE);
 
                 if(linkValueArg == null)
                 {
@@ -49,7 +49,7 @@ namespace Headway.Blazor.Controls.Base
 
         protected void PropagateLinkedFields(List<DynamicField> dynamicFields)
         {
-            var propagateFieldsArg = ComponentArgs.DynamicArgOrDefault(Args.PROPAGATE_FIELDS);
+            var propagateFieldsArg = ComponentArgs.GetDynamicArgOrDefault(Args.PROPAGATE_FIELDS);
 
             if (propagateFieldsArg == null
                 || propagateFieldsArg.Value == null)
