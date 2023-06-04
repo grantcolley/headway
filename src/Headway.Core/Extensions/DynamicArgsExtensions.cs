@@ -6,12 +6,12 @@ namespace Headway.Core.Extensions
 {
     public static class DynamicArgsExtensions
     {
-        public static DynamicArg DynamicArgOrDefault(this IEnumerable<DynamicArg> dynamicArgs, string name)
+        public static DynamicArg GetDynamicArgOrDefault(this IEnumerable<DynamicArg> dynamicArgs, string name)
         {
             return dynamicArgs.FirstOrDefault(a => a.Name.Equals(name));
         }
 
-        public static string DynamicArgToString(this IEnumerable<DynamicArg> dynamicArgs, string name)
+        public static string DynamicArgValueToString(this IEnumerable<DynamicArg> dynamicArgs, string name)
         {
             return dynamicArgs.First(a => a.Name.Equals(name)).Value.ToString();
         }
