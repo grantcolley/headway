@@ -34,7 +34,14 @@ namespace Headway.Blazor.Controls.Components
         {
             get
             {
-                return Field.PropertyInfo.GetValue(Field.Model)?.ToString();
+                var value = Field.PropertyInfo.GetValue(Field.Model)?.ToString();
+
+                if(value == null)
+                {
+                    return null;
+                }
+
+                return value.Replace(";", ", ");
             }
             set
             {
@@ -44,7 +51,8 @@ namespace Headway.Blazor.Controls.Components
                 }
                 else
                 {
-                    Field.PropertyInfo.SetValue(Field.Model, value);
+                    var newVal = string.Join(";", SelectedItems);
+                    Field.PropertyInfo.SetValue(Field.Model, newVal);
                 }
             }
         }
@@ -61,7 +69,7 @@ namespace Headway.Blazor.Controls.Components
 
             if (!string.IsNullOrWhiteSpace(selectedItems))
             {
-                SelectedItems = selectedItems.Split(", ");
+                SelectedItems = selectedItems.Split(";");
             }
 
             await base.OnParametersSetAsync().ConfigureAwait(false);
