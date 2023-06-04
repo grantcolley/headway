@@ -6,6 +6,7 @@ using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Options;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Headway.RequestApi.Api
         private readonly Dictionary<string, IOptionItems> localOptionItems = new();
         private readonly Dictionary<string, IOptionTextItems> localOptionTextItems = new();
         private readonly Dictionary<string, IOptionCheckItems> localOptionCheckItems = new();
+        private readonly Dictionary<string, IOptionDynamicArgTextItems> localDynamicArgOptionTextItems = new();
 
         public OptionsApiRequest(HttpClient httpClient)
             : this(httpClient, false, null)
@@ -47,10 +49,20 @@ namespace Headway.RequestApi.Api
             localOptionCheckItems.Add(typeof(ModelFieldsOptionCheckItems).Name, new ModelFieldsOptionCheckItems());
 
             localOptionTextItems.Add(typeof(ModelFieldsOptionTextItems).Name, new ModelFieldsOptionTextItems());
+
+            localDynamicArgOptionTextItems.Add(typeof(DynamicArgStatesOptionTextItems).Name, new DynamicArgStatesOptionTextItems());
         }
 
         public async Task<IResponse<IEnumerable<string>>> GetOptionTextItemsAsync(List<DynamicArg> dynamicArgs)
         {
+            var isLocalDynamicArgOption = dynamicArgs.Any(da => da.Name.Equals(Args.IS_LOCAL_DYNAMICARG_OPTION) 
+                                                                && da.Value.Equals(Args.TRUE));
+            if(isLocalDynamicArgOption)
+            {
+                return await GetLocalDynamicArgOptionTextItemsAsync(dynamicArgs)
+                    .ConfigureAwait(false);
+            }
+
             var args = ComponentArgHelper.GetArgs(dynamicArgs);
             return await GetOptionTextItemsAsync(args);
         }
@@ -136,6 +148,24 @@ namespace Headway.RequestApi.Api
 
             return await GetResponseAsync<IEnumerable<T>>(httpResponseMessage)
                 .ConfigureAwait(false);
+        }
+
+        private async Task<IResponse<IEnumerable<string>>> GetLocalDynamicArgOptionTextItemsAsync(List<DynamicArg> dynamicArgs)
+        {
+            var optionsCode = dynamicArgs.DynamicArgValueToString(Options.OPTIONS_CODE);
+
+            if (localDynamicArgOptionTextItems.ContainsKey(optionsCode))
+            {
+                return new Response<IEnumerable<string>>
+                {
+                    IsSuccess = true,
+                    Result = await localDynamicArgOptionTextItems[optionsCode].GetOptionDynamicArgTextItemsAsync(dynamicArgs)
+                };
+            }
+            else
+            {
+                throw new KeyNotFoundException(optionsCode);
+            }
         }
     }
 }
