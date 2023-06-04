@@ -46,7 +46,7 @@ namespace Headway.Blazor.Controls.Components.Mobile
         {
             LinkFieldCheck();
 
-            var displayName = ComponentArgs.DynamicArgToString(Options.DISPLAY_FIELD);
+            var displayName = ComponentArgs.DynamicArgValueToString(Options.DISPLAY_FIELD);
 
             var propertyInfo = PropertyInfoHelper.GetPropertyInfo(typeof(T), displayName);
 
