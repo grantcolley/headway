@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Headway.Blazor.Controls.Components
 {
     [DynamicComponent]
-    public abstract class DropdownMultiSelectBase : DynamicComponentBase
+    public abstract class DropdownTextMultiSelectBase : DynamicComponentBase
     {
         [Inject]
         public IStateNotification StateNotification { get; set; }
