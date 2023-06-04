@@ -8,6 +8,7 @@
         public const string FALSE = "false";
         public const string FORMAT = "Format";
         public const string FORMAT_F2 = "F2";
+        public const string IS_LOCAL_DYNAMICARG_OPTION = "IsLocalDynamicArgOption";
         public const string IS_NUMERIC_ID = "IsNumericId";
         public const string LABEL_PROPERTY = "LabelProperty";
         public const string LAYOUT_HORIZONTAL = "LayoutHorizontal";
