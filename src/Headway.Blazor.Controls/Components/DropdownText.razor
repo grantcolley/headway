@@ -1,0 +1,31 @@
+﻿@using Headway.Core.Dynamic
+@using Headway.Core.Model
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@using System.Linq.Expressions
+
+@inherits DropdownTextBase
+
+<div class="mb-1">
+    <div class="row">
+        <div class="col-sm-4 col-form-label">
+            @if(string.IsNullOrWhiteSpace(Field.Tooltip))
+            {
+                @Field.Label                
+            }
+            else
+            {
+                <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">@Field.Label</MudTooltip>
+            }
+        </div>
+        <div class="col-sm-8">
+            <MudSelect T="string" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                        For="FieldExpression" @bind-Value="PropertyValue">
+                @foreach (var item in Items)
+                {
+                    <MudSelectItem T="string" Value="@item">@item</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+    </div>
+</div>
