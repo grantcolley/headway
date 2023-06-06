@@ -182,7 +182,7 @@ namespace Headway.Core.Dynamic
                 FlowArgs = configContainer.FlowArgs,
             };
 
-            ComponentArgHelper.AddDynamicArgs(dynamicContainer, dynamicFields);
+            dynamicContainer.AddDynamicArgs(dynamicFields);
 
             dynamicContainer.Parameters.Add(Parameters.CONTAINER, dynamicContainer);
 
