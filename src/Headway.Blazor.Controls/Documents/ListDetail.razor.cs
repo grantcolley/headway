@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Headway.Core.Extensions;
 
 namespace Headway.Blazor.Controls.Documents
 {
@@ -29,7 +30,7 @@ namespace Headway.Blazor.Controls.Documents
 
             var list = (List<T>)Field.PropertyInfo.GetValue(Field.Model, null);
 
-            var listConfig = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LIST_CONFIG);
+            var listConfig = ComponentArgs.FirstDynamicArgValueToString(Args.LIST_CONFIG);
 
             dynamicList = await GetDynamicListAsync(list, listConfig).ConfigureAwait(false);
         }

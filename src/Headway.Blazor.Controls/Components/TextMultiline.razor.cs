@@ -5,6 +5,7 @@ using Headway.Blazor.Controls.Base;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq.Expressions;
+using Headway.Core.Extensions;
 
 namespace Headway.Blazor.Controls.Components
 {
@@ -35,7 +36,7 @@ namespace Headway.Blazor.Controls.Components
 
         protected override void OnInitialized()
         {
-            var val = ComponentArgHelper.GetArgValue(ComponentArgs, Args.TEXT_MULTILINE_ROWS);
+            var val = ComponentArgs.FirstDynamicArgValueToString(Args.TEXT_MULTILINE_ROWS);
 
             if (int.TryParse(val, out int i))
             {

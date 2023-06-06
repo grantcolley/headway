@@ -1,8 +1,8 @@
 ﻿using Headway.Blazor.Controls.Base;
 using Headway.Blazor.Controls.Flow.Components;
 using Headway.Blazor.Controls.Flow.Documents;
-using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Microsoft.AspNetCore.Components;
@@ -28,8 +28,8 @@ namespace Headway.Blazor.Controls.Flow.Containers
 
         protected override async Task OnInitializedAsync()
         {
-            label = ComponentArgHelper.GetArgValue(Container.DynamicArgs, FlowConstants.FLOW_LIST_CONTAINER_LABEL);
-            width = ComponentArgHelper.GetArgValue(Container.DynamicArgs, FlowConstants.FLOW_LIST_CONTAINER_WIDTH);
+            label = Container.DynamicArgs.FirstDynamicArgValueToString(FlowConstants.FLOW_LIST_CONTAINER_LABEL);
+            width = Container.DynamicArgs.FirstDynamicArgValueToString(FlowConstants.FLOW_LIST_CONTAINER_WIDTH);
 
             await base.OnInitializedAsync().ConfigureAwait(false);
 
@@ -48,7 +48,7 @@ namespace Headway.Blazor.Controls.Flow.Containers
 
         protected bool ShowContainer(DynamicContainer dynamicContainer)
         {
-            var flowStateCode = ComponentArgHelper.GetArgValue(dynamicContainer.DynamicArgs, FlowConstants.FLOW_STATE_CODE);
+            var flowStateCode = dynamicContainer.DynamicArgs.FirstDynamicArgValueToString(FlowConstants.FLOW_STATE_CODE);
 
             if(flowContext.Flow.ActiveState.StateCode.Equals(flowStateCode))
             {

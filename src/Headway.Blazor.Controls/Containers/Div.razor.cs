@@ -5,6 +5,7 @@ using Headway.Core.Helpers;
 using Headway.Blazor.Controls.Base;
 using System;
 using System.Threading.Tasks;
+using Headway.Core.Extensions;
 
 namespace Headway.Blazor.Controls.Containers
 {
@@ -15,7 +16,7 @@ namespace Headway.Blazor.Controls.Containers
 
         protected override Task OnInitializedAsync()
         {
-            var layoutHorizontal = ComponentArgHelper.GetArgValue(Container.DynamicArgs, Args.LAYOUT_HORIZONTAL);
+            var layoutHorizontal = Container.DynamicArgs.FirstDynamicArgValueToStringOrDefault(Args.LAYOUT_HORIZONTAL);
 
             if(!string.IsNullOrWhiteSpace(layoutHorizontal))
             {

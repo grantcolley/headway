@@ -9,42 +9,6 @@ namespace Headway.Core.Helpers
 {
     public static class ComponentArgHelper
     {
-        public static string GetArgValue(IEnumerable<DynamicArg> dynamicArgs, string name)
-        {
-            var dynamicArg = dynamicArgs?.FirstDynamicArgOrDefault(name);
-
-            if (dynamicArg == null)
-            {
-                return null;
-            }
-
-            if (dynamicArg.Value is DynamicField field)
-            {
-                return field.PropertyInfo.GetValue(field.Model)?.ToString();
-            }
-            else
-            {
-                return dynamicArg.Value.ToString();
-            }
-        }
-
-        public static void PropagateDynamicArgs(List<DynamicField> dynamicFields, List<DynamicArg> sourceArgs)
-        {
-            foreach (var dynamicField in dynamicFields)
-            {
-                var componentArg = dynamicField.Parameters.FirstOrDefault(a => a.Key.Equals(Parameters.COMPONENT_ARGS)).Value;
-                if (componentArg is List<DynamicArg> dynamicArg)
-                {
-                    var linkedSourceArg = dynamicArg.FirstDynamicArgOrDefault(Constants.Args.LINK_SOURCE);
-                    if (linkedSourceArg != null
-                        && linkedSourceArg.Value != null)
-                    {
-                        DynamicLinkHelper.LinkFields(dynamicField, sourceArgs, linkedSourceArg.Value.ToString());
-                    }
-                }
-            }
-        }
-
         public static void AddDynamicArgs(List<DynamicField> dynamicFields)
         {
             foreach (var dynamicField in dynamicFields)

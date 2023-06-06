@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Args;
 using Headway.Core.Constants;
 using Headway.Core.Dynamic;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
@@ -93,10 +94,10 @@ namespace Headway.Blazor.Controls.Components.GenericTree
 
         protected override void OnInitialized()
         {
-            nodeLabel = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LABEL_PROPERTY);
-            nodesProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.LIST_PROPERTY);
-            nodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.UNIQUE_PROPERTY);
-            parentNodeUniqueProperty = ComponentArgHelper.GetArgValue(ComponentArgs, Args.UNIQUE_PARENT_PROPERTY);
+            nodeLabel = ComponentArgs.FirstDynamicArgValueToString(Args.LABEL_PROPERTY);
+            nodesProperty = ComponentArgs.FirstDynamicArgValueToString(Args.LIST_PROPERTY);
+            nodeUniqueProperty = ComponentArgs.FirstDynamicArgValueToString(Args.UNIQUE_PROPERTY);
+            parentNodeUniqueProperty = ComponentArgs.FirstDynamicArgValueToString(Args.UNIQUE_PARENT_PROPERTY);
 
             typeHelper = DynamicTypeHelper.Get<T>();
             modelNodesPropertyInfo = typeHelper.GetPropertyInfo(nodesProperty);
