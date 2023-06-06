@@ -62,7 +62,7 @@ namespace Headway.Blazor.Controls.Base
                                    join n in sourceFieldArgNames on a.Name equals n
                                    select a).ToList();
 
-            ComponentArgHelper.PropagateDynamicArgs(dynamicFields, sourceFieldArgs);
+            dynamicFields.PropagateDynamicArgs(sourceFieldArgs);
         }
     }
 }
