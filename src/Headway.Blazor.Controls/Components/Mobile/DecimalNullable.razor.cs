@@ -1,7 +1,7 @@
-﻿using Headway.Core.Attributes;
+﻿using Headway.Blazor.Controls.Base;
+using Headway.Core.Attributes;
 using Headway.Core.Constants;
-using Headway.Core.Helpers;
-using Headway.Blazor.Controls.Base;
+using Headway.Core.Extensions;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq.Expressions;
@@ -17,28 +17,28 @@ namespace Headway.Blazor.Controls.Components.Mobile
 
         protected override Task OnInitializedAsync()
         {
-            var formatArg = ComponentArgHelper.GetArg(ComponentArgs, Args.FORMAT);
+            var formatArg = ComponentArgs.FirstArgOrDefault(Args.FORMAT);
 
             if(formatArg != null)
             {
                 format = formatArg.Value;
             }
 
-            var maxLengthArg = ComponentArgHelper.GetArg(ComponentArgs, Args.MAX_LENGTH);
+            var maxLengthArg = ComponentArgs.FirstArgOrDefault(Args.MAX_LENGTH);
 
             if (maxLengthArg != null)
             {
                 maxLength = int.Parse(maxLengthArg.Value);
             }
 
-            var minArg = ComponentArgHelper.GetArg(ComponentArgs, Args.MIN);
+            var minArg = ComponentArgs.FirstArgOrDefault(Args.MIN);
 
             if (minArg != null)
             {
                 Min = decimal.Parse(minArg.Value);
             }
 
-            var maxArg = ComponentArgHelper.GetArg(ComponentArgs, Args.MAX);
+            var maxArg = ComponentArgs.FirstArgOrDefault(Args.MAX);
 
             if (maxArg != null)
             {

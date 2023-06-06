@@ -1,11 +1,11 @@
-﻿using Headway.Core.Attributes;
-using Headway.Blazor.Controls.Base;
+﻿using Headway.Blazor.Controls.Base;
+using Headway.Core.Attributes;
+using Headway.Core.Constants;
+using Headway.Core.Extensions;
+using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MudBlazor;
-using Headway.Core.Helpers;
-using Headway.Core.Constants;
 
 namespace Headway.Blazor.Controls.Components
 {
@@ -22,7 +22,7 @@ namespace Headway.Blazor.Controls.Components
 
         protected override Task OnParametersSetAsync()
         {
-            var argLabelTypo = ComponentArgHelper.GetArg(ComponentArgs, Args.LABEL_TYPO);
+            var argLabelTypo = ComponentArgs.FirstArgOrDefault(Args.LABEL_TYPO);
 
             if (argLabelTypo != null)
             {

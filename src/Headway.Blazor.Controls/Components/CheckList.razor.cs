@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MudBlazor;
 using Headway.Core.Constants;
 using Headway.Core.Helpers;
+using Headway.Core.Extensions;
 
 namespace Headway.Blazor.Controls.Components
 {
@@ -23,7 +24,7 @@ namespace Headway.Blazor.Controls.Components
 
         protected override Task OnParametersSetAsync()
         {
-            var argLabelTypo = ComponentArgHelper.GetArg(ComponentArgs, Args.LABEL_TYPO);
+            var argLabelTypo = ComponentArgs.FirstArgOrDefault(Args.LABEL_TYPO);
 
             if (argLabelTypo != null)
             {

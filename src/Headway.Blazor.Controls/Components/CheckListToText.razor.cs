@@ -1,6 +1,7 @@
 ﻿using Headway.Blazor.Controls.Base;
 using Headway.Core.Attributes;
 using Headway.Core.Constants;
+using Headway.Core.Extensions;
 using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Headway.Core.Model;
@@ -31,7 +32,7 @@ namespace Headway.Blazor.Controls.Components
         {
             LinkFieldCheck();
 
-            var argLabelTypo = ComponentArgHelper.GetArg(ComponentArgs, Args.LABEL_TYPO);
+            var argLabelTypo = ComponentArgs.FirstArgOrDefault(Args.LABEL_TYPO);
 
             if(argLabelTypo != null) 
             {

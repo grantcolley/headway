@@ -1,6 +1,6 @@
 ﻿using Headway.Core.Attributes;
 using Headway.Core.Constants;
-using Headway.Core.Helpers;
+using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
@@ -55,7 +55,7 @@ namespace Headway.Blazor.Controls.Base
         {
             await base.OnInitializedAsync().ConfigureAwait(false);
 
-            var arg = ComponentArgHelper.GetArg(ComponentArgs, Options.OPTIONS_CODE);
+            var arg = ComponentArgs.FirstArgOrDefault(Options.OPTIONS_CODE);
 
             if (arg == null)
             {

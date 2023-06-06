@@ -1,7 +1,7 @@
 ﻿using Headway.Blazor.Controls.Base;
 using Headway.Core.Attributes;
 using Headway.Core.Constants;
-using Headway.Core.Helpers;
+using Headway.Core.Extensions;
 using Headway.Core.Interface;
 using Headway.Core.Model;
 using Headway.Core.Notifications;
@@ -60,7 +60,7 @@ namespace Headway.Blazor.Controls.Components.Mobile
 
         protected override void OnInitialized()
         {
-            var isNumericIdArg = ComponentArgHelper.GetArg(ComponentArgs, Args.IS_NUMERIC_ID);
+            var isNumericIdArg = ComponentArgs.FirstArgOrDefault(Args.IS_NUMERIC_ID);
 
             if (isNumericIdArg != null)
             {

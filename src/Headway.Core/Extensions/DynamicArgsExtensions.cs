@@ -39,5 +39,28 @@ namespace Headway.Core.Extensions
 
             return args;
         }
+
+        public static Arg FirstArgOrDefault(this IEnumerable<DynamicArg> dynamicArgs, string name)
+        {
+            var dynamicArg = dynamicArgs.FirstDynamicArgOrDefault(name);
+
+            if (dynamicArg == null)
+            {
+                return null;
+            }
+
+            var arg = new Arg { Name = dynamicArg.Name };
+
+            if (dynamicArg.Value is DynamicField field)
+            {
+                arg.Value = field.PropertyInfo.GetValue(field.Model)?.ToString();
+            }
+            else
+            {
+                arg.Value = dynamicArg.Value.ToString();
+            }
+
+            return arg;
+        }
     }
 }
