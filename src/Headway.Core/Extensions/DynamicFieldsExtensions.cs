@@ -9,6 +9,22 @@ namespace Headway.Core.Extensions
 {
     public static class DynamicFieldsExtensions
     {
+        public static void AddDynamicArgs(this List<DynamicField> dynamicFields)
+        {
+            foreach (var dynamicField in dynamicFields)
+            {
+                var dynamicArgs = ComponentArgHelper.ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
+                dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
+
+                var linkedSourceArg = dynamicArgs.FirstDynamicArgOrDefault(Constants.Args.LINK_SOURCE);
+                if (linkedSourceArg != null
+                    && linkedSourceArg.Value != null)
+                {
+                    DynamicLinkHelper.LinkFields(dynamicField, dynamicFields, linkedSourceArg.Value.ToString());
+                }
+            }
+        }
+
         public static void PropagateDynamicArgs(this List<DynamicField> dynamicFields, List<DynamicArg> sourceArgs)
         {
             foreach (var dynamicField in dynamicFields)
