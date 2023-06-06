@@ -1,7 +1,5 @@
 ﻿using Headway.Core.Args;
-using Headway.Core.Constants;
 using Headway.Core.Dynamic;
-using Headway.Core.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,29 +7,7 @@ namespace Headway.Core.Helpers
 {
     public static class ComponentArgHelper
     {
-        public static void AddDynamicArgs(List<DynamicField> dynamicFields)
-        {
-            foreach (var dynamicField in dynamicFields)
-            {
-                var dynamicArgs = ExtractDynamicArgs(dynamicField.ComponentArgs, dynamicFields);
-                dynamicField.Parameters.Add(Parameters.COMPONENT_ARGS, dynamicArgs);
-
-                var linkedSourceArg = dynamicArgs.FirstDynamicArgOrDefault(Constants.Args.LINK_SOURCE);
-                if(linkedSourceArg != null
-                    && linkedSourceArg.Value != null)
-                {
-                    DynamicLinkHelper.LinkFields(dynamicField, dynamicFields, linkedSourceArg.Value.ToString());
-                }
-            }
-        }
-
-        public static void AddDynamicArgs(DynamicContainer dynamicContainer, List<DynamicField> dynamicFields)
-        {
-            var dynamicArgs = ExtractDynamicArgs(dynamicContainer.ComponentArgs, dynamicFields);
-            dynamicContainer.DynamicArgs.AddRange(dynamicArgs);
-        }
-
-        private static List<DynamicArg> ExtractDynamicArgs(string componentArgs, List<DynamicField> dynamicFields)
+        public static List<DynamicArg> ExtractDynamicArgs(string componentArgs, List<DynamicField> dynamicFields)
         {
             var dynamicArgs = new List<DynamicArg>();
 
