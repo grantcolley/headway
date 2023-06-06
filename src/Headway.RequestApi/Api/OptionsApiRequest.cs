@@ -63,7 +63,7 @@ namespace Headway.RequestApi.Api
                     .ConfigureAwait(false);
             }
 
-            var args = ComponentArgHelper.GetArgs(dynamicArgs);
+            var args = dynamicArgs.ToArgs();
             return await GetOptionTextItemsAsync(args);
         }
 
@@ -89,7 +89,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<OptionCheckItem>>> GetOptionCheckItemsAsync(List<DynamicArg> dynamicArgs)
         {
-            var args = ComponentArgHelper.GetArgs(dynamicArgs);
+            var args = dynamicArgs.ToArgs();
             return await GetOptionCheckItemsAsync(args);
         }
 
@@ -115,7 +115,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<DynamicArg> dynamicArgs)
         {
-            var args = ComponentArgHelper.GetArgs(dynamicArgs);
+            var args = dynamicArgs.ToArgs();
             return await GetOptionItemsAsync(args);
         }
 
@@ -141,7 +141,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<T>>> GetOptionItemsAsync<T>(List<DynamicArg> dynamicArgs)
         {
-            var args = ComponentArgHelper.GetArgs(dynamicArgs);
+            var args = dynamicArgs.ToArgs();
 
             using var httpResponseMessage = await httpClient.PostAsJsonAsync(Controllers.OPTIONS_COMPLEXOPTIONS, args)
                 .ConfigureAwait(false);

@@ -9,29 +9,6 @@ namespace Headway.Core.Helpers
 {
     public static class ComponentArgHelper
     {
-        public static List<Arg> GetArgs(IEnumerable<DynamicArg> dynamicArgs)
-        {
-            var args = new List<Arg>();
-
-            foreach (var dynamicArg in dynamicArgs)
-            {
-                var arg = new Arg { Name = dynamicArg.Name };
-
-                if (dynamicArg.Value is DynamicField field)
-                {
-                    arg.Value = field.PropertyInfo.GetValue(field.Model)?.ToString();
-                }
-                else
-                {
-                    arg.Value = dynamicArg.Value?.ToString();
-                }
-
-                args.Add(arg);
-            }
-
-            return args;
-        }
-
         public static Arg GetArg(IEnumerable<DynamicArg> dynamicArgs, string name)
         {
             var dynamicArg = dynamicArgs.GetDynamicArgOrDefault(name);

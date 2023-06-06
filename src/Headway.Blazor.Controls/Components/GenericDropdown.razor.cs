@@ -27,7 +27,7 @@ namespace Headway.Blazor.Controls.Components
         {
             await base.OnInitializedAsync().ConfigureAwait(false);
 
-            var args = ComponentArgHelper.GetArgs(ComponentArgs);
+            var args = ComponentArgs.ToArgs();
 
             model = args.FirstArgValue(Args.MODEL);
             componentName = args.FirstArgValue(Args.COMPONENT);
