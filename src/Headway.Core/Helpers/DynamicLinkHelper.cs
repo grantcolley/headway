@@ -42,7 +42,7 @@ namespace Headway.Core.Helpers
                 return;
             }
 
-            var sourceFieldArg = sourceArgs.GetDynamicArgOrDefault(propertyName);
+            var sourceFieldArg = sourceArgs.FirstDynamicArgOrDefault(propertyName);
             if (sourceFieldArg == null
                 || sourceFieldArg.Value == null)
             {

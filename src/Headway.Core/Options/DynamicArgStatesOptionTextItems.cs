@@ -13,7 +13,7 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<string>> GetOptionDynamicArgTextItemsAsync(IEnumerable<DynamicArg> dynamicArgs)
         {
-            var isLocalDynamicArg = dynamicArgs.GetDynamicArgOrDefault(Constants.Args.IS_LOCAL_DYNAMICARG_OPTION);
+            var isLocalDynamicArg = dynamicArgs.FirstDynamicArgOrDefault(Constants.Args.IS_LOCAL_DYNAMICARG_OPTION);
 
             if(isLocalDynamicArg == null
                 || string.IsNullOrWhiteSpace(isLocalDynamicArg.Value.ToString())
@@ -22,7 +22,7 @@ namespace Headway.Core.Options
                 throw new HeadwayArgsException($"{Constants.Args.IS_LOCAL_DYNAMICARG_OPTION} must be {Constants.Args.TRUE}");
             }
 
-            var statesArg = dynamicArgs.GetDynamicArgOrDefault(Constants.Args.LINK_VALUE);
+            var statesArg = dynamicArgs.FirstDynamicArgOrDefault(Constants.Args.LINK_VALUE);
 
             var states = statesArg.Value as IEnumerable<State>;
             

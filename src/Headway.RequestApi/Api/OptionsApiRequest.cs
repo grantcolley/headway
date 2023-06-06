@@ -152,7 +152,7 @@ namespace Headway.RequestApi.Api
 
         private async Task<IResponse<IEnumerable<string>>> GetLocalDynamicArgOptionTextItemsAsync(List<DynamicArg> dynamicArgs)
         {
-            var optionsCode = dynamicArgs.DynamicArgValueToString(Options.OPTIONS_CODE);
+            var optionsCode = dynamicArgs.FirstDynamicArgValueToString(Options.OPTIONS_CODE);
 
             if (localDynamicArgOptionTextItems.ContainsKey(optionsCode))
             {
