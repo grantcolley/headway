@@ -128,7 +128,7 @@ namespace Headway.Core.Dynamic
                                                     join c in Config.ConfigItems on p.Name equals c.PropertyName
                                 select CreateDynamicField(Model, constantExpression, p, c)).ToList());
 
-            ComponentArgHelper.AddDynamicArgs(DynamicFields);
+            DynamicFields.AddDynamicArgs();
 
             RootContainers = Config.ConfigContainers
                 .Where(cc => string.IsNullOrWhiteSpace(cc.ParentCode))
