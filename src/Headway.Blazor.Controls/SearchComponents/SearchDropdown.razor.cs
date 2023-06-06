@@ -27,7 +27,7 @@ namespace Headway.Blazor.Controls.SearchComponents
 
         protected override Task OnInitializedAsync()
         {
-            var styleArg = ComponentArgs.ArgOrDefault(Args.STYLE);
+            var styleArg = ComponentArgs.FirstArgOrDefault(Args.STYLE);
 
             if (styleArg != null)
             {

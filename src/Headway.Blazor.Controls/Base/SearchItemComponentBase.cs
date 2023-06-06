@@ -48,7 +48,7 @@ namespace Headway.Blazor.Controls.Base
             {
                 var value = SearchItem.LinkValue;
 
-                var linkValueArg = ComponentArgs.ArgOrDefault(Args.LINK_VALUE);
+                var linkValueArg = ComponentArgs.FirstArgOrDefault(Args.LINK_VALUE);
 
                 if (linkValueArg == null)
                 {

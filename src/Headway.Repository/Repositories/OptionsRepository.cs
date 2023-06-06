@@ -45,7 +45,7 @@ namespace Headway.Repository.Repositories
 
         public async Task<IEnumerable<string>> GetOptionTextItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+            var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
             if (optionItems.ContainsKey(optionsCode))
             {
@@ -57,7 +57,7 @@ namespace Headway.Repository.Repositories
 
         public async Task<IEnumerable<OptionCheckItem>> GetOptionCheckItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+            var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
             if (optionItems.ContainsKey(optionsCode))
             {
@@ -69,7 +69,7 @@ namespace Headway.Repository.Repositories
 
         public async Task<string> GetComplexOptionItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+            var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
             if (complexOptionItems.ContainsKey(optionsCode))
             {
@@ -81,7 +81,7 @@ namespace Headway.Repository.Repositories
 
         public async Task<IEnumerable<OptionItem>> GetOptionItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+            var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
             if (optionItems.ContainsKey(optionsCode))
             {
@@ -185,8 +185,8 @@ namespace Headway.Repository.Repositories
         {
             List<User> users = new List<User>();
 
-            var level = args.ArgValue(Args.AUTHORIZED_LEVEL);
-            var value = args.ArgValue(Args.VALUE);
+            var level = args.FirstArgValue(Args.AUTHORIZED_LEVEL);
+            var value = args.FirstArgValue(Args.VALUE);
 
             if (level != null)
             {
@@ -217,7 +217,7 @@ namespace Headway.Repository.Repositories
 
         private async Task<string> GetConfigContainers(List<Arg> args)
         {
-            var configId = args.ArgValue(Args.LINK_VALUE);
+            var configId = args.FirstArgValue(Args.LINK_VALUE);
 
             var configs = await applicationDbContext.Configs
                 .Include(c => c.ConfigContainers)

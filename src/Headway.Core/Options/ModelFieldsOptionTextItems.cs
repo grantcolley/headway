@@ -18,11 +18,11 @@ namespace Headway.Core.Options
 
             if (args.HasArg(Constants.Args.LINK_SOURCE))
             {
-                modelName = args.ArgValue(Constants.Args.LINK_VALUE);
+                modelName = args.FirstArgValue(Constants.Args.LINK_VALUE);
             }
             else
             {
-                modelName = args.ArgValue(Constants.Args.MODEL);
+                modelName = args.FirstArgValue(Constants.Args.MODEL);
             }
 
             if(string.IsNullOrWhiteSpace(modelName))

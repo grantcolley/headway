@@ -69,7 +69,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<string>>> GetOptionTextItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+            var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
             if (localOptionTextItems.ContainsKey(optionsCode))
             {
@@ -95,7 +95,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<OptionCheckItem>>> GetOptionCheckItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+            var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
             if (localOptionCheckItems.ContainsKey(optionsCode))
             {
@@ -121,7 +121,7 @@ namespace Headway.RequestApi.Api
 
         public async Task<IResponse<IEnumerable<OptionItem>>> GetOptionItemsAsync(List<Arg> args)
         {
-            var optionsCode = args.ArgValue(Options.OPTIONS_CODE);
+            var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
             if (localOptionItems.ContainsKey(optionsCode))
             {

@@ -9,12 +9,12 @@ namespace Headway.Core.Extensions
 {
     public static class ArgsExtensions
     {
-        public static Arg ArgOrDefault(this IEnumerable<Arg> args, string name)
+        public static Arg FirstArgOrDefault(this IEnumerable<Arg> args, string name)
         {
             return args.FirstOrDefault(a => a.Name.Equals(name));
         }
 
-        public static string ArgValue(this IEnumerable<Arg> args, string name)
+        public static string FirstArgValue(this IEnumerable<Arg> args, string name)
         {
             return args.First(a => a.Name.Equals(name)).Value;
         }
@@ -49,7 +49,7 @@ namespace Headway.Core.Extensions
                     var args = dynamicSearchItem.ComponentArgs.ToArgsList();
                     dynamicSearchItem.Parameters.Add(Parameters.COMPONENT_ARGS, args);
 
-                    var linkedSourceArg = args.ArgOrDefault(Constants.Args.LINK_SOURCE);
+                    var linkedSourceArg = args.FirstArgOrDefault(Constants.Args.LINK_SOURCE);
                     if (linkedSourceArg != null
                         && linkedSourceArg.Value != null)
                     {

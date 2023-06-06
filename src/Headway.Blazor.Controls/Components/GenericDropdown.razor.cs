@@ -29,8 +29,8 @@ namespace Headway.Blazor.Controls.Components
 
             var args = ComponentArgHelper.GetArgs(ComponentArgs);
 
-            model = args.ArgValue(Args.MODEL);
-            componentName = args.ArgValue(Args.COMPONENT);
+            model = args.FirstArgValue(Args.MODEL);
+            componentName = args.FirstArgValue(Args.COMPONENT);
         }
 
         protected RenderFragment RenderView() => __builder =>

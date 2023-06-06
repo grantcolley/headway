@@ -34,22 +34,22 @@ namespace Headway.Blazor.Controls.Documents
 
             if (args.HasArg(Buttons.HEADER_BTN_IMAGE))
             {
-                headerButtonIcon = args.ArgValue(Buttons.HEADER_BTN_IMAGE);
+                headerButtonIcon = args.FirstArgValue(Buttons.HEADER_BTN_IMAGE);
             }
 
             if (args.HasArg(Buttons.HEADER_BTN_TOOLTIP))
             {
-                headerButtonTooltip = args.ArgValue(Buttons.HEADER_BTN_TOOLTIP);
+                headerButtonTooltip = args.FirstArgValue(Buttons.HEADER_BTN_TOOLTIP);
             }
 
             if (args.HasArg(Buttons.ROW_BTN_IMAGE))
             {
-                rowButtonIcon = args.ArgValue(Buttons.ROW_BTN_IMAGE);
+                rowButtonIcon = args.FirstArgValue(Buttons.ROW_BTN_IMAGE);
             }
 
             if (args.HasArg(Buttons.ROW_BTN_TOOLTIP))
             {
-                rowButtonTooltip = args.ArgValue(Buttons.ROW_BTN_TOOLTIP);
+                rowButtonTooltip = args.FirstArgValue(Buttons.ROW_BTN_TOOLTIP);
             }
         }
 

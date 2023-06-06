@@ -13,7 +13,7 @@ namespace Headway.Core.Options
     {
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
-            var typeName = args.ArgValue(Constants.Args.TYPE);
+            var typeName = args.FirstArgValue(Constants.Args.TYPE);
 
             var type = Type.GetType(typeName);
 
