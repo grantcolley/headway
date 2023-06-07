@@ -179,7 +179,7 @@ namespace Headway.Core.Dynamic
                 Code = configContainer.Code,
                 ParentCode = configContainer.ParentCode,
                 ComponentArgs = configContainer.ComponentArgs,
-                FlowArgs = configContainer.FlowArgs,
+                FlowArgs = configContainer.FlowArgs
             };
 
             dynamicContainer.AddDynamicArgs(dynamicFields);
