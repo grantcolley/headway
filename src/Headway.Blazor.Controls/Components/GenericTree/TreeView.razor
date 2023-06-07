@@ -7,11 +7,13 @@
             <div class="treeview-header">
                 @if(string.IsNullOrWhiteSpace(Field.Tooltip))
                 {
-                    @Field.Label                    
+                    <MudText Typo=Typo.body1 Class="mb-2 pl-4">@Field.Label</MudText>
                 }
                 else
                 {
-                    <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">@Field.Label</MudTooltip>
+                    <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
+                        <MudText Typo=Typo.body1 Class="mb-2 pl-4">@Field.Label</MudText>
+                    </MudTooltip>
                 }
             </div>
             <div class="treeview">
