@@ -1,4 +1,5 @@
-﻿using Headway.Core.Enums;
+﻿using Headway.Blazor.Controls.Model;
+using Headway.Core.Enums;
 using Headway.Core.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,31 +100,40 @@ namespace Headway.Blazor.Controls.Flow.Components
             ActionTarget = ActionTargetItems.FirstOrDefault();
 
             CanEdit = GetCanEdit();
-            CanExecute = GetCanExecute();
+            CanExecute = CanEdit;
             CanManageOwnership = GetCanManageOwnership();
-        }
-
-        private bool GetCanExecute()
-        {
-            return GetCanEdit();
         }
 
         private bool GetCanEdit()
         {
-            // 1. Container is for ActiveState
-            // 2. ActiveState.StateStatus.Equals(StateStatus.InProgress)
-            // 3. User has state write permission
-            // 4. If ownership is required:
+            // 1. ActiveState.StateStatus.Equals(StateStatus.InProgress)
+            // 2. User has state write permission
+            // 3. If state ownership is required:
             //      - state has owner
-            //      - user is 
-            return ActiveState.StateStatus.Equals(StateStatus.InProgress);
+            //      - user is the state owner 
+
+            if(ActiveState.StateStatus.Equals(StateStatus.InProgress)
+                && FlowContext.Authorisation.Permissions.Any(p => p.Equals(ActiveState.WritePermission)))
+            {
+                if(!ActiveState.IsOwnerRestricted)
+                {
+                    return true;
+                }
+
+                return !string.IsNullOrWhiteSpace(ActiveState.Owner)
+                    && !string.IsNullOrWhiteSpace(FlowContext.Authorisation.User)
+                    && ActiveState.Owner.Equals(FlowContext.Authorisation.User);
+            }
+
+            return false;
         }
 
         private bool GetCanManageOwnership()
         {
-            // 1. Container is for ActiveState
+            // 1. State ownership is required
             // 2. User has state write permission
-            return ActiveState.IsOwnerRestricted;
+            return ActiveState.IsOwnerRestricted
+                && FlowContext.Authorisation.Permissions.Any(p => p.Equals(ActiveState.WritePermission));
         }
     }
 }
