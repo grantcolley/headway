@@ -103,6 +103,98 @@ namespace Headway.Core.Extensions
             }
         }
 
+        public static async Task TakeOwnershipAsync(this State state, Authorisation user)
+        {
+            if(user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            if(!state.Flow.Bootstrapped)
+            {
+                throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because {state.Flow.Name} hasn't been bootstrapped.");
+            }
+
+            if (!state.StateCode.Equals(state.Flow.ActiveState.StateCode))
+            {
+                throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because it isn't the active state.");
+            }
+
+            if(!user.Permissions.Any(p => p.Equals(state.StateCode)))
+            {
+                throw new StateException(state, $"{user.User} doesn't have permission to take ownership of {state.StateCode}.");
+            }
+
+            if (!state.IsOwnerRestricted)
+            {
+                throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because {nameof(state.IsOwnerRestricted)} is {state.IsOwnerRestricted}");
+            }
+
+            if (state.StateStatus.Equals(StateStatus.Completed))
+            {
+                throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because it's {state.StateStatus}.");
+            }
+
+            state.Owner = user.User;
+            state.Comment = $"Ownership of {state.StateCode} taken by {user.User}";
+
+            if (state.StateStatus.Equals(StateStatus.Uninitialized))
+            {
+                await state.InitialiseAsync().ConfigureAwait(false);
+                return;
+            }
+            else if(state.StateStatus.Equals(StateStatus.Initialized))
+            {
+                await state.StartAsync().ConfigureAwait(false);
+                return;
+            }
+
+            state.Flow.History.RecordTakeOwnership(state);
+        }
+
+        public static async Task RelinquishOwnershipAsync(this State state, Authorisation user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            if (!state.Flow.Bootstrapped)
+            {
+                throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because {state.Flow.Name} hasn't been bootstrapped");
+            }
+
+            if (!state.StateCode.Equals(state.Flow.ActiveState.StateCode))
+            {
+                throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because it isn't the active state.");
+            }
+
+            if (!user.Permissions.Any(p => p.Equals(state.StateCode)))
+            {
+                throw new StateException(state, $"{user.User} doesn't have permission to relinquish ownership of {state.StateCode}");
+            }
+
+            if (!state.IsOwnerRestricted)
+            {
+                throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because {nameof(state.IsOwnerRestricted)} is {state.IsOwnerRestricted}");
+            }
+
+            if (!state.StateStatus.Equals(StateStatus.InProgress))
+            {
+                throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because it's not {StateStatus.InProgress}.");
+            }
+
+            if (string.IsNullOrWhiteSpace(state.Owner))
+            {
+                throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because it doesn't have an owner.");
+            }
+
+            state.Comment = $"{state.Owner} ownership of {state.StateCode} relinquished by {user.User}";
+            state.Owner = string.Empty;
+
+            state.Flow.History.RecordRelinquishOwnership(state);
+        }
+
         /// <summary>
         /// Start routine for a <see cref="State"/>.
         /// 
