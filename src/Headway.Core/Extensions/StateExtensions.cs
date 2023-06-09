@@ -22,7 +22,7 @@ namespace Headway.Core.Extensions
         /// Assign the <see cref="Flow.Context"/> to the <see cref="State.Context"/> and set the <see cref="State.ParentState"/> if applicable.
         /// Populate the <see cref="State.SubStates"/>, <see cref="State.Transitions"/> and <see cref="State.Regressions"/>.
         /// </summary>
-        /// <param name="state"></param>
+        /// <param name="state">The <see cref="State"/> to bootstrap.</param>
         public static void Bootstrap(this State state)
         {
             state.StateStatus = default;
@@ -57,15 +57,17 @@ namespace Headway.Core.Extensions
         ///             Set the state as the <see cref="Flow.ActiveState"/>
         ///             If the first state in the <see cref="Flow"/> set it to <see cref="FlowStatus.InProgress"/>
         ///             If <see cref="State.IsOwnerRestricted"/> is false or an owner has been assigned execute the <see cref="StartAsync"/> routine. 
-        ///             
-        /// <see cref="StateException"/> thrown when:
+        ///
+        /// A <see cref="StateException"> is thrown when:
         ///             - the state is already <see cref="StateStatus.Initialized"/> or <see cref="StateStatus.InProgress"/>. 
         ///             - if <see cref="State.IsOwnerRestricted"/> is true and an owner has not been assigned (only checked after executing start actions).
         ///             - if the <see cref="StateType"/> is <see cref="StateType.Parent"/> but it doesn't have any associated sub states. 
+        ///             
         /// </summary>
         /// <param name="state">The state to initialize.</param>
-        /// <returns>A Task.</returns>
-        /// <exception cref="StateException"></exception>
+        /// <returns>A <see cref="Task"/></returns>
+        /// <exception cref="StateException">
+        /// </exception>
         public static async Task InitialiseAsync(this State state)
         {
             if(state.StateStatus.Equals(StateStatus.Initialized)
@@ -103,6 +105,28 @@ namespace Headway.Core.Extensions
             }
         }
 
+        /// <summary>
+        /// A user can take ownership of a <see cref="State"/> if the user has write permission for that <see cref="State"/>.
+        /// The <see cref="State"/> must be the <see cref="Flow"/>'s <see cref="Flow.ActiveState"/> and cannot be owned.
+        /// 
+        /// Once the user has taken ownership:
+        ///             - if the <see cref="State.StateStatus"/> is <see cref="StateStatus.Uninitialized"/> the <see cref="State"/> will automatically be initialised.
+        ///             - if the <see cref="State.StateStatus"/> is <see cref="StateStatus.Initialized"/> the <see cref="State"/> will automatically be started.
+        ///             - if the <see cref="State.StateStatus"/> is <see cref="StateStatus.InProgress"/> the <see cref="State.Owner"/> will be set to the user.
+        ///             
+        /// <see cref="StateException"/> thrown when:
+        ///             - The <see cref="Flow"/> has not been bootstrapped.
+        ///             - The <see cref="State"/> is not the <see cref="Flow"/>'s <see cref="Flow.ActiveState"/> 
+        ///             - the user does'nt have write permission for the <see cref="State"/>
+        ///             - the <see cref="State.IsOwnerRestricted"/> = false
+        ///             - the <see cref="State.StateStatus"/> is <see cref="StateStatus.Completed"/> 
+        ///             - The <see cref="State"/> already has an owner.
+        /// </summary>
+        /// <param name="state">The <see cref="State"/></param>
+        /// <param name="user">The user taking ownership of the <see cref="State"/>.</param>
+        /// <returns>A <see cref="Task"/></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="StateException"></exception>
         public static async Task TakeOwnershipAsync(this State state, Authorisation user)
         {
             if(user == null)
@@ -120,9 +144,9 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because it isn't the active state.");
             }
 
-            if(!user.Permissions.Any(p => p.Equals(state.StateCode)))
+            if(!user.Permissions.Any(p => p.Equals(state.WritePermission)))
             {
-                throw new StateException(state, $"{user.User} doesn't have permission to take ownership of {state.StateCode}.");
+                throw new StateException(state, $"{user.User} doesn't have write permission to take ownership of {state.StateCode}.");
             }
 
             if (!state.IsOwnerRestricted)
@@ -133,6 +157,11 @@ namespace Headway.Core.Extensions
             if (state.StateStatus.Equals(StateStatus.Completed))
             {
                 throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because it's {state.StateStatus}.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(state.Owner))
+            {
+                throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because it's already owned by {state.Owner}.");
             }
 
             state.Owner = user.User;
@@ -152,6 +181,27 @@ namespace Headway.Core.Extensions
             state.Flow.History.RecordTakeOwnership(state);
         }
 
+        /// <summary>
+        /// A user can relinquish the ownership of a <see cref="State"/> if the user has write permission for that <see cref="State"/>.
+        /// The <see cref="State"/> must be the <see cref="Flow"/>'s <see cref="Flow.ActiveState"/> and the <see cref="State.StateStatus"/>
+        /// must be <see cref="StateStatus.InProgress"/>.
+        /// 
+        /// Relinquishing ownership of the <see cref="State"/> doesn't change its <see cref="State.StateStatus"/>, it simply sets the 
+        /// <see cref="State.Owner"/> to null.
+        /// 
+        /// <see cref="StateException"/> thrown when:
+        ///             - the <see cref="Flow"/> has not been bootstrapped.
+        ///             - the <see cref="State"/> is not the <see cref="Flow"/>'s <see cref="Flow.ActiveState"/> 
+        ///             - the user does'nt have write permission for the <see cref="State"/>
+        ///             - the <see cref="State.IsOwnerRestricted"/> = false
+        ///             - the <see cref="State.StateStatus"/> is <see cref="StateStatus.Completed"/> 
+        ///             - the <see cref="State"/> doesn't have an owner. 
+        /// </summary>
+        /// <param name="state">The <see cref="State"/></param>
+        /// <param name="user">The user requestion the <see cref="State"/> relinquishesh ownership.</param>
+        /// <returns>A <see cref="Task"/></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="StateException"></exception>
         public static async Task RelinquishOwnershipAsync(this State state, Authorisation user)
         {
             if (user == null)
@@ -169,9 +219,9 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because it isn't the active state.");
             }
 
-            if (!user.Permissions.Any(p => p.Equals(state.StateCode)))
+            if (!user.Permissions.Any(p => p.Equals(state.WritePermission)))
             {
-                throw new StateException(state, $"{user.User} doesn't have permission to relinquish ownership of {state.StateCode}");
+                throw new StateException(state, $"{user.User} doesn't have write permission to relinquish ownership of {state.StateCode}");
             }
 
             if (!state.IsOwnerRestricted)
@@ -190,7 +240,7 @@ namespace Headway.Core.Extensions
             }
 
             state.Comment = $"{state.Owner} ownership of {state.StateCode} relinquished by {user.User}";
-            state.Owner = string.Empty;
+            state.Owner = default;
 
             state.Flow.History.RecordRelinquishOwnership(state);
         }
@@ -211,7 +261,7 @@ namespace Headway.Core.Extensions
         ///             - the <see cref="State"/> is <see cref="StateType.Auto"/> but it's <see cref="State.AutoActionResult"/> = <see cref="StateAutoActionResult.Unknown"/>.
         /// </summary>
         /// <param name="state">The state to start.</param>
-        /// <returns>A Task.</returns>
+        /// <returns>A <see cref="Task"/></returns>
         /// <exception cref="StateException"></exception>
         public static async Task StartAsync(this State state)
         {
@@ -283,7 +333,7 @@ namespace Headway.Core.Extensions
         /// </summary>
         /// <param name="state">The state to complete.</param>
         /// <param name="transitionStateCode">Optional state code of the state to transition to once the state has been completed.</param>
-        /// <returns>A Task.</returns>
+        /// <returns>A <see cref="Task"/></returns>
         /// <exception cref="StateException"></exception>
         public static async Task CompleteAsync(this State state, string transitionStateCode = "")
         {
@@ -380,7 +430,7 @@ namespace Headway.Core.Extensions
         /// </summary>
         /// <param name="state">The state to reset.</param>
         /// <param name="regressStateCode">Optional state code of the state to regress to.</param>
-        /// <returns>A Task.</returns>
+        /// <returns>A <see cref="Task"/></returns>
         /// <exception cref="StateException">
         /// Thrown if
         /// - the state to be reset is <see cref="StateStatus.Uninitialized"/>
@@ -468,7 +518,7 @@ namespace Headway.Core.Extensions
         /// </summary>
         /// <param name="state">The <see cref="State"/>.</param>
         /// <param name="stateFunctionType">The <see cref="StateActionType"/>.</param>
-        /// <returns>A task.</returns>
+        /// <returns>A <see cref="Task"/></returns>
         public static async Task ExecuteActionsAsync(this State state, StateActionType stateFunctionType)
         {
             if (state.StateActions == null)
