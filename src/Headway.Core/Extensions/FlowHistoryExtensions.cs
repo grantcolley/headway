@@ -7,6 +7,26 @@ namespace Headway.Core.Extensions
     public static class FlowHistoryExtensions
     {
         /// <summary>
+        /// Records a <see cref="State"/> take ownership event.
+        /// </summary>
+        /// <param name="history">The <see cref="FlowHistory"/></param>
+        /// <param name="state">The <see cref="State"/></param>
+        public static void RecordTakeOwnership(this List<FlowHistory> history, State state)
+        {
+            history.RecordHistory(state, FlowHistoryEvents.TAKE_OWNERSHIP);
+        }
+
+        /// <summary>
+        /// Records a <see cref="State"/> relinquish ownership event.
+        /// </summary>
+        /// <param name="history">The <see cref="FlowHistory"/></param>
+        /// <param name="state">The <see cref="State"/></param>
+        public static void RecordRelinquishOwnership(this List<FlowHistory> history, State state)
+        {
+            history.RecordHistory(state, FlowHistoryEvents.RELINQUISH_OWNERSHIP);
+        }
+
+        /// <summary>
         /// Records a <see cref="State"/> Initialize event.
         /// </summary>
         /// <param name="history">The <see cref="FlowHistory"/></param>
