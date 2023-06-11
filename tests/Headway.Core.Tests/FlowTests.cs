@@ -271,7 +271,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public void Flow_RemediatR_REDRESS_CREATE_To_FINAL_REVIEW_REPLAY_HISTORY()
+        public void Flow_RemediatR_REDRESS_CREATE_To_FINAL_REVIEW_ReplayHistory()
         {
             // Arrange
             var history = GetHistoryRedressCreateToFinalReview();
@@ -314,7 +314,7 @@ namespace Headway.Core.Tests
         }
 
         [TestMethod]
-        public void Flow_RemediatR_REDRESS_CREATE_To_FINAL_REVIEW_To_REDRESS_REVIEW_REPLAY_HISTORY()
+        public void Flow_RemediatR_REDRESS_CREATE_To_FINAL_REVIEW_To_REDRESS_REVIEW_ReplayHistory()
         {
             // Arrange
             var history = GetHistoryRedressCreateToFinalReview();
@@ -458,6 +458,46 @@ namespace Headway.Core.Tests
             }
         }
 
+        [TestMethod]
+        public async Task Flow_TakeOwnership_State_InProgress_ReplayHistory()
+        {
+            // Arrange
+            var history = GetHistoryRedressCreateToRefundReview();
+            var expectedReplayHistoryList = GetReplayHistoryRedressCreateToRefundReviewTakeOwnership();
+
+            var permissions = new List<string>
+            {
+                RemediatRAuthorisation.REFUND_ASSESSOR_WRITE
+            };
+
+            var authorisation = AuthorisationHelper.CreateAuthorisation(permissions);
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap(history);
+
+            // Act
+            flow.ActiveState.RelinquishOwnership(authorisation);
+
+            await flow.ActiveState.TakeOwnershipAsync(authorisation).ConfigureAwait(false);
+
+            var flowHistory = flow.ReplayFlowHistory();
+
+            // Assert
+            var replayHistory = JsonSerializer.Serialize<List<FlowHistory>>(flow.ReplayHistory, new JsonSerializerOptions { WriteIndented = true });
+            var expectedReplayHistory = JsonSerializer.Serialize<List<FlowHistory>>(expectedReplayHistoryList, new JsonSerializerOptions { WriteIndented = true });
+            var refundReview = flow.StateDictionary[RemediatRFlowCodes.REFUND_REVIEW_CODE];
+
+            Assert.AreSame(refundReview, flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(Environment.UserName, flow.ActiveState.Owner);
+            Assert.AreEqual(RemediatRFlowCodes.REFUND_REVIEW_CODE, flowHistory.StateCode);
+            Assert.AreEqual(FlowHistoryEvents.TAKE_OWNERSHIP, flowHistory.Event);
+            Assert.AreEqual(Environment.UserName, flowHistory.Owner);
+            Assert.AreEqual(StateStatus.InProgress, flowHistory.StateStatus);
+            Assert.AreEqual(expectedReplayHistory, replayHistory);
+        }
+
         private static List<FlowHistory> GetHistoryRedressCreateToFinalReview()
         {
             var jsonHistoryRedressCreateToFinalReview = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW.txt"));
@@ -587,6 +627,27 @@ namespace Headway.Core.Tests
         private static List<FlowHistory> GetHistoryRedressCreateToFinalReviewReplay()
         {
             var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_REDRESS_CREATE_To_FINAL_REVIEW_Replay.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            return history;
+        }
+
+        private static List<FlowHistory> GetReplayHistoryRedressCreateToRefundReviewTakeOwnership()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_TakeOwnership_State_InProgress_ReplayHistory.txt"));
             var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var h in history)
