@@ -1,0 +1,26 @@
+﻿[
+  {
+    "StateStatus": 1,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_CREATE",
+    "Event": "Initialize",
+    "Owner": "dummy_account",
+    "Comment": "dummy_account takes ownership of REDRESS_CREATE",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_CREATE",
+    "Event": "Start",
+    "Owner": "dummy_account",
+    "Comment": null,
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  }
+]
