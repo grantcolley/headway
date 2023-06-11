@@ -199,6 +199,8 @@ namespace Headway.Core.Extensions
                 {
                     case FlowHistoryEvents.INITIALIZE:
                     case FlowHistoryEvents.START:
+                    case FlowHistoryEvents.TAKE_OWNERSHIP:
+                    case FlowHistoryEvents.RELINQUISH_OWNERSHIP:
                     case FlowHistoryEvents.COMPLETE:
                         if(!flow.ReplayHistory.Any())
                         {
@@ -284,13 +286,15 @@ namespace Headway.Core.Extensions
             }
             else
             {
-                if(lastHistory.StateCode.Equals(flow.FinalState.StateCode)
+                if (lastHistory.StateCode.Equals(flow.FinalState.StateCode)
                     && lastHistory.Event.Equals(FlowHistoryEvents.COMPLETE))
                 {
                     flow.FlowStatus = Enums.FlowStatus.Completed;
                 }
-
-                flow.FlowStatus = Enums.FlowStatus.InProgress;
+                else
+                {
+                    flow.FlowStatus = Enums.FlowStatus.InProgress;
+                }
             }
 
             return lastHistory;
