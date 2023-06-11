@@ -46,6 +46,21 @@
     <None Update="Data\RemediatR_Flow_REFUND_REVIEW_Reset_To_REDRESS_CREATE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\RemediatR_Flow_RelinquishOwnership_State_InProgress.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\RemediatR_Flow_TakeOwnership_State_Initialised.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\RemediatR_Flow_TakeOwnership_State_InProgress_ReplayHistory.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\RemediatR_Flow_TakeOwnership_State_Uninitialised.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\RemediatR_Flow_TakeOwnership_State_InProgress.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
