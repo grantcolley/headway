@@ -101,6 +101,7 @@ namespace Headway.Core.Extensions
                 || (state.IsOwnerRestricted
                 && !string.IsNullOrWhiteSpace(state.Owner)))
             {
+                state.Comment = default;
                 await state.StartAsync().ConfigureAwait(false);
             }
         }
@@ -164,21 +165,41 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because it's already owned by {state.Owner}.");
             }
 
-            state.Owner = user.User;
-            state.Comment = $"Ownership of {state.StateCode} taken by {user.User}";
+            var comment = $"{Environment.UserName} takes ownership of {state.StateCode}";
+
+            Task TakeOwnershipOnInitialisation(State state, StateActionType stateActionType, int order)
+            {
+                state.Owner = user.User;
+                state.Comment = comment;
+                return Task.CompletedTask;
+            }
 
             if (state.StateStatus.Equals(StateStatus.Uninitialized))
             {
+                state.StateActions.Add(new StateAction
+                {
+                    StateActionType = StateActionType.Initialize,
+                    ActionAsync = TakeOwnershipOnInitialisation
+                });
+
                 await state.InitialiseAsync().ConfigureAwait(false);
-                return;
             }
             else if(state.StateStatus.Equals(StateStatus.Initialized))
             {
-                await state.StartAsync().ConfigureAwait(false);
-                return;
-            }
+                state.StateActions.Add(new StateAction
+                {
+                    StateActionType = StateActionType.Start,
+                    ActionAsync = TakeOwnershipOnInitialisation
+                });
 
-            state.Flow.History.RecordTakeOwnership(state);
+                await state.StartAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                state.Owner = user.User;
+                state.Comment = comment;
+                state.Flow.History.RecordTakeOwnership(state);
+            }
         }
 
         /// <summary>
@@ -199,10 +220,9 @@ namespace Headway.Core.Extensions
         /// </summary>
         /// <param name="state">The <see cref="State"/></param>
         /// <param name="user">The user requestion the <see cref="State"/> relinquishesh ownership.</param>
-        /// <returns>A <see cref="Task"/></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="StateException"></exception>
-        public static async Task RelinquishOwnershipAsync(this State state, Authorisation user)
+        public static void RelinquishOwnership(this State state, Authorisation user)
         {
             if (user == null)
             {
@@ -239,7 +259,7 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because it doesn't have an owner.");
             }
 
-            state.Comment = $"{state.Owner} ownership of {state.StateCode} relinquished by {user.User}";
+            state.Comment = $"{user.User} relinquishes ownership of {state.StateCode} from {state.Owner}";
             state.Owner = default;
 
             state.Flow.History.RecordRelinquishOwnership(state);
