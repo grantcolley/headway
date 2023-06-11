@@ -4,6 +4,7 @@ using Headway.Core.Extensions;
 using Headway.Core.Model;
 using Headway.Core.Tests.Helpers;
 using Headway.SeedData.RemediatR;
+using RemediatR.Core.Constants;
 using System.Text.Json;
 
 namespace Headway.Core.Tests
@@ -559,6 +560,226 @@ namespace Headway.Core.Tests
 
                 throw;
             }
+        }
+
+        [TestMethod]
+        public async Task TakeOwnership_State_Uninitialised()
+        {
+            // Arrange
+            var expectedHistoryList = GetHistoryTakeOwnershipStateUninitialised();
+
+            var permissions = new List<string>
+            {
+                RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE
+            };
+
+            var authorisation = AuthorisationHelper.CreateAuthorisation(permissions);
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap();
+
+            // Act
+            await flow.ActiveState.TakeOwnershipAsync(authorisation).ConfigureAwait(false);
+
+            // Assert
+            var history = JsonSerializer.Serialize<List<FlowHistory>>(flow.History, new JsonSerializerOptions { WriteIndented = true });
+            var expectedHistory = JsonSerializer.Serialize<List<FlowHistory>>(expectedHistoryList, new JsonSerializerOptions { WriteIndented = true });
+
+            Assert.AreEqual(flow.States.FirstState(), flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(Environment.UserName, flow.ActiveState.Owner);
+            Assert.AreEqual(expectedHistory, history);
+        }
+
+        [TestMethod]
+        public async Task TakeOwnership_State_Initialised()
+        {
+            // Arrange
+            var expectedHistoryList = GetHistoryTakeOwnershipStateInitialised();
+
+            var permissions = new List<string>
+            {
+                RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE
+            };
+
+            var authorisation = AuthorisationHelper.CreateAuthorisation(permissions);
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap();
+
+            await flow.ActiveState.InitialiseAsync().ConfigureAwait(false);
+
+            // Act
+            await flow.ActiveState.TakeOwnershipAsync(authorisation).ConfigureAwait(false);
+
+            // Assert
+            var history = JsonSerializer.Serialize<List<FlowHistory>>(flow.History, new JsonSerializerOptions { WriteIndented = true });
+            var expectedHistory = JsonSerializer.Serialize<List<FlowHistory>>(expectedHistoryList, new JsonSerializerOptions { WriteIndented = true });
+
+            Assert.AreEqual(flow.States.FirstState(), flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(Environment.UserName, flow.ActiveState.Owner);
+            Assert.AreEqual(expectedHistory, history);
+        }
+
+        [TestMethod]
+        public async Task RelinquishOwnership_State_InProgress()
+        {
+            // Arrange
+            var expectedHistoryList = GetHistoryRelinquishOwnershipStateInProgress();
+
+            var permissions = new List<string>
+            {
+                RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE
+            };
+
+            var authorisation = AuthorisationHelper.CreateAuthorisation(permissions);
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap();
+
+            await flow.ActiveState.TakeOwnershipAsync(authorisation).ConfigureAwait(false);
+
+            // Act
+            flow.ActiveState.RelinquishOwnership(authorisation);
+
+            // Assert
+            var history = JsonSerializer.Serialize<List<FlowHistory>>(flow.History, new JsonSerializerOptions { WriteIndented = true });
+            var expectedHistory = JsonSerializer.Serialize<List<FlowHistory>>(expectedHistoryList, new JsonSerializerOptions { WriteIndented = true });
+
+            Assert.AreEqual(flow.States.FirstState(), flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.IsNull(flow.ActiveState.Owner);
+            Assert.AreEqual(expectedHistory, history);
+        }
+
+        [TestMethod]
+        public async Task TakeOwnership_State_InProgress()
+        {
+            // Arrange
+            var expectedHistoryList = GetHistoryTakeOwnershipStateInProgress();
+
+            var permissions = new List<string>
+            {
+                RemediatRAuthorisation.REDRESS_CASE_OWNER_WRITE
+            };
+
+            var authorisation = AuthorisationHelper.CreateAuthorisation(permissions);
+
+            var flow = RemediatRFlow.CreateRemediatRFlow();
+
+            flow.Bootstrap();
+
+            await flow.ActiveState.TakeOwnershipAsync(authorisation).ConfigureAwait(false);
+
+            flow.ActiveState.RelinquishOwnership(authorisation);
+
+            // Act
+            await flow.ActiveState.TakeOwnershipAsync(authorisation).ConfigureAwait(false);
+
+            // Assert
+            var history = JsonSerializer.Serialize<List<FlowHistory>>(flow.History, new JsonSerializerOptions { WriteIndented = true });
+            var expectedHistory = JsonSerializer.Serialize<List<FlowHistory>>(expectedHistoryList, new JsonSerializerOptions { WriteIndented = true });
+
+            Assert.AreEqual(flow.States.FirstState(), flow.ActiveState);
+            Assert.AreEqual(StateStatus.InProgress, flow.ActiveState.StateStatus);
+            Assert.AreEqual(Environment.UserName, flow.ActiveState.Owner);
+            Assert.AreEqual(expectedHistory, history);
+        }
+
+        private static List<FlowHistory> GetHistoryTakeOwnershipStateUninitialised()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_TakeOwnership_State_Uninitialised.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            return history;
+        }
+
+        private static List<FlowHistory> GetHistoryTakeOwnershipStateInitialised()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_TakeOwnership_State_Initialised.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+            }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            return history;
+        }
+
+        private static List<FlowHistory> GetHistoryRelinquishOwnershipStateInProgress()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_RelinquishOwnership_State_InProgress.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+                else if (!string.IsNullOrWhiteSpace(h.Comment))
+                {
+                    h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                }
+            }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            return history;
+        }
+
+        private static List<FlowHistory> GetHistoryTakeOwnershipStateInProgress()
+        {
+            var jsonHistory = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "RemediatR_Flow_TakeOwnership_State_InProgress.txt"));
+            var history = JsonSerializer.Deserialize<List<FlowHistory>>(jsonHistory);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            foreach (var h in history)
+            {
+                if (h.Owner == "dummy_account")
+                {
+                    h.Owner = Environment.UserName;
+                    if (!string.IsNullOrWhiteSpace(h.Comment))
+                    {
+                        h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                    }
+                }
+                else if (!string.IsNullOrWhiteSpace(h.Comment))
+                {
+                    h.Comment = h.Comment.Replace("dummy_account", Environment.UserName);
+                }
+            }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            return history;
         }
     }
 }
