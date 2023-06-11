@@ -1,0 +1,62 @@
+﻿[
+  {
+    "StateStatus": 3,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REDRESS_CREATE",
+    "Event": "Complete",
+    "Owner": "dummy_account",
+    "Comment": "Standard REDRESS_CREATE Complete by dummy_account",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 3,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_ASSESSMENT",
+    "Event": "Complete",
+    "Owner": "system_account",
+    "Comment": "Parent REFUND_ASSESSMENT Complete by system_account",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 3,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_CALCULATION",
+    "Event": "Complete",
+    "Owner": "dummy_account",
+    "Comment": "Standard REFUND_CALCULATION Complete by dummy_account",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 3,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_VERIFICATION",
+    "Event": "Complete",
+    "Owner": "dummy_account",
+    "Comment": "Standard REFUND_VERIFICATION Complete by dummy_account",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  },
+  {
+    "StateStatus": 2,
+    "FlowCode": "REMEDIATR",
+    "StateCode": "REFUND_REVIEW",
+    "Event": "Take Ownership",
+    "Owner": "dummy_account",
+    "Comment": "dummy_account takes ownership of REFUND_REVIEW",
+    "CreatedDate": null,
+    "CreatedBy": null,
+    "ModifiedDate": null,
+    "ModifiedBy": null
+  }
+]
