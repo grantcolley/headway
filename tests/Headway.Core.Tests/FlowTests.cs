@@ -286,7 +286,7 @@ namespace Headway.Core.Tests
             // Assert
             Assert.AreEqual(flow.FinalState, flow.ActiveState);
             Assert.AreEqual(StateStatus.Completed, flow.ActiveState.StateStatus);
-            Assert.AreEqual(FlowStatus.InProgress, flow.FlowStatus);
+            Assert.AreEqual(FlowStatus.Completed, flow.FlowStatus);
 
             var lastIndex = flow.History.Count - 1;
 
