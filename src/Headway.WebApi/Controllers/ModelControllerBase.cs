@@ -10,9 +10,9 @@ namespace Headway.WebApi.Controllers
     public abstract class ModelControllerBase<T,K> : ApiControllerBase<K>
     {
         public ModelControllerBase(
-            IRepository authorisationRepository,
+            IRepository repository,
             ILogger<K> logger)
-            : base(authorisationRepository, logger)
+            : base(repository, logger)
         {
         }
 
