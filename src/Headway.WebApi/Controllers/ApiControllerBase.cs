@@ -1,11 +1,8 @@
 ﻿using Headway.Core.Interface;
-using Headway.Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Serilog.Context;
-using Serilog.Core;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
