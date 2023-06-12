@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class ConfigurationController : ApiControllerBase<ConfigurationController>
+    public class ConfigurationController : ModelControllerBase<Config, ConfigurationController>
     {
         private readonly IConfigurationRepository configRepository;
 
@@ -19,24 +19,6 @@ namespace Headway.WebApi.Controllers
             : base(configRepository, logger)
         {
             this.configRepository = configRepository;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
-                .ConfigureAwait(false);
-
-            if (!authorised)
-            {
-                return Unauthorized();
-            }
-
-            var config = await configRepository
-                .GetConfigsAsync()
-                .ConfigureAwait(false);
-
-            return Ok(config);
         }
 
         [HttpGet("{name}")]
@@ -57,8 +39,26 @@ namespace Headway.WebApi.Controllers
             return Ok(config);
         }
 
+        [HttpGet]
+        public override async Task<IActionResult> Get()
+        {
+            var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
+                .ConfigureAwait(false);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var config = await configRepository
+                .GetConfigsAsync()
+                .ConfigureAwait(false);
+
+            return Ok(config);
+        }
+
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
+        public override async Task<IActionResult> Get(int id)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -76,7 +76,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Config config)
+        public override async Task<IActionResult> Post([FromBody] Config config)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -94,7 +94,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Config config)
+        public override async Task<IActionResult> Put([FromBody] Config config)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -112,7 +112,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpDelete("{configId}")]
-        public async Task<IActionResult> Delete(int configId)
+        public override async Task<IActionResult> Delete(int configId)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);

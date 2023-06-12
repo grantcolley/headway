@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class FlowController : ApiControllerBase<FlowController>
+    public class FlowController : ModelControllerBase<Flow, FlowController>
     {
         private readonly IFlowRepository flowRepository;
 
@@ -22,7 +22,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public override async Task<IActionResult> Get()
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -40,7 +40,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet("{flowId}")]
-        public async Task<IActionResult> Get(int flowId)
+        public override async Task<IActionResult> Get(int flowId)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -58,7 +58,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Flow flow)
+        public override async Task<IActionResult> Post([FromBody] Flow flow)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -76,7 +76,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Flow flow)
+        public override async Task<IActionResult> Put([FromBody] Flow flow)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -94,7 +94,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpDelete("{flowId}")]
-        public async Task<IActionResult> Delete(int flowId)
+        public override async Task<IActionResult> Delete(int flowId)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);

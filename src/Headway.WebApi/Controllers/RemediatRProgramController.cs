@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class RemediatRProgramController : ApiControllerBase<RemediatRProgramController>
+    public class RemediatRProgramController : ModelControllerBase<RemediatR.Core.Model.Program, RemediatRProgramController>
     {
         private readonly IRemediatRRepository remediatRRepository;
 
@@ -21,7 +21,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public override async Task<IActionResult> Get()
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -39,7 +39,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet("{programId}")]
-        public async Task<IActionResult> Get(int programId)
+        public override async Task<IActionResult> Get(int programId)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -57,7 +57,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] RemediatR.Core.Model.Program program)
+        public override async Task<IActionResult> Post([FromBody] RemediatR.Core.Model.Program program)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -75,7 +75,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] RemediatR.Core.Model.Program program)
+        public override async Task<IActionResult> Put([FromBody] RemediatR.Core.Model.Program program)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -93,7 +93,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpDelete("{programId}")]
-        public async Task<IActionResult> Delete(int programId)
+        public override async Task<IActionResult> Delete(int programId)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);

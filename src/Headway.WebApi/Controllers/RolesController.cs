@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class RolesController : ApiControllerBase<RolesController>
+    public class RolesController : ModelControllerBase<Role, RolesController>
     {
         private readonly IAuthorisationRepository authorisationRepository;
 
@@ -22,7 +22,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public override async Task<IActionResult> Get()
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -40,7 +40,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpGet("{roleId}")]
-        public async Task<IActionResult> Get(int roleId)
+        public override async Task<IActionResult> Get(int roleId)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -58,7 +58,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Role role)
+        public override async Task<IActionResult> Post([FromBody] Role role)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -76,7 +76,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Role role)
+        public override async Task<IActionResult> Put([FromBody] Role role)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
@@ -94,7 +94,7 @@ namespace Headway.WebApi.Controllers
         }
 
         [HttpDelete("{roleId}")]
-        public async Task<IActionResult> Delete(int roleId)
+        public override async Task<IActionResult> Delete(int roleId)
         {
             var authorised = await IsAuthorisedAsync(HeadwayAuthorisation.ADMIN)
                 .ConfigureAwait(false);
