@@ -1,6 +1,8 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Args;
+using Headway.Core.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -28,5 +30,11 @@ namespace Headway.WebApi.Controllers
 
         [HttpDelete]
         public abstract Task<IActionResult> Delete(int id);
+
+        [HttpPost("[action]")]
+        public virtual Task<IActionResult> Search([FromBody] SearchArgs searchArgs)
+        {
+            throw new NotImplementedException(searchArgs.SourceConfig);
+        }
     }
 }
