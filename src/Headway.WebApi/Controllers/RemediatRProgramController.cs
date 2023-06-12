@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class RemediatRProgramController : ModelControllerBase<RemediatR.Core.Model.Program, RemediatRProgramController>
+    public class RemediatRProgramController : ApiModelControllerBase<RemediatR.Core.Model.Program, RemediatRProgramController>
     {
         private readonly IRemediatRRepository remediatRRepository;
 

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
 {
-    public abstract class ModelControllerBase<T,K> : ApiControllerBase<K>
+    public abstract class ApiModelControllerBase<T,K> : ApiControllerBase<K>
     {
-        public ModelControllerBase(
+        public ApiModelControllerBase(
             IRepository repository,
             ILogger<K> logger)
             : base(repository, logger)

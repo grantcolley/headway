@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class DemoModelController : ModelControllerBase<DemoModel, DemoModelController>
+    public class DemoModelController : ApiModelControllerBase<DemoModel, DemoModelController>
     {
         private readonly IDemoModelRepository demoModelRepository;
 

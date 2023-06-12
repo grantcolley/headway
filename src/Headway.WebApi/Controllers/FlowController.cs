@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class FlowController : ModelControllerBase<Flow, FlowController>
+    public class FlowController : ApiModelControllerBase<Flow, FlowController>
     {
         private readonly IFlowRepository flowRepository;
 

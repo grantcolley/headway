@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class RemediatRRedressController : ModelControllerBase<Redress, RemediatRRedressController>
+    public class RemediatRRedressController : ApiModelControllerBase<Redress, RemediatRRedressController>
     {
         private readonly IRemediatRRepository remediatRRepository;
 

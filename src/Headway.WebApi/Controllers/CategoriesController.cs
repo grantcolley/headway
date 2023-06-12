@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class CategoriesController : ModelControllerBase<Category, CategoriesController>
+    public class CategoriesController : ApiModelControllerBase<Category, CategoriesController>
     {
         private readonly IModuleRepository moduleRepository;
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class ConfigurationController : ModelControllerBase<Config, ConfigurationController>
+    public class ConfigurationController : ApiModelControllerBase<Config, ConfigurationController>
     {
         private readonly IConfigurationRepository configRepository;
 
