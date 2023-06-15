@@ -1,13 +1,12 @@
 ﻿using Headway.Core.Args;
 using Headway.Core.Interface;
-using Headway.Core.Model;
 using RemediatR.Core.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RemediatR.Core.Interface
 {
-    public interface IRemediatRRepository : IRepository
+    public interface IRemediatRRepository<RemediatRRepository> : IRepositoryFlowable<RedressFlowContext>
     {
         Task<IEnumerable<Customer>> GetCustomersAsync();
         Task<IEnumerable<Customer>> GetCustomersAsync(SearchArgs searchArgs);
