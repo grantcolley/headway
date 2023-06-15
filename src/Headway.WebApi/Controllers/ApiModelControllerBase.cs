@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
 {
-    public abstract class ApiModelControllerBase<T,K> : ApiControllerBase<K>
+    public abstract class ApiModelControllerBase<TModel,TController> : ApiControllerBase<TController>
     {
         public ApiModelControllerBase(
             IRepository repository,
-            ILogger<K> logger)
+            ILogger<TController> logger)
             : base(repository, logger)
         {
         }
@@ -23,10 +23,10 @@ namespace Headway.WebApi.Controllers
         public abstract Task<IActionResult> Get(int id);
 
         [HttpPost]
-        public abstract Task<IActionResult> Post([FromBody] T model);
+        public abstract Task<IActionResult> Post([FromBody] TModel model);
 
         [HttpPut]
-        public abstract Task<IActionResult> Put([FromBody] T model);
+        public abstract Task<IActionResult> Put([FromBody] TModel model);
 
         [HttpDelete]
         public abstract Task<IActionResult> Delete(int id);
