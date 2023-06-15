@@ -1,20 +1,19 @@
 ﻿using Headway.Core.Args;
-using RemediatR.Core.Enums;
-using RemediatR.Core.Interface;
-using RemediatR.Core.Model;
 using Headway.Repository.Data;
 using Headway.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RemediatR.Core.Enums;
+using RemediatR.Core.Interface;
+using RemediatR.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Headway.Core.Model;
 
 namespace RemediatR.Repository
 {
-    public class RemediatRRepository : RepositoryBase<RemediatRRepository>, IRemediatRRepository
+    public class RemediatRRepository : RepositoryBase<RemediatRRepository>, IRemediatRRepository<RedressFlowContext>
     {
         public RemediatRRepository(ApplicationDbContext applicationDbContext, ILogger<RemediatRRepository> logger)
             : base(applicationDbContext, logger)
@@ -687,6 +686,22 @@ namespace RemediatR.Repository
             return await applicationDbContext
                 .SaveChangesAsync()
                 .ConfigureAwait(false);
+        }
+
+        public async Task<RedressFlowContext> GetFlowContextAsync(int id)
+        {
+            var redressFlowContext = await applicationDbContext.RedressFlowContexts
+                .Include(r => r.Flow)
+                .Include(r => r.RedressFlowHistory)
+                .FirstAsync(r => r.RedressFlowContextId.Equals(id))
+                .ConfigureAwait(false);
+
+            var authorisation = await GetAuthorisationAsync(User)
+                .ConfigureAwait(false);
+
+            redressFlowContext.Authorisation = authorisation;
+
+            return redressFlowContext;
         }
     }
 }
