@@ -12,10 +12,10 @@ namespace Headway.WebApi.Controllers
     [DynamicApiController]
     public class RemediatRCustomerController : ApiModelControllerBase<Customer, RemediatRCustomerController>
     {
-        private readonly IRemediatRRepository remediatRRepository;
+        private readonly IRemediatRRepository<RedressFlowContext> remediatRRepository;
 
         public RemediatRCustomerController(
-            IRemediatRRepository repository, 
+            IRemediatRRepository<RedressFlowContext> repository, 
             ILogger<RemediatRCustomerController> logger) 
             : base(repository, logger)
         {
