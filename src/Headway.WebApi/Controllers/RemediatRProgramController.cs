@@ -3,6 +3,7 @@ using Headway.Core.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RemediatR.Core.Interface;
+using RemediatR.Core.Model;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -10,10 +11,10 @@ namespace Headway.WebApi.Controllers
     [DynamicApiController]
     public class RemediatRProgramController : ApiModelControllerBase<RemediatR.Core.Model.Program, RemediatRProgramController>
     {
-        private readonly IRemediatRRepository remediatRRepository;
+        private readonly IRemediatRRepository<RedressFlowContext> remediatRRepository;
 
         public RemediatRProgramController(
-            IRemediatRRepository repository, 
+            IRemediatRRepository<RedressFlowContext> repository, 
             ILogger<RemediatRProgramController> logger) 
             : base(repository, logger)
         {
