@@ -60,11 +60,7 @@ namespace Headway.Blazor.Controls.Flow.Components
         {
             FlowComponentContext.IsOwnerAssigning = true;
 
-            if (FlowTabDocument?.CurrentEditContext != null)
-            {
-                // assign / unassign here....
-                await Task.Delay(1000);
-            }
+            await FlowTabDocument.FlowExecutionAsync();
 
             FlowComponentContext.IsOwnerAssigning = false;
 
