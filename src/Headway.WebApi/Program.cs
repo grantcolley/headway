@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RemediatR.Core.Interface;
+using RemediatR.Core.Model;
 using RemediatR.Repository;
 using Serilog;
 using Serilog.Context;
@@ -68,7 +69,8 @@ builder.Services.AddScoped<IFlowRepository, FlowRepository>();
 builder.Services.AddScoped<IOptionsRepository, OptionsRepository>();
 builder.Services.AddScoped<IDemoModelRepository, DemoModelRepository>();
 builder.Services.AddScoped<ILogRepository, LogRepository>();
-builder.Services.AddScoped<IRemediatRRepository, RemediatRRepository>();
+builder.Services.AddScoped<IRemediatRRepository<RedressFlowContext>, RemediatRRepository>();
+builder.Services.AddScoped<IRedressFlowContextExecutionService, RedressFlowContextExecutionService>();
 
 builder.Services.AddCors(options =>
 {
