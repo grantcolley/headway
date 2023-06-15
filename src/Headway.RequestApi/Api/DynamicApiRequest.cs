@@ -334,5 +334,28 @@ namespace Headway.RequestApi.Api
             using var httpResponseMessage = await httpClient.DeleteAsync(configPath).ConfigureAwait(false);
             return await GetResponseAsync<int>(httpResponseMessage).ConfigureAwait(false);
         }
+
+        public async Task<IResponse<DynamicModel<T>>> FlowExecutionAsync<T>(DynamicModel<T> dynamicModel) where T : class, new()
+        {
+            var uri = $"{dynamicModel.Config.ModelApi}/{Controllers.FLOW_EXECUTION}";
+
+            using var updateResponse = await httpClient.PutAsJsonAsync(
+                uri, dynamicModel.Model)
+                .ConfigureAwait(false);
+
+            var response = await GetResponseAsync<T>(updateResponse).ConfigureAwait(false);
+
+            if (response.IsSuccess)
+            {
+                dynamicModel.Reset(response.Result);
+            }
+
+            return new Response<DynamicModel<T>>
+            {
+                IsSuccess = response.IsSuccess,
+                Message = response.Message,
+                Result = dynamicModel
+            };
+        }
     }
 }
