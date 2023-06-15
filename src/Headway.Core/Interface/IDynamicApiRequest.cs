@@ -16,5 +16,6 @@ namespace Headway.Core.Interface
         Task<IResponse<DynamicModel<T>>> AddDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new();
         Task<IResponse<DynamicModel<T>>> UpdateDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new();
         Task<IResponse<int>> DeleteDynamicModelAsync<T>(DynamicModel<T> dynamicModel) where T : class, new();
+        Task<IResponse<DynamicModel<T>>> FlowExecutionAsync<T>(DynamicModel<T> dynamicModel) where T : class, new();
     }
 }
