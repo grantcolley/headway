@@ -1,10 +1,12 @@
 ﻿using Headway.Core.Args;
 using Headway.Core.Attributes;
+using Headway.Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RemediatR.Core.Constants;
 using RemediatR.Core.Interface;
 using RemediatR.Core.Model;
+using RemediatR.Repository;
 using RemediatR.Repository.Constants;
 using System;
 using System.Threading.Tasks;
@@ -12,16 +14,19 @@ using System.Threading.Tasks;
 namespace Headway.WebApi.Controllers
 {
     [DynamicApiController]
-    public class RemediatRRedressController : ApiModelControllerBase<Redress, RemediatRRedressController>
+    public class RemediatRRedressController : ApiModelFlowControllerBase<Redress, RemediatRRedressController, RedressFlowContext>
     {
-        private readonly IRemediatRRepository remediatRRepository;
+        private readonly IRemediatRRepository<RedressFlowContext> remediatRRepository;
+        private readonly IRedressFlowContextExecutionService redressFlowContextExecutionService;
 
         public RemediatRRedressController(
-            IRemediatRRepository repository, 
+            IRemediatRRepository<RedressFlowContext> repository,
+            IRedressFlowContextExecutionService redressFlowContextExecutionService,
             ILogger<RemediatRRedressController> logger) 
             : base(repository, logger)
         {
             this.remediatRRepository = repository;
+            this.redressFlowContextExecutionService = redressFlowContextExecutionService;
         }
 
         [HttpPost("[action]")]
@@ -40,6 +45,25 @@ namespace Headway.WebApi.Controllers
                 .ConfigureAwait(false);
 
             return Ok(redressCases);
+        }
+
+        [HttpPut("[action]")]
+        public override async Task<IActionResult> FlowExecution([FromBody] Redress redress)
+        {
+            var authorised = IsFlowUserAuthenticatedAsync(redress.RedressFlowContext);
+
+            if (!authorised)
+            {
+                return Unauthorized();
+            }
+
+            var redressFlowContext = await redressFlowContextExecutionService.Execute(redress.RedressFlowContext);
+            
+            var savedRedress = await remediatRRepository
+                .UpdateRedressAsync(redress)
+                .ConfigureAwait(false);
+
+            return Ok(savedRedress);
         }
 
         [HttpPost("[action]")]
