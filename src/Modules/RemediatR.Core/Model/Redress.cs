@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Headway.Core.Attributes;
-using Headway.Core.Interface;
 using Headway.Core.Model;
 using RemediatR.Core.Constants;
 using System;
