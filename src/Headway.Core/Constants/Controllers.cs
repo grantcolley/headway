@@ -4,6 +4,7 @@
     {
         public const string CONFIGURATION = "Configuration";
         public const string CREATE_ACTION = "Create";
+        public const string FLOW_EXECUTION = "FlowExecution";
         public const string LOG = "Log";
         public const string MODULES_CLAIMMODULES = "Modules/ClaimModules";
         public const string OPTIONS = "Options";
