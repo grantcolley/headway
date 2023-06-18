@@ -1,4 +1,6 @@
-﻿using Headway.Core.Interface;
+﻿using Headway.Core.Args;
+using Headway.Core.Enums;
+using Headway.Core.Interface;
 using Headway.Core.Model;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,6 +23,9 @@ namespace RemediatR.Core.Model
 
         [NotMapped]
         public Authorisation Authorisation { get; set; }
+
+        [NotMapped]
+        public FlowExecutionArgs FlowExecutionArgs { get; set; }
 
         public List<FlowHistory> GetFlowHistory()
         {
