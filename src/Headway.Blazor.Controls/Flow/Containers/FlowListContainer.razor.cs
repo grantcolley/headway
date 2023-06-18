@@ -3,7 +3,6 @@ using Headway.Blazor.Controls.Flow.Components;
 using Headway.Blazor.Controls.Flow.Documents;
 using Headway.Core.Dynamic;
 using Headway.Core.Extensions;
-using Headway.Core.Helpers;
 using Headway.Core.Interface;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -73,8 +72,10 @@ namespace Headway.Blazor.Controls.Flow.Containers
                 {
                     activeListItem = Container.DynamicContainers.FirstOrDefault(c => c.ContainerId.Equals(activeListItem.ContainerId));
                 }
-
-                activeListItem ??= Container.DynamicContainers.First();
+                else
+                {
+                    activeListItem ??= Container.DynamicContainers.First();
+                }
             }
         }
     }
