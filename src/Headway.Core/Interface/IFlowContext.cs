@@ -1,4 +1,5 @@
-﻿using Headway.Core.Model;
+﻿using Headway.Core.Args;
+using Headway.Core.Model;
 using System.Collections.Generic;
 
 namespace Headway.Core.Interface
@@ -9,5 +10,6 @@ namespace Headway.Core.Interface
         Flow Flow { get; set; }
         List<FlowHistory> GetFlowHistory();
         Authorisation Authorisation { get; set; }
+        FlowExecutionArgs FlowExecutionArgs { get; set; }
     }
 }
