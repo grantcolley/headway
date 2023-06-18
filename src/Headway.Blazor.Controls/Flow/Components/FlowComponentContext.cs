@@ -70,14 +70,25 @@ namespace Headway.Blazor.Controls.Flow.Components
 
             Owner = ActiveState.Owner;
 
-            if (ActiveState.Transitions.Any())
+            if(ActiveState.StateStatus.Equals(StateStatus.Uninitialized))
             {
-                ActionTextItems.Add(FlowConstants.FLOW_ACTION_PROCEED);
+                ActionTextItems.Add(FlowConstants.FLOW_ACTION_INITIALISE);
             }
-
-            if (ActiveState.Regressions.Any())
+            else if (ActiveState.StateStatus.Equals(StateStatus.Initialized))
             {
-                ActionTextItems.Add(FlowConstants.FLOW_ACTION_REGRESS);
+                ActionTextItems.Add(FlowConstants.FLOW_ACTION_START);
+            }
+            else if (ActiveState.StateStatus.Equals(StateStatus.InProgress))
+            {
+                if (ActiveState.Transitions.Any())
+                {
+                    ActionTextItems.Add(FlowConstants.FLOW_ACTION_PROCEED);
+                }
+
+                if (ActiveState.Regressions.Any())
+                {
+                    ActionTextItems.Add(FlowConstants.FLOW_ACTION_REGRESS);
+                }
             }
 
             ActionText = ActionTextItems.FirstOrDefault();
