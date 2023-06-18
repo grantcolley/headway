@@ -1,81 +1,87 @@
 ﻿@typeparam T where T : class, new()
 @inherits FlowComponentBase<T>
 
-<MudPaper Class="d-flex flex-row align-center gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
+@if (ActiveStateStatus != Core.Enums.StateStatus.Completed)
+{
+    <MudPaper Class="d-flex flex-row align-center gap-4 pl-4 pt-1 pb-1 pr-4" Elevation="1">
 
-    @if(FlowComponentContext.CanManageOwnership)
-    {
-        @if (FlowComponentContext.IsOwnerAssigning)
+        @if(FlowComponentContext.CanManageOwnership)
         {
-            <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+            @if (FlowComponentContext.IsOwnerAssigning)
+            {
+                <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+            }
+            else
+            {
+                <MudTooltip Text="@FlowComponentContext.OwnerAssignedTooltip" Arrow="true">
+                    <MudToggleIconButton Toggled="@FlowComponentContext.OwnerAssigned"
+                                     Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
+                                     ToggledIcon="@Icons.Material.Filled.PersonRemove" ToggledColor="@Color.Default"
+                                     ToggledChanged="OnOwnerAssignedChangedAsync" />
+                </MudTooltip>
+            }
+        }
+
+        @if (FlowComponentContext.CanExecute)
+        {
+            @if (ActiveStateStatus.Equals(Core.Enums.StateStatus.InProgress))
+            {
+                @if (FlowComponentContext.ActionTextItems != null)
+                {
+                    <MudTooltip Text="@FlowConstants.FLOW_STATE_ACTION" Arrow="true">
+                        <MudSelect T="string" Class="align-self-center"
+                        @bind-Value="FlowComponentContext.ActionText"
+                        SelectedValuesChanged="OnActionChanged"
+                        Variant="Variant.Text"
+                        FullWidth=true
+                        Margin="Margin.Dense"
+                        MultiSelection="false">
+                            @foreach (var actionTextItem in FlowComponentContext.ActionTextItems)
+                            {
+                                <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudTooltip>
+                }
+
+                @if (FlowComponentContext.ActionTargetItems != null)
+                {
+                    <MudTooltip Text="@FlowConstants.FLOW_TARGET_STATE" Arrow="true">
+                        <MudSelect T="string" Class="align-self-center"
+                        @bind-Value="FlowComponentContext.ActionTarget"
+                        SelectedValuesChanged="OnActionTargetChanged"
+                        Variant="Variant.Text"
+                        FullWidth=true 
+                        Margin="Margin.Dense"
+                        MultiSelection="false">
+                            @foreach (var actionTargetItem in FlowComponentContext.ActionTargetItems)
+                            {
+                                <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudTooltip>
+                }
+
+                <MudTextField @bind-Value="FlowComponentContext.Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center" Margin="Margin.Dense"></MudTextField>
+            }
+
+            <MudSpacer />
+
+            @if (FlowComponentContext.IsExecuting)
+            {
+                <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+            }
+            else
+            {
+                <MudTooltip Text="@FlowConstants.FLOW_ACTION_EXECUTE" Arrow="true">
+                    <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" OnClick="OnExecutingClickAsync" />
+                </MudTooltip>
+            }
         }
         else
         {
-            <MudTooltip Text="@FlowComponentContext.OwnerAssignedTooltip" Arrow="true">
-                <MudToggleIconButton Toggled="@FlowComponentContext.OwnerAssigned"
-                                 Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
-                                 ToggledIcon="@Icons.Material.Filled.PersonRemove" ToggledColor="@Color.Default"
-                                 ToggledChanged="OnOwnerAssignedChangedAsync" />
-            </MudTooltip>
-        }
-    }
-
-    @if (FlowComponentContext.CanExecute)
-    {
-        @if (FlowComponentContext.ActionTextItems != null)
-        {
-            <MudTooltip Text="@FlowConstants.FLOW_STATE_ACTION" Arrow="true">
-                <MudSelect T="string" Class="align-self-center"
-                @bind-Value="FlowComponentContext.ActionText"
-                SelectedValuesChanged="OnActionChanged"
-                Variant="Variant.Text"
-                FullWidth=true
-                Margin="Margin.Dense"
-                MultiSelection="false">
-                    @foreach (var actionTextItem in FlowComponentContext.ActionTextItems)
-                    {
-                        <MudSelectItem T="string" Value="@actionTextItem">@actionTextItem</MudSelectItem>
-                    }
-                </MudSelect>
-            </MudTooltip>
+            <MudSpacer />
         }
 
-        @if (FlowComponentContext.ActionTargetItems != null)
-        {
-            <MudTooltip Text="@FlowConstants.FLOW_TARGET_STATE" Arrow="true">
-                <MudSelect T="string" Class="align-self-center"
-                @bind-Value="FlowComponentContext.ActionTarget"
-                SelectedValuesChanged="OnActionTargetChanged"
-                Variant="Variant.Text"
-                FullWidth=true 
-                Margin="Margin.Dense"
-                MultiSelection="false">
-                    @foreach (var actionTargetItem in FlowComponentContext.ActionTargetItems)
-                    {
-                        <MudSelectItem T="string" Value="@actionTargetItem">@actionTargetItem</MudSelectItem>
-                    }
-                </MudSelect>
-            </MudTooltip>
-        }
-        
-        <MudTextField @bind-Value="FlowComponentContext.Comment" Label="Comment" Variant="Variant.Text" Class="flex-grow-1 align-self-center" Margin="Margin.Dense"></MudTextField>
-
-        <MudSpacer />
-
-        @if (FlowComponentContext.IsExecuting)
-        {
-            <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-        }
-        else
-        {
-            <MudTooltip Text="@FlowConstants.FLOW_ACTION_EXECUTE" Arrow="true">
-                <MudIconButton Icon="@Icons.Material.Filled.PlayCircleFilled" Color="@Color.Default" OnClick="OnExecutingClickAsync" />
-            </MudTooltip>
-        }
-    }
-    else
-    {
-        <MudSpacer />
-    }
-
-</MudPaper>
+    </MudPaper>
+}
