@@ -15,6 +15,7 @@ namespace Headway.Core.Dynamic
         public object Model { get; set; }
         public int Order { get; set; }
         public string Label { get; set; }
+        public bool ReadOnly { get; set; }
         public string Tooltip { get; set; }
         public string ConfigName { get; set; }
         public string PropertyName { get; set; }
