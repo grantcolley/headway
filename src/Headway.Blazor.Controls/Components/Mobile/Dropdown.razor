@@ -25,7 +25,7 @@
             else
             {
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
-                    <MudSelect  T="string" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
+                    <MudSelect T="string" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false" ReadOnly="@Field.ReadOnly"
                                @bind-Value="PropertyValue" For="FieldExpression" SelectedValuesChanged="OnValueChanged" Label="@Field.Label">
                         @if (optionItems != null)
                         {

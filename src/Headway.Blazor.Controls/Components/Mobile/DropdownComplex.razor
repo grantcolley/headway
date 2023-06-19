@@ -28,7 +28,7 @@
             {
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
                     <MudSelect T="GenericItem<T>" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
-                           @bind-Value="SelectedItem" SelectedValuesChanged="OnValueChanged" Label="@Field.Label">
+                                @bind-Value="SelectedItem" SelectedValuesChanged="OnValueChanged" Label="@Field.Label" ReadOnly="@Field.ReadOnly">
                         @if (optionItems != null)
                         {
                             @foreach (var optionItem in optionItems)

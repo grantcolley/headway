@@ -20,7 +20,7 @@
         </div>
         <div class="col-sm-8">
             <MudTextField T="DateTime" @bind-Value="@PropertyValue" For="FieldExpression" Format="yyyy-MM-dd"
-                        Variant="Variant.Outlined" InputType="InputType.Date"/>
+                          Variant="Variant.Outlined" InputType="InputType.Date" ReadOnly="@Field.ReadOnly" />
         </div>
     </div>
 </div>

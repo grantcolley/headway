@@ -18,7 +18,7 @@
             {
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
                     <MudNumericField @bind-Value="@PropertyValue" MaxLength="@MaxLength" Min="@Min" Max="@Max"
-                                 For="FieldExpression" Variant="Variant.Outlined" Label="@Field.Label" />
+                                     For="FieldExpression" Variant="Variant.Outlined" Label="@Field.Label" ReadOnly="@Field.ReadOnly" />
                 </MudTooltip>    
             }
         </div>

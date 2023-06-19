@@ -18,7 +18,7 @@
             {
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
                     <MudTextField T="DateTime?" @bind-Value="@PropertyValue" For="FieldExpression" Format="yyyy-MM-dd"
-                              Variant="Variant.Outlined" InputType="InputType.Date" Label="@Field.Label" />
+                                  Variant="Variant.Outlined" InputType="InputType.Date" Label="@Field.Label" ReadOnly="@Field.ReadOnly" />
                 </MudTooltip>   
             }
         </div>

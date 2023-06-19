@@ -19,7 +19,7 @@
             }
         </div>
         <div class="col-sm-1">
-            <MudCheckBox T="bool" @bind-Checked="PropertyValue" />
+            <MudCheckBox T="bool" @bind-Checked="PropertyValue" ReadOnly="@Field.ReadOnly" />
         </div>
         <div class="col-sm-7"></div>
     </div>

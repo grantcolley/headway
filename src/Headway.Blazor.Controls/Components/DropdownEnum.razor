@@ -21,7 +21,7 @@
         </div>
         <div class="col-sm-8">
             <MudSelect  T="T" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
-                        @bind-Value="PropertyValue" SelectedValuesChanged="OnValueChanged">
+                        @bind-Value="PropertyValue" SelectedValuesChanged="OnValueChanged" ReadOnly="@Field.ReadOnly">
                 @if (optionItems != null)
                 {
                     @foreach (var optionItem in optionItems)

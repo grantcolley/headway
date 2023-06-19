@@ -16,7 +16,7 @@
             else
             {
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
-                    <MudTextField @bind-Value="@PropertyValue" For="FieldExpression" Variant="Variant.Outlined" Lines="@rows" Label="@Field.Label" />
+                    <MudTextField @bind-Value="@PropertyValue" For="FieldExpression" Variant="Variant.Outlined" Lines="@rows" Label="@Field.Label" ReadOnly="@Field.ReadOnly" />
                 </MudTooltip>    
             }
         </div>

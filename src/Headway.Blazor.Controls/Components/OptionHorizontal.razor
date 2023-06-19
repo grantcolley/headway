@@ -19,7 +19,7 @@
             }
         </div>
         <div class="col-sm-8">
-           <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression">
+            <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression" ReadOnly="@Field.ReadOnly">
                 @foreach (var option in options)
                 {
                     <MudRadio Option="@option.Id">@option.Display</MudRadio>

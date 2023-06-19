@@ -20,7 +20,7 @@
         </div>
         <div class="col-sm-8">
             <MudSelect T="string" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" MultiSelection="false"
-                        For="FieldExpression" @bind-Value="PropertyValue">
+                       For="FieldExpression" @bind-Value="PropertyValue" ReadOnly="@Field.ReadOnly">
                 @foreach (var item in Items)
                 {
                     <MudSelectItem T="string" Value="@item">@item</MudSelectItem>

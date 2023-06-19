@@ -19,7 +19,7 @@
             }
         </div>
         <div class="col-sm-8">
-            <MudTextField @bind-Value="@PropertyValue" For="FieldExpression" Variant="Variant.Outlined"/>
+            <MudTextField @bind-Value="@PropertyValue" For="FieldExpression" Variant="Variant.Outlined" ReadOnly="@Field.ReadOnly"/>
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@
             }
         </div>
         <div class="col-sm-8">
-            <MudNumericField @bind-Value="@PropertyValue" MaxLength="@MaxLength" Min="@Min" Max="@Max" For="FieldExpression" Variant="Variant.Outlined"/>
+            <MudNumericField @bind-Value="@PropertyValue" MaxLength="@MaxLength" Min="@Min" Max="@Max" For="FieldExpression" Variant="Variant.Outlined" ReadOnly="@Field.ReadOnly" />
         </div>
     </div>
 </div>

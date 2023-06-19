@@ -21,7 +21,7 @@
             else
             {
                 <MudTooltip Text="@Field.Tooltip" Placement="Placement.Top" Arrow="true">
-                    <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression">
+                    <MudRadioGroup @bind-SelectedOption="@PropertyValue" For="FieldExpression" ReadOnly="@Field.ReadOnly">
                         @foreach (var option in options)
                         {
                             <MudRadio Option="@option.Id">@option.Display</MudRadio>
