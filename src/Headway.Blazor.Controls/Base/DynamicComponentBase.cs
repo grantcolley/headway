@@ -4,6 +4,7 @@ using Headway.Core.Dynamic;
 using Headway.Core.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +20,18 @@ namespace Headway.Blazor.Controls.Base
 
         [Parameter]
         public List<DynamicArg> ComponentArgs { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            var readOnlyArg = ComponentArgs.FirstDynamicArgOrDefault(Args.READ_ONLY);
+
+            if (readOnlyArg != null && Convert.ToBoolean(readOnlyArg.Value))
+            {
+                Field.ReadOnly = true;
+            }
+        }
 
         protected void LinkFieldCheck()
         {
