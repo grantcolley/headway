@@ -2,6 +2,9 @@
 {
     public static class Args
     {
+        public const string AUTHORIZED_LEVEL = "AuthorizedLevel";
+        public const string AUTHORIZED_ROLE = "AuthorizedRole";
+        public const string AUTHORIZED_PERMISSION = "AuthorizedPermission";
         public const string CODE = "Code";
         public const string CODE_PARENT = "ParentCode";
         public const string COMPONENT = "Component";
@@ -11,6 +14,10 @@
         public const string IS_LOCAL_DYNAMICARG_OPTION = "IsLocalDynamicArgOption";
         public const string IS_NUMERIC_ID = "IsNumericId";
         public const string LABEL_PROPERTY = "LabelProperty";
+        public const string LABEL_TYPO = "LabelTypo";
+        public const string LABEL_TYPO_BODY1 = "body1";
+        public const string LABEL_TYPO_BODY2 = "body2";
+        public const string LABEL_TYPO_H6 = "h6";
         public const string LAYOUT_HORIZONTAL = "LayoutHorizontal";
         public const string LINK_SOURCE = "LinkSource";
         public const string LINK_VALUE = "LinkValue";
@@ -21,20 +28,14 @@
         public const string MIN = "Min";
         public const string MODEL = "Model";
         public const string PROPAGATE_FIELDS = "PropagateFields";
+        public const string READ_ONLY = "ReadOnly";
         public const string STYLE = "Style";
-        public const string LABEL_TYPO = "LabelTypo";
-        public const string LABEL_TYPO_BODY1 = "body1";
-        public const string LABEL_TYPO_BODY2 = "body2";
-        public const string LABEL_TYPO_H6 = "h6";
         public const string TEXT_MULTILINE_ROWS = "Rows";
         public const string TRUE = "true";
         public const string TYPE = "Type";
         public const string UNIQUE_PROPERTY = "UniqueProperty";
         public const string UNIQUE_PARENT_PROPERTY = "ParentUniqueProperty";
         public const string VALUE = "Value";
-        public const string AUTHORIZED_LEVEL = "AuthorizedLevel";
-        public const string AUTHORIZED_ROLE = "AuthorizedRole";
-        public const string AUTHORIZED_PERMISSION = "AuthorizedPermission";
 
     }
 }
