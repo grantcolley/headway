@@ -24,6 +24,7 @@ namespace Headway.Core.Dynamic
         public string ParentCode { get; set; }
         public string ComponentArgs { get; set; }
         public string FlowArgs { get; set; }
+        public IFlowContext FlowContext { get; set; }
         public List<DynamicArg> DynamicArgs {get;set;}
         public Type DynamicComponent { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
