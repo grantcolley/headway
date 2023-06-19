@@ -12,7 +12,8 @@ namespace Headway.Core.Options
         public Task<IEnumerable<OptionItem>> GetOptionItemsAsync(IEnumerable<Arg> args)
         {
             var optionItemValues = args
-                .Where(a => !a.Value.Equals(Constants.Options.STATIC_OPTION_ITEMS))
+                .Where(a => !a.Value.Equals(Constants.Options.STATIC_OPTION_ITEMS)
+                        && !a.Value.Equals(Constants.Args.READ_ONLY))
                 .ToList();
 
             var optionItems = optionItemValues
