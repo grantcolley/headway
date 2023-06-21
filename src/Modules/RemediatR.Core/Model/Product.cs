@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Headway.Core.Attributes;
+﻿using Headway.Core.Attributes;
 using Headway.Core.Model;
 using RemediatR.Core.Enums;
 using System;
@@ -33,18 +32,5 @@ namespace RemediatR.Core.Model
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? Value { get; set; }
-    }
-
-    public class ProductValidator : AbstractValidator<Product>
-    {
-        public ProductValidator()
-        {
-            RuleFor(v => v.Name)
-                .NotNull().WithMessage("Product name is required")
-                .Length(1, 50).WithMessage("Name cannot exceed 50 characters");
-
-            RuleFor(v => v.StartDate)
-                .NotNull().WithMessage("Product start date is required");
-        }
     }
 }
