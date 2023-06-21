@@ -529,7 +529,6 @@ namespace RemediatR.Repository
                 return new Redress
                 {
                     Product = product,                    
-                    RefundCalculation = new RefundCalculation(),
                     RedressFlowContext = new RedressFlowContext
                     {
                         FlowId = flow.FlowId,
