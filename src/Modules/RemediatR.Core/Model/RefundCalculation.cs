@@ -29,7 +29,6 @@ namespace RemediatR.Core.Model
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? TotalRefundAmount { get; set; }
 
-
         [MaxLength(50)]
         public string? VerifiedBy { get; set; }
 
