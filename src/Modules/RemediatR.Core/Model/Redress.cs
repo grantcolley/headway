@@ -1,7 +1,5 @@
-﻿using FluentValidation;
-using Headway.Core.Attributes;
+﻿using Headway.Core.Attributes;
 using Headway.Core.Model;
-using RemediatR.Core.Constants;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,13 +10,18 @@ namespace RemediatR.Core.Model
     [DynamicModel]
     public class Redress : ModelBase
     {
+        public Redress() 
+        {
+            RefundCalculation = new RefundCalculation();
+        }
+
         public int RedressId { get; set; }
         public int ProductId { get; set; }
         public Product? Product { get; set; }
         public int ProgramId { get; set; }
         public Program? Program { get; set; }
         public int RefundCalculationId { get; set; }
-        public RefundCalculation? RefundCalculation { get; set; }
+        public RefundCalculation RefundCalculation { get; set; }
         public int RefressFlowContextId { get; set; }
         public RedressFlowContext? RedressFlowContext { get; set; }
 
@@ -166,26 +169,6 @@ namespace RemediatR.Core.Model
         public string? ProductName 
         {
             get { return Product.Name; } 
-        }
-    }
-
-    public class RedressValidator : AbstractValidator<Redress>
-    {
-        public RedressValidator()
-        {
-            RuleFor(v => v.Program)
-                .NotNull()
-                .WithMessage("Program is required")
-                .When(v => v.RedressFlowContext != null
-                && v.RedressFlowContext.Flow != null
-                && v.RedressFlowContext.Flow.ActiveState != null
-                && v.RedressFlowContext.Flow.ActiveState.StateCode.Equals(RemediatRFlowCodes.REDRESS_CREATE_CODE));
-
-            RuleFor(v => v.Product)
-                .NotNull().WithMessage("Product is required");
-
-            RuleFor(v => v.RefundCalculation)
-                .NotNull().WithMessage("Refund calculation is required");
         }
     }
 }
