@@ -17,7 +17,7 @@ namespace Headway.WebApi.Controllers
             this.repositoryFlowable = repositoryFlowable;
         }
 
-        [HttpPut("[action]")]
+        [HttpPost("[action]")]
         public abstract Task<IActionResult> FlowExecution([FromBody] TModel model);
 
         protected bool IsFlowUserAuthenticatedAsync(IFlowContext flowContext)
