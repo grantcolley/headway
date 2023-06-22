@@ -339,7 +339,7 @@ namespace Headway.RequestApi.Api
         {
             var uri = $"{dynamicModel.Config.ModelApi}/{Controllers.FLOW_EXECUTION}";
 
-            using var updateResponse = await httpClient.PutAsJsonAsync(
+            using var updateResponse = await httpClient.PostAsJsonAsync(
                 uri, dynamicModel.Model)
                 .ConfigureAwait(false);
 
