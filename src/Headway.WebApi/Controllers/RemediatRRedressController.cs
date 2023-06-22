@@ -47,7 +47,7 @@ namespace Headway.WebApi.Controllers
             return Ok(redressCases);
         }
 
-        [HttpPut("[action]")]
+        [HttpPost("[action]")]
         public override async Task<IActionResult> FlowExecution([FromBody] Redress redress)
         {
             var authorised = IsFlowUserAuthenticatedAsync(redress.RedressFlowContext);
