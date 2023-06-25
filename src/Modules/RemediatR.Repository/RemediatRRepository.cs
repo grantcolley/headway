@@ -3,6 +3,7 @@ using Headway.Repository.Data;
 using Headway.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RemediatR.Core.Constants;
 using RemediatR.Core.Enums;
 using RemediatR.Core.Interface;
 using RemediatR.Core.Model;
@@ -520,7 +521,7 @@ namespace RemediatR.Repository
 
                 var flow = await applicationDbContext.Flows
                     .Include(f => f.States)
-                    .FirstAsync(f => f.FlowCode.Equals("REMEDIATR"))
+                    .FirstAsync(f => f.FlowCode.Equals(RemediatRFlowCodes.REMEDIATR_CODE))
                     .ConfigureAwait(false);
 
                 var authorisation = await GetAuthorisationAsync(User)
