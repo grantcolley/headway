@@ -50,7 +50,7 @@ namespace Headway.Blazor.Controls.Flow.Containers
         {
             var flowStateCode = dynamicContainer.DynamicArgs.FirstDynamicArgValueToString(FlowConstants.FLOW_STATE_CODE);
 
-            if(flowContext.Flow.ActiveState.StateCode.Equals(flowStateCode))
+            if(flowContext.Flow.ActiveStateCode.Equals(flowStateCode))
             {
                 return true;
             }
