@@ -18,6 +18,7 @@ namespace Headway.Core.Model
     {
         private State rootState = default;
         private State finalState = default;
+        private State activeState = default;
 
         public Flow()
         {
@@ -112,20 +113,38 @@ namespace Headway.Core.Model
         public bool ActionsConfigured { get; set; }
 
         /// <summary>
+        /// The context associated with the flow.
+        /// </summary>
+        [NotMapped]
+        [JsonIgnore]
+        public object Context { get; set; }
+
+        /// <summary>
+        /// The active state code.
+        /// </summary>
+        [NotMapped]
+        public string ActiveStateCode { get; set; }
+
+        /// <summary>
         /// The active state in the flow. This is set 
         /// during the bootstrap routine and tracked 
         /// during the lifetime of the flow instance.
         /// </summary>
         [NotMapped]
         [JsonIgnore]
-        public State ActiveState { get; set; }
+        public State ActiveState 
+        {
+            get { return activeState; }
+            set
+            {
+                if(activeState != value)
+                {
+                    activeState = value;
 
-        /// <summary>
-        /// The context associated with the flow.
-        /// </summary>
-        [NotMapped]
-        [JsonIgnore]
-        public object Context { get; set; }
+                    ActiveStateCode = value?.StateCode;
+                }
+            }
+        }
 
         /// <summary>
         /// The root state is the state with the minimum 
