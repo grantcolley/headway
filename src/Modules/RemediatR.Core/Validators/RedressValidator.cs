@@ -39,7 +39,7 @@ namespace RemediatR.Core.Validators
 
         protected override bool PreValidate(ValidationContext<Redress> context, ValidationResult result)
         {
-            var stateCode = context.InstanceToValidate?.RedressFlowContext?.Flow?.ActiveState?.StateCode;
+            var stateCode = context.InstanceToValidate?.RedressFlowContext?.Flow?.ActiveStateCode;
 
             if(string.IsNullOrWhiteSpace(stateCode))
             {
