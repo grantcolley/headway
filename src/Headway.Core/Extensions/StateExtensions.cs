@@ -140,7 +140,7 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because {state.Flow.Name} hasn't been bootstrapped.");
             }
 
-            if (!state.StateCode.Equals(state.Flow.ActiveState.StateCode))
+            if (!state.StateCode.Equals(state.Flow.ActiveStateCode))
             {
                 throw new StateException(state, $"{user.User} can't take ownership of {state.StateCode} because it isn't the active state.");
             }
@@ -234,7 +234,7 @@ namespace Headway.Core.Extensions
                 throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because {state.Flow.Name} hasn't been bootstrapped");
             }
 
-            if (!state.StateCode.Equals(state.Flow.ActiveState.StateCode))
+            if (!state.StateCode.Equals(state.Flow.ActiveStateCode))
             {
                 throw new StateException(state, $"{user.User} can't relinquish ownership of {state.StateCode} because it isn't the active state.");
             }
