@@ -17,12 +17,14 @@ namespace Headway.Blazor.Controls.Base
             {
                 RaiseAuthorisationAlert(DynamicModel.FlowContext.Flow.Name);
             }
+
+            isReadOnly = DynamicModel.FlowContext.IsActiveStateReadOnly();
         }
 
         public virtual async Task FlowExecutionAsync(FlowExecutionArgs flowExecutionArgs)
         {
             if (flowExecutionArgs.FlowAction.Equals(FlowActionEnum.Complete)
-                && !CurrentEditContext.Validate())
+                || !CurrentEditContext.Validate())
             {
                 return;
             }
