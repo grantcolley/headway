@@ -67,7 +67,8 @@ namespace Headway.Blazor.Controls.Flow.Components
             {
                 FlowAction = toggled ? FlowActionEnum.TakeOwnership : FlowActionEnum.RelinquishOwnership,
                 StateCode = FlowComponentContext.ActiveState.StateCode,
-                Comment = FlowComponentContext.Comment
+                Comment = FlowComponentContext.Comment,
+                Authorisation = FlowComponentContext.FlowContext.Authorisation
             };
 
             await FlowTabDocument.FlowExecutionAsync(flowExecutionArgs);
@@ -101,7 +102,8 @@ namespace Headway.Blazor.Controls.Flow.Components
                     FlowAction = flowAction,
                     StateCode = FlowComponentContext.ActiveState.StateCode,
                     TargetStateCode = string.IsNullOrWhiteSpace(FlowComponentContext.ActionTarget) ? FlowComponentContext.ActionTarget : null,
-                    Comment = FlowComponentContext.Comment
+                    Comment = FlowComponentContext.Comment,
+                    Authorisation = FlowComponentContext.FlowContext.Authorisation
                 };
 
                 await FlowTabDocument.FlowExecutionAsync(flowExecutionArgs);
