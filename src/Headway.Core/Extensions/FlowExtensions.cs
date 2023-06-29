@@ -21,11 +21,12 @@ namespace Headway.Core.Extensions
         /// </summary>
         /// <param name="flow">The <see cref="Flow"/></param>
         /// <param name="history">The <see cref="List{FlowHistory}"/>.</param>
-        public static void Bootstrap(this Flow flow, List<FlowHistory> history, bool isClientSide = false)
+        /// <param name="skipConfigure">A flag indicating the <see cref="Flow"/>'s configure routine must be skipped while bootstrapping.</param>
+        public static void Bootstrap(this Flow flow, List<FlowHistory> history, bool skipConfigure = false)
         {
             flow.History.Clear();
             flow.History.AddRange(history);
-            flow.Bootstrap(isClientSide);
+            flow.Bootstrap(skipConfigure);
         }
 
         /// <summary>
@@ -46,9 +47,10 @@ namespace Headway.Core.Extensions
         /// <see cref="FlowException"/> thrown when:
         ///                 - <see cref="Flow.Bootstrapped"/> is already true
         /// </summary>
-        /// <param name="flow">The <see cref="Flow"/></param>
+        /// <param name="flow">The <see cref="Flow"/> to bootstrap.</param>
+        /// <param name="skipConfigure">A flag indicating the <see cref="Flow"/>'s configure routine must be skipped while bootstrapping.</param>
         /// <exception cref="FlowException"></exception>
-        public static void Bootstrap(this Flow flow, bool isClientSide = false)
+        public static void Bootstrap(this Flow flow, bool skipConfigure = false)
         {
             if (flow.Bootstrapped)
             {
@@ -61,7 +63,7 @@ namespace Headway.Core.Extensions
                 flow.StateDictionary.Add(state.StateCode, state);
             }
 
-            if (!isClientSide)
+            if (!skipConfigure)
             {
                 flow.Configure();
             }
