@@ -126,6 +126,18 @@ namespace Headway.Core.Model
         public string ActiveStateCode { get; set; }
 
         /// <summary>
+        /// Flag inidcating of the active state is readonly.
+        /// </summary>
+        [NotMapped]
+        public bool IsActiveStateReadOnly { get; set; }
+
+        /// <summary>
+        /// The active state's flow history.
+        /// </summary>
+        [NotMapped]
+        public FlowHistory ActiveStateFlowHistory { get; set; }
+
+        /// <summary>
         /// The active state in the flow. This is set 
         /// during the bootstrap routine and tracked 
         /// during the lifetime of the flow instance.
@@ -141,7 +153,16 @@ namespace Headway.Core.Model
                 {
                     activeState = value;
 
-                    ActiveStateCode = value?.StateCode;
+                    if (value != null)
+                    {
+                        ActiveStateCode = value.StateCode;
+                        ActiveStateFlowHistory = ReplayHistory?.FirstOrDefault(f => f.StateCode.Equals(ActiveStateCode));
+                    }
+                    else
+                    {
+                        ActiveStateCode = null;
+                        ActiveStateFlowHistory = null;
+                    }
                 }
             }
         }
