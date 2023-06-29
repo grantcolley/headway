@@ -22,7 +22,7 @@ namespace RemediatR.Repository
                  .ConfigureAwait(false);
 
             await currentFlowContext
-                .ExecuteAsync(flowContext.FlowExecutionArgs, flowContext.Authorisation)
+                .ExecuteAsync(flowContext.FlowExecutionArgs)
                 .ConfigureAwait(false);
 
             return currentFlowContext;
