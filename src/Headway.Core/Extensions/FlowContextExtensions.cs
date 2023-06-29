@@ -13,8 +13,25 @@ namespace Headway.Core.Extensions
             throw new NotImplementedException();
         }
 
-        public static bool IsActiveStateReadOnly(this IFlowContext flowContext)
+        public static bool ValidateActiveStateReadOnly(this IFlowContext flowContext)
         {
+            if (flowContext == null)
+            {
+                throw new ArgumentNullException(nameof(flowContext));
+            }
+
+            if (flowContext.Flow == null)
+            {
+                throw new ArgumentNullException(nameof(flowContext.Flow));
+            }
+
+            if (flowContext.Flow?.ActiveState != null)
+            {
+                return flowContext.IsStateReadOnly(flowContext.Flow?.ActiveState);
+            }
+
+            flowContext.Flow.Bootstrap(flowContext.GetFlowHistory(), true);
+
             return flowContext.IsStateReadOnly(flowContext.Flow?.ActiveState);
         }
 
