@@ -43,7 +43,7 @@ namespace RemediatR.Core.Validators
 
         protected override bool PreValidate(ValidationContext<Redress> context, ValidationResult result)
         {
-            if (context.InstanceToValidate.RedressFlowContext.IsActiveStateReadOnly())
+            if (context.InstanceToValidate.RedressFlowContext.ValidateActiveStateReadOnly())
             {
                 context.RootContextData[Args.READ_ONLY] = true;
             }
