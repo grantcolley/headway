@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Headway.Core.Constants;
+using Headway.Core.Extensions;
 using RemediatR.Core.Constants;
 using RemediatR.Core.Model;
 
@@ -12,7 +13,8 @@ namespace RemediatR.Core.Validators
         {
             When((redress, context) =>
             {
-                return context.RootContextData[FlowConstants.FLOW_STATE_CODE].Equals(RemediatRFlowCodes.REDRESS_CREATE_CODE);
+                return context.RootContextData[Args.READ_ONLY].Equals(false)
+                    && context.RootContextData[FlowConstants.FLOW_STATE_CODE].Equals(RemediatRFlowCodes.REDRESS_CREATE_CODE);
             }, () =>
             {
                 RuleFor(r => r.Program).NotNull().WithMessage("Program is required");
@@ -22,7 +24,8 @@ namespace RemediatR.Core.Validators
 
             When((redress, context) =>
             {
-                return context.RootContextData[FlowConstants.FLOW_STATE_CODE].Equals(RemediatRFlowCodes.REFUND_CALCULATION_CODE);
+                return context.RootContextData[Args.READ_ONLY].Equals(false)
+                    && context.RootContextData[FlowConstants.FLOW_STATE_CODE].Equals(RemediatRFlowCodes.REFUND_CALCULATION_CODE);
             }, () =>
             {
                 RuleFor(r => r.RefundCalculation).SetValidator(new RefundCalculationValidator(), new[] { RemediatRFlowCodes.REFUND_CALCULATION_CODE } );
@@ -30,7 +33,8 @@ namespace RemediatR.Core.Validators
 
             When((redress, context) =>
             {
-                return context.RootContextData[FlowConstants.FLOW_STATE_CODE].Equals(RemediatRFlowCodes.REFUND_VERIFICATION_CODE);
+                return context.RootContextData[Args.READ_ONLY].Equals(false)
+                    && context.RootContextData[FlowConstants.FLOW_STATE_CODE].Equals(RemediatRFlowCodes.REFUND_VERIFICATION_CODE);
             }, () =>
             {
                 RuleFor(r => r.RefundCalculation).SetValidator(new RefundCalculationValidator(), new[] { RemediatRFlowCodes.REFUND_VERIFICATION_CODE });
@@ -39,15 +43,23 @@ namespace RemediatR.Core.Validators
 
         protected override bool PreValidate(ValidationContext<Redress> context, ValidationResult result)
         {
-            var stateCode = context.InstanceToValidate?.RedressFlowContext?.Flow?.ActiveStateCode;
-
-            if(string.IsNullOrWhiteSpace(stateCode))
+            if (context.InstanceToValidate.RedressFlowContext.IsActiveStateReadOnly())
             {
-                result.Errors.Add(new ValidationFailure(typeof(RedressFlowContext).Name, $"No active {FlowConstants.FLOW_STATE_CODE}. The flow must be initialised."));
-                return false;
+                context.RootContextData[Args.READ_ONLY] = true;
             }
+            else
+            {
+                var stateCode = context.InstanceToValidate?.RedressFlowContext?.Flow?.ActiveStateCode;
 
-            context.RootContextData[FlowConstants.FLOW_STATE_CODE] = stateCode;
+                if (string.IsNullOrWhiteSpace(stateCode))
+                {
+                    result.Errors.Add(new ValidationFailure(typeof(RedressFlowContext).Name, $"No active {FlowConstants.FLOW_STATE_CODE}. The flow must be initialised."));
+                    return false;
+                }
+
+                context.RootContextData[Args.READ_ONLY] = false;
+                context.RootContextData[FlowConstants.FLOW_STATE_CODE] = stateCode;
+            }
 
             return base.PreValidate(context, result);
         }
