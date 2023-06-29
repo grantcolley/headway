@@ -53,6 +53,8 @@ namespace Headway.Blazor.Controls.Base
 
         protected bool isDeleteInProgress = false;
 
+        protected bool isReadOnly = false;
+
         private bool disposedValue;
 
         public void Dispose()
