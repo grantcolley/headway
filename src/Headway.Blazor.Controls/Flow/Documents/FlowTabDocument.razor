@@ -14,15 +14,18 @@ else
         <EditForm EditContext="CurrentEditContext">
             <FluentValidationValidator />
             <MudToolBar DisableGutters="true">
-                @if (isSaveInProgress)
+                @if(!isReadOnly)
                 {
-                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-                }
-                else if (!isDeleteInProgress)
-                {
-                    <MudTooltip Text="Save" Arrow="true">
-                        <MudIconButton ButtonType="ButtonType.Button" OnClick="@SubmitAsync" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
-                    </MudTooltip>
+                    @if (isSaveInProgress)
+                    {
+                        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                    }
+                    else if (!isDeleteInProgress)
+                    {
+                        <MudTooltip Text="Save" Arrow="true">
+                            <MudIconButton ButtonType="ButtonType.Button" OnClick="@SubmitAsync" Color="Color.Inherit" Icon="@Icons.Material.Filled.Save"/>
+                        </MudTooltip>
+                    }
                 }
 
                 <MudText Typo="Typo.h6">@DynamicModel.Title @DynamicModel.Id</MudText>
@@ -31,15 +34,18 @@ else
 
                 <MudSpacer />
 
-                @if (isDeleteInProgress)
-                {
-                    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
-                }
-                else if (!isSaveInProgress)
-                {
-                    <MudTooltip Text="Delete" Arrow="true">
-                        <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="DeleteAsync" />
-                    </MudTooltip>
+                @if(!isReadOnly)
+                {               
+                    @if (isDeleteInProgress)
+                    {
+                        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+                    }
+                    else if (!isSaveInProgress)
+                    {
+                        <MudTooltip Text="Delete" Arrow="true">
+                            <MudIconButton Color="Color.Inherit" Icon="@Icons.Material.Filled.Delete" OnClick="DeleteAsync" />
+                        </MudTooltip>
+                    }
                 }
             </MudToolBar>
             <MudTabs Elevation="1" Rounded="true" ApplyEffectsToContainer="true">
