@@ -133,7 +133,7 @@ namespace RemediatR.Core.Model
         {
             get
             {
-                return Product.Customer?.CustomerId;
+                return Product?.Customer?.CustomerId;
             }
         }
 
@@ -143,7 +143,7 @@ namespace RemediatR.Core.Model
         {
             get
             {
-                return $"{Product.Customer?.Fullname}";
+                return $"{Product?.Customer?.Fullname}";
             }
         }
 
@@ -153,7 +153,7 @@ namespace RemediatR.Core.Model
         {
             get
             {
-                return Product.Customer;
+                return Product?.Customer;
             }
         }
 
@@ -161,14 +161,14 @@ namespace RemediatR.Core.Model
         [JsonIgnore]
         public string? ProgramName         
         {
-            get { return Program.Name; } 
+            get { return Program?.Name; } 
         }
 
         [NotMapped]
         [JsonIgnore]
         public string? ProductName 
         {
-            get { return Product.Name; } 
+            get { return Product?.Name; } 
         }
     }
 }
