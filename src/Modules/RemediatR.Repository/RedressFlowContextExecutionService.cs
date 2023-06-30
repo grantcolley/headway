@@ -26,7 +26,7 @@ namespace RemediatR.Repository
                 .ConfigureAwait(false);
 
             return await remediatRRedressRepository
-                .UpdateFlowContextAsync(currentFlowContext)
+                .UpdateFlowHistoryAsync(currentFlowContext)
                 .ConfigureAwait(false);
         }
     }
