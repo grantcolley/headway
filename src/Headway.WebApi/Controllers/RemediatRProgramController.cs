@@ -3,7 +3,6 @@ using Headway.Core.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RemediatR.Core.Interface;
-using RemediatR.Core.Model;
 using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
@@ -11,14 +10,14 @@ namespace Headway.WebApi.Controllers
     [DynamicApiController]
     public class RemediatRProgramController : ApiModelControllerBase<RemediatR.Core.Model.Program, RemediatRProgramController>
     {
-        private readonly IRemediatRRepository<RedressFlowContext> remediatRRepository;
+        private readonly IRemediatRProgramRepository remediatRProgramRepository;
 
         public RemediatRProgramController(
-            IRemediatRRepository<RedressFlowContext> repository, 
+            IRemediatRProgramRepository remediatRProgramRepository, 
             ILogger<RemediatRProgramController> logger) 
-            : base(repository, logger)
+            : base(remediatRProgramRepository, logger)
         {
-            this.remediatRRepository = repository;
+            this.remediatRProgramRepository = remediatRProgramRepository;
         }
 
         [HttpGet]
@@ -32,7 +31,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var programs = await remediatRRepository
+            var programs = await remediatRProgramRepository
                 .GetProgramsAsync()
                 .ConfigureAwait(false);
 
@@ -50,7 +49,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var program = await remediatRRepository
+            var program = await remediatRProgramRepository
                 .GetProgramAsync(programId)
                 .ConfigureAwait(false);
 
@@ -68,7 +67,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var savedProgram = await remediatRRepository
+            var savedProgram = await remediatRProgramRepository
                 .AddProgramAsync(program)
                 .ConfigureAwait(false);
 
@@ -86,7 +85,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var savedProgram = await remediatRRepository
+            var savedProgram = await remediatRProgramRepository
                 .UpdateProgramAsync(program)
                 .ConfigureAwait(false);
 
@@ -104,7 +103,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var result = await remediatRRepository
+            var result = await remediatRProgramRepository
                 .DeleteProgramAsync(programId)
                 .ConfigureAwait(false);
 
