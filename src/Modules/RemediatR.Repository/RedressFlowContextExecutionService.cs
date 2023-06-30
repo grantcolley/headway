@@ -8,16 +8,16 @@ namespace RemediatR.Repository
 {
     public class RedressFlowContextExecutionService : IRedressFlowContextExecutionService
     {
-        private readonly IRemediatRRepository<RedressFlowContext> remediatRRepository;
+        private readonly IRemediatRRedressRepository<RedressFlowContext> remediatRRedressRepository;
 
-        public RedressFlowContextExecutionService(IRemediatRRepository<RedressFlowContext> remediatRRepository) 
+        public RedressFlowContextExecutionService(IRemediatRRedressRepository<RedressFlowContext> remediatRRedressRepository) 
         {
-            this.remediatRRepository = remediatRRepository;
+            this.remediatRRedressRepository = remediatRRedressRepository;
         }
 
         public async Task<RedressFlowContext> Execute(RedressFlowContext flowContext)
         {
-            var currentFlowContext = await remediatRRepository
+            var currentFlowContext = await remediatRRedressRepository
                  .GetFlowContextAsync(flowContext.RedressFlowContextId)
                  .ConfigureAwait(false);
 
@@ -25,7 +25,9 @@ namespace RemediatR.Repository
                 .ExecuteAsync(flowContext.FlowExecutionArgs)
                 .ConfigureAwait(false);
 
-            return currentFlowContext;
+            return await remediatRRedressRepository
+                .UpdateFlowContextAsync(currentFlowContext)
+                .ConfigureAwait(false);
         }
     }
 }
