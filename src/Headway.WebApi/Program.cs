@@ -69,7 +69,9 @@ builder.Services.AddScoped<IFlowRepository, FlowRepository>();
 builder.Services.AddScoped<IOptionsRepository, OptionsRepository>();
 builder.Services.AddScoped<IDemoModelRepository, DemoModelRepository>();
 builder.Services.AddScoped<ILogRepository, LogRepository>();
-builder.Services.AddScoped<IRemediatRRepository<RedressFlowContext>, RemediatRRepository>();
+builder.Services.AddScoped<IRemediatRProgramRepository, RemediatRProgramRepository>();
+builder.Services.AddScoped<IRemediatRCustomerRepository, RemediatRCustomerRepository>();
+builder.Services.AddScoped<IRemediatRRedressRepository<RedressFlowContext>, RemediatRRedressRepository>();
 builder.Services.AddScoped<IRedressFlowContextExecutionService, RedressFlowContextExecutionService>();
 
 builder.Services.AddCors(options =>
