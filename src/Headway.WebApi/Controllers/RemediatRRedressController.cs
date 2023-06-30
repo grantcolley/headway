@@ -16,16 +16,16 @@ namespace Headway.WebApi.Controllers
     [DynamicApiController]
     public class RemediatRRedressController : ApiModelFlowControllerBase<Redress, RemediatRRedressController, RedressFlowContext>
     {
-        private readonly IRemediatRRepository<RedressFlowContext> remediatRRepository;
+        private readonly IRemediatRRedressRepository<RedressFlowContext> remediatRRedressRepository;
         private readonly IRedressFlowContextExecutionService redressFlowContextExecutionService;
 
         public RemediatRRedressController(
-            IRemediatRRepository<RedressFlowContext> repository,
+            IRemediatRRedressRepository<RedressFlowContext> remediatRRedressRepository,
             IRedressFlowContextExecutionService redressFlowContextExecutionService,
             ILogger<RemediatRRedressController> logger) 
-            : base(repository, logger)
+            : base(remediatRRedressRepository, logger)
         {
-            this.remediatRRepository = repository;
+            this.remediatRRedressRepository = remediatRRedressRepository;
             this.redressFlowContextExecutionService = redressFlowContextExecutionService;
         }
 
@@ -40,7 +40,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var redressCases = await remediatRRepository
+            var redressCases = await remediatRRedressRepository
                 .CreateRedressAsync(dataArgs)
                 .ConfigureAwait(false);
 
@@ -59,7 +59,7 @@ namespace Headway.WebApi.Controllers
 
             var redressFlowContext = await redressFlowContextExecutionService.Execute(redress.RedressFlowContext);
             
-            var savedRedress = await remediatRRepository
+            var savedRedress = await remediatRRedressRepository
                 .UpdateRedressAsync(redress)
                 .ConfigureAwait(false);
 
@@ -80,12 +80,12 @@ namespace Headway.WebApi.Controllers
             switch (searchArgs.SourceConfig)
             {
                 case RemediatRSearchSource.REDRESSCASES:
-                    var redressCases = await remediatRRepository
+                    var redressCases = await remediatRRedressRepository
                         .GetRedressCasesAsync(searchArgs)
                         .ConfigureAwait(false);
                     return Ok(redressCases);
                 case RemediatRSearchSource.NEW_REDRESS_CASE:
-                    var newRedressCases = await remediatRRepository
+                    var newRedressCases = await remediatRRedressRepository
                         .SearchNewRedressCasesAsync(searchArgs)
                         .ConfigureAwait(false);
                     return Ok(newRedressCases);
@@ -111,7 +111,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var redress = await remediatRRepository
+            var redress = await remediatRRedressRepository
                 .GetRedressAsync(redressId)
                 .ConfigureAwait(false);
 
@@ -129,7 +129,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var savedRedress = await remediatRRepository
+            var savedRedress = await remediatRRedressRepository
                 .AddRedressAsync(redress)
                 .ConfigureAwait(false);
 
@@ -147,7 +147,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var savedRedress = await remediatRRepository
+            var savedRedress = await remediatRRedressRepository
                 .UpdateRedressAsync(redress)
                 .ConfigureAwait(false);
 
@@ -165,7 +165,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var result = await remediatRRepository
+            var result = await remediatRRedressRepository
                 .DeleteRedressAsync(redressId)
                 .ConfigureAwait(false);
 
