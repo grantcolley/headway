@@ -468,12 +468,22 @@ namespace RemediatR.Repository
                 .FirstAsync(r => r.RedressId.Equals(id))
                 .ConfigureAwait(false);
 
-            //for (int i = 0; i < redress.RefundCalculation.Count; i++)
-            //{
-            //    var product = customer.Products[i];
-            //    customer.Products.Remove(product);
-            //    applicationDbContext.Products.Remove(product);
-            //}
+            if (redress.RefundCalculation != null)
+            {
+                applicationDbContext.RefundCalculations.Remove(redress.RefundCalculation);
+            }
+
+            if (redress.RedressFlowContext != null)
+            {
+                for (int i = 0; i < redress.RedressFlowContext.RedressFlowHistory.Count; i++)
+                {
+                    var redressFlowHistory = redress.RedressFlowContext.RedressFlowHistory[i];
+                    redress.RedressFlowContext.RedressFlowHistory.Remove(redressFlowHistory);
+                    applicationDbContext.RedressFlowHistory.Remove(redressFlowHistory);
+                }
+
+                applicationDbContext.RedressFlowContexts.Remove(redress.RedressFlowContext);
+            }
 
             applicationDbContext.Redresses.Remove(redress);
 
