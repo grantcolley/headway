@@ -1,7 +1,6 @@
 ﻿using Headway.Core.Extensions;
 using RemediatR.Core.Interface;
 using RemediatR.Core.Model;
-using System;
 using System.Threading.Tasks;
 
 namespace RemediatR.Repository
