@@ -12,14 +12,14 @@ namespace Headway.WebApi.Controllers
     [DynamicApiController]
     public class RemediatRCustomerController : ApiModelControllerBase<Customer, RemediatRCustomerController>
     {
-        private readonly IRemediatRRepository<RedressFlowContext> remediatRRepository;
+        private readonly IRemediatRCustomerRepository remediatRCustomerRepository;
 
         public RemediatRCustomerController(
-            IRemediatRRepository<RedressFlowContext> repository, 
+            IRemediatRCustomerRepository remediatRCustomerRepository, 
             ILogger<RemediatRCustomerController> logger) 
-            : base(repository, logger)
+            : base(remediatRCustomerRepository, logger)
         {
-            this.remediatRRepository = repository;
+            this.remediatRCustomerRepository = remediatRCustomerRepository;
         }
 
         [HttpPost("[action]")]
@@ -33,7 +33,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var customers = await remediatRRepository
+            var customers = await remediatRCustomerRepository
                 .GetCustomersAsync(searchArgs)
                 .ConfigureAwait(false);
 
@@ -51,7 +51,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var customers = await remediatRRepository
+            var customers = await remediatRCustomerRepository
                 .GetCustomersAsync()
                 .ConfigureAwait(false);
 
@@ -69,7 +69,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var customer = await remediatRRepository
+            var customer = await remediatRCustomerRepository
                 .GetCustomerAsync(customerId)
                 .ConfigureAwait(false);
 
@@ -87,7 +87,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var savedCustomer = await remediatRRepository
+            var savedCustomer = await remediatRCustomerRepository
                 .AddCustomerAsync(customer)
                 .ConfigureAwait(false);
 
@@ -105,7 +105,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var savedCustomer = await remediatRRepository
+            var savedCustomer = await remediatRCustomerRepository
                 .UpdateCustomerAsync(customer)
                 .ConfigureAwait(false);
 
@@ -123,7 +123,7 @@ namespace Headway.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var result = await remediatRRepository
+            var result = await remediatRCustomerRepository
                 .DeleteCustomerAsync(customerId)
                 .ConfigureAwait(false);
 
