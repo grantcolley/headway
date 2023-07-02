@@ -35,21 +35,27 @@ namespace RemediatR.Repository
                     Flow = flowContext.Flow,
                     Authorisation = authorisation
                 };
+
+                await redressFlowContext
+                    .ExecuteAsync(flowContext.FlowExecutionArgs)
+                    .ConfigureAwait(false);
+
+                return flowContext;
             }
             else
             {
                 redressFlowContext = await remediatRRedressRepository
                     .GetFlowContextAsync(flowContext.RedressFlowContextId)
                     .ConfigureAwait(false);
+
+                await redressFlowContext
+                    .ExecuteAsync(flowContext.FlowExecutionArgs)
+                    .ConfigureAwait(false);
+
+                return await remediatRRedressRepository
+                    .UpdateFlowHistoryAsync(redressFlowContext)
+                    .ConfigureAwait(false);
             }
-
-            await redressFlowContext
-                .ExecuteAsync(flowContext.FlowExecutionArgs)
-                .ConfigureAwait(false);
-
-            return await remediatRRedressRepository
-                .UpdateFlowHistoryAsync(redressFlowContext)
-                .ConfigureAwait(false);
         }
     }
 }
