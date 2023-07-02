@@ -1,6 +1,7 @@
 ﻿using Headway.Core.Extensions;
 using RemediatR.Core.Interface;
 using RemediatR.Core.Model;
+using System;
 using System.Threading.Tasks;
 
 namespace RemediatR.Repository
@@ -16,16 +17,38 @@ namespace RemediatR.Repository
 
         public async Task<RedressFlowContext> Execute(RedressFlowContext flowContext)
         {
-            var currentFlowContext = await remediatRRedressRepository
-                 .GetFlowContextAsync(flowContext.RedressFlowContextId)
-                 .ConfigureAwait(false);
+            if(flowContext == null)
+            {
+                throw new ArgumentNullException(nameof(flowContext));
+            }
 
-            await currentFlowContext
+            RedressFlowContext redressFlowContext;
+
+            if(flowContext.RedressFlowContextId.Equals(0))
+            {
+                var authorisation = await remediatRRedressRepository.GetAuthorisationAsync(flowContext.Authorisation?.User)
+                    .ConfigureAwait(false);
+
+                redressFlowContext = new RedressFlowContext
+                {
+                    FlowId = flowContext.FlowId,
+                    Flow = flowContext.Flow,
+                    Authorisation = authorisation
+                };
+            }
+            else
+            {
+                redressFlowContext = await remediatRRedressRepository
+                    .GetFlowContextAsync(flowContext.RedressFlowContextId)
+                    .ConfigureAwait(false);
+            }
+
+            await redressFlowContext
                 .ExecuteAsync(flowContext.FlowExecutionArgs)
                 .ConfigureAwait(false);
 
             return await remediatRRedressRepository
-                .UpdateFlowHistoryAsync(currentFlowContext)
+                .UpdateFlowHistoryAsync(redressFlowContext)
                 .ConfigureAwait(false);
         }
     }
