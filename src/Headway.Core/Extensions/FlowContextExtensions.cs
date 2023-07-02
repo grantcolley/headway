@@ -12,7 +12,10 @@ namespace Headway.Core.Extensions
     {
         public static async Task ExecuteAsync(this IFlowContext flowContext, FlowExecutionArgs flowExecutionArgs)
         {
-            flowContext.Flow.Bootstrap(flowContext.GetFlowHistory());
+            if(!flowContext.Flow.Bootstrapped)
+            {
+                flowContext.Flow.Bootstrap(flowContext.GetFlowHistory());
+            }
 
             switch(flowExecutionArgs.FlowAction)
             {
