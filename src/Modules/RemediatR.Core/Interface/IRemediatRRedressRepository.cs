@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RemediatR.Core.Interface
 {
-    public interface IRemediatRRedressRepository<RemediatRRepository> : IRepositoryFlowable<RedressFlowContext>
+    public interface IRemediatRRedressRepository<T> : IRepositoryFlowable<T> where T : class, IFlowContext
     {
         Task<IEnumerable<RedressCase>> GetRedressCasesAsync(SearchArgs searchArgs);
         Task<IEnumerable<NewRedressCase>> SearchNewRedressCasesAsync(SearchArgs searchArgs);
