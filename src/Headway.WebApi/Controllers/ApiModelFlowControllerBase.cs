@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace Headway.WebApi.Controllers
 {
-    public abstract class ApiModelFlowControllerBase<TModel, TController, TFlowContext> : ApiModelControllerBase<TModel, TController>
+    public abstract class ApiModelFlowControllerBase<TModel, TController, TFlowContext> 
+        : ApiModelControllerBase<TModel, TController> 
+        where TFlowContext : class, IFlowContext
     {
         protected readonly IRepositoryFlowable<TFlowContext> repositoryFlowable;
 
