@@ -18,7 +18,7 @@ namespace RemediatR.Core.Model
         public int RedressId { get; set; }
         public int ProductId { get; set; }
         public Product? Product { get; set; }
-        public int ProgramId { get; set; }
+        public int? ProgramId { get; set; }
         public Program? Program { get; set; }
         public int RefundCalculationId { get; set; }
         public RefundCalculation? RefundCalculation { get; set; }
