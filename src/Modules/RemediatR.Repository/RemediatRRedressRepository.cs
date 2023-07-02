@@ -355,9 +355,14 @@ namespace RemediatR.Repository
                 .FirstAsync(p => p.ProductId.Equals(redress.Product.ProductId))
                 .ConfigureAwait(false);
 
-            var program = await applicationDbContext.Programs
-                .FirstAsync(p => p.ProgramId.Equals(redress.Program.ProgramId))
-                .ConfigureAwait(false);
+            Program program = null;
+
+            if (redress.Program != null)
+            {
+                program = await applicationDbContext.Programs
+                    .FirstAsync(p => p.ProgramId.Equals(redress.Program.ProgramId))
+                    .ConfigureAwait(false);
+            }
 
             var flow = await applicationDbContext.Flows
                 .FirstAsync(f => f.FlowId.Equals(redress.RedressFlowContext.FlowId))
