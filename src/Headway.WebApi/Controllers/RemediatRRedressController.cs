@@ -59,11 +59,11 @@ namespace Headway.WebApi.Controllers
 
             _ = await redressFlowContextExecutionService.Execute(redress.RedressFlowContext);
             
-            var savedRedress = await remediatRRedressRepository
+            var updatedRedress = await remediatRRedressRepository
                 .GetRedressAsync(redress.RedressId)
                 .ConfigureAwait(false);
 
-            return Ok(savedRedress);
+            return Ok(updatedRedress);
         }
 
         [HttpPost("[action]")]
