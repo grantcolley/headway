@@ -59,21 +59,23 @@ namespace Headway.WebApi.Controllers
 
             var redressFlowContext = await redressFlowContextExecutionService.Execute(redress.RedressFlowContext);
 
+            Redress updatedRedress = null;
+
             if (redress.RedressId.Equals(0)
                 && redressFlowContext.RedressFlowContextId.Equals(0))
             {
                 redress.RedressFlowContext = redressFlowContext;
-                _ = await remediatRRedressRepository.AddRedressAsync(redress);
+                updatedRedress = await remediatRRedressRepository.AddRedressAsync(redress);
             }
             else
             {
-                _ = await remediatRRedressRepository
+                updatedRedress = await remediatRRedressRepository
                     .GetRedressAsync(redress.RedressId)
                     .ConfigureAwait(false);
             }
 
-            var updatedRedress = await remediatRRedressRepository
-                .GetRedressAsync(redress.RedressId)
+            updatedRedress = await remediatRRedressRepository
+                .GetRedressAsync(updatedRedress.RedressId)
                 .ConfigureAwait(false);
 
             return Ok(updatedRedress);
