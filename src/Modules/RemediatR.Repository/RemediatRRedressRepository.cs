@@ -1,4 +1,5 @@
 ﻿using Headway.Core.Args;
+using Headway.Core.Enums;
 using Headway.Repository.Data;
 using Headway.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using RemediatR.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace RemediatR.Repository
@@ -355,29 +357,30 @@ namespace RemediatR.Repository
                 .FirstAsync(p => p.ProductId.Equals(redress.Product.ProductId))
                 .ConfigureAwait(false);
 
-            Program program = null;
-
-            if (redress.Program != null)
+            foreach (var flowHistory in redress.RedressFlowContext.Flow.History)
             {
-                program = await applicationDbContext.Programs
-                    .FirstAsync(p => p.ProgramId.Equals(redress.Program.ProgramId))
-                    .ConfigureAwait(false);
+                redress.RedressFlowContext.RedressFlowHistory.Add(new RedressFlowHistory
+                {
+                    Index = flowHistory.Index,
+
+                    StateStatus = flowHistory.StateStatus,
+                    FlowCode = flowHistory.FlowCode,
+                    StateCode = flowHistory.StateCode,
+                    Event = flowHistory.Event,
+                    Owner = flowHistory.Owner,
+                    Comment = flowHistory.Comment
+                });
             }
 
             var flow = await applicationDbContext.Flows
                 .FirstAsync(f => f.FlowId.Equals(redress.RedressFlowContext.FlowId))
                 .ConfigureAwait(false);
 
-            var authorisation = await GetAuthorisationAsync(User).ConfigureAwait(false);
-
-            redress.RedressFlowContext.FlowId = flow.FlowId;
             redress.RedressFlowContext.Flow = flow;
-            redress.RedressFlowContext.Authorisation = authorisation;
 
             var newRedress = new Redress
             {
                 Product = product,
-                Program = program,
                 RefundCalculation = redress.RefundCalculation,
                 RedressCaseOwner = redress.RedressCaseOwner,
                 RedressFlowContext = redress.RedressFlowContext
