@@ -73,8 +73,11 @@ namespace Headway.Core.Extensions
         /// <param name="state">The <see cref="State"/></param>
         public static void RecordHistory(this List<FlowHistory> history, State state, string eventname)
         {
+            int index = history.Count + 1;
+
             history.Add(new FlowHistory
             {
+                Index = index,
                 Event = eventname,
                 FlowCode = state.Flow.FlowCode,
                 StateCode = state.StateCode,
