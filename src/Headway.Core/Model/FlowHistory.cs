@@ -6,6 +6,9 @@ namespace Headway.Core.Model
     public class FlowHistory : ModelBase
     {
         [Required]
+        public int Index { get; set; }
+
+        [Required]
         public StateStatus StateStatus { get; set; }
 
         [Required]
