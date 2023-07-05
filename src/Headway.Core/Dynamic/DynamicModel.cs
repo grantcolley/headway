@@ -15,28 +15,26 @@ namespace Headway.Core.Dynamic
     {
         private readonly string idFieldName;
         private readonly string titleFieldName;
-        
+
         public DynamicModel(T model, Config config)
         {
             Model = model;
             Config = config;
             Helper = DynamicTypeHelper.Get<T>();
 
-            var idField = config.ConfigItems.FirstOrDefault(ci => ci.IsIdentity);
+            var idField = Config.ConfigItems.FirstOrDefault(ci => ci.IsIdentity);
 
             if (idField != null)
             {
                 idFieldName = idField.PropertyName;
             }
 
-            var titleField = config.ConfigItems.FirstOrDefault(ci => ci.IsTitle);
+            var titleField = Config.ConfigItems.FirstOrDefault(ci => ci.IsTitle);
 
-            if(titleField != null)
+            if (titleField != null)
             {
                 titleFieldName = titleField.PropertyName;
             }
-
-            SetStaticFields();
 
             BootstrapFlow();
 
@@ -50,9 +48,31 @@ namespace Headway.Core.Dynamic
         public List<DynamicContainer> RootContainers { get; set; }
         public List<DynamicField> DynamicFields { get; private set; }
 
-        public int Id { get; private set; }
+        public int Id 
+        { 
+            get
+            {
+                if (string.IsNullOrWhiteSpace(idFieldName))
+                {
+                    return default;
+                }
 
-        public string Title { get; private set; }
+                return Convert.ToInt32(Helper.GetValue(Model, idFieldName));
+            }
+        }
+
+        public string Title 
+        {
+            get            
+            {
+                if (string.IsNullOrWhiteSpace(titleFieldName))
+                {
+                    return default;
+                }
+
+                return Helper.GetValue(Model, titleFieldName).ToString();
+            }
+        }
 
         public bool IsValid
         {
@@ -74,33 +94,12 @@ namespace Headway.Core.Dynamic
         {
             Model = model;
 
-            foreach(var dynamicField in DynamicFields)
+            foreach (var dynamicField in DynamicFields)
             {
                 dynamicField.Model = model;
             }
 
-            SetStaticFields();
-        }
-
-        private void SetStaticFields()
-        {
-            if (!string.IsNullOrWhiteSpace(idFieldName))
-            {
-                var property = Helper.SupportedProperties.FirstOrDefault(p => p.Name.Equals(idFieldName));
-                if (property != null)
-                {
-                    Id = Convert.ToInt32(property.GetValue(Model));
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(titleFieldName))
-            {
-                var property = Helper.SupportedProperties.FirstOrDefault(p => p.Name.Equals(titleFieldName));
-                if (property != null)
-                {
-                    Title = property.GetValue(Model)?.ToString();
-                }
-            }
+            BootstrapFlow();
         }
 
         private void BootstrapFlow()
@@ -118,8 +117,6 @@ namespace Headway.Core.Dynamic
 
         private void BuildDynamicComponents()
         {
-            SetStaticFields();
-
             DynamicFields = new List<DynamicField>();
 
             var constantExpression = Expression.Constant(Model);
