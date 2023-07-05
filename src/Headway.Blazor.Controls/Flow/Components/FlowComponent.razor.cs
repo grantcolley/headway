@@ -18,13 +18,11 @@ namespace Headway.Blazor.Controls.Flow.Components
 
         protected StateStatus ActiveStateStatus { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
-            await base.OnInitializedAsync().ConfigureAwait(false);
+            GetFlowComponentContext();
 
-            FlowComponentContext = FlowTabDocument.DynamicModel.FlowContext.GetFlowComponentContext();
-
-            ActiveStateStatus = FlowComponentContext.ActiveState.StateStatus;
+            return base.OnInitializedAsync();
         }
 
         protected virtual void OnActionChanged(IEnumerable<string> values)
@@ -73,6 +71,8 @@ namespace Headway.Blazor.Controls.Flow.Components
 
             await FlowTabDocument.FlowExecutionAsync(flowExecutionArgs);
 
+            GetFlowComponentContext();
+
             FlowComponentContext.IsOwnerAssigning = false;
 
             //await InvokeAsync(() =>
@@ -115,6 +115,13 @@ namespace Headway.Blazor.Controls.Flow.Components
             //{
             //    StateHasChanged();
             //});
+        }
+
+        private void GetFlowComponentContext()
+        {
+            FlowComponentContext = FlowTabDocument.DynamicModel.FlowContext.GetFlowComponentContext();
+
+            ActiveStateStatus = FlowComponentContext.ActiveState.StateStatus;
         }
     }
 }
