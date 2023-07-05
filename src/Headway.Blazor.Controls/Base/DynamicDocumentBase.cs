@@ -158,7 +158,7 @@ namespace Headway.Blazor.Controls.Base
                         .ConfigureAwait(false);
                 }
 
-                GetResponse(response);
+                _ = GetResponse(response);
             }
 
             isSaveInProgress = false;
