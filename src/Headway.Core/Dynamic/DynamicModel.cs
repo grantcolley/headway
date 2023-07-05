@@ -70,7 +70,7 @@ namespace Headway.Core.Dynamic
                     return default;
                 }
 
-                return Helper.GetValue(Model, titleFieldName).ToString();
+                return Helper.GetValue(Model, titleFieldName)?.ToString();
             }
         }
 
