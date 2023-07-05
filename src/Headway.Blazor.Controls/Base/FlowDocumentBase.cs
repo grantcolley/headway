@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Headway.Blazor.Controls.Base
 {
-    public class FlowDocumentBase<T> : DynamicDocumentBase<T> where T : class, new()
+    public abstract class FlowDocumentBase<T> : DynamicDocumentBase<T> where T : class, new()
     {
         protected override async Task OnInitializedAsync()
         {
@@ -40,6 +40,11 @@ namespace Headway.Blazor.Controls.Base
             GetResponse(response);
 
             isSaveInProgress = false;
+
+            //await InvokeAsync(() =>
+            //{
+            //    StateHasChanged();
+            //});
         }
     }
 }
