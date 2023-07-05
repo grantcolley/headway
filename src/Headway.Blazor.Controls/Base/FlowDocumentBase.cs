@@ -12,6 +12,11 @@ namespace Headway.Blazor.Controls.Base
             await base.OnInitializedAsync();
 
             await InitializeDynamicModelAsync().ConfigureAwait(false);
+        }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
 
             if (!DynamicModel.FlowContext.Authorisation.IsUserAuthorised(DynamicModel.FlowContext.Flow.Permission))
             {
@@ -41,10 +46,10 @@ namespace Headway.Blazor.Controls.Base
 
             isSaveInProgress = false;
 
-            //await InvokeAsync(() =>
-            //{
-            //    StateHasChanged();
-            //});
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
         }
     }
 }
