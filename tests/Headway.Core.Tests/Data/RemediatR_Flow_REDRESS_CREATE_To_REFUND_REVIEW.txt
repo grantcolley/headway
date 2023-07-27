@@ -1,5 +1,6 @@
 ﻿[
   {
+    "Index": 1,
     "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
@@ -12,6 +13,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 2,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
@@ -24,6 +26,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 3,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
@@ -36,6 +39,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 4,
     "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
@@ -48,6 +52,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 5,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
@@ -60,6 +65,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 6,
     "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
@@ -72,6 +78,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 7,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
@@ -84,6 +91,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 8,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
@@ -96,6 +104,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 9,
     "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
@@ -108,6 +117,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 10,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
@@ -120,6 +130,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 11,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
@@ -132,6 +143,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 12,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
@@ -144,6 +156,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 13,
     "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",
@@ -156,6 +169,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 14,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",

@@ -1,5 +1,6 @@
 ﻿[
   {
+    "Index": 3,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
@@ -12,6 +13,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 12,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_ASSESSMENT",
@@ -24,6 +26,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 8,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_CALCULATION",
@@ -36,6 +39,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 11,
     "StateStatus": 3,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_VERIFICATION",
@@ -48,6 +52,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 16,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REFUND_REVIEW",

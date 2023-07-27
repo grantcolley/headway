@@ -1,5 +1,6 @@
 ﻿[
   {
+    "Index": 1,
     "StateStatus": 1,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
@@ -12,6 +13,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 2,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",
@@ -24,6 +26,7 @@
     "ModifiedBy": null
   },
   {
+    "Index": 3,
     "StateStatus": 2,
     "FlowCode": "REMEDIATR",
     "StateCode": "REDRESS_CREATE",

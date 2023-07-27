@@ -212,9 +212,11 @@ namespace Headway.Core.Tests
 
             for (int i = 0; i < flow.History.Count; i++)
             {
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].Event, flow.History[i].Event);
-                Assert.AreEqual(historyRedressCreateToFinalReview[i].StateCode, flow.History[i].StateCode);
+                Assert.AreEqual(historyRedressCreateToFinalReview[i].Index, flow.History[i].Index);
                 Assert.AreEqual(historyRedressCreateToFinalReview[i].StateStatus, flow.History[i].StateStatus);
+                Assert.AreEqual(historyRedressCreateToFinalReview[i].FlowCode, flow.History[i].FlowCode);
+                Assert.AreEqual(historyRedressCreateToFinalReview[i].StateCode, flow.History[i].StateCode);
+                Assert.AreEqual(historyRedressCreateToFinalReview[i].Event, flow.History[i].Event);
                 Assert.AreEqual(historyRedressCreateToFinalReview[i].Owner, flow.History[i].Owner);
                 Assert.AreEqual(historyRedressCreateToFinalReview[i].Comment, flow.History[i].Comment);
             }
