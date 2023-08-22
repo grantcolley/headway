@@ -14,10 +14,17 @@
             else
             {
                 <MudTooltip Text="@FlowComponentContext.OwnerAssignedTooltip" Arrow="true">
+                    @if (FlowComponentContext.OwnerAssigned)
+                    {
+                        <div>
+                            <font size="1">@FlowComponentContext.Owner</font>
+                        </div>
+                    }
+
                     <MudToggleIconButton Toggled="@FlowComponentContext.OwnerAssigned"
-                                     Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
-                                     ToggledIcon="@Icons.Material.Filled.PersonRemove" ToggledColor="@Color.Default"
-                                     ToggledChanged="OnOwnerAssignedChangedAsync" />
+                                        Icon="@Icons.Material.Filled.PersonAdd" Color="@Color.Default"
+                                        ToggledIcon="@Icons.Material.Filled.PersonRemove" ToggledColor="@Color.Default"
+                                        ToggledChanged="OnOwnerAssignedChangedAsync" />
                 </MudTooltip>
             }
         }
