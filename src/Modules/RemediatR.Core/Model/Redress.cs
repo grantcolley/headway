@@ -22,7 +22,6 @@ namespace RemediatR.Core.Model
         public Program? Program { get; set; }
         public int RefundCalculationId { get; set; }
         public RefundCalculation? RefundCalculation { get; set; }
-        public int RedressFlowContextId { get; set; }
         public RedressFlowContext? RedressFlowContext { get; set; }
 
         [MaxLength(50)]
