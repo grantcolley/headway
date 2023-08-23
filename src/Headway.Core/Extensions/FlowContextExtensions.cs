@@ -42,7 +42,7 @@ namespace Headway.Core.Extensions
             }
         }
 
-        public static bool IsActiveStateForReadOnlyForValidator(this IFlowContext flowContext)
+        public static bool IsActiveStateReadOnlyForValidator(this IFlowContext flowContext)
         {
             if (flowContext == null)
             {
