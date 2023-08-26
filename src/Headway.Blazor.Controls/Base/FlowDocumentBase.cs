@@ -28,15 +28,14 @@ namespace Headway.Blazor.Controls.Base
 
         public virtual async Task FlowExecutionAsync(FlowExecutionArgs flowExecutionArgs)
         {
-            if (flowExecutionArgs.FlowAction.Equals(FlowActionEnum.Complete)
-                || !CurrentEditContext.Validate())
+            DynamicModel.FlowContext.FlowExecutionArgs = flowExecutionArgs;
+
+            if (!CurrentEditContext.Validate())
             {
                 return;
             }
 
             isSaveInProgress = true;
-
-            DynamicModel.FlowContext.FlowExecutionArgs = flowExecutionArgs;
 
             var response = await DynamicApiRequest
                 .FlowExecutionAsync<T>(DynamicModel)
