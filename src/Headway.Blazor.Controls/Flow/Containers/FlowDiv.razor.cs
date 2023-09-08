@@ -22,9 +22,14 @@ namespace Headway.Blazor.Controls.Flow.Containers
                 LayoutHorizontal = Convert.ToBoolean(layoutHorizontal);
             }
 
+            return base.OnInitializedAsync();
+        }
+
+        protected override Task OnParametersSetAsync()
+        {
             Container.ApplyStateReadOnlyFlag();
 
-            return base.OnInitializedAsync();
+            return base.OnParametersSetAsync();
         }
     }
 }
