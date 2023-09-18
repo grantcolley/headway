@@ -65,10 +65,10 @@
         base.OnParametersSet();
     }
 
-    private void ToggledChanged(bool val)
+    private void ToggledChanged(bool value)
     {
-        isDarkMode = val;
-        AppCache.Set(AppCacheKeys.IsDarkMode, val);
+        isDarkMode = value;
+        AppCache.Set(AppCacheKeys.IsDarkMode, value);
     }
 
     private void DrawerToggle()
