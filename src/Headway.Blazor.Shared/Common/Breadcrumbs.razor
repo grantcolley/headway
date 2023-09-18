@@ -1,3 +1,13 @@
 ﻿@inherits BreadcrumbsBase
 
-<MudBreadcrumbs @key="uniqueId" Items="@breadcrumbs"/>
+<MudBreadcrumbs @key="uniqueId" Items="@breadcrumbs">
+    <ItemTemplate Context="item">
+        <MudStack Row="true" Spacing="1">
+            @if (!string.IsNullOrWhiteSpace(@item.Icon))
+            {
+                <MudIcon Icon="@item.Icon" />
+            }
+            <MudLink Href="@item.Href" Color="Color.Inherit">@item.Text</MudLink>
+        </MudStack>
+    </ItemTemplate>
+</MudBreadcrumbs>
