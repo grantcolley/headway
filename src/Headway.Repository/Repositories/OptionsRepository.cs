@@ -59,7 +59,7 @@ namespace Headway.Repository.Repositories
         {
             var optionsCode = args.FirstArgValue(Options.OPTIONS_CODE);
 
-            if (optionItems.ContainsKey(optionsCode))
+            if (checkListItems.ContainsKey(optionsCode))
             {
                 return await checkListItems[optionsCode].Invoke(args).ConfigureAwait(false);
             }
