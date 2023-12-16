@@ -1,6 +1,6 @@
 ![Alt text](/readme-images/Headway-dark.png?raw=true "Headway") 
 
-###### .NET 6.0, Blazor WebAssembly, Blazor Server, ASP.NET Core Web API, Auth0, IdentityServer4, MudBlazor, Entity Framework Core, MS SQL Server, SQLite 
+###### .NET 7.0, Blazor WebAssembly, Blazor Server, ASP.NET Core Web API, Auth0, IdentityServer4, MudBlazor, Entity Framework Core, MS SQL Server, SQLite 
 ###### 
 \
 [![Build status](https://ci.appveyor.com/api/projects/status/xg606j7pr1ib54db?svg=true)](https://ci.appveyor.com/project/grantcolley/headway)
